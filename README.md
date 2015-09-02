@@ -1,8 +1,5 @@
-# Weed for .net/mono
+# Weed for .net/mono/java
 超强跨平台轻量级ORM（无反射；缓存控制；分布式事务；万能绑定）<br/>
-
-Weed3::源码<br/>
-Weed3Demo::使用示例<br/>
 
 占位符说明：<br/>
  $.       //表空间占位数（即数据库名）<br/>
@@ -17,7 +14,7 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例（使用代码可与java版互用）<br/>
+示例::<br/>
 db.table("user_info")<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;.where("user_id<?", 10)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;.select("user_id,name,sex")<br/>
