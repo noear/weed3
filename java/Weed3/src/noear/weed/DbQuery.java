@@ -1,0 +1,72 @@
+package noear.weed;
+
+import java.sql.SQLException;
+
+/**
+ * Created by noear on 14-9-5.
+ *
+ * 查询语句访问类
+ *
+ * $.tableName  --$ 代表当表db context schema
+ * @paramName   --@ 为参数名的开头
+ */
+public class DbQuery extends DbAccess {
+
+
+
+    public DbQuery(DbContext context)
+    {
+        super(context);
+    }
+
+    public DbQuery sql(SQLBuilder sqlBuilder) {
+        this.commandText = sqlBuilder.toString();
+        this.paramS.clear();
+        this._weedKey = null;
+        for (Object p1 : sqlBuilder.paramS) {
+            doSet("", p1);
+        }
+
+        return this;
+    }
+
+    public long insert() throws SQLException
+    {
+        return new SQLer().insert(getCommand(),_tran);
+    }
+
+    @Override
+    protected String getCommandID() {
+        return this.commandText;
+    }
+
+    @Override
+    protected DbCommand getCommand() {
+
+        DbCommand cmd = new DbCommand();
+
+        cmd.key     = getCommandID();
+        cmd.context = this.context;
+        cmd.paramS  = this.paramS;
+
+        StringBuilder sb = new StringBuilder(commandText);
+
+        //1.替换schema
+        int idx=0;
+        while (true) {
+            idx = sb.indexOf("$",idx);
+            if(idx>0) {
+                sb.replace(idx, idx + 1, context.getSchema());
+                idx++;
+            }
+            else {
+                break;
+            }
+        }
+
+
+        cmd.text = sb.toString();
+
+        return cmd;
+    }
+}
