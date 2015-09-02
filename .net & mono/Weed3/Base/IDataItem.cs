@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 namespace Noear.Weed {
-    public interface IDataItem : IEnumerable<KeyValuePair<String, Object>> {
+    public interface IDataItem {
         int count();
         void clear();
         bool exists(string name);
         IEnumerable<string> keys();
-
+        
         IDataItem set(String name, Object value);
         Object get(String name);
         Variate getVariate(String name);
@@ -20,5 +20,7 @@ namespace Noear.Weed {
         String getString(String name);
         bool getBoolean(String name);
         DateTime getDateTime(String name);
+
+        void forEach(Action<String, Object> callback);
     }
 }

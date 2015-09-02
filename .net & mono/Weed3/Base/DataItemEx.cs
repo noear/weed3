@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Noear.Weed {
     public class DataItemEx  : IDataItem {
         Dictionary<String, Func<Object>> _data = new Dictionary<string, Func<Object>>();
-        bool _isNotNull = false;
+        bool _isNotNull = false; //不需要null的数据
 
         public DataItemEx() { }
 
@@ -25,6 +25,7 @@ namespace Noear.Weed {
         public IEnumerable<string> keys() {
             return _data.Keys;
         }
+        
 
         public IDataItem set(String name, Object value) {
             _data[name] = (() => value);
@@ -87,38 +88,23 @@ namespace Noear.Weed {
             return (DateTime)get(name);
         }
 
-        
+
 
         //
         //===========================
         //
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() {
+        public void forEach(Action<String, Object> callback) {
             foreach (var kv in _data) {
                 var val = kv.Value();
                 if (_isNotNull) {
                     if (val != null) {
-                        yield return new KeyValuePair<string, object>(kv.Key, val);
+                        callback(kv.Key, val);
                     }
                 }
                 else {
-                    yield return new KeyValuePair<string, object>(kv.Key, val);
+                    callback(kv.Key, val);
                 }
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-            foreach (var kv in _data) {
-                var val = kv.Value();
-                if (_isNotNull) {
-                    if (val != null) {
-                        yield return new KeyValuePair<string, object>(kv.Key, val);
-                    }
-                }
-                else {
-                    yield return new KeyValuePair<string, object>(kv.Key, val);
-                }
-            }
-        }
-        
     }
 }

@@ -58,7 +58,7 @@ namespace Noear.Weed {
             _builder.append(" ) ");
             return (T)this;
         }
-        
+
         public long insert(IDataItem data) {
             if (data == null || data.count() == 0)
                 return 0;
@@ -68,29 +68,30 @@ namespace Noear.Weed {
 
             sb.Append(" INSERT INTO ").Append(_table).Append(" (");
 
-            foreach (var kv in data) {
-                sb.Append(kv.Key).Append(",");
+            foreach (var key in data.keys()) {
+                sb.Append(key).Append(",");
             }
 
             sb.DeleteCharAt(sb.Length - 1);
 
             sb.Append(") VALUES (");
-            foreach (var kv in data) {
-                if (kv.Value is String) {
-                    String val2 = (String)kv.Value;
+            data.forEach((key, value) => {
+                if (value is String) {
+                    String val2 = (String)value;
                     if (val2[0] == '$') { //说明是SQL函数
                         sb.Append(val2.Substring(1)).Append(",");
                     }
                     else {
                         sb.Append("?,");
-                        args.Add(kv.Value);
+                        args.Add(value);
                     }
                 }
                 else {
                     sb.Append("?,");
-                    args.Add(kv.Value);
+                    args.Add(value);
                 }
-            }
+            });
+
             sb.DeleteCharAt(sb.Length - 1);
             sb.Append(");");
 
@@ -114,23 +115,22 @@ namespace Noear.Weed {
 
             sb.Append("UPDATE ").Append(_table).Append(" SET ");
 
-            foreach (var kv in data) {
-
-                if (kv.Value is String) {
-                    String val2 = (String)kv.Value;
+            data.forEach((key, value) => {
+                if (value is String) {
+                    String val2 = (String)value;
                     if (val2[0] == '$') {
-                        sb.Append(kv.Key).Append("=").Append(val2.Substring(1)).Append(",");
+                        sb.Append(key).Append("=").Append(val2.Substring(1)).Append(",");
                     }
                     else {
-                        sb.Append(kv.Key).Append("=?,");
-                        args.Add(kv.Value);
+                        sb.Append(key).Append("=?,");
+                        args.Add(value);
                     }
                 }
                 else {
-                    sb.Append(kv.Key).Append("=?,");
-                    args.Add(kv.Value);
+                    sb.Append(key).Append("=?,");
+                    args.Add(value);
                 }
-            }
+            });
 
             sb.DeleteCharAt(sb.Length - 1);
 
