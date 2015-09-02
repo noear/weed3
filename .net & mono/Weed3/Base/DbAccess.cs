@@ -26,9 +26,7 @@ namespace Noear.Weed {
         public DbAccess(DbContext context) {
             this.context = context;
         }
-
-        /*参数源...通过bind()*/
-        //protected VarHandler _source = null;
+        
         /*IWeedKey begin*/
         protected String _weedKey;
         public String getWeedKey() {
