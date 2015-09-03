@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 
 namespace Noear.Weed.Cache {
-    public class LocalCache: ICacheService {
+    public class LocalCache : ICacheService {
         private String _cacheKeyHead;
         private int _defaultSeconds;
 
-        private int _max   = 50000;
+        private int _max = 50000;
         private int _count = 0;
 
-        private List<int>                         mks = new List<int>(); //key的顺序记录
+        private List<int> mks = new List<int>(); //key的顺序记录
         private Dictionary<int, LocalCacheRecord> mcc = new Dictionary<int, LocalCacheRecord>();   //缓存存储器
 
         public LocalCache(String keyHeader, int defSeconds) : this(keyHeader, defSeconds, 50000) {
-            
+
         }
 
         public LocalCache(String keyHeader, int defSeconds, int recordMax) {
@@ -40,7 +40,10 @@ namespace Noear.Weed.Cache {
 
         public Object get(String key) {
             int hashKey = (_cacheKeyHead + "$" + key).GetHashCode();
-            LocalCacheRecord val = mcc[hashKey];
+
+            LocalCacheRecord val = null;
+            if (mcc.ContainsKey(hashKey))
+                val = mcc[hashKey];
 
             if (val == null)
                 return null;
@@ -55,7 +58,7 @@ namespace Noear.Weed.Cache {
                 return val.data;
         }
 
-    public void remove(String key) {
+        public void remove(String key) {
             int hashKey = (_cacheKeyHead + "$" + key).GetHashCode();
 
             mcc.Remove(hashKey);
