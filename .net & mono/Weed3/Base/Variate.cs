@@ -52,17 +52,8 @@ namespace Noear.Weed {
                 return def;
             else if (DBNull.Value.Equals(_value))
                 return def;
-            else {
-                try {
-                    return (T)_value;
-                }
-                catch (Exception ex) {
-                    if (_name != null)
-                        throw new WeedException(_name + " 转换失败（" + _value.GetType().ToString() + "不能强制转换为" + typeof(T).ToString() + "）");
-                    else
-                        throw ex;
-                }
-            }
+            else
+                return doValue<T>();
         }
 
         public T value<T>() {
@@ -71,15 +62,19 @@ namespace Noear.Weed {
             else if (DBNull.Value.Equals(_value))
                 return default(T);
             else {
-                try {
-                    return (T)_value;
-                }
-                catch (Exception ex) {
-                    if (_name != null)
-                        throw new WeedException(_name + " 转换失败（" + _value.GetType().ToString() + "不能强制转换为" + typeof(T).ToString() + "）");
-                    else
-                        throw ex;
-                }
+                return doValue<T>();
+            }
+        }
+
+        T doValue<T>() {
+            try {
+                return (T)_value;
+            }
+            catch (Exception ex) {
+                if (_name != null)
+                    throw new WeedException(_name + "::无法将类型为“" + _value.GetType().ToString() + "”的对象强制转换为类型“" + typeof(T).ToString() + "”");
+                else
+                    throw ex;
             }
         }
     }
