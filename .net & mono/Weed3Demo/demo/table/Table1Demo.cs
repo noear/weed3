@@ -43,7 +43,7 @@ namespace Weed3Demo.demo.table {
             var list = db.table("user_info")
                          .where("user_id<?", 10)
                          .select("user_id,name,sex")
-                         .getList<UserInfoModel>();
+                         .getList(new UserInfoModel());
 
             return list;
         }
