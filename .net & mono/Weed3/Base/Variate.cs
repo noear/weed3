@@ -55,17 +55,7 @@ namespace Noear.Weed {
             else
                 return doValue<T>();
         }
-
-        public T value<T>() {
-            if (_value == null)
-                return default(T);
-            else if (DBNull.Value.Equals(_value))
-                return default(T);
-            else {
-                return doValue<T>();
-            }
-        }
-
+        
         T doValue<T>() {
             try {
                 return (T)_value;

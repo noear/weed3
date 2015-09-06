@@ -47,20 +47,19 @@ namespace Noear.Weed {
             }
         }
 
-        public T getItem<T>(Command cmd, DbTran transaction) where T : IBinder {
-            T model = BinderMapping.getBinder<T>();
+        public T getItem<T>(T model, Command cmd, DbTran transaction) where T : IBinder {
+            //T model = BinderMapping.getBinder<T>();
             try {
-                T item = (T)model.clone();
                 reader = query(cmd, transaction);
                 if (reader.Read()) {
-                    item.bind((key) => {
+                    model.bind((key) => {
                         return new Variate(key, reader[key]);
                     });
 
-                    return item;
+                    return model;
                 }
                 else
-                    return item;
+                    return model;
             }
             catch (Exception ex) {
                 WeedLog.logException(cmd, ex);
@@ -71,18 +70,17 @@ namespace Noear.Weed {
             }
         }
 
-        public List<T> getList<T>(Command cmd, DbTran transaction) where T : IBinder {
+        public List<T> getList<T>(T model, Command cmd, DbTran transaction) where T : IBinder {
             List<T> list = new List<T>();
             try {
-                T model = BinderMapping.getBinder<T>();
                 reader = query(cmd, transaction);
                 while (reader.Read()) {
-                    T item = (T)model.clone();
-                    item.bind((key) => {
+                    model.bind((key) => {
                         return new Variate(key, reader[key]);
                     });
 
-                    list.Add(item);
+                    list.Add(model);
+                    model = (T)model.clone();
                 }
 
                 return list;
