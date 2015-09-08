@@ -7,10 +7,10 @@ namespace Noear.Weed {
         long getCount();
         T getValue<T>(T def);
         T getValue<T>(T def, Action<CacheUsing, T> cacheCondition);
-        T getItem<T>() where T : IBinder;
-        T getItem<T>(Action<CacheUsing, T> cacheCondition) where T : IBinder;
-        List<T> getList<T>() where T : IBinder;
-        List<T> getList<T>(Action<CacheUsing, List<T>> cacheCondition) where T : IBinder;
+        T getItem<T>(T model) where T : IBinder;
+        T getItem<T>(T model,Action<CacheUsing, T> cacheCondition) where T : IBinder;
+        List<T> getList<T>(T model) where T : IBinder;
+        List<T> getList<T>(T model,Action<CacheUsing, List<T>> cacheCondition) where T : IBinder;
         List<T> getArray<T>(String column);
         DataList getDataList();
         DataList getDataList(Action<CacheUsing, DataList> cacheCondition);

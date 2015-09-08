@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BinderMapping.cs" />
     <Compile Include="Base\DbTypeMapping.cs" />
     <Compile Include="Base\DataItemEx.cs" />
     <Compile Include="Base\IDataItem.cs" />

@@ -26,9 +26,7 @@ namespace Noear.Weed {
         public DbAccess(DbContext context) {
             this.context = context;
         }
-
-        /*参数源...通过bind()*/
-        //protected VarHandler _source = null;
+        
         /*IWeedKey begin*/
         protected String _weedKey;
         public String getWeedKey() {
@@ -106,32 +104,32 @@ namespace Noear.Weed {
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>() where T : IBinder {
-            return getItem<T>(null);
+        public T getItem<T>(T model) where T : IBinder {
+            return getItem<T>(model, null);
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>(Action<CacheUsing, T> cacheCondition) where T : IBinder {
+        public T getItem<T>(T model ,Action<CacheUsing, T> cacheCondition) where T : IBinder {
             if (_cache == null)
-                return new SQLer().getItem<T>(getCommand(), _tran);
+                return new SQLer().getItem<T>(model,getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(getCommand(), _tran)));
+                return _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(model,getCommand(), _tran)));
             }
         }
         /*执行命令（返回一个列表）*/
-        public List<T> getList<T>() where T : IBinder {
-            return getList<T>(null);
+        public List<T> getList<T>(T model) where T : IBinder {
+            return getList<T>(model,null);
         }
 
         /*执行命令（返回一个列表）*/
-        public List<T> getList<T>(Action<CacheUsing, List<T>> cacheCondition) where T : IBinder {
+        public List<T> getList<T>(T model,Action<CacheUsing, List<T>> cacheCondition) where T : IBinder {
 
             if (_cache == null)
-                return new SQLer().getList<T>(getCommand(), _tran);
+                return new SQLer().getList<T>(model,getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(getCommand(), _tran)));
+                return _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(model,getCommand(), _tran)));
             }
         }
 

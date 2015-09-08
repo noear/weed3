@@ -12,7 +12,7 @@ namespace Weed3Demo.demo.cache {
             db.call("user_get").set("xxx", 1)
                 .caching(cache)
                 .usingCache(60 * 100)
-                .getItem<UserInfoModel>();
+                .getItem(new UserInfoModel());
             
         }
 
@@ -24,7 +24,7 @@ namespace Weed3Demo.demo.cache {
             db.call("user_get").set("xxx",1)
                 .caching(cache)
                 .usingCache(60 * 100)
-                .getItem<UserInfoModel>((cu, t) => { 
+                .getItem(new UserInfoModel(), (cu, t) => { 
                     if (t.user_id == 12)
                         cu.usingCache(false);
                 });
@@ -42,7 +42,7 @@ namespace Weed3Demo.demo.cache {
 
             sp.caching(cache).usingCache(60 * 100);//与上面分开写（不然,返回类型需要转换）
 
-            sp.getListBySplit<UserInfoModel>("user_ids", t => t.user_id);
+            sp.getListBySplit(new UserInfoModel(), "user_ids", t => t.user_id);
         }
     }
 }

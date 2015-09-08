@@ -21,7 +21,7 @@ namespace Noear.Weed {
         public IEnumerable<string> keys() {
             return _data.Keys;
         }
-
+        
         public IDataItem set(String name, Object value) {
             _data[name] = value;
             return this;
@@ -78,17 +78,10 @@ namespace Noear.Weed {
             return (DateTime)_data[name];
         }
 
-        
-
-        //
-        //===========================
-        //
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() {
-            return _data.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-            return _data.GetEnumerator();
+        public void forEach(Action<String, Object> callback) {
+            foreach (var kv in _data) {
+                callback(kv.Key, kv.Value);
+            }
         }
 
         //============================

@@ -61,9 +61,8 @@ namespace Noear.Weed {
                                 paramS.Add(p2.getValue());
                             }
 
-                            if (s1.paramS.Count > 0) {
+                            if (s1.paramS.Count > 0) 
                                 builder.ReplaceFirst("\\?\\.\\.\\.", s1.commandText);
-                            }
                             else
                                 builder.ReplaceFirst("\\?\\.\\.\\.", s1.commandText);
                         }

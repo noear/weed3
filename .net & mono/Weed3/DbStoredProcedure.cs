@@ -73,11 +73,11 @@ namespace Noear.Weed {
         //
         //以下未测试
         //
-        public List<T> getListBySplit<T>(String splitParamName, Func<T, Object> getKey) where T : IBinder {
+        public List<T> getListBySplit<T>(T model,String splitParamName, Func<T, Object> getKey) where T : IBinder {
             //如果没有缓存,则直接返回执行结果
             //
             if (_cache == null || _cache.cacheController == CacheState.NonUsing)
-                return getList<T>();
+                return getList<T>(model);
 
 
             //1.获取所有分拆后的WeedCode
@@ -109,7 +109,7 @@ namespace Noear.Weed {
 
                 doGet(splitParamName).setValue(sb.ToString());
 
-                List<T> newList1 = getList<T>();
+                List<T> newList1 = getList<T>(model);
 
                 foreach (T ent in newList1) {
                     String weedKey = do_getSubWeedCode(vmlist, splitParamName, getKey(ent).ToString());

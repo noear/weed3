@@ -7,8 +7,7 @@ namespace Weed3Demo.demo_ex.store {
 
             sp.userID = 12;
             sp.sex = 1;//男的
-
-            sp.getList<UserInfoModel>();
+            
         }
     }
 }

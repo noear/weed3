@@ -12,7 +12,6 @@ namespace Noear.Weed {
     public class DbQuery : DbAccess {
 
         /*查询语句*/
-        
         public DbQuery(DbContext context) : base(context) {
             
         }
@@ -78,13 +77,6 @@ namespace Noear.Weed {
                         }
 
                         temp.setName("p" + paIdx);
-
-                        //String strVal = temp.getValue().ToString();
-                        //if (temp.getValue() is String)
-                        //    sb.Replace("?", "'" + strVal.Replace("'","\\'") + "'", atIdx, 1);
-                        //else
-                        //    sb.Replace("?", strVal, atIdx, 1);
-
                         sb.Replace("?", "@" + temp.getName(), atIdx, 1);
 
                         //atIdx+= strVal.Length;//增加替换后的长度

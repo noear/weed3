@@ -46,9 +46,7 @@ namespace Noear.Weed {
             foreach (DataItem r in rows) {
                 T item = (T)model.clone();
 
-                item.bind((key) => {
-                    return r.getVariate(key);
-                });
+                item.bind((key) => r.getVariate(key));
 
                 list.Add(item);
             }

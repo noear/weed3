@@ -49,14 +49,6 @@ namespace Noear.Weed {
             return conn;
         }
 
-        //public DbParameter getParameter(Variate variate) {
-        //    DbParameter parm = _provider.CreateParameter();
-        //    parm.ParameterName = variate.getName();
-        //    parm.Value = variate.getValue();
-
-        //    return parm;
-        //}
-
         public DbQuery sql(String code, params object[] args) {
             return new DbQuery(this).sql(new SQLBuilder().append(code, args));
         }

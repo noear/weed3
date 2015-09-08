@@ -20,7 +20,7 @@ namespace Weed3Demo {
             user_get sp = new user_get();
             sp.userID = 1;
 
-            var m = sp.getItem<UserModel>();
+            var m = sp.getItem(new UserModel());
 
         }
 
@@ -87,7 +87,7 @@ namespace Weed3Demo {
             var m = tb.where("UserID<? AND sex=?", 100, 1)
                       .limit(1)
                       .select("UserID,Nickname,Sex")
-                      .getItem<UserModel>();
+                      .getItem(new UserModel());
 
             if (m.UserID > 0)
                 return;

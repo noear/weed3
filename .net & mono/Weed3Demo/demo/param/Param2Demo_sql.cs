@@ -12,7 +12,7 @@ namespace Weed3Demo.demo.param {
     public class Param2Demo_sql {
         public static void demo_value() {
             var m = DbConfig.pc_user.sql("select * from $.user_info where user_id=?", 1)
-                        .getItem<UserInfoModel>();
+                        .getItem(new UserInfoModel());
         }
 
         public static List<UserInfoModel> demo_params() {
@@ -23,7 +23,7 @@ namespace Weed3Demo.demo.param {
 
             var sp = DbConfig.pc_user.sql("SELECT * FROM users WHERE mobile IN ( ?... )", mobiles);
             
-            return sp.getList<UserInfoModel>();
+            return sp.getList(new UserInfoModel());
         }
 
         public static List<UserInfoModel> demo_list() {
@@ -34,7 +34,7 @@ namespace Weed3Demo.demo.param {
 
             var sp = DbConfig.pc_user.sql("SELECT * FROM users WHERE mobile IN (?...)", mobiles);
 
-            return sp.getList<UserInfoModel>();
+            return sp.getList(new UserInfoModel());
         }
     }
 }

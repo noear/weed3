@@ -1,6 +1,4 @@
 ﻿using Noear.Weed;
-using System.Data;
-using Weed3Demo.demo;
 
 namespace Weed3Demo.demo_ex {
     //此类，可由工具根据存储过程生成

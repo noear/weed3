@@ -14,7 +14,7 @@ namespace Weed3Demo.demo.param {
            var m = DbConfig.pc_user.table("$.user_info")
                                .where("user_id=?", 1)
                                .select("*")
-                               .getItem<UserInfoModel>();
+                               .getItem(new UserInfoModel());
         }
 
         public static List<UserInfoModel> demo_params() {
@@ -24,7 +24,7 @@ namespace Weed3Demo.demo.param {
         private static List<UserInfoModel> _demo_params(params string[] mobiles) {
             var sp = DbConfig.pc_user.table("users").where("mobile IN (?...)", mobiles).select("*");
 
-            return sp.getList<UserInfoModel>();
+            return sp.getList(new UserInfoModel());
         }
 
         public static List<UserInfoModel> demo_list() {
@@ -35,7 +35,7 @@ namespace Weed3Demo.demo.param {
             
             var sp = DbConfig.pc_user.table("users").where("mobile IN (?...)", mobiles).select("*");
 
-            return sp.getList<UserInfoModel>();
+            return sp.getList(new UserInfoModel());
         }
     }
 }

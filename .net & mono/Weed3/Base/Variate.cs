@@ -53,16 +53,19 @@ namespace Noear.Weed {
             else if (DBNull.Value.Equals(_value))
                 return def;
             else
-                return (T)_value;
+                return doValue<T>();
         }
-
-        public T value<T>() {
-            if (_value == null)
-                return default(T);
-            else if (DBNull.Value.Equals(_value))
-                return default(T);
-            else
+        
+        T doValue<T>() {
+            try {
                 return (T)_value;
+            }
+            catch (Exception ex) {
+                if (_name != null)
+                    throw new WeedException(_name + "::无法将类型为“" + _value.GetType().ToString() + "”的对象强制转换为类型“" + typeof(T).ToString() + "”");
+                else
+                    throw ex;
+            }
         }
     }
 }
