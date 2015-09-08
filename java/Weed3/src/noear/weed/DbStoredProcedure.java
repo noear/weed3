@@ -15,9 +15,6 @@ import java.util.List;
  */
 public class DbStoredProcedure extends DbAccess {
 
-    /*存储过程名*/
-    public String processName   = null;
-
     public DbStoredProcedure(DbContext context){
         super(context);
     }
@@ -43,7 +40,7 @@ public class DbStoredProcedure extends DbAccess {
 
     @Override
     protected String getCommandID() {
-        return this.processName;
+        return this.commandText;
     }
 
     @Override
@@ -61,7 +58,7 @@ public class DbStoredProcedure extends DbAccess {
             sb.append(context.getSchema()).append(".");
         }
 
-        sb.append(processName.trim());
+        sb.append(commandText.trim());
 
         if(paramS.size()>0) {
             sb.append('(');
