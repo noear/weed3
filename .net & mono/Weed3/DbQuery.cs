@@ -67,7 +67,7 @@ namespace Noear.Weed {
                 
                 int paIdx = 0; //参数位置 
                 int atIdx = 0; //? in sb位置//到此时已不再有?...(之前已转换为?)
-                List<Variate> t_params = new List<Variate>();
+                
 
                 while (true) {
                     atIdx = sb.IndexOf('?', atIdx);
