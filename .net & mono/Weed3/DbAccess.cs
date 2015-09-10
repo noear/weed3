@@ -94,11 +94,11 @@ namespace Noear.Weed {
         /*执行命令（返回符合条件的第一个值）*/
         public T getValue<T>(T def, Action<CacheUsing, T> cacheCondition) {
             if (_cache == null)
-                return new SQLer().getValue(def, getCommand(), _tran);
+                return new SQLer().getVariate(getCommand(), _tran).value(def);
             else {
                 _cache.usingCache(cacheCondition);
                 return _cache.get(this.getWeedKey(), () => {
-                    return new SQLer().getValue(def, getCommand(), _tran);
+                    return new SQLer().getVariate(getCommand(), _tran).value(def);
                 });
             }
         }

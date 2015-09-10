@@ -19,24 +19,13 @@ namespace Noear.Weed {
         }
 
         
-
-        public T getValue<T>(T def, Command cmd, DbTran transaction) {
-            Object temp = getObject(cmd, transaction);
-
-            if (temp == null)
-                return def;
-            else {
-                return (T)temp;
-            }
-        }
-
-        public Object getObject(Command cmd, DbTran transaction) {
+        public Variate getVariate(Command cmd, DbTran transaction) {
             try {
                 reader = query(cmd, transaction);
                 if (reader.Read())
-                    return reader[0]; //也可能从1开始
+                    return new Variate(null, reader[0]); //也可能从1开始
                 else
-                    return null;
+                    return new Variate(null, null);
             }
             catch (Exception ex) {
                 WeedLog.logException(cmd, ex);
