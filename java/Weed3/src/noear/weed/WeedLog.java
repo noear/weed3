@@ -6,8 +6,8 @@ import noear.weed.ext.Act2;
  * Created by yuety on 14/11/20.
  */
 public class WeedLog {
-    static Act2<DbCommand,Exception> _writer;
-    public static void logException(DbCommand cmd,Exception ex)
+    static Act2<Command,Exception> _writer;
+    public static void logException(Command cmd,Exception ex)
     {
         if(isInited()) {
             _writer.run(cmd, ex);
@@ -18,7 +18,7 @@ public class WeedLog {
         return _writer != null;
     }
 
-    public static void setWriter(Act2<DbCommand,Exception> writer)
+    public static void setWriter(Act2<Command,Exception> writer)
     {
         _writer = writer;
     }

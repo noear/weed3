@@ -44,8 +44,8 @@ public class DbStoredProcedure extends DbAccess {
     }
 
     @Override
-    protected DbCommand getCommand(){
-        DbCommand cmd = new DbCommand();
+    protected Command getCommand(){
+        Command cmd = new Command();
 
         cmd.key      = getCommandID();
         cmd.context = this.context;

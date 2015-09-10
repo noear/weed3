@@ -22,7 +22,7 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
     /*访问参数*/
     public List<Variate> paramS = new ArrayList<Variate>();
     /*获取执行命令（由子类实现）*/
-    protected abstract DbCommand getCommand();
+    protected abstract Command getCommand();
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 

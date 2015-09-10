@@ -1,6 +1,5 @@
 package noear.weed;
 
-import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ class SQLer {
             WeedLog.logException(null, ex);};
     }
 
-    public Variate getVariate(DbCommand cmd,DbTran transaction) throws SQLException{
+    public Variate getVariate(Command cmd,DbTran transaction) throws SQLException{
         try {
             rset = query(cmd,transaction);
 
@@ -42,7 +41,7 @@ class SQLer {
         }
     }
 
-    public <T extends IBinder> T getItem(DbCommand cmd, DbTran transaction,T model) throws SQLException
+    public <T extends IBinder> T getItem(Command cmd, DbTran transaction,T model) throws SQLException
     {
         try {
             rset = query(cmd,transaction);
@@ -70,7 +69,7 @@ class SQLer {
         }
     }
 
-    public <T extends IBinder> List<T> getList(DbCommand cmd, DbTran transaction,T model) throws SQLException
+    public <T extends IBinder> List<T> getList(Command cmd, DbTran transaction,T model) throws SQLException
     {
         List<T> list = new ArrayList<T>();
         try {
@@ -101,7 +100,7 @@ class SQLer {
         }
     }
 
-    public DataItem getRow(DbCommand cmd,DbTran transaction) throws SQLException
+    public DataItem getRow(Command cmd,DbTran transaction) throws SQLException
     {
         DataItem row = new DataItem();
 
@@ -129,7 +128,7 @@ class SQLer {
         }
     }
 
-    public DataList getTable(DbCommand cmd,DbTran transaction) throws SQLException
+    public DataList getTable(Command cmd,DbTran transaction) throws SQLException
     {
         DataList table = new DataList();
 
@@ -159,7 +158,7 @@ class SQLer {
     }
 
     //执行
-    public int execute(DbCommand cmd,DbTran transaction)  throws SQLException {
+    public int execute(Command cmd,DbTran transaction)  throws SQLException {
         try {
             if (transaction == null)
                 buildCMD(cmd, null, false);
@@ -176,7 +175,7 @@ class SQLer {
         }
     }
 
-    public long insert(DbCommand cmd,DbTran transaction)  throws SQLException {
+    public long insert(Command cmd,DbTran transaction)  throws SQLException {
         try {
             if (transaction == null)
                 buildCMD(cmd, null, true);
@@ -200,7 +199,7 @@ class SQLer {
     }
 
     //查询
-    private ResultSet query(DbCommand cmd, DbTran transaction) throws SQLException {
+    private ResultSet query(Command cmd, DbTran transaction) throws SQLException {
         if (transaction == null)
             buildCMD(cmd, null, false);
         else
@@ -210,7 +209,7 @@ class SQLer {
         return stmt.executeQuery();
     }
 
-    private void buildCMD(DbCommand cmd, Connection c, boolean isInsert) throws SQLException {
+    private void buildCMD(Command cmd, Connection c, boolean isInsert) throws SQLException {
         //1.构建连接和命令(外部的c不能给conn)
         if (c == null)
             c = conn = cmd.context.getConnection();

@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.ext.DbType;
+
 /**
  * Created by noear on 14-6-12.
  * 数据库访问参数（支付范型）
