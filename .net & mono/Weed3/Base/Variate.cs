@@ -60,11 +60,11 @@ namespace Noear.Weed {
             try {
                 return (T)_value;
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 if (_name != null)
                     throw new WeedException(_name + "::无法将类型为“" + _value.GetType().ToString() + "”的对象强制转换为类型“" + typeof(T).ToString() + "”");
                 else
-                    throw ex;
+                    throw new WeedException("无法将类型为“" + _value.GetType().ToString() + "”的对象强制转换为类型“" + typeof(T).ToString() + "”");
             }
         }
     }
