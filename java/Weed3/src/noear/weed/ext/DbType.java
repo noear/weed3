@@ -1,4 +1,4 @@
-package noear.weed;
+package noear.weed.ext;
 
 /**
  * Created by noear on 14-6-12.

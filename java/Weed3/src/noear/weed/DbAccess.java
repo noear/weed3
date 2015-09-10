@@ -22,7 +22,7 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
     /*访问参数*/
     public List<Variate> paramS = new ArrayList<Variate>();
     /*获取执行命令（由子类实现）*/
-    protected abstract DbCommand getCommand();
+    protected abstract Command getCommand();
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 
@@ -103,10 +103,10 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
     /*执行命令（返回符合条件的第一个值）*/
     public <T> T getValue(T def,Act2<CacheUsing,T> cacheCondition) throws SQLException {
         if (_cache == null)
-            return new SQLer().getValue(def, getCommand(), _tran);
+            return new SQLer().getVariate(getCommand(), _tran).value(def);
         else {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getValue(def, getCommand(), _tran)));
+            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran).value(def)));
         }
     }
 

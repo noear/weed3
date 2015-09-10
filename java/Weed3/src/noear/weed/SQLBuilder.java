@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by noear on 15/3/5.
  */
-public class SQLBuilder {
+class SQLBuilder {
     private StringBuilder builder = new StringBuilder();
     public List<Object> paramS = new ArrayList<Object>();
 

@@ -1,6 +1,7 @@
 package noear.weed;
 
 import noear.weed.ext.Act1;
+import noear.weed.ext.DbType;
 import noear.weed.ext.Fun0;
 
 /**
@@ -25,7 +26,7 @@ public class VariateEx extends Variate {
         return _value=_valueGetter.run();
     }
 
-    public  DbType getType() {
+    public DbType getType() {
         if (_value == null)
             _value = _valueGetter.run();
 
