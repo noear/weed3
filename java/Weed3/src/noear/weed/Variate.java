@@ -45,27 +45,22 @@ public class Variate {
     public <T> T value(T def) {
         if (_value == null)
             return def;
-//        else if (DBNull.Value.Equals(_value)) //需要再改
-//            return def;
         else
             return (T)_value;
+
     }
 
-//    public <T> T value() {
-//
+//    private Object getDefault(DbType type)
+//    {
+//        if(type == DbType.String || type == type.DateTime)
+//            return null;
+//        else if(type == DbType.Int64)
+//            return 0L;
+//        else if(type == DbType.Double || type == DbType.Single)
+//            return 0.0;
+//        else if(type == DbType.Boolean)
+//            return false;
+//        else
+//            return 0;
 //    }
-
-    private Object getDefault(DbType type)
-    {
-        if(type == DbType.String || type == type.DateTime)
-            return null;
-        else if(type == DbType.Int64)
-            return 0L;
-        else if(type == DbType.Double || type == DbType.Single)
-            return 0.0;
-        else if(type == DbType.Boolean)
-            return false;
-        else
-            return 0;
-    }
 }

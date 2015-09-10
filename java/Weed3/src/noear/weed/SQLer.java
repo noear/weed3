@@ -10,7 +10,7 @@ import java.util.List;
  * Created by noear on 14-6-12.
  * 数据库执行器
  */
-public class SQLer {
+class SQLer {
 
     private ResultSet rset;
     private PreparedStatement stmt;
@@ -26,43 +26,14 @@ public class SQLer {
             WeedLog.logException(null, ex);};
     }
 
-    private Object getDefault(DbType type)
-    {
-        if(type == DbType.String || type == type.DateTime)
-            return null;
-        else if(type == DbType.Int64)
-            return 0L;
-        else if(type == DbType.Double || type == DbType.Single)
-            return 0.0;
-        else if(type == DbType.Boolean)
-            return false;
-        else
-            return 0;
-    }
-
-    public <T> T getValue(T def,DbCommand cmd,DbTran transaction) throws SQLException {
-        Object temp = getObject(cmd, transaction);
-
-        if (temp == null)
-            return def;
-        else {
-            if (temp.getClass() == BigInteger.class) {
-                BigInteger t2 = (BigInteger) temp;
-                return (T) new Long(t2.longValue());
-            } else {
-                return (T) temp;
-            }
-        }
-    }
-
-    public Object getObject(DbCommand cmd,DbTran transaction) throws SQLException{
+    public Variate getVariate(DbCommand cmd,DbTran transaction) throws SQLException{
         try {
             rset = query(cmd,transaction);
 
             if (rset.next())
-                return rset.getObject(1);
+                return new Variate(null,rset.getObject(1));
             else
-                return null;
+                return new Variate(null,null);
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
             throw ex;
