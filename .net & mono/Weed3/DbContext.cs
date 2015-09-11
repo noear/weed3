@@ -19,18 +19,31 @@ namespace Noear.Weed {
         private String _schemaName;
         private DbProviderFactory _provider;
 
+        static DbProviderFactory provider(string providerString) {
+            if (providerString == null)
+                return null;
+
+            if (providerString.IndexOf(",") > 0)
+                return (DbProviderFactory)Activator.CreateInstance(Type.GetType(providerString, true, true));
+            else
+                return DbProviderFactories.GetFactory(providerString);
+        }
+
+        public DbContext(String schemaName, string name) {
+            var set = ConfigurationManager.ConnectionStrings[name];
+            var p = provider(set.ProviderName);
+            doInit(schemaName, set.ConnectionString, p);
+        }
+
         //基于线程池配置（如："proxool."） //默认为mysql
-        public DbContext(String schemaName, string url, DbProviderFactory provider) {
+        public DbContext(String schemaName, string connectionString, DbProviderFactory provider) {
+            doInit(schemaName, connectionString, provider);
+        }
+
+        void doInit(String schemaName, string connectionString, DbProviderFactory provider) {
             _provider = provider;
             _schemaName = schemaName;
-
-            if (url.IndexOf('=') < 0) {
-                var set = ConfigurationManager.ConnectionStrings[url];
-                _url = set.ConnectionString;
-            }
-            else {
-                _url = url;
-            }
+            _url = connectionString;
         }
 
         /*是否配置了schema*/
