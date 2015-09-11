@@ -1,24 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 
 namespace Noear.Weed {
-
-    public delegate DbProviderFactory DriveHandler(string providerName);
-
+    
     /**
      * Created by noear on 14-6-12.
      * 数据库上下文
      */
     public class DbContext {
-        public static class Drive {
-            public static DriveHandler get;
-        }
-
+       
         private String _url;
         private String _schemaName;
         private DbProviderFactory _provider;
-
+        
         static DbProviderFactory provider(string providerString) {
             if (providerString == null)
                 return null;
@@ -34,13 +30,12 @@ namespace Noear.Weed {
             var p = provider(set.ProviderName);
             doInit(schemaName, set.ConnectionString, p);
         }
-
-        //基于线程池配置（如："proxool."） //默认为mysql
+        
         public DbContext(String schemaName, string connectionString, DbProviderFactory provider) {
             doInit(schemaName, connectionString, provider);
         }
-
-        void doInit(String schemaName, string connectionString, DbProviderFactory provider) {
+        
+        protected virtual void doInit(String schemaName, string connectionString, DbProviderFactory provider) {
             _provider = provider;
             _schemaName = schemaName;
             _url = connectionString;
