@@ -1,0 +1,10 @@
+﻿<Scheme>
+    <File>{tablename}.ops.sql</File>
+    <Items>       
+        <AllCol>
+    [{colname}] {sqltype} NULL,</AllCol>
+    </Items>
+    <Main>
+CREATE TABLE [dbo].[{tablename}]({AllCols})
+    </Main>
+</Scheme>

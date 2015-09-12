@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Object>
+    <!-- 须要结构：Id,Name -->
+    <Table>select TABLE_NAME ID,TABLE_NAME Name from INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE'</Table>
+    <View> select TABLE_NAME ID,TABLE_NAME Name from INFORMATION_SCHEMA.TABLES WHERE 1!=1</View>
+    <StoredProcedure> select TABLE_NAME ID,TABLE_NAME Name from INFORMATION_SCHEMA.TABLES WHERE 1!=1</StoredProcedure>
+  </Object>
+  <Default>
+    <Char>''</Char>
+    <NUM>0</NUM>
+    <Time>GETDATE()</Time>
+    <Bool>0</Bool>
+  </Default>
+  <Property>
+    <!-- 须要结构：Name,Type,IsKey（关键字或输出项）,Note,Default -->
+    <Table>
+      SELECT a.COLUMN_NAME [Name],
+      a.DATA_TYPE + (CASE WHEN a.CHARACTER_MAXIMUM_LENGTH IS NULL THEN ''
+      WHEN a.CHARACTER_MAXIMUM_LENGTH >=0 THEN '('+CONVERT(nvarchar,a.CHARACTER_MAXIMUM_LENGTH)+')'
+      ELSE '(MAX)' END) [Type],
+      (CASE WHEN b.CONSTRAINT_NAME IS NULL THEN 0 ELSE 1 END) [IsKey],
+      '' [Note],
+      a.COLUMN_DEFAULT [Default]
+      FROM INFORMATION_SCHEMA.COLUMNS a
+      LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE b on b.TABLE_NAME=a.TABLE_NAME AND b.COLUMN_NAME=a.COLUMN_NAME
+      WHERE a.TABLE_NAME='{NAME}' AND (b.CONSTRAINT_NAME IS NULL OR b.CONSTRAINT_NAME NOT LIKE 'PK_%')
+    </Table>
+    <View>
+      #Table
+    </View>
+    <StoredProcedure>
+      #Table
+    </StoredProcedure>
+</Property>
+</root>

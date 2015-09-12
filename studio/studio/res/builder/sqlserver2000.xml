@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Object>
+    <!-- 须要结构：Id,Name -->
+    <Table>SELECT Id,Name FROM sysobjects WHERE (xtype = 'U') AND (status >= 0) ORDER BY name</Table>
+    <View>SELECT Id,Name FROM sysobjects WHERE (xtype = 'V') AND (status >= 0) ORDER BY name</View>
+    <StoredProcedure>SELECT Id,Name FROM sysobjects WHERE (xtype = 'P') AND (status >= 0) ORDER BY name</StoredProcedure>
+    <Database></Database>
+  </Object>
+  <Default>
+    <Char>''</Char>
+    <NUM>0</NUM>
+    <Time>GETDATE()</Time>
+    <Bool>0</Bool>
+  </Default>
+  <Property>
+    <!-- 须要结构：Name,Type,IsKey（关键字或输出项）,Note,Default -->
+    <Table>
+      SELECT sc.name AS Name, syscomments.text as [Default],
+      (st.name +'('+(CASE WHEN sc.length >= 0 THEN CONVERT(varchar,sc.length) ELSE 'MAX' END)+')') AS Type,
+      case when exists(select *
+      from sysindexes as idx
+      inner join sysobjects as t2 on t2.xtype='PK'
+      inner join sysindexkeys as sid on sid.id = idx.id and sid.indid=idx.indid
+      and t2.name = idx.name
+      where sid.colid = sc.colid and idx.id = sc.id) then 1 else 0 end
+      AS IsKey,
+      (select value from ::fn_listextendedproperty (default,'user','dbo','table','{NAME}','column',default) as e
+      where e.objname=sc.name AND e.name='MS_Description') AS Note
+      FROM syscolumns sc
+      inner join sysobjects as t on t.id = sc.id
+      INNER JOIN systypes st ON sc.xtype = st.xtype
+      left join sysobjects on sysobjects.id = sc.cdefault and sysobjects.type='D'
+      left join syscomments on syscomments.id = sysobjects.id
+      WHERE (sc.id = {ID})
+      AND (st.name not in ('sysname','BuildItemIDKind')) ORDER BY sc.colorder
+    </Table>
+    <View>
+      #Table
+    </View>
+    <StoredProcedure>
+      SELECT sc.name AS Name, (st.name +'('+CONVERT(varchar,sc.length)+')') AS Type, sc.isoutparam AS IsKey,'' AS Note,''as [Default]
+      FROM syscolumns sc
+      INNER JOIN systypes st ON sc.xtype = st.xtype
+      WHERE (sc.id = {ID}) AND (st.name not in ('sysname','BuildItemIDKind')) ORDER BY sc.colorder
+    </StoredProcedure>
+  </Property>
+</root>
