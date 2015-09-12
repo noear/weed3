@@ -212,7 +212,11 @@ namespace Noear.Weed {
 
         //编译（成DbQuery）
         private DbQuery compile() {
-            return new DbQuery(_context).sql(_builder);
+            var temp = new DbQuery(_context).sql(_builder);
+
+            _builder.clear();
+
+            return temp;
         }
     }
 }
