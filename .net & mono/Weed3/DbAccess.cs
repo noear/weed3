@@ -86,6 +86,10 @@ namespace Noear.Weed {
             return getValue(0);
         }
 
+        public Object getValue() {
+            return new SQLer().getVariate(getCommand(), _tran).getValue();
+        }
+
         /*执行命令（返回符合条件的第一个值）*/
         public T getValue<T>(T def) {
             return getValue(def, null);

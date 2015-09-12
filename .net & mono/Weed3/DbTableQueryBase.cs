@@ -184,6 +184,10 @@ namespace Noear.Weed {
             return (T)this;
         }
 
+        public bool exists() {
+            return select("1").getValue() != null;
+        }
+
         public IQuery select(String columns) {
 
             StringBuilder sb = new StringBuilder();
