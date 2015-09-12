@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Noear.Weed {
-    internal class SQLBuilder {
+    public class SQLBuilder {
         private StringBuilder builder = new StringBuilder();
         internal List<Object> paramS = new List<Object>();
 
