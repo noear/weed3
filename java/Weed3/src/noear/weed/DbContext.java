@@ -52,6 +52,10 @@ public class DbContext {
         return new DbQuery(this).sql(new SQLBuilder().append(code, args));
     }
 
+    public DbQuery sql(SQLBuilder sqlBuilder) {
+        return new DbQuery(this).sql(sqlBuilder);
+    }
+
     /*获取process执行对象*/
     public DbStoredProcedure call(String process) {
         return new DbStoredProcedure(this).call(process);
