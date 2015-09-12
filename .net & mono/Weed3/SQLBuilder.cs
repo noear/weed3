@@ -8,6 +8,11 @@ namespace Noear.Weed {
         private StringBuilder builder = new StringBuilder();
         internal List<Object> paramS = new List<Object>();
 
+        public void clear() {
+            builder.Clear();
+            paramS.Clear();
+        }
+
         public SQLBuilder insert(String code, params Object[] args) {
             SQLPartBuilder pb = new SQLPartBuilder(code, args);
 

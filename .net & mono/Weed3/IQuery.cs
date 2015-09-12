@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace Noear.Weed {
     public interface IQuery {
         long getCount();
+        Object getValue();
         T getValue<T>(T def);
         T getValue<T>(T def, Action<CacheUsing, T> cacheCondition);
         T getItem<T>(T model) where T : IBinder;

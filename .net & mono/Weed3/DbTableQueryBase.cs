@@ -184,6 +184,19 @@ namespace Noear.Weed {
             return (T)this;
         }
 
+        public bool exists() {
+            StringBuilder sb = new StringBuilder();
+
+            //1.构建sql
+            sb.Append("IF EXISTS (SELECT ").Append("*").Append(" FROM ").Append(_table);
+
+            _builder.insert(sb.ToString());
+
+            _builder.append(") THEN SELECT 1; END IF;");
+
+            return compile().getValue() != null;
+        }
+
         public IQuery select(String columns) {
 
             StringBuilder sb = new StringBuilder();
@@ -199,7 +212,11 @@ namespace Noear.Weed {
 
         //编译（成DbQuery）
         private DbQuery compile() {
-            return new DbQuery(_context).sql(_builder);
+            var temp = new DbQuery(_context).sql(_builder);
+
+            _builder.clear();
+
+            return temp;
         }
     }
 }
