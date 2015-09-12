@@ -94,6 +94,10 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
         return getValue(0l);
     }
 
+    public Object getValue() throws SQLException {
+        return new SQLer().getVariate(getCommand(), _tran).getValue();
+    }
+
     /*执行命令（返回符合条件的第一个值）*/
     public <T> T getValue(T def) throws SQLException
     {
@@ -109,6 +113,8 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
             return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran).value(def)));
         }
     }
+
+
 
     /*执行命令（返回一个模理）*/
     public <T extends IBinder> T getItem(T model) throws SQLException {

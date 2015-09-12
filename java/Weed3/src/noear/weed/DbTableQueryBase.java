@@ -181,6 +181,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
         return (T)this;
     }
 
+    public boolean exists() throws SQLException{
+       return select("1").getValue() != null;
+    }
+
     public IQuery select(String columns) {
 
         StringBuilder sb = new StringBuilder();
