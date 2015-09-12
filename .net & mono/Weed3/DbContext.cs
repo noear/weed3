@@ -1,36 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 
 namespace Noear.Weed {
-
-    public delegate DbProviderFactory DriveHandler(string providerName);
-
+    
     /**
      * Created by noear on 14-6-12.
      * 数据库上下文
      */
     public class DbContext {
-        public static class Drive {
-            public static DriveHandler get;
-        }
-
+       
         private String _url;
         private String _schemaName;
         private DbProviderFactory _provider;
+        
+        static DbProviderFactory provider(string providerString) {
+            if (providerString == null)
+                return null;
 
-        //基于线程池配置（如："proxool."） //默认为mysql
-        public DbContext(String schemaName, string url, DbProviderFactory provider) {
+            if (providerString.IndexOf(",") > 0)
+                return (DbProviderFactory)Activator.CreateInstance(Type.GetType(providerString, true, true));
+            else
+                return DbProviderFactories.GetFactory(providerString);
+        }
+
+        public DbContext(String schemaName, string name) {
+            var set = ConfigurationManager.ConnectionStrings[name];
+            var p = provider(set.ProviderName);
+            doInit(schemaName, set.ConnectionString, p);
+        }
+        
+        public DbContext(String schemaName, string connectionString, DbProviderFactory provider) {
+            doInit(schemaName, connectionString, provider);
+        }
+        
+        protected virtual void doInit(String schemaName, string connectionString, DbProviderFactory provider) {
             _provider = provider;
             _schemaName = schemaName;
-
-            if (url.IndexOf('=') < 0) {
-                var set = ConfigurationManager.ConnectionStrings[url];
-                _url = set.ConnectionString;
-            }
-            else {
-                _url = url;
-            }
+            _url = connectionString;
         }
 
         /*是否配置了schema*/

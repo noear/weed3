@@ -1,0 +1,17 @@
+﻿<Scheme>
+    <File>{classname}.htm</File>
+    <Items>
+<Table>
+	<tr><td><label>{note}：</label></td><td><input type="text" id="{popname}" /></td></tr></Table>
+<Div>
+	<div><label>{note}：</label><input type="text" id="{popname}" /></div></Div>
+    </Items>
+    <Main>
+<div>{divs}    
+</div>
+
+        
+<table>{tables}    
+</table>
+    </Main>
+</Scheme>

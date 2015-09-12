@@ -1,0 +1,37 @@
+﻿<Scheme>
+    <File>{classname}M.java</File>
+    <Items>
+        <Init>
+        set("{colname}",()->{colname}); </Init>
+        <Prop>
+	/// <summary>
+    /// {note}
+    /// </summary>
+    public {etype} {colname};</Prop>
+    </Items>
+    <Main>
+package {namespace};
+
+import noear.weed.*;
+import webapi.Config;
+import java.util.*;
+
+/// <summary>
+/// 生成:{time}
+/// 备注:请确保与[数据表].[字段]的对应关系正确!!!
+/// </summary>
+public class {classname}M extends DbTable
+{
+	public {classname}M()
+	{
+		super(Config.db);
+		table("{tablename}");
+
+		//set("{colname}",()=>{colname}); 
+		//{Inits}
+	}
+{Props}
+}
+
+    </Main>
+</Scheme>

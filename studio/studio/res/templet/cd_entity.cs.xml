@@ -1,0 +1,36 @@
+﻿<Scheme>
+    <File>{classname}Model.cs</File>
+    <Items>
+        <Bind>
+            {popname} = s("{colname}").value({def});</Bind>
+        <Prop>
+        public {type} {popname} { get; set; }</Prop>
+    </Items>
+    <Main>
+using System;
+
+using Noear.Weed;
+
+namespace {namespace}
+{
+    /// <summary>
+    /// 生成:{time}
+    /// </summary>
+    [Serializable]
+    public class {classname}Model : IBinder
+    {{Props}
+    
+        public void bind(GetHandlerEx s)
+        {
+            //1.s:获取数据的方法指针；
+            //{Binds}
+        }
+        
+        public IBinder clone()
+        {
+            return new {classname}Model();
+        }
+    }
+}
+    </Main>
+</Scheme>

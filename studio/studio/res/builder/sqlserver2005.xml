@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Object>
+    <!-- 须要结构：Id,Name -->
+    <Table>SELECT Id,Name FROM sysobjects WHERE (xtype = 'U') AND (status >= 0) ORDER BY name</Table>
+    <View>SELECT Id,Name FROM sysobjects WHERE (xtype = 'V') AND (status >= 0) ORDER BY name</View>
+    <StoredProcedure>SELECT Id,Name FROM sysobjects WHERE (xtype = 'P') AND (status >= 0) ORDER BY name</StoredProcedure>
+    <Database></Database>
+  </Object>
+  <Default>
+    <Char>''</Char>
+    <NUM>0</NUM>
+    <Time>GETDATE()</Time>
+    <Bool>0</Bool>
+  </Default>
+  <Property>
+    <!-- 须要结构：Name,Type,IsKey（关键字或输出项）,Note,Default -->
+    <Table>
+      select Column_name as [Name],
+      Data_type +
+      (CASE WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN ''
+      WHEN CHARACTER_MAXIMUM_LENGTH >=0 THEN '('+CONVERT(VARCHAR,CHARACTER_MAXIMUM_LENGTH)+')'
+      ELSE '(MAX)' END) as [Type],
+      case when exists(select * from   information_schema.KEY_COLUMN_USAGE as b
+      where b.table_name = a.table_name and b.column_name=a.column_name)
+      then 1 else 0 end as isKey,
+      (SELECT   value
+      FROM   ::fn_listextendedproperty (NULL, 'user', 'dbo', 'table', a.table_name, 'column', a.column_name)  as e
+      where e.name='MS_Description'
+      ) AS Note,
+      Column_default as [Default]
+      from information_schema.COLUMNS as a WHERE TABLE_NAME = '{NAME}'
+    </Table>
+    <View>
+      #Table
+    </View>
+    <StoredProcedure>
+      SELECT sc.name AS Name, (st.name +'('+CONVERT(varchar,sc.length)+')') AS Type, sc.isoutparam AS IsKey,'' AS Note,''as [Default]
+      FROM syscolumns sc
+      INNER JOIN systypes st ON sc.xtype = st.xtype
+      WHERE (sc.id = {ID}) AND (st.name not in ('sysname','BuildItemIDKind')) ORDER BY sc.colorder
+    </StoredProcedure>
+  </Property>
+
+</root>

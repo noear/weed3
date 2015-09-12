@@ -40,9 +40,9 @@ namespace Noear.Weed {
                 if (args.Length > 0) {
                     StringBuilder builder = new StringBuilder(code);
                     foreach (Object p1 in args) {
-                        if (p1 is IEnumerable) { //将数组转为单体
+                        if (p1 is ICollection) { //将数组转为单体
                             StringBuilder sb = new StringBuilder();
-                            foreach (Object p2 in (IEnumerable)p1) {
+                            foreach (Object p2 in (ICollection)p1) {
                                 paramS.Add(p2);
                                 sb.Append("?").Append(",");
                             }

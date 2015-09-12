@@ -1,0 +1,124 @@
+﻿<Scheme>
+    <File>{tablename}.sdq.sql</File>
+    <Items>
+        <KeyCol1>A.`{keycolname}`,</KeyCol1>
+        <Col>
+    {colname} {sqltype}{tryout},</Col>
+        <SetItem>
+            T0.`{unkeycolname}`={unkeycolname},</SetItem>
+        <AllCol>`{colname}`,</AllCol>
+        <AllVal>{colname},</AllVal>
+        <Note>
+#    {colname} {sqltype} --{note}</Note>
+    </Items>
+    <Main>
+#/************************************************************
+#--功能：设置(插入或更新){tablename}表
+#--具体描述：
+#--参数：{Notes}
+#--返回值说明：受影响行数
+#--涉及库/表：{tablename}
+#--在何处使用（具体到页面）：
+#--创建者/创建时间：{author}/{time}
+#************************************************************/
+CREATE PROCEDURE `{tablename}_Set`({cols})    
+BEGIN
+    IF(EXISTS(SELECT 1 FROM `{tablename}` AS T0 WHERE T0.`{keycolname}` = {keycolname}))
+    THEN
+        UPDATE `{tablename}` AS T0 SET {SetItems}    
+        WHERE T0.`{keycolname}` = {keycolname};    
+    ELSE
+        INSERT INTO `{tablename}`
+        ({AllCols}) 
+        VALUES({AllVals});
+        
+        SET {keycolname} = LAST_INSERT_ID();
+    END IF;
+END;
+
+#/************************************************************
+#--功能：设置(插入或更新){tablename}表
+#--具体描述：
+#--参数：{Notes}
+#--返回值说明：受影响行数
+#--涉及库/表：{tablename}
+#--在何处使用（具体到页面）：
+#--创建者/创建时间：{author}/{time}
+#************************************************************/
+CREATE PROCEDURE `{tablename}_Get`({keycolname})    
+BEGIN
+    SELECT * FROM `{tablename}` AS T0 WHERE T0.`{keycolname}` = {keycolname};  
+END;
+
+
+#/************************************************************
+#--功能：根据{keycolname}字段,删除一条{tablename}的记录
+#--具体描述：
+#--参数：
+#    @{keycolname} {keysqltype}  --{keycolnote}
+#--返回值说明：受影响行数
+#--涉及库/表：{tablename}
+#--在何处使用（具体到页面）：
+#--创建者/创建时间：{author}/{time}
+#************************************************************/
+CREATE PROCEDURE  `{tablename}_Del`({keycolname} {keysqltype})
+BEGIN
+    DELETE FROM `{tablename}` AS TO WHERE T0.`{keycolname}` = {keycolname};
+END;
+
+
+#/************************************************************
+#--功能：以分页的形式获取{tablename}记录
+#--具体描述：
+#--参数：
+#    Columns varchar(200) = 'A.*',          --查询列表达式
+#    Wheres  varchar(200) = '',             --查询条件表达式
+#    Orders  varchar(200) = '{KeyCol1s}',   --排序列表达式
+#    Start     int = 0,                     --页长    （如果@PageSize<=0，则不输出列表）
+#    Records   int = 0, --起始页为1页       --页索引
+#    Count int = 0 output                   --总记录数（如果@Count>0，则不输出总记录数）
+#--返回值说明：受影响行数
+#--涉及库/表：{tablename}
+#--在何处使用（具体到页面）：
+#--创建者/创建时间：{author}/{time}
+#************************************************************/
+CREATE PROCEDURE `{tablename}_GetPage`(
+    Columns varchar(200) = 'A.*',
+    Wheres  varchar(200) = '',
+    Orders  varchar(200) = '{KeyCol1s}',
+    Start int = 20,
+    Records int = 1, --起始页为1页
+    Count int = 0 OUT
+)
+BEGIN
+    
+    DECLARE @End int;
+    
+    SET @End = Start + Records;
+    
+    DECLARE @Code varchar(1000)
+
+    IF(LEN(ISNULL(Wheres,'')) < 2)
+        SET Wheres = '1=1';
+
+    IF(ISNULL(Count,0) <= 0) BEGIN
+        DECLARE @CountTable table (`Count` int)
+	    INSERT INTO @CountTable
+		    EXEC('SELECT COUNT(1) FROM `{tablename}` AS A WHERE '+@Wheres);
+	    SET Count = (SELECT `Count` FROM @CountTable);
+    END
+    
+    IF(PageSize > 0) BEGIN
+        SET @Code =(
+        'SELECT A.* '+
+        '    FROM (SELECT '+Columns'+ 
+        '              FROM `{tablename}` AS A'+
+        '              WHERE '+@Wheres+' ORDER BY '+@Orders+') AS A'+
+        '    WHERE LIMIT'+STR(@Start)+','+STR(@End))
+
+        EXEC (@Code)    
+    END;
+END;
+
+    </Main>
+</Scheme>

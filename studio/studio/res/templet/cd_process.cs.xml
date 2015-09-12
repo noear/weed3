@@ -1,0 +1,33 @@
+﻿<Scheme>
+    <File>{classname}.cs</File>
+    <Items>
+        <Init>
+            set("{colname}", ()=>{popname});</Init>
+        <Prop>
+        public {type} {popname};</Prop>
+    </Items>
+    <Main>
+using System;
+using Noear.Weed;
+
+namespace {namespace}
+{
+    /// <summary>
+    /// 生成:08/04/24 10:26:51
+    /// 备注:请确保与[存储过程].[参数]的对应关系正确!!!
+    /// </summary>
+    [Serializable]
+    public class {classname} : DbStoredProcedure
+    {
+        public {classname}() : base(config) 
+        {
+            call("{tablename}");
+
+            //set("{colname}", ()=>{popname});
+            //{Inits}
+        }      
+{Props}
+    }
+}
+    </Main>
+</Scheme>

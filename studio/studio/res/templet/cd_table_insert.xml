@@ -1,0 +1,14 @@
+﻿<Scheme>
+    <File>{classname}M.insert.cs</File>
+    <Items>
+        <Prop>
+//{note}
+m.{popname}.Value = ;</Prop>
+    </Items>
+    <Main>
+CM.{classname}M m = new CM.{classname}M();
+{Props}
+
+m.Insert();
+    </Main>
+</Scheme>
