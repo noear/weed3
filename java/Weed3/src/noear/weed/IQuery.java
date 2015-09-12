@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface IQuery {
     public long getCount() throws SQLException;
+    public Object getValue() throws SQLException;
     public <T> T getValue(T def) throws SQLException;
     public <T> T getValue(T def, Act2<CacheUsing, T> cacheCondition) throws SQLException;
     public <T extends IBinder> T getItem(T model) throws SQLException;
