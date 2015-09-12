@@ -10,6 +10,12 @@ class SQLBuilder {
     private StringBuilder builder = new StringBuilder();
     public List<Object> paramS = new ArrayList<Object>();
 
+    public void clear()
+    {
+        builder.delete(0,builder.length());
+        paramS.clear();
+    }
+
     public SQLBuilder insert(String code,  Object... args) {
         SQLPartBuilder pb = new SQLPartBuilder(code, args);
 
