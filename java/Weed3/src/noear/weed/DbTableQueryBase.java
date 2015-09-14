@@ -66,9 +66,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
 
-        for (String key : data.keys()) {
+        data.forEach((key,value)->{
             sb.append(key).append(",");
-        }
+        });
 
         sb.deleteCharAt(sb.length() - 1);
 
@@ -92,7 +92,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
         sb.deleteCharAt(sb.length() - 1);
         sb.append(");");
 
-        _builder.append(sb.toString(), args);
+        _builder.append(sb.toString(), args.toArray());
 
         return compile().insert();
     }
