@@ -11,7 +11,7 @@ namespace Noear.Weed {
      * Created by noear on 14-6-12.
      * 存储过程访问类
      */
-    public class DbStoredProcedure : DbAccess {
+    public class DbStoredProcedure : DbAccess<DbStoredProcedure> {
 
         public DbStoredProcedure(DbContext context) : base(context) {
 
