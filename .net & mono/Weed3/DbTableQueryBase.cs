@@ -210,11 +210,25 @@ namespace Noear.Weed {
         }
 
 
+        protected DbTran _tran = null;
+        public DbTableQueryBase<T> tran(DbTran transaction) {
+            _tran = transaction;
+            return (T)this;
+        }
+
+        public DbTableQueryBase<T> tran() {
+            _tran = _context.tran();
+            return (T)this;
+        }
+
         //编译（成DbQuery）
         private DbQuery compile() {
             var temp = new DbQuery(_context).sql(_builder);
 
             _builder.clear();
+
+            if (_tran != null)
+                temp.tran(_tran);
 
             return temp;
         }

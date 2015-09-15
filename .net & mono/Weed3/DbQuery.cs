@@ -9,7 +9,7 @@ namespace Noear.Weed {
  * 查询语句访问类
  *
  */
-    public class DbQuery : DbAccess {
+    public class DbQuery : DbAccess<DbQuery> {
 
         /*查询语句*/
         public DbQuery(DbContext context) : base(context) {
