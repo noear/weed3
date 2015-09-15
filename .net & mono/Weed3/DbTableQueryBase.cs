@@ -68,9 +68,9 @@ namespace Noear.Weed {
 
             sb.Append(" INSERT INTO ").Append(_table).Append(" (");
 
-            foreach (var key in data.keys()) {
+            data.forEach((key, value) => {
                 sb.Append(key).Append(",");
-            }
+            });
 
             sb.DeleteCharAt(sb.Length - 1);
 
@@ -95,7 +95,7 @@ namespace Noear.Weed {
             sb.DeleteCharAt(sb.Length - 1);
             sb.Append(");");
 
-            _builder.append(sb.ToString(), args);
+            _builder.append(sb.ToString(), args.ToArray());
 
             return compile().insert();
         }
@@ -185,14 +185,14 @@ namespace Noear.Weed {
         }
 
         public bool exists() {
+            limit(1);
+
             StringBuilder sb = new StringBuilder();
 
             //1.构建sql
-            sb.Append("IF EXISTS (SELECT ").Append("*").Append(" FROM ").Append(_table);
+            sb.Append("SELECT ").Append("1").Append(" FROM ").Append(_table);
 
             _builder.insert(sb.ToString());
-
-            _builder.append(") THEN SELECT 1; END IF;");
 
             return compile().getValue() != null;
         }
