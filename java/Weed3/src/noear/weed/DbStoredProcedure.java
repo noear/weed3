@@ -13,7 +13,7 @@ import java.util.List;
  * Created by noear on 14-6-12.
  * 存储过程访问类
  */
-public class DbStoredProcedure extends DbAccess {
+public class DbStoredProcedure extends DbAccess<DbStoredProcedure> {
 
     public DbStoredProcedure(DbContext context){
         super(context);
