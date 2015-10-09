@@ -13,7 +13,7 @@ import java.util.List;
  * Created by noear on 14-9-5.
  * 数据库方问基类
  */
-public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
+public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Serializable {
     /*查询语句*/
     public String commandText = null;
 
@@ -179,16 +179,16 @@ public abstract class DbAccess implements IWeedKey,IQuery,Serializable {
     }
 
     protected DbTran _tran = null;
-    public DbAccess tran(DbTran transaction)
+    public T tran(DbTran transaction)
     {
         _tran = transaction;
-        return this;
+        return (T)this;
     }
 
-    public DbAccess tran()
+    public T tran()
     {
         _tran = context.tran();
-        return this;
+        return (T)this;
     }
 
     //=======================

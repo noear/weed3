@@ -11,7 +11,7 @@ import java.util.List;
  * $NOW()   //说明这里是一个sql 函数
  * ?...     //说明这里是一个数组或查询结果
  */
-public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
+public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
     String _table;
     DbContext _context;
@@ -66,9 +66,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
 
-        for (String key : data.keys()) {
+        data.forEach((key,value)->{
             sb.append(key).append(",");
-        }
+        });
 
         sb.deleteCharAt(sb.length() - 1);
 
@@ -92,7 +92,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
         sb.deleteCharAt(sb.length() - 1);
         sb.append(");");
 
-        _builder.append(sb.toString(), args);
+        _builder.append(sb.toString(), args.toArray());
 
         return compile().insert();
     }
@@ -182,14 +182,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
     }
 
     public boolean exists() throws SQLException {
+
+        limit(1);
+
         StringBuilder sb = new StringBuilder();
 
         //1.构建sql
-        sb.append("IF EXISTS (SELECT ").append("*").append(" FROM ").append(_table);
+        sb.append("SELECT ").append("1").append(" FROM ").append(_table);
 
         _builder.insert(sb.toString());
-
-        _builder.append(") THEN SELECT 1; END IF;");
 
         return compile().getValue() != null;
     }
@@ -207,12 +208,28 @@ public class DbTableQueryBase<T extends DbTableQueryBase<T>>  {
         return compile();
     }
 
+    protected DbTran _tran = null;
+    public T tran(DbTran transaction)
+    {
+        _tran = transaction;
+        return (T)this;
+    }
+
+    public T tran()
+    {
+        _tran = _context.tran();
+        return (T)this;
+    }
+
 
     //编译（成DbQuery）
     private DbQuery compile() {
         DbQuery temp = new DbQuery(_context).sql(_builder);
 
         _builder.clear();
+
+        if(_tran!=null)
+            temp.tran(_tran);
 
         return temp;
     }

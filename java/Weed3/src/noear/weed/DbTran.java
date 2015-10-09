@@ -49,7 +49,7 @@ public class DbTran {
             begin(false);
             _handler.run(this);
             commit(false);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             if (queue == null)
                 rollback(false);
             else

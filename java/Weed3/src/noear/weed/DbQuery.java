@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * $.tableName  --$ 代表当表db context schema
  * @paramName   --@ 为参数名的开头
  */
-public class DbQuery extends DbAccess {
+public class DbQuery extends DbAccess<DbQuery> {
 
 
 
