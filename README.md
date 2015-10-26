@@ -19,23 +19,28 @@ QQ群：<br/>
 --------------------------------------<br/>
 示例::<br/>
 ```java
-db.table("user_info") //表操作(简易版)
+//简易.查询示例
+db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
   .getList(new UserInfoModel());
 
+//简易.插入示例
 db.table("$.test")
   .insert(new DataItem().set("log_time", "$DATE(NOW())"));
 
+//简易.更新示例
 db.table("test")
   .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
   .update(new DataItem().set("txt", "NOW()xx").set("num", 44));
 
-db.call("user_get").set("xxx", 1) //存储过程操作(简易版)
+//简易.存储过程调用示例，及使用使用示例
+db.call("user_get").set("xxx", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
   .getItem(new UserInfoModel()); 
 
+//简易.存储过程调用示例，及使用事务示例
 db.call("$.user_set").set("xxx", 1) 
   .tran() //使用事务
   .execute();
