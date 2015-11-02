@@ -7,7 +7,7 @@
 	/// <summary>
     /// {note}
     /// </summary>
-    public {etype} {colname};</Prop>
+    public {ntype} {colname};</Prop>
     </Items>
     <Main>
 package {namespace};

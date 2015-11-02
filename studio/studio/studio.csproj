@@ -42,10 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>_dll\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Noear.Weed3, Version=1.0.5733.14233, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>_dll\Noear.Weed3.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -184,10 +180,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="res\templet\cd_entity.java.xml">
+    <Content Include="res\templet\cd_model.java.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="res\templet\cd_entity.cs.xml">
+    <Content Include="res\templet\cd_model.cs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="res\templet\cd_process.java.xml">
@@ -207,7 +203,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="res\templet\cd_entity.pop.java.xml">
+    <Content Include="res\templet\cd_model.pop.java.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -215,6 +211,12 @@
     <Content Include="res\builder\oracle.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\.net &amp; mono\Weed3\Weed3.csproj">
+      <Project>{af3bfa29-e9e4-4f00-9d47-cc8f745d0311}</Project>
+      <Name>Weed3</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

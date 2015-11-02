@@ -11,7 +11,7 @@ namespace Noear.Weed {
      * 数据库方问基类
      */
     [Serializable]
-    public abstract class DbAccess<T> : IWeedKey, IQuery where T :DbAccess<T>{
+    public abstract class DbAccess<X> : IWeedKey, IQuery where X :DbAccess<X>{
         public String commandText = null;
 
         /*数据库上下文*/
@@ -169,14 +169,14 @@ namespace Noear.Weed {
         }
 
         protected DbTran _tran = null;
-        public T tran(DbTran transaction) {
+        public X tran(DbTran transaction) {
             _tran = transaction;
-            return (T)this;
+            return (X)this;
         }
 
-        public T tran() {
+        public X tran() {
             _tran = context.tran();
-            return (T)this;
+            return (X)this;
         }
 
         //=======================
