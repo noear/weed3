@@ -6,7 +6,7 @@
 
 占位符说明：<br/>
  $.       //数据库名占位数<br/>
- $fcn     //SQL函数占位符<br/>
+ $fun     //SQL函数占位符<br/>
  ?        //参数占位符<br/>
  ?...     //数组型参数占位符<br/>
 
@@ -18,27 +18,34 @@ QQ群：<br/>
  
 --------------------------------------<br/>
 示例::<br/>
-db.table("user_info") //表操作(简易版)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.where("user_id<?", 10)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.select("user_id,name,sex")<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.getList&lt;UserInfoModel&gt;();<br/>
+```java
+//简易.查询示例
+db.table("user_info") 
+  .where("user_id<?", 10)
+  .select("user_id,name,sex")
+  .getList(new UserInfoModel());
 
-db.table("$.test")<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.insert(new DataItem().set("log_time", "$DATE(NOW())"));<br/>
+//简易.插入示例
+db.table("$.test")
+  .insert(new DataItem().set("log_time", "$DATE(NOW())"));
 
-db.table("test")<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.where("id IN (?...)", new int[] { 15,14,16}) //数据参数<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.update(new DataItem().set("txt", "NOW()xx").set("num", 44)); <br/>
+//简易.更新示例
+db.table("test")
+  .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
+  .update(new DataItem().set("txt", "NOW()xx").set("num", 44));
 
-db.call("user_get").set("xxx", 1) //存储过程操作(简易版)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.caching(cache)//使用缓存<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.usingCache(60 * 100) //缓存时间<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.getItem<UserInfoModel>(); <br/>
+//简易.存储过程调用示例，及使用使用示例
+db.call("user_get").set("xxx", 1) 
+  .caching(cache)//使用缓存
+  .usingCache(60 * 100) //缓存时间
+  .getItem(new UserInfoModel()); 
 
-db.call("$.user_set").set("xxx", 1) <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.tran() //使用事务<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;.execute();<br/>
-  
+//简易.存储过程调用示例，及使用事务示例
+db.call("$.user_set").set("xxx", 1) 
+  .tran() //使用事务
+  .execute();
+```
+
 (高定版)及更多示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
 

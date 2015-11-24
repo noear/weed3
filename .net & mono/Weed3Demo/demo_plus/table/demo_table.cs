@@ -74,7 +74,7 @@ namespace Weed3Demo.demo_ex.table {
         public void demo_select_join() {
             user_info tb = new user_info();
 
-            tb.innerJoin("$.user_link l").on("u.user_id = l.user_id")
+            tb.innerJoin("$.user_link l").on("user_id = l.user_id")
               .where("id=?", 22)
               .select("*");
         }
