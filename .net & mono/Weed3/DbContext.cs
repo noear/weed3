@@ -27,7 +27,7 @@ namespace Noear.Weed {
         }
 
         
-        public DbContext(String schemaName, string name) : this(schemaName, name, "%") {
+        public DbContext(String schemaName, string name) : this(schemaName, name, "") {
 
         }
 
@@ -52,7 +52,10 @@ namespace Noear.Weed {
         }
 
         public String field(String key) {
-            return _fieldFormat.Replace("%", key);
+            if (string.IsNullOrEmpty(_fieldFormat))
+                return key;
+            else
+                return _fieldFormat.Replace("%", key);
         }
 
         /*是否配置了schema*/
