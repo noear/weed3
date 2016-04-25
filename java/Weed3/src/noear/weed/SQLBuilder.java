@@ -60,7 +60,7 @@ public class SQLBuilder {
                         if (len > 0)
                             sb.deleteCharAt(len - 1);
 
-                        int idx = builder.indexOf("\\?\\.\\.\\.");
+                        int idx = builder.indexOf("?...");
 
                         builder.replace(idx, idx + 4, sb.toString());
                     }
@@ -72,7 +72,7 @@ public class SQLBuilder {
                             paramS.add(p2.getValue());
                         }
 
-                        int idx = builder.indexOf("\\?\\.\\.\\.");
+                        int idx = builder.indexOf("?...");
                         if (s1.paramS.size() > 0)
                             builder.replace(idx, idx + 4, s1.commandText);
                         else
