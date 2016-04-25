@@ -59,6 +59,11 @@ namespace Noear.Weed {
             return (T)this;
         }
 
+        public long insert(Func<IDataItem, IDataItem> fun) {
+            DataItem item = new DataItem();
+            return insert(fun(item));
+        }
+
         public long insert(IDataItem data) {
             if (data == null || data.count() == 0)
                 return 0;
@@ -104,6 +109,12 @@ namespace Noear.Weed {
             foreach (IDataItem row in rowsValue) {
                 insert(row);
             }
+        }
+        
+
+        public int update(Func<IDataItem, IDataItem> fun) {
+            DataItem item = new DataItem();
+            return update(fun(item));
         }
 
         public int update(IDataItem data) {
