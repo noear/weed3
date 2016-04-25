@@ -27,7 +27,7 @@ namespace Noear.Weed {
         }
 
         
-        public DbContext(String schemaName, string name) : this(schemaName, name, "") {
+        public DbContext(String schemaName, string name) : this(schemaName, name, "%") {
 
         }
 
