@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.ext.Fun1;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    public long insert(Fun1<IDataItem,IDataItem> fun) throws SQLException
+    {
+        DataItem item = new DataItem();
+
+        return insert(fun.run(item));
+    }
+
     public long insert(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
             return 0;
@@ -100,6 +109,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         for (IDataItem row : rowsValue) {
             insert(row);
         }
+    }
+
+    public int update(Fun1<IDataItem,IDataItem> fun) throws SQLException
+    {
+        DataItem item = new DataItem();
+
+        return update(fun.run(item));
     }
 
     public int update(IDataItem data) throws SQLException{
