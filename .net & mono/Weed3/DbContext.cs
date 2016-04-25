@@ -10,35 +10,49 @@ namespace Noear.Weed {
      * 数据库上下文
      */
     public class DbContext {
-       
+
+        private string _fieldFormat;
         private String _url;
         private String _schemaName;
         private DbProviderFactory _provider;
-        
+
         static DbProviderFactory provider(string providerString) {
             if (providerString == null)
                 return null;
-
+            
             if (providerString.IndexOf(",") > 0)
                 return (DbProviderFactory)Activator.CreateInstance(Type.GetType(providerString, true, true));
             else
                 return DbProviderFactories.GetFactory(providerString);
         }
 
-        public DbContext(String schemaName, string name) {
+        
+        public DbContext(String schemaName, string name) : this(schemaName, name, "") {
+
+        }
+
+        //fieldFormat："`%`"
+        public DbContext(String schemaName, string name, string fieldFormat) {
             var set = ConfigurationManager.ConnectionStrings[name];
             var p = provider(set.ProviderName);
             doInit(schemaName, set.ConnectionString, p);
+
+            _fieldFormat = fieldFormat;
         }
         
-        public DbContext(String schemaName, string connectionString, DbProviderFactory provider) {
+        public DbContext(String schemaName, string connectionString, String fieldFormat, DbProviderFactory provider) {
             doInit(schemaName, connectionString, provider);
+            _fieldFormat = fieldFormat;
         }
         
         protected virtual void doInit(String schemaName, string connectionString, DbProviderFactory provider) {
             _provider = provider;
             _schemaName = schemaName;
             _url = connectionString;
+        }
+
+        public String field(String key) {
+            return _fieldFormat.Replace("%", key);
         }
 
         /*是否配置了schema*/

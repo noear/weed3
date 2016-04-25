@@ -166,14 +166,18 @@ namespace Noear.Weed {
                 else
                     dbcmd = buildCMD(cmd, transaction.connection, true);
 
-                dbcmd.ExecuteNonQuery();
+                if (dbcmd.CommandText.IndexOf("@@IDENTITY") > 0) {
+                    var obj = dbcmd.ExecuteScalar();
 
-                return 1;
-                //rset = stmt.getGeneratedKeys();
-                //if (rset.next())
-                //    return rset.getLong(1);//从1开始
-                //else
-                //    return 0l;
+                    if (obj is ulong)
+                        return (long)((ulong)obj);
+                    else if (obj is long)
+                        return (long)obj;
+                    else
+                        return 0;
+                }
+                else
+                    return dbcmd.ExecuteNonQuery();
 
             }
             catch (Exception ex) {

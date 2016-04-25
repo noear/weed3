@@ -69,7 +69,7 @@ namespace Noear.Weed {
             sb.Append(" INSERT INTO ").Append(_table).Append(" (");
 
             data.forEach((key, value) => {
-                sb.Append(key).Append(",");
+                sb.Append(_context.field(key)).Append(",");
             });
 
             sb.DeleteCharAt(sb.Length - 1);
@@ -78,7 +78,7 @@ namespace Noear.Weed {
             data.forEach((key, value) => {
                 if (value is String) {
                     String val2 = (String)value;
-                    if (val2[0] == '$') { //说明是SQL函数
+                    if (val2.Length>0 && val2[0] == '$') { //说明是SQL函数
                         sb.Append(val2.Substring(1)).Append(",");
                     }
                     else {
@@ -93,7 +93,7 @@ namespace Noear.Weed {
             });
 
             sb.DeleteCharAt(sb.Length - 1);
-            sb.Append(");");
+            sb.Append("); SELECT @@IDENTITY;");
 
             _builder.append(sb.ToString(), args.ToArray());
 
@@ -118,16 +118,16 @@ namespace Noear.Weed {
             data.forEach((key, value) => {
                 if (value is String) {
                     String val2 = (String)value;
-                    if (val2[0] == '$') {
-                        sb.Append(key).Append("=").Append(val2.Substring(1)).Append(",");
+                    if (val2.Length >0 && val2[0] == '$') {
+                        sb.Append(_context.field(key)).Append("=").Append(val2.Substring(1)).Append(",");
                     }
                     else {
-                        sb.Append(key).Append("=?,");
+                        sb.Append(_context.field(key)).Append("=?,");
                         args.Add(value);
                     }
                 }
                 else {
-                    sb.Append(key).Append("=?,");
+                    sb.Append(_context.field(key)).Append("=?,");
                     args.Add(value);
                 }
             });

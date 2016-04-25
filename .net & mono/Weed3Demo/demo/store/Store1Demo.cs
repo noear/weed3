@@ -19,5 +19,6 @@ namespace Weed3Demo.demo.store {
                 .set("useer_id",11)
                 .set("age", 12).execute();
         }
+        
     }
 }
