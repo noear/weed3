@@ -65,9 +65,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
-
         data.forEach((key,value)->{
-            sb.append(key).append(",");
+            sb.append(_context.field(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);
@@ -116,15 +115,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (val2.indexOf('$') == 0) {
-                    sb.append(key).append("=").append(val2.substring(1)).append(",");
+                    sb.append(_context.field(key)).append("=").append(val2.substring(1)).append(",");
                 }
                 else {
-                    sb.append(key).append("=?,");
+                    sb.append(_context.field(key)).append("=?,");
                     args.add(value);
                 }
             }
             else {
-                sb.append(key).append("=?,");
+                sb.append(_context.field(key)).append("=?,");
                 args.add(value);
             }
         });
