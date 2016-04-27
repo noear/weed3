@@ -34,8 +34,16 @@ namespace weedstudio {
 
         private void objectList_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<Object> e) {
             currentObject = (ObjectModel)e.NewValue;
+
+            if (currentObject == null)
+            {
+                viewModel.loadPropertys(null, null);
+                return;
+            }
+            
             if (currentObject.Type > 0) {
                 viewModel.loadPropertys(currentSource, currentObject);
+                return;
             }
         }
 

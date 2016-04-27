@@ -27,7 +27,7 @@ public class {classname}M extends DbTable
 		super(Config.db);
 		table("{tablename}");
 
-		//set("{colname}",()=>{colname}); 
+		//set("{colname}",()->{colname}); 
 		//{Inits}
 	}
 {Props}

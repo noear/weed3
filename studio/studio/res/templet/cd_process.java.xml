@@ -2,7 +2,7 @@
     <File>{tablename}.java</File>
     <Items>
         <Init>
-        set("{colname}", ()=>{popname});</Init>
+        set("{colname}", ()->{popname});</Init>
         <Prop>
     public {type} {popname};</Prop>
     </Items>
@@ -22,7 +22,7 @@ public class {tablename} extends DbStoredProcedure
 		super(config);
         call("{tablename}");
 
-        //set("{colname}", ()=>{popname});
+        //set("{colname}", ()->{popname});
         //{Inits}
     }      
 {Props}

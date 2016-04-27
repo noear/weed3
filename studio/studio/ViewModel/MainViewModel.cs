@@ -67,9 +67,12 @@ namespace weedstudio.ViewModel {
         }
 
         public void loadPropertys(DbContextEx db, ObjectModel obj) {
-            var popList = getPropertyList(db, obj);
-
             PropertyList.Clear();
+
+            if (db == null || obj == null)
+                return;
+
+            var popList = getPropertyList(db, obj);
             foreach (var p in popList)
                 PropertyList.Add(p);
         }

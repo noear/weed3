@@ -139,6 +139,7 @@ namespace weedstudio.Utils {
 
 
                 sb.Replace("{def}", DEF(col));
+                sb.Replace("{def2}", DEF2(col));
                 sb.Replace("{type}", ST(col));
                 sb.Replace("{ntype}", EST(col));
                 sb.Replace("{dbtype}", DT(col));
@@ -546,7 +547,7 @@ namespace weedstudio.Utils {
                         if (IsJava)
                             return "null";
                         else
-                            return "null";//string
+                            return "(string)null";//string
                     }
 
 
@@ -580,11 +581,114 @@ namespace weedstudio.Utils {
                         if (IsJava)
                             return "null";
                         else
-                            return "null";//string
+                            return "(string)null";//string
                     }
             }
         }
-        
+
+        private string DEF2(PropertyModel col) {
+            string sqlType = col.Type.Split('(')[0].ToLower();
+
+
+            switch (sqlType) {
+                case "system.boolean":
+                case "bit":
+                case "bool": {
+                        if (IsJava)
+                            return "false";
+                        else
+                            return "false";//bool
+                    }
+
+                case "system.byte":
+                case "tinyint": {
+                        if (col.Type.ToLower() == "tinyint(1)") {
+                            if (IsJava)
+                                return "false";
+                            else
+                                return "false";//bool
+                        }
+                        else
+                            return "0";//byte
+                    }
+
+                case "system.int16":
+                case "smallint":
+                    return "0";//short
+
+                case "system.int32":
+                case "int":
+                case "integer":
+                    return "0";//int
+
+                case "system.int64":
+                case "bigint":
+                    return "0L";//long
+
+                case "system.single":
+                case "real":
+                case "float":
+                case "single":
+                    return "0";//float
+
+                case "system.double":
+                case "double":
+                    return "0"; //double
+
+                case "system.decimal":
+                case "money":
+                case "smallmoney":
+                case "numeric":
+                case "decimal":
+                    return "0";//decimal
+
+                case "system.string":
+                case "char":
+                case "nchar":
+                case "varchar":
+                case "nvarchar":
+                case "text":
+                case "ntext":
+                case "xml": {
+                        if (IsJava)
+                            return "null";
+                        else
+                            return "\"\"";//string
+                    }
+
+
+                case "image":
+                case "binary":
+                case "varbinary":
+                case "bolb":
+                    return "null";
+
+                case "system.dateTime":
+                case "datetime":
+                case "datetime2":
+                case "date":
+                case "smalldatetime": {
+                        if (IsJava)
+                            return "null";
+                        else
+                            return "DateTime.MinValue";//DateTime
+                    }
+                case "time": {
+                        if (IsJava)
+                            return "null";
+                        else
+                            return "DateTime.MinValue";//DateTime
+                    }
+
+                default: {
+                        if (IsJava)
+                            return "null";
+                        else
+                            return "\"\"";//string
+                    }
+            }
+        }
+
 
         /// <summary>
         /// 获取System.Data.DbType
