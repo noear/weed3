@@ -11,5 +11,10 @@ namespace Noear.Weed {
         public List<Variate> paramS;
         /*数据库上下文*/
         public DbContext context;
+
+        public Command(DbContext context) {
+            this.context = context;
+            this.context.lastCommand = this;
+        }
     }
 }

@@ -11,8 +11,9 @@ namespace Weed3Demo.demo.param {
     // ?...  :[]
     public class Param1Demo {
         public static void demo_value() {
+            
            var m = DbConfig.pc_user.table("$.user_info")
-                               .where("user_id=?", 1)
+                               .where("user_id=?",1)
                                .select("*")
                                .getItem(new UserInfoModel());
         }

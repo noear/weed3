@@ -2,7 +2,7 @@
 
 namespace Noear.Weed {
     public class DbTable : DbTableQueryBase<DbTable> {
-        DataItemEx _item = new DataItemEx(true); //会排除null数据
+        DataItemEx _item = new DataItemEx(); //会排除null数据
 
         public DbTable(DbContext context) : base(context) {
         }

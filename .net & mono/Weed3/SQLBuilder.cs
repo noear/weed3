@@ -8,9 +8,24 @@ namespace Noear.Weed {
         private StringBuilder builder = new StringBuilder();
         internal List<Object> paramS = new List<Object>();
 
+         StringBuilder b_builder = new StringBuilder();
+         List<Object> b_paramS = new List<Object>();
+
         public void clear() {
             builder.Clear();
             paramS.Clear();
+        }
+
+        //备分状态
+        public void backup() {
+            b_builder.Append(builder.ToString());
+            b_paramS.AddRange(paramS);
+        }
+        //还原状态
+        public void restore() {
+            clear();
+            builder.Append(b_builder.ToString());
+            paramS.AddRange(b_paramS);
         }
 
         public SQLBuilder insert(String code, params Object[] args) {
@@ -56,7 +71,7 @@ namespace Noear.Weed {
                             if (len > 0)
                                 sb.Remove(len - 1, 1);
 
-                            builder.ReplaceFirst("\\?\\.\\.\\.", sb.ToString());
+                            builder.ReplaceFirst("?...", sb.ToString());
                         }
                         else if (p1 is DbQuery) {
 
@@ -67,9 +82,9 @@ namespace Noear.Weed {
                             }
 
                             if (s1.paramS.Count > 0) 
-                                builder.ReplaceFirst("\\?\\.\\.\\.", s1.commandText);
+                                builder.ReplaceFirst("?...", s1.commandText);
                             else
-                                builder.ReplaceFirst("\\?\\.\\.\\.", s1.commandText);
+                                builder.ReplaceFirst("?...", s1.commandText);
                         }
                         else {
                             paramS.Add(p1);

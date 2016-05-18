@@ -81,6 +81,9 @@ namespace Noear.Weed {
 
             sb.Append(") VALUES (");
             data.forEach((key, value) => {
+                if (value == null)
+                    return;
+
                 if (value is String) {
                     String val2 = (String)value;
                     if (val2.Length>0 && val2[0] == '$') { //说明是SQL函数
@@ -127,6 +130,9 @@ namespace Noear.Weed {
             sb.Append("UPDATE ").Append(_table).Append(" SET ");
 
             data.forEach((key, value) => {
+                if (value == null)
+                    return;
+
                 if (value is String) {
                     String val2 = (String)value;
                     if (val2.Length >0 && val2[0] == '$') {
@@ -198,14 +204,7 @@ namespace Noear.Weed {
         public bool exists() {
             limit(1);
 
-            StringBuilder sb = new StringBuilder();
-
-            //1.构建sql
-            sb.Append("SELECT ").Append("1").Append(" FROM ").Append(_table);
-
-            _builder.insert(sb.ToString());
-
-            return compile().getValue() != null;
+            return select("1").getValue() != null;
         }
 
         public IQuery select(String columns) {
@@ -214,10 +213,16 @@ namespace Noear.Weed {
 
             //1.构建sql
             sb.Append("SELECT ").Append(columns).Append(" FROM ").Append(_table);
-            
+
+
+            _builder.backup();
             _builder.insert(sb.ToString());
 
-            return compile();
+            var rst = compile();
+
+            _builder.restore();
+
+            return rst;
         }
 
 

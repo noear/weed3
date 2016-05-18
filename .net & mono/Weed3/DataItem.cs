@@ -6,6 +6,9 @@ namespace Noear.Weed {
     public class DataItem  : IDataItem {
         Dictionary<String, Object> _data = new Dictionary<string, object>();
 
+        public DataItem() { }
+        public DataItem(bool isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
+
         public int count() {
             return _data.Count;
         }
@@ -80,9 +83,16 @@ namespace Noear.Weed {
 
         public void forEach(Action<String, Object> callback) {
             foreach (var kv in _data) {
-                callback(kv.Key, kv.Value);
+                if (kv.Value == null && _isUsingDbNull) {
+                    callback(kv.Key, "$NULL");
+                }
+                else {
+                    callback(kv.Key, kv.Value);
+                }
             }
         }
+
+        private bool _isUsingDbNull = false;
 
         //============================
         public static IDataItem create(IDataItem schema, GetHandler source) {

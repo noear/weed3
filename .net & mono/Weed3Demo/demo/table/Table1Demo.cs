@@ -27,6 +27,7 @@ namespace Weed3Demo.demo.table {
               .where("t.id=?", 17)
               .update(new DataItem().set("t.txt", "fff").set("num", 111));
 
+            
             //1
             db.table("test")
               .where("id IN (?...)", db.table("user_info").where("user_id<?", 16).select("user_id"))
@@ -52,6 +53,7 @@ namespace Weed3Demo.demo.table {
             var dt = db.table("test a")
                        .innerJoin("user_info b").on("b.user_id=a.id")
                        .where("a.id<?", 20)
+                       .limit(100)
                        .select("a.*,b.name").getDataList();
 
 

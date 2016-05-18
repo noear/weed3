@@ -26,7 +26,9 @@ namespace Noear.Weed {
                 return DbProviderFactories.GetFactory(providerString);
         }
 
-        
+        public Command lastCommand { get; internal set; }
+
+
         public DbContext(String schemaName, string name) : this(schemaName, name, "") {
 
         }

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 namespace Noear.Weed {
     public class DataItemEx  : IDataItem {
         Dictionary<String, Func<Object>> _data = new Dictionary<string, Func<Object>>();
-        bool _isNotNull = false; //不需要null的数据
+       
 
         public DataItemEx() { }
+        public DataItemEx(bool isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
 
-        public DataItemEx(bool isNotNull) { _isNotNull = isNotNull; }
 
         public int count() {
             return _data.Count;
@@ -96,15 +96,16 @@ namespace Noear.Weed {
         public void forEach(Action<String, Object> callback) {
             foreach (var kv in _data) {
                 var val = kv.Value();
-                if (_isNotNull) {
-                    if (val != null) {
-                        callback(kv.Key, val);
-                    }
+
+                if (val == null && _isUsingDbNull) {
+                    callback(kv.Key, "$NULL");
                 }
                 else {
                     callback(kv.Key, val);
                 }
             }
         }
+
+        private bool _isUsingDbNull = false;
     }
 }

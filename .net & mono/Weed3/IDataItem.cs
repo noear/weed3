@@ -20,7 +20,7 @@ namespace Noear.Weed {
         String getString(String name);
         bool getBoolean(String name);
         DateTime getDateTime(String name);
-
+        
         void forEach(Action<String, Object> callback);
     }
 }

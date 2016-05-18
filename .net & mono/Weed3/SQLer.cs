@@ -196,7 +196,7 @@ namespace Noear.Weed {
                 dbcmd = buildCMD(cmd, null, false);
             else
                 dbcmd = buildCMD(cmd, transaction.connection, false);
-
+            
             //3.执行
             return new DbReader(dbcmd.ExecuteReader());//stmt.executeQuery();
         }

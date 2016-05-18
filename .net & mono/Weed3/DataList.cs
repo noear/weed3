@@ -5,14 +5,12 @@ namespace Noear.Weed {
     public class DataList {
         private List<DataItem> rows = null;
 
-        private void tryInit() {
-            if (rows == null)
-                rows = new List<DataItem>();
+        public DataList() {
+            rows = new List<DataItem>();
         }
+        
 
         public List<DataItem> getRows() {
-            tryInit();
-
             return rows;
         }
 
@@ -21,8 +19,6 @@ namespace Noear.Weed {
         }
 
         public void addRow(DataItem row) {
-            tryInit();
-
             rows.Add(row);
         }
 

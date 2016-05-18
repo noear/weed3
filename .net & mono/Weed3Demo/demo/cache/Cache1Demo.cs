@@ -11,7 +11,7 @@ namespace Weed3Demo.demo.cache {
 
             db.call("user_get").set("xxx", 1)
                 .caching(cache)
-                .usingCache(60 * 100)
+                .usingCache(60 * 1000)
                 .getItem(new UserInfoModel());
             
         }
@@ -25,10 +25,9 @@ namespace Weed3Demo.demo.cache {
                 .caching(cache)
                 .usingCache(60 * 100)
                 .getItem(new UserInfoModel(), (cu, t) => { 
-                    if (t.user_id == 12)
+                    if (t.user_id == 0)
                         cu.usingCache(false);
                 });
-
         }
 
         //分割参数值，并实现对应分别缓存
