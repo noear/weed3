@@ -6,23 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTable.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder$SQLPartBuilder.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder$SQLPartBuilder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="" />
     <ignored path="Weed3.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -504,7 +488,7 @@
       <workItem from="1462764505381" duration="57000" />
       <workItem from="1463539513648" duration="797000" />
       <workItem from="1464165789550" duration="404000" />
-      <workItem from="1464166223133" duration="9000" />
+      <workItem from="1464166223133" duration="115000" />
     </task>
     <task id="LOCAL-00001" summary="首次提交java代码。">
       <created>1441202557103</created>
@@ -594,7 +578,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29809000" />
+    <option name="totallyTimeSpent" value="29915000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
