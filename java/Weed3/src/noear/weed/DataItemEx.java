@@ -15,8 +15,7 @@ public class DataItemEx implements IDataItem{
     boolean _isNotNull = false; //不需要null的数据
 
     public DataItemEx() { }
-
-    public DataItemEx(boolean isNotNull) { _isNotNull = isNotNull; }
+    public DataItemEx(boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
 
     public int count() {
         return _data.size();
@@ -101,15 +100,16 @@ public class DataItemEx implements IDataItem{
     //
     public void forEach(Act2<String, Object> callback)
     {
-        for(Map.Entry<String,Fun0<Object>> kv : _data.entrySet()){
+        for(Map.Entry<String,Fun0<Object>> kv : _data.entrySet()) {
             Object val = kv.getValue().run();
-            if(_isNotNull){
-                if(val!=null){
-                    callback.run(kv.getKey(),val);
-                }
-            }else{
-                callback.run(kv.getKey(),val);
+
+            if (val == null && _isUsingDbNull) {
+                callback.run(kv.getKey(), "$NULL");
+            } else {
+                callback.run(kv.getKey(), val);
             }
         }
     }
+
+    private boolean _isUsingDbNull=false;
 }

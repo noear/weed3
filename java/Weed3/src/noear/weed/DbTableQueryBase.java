@@ -75,6 +75,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         data.forEach((key,value)->{
+            if(value==null)
+                return;
+
             sb.append(_context.field(key)).append(",");
         });
 
@@ -82,6 +85,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.append(") VALUES (");
         data.forEach((key,value)->{
+            if(value==null)
+                return;
+
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (val2.indexOf('$') == 0) { //说明是SQL函数
@@ -128,6 +134,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.append("UPDATE ").append(_table).append(" SET ");
 
         data.forEach((key,value)->{
+            if(value==null)
+                return;
+
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (val2.indexOf('$') == 0) {
@@ -200,14 +209,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         limit(1);
 
-        StringBuilder sb = new StringBuilder();
-
-        //1.构建sql
-        sb.append("SELECT ").append("1").append(" FROM ").append(_table);
-
-        _builder.insert(sb.toString());
-
-        return compile().getValue() != null;
+        return select("1").getValue() != null;
     }
 
 
@@ -218,9 +220,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         //1.构建sql
         sb.append("SELECT ").append(columns).append(" FROM ").append(_table);
 
+        _builder.backup();
         _builder.insert(sb.toString());
 
-        return compile();
+        IQuery rst = compile();
+
+        _builder.restore();
+
+        return rst;
     }
 
     protected DbTran _tran = null;
