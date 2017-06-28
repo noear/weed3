@@ -11,6 +11,7 @@ public class Variate {
     protected Object _value;
     public final   int   _hash;
 
+
     public Variate(String name, Object value) {
         this._name = name;
         this._value = value;

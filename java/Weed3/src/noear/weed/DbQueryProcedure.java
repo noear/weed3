@@ -1,79 +1,135 @@
 package noear.weed;
 
 import noear.weed.cache.CacheState;
+import noear.weed.ext.Act0;
 import noear.weed.ext.Fun0;
 import noear.weed.ext.Fun1;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
  * Created by noear on 14-6-12.
- * 存储过程访问类
+ * 查询过程访问类（模拟存储过和）
  */
-public class DbStoredProcedure extends DbAccess<DbStoredProcedure> {
+public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
 
-    public DbStoredProcedure(DbContext context){
+    private Map<String,Variate> _paramS2 = new HashMap<>();
+
+    public DbQueryProcedure(DbContext context){
         super(context);
     }
 
-    protected DbStoredProcedure call(String storedProcedure) {
-        this.commandText = storedProcedure;
+    /*延后初始化接口*/
+    private Act0 _lazyload;
+    private boolean _is_lazyload;
+    protected void lazyload(Act0 action){
+        _lazyload = action;
+        _is_lazyload = false;
+    }
+
+    protected void tryLazyload() {
+        if (_is_lazyload == false) {
+            _is_lazyload = true;
+
+            if (_lazyload != null) {
+                _lazyload.run();
+            }
+        }
+    }
+
+    //---------
+
+    protected DbQueryProcedure sql(String sqlCode) {
+        this.commandText = sqlCode;
+        this.paramS.clear();
+        this._paramS2.clear();
+        this._weedKey = null;
+
+        return this;
+    }
+
+    private  DbQueryProcedure doSqlItem(String sqlCode){
+        this.commandText = sqlCode;
         this.paramS.clear();
         this._weedKey = null;
 
         return this;
     }
 
-    public DbStoredProcedure set(String param, Object value) {
-        doSet(param, value);
+    public DbQueryProcedure set(String param, Object value) {
+        _paramS2.put(param,new Variate(param,value));
         return this;
     }
 
-    public DbStoredProcedure set(String param, Fun0<Object> valueGetter) {
-        doSet(param, valueGetter);
+    public DbQueryProcedure set(String param, Fun0<Object> valueGetter) {
+        _paramS2.put(param, new VariateEx(param, valueGetter));
         return this;
     }
 
     @Override
     protected String getCommandID() {
+        tryLazyload();
+
         return this.commandText;
     }
 
     @Override
     protected Command getCommand(){
+        tryLazyload();
+
         Command cmd = new Command();
 
         cmd.key      = getCommandID();
         cmd.context = this.context;
-        cmd.paramS  = this.paramS;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{call ");
+        String sqlTxt = this.commandText;
 
-        if(context.hasSchema()) {
-            sb.append(context.getSchema()).append(".");
-        }
-
-        sb.append(commandText.trim());
-
-        if(paramS.size()>0) {
-            sb.append('(');
-            for (Variate p : paramS) {
-                sb.append("?,");
+        {
+            Pattern pattern = Pattern.compile("@\\w+");
+            Matcher m = pattern.matcher(sqlTxt);
+            while (m.find()) {
+                String key = m.group(0);
+                doSet(_paramS2.get(key));
             }
-            sb.deleteCharAt(sb.length()-1);
-            sb.append(')');
-        }
-        sb.append('}');
 
-        cmd.text = sb.toString();
+            for (String key : _paramS2.keySet()) {
+                sqlTxt = sqlTxt.replace(key, "?");
+            }
+        }
+
+        if(context.hasSchema()){
+            sqlTxt.replace("$",context.getSchema());
+        }
+
+        cmd.paramS  = this.paramS;
+        cmd.text    = sqlTxt;
 
         return cmd;
     }
 
+    @Override
+    public int execute() throws SQLException {
+        tryLazyload();
+
+        int num = 0;
+        String[] sqlList = commandText.split(";"); //支持多段SQL执行
+        for (String sql : sqlList) {
+            if (sql.length() > 10) {
+                doSqlItem(sql);
+
+                num += super.execute();
+            }
+        }
+
+        return num;
+    }
 
     //=================================
     //
@@ -166,7 +222,7 @@ public class DbStoredProcedure extends DbAccess<DbStoredProcedure> {
 
         sb.append(this.getCommandID() + ":");
 
-        for (Variate item : paramS) {
+        for (Variate item : _paramS2.values()) {
             if (item.getName() == paramName)
                 sb.append("_" + value.trim());
             else {

@@ -77,6 +77,10 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     protected  void doSet(String param, Fun0<Object> valueGetter, Act1<Object> valueSetter) {
         paramS.add(new VariateEx(param, valueGetter, valueSetter));
     }
+
+    protected void doSet(Variate value){
+        paramS.add(value);
+    }
     //=======================
     //
     // 执行相关代码
@@ -147,13 +151,17 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         }
     }
 
-
-    public DataList getTable() throws SQLException
+    public <T> List<T> getArray(String column) throws SQLException
     {
-        return getTable(null);
+        return getDataList().toArray(column);
     }
 
-    public DataList getTable(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
+    public DataList getDataList() throws SQLException
+    {
+        return getDataList(null);
+    }
+
+    public DataList getDataList(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
     {
         if (_cache == null)
             return new SQLer().getTable(getCommand(), _tran);
@@ -163,12 +171,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         }
     }
 
-    public DataItem getRow() throws SQLException
+    public DataItem getDataItem() throws SQLException
     {
-        return getRow(null);
+        return getDataItem(null);
     }
 
-    public DataItem getRow(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
+    public DataItem getDataItem(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
     {
         if (_cache == null)
             return new SQLer().getRow(getCommand(), _tran);

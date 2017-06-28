@@ -11,6 +11,7 @@ public class VariateEx extends Variate {
     protected Fun0<Object> _valueGetter;
     protected Act1<Object> _valueSetter;
 
+
     public VariateEx(String name,  Fun0<Object> valueGetter) {
         super(name, null);
         _valueGetter = valueGetter;

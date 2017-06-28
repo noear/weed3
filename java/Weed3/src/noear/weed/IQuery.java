@@ -19,8 +19,10 @@ public interface IQuery {
     public <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException;
     public <T extends IBinder> List<T> getList(T model) throws SQLException;
     public <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
-    public DataList getTable() throws SQLException;
-    public DataList getTable(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+    public DataList getDataList() throws SQLException;
+    public DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+    public DataItem getDataItem() throws SQLException;
+    public DataItem getDataItem(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
 
     public IQuery caching(ICacheService service);
     public IQuery usingCache(boolean isCache);
