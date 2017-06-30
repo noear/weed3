@@ -64,6 +64,7 @@ namespace Noear.Weed {
             return insert(fun(item));
         }
 
+
         public long insert(IDataItem data) {
             if (data == null || data.count() == 0)
                 return 0;
@@ -74,6 +75,9 @@ namespace Noear.Weed {
             sb.Append(" INSERT INTO ").Append(_table).Append(" (");
 
             data.forEach((key, value) => {
+                if (value == null)
+                    return;
+
                 sb.Append(_context.field(key)).Append(",");
             });
 
@@ -114,7 +118,6 @@ namespace Noear.Weed {
             }
         }
         
-
         public int update(Func<IDataItem, IDataItem> fun) {
             DataItem item = new DataItem();
             return update(fun(item));
@@ -206,7 +209,7 @@ namespace Noear.Weed {
 
             return select("1").getValue() != null;
         }
-
+        
         public IQuery select(String columns) {
 
             StringBuilder sb = new StringBuilder();

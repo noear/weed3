@@ -6,6 +6,7 @@ using System.IO;
 using weedstudio.exts;
 using weedstudio.Model;
 using weedstudio.Utils;
+using Noear.Snacks;
 
 namespace weedstudio.Utils {
     public enum BuildType
@@ -33,7 +34,7 @@ namespace weedstudio.Utils {
         private string ClassName;
         private bool IsJava;
 
-        private Encoding _Encoding = new UTF8Encoding(false);
+        private Encoding _Encoding = Encoding.UTF8;
         protected Encoding Encoding
         {
             get { return _Encoding; }
@@ -44,7 +45,7 @@ namespace weedstudio.Utils {
         public string SdqName = "";
         public List<PropertyModel> Columns { get; set; }
         public string TargetFolder { get; set; }
-        public string NameSpace { get; set; }
+        public ONode args { get; set; } = new ONode();
 
         /// <summary>
         /// 执行前,请设置:TargetFolder,NameSpace,Columns,VSNET
@@ -67,11 +68,15 @@ namespace weedstudio.Utils {
             StringBuilder codeWriter = new StringBuilder();
 
             codeWriter.Append(sc.Main)
-                      .Replace("{namespace}", this.NameSpace)
+                      //.Replace("{namespace}", this.NameSpace)
                       .Replace("{classname}", this.ClassName)
                       .Replace("{tablename}", this.TableName)
                       .Replace("{time}", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"))
                       .Replace("{sdqname}", this.SdqName);
+
+            args.forEach((k, v) => {
+                codeWriter.Replace("{" + k + "}", v.getString());
+            });
 
             if (sc.Main.IndexOf("{keycolname}") > 0) {
                 PropertyModel keyColumn = GetKeyCol();
@@ -94,9 +99,13 @@ namespace weedstudio.Utils {
             fileName
                 .Replace("{classname}", this.ClassName)
                 .Replace("{tablename}", this.TableName)
-                .Replace("{namespace}", this.NameSpace)
+                //.Replace("{namespace}", this.NameSpace)
                 .Replace("{time}", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"))
                 .Replace("{sdqname}", this.SdqName);
+
+            args.forEach((k, v) => {
+                fileName.Replace("{" + k + "}", v.getString());
+            });
 
 
             foreach (ReplaceItem x in sc.ReplaceItems)
@@ -152,11 +161,15 @@ namespace weedstudio.Utils {
                 sb.Replace("{colnote}", col.Note);
                 sb.Replace("{tryout}", (col.IsKey ? " OUT" : ""));
 
-                sb.Replace("{namespace}", this.NameSpace)
-                  .Replace("{classname}", this.ClassName)
+                sb.Replace("{classname}", this.ClassName)
+                  //.Replace("{namespace}", this.NameSpace)
                   .Replace("{tablename}", this.TableName)
                   .Replace("{time}", DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"))
                   .Replace("{sdqname}", this.SdqName);
+
+                args.forEach((k, v) => {
+                    sb.Replace("{" + k + "}", v.getString());
+                });
             }
 
 
@@ -477,6 +490,7 @@ namespace weedstudio.Utils {
             }
         }
 
+        //模型的默认值 
         private string DEF(PropertyModel col) {
             string sqlType = col.Type.Split('(')[0].ToLower();
 
@@ -522,11 +536,11 @@ namespace weedstudio.Utils {
                 case "real":
                 case "float":
                 case "single":
-                    return "0";//float
+                    return "0f";//float
 
                 case "system.double":
                 case "double":
-                    return "0"; //double
+                    return "0d"; //double
 
                 case "system.decimal":
                 case "money":
@@ -629,11 +643,11 @@ namespace weedstudio.Utils {
                 case "real":
                 case "float":
                 case "single":
-                    return "0";//float
+                    return "0f";//float
 
                 case "system.double":
                 case "double":
-                    return "0"; //double
+                    return "0d"; //double
 
                 case "system.decimal":
                 case "money":

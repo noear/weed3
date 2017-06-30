@@ -6,6 +6,9 @@ using weedstudio.exts;
 using weedstudio.Utils;
 using weedstudio.Model;
 using weedstudio.ViewModel;
+using System.Configuration;
+using weedstudio.Dao;
+using Noear.Snacks;
 
 namespace weedstudio {
     /// <summary>
@@ -24,12 +27,30 @@ namespace weedstudio {
             viewModel = new MainViewModel();
 
             this.DataContext = viewModel;
+
+            string source = Setting.get("source");
+            if (string.IsNullOrEmpty(source) == false) {
+                sourceBox.SelectedItem = source;
+            }
+
+            string templet = Setting.get("templet");
+            if (string.IsNullOrEmpty(templet) == false) {
+                templetBox.SelectedItem = templet;
+            }
+
+            args.Text = Setting.get("def_args", "{namespace:'noear.weed.studio',dbcontext:'config'}");
         }
 
+        private void Window_Unloaded(object sender, RoutedEventArgs e) {
+            Setting.set("def_args", args.Text.Trim());
+        }
 
         private void sourceBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            currentSource = DbManager.get((string)sourceBox.SelectedItem);
+            var name = (string)sourceBox.SelectedItem;
+            currentSource = DbManager.get(name);
             viewModel.loadObjects(currentSource);
+
+            Setting.set("source", name);
         }
 
         private void objectList_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<Object> e) {
@@ -54,6 +75,9 @@ namespace weedstudio {
                 MessageBox.Show("请选择模板!");
                 return;
             }
+
+            var templet = (string)templetBox.SelectedItem;
+            Setting.set("templet", templet);
 
             int count = 0;
             foreach (ObjectModel p in viewModel.ObjectList) {
@@ -83,9 +107,11 @@ namespace weedstudio {
             if (Directory.Exists(Config.DIR_OUT) == false) {
                 Directory.CreateDirectory(Config.DIR_OUT);
             }
+            
+            
 
             sdqBuilder.TargetFolder = Config.DIR_OUT;
-            sdqBuilder.NameSpace = "noear.weed.studio";
+            sdqBuilder.args = ONode.tryLoad(args.Text.Trim());
             sdqBuilder.TableName = obj.Name;
             sdqBuilder.Columns = cols;
 
@@ -94,5 +120,57 @@ namespace weedstudio {
 
             sdqBuilder.Build();
         }
+        
+
+        private void menu_all_Click(object sender, RoutedEventArgs e) {
+            MenuItem item = sender as MenuItem;
+            if (item == null) {
+                return;
+            }
+            var model = item.DataContext as ObjectModel;
+
+            if (model == null) {
+                return;
+            }
+
+            foreach (var objp in viewModel.ObjectList) {
+                foreach (var obj in objp.Children) {
+                    if (obj.Type == model.Type) {
+                        obj.IsSelected = true;
+                    }
+                }
+            }
+        }
+
+        private void menu_unall_Click(object sender, RoutedEventArgs e) {
+            MenuItem item = sender as MenuItem;
+            if (item == null) {
+                return;
+            }
+            var model = item.DataContext as ObjectModel;
+
+            if (model == null) {
+                return;
+            }
+
+            foreach (var objp in viewModel.ObjectList) {
+                foreach (var obj in objp.Children) {
+                    if (obj.Type == model.Type) {
+                        obj.IsSelected = !obj.IsSelected;
+                    }
+                }
+            }
+        }
+
+        private void templetBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (templetBox.SelectedIndex < 0) {
+                return;
+            }
+
+            var templet = (string)templetBox.SelectedItem;
+            Setting.set("templet", templet);
+        }
+
+       
     }
 }

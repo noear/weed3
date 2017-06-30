@@ -8,8 +8,8 @@ namespace Noear.Weed {
         private StringBuilder builder = new StringBuilder();
         internal List<Object> paramS = new List<Object>();
 
-         StringBuilder b_builder = new StringBuilder();
-         List<Object> b_paramS = new List<Object>();
+        StringBuilder b_builder = new StringBuilder();
+        List<Object> b_paramS = new List<Object>();
 
         public void clear() {
             builder.Clear();
@@ -17,12 +17,12 @@ namespace Noear.Weed {
         }
 
         //备分状态
-        public void backup() {
+        internal void backup() {
             b_builder.Append(builder.ToString());
             b_paramS.AddRange(paramS);
         }
         //还原状态
-        public void restore() {
+        internal void restore() {
             clear();
             builder.Append(b_builder.ToString());
             paramS.AddRange(b_paramS);
@@ -44,6 +44,15 @@ namespace Noear.Weed {
             return this;
         }
 
+        public SQLBuilder remove(int start, int length) {
+            builder.Remove(start, length);
+            return this;
+        }
+
+        public int length() {
+            return builder.Length;
+        }
+
         public override string ToString() {
             return builder.ToString();
         }
@@ -56,7 +65,7 @@ namespace Noear.Weed {
             public SQLPartBuilder(String code, params Object[] args) {
 
                 paramS = new List<Object>();
-
+                
                 if (args.Length > 0) {
                     StringBuilder builder = new StringBuilder(code);
                     foreach (Object p1 in args) {

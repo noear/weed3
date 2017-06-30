@@ -25,7 +25,7 @@ namespace Noear.Weed {
                 if (reader.Read())
                     return new Variate(null, reader[0]); //也可能从1开始
                 else
-                    return new Variate(null, null);
+                    return null;//new Variate(null, null);
             }
             catch (Exception ex) {
                 WeedLog.logException(cmd, ex);
@@ -36,7 +36,7 @@ namespace Noear.Weed {
             }
         }
 
-        public T getItem<T>(T model, Command cmd, DbTran transaction) where T : IBinder {
+        public T getItem<T>(T model, Command cmd, DbTran transaction) where T : class,IBinder {
             //T model = BinderMapping.getBinder<T>();
             try {
                 reader = query(cmd, transaction);
@@ -48,7 +48,7 @@ namespace Noear.Weed {
                     return model;
                 }
                 else
-                    return model;
+                    return null;
             }
             catch (Exception ex) {
                 WeedLog.logException(cmd, ex);
@@ -72,8 +72,10 @@ namespace Noear.Weed {
                     model = (T)model.clone();
                 }
 
-                return list;
-
+                if (list.Count > 0)
+                    return list;
+                else
+                    return null;
             }
             catch (Exception ex) {
                 WeedLog.logException(cmd, ex);
@@ -97,7 +99,10 @@ namespace Noear.Weed {
                     }
                 }
 
-                return row;
+                if (row.count() > 0)
+                    return row;
+                else
+                    return null;
 
             }
             catch (Exception ex) {
@@ -125,7 +130,11 @@ namespace Noear.Weed {
 
                     table.addRow(row);
                 }
-                return table;
+
+                if (table.getRowCount() > 0)
+                    return table;
+                else
+                    return null;
 
             }
             catch (Exception ex) {

@@ -72,7 +72,7 @@ namespace Noear.Weed {
         //
         //以下未测试
         //
-        public List<T> getListBySplit<T>(T model,String splitParamName, Func<T, Object> getKey) where T : IBinder {
+        public List<T> getListBySplit<T>(T model,String splitParamName, Func<T, Object> getKey) where T : class, IBinder {
             //如果没有缓存,则直接返回执行结果
             //
             if (_cache == null || _cache.cacheController == CacheState.NonUsing)

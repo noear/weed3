@@ -12,18 +12,30 @@ import java.sql.SQLException;
  */
 public class DbContext {
 
-    //基于线程池配置（如："proxool."）
     public DbContext(String schemaName,String url) {
         _schemaName = schemaName;
         _url = url;
+
+        _fieldFormat = "";
+    }
+
+    //基于线程池配置（如："proxool."）
+    //fieldFormat："`%`"
+    public DbContext(String schemaName,String url,String fieldFormat) {
+        _schemaName = schemaName;
+        _url = url;
+
+        _fieldFormat = fieldFormat;
     }
 
     //基于手动配置（无线程池）
-    public DbContext(String schemaName,String url,String user,String password) {
+    public DbContext(String schemaName,String url, String user,String password, String fieldFormat) {
         _schemaName = schemaName;
         _url = url;
         _user = user;
         _password = password;
+
+        _fieldFormat = fieldFormat;
     }
 
     private String _url;
@@ -31,6 +43,15 @@ public class DbContext {
     private String _password;
 
     private String _schemaName;
+
+    private String _fieldFormat;
+
+    public String field(String key){
+        if(_fieldFormat == null || _fieldFormat.length()==0)
+            return key;
+        else
+            return _fieldFormat.replace("%",key);
+    }
 
     /*是否配置了schema*/
     public boolean hasSchema(){return _schemaName!=null;}

@@ -10,9 +10,14 @@ namespace Weed3Demo {
     public class UnitTest1 {
         [TestMethod]
         public void TestMethod1() {
-            long num = DbConfig.test.sql("SELECT 10 FROM users WHERE UserID=? LIMIT 1", 1).getValue<long>(0);
 
-            Assert.AreEqual(10, num);
+            string[] args = new string[] { "1", "2" };
+
+            var l = DbConfig.test.table("users").where("mobile in (?...)",args).select("*").getDataList();
+
+            //long num = DbConfig.test.sql("SELECT 10 FROM users WHERE UserID=? LIMIT 1", 1).getValue<long>(0);
+
+            //Assert.AreEqual(10, num);
         }
 
         [TestMethod]

@@ -29,14 +29,17 @@ namespace Noear.Weed {
         
         /*IWeedKey begin*/
         protected String _weedKey;
-        public String getWeedKey() {
+        public virtual String getWeedKey() {
+            return buildWeedKey(paramS);
+        }
+        protected String buildWeedKey(IEnumerable<Variate> args) {
             if (_weedKey == null) {
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append(getCommandID()).Append(":");
 
-                foreach (Variate p in paramS) {
-                    sb.Append("_").Append(p.getValue()??"");
+                foreach (Variate p in args) {
+                    sb.Append("_").Append(p.getValue() ?? "");
                 }
 
                 _weedKey = sb.ToString();
@@ -73,6 +76,10 @@ namespace Noear.Weed {
             paramS.Add(new VariateEx(param, valueGetter, valueSetter));
         }
 
+        protected void doSet(Variate value) {
+            paramS.Add(value);
+        }
+
         //=======================
         //
         // 执行相关代码
@@ -81,11 +88,7 @@ namespace Noear.Weed {
         public int execute() {
             return new SQLer().execute(getCommand(), _tran);
         }
-
-        public long getCount() {
-            return getValue(0);
-        }
-
+        
         public Object getValue() {
             return new SQLer().getVariate(getCommand(), _tran).getValue();
         }
@@ -97,44 +100,60 @@ namespace Noear.Weed {
 
         /*执行命令（返回符合条件的第一个值）*/
         public T getValue<T>(T def, Action<CacheUsing, T> cacheCondition) {
+            Variate rst;
             if (_cache == null)
-                return new SQLer().getVariate(getCommand(), _tran).value(def);
+                rst = new SQLer().getVariate(getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => {
-                    return new SQLer().getVariate(getCommand(), _tran).value(def);
+                rst = _cache.get(this.getWeedKey(), () => {
+                    return new SQLer().getVariate(getCommand(), _tran);
                 });
             }
+            if (rst == null)
+                return def;
+            else
+                return rst.value(def);
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>(T model) where T : IBinder {
+        public T getItem<T>(T model) where T : class,IBinder {
             return getItem<T>(model, null);
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>(T model ,Action<CacheUsing, T> cacheCondition) where T : IBinder {
+        public T getItem<T>(T model ,Action<CacheUsing, T> cacheCondition) where T : class,IBinder {
+            T rst;
             if (_cache == null)
-                return new SQLer().getItem<T>(model,getCommand(), _tran);
+                rst = new SQLer().getItem<T>(model,getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(model,getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(model,getCommand(), _tran)));
             }
+
+            if (rst == null)
+                return model;
+            else
+                return rst;
         }
         /*执行命令（返回一个列表）*/
-        public List<T> getList<T>(T model) where T : IBinder {
+        public List<T> getList<T>(T model) where T : class, IBinder {
             return getList<T>(model,null);
         }
 
         /*执行命令（返回一个列表）*/
-        public List<T> getList<T>(T model,Action<CacheUsing, List<T>> cacheCondition) where T : IBinder {
-
+        public List<T> getList<T>(T model,Action<CacheUsing, List<T>> cacheCondition) where T : class, IBinder {
+            List<T> rst;
             if (_cache == null)
-                return new SQLer().getList<T>(model,getCommand(), _tran);
+                rst = new SQLer().getList<T>(model,getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(model,getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(model,getCommand(), _tran)));
             }
+
+            if (rst == null)
+                return new List<T>();
+            else
+                return rst;
         }
 
         public List<T> getArray<T>(String column) 
@@ -147,12 +166,18 @@ namespace Noear.Weed {
         }
 
         public DataList getDataList(Action<CacheUsing, DataList> cacheCondition) {
+            DataList rst;
             if (_cache == null)
-                return new SQLer().getTable(getCommand(), _tran);
+                rst = new SQLer().getTable(getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getTable(getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getTable(getCommand(), _tran)));
             }
+
+            if (rst == null)
+                return new DataList();
+            else
+                return rst;
         }
 
         public DataItem getDataItem() {
@@ -160,12 +185,18 @@ namespace Noear.Weed {
         }
 
         public DataItem getDataItem(Action<CacheUsing, DataList> cacheCondition) {
+            DataItem rst;
             if (_cache == null)
-                return new SQLer().getRow(getCommand(), _tran);
+                rst = new SQLer().getRow(getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                return _cache.get(this.getWeedKey(), () => (new SQLer().getRow(getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getRow(getCommand(), _tran)));
             }
+
+            if (rst == null)
+                return new DataItem();
+            else
+                return rst;
         }
 
         protected DbTran _tran = null;
@@ -187,7 +218,7 @@ namespace Noear.Weed {
         protected CacheUsing _cache = null;
         /*引用一个缓存服务*/
         public IQuery caching(ICacheService service) {
-            _cache = new CacheUsing(service);
+            _cache = new CacheUsing(service).usingCache(true);
             return this;
         }
         /*是否使用缓存*/

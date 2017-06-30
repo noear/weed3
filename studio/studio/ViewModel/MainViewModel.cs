@@ -34,34 +34,38 @@ namespace weedstudio.ViewModel {
         public void loadObjects(DbContextEx db) {
             ObjectList.Clear();
 
-            //1.获取配置里的执行代码
-            //
-            ObjectItem exeCode = SourceConfig.GetObject(db.builder, db);
+            try {
+                //1.获取配置里的执行代码
+                //
+                ObjectItem exeCode = SourceConfig.GetObject(db.builder, db);
 
-            ObjectModel dataTableRoot = new ObjectModel("数据表", 0);
-            ObjectModel dataViewRoot = new ObjectModel("数据视图", 0);
-            ObjectModel dataSPRoot = new ObjectModel("存储过程", 0);
+                ObjectModel dataTableRoot = new ObjectModel("数据表", 0);
+                ObjectModel dataViewRoot = new ObjectModel("数据视图", 0);
+                ObjectModel dataSPRoot = new ObjectModel("存储过程", 0);
 
-            //2.执行代码,获取数据
-            //
-            List<ObjectModel> tableList = db.sql(exeCode.Table).getList(new ObjectModel(1));
-            List<ObjectModel> viewList = db.sql(exeCode.View).getList(new ObjectModel(2));
-            List<ObjectModel> spList = db.sql(exeCode.StoredProcedure).getList(new ObjectModel(3));
+                //2.执行代码,获取数据
+                //
+                List<ObjectModel> tableList = db.sql(exeCode.Table).getList(new ObjectModel(1));
+                List<ObjectModel> viewList = db.sql(exeCode.View).getList(new ObjectModel(2));
+                List<ObjectModel> spList = db.sql(exeCode.StoredProcedure).getList(new ObjectModel(3));
 
-            //3.绑定到树控件上
-            //
-            dataTableRoot.AddRange(tableList);
-            dataViewRoot.AddRange(viewList);
-            dataSPRoot.AddRange(spList);
+                //3.绑定到树控件上
+                //
+                dataTableRoot.AddRange(tableList);
+                dataViewRoot.AddRange(viewList);
+                dataSPRoot.AddRange(spList);
 
-            if (dataTableRoot.Children.Count > 0)
-                ObjectList.Add(dataTableRoot);
+                if (dataTableRoot.Children.Count > 0)
+                    ObjectList.Add(dataTableRoot);
 
-            if (dataViewRoot.Children.Count > 0)
-                ObjectList.Add(dataViewRoot);
+                if (dataViewRoot.Children.Count > 0)
+                    ObjectList.Add(dataViewRoot);
 
-            if (dataSPRoot.Children.Count > 0)
-                ObjectList.Add(dataSPRoot);
+                if (dataSPRoot.Children.Count > 0)
+                    ObjectList.Add(dataSPRoot);
+            } catch (Exception ex) {
+                
+            }
 
             NotifyPropertyChanged("ObjectList");
         }

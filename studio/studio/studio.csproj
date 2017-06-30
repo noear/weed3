@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>_dll\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Noear.Snacks3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>_dll\Noear.Snacks3.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -64,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
+    <Compile Include="Dao\Setting.cs" />
     <Compile Include="Utils\exts\Addins\Addin.cs" />
     <Compile Include="Utils\exts\Addins\AddinCache.cs" />
     <Compile Include="Utils\exts\Addins\AddinItem.cs" />

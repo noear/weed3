@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.ext.Fun1;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    public long insert(Fun1<IDataItem,IDataItem> fun) throws SQLException
+    {
+        DataItem item = new DataItem();
+
+        return insert(fun.run(item));
+    }
+
     public long insert(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
             return 0;
@@ -65,9 +74,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
-
         data.forEach((key,value)->{
-            sb.append(key).append(",");
+            sb.append(_context.field(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);
@@ -103,6 +111,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         }
     }
 
+    public int update(Fun1<IDataItem,IDataItem> fun) throws SQLException
+    {
+        DataItem item = new DataItem();
+
+        return update(fun.run(item));
+    }
+
     public int update(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
             return 0;
@@ -116,15 +131,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (val2.indexOf('$') == 0) {
-                    sb.append(key).append("=").append(val2.substring(1)).append(",");
+                    sb.append(_context.field(key)).append("=").append(val2.substring(1)).append(",");
                 }
                 else {
-                    sb.append(key).append("=?,");
+                    sb.append(_context.field(key)).append("=?,");
                     args.add(value);
                 }
             }
             else {
-                sb.append(key).append("=?,");
+                sb.append(_context.field(key)).append("=?,");
                 args.add(value);
             }
         });

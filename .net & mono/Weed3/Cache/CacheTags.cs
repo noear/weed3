@@ -84,6 +84,22 @@ namespace Noear.Weed.Cache {
             return this;
         }
 
+        public void update<T>(string tag, Func<T,T> setter) where T:class{
+            var keys = getCacheKeys(tag);
+
+            foreach (string key in keys) {
+                var temp = _Cache.get(key);
+                if (temp == null) {
+                    continue;
+                }
+                
+                var obj = temp as T;
+                if (obj != null) {
+                    obj = setter(obj);
+                    _Cache.store(key, obj, _Cache.getDefalutSeconds());
+                }
+            }
+        }
 
         public int count(String tag) {
             return this[KEY(tag)].Count;
@@ -141,5 +157,6 @@ namespace Noear.Weed.Cache {
         private String KEY(String tag) {
             return ("@" + tag).ToUpper();
         }
+        
     }
 }

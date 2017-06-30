@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:studio"
         mc:Ignorable="d"
-        Title="Weed Studio" Height="600" Width="800" Loaded="Window_Loaded">
+        Title="Weed Studio" Height="600" Width="800" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -38,6 +38,12 @@
                                     <StackPanel Orientation="Horizontal" Margin="5">
                                         <CheckBox Visibility="{Binding CanCheck}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                                         <TextBlock Text="{Binding Name}"/>
+                                        <StackPanel.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="全选" Name="menu_all"  Click="menu_all_Click" />
+                                                <MenuItem Header="反选" Name="menu_unall" Click="menu_unall_Click"/>
+                                            </ContextMenu>
+                                        </StackPanel.ContextMenu>
                                     </StackPanel>
                                 </DataTemplate>
                             </HierarchicalDataTemplate.ItemTemplate>
@@ -47,20 +53,25 @@
 
             </Grid>
             <Grid Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" x:Name="args"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 <DataGrid ColumnHeaderHeight="30" 
+                          Grid.Row="1"
                           RowHeight="20"
                           CanUserAddRows="False" 
                           CanUserReorderColumns="False"
                           CanUserResizeRows="False"
                           CanUserDeleteRows="False" 
-                          ItemsSource="{Binding PropertyList}">
-                </DataGrid>
+                          ItemsSource="{Binding PropertyList}" />
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                <ComboBox VerticalAlignment="Top" Width="200"  Height="40" x:Name="templetBox" ItemsSource="{Binding TempletList}" >
+                <ComboBox VerticalAlignment="Top" Width="200"  Height="40" x:Name="templetBox" ItemsSource="{Binding TempletList}" SelectionChanged="templetBox_SelectionChanged" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>

@@ -1,5 +1,5 @@
 ﻿<Scheme>
-    <File>{classname}.cs</File>
+    <File>{tablename}.cs</File>
     <Items>
         <Init>
             set("{colname}", ()=>{popname});</Init>
@@ -17,9 +17,9 @@ namespace {namespace}
     /// 备注:请确保与[存储过程].[参数]的对应关系正确!!!
     /// </summary>
     [Serializable]
-    public class {classname} : DbStoredProcedure
+    public class {tablename} : DbStoredProcedure
     {
-        public {classname}() : base(config) 
+        public {tablename}() : base(config) 
         {
             call("{tablename}");
 
