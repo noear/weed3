@@ -122,6 +122,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             _cache.usingCache(cacheCondition);
             rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
         }
+
         if (rst == null)
             return def;
         else

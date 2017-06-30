@@ -92,10 +92,9 @@ public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
     protected Command getCommand(){
         tryLazyload();
 
-        Command cmd = new Command();
+        Command cmd = new Command(this.context);
 
         cmd.key      = getCommandID();
-        cmd.context = this.context;
 
         String sqlTxt = this.commandText;
 

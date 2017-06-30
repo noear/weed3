@@ -12,6 +12,7 @@ import java.sql.SQLException;
  * 数据库上下文
  */
 public class DbContext {
+    public Command lastCommand;
 
     public DbContext(String schemaName,String url) {
         _schemaName = schemaName;
