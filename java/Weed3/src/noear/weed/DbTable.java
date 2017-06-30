@@ -5,7 +5,7 @@ import noear.weed.ext.Fun0;
 import java.sql.SQLException;
 
 public class DbTable extends DbTableQueryBase<DbTable> {
-    DataItemEx _item = new DataItemEx(true); //会排除null数据
+    DataItemEx _item = new DataItemEx(); //会排除null数据
 
     public DbTable(DbContext context)  {
         super(context);

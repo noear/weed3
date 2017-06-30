@@ -11,6 +11,10 @@ import java.util.Map;
  */
 public class DataItem implements IDataItem{
     HashMap<String,Object> _data = new HashMap<>();
+
+    public DataItem() { }
+    public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
+
     public int count(){
         return _data.size();
     }
@@ -83,9 +87,17 @@ public class DataItem implements IDataItem{
     public void forEach(Act2<String, Object> callback)
     {
         for(Map.Entry<String,Object> kv : _data.entrySet()){
-            callback.run(kv.getKey(),kv.getValue());
+            Object val = kv.getValue();
+
+            if(val == null && _isUsingDbNull){
+                callback.run(kv.getKey(), "$NULL");
+            }else {
+                callback.run(kv.getKey(), val);
+            }
         }
     }
+
+    private boolean _isUsingDbNull=false;
 
     //============================
     public static IDataItem create(IDataItem schema, GetHandler source) {

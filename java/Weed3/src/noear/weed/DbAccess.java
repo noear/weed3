@@ -7,6 +7,7 @@ import noear.weed.ext.*;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -34,13 +35,17 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     protected String _weedKey;
     public String getWeedKey()
     {
+        return buildWeedKey(paramS);
+    }
+
+    protected String buildWeedKey(Collection<Variate> args){
         if(_weedKey==null)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.append(getCommandID()).append(":");
 
-            for(Variate p:paramS) {
+            for(Variate p:args) {
                 sb.append("_").append(p.getValue());
             }
 
@@ -77,6 +82,10 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     protected  void doSet(String param, Fun0<Object> valueGetter, Act1<Object> valueSetter) {
         paramS.add(new VariateEx(param, valueGetter, valueSetter));
     }
+
+    protected void doSet(Variate value){
+        paramS.add(value);
+    }
     //=======================
     //
     // 执行相关代码
@@ -106,29 +115,41 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     /*执行命令（返回符合条件的第一个值）*/
     public <T> T getValue(T def,Act2<CacheUsing,T> cacheCondition) throws SQLException {
+        Variate rst;
         if (_cache == null)
-            return new SQLer().getVariate(getCommand(), _tran).value(def);
+            rst = new SQLer().getVariate(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran).value(def)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
         }
+
+        if (rst == null)
+            return def;
+        else
+            return rst.value(def);
     }
 
 
 
     /*执行命令（返回一个模理）*/
     public <T extends IBinder> T getItem(T model) throws SQLException {
-        return getItem(model,null);
+        return getItem(model,null) ;
     }
 
     /*执行命令（返回一个模理）*/
     public <T extends IBinder> T getItem(T model,Act2<CacheUsing,T> cacheCondition) throws SQLException {
+        T rst;
         if (_cache == null)
-            return new SQLer().getItem(getCommand(), _tran, model);
+            rst = new SQLer().getItem(getCommand(), _tran, model);
         else {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
         }
+
+        if(rst == null)
+            return model;
+        else
+            return rst;
     }
     /*执行命令（返回一个列表）*/
     public <T extends IBinder> List<T> getList(T model) throws SQLException{
@@ -137,45 +158,66 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     /*执行命令（返回一个列表）*/
     public <T extends IBinder> List<T> getList(T model,Act2<CacheUsing,List<T>> cacheCondition) throws SQLException {
-
+        List<T> rst;
         if (_cache == null)
-            return new SQLer().getList(getCommand(), _tran, model);
+            rst = new SQLer().getList(getCommand(), _tran, model);
         else
         {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
         }
+
+        if(rst == null)
+            return new ArrayList<>();
+        else
+            return rst;
     }
 
-
-    public DataList getTable() throws SQLException
+    public <T> List<T> getArray(String column) throws SQLException
     {
-        return getTable(null);
+        return getDataList().toArray(column);
     }
 
-    public DataList getTable(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
+    public DataList getDataList() throws SQLException
     {
+        return getDataList(null);
+    }
+
+    public DataList getDataList(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
+    {
+        DataList rst;
         if (_cache == null)
-            return new SQLer().getTable(getCommand(), _tran);
+            rst = new SQLer().getTable(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
         }
+
+        if(rst == null)
+            return new DataList();
+        else
+            return rst;
     }
 
-    public DataItem getRow() throws SQLException
+    public DataItem getDataItem() throws SQLException
     {
-        return getRow(null);
+        return getDataItem(null);
     }
 
-    public DataItem getRow(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
+    public DataItem getDataItem(Act2<CacheUsing,DataList> cacheCondition) throws SQLException
     {
+        DataItem rst;
         if (_cache == null)
-            return new SQLer().getRow(getCommand(), _tran);
+            rst = new SQLer().getRow(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            return _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
         }
+
+        if(rst == null)
+            return new DataItem();
+        else
+            return rst;
     }
 
     protected DbTran _tran = null;
@@ -215,14 +257,6 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         _cache.usingCache(seconds);
         return this;
     }
-
-//    public DbAccess usingCache(Act2<CacheUsing,Object> condition)
-//    {
-//        _cache.usingCache(condition);
-//        return this;
-//    }
-
-
 
     /*添加缓存标签*/
     public DbAccess cacheTag(String tag)

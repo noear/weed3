@@ -10,10 +10,25 @@ public class SQLBuilder {
     private StringBuilder builder = new StringBuilder();
     public List<Object> paramS = new ArrayList<Object>();
 
+    StringBuilder b_builder = new StringBuilder();
+    List<Object> b_paramS = new ArrayList<>();
+
     public void clear()
     {
         builder.delete(0,builder.length());
         paramS.clear();
+    }
+
+    //备分状态
+    protected void backup() {
+        b_builder.append(builder.toString());
+        b_paramS.addAll(paramS);
+    }
+    //还原状态
+    protected void restore() {
+        clear();
+        builder.append(b_builder.toString());
+        paramS.addAll(b_paramS);
     }
 
     public SQLBuilder insert(String code,  Object... args) {
@@ -30,6 +45,15 @@ public class SQLBuilder {
         builder.append(pb.code);
         paramS.addAll(pb.paramS);
         return this;
+    }
+
+    public SQLBuilder remove(int start, int length) {
+        builder.delete(start, start+ length);
+        return this;
+    }
+
+    public int length() {
+        return builder.length();
     }
 
     @Override

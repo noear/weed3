@@ -1,6 +1,7 @@
 package noear.weed.cache;
 
 import noear.weed.IWeedKey;
+import noear.weed.ext.Fun1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,31 @@ public class CacheTags {
         return this;
     }
 
+    public <T extends Object> void update(String tag, Fun1<T,T> setter) {
+        List<String> keys = getCacheKeys(tag);
+
+        for (String key : keys) {
+            Object temp = _Cache.get(key);
+            if (temp == null) {
+                continue;
+            }
+
+
+//            if ((temp instanceof T) == false) {
+//                return;
+//            }
+
+            try {
+                T obj = (T) temp;
+                if (obj != null) {
+                    obj = setter.run(obj);
+                    _Cache.store(key, obj, _Cache.getDefalutSeconds());
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
 
     public int count(String tag)
     {

@@ -1,5 +1,6 @@
 package noear.weed;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,15 +8,10 @@ import java.util.List;
  * Created by yuety on 14-9-10.
  */
 public class DataList {
-    private ArrayList<DataItem> rows = null;
+    private ArrayList<DataItem> rows = new ArrayList<DataItem>();
 
-    private void tryInit() {
-        if (rows == null)
-            rows = new ArrayList<DataItem>();
-    }
 
     public List<DataItem> getRows() {
-        tryInit();
 
         return rows;
     }
@@ -25,7 +21,6 @@ public class DataList {
     }
 
     public void addRow(DataItem row) {
-        tryInit();
 
         rows.add(row);
     }
@@ -45,11 +40,17 @@ public class DataList {
 
     //----------
 
-    public <T extends IBinder>  List<T> toList(T model) {
+    public <T extends IBinder>  List<T> toList(T model) throws SQLException{
         List<T> list = new ArrayList<T>();
 
         for (DataItem r : rows) {
             T item = (T) model.clone();
+
+            if(WeedConfig.isDebug){
+                if(model.getClass().isInstance(item)==false){
+                    throw new SQLException(model.getClass()+" clone error ("+item.getClass()+")");
+                }
+            }
 
             item.bind((key) -> r.getVariate(key));
 
