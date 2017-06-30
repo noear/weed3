@@ -2,6 +2,8 @@ package noear.weed;
 
 import noear.weed.ext.DbType;
 
+import java.math.BigDecimal;
+
 /**
  * Created by noear on 14-6-12.
  * 数据库访问参数（支付范型）
@@ -20,6 +22,10 @@ public class Variate {
             this._hash = name.hashCode();
         else
             this._hash = 0;
+    }
+
+    public boolean isNull(){
+        return _value == null;
     }
 
     public String getName() {
@@ -48,10 +54,11 @@ public class Variate {
     public <T> T value(T def) {
         if (_value == null)
             return def;
-        else
-            return (T)_value;
-
+        else {
+            return (T) _value;
+        }
     }
+
 
 //    private Object getDefault(DbType type)
 //    {

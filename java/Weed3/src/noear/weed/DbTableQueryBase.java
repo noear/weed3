@@ -66,6 +66,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return insert(fun.run(item));
     }
 
+    public long insert() throws SQLException
+    {
+        if(_values_set==null)
+            return 0;
+        else
+            return insert(_values_set);
+    }
+
     public long insert(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
             return 0;
@@ -115,6 +123,25 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         for (IDataItem row : rowsValue) {
             insert(row);
         }
+    }
+
+    DataItem _values_set;
+    public T set(String name,String value){
+        if(_values_set==null){
+            _values_set = new DataItem();
+        }
+
+        _values_set.set(name,value);
+
+        return (T)this;
+    }
+
+    public int update() throws SQLException
+    {
+        if(_values_set==null)
+            return 0;
+        else
+            return update(_values_set);
     }
 
     public int update(Fun1<IDataItem,IDataItem> fun) throws SQLException

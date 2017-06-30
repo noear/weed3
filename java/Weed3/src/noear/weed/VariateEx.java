@@ -39,4 +39,11 @@ public class VariateEx extends Variate {
             _valueSetter.run(value);
         }
     }
+
+    @Override
+    public <T> T value(T def) {
+        getValue();
+
+        return super.value(def);
+    }
 }

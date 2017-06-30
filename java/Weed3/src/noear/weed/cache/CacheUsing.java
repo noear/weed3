@@ -98,11 +98,13 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
         if (cacheT == null) {
             cacheT = exec.run();
 
-            if (cacheCondition != null)  //如果有缓存条件，则使用检查
-                ((Act2<CacheUsing,T>)cacheCondition).run(this,cacheT);
+            if (cacheT != null) {
+                if (cacheCondition != null)  //如果有缓存条件，则使用检查
+                    ((Act2<CacheUsing, T>) cacheCondition).run(this, cacheT);
 
-            if (cacheT != null && cacheController!=CacheState.NonUsing) {
-                outerCaching.store(_weedKey, cacheT, cacheSeconds > 0 ? cacheSeconds : outerCaching.getDefalutSeconds());
+                if (cacheController != CacheState.NonUsing) {
+                    outerCaching.store(_weedKey, cacheT, cacheSeconds > 0 ? cacheSeconds : outerCaching.getDefalutSeconds());
+                }
             }
         }
 //      T temp = do_get(exec, this);
@@ -126,11 +128,13 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
         if (cacheT == null) {
             cacheT = exec.run();
 
-            if (cacheCondition != null)  //如果有缓存条件，则使用检查
-                ((Act2<CacheUsing,T>)cacheCondition).run(this, cacheT);
+            if (cacheT != null) {
+                if (cacheCondition != null)  //如果有缓存条件，则使用检查
+                    ((Act2<CacheUsing, T>) cacheCondition).run(this, cacheT);
 
-            if (cacheT != null && cacheController!=CacheState.NonUsing) {
-                outerCaching.store(_weedKey, cacheT, cacheSeconds > 0 ? cacheSeconds : outerCaching.getDefalutSeconds());
+                if (cacheController != CacheState.NonUsing) {
+                    outerCaching.store(_weedKey, cacheT, cacheSeconds > 0 ? cacheSeconds : outerCaching.getDefalutSeconds());
+                }
             }
         }
 

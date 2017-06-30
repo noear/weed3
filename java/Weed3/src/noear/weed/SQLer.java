@@ -32,7 +32,7 @@ class SQLer {
             if (rset.next())
                 return new Variate(null,rset.getObject(1));
             else
-                return new Variate(null,null);
+                return null;//new Variate(null,null);
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
             throw ex;
@@ -59,7 +59,8 @@ class SQLer {
                 return model;
             }
             else
-                return model;
+                return null;
+
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
             throw ex;
@@ -73,23 +74,33 @@ class SQLer {
     {
         List<T> list = new ArrayList<T>();
         try {
-            rset = query(cmd,transaction);
+            rset = query(cmd, transaction);
 
             while (rset.next()) {
-                T item = (T)model.clone();
+                T item = (T) model.clone();
 
-                item.bind((key)->{
+                if(WeedConfig.isDebug){
+                    if(model.getClass().isInstance(item)==false){
+                        throw new SQLException(model.getClass()+" clone error("+item.getClass()+")");
+                    }
+                }
+
+                item.bind((key) -> {
                     try {
-                        return new Variate(key,rset.getObject(key));
-                    }catch (SQLException ex){
+                        return new Variate(key, rset.getObject(key));
+                    } catch (SQLException ex) {
                         WeedLog.logException(cmd, ex);
-                        return new Variate(key,null);
+                        return new Variate(key, null);
                     }
                 });
 
                 list.add(item);
             }
-            return list;
+
+            if (list.size() > 0)
+                return list;
+            else
+                return null;
 
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
@@ -100,59 +111,62 @@ class SQLer {
         }
     }
 
-    public DataItem getRow(Command cmd,DbTran transaction) throws SQLException
-    {
+    public DataItem getRow(Command cmd,DbTran transaction) throws SQLException {
         DataItem row = new DataItem();
 
         try {
-            rset = query(cmd,transaction);
+            rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
             if (rset.next()) {
 
                 int len = meta.getColumnCount();
 
-                for(int i=1;i<=len;i++) {
+                for (int i = 1; i <= len; i++) {
                     row.set(meta.getColumnName(i), rset.getObject(i));
                 }
             }
 
-            return row;
+            if (row.count() > 0)
+                return row;
+            else
+                return null;
 
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
             throw ex;
-        }
-        finally {
+        } finally {
             tryClose();
         }
     }
 
-    public DataList getTable(Command cmd,DbTran transaction) throws SQLException
-    {
+    public DataList getTable(Command cmd,DbTran transaction) throws SQLException {
         DataList table = new DataList();
 
         try {
-            rset = query(cmd,transaction);
+            rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
             while (rset.next()) {
                 DataItem row = new DataItem();
                 int len = meta.getColumnCount();
 
-                for(int i=1;i<=len;i++) {
+                for (int i = 1; i <= len; i++) {
                     row.set(meta.getColumnName(i), rset.getObject(i));
                 }
 
                 table.addRow(row);
             }
-            return table;
+
+            if (table.getRowCount() > 0)
+                return table;
+            else
+                return null;
 
         } catch (SQLException ex) {
             WeedLog.logException(cmd, ex);
             throw ex;
-        }
-        finally {
+        } finally {
             tryClose();
         }
     }

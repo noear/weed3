@@ -24,6 +24,8 @@ public interface IQuery {
     public DataItem getDataItem() throws SQLException;
     public DataItem getDataItem(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
 
+    public <T> List<T> getArray(String column) throws SQLException;
+
     public IQuery caching(ICacheService service);
     public IQuery usingCache(boolean isCache);
     public IQuery usingCache(int seconds);

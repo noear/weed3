@@ -49,8 +49,11 @@ public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
     protected DbQueryProcedure sql(String sqlCode) {
         this.commandText = sqlCode;
         this.paramS.clear();
-        this._paramS2.clear();
         this._weedKey = null;
+
+        if(_lazyload == null) { //如果是后续加载的话，不能清掉这些参数
+            this._paramS2.clear();
+        }
 
         return this;
     }
@@ -71,6 +74,11 @@ public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
     public DbQueryProcedure set(String param, Fun0<Object> valueGetter) {
         _paramS2.put(param, new VariateEx(param, valueGetter));
         return this;
+    }
+
+    @Override
+    public String getWeedKey() {
+        return buildWeedKey(_paramS2.values());
     }
 
     @Override
