@@ -34,15 +34,19 @@ db.table("user_info")
 
 //简易.插入示例
 db.table("$.test")
-  .insert(new DataItem().set("log_time", "$DATE(NOW())"));
+  .set("log_time", "$DATE(NOW())")
+  .insert();
 
 //简易.更新示例
 db.table("test")
+  .set("txt", "NOW()xx")
+  .set("num", 44)
   .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
-  .update(new DataItem().set("txt", "NOW()xx").set("num", 44));
+  .update();
 
 //简易.存储过程调用示例，及使用使用示例
-db.call("user_get").set("xxx", 1) 
+db.call("user_get")
+  .set("xxx", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
   .getItem(new UserInfoModel()); 
