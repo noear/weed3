@@ -1,5 +1,6 @@
 package noear.weed;
 
+import noear.weed.ext.Act1;
 import noear.weed.ext.Fun1;
 
 import java.sql.SQLException;
@@ -22,6 +23,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     public DbTableQueryBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
+    }
+
+    public T expre(Act1<T> action){
+        action.run((T)this);
+        return (T)this;
     }
 
     protected T table(String table) { //相当于 from

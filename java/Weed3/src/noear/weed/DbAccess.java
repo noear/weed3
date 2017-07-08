@@ -23,7 +23,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /*访问参数*/
     public List<Variate> paramS = new ArrayList<Variate>();
     /*获取执行命令（由子类实现）*/
-    protected abstract Command getCommand();
+    protected abstract Command getCommand() throws SQLException;
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 
