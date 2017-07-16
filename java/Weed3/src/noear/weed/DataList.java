@@ -1,5 +1,6 @@
 package noear.weed;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by yuety on 14-9-10.
  */
-public class DataList {
+public class DataList implements Serializable {
     private ArrayList<DataItem> rows = new ArrayList<DataItem>();
 
 

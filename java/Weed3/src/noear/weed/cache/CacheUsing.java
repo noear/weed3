@@ -73,7 +73,8 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
     public String getWeedKey(){return _weedKey;}
 
     public CacheUsing(ICacheService cache) {
-        outerCaching = cache;
+        this.outerCaching = cache;
+        this.cacheController = CacheState.Using;
     }
 
     //===========

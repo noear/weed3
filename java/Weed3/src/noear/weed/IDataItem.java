@@ -2,12 +2,13 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by yuety on 15/9/2.
  */
-public interface IDataItem {
+public interface IDataItem extends Serializable {
     int count();
     void clear();
     boolean exists(String name);
