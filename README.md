@@ -56,6 +56,33 @@ db.call("$.user_set").set("xxx", 1)
   .tran() //使用事务
   .execute();
 ```
+示例2::<br/>
+```java
+//demo1:: //事务组
+db.tran((t) => {
+    //以下操作在同一个事务里执行
+    t.db().sql("insert into test(txt) values(?)", "cc").tran(t).execute();
+    t.db().sql("insert into test(txt) values(?)", "dd").tran(t).execute();
+    t.db().sql("insert into test(txt) values(?)", "ee").tran(t).execute();
+
+    t.db().sql("update test set txt='1' where id=1").tran(t).execute();
+});
+
+//demo2:: //事务队列
+DbTranQueue queue = new DbTranQueue();
+
+db.tran().join(queue).execute((t) => {
+    db.sql("insert into test(txt) values(?)", "cc").tran(t).execute();
+    db.sql("insert into test(txt) values(?)", "dd").tran(t).execute();
+    db.sql("insert into test(txt) values(?)", "ee").tran(t).execute();
+});
+
+db2.tran().join(queue).execute((t) => {
+    db2.sql("insert into test(txt) values(?)", "gg").tran(t).execute();
+});
+
+queue.complete();
+```
 
 (高定版)及更多示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
