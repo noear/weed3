@@ -84,7 +84,7 @@ db2.tran().join(queue).execute((t) => {
 queue.complete();
 ```
 
-(高定版)及更多示例请参考Weed3Demo <br/>
+更多高级示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
 
 by noear
