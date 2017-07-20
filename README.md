@@ -24,7 +24,7 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例::<br/>
+示例::入门级<br/>
 ```java
 //简易.查询示例
 db.table("user_info") 
@@ -56,7 +56,7 @@ db.call("$.user_set").set("xxx", 1)
   .tran() //使用事务
   .execute();
 ```
-示例2::<br/>
+示例2::简单事务<br/>
 ```java
 //demo1:: //事务组
 db.tran((t) => {
@@ -82,6 +82,41 @@ db2.tran().join(queue).execute((t) => {
 });
 
 queue.complete();
+```
+示例3::简易缓存控制<br/>
+```java
+//最简单的缓存控制
+db.call("user_get").set("xxx", 1)
+    .caching(cache)
+    .usingCache(60 * 1000)
+    .getItem(new UserInfoModel());
+    
+//根据查询结果控制缓存
+db.call("user_get").set("xxx",1)
+    .caching(cache)
+    .usingCache(60 * 100)
+    .getItem(new UserInfoModel(), (cu, t) => { 
+        if (t.user_id == 0)
+            cu.usingCache(false);
+});
+
+//通过tag维护缓存
+//1.缓存并添加简易标签
+db.call("user_get").set("xxx", 1)
+    .caching(cache)
+    .cacheTag("user_"+ 1)
+    .usingCache(60 * 1000)
+    .getItem(new UserInfoModel());
+
+CacheTags tags = new CacheTags(cache);
+//2.1.可根据标签清除缓存
+tags.clear("user_" + 1);
+
+//2.2.可根据标签更新缓存
+tags.update<UserInfoModel>("user_" + 1, (m)=>{
+    m.name = "xxx";
+    return m;
+});
 ```
 
 更多高级示例请参考Weed3Demo <br/>
