@@ -118,6 +118,41 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
+示例4::把存储过程转成类<br/>
+```java
+public class user_get_by_id extends DbStoredProcedure
+{
+    public user_get_by_id()
+    {
+        super(Config.rock_user);
+        call("user_get_by_id");
+
+        //set("{colname}", ()->{popname});
+        //
+        set("_user_id", ()->user_id);
+    }
+
+    public long user_id;
+}
+```
+
+示例5::把查询片段转成类<br/>
+```java
+public class user_get_by_id extends DbQueryProcedure
+{
+    public user_get_by_id()
+    {
+        super(Config.rock_user);
+        sql("SELECT * FROM `user` where user_id = @user_id;");
+
+        //set("{colname}", ()->{popname});
+        //
+        set("@user_id", ()->user_id);
+    }
+
+    public long user_id;
+}
+```
 
 更多高级示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
