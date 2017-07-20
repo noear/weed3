@@ -9,9 +9,8 @@ class LocalCacheRecord {
     public Object data;
     public long time;
 
-    public LocalCacheRecord(Object val, int seconds)
-    {
-        this.time = new Date().getTime()+seconds*1000;
+    public LocalCacheRecord(Object val, int seconds) {
+        this.time = new Date().getTime() + seconds * 1000;
         this.data = val;
     }
 }

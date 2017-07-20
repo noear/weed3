@@ -63,6 +63,7 @@ public class DbContext {
         return _schemaName;
     }
 
+    protected Object pool;
     /*获取连接*/
     public  Connection getConnection() throws SQLException {
         if (_user == null)

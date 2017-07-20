@@ -219,13 +219,23 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return select("1").getValue() != null;
     }
 
+    String _hint = null;
+    public T hint(String hint){
+        _hint = hint;
+        return  (T)this;
+    }
 
     public IQuery select(String columns) {
 
         StringBuilder sb = new StringBuilder();
 
         //1.构建sql
-        sb.append("SELECT ").append(columns).append(" FROM ").append(_table);
+        if(_hint!=null) {
+            sb.append(_hint);
+            _hint = null;
+        }
+
+        sb.append(" SELECT ").append(columns).append(" FROM ").append(_table);
 
         _builder.backup();
         _builder.insert(sb.toString());
