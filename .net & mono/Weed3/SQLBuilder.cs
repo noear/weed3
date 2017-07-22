@@ -49,6 +49,11 @@ namespace Noear.Weed {
             return this;
         }
 
+        public SQLBuilder removeLast() {
+            builder.DeleteCharAt(builder.Length - 1);
+            return this;
+        }
+
         public int length() {
             return builder.Length;
         }

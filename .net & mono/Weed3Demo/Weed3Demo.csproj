@@ -74,6 +74,7 @@
     <Compile Include="demo\model\UserInfoModel.cs" />
     <Compile Include="demo\param\Param1Demo_tbl.cs" />
     <Compile Include="demo\param\Param2Demo_sql.cs" />
+    <Compile Include="demo\sqlbuilder\demo.cs" />
     <Compile Include="demo\store\Store1Demo.cs" />
     <Compile Include="demo\table\demo_table.cs" />
     <Compile Include="demo\table\demo_table_inserlist.cs" />
