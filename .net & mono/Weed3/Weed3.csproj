@@ -71,7 +71,7 @@
     <Compile Include="GetHandlerEx.cs" />
     <Compile Include="IBinder.cs" />
     <Compile Include="IQuery.cs" />
-    <Compile Include="WeedLog.cs" />
+    <Compile Include="WeedConfig.cs" />
     <Compile Include="WeedException.cs" />
     <Compile Include="IWeedKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

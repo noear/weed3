@@ -72,7 +72,7 @@ namespace Noear.Weed {
                     if (atIdx > 0) {
                         Variate temp = doGet(paIdx);
                         if (temp == null) {
-                            WeedLog.logException(cmd, new WeedException("缺少参数"));
+                            WeedConfig.logException(cmd, new WeedException("缺少参数"));
                         }
 
                         temp.setName("p" + paIdx);

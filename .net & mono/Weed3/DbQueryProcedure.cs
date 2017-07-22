@@ -6,10 +6,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Noear.Weed {
-    /*
-     
-         查询过程类
-         */
+    /**
+    * Created by noear on 17-6-12.
+    * 查询过程访问类（模拟存储过程）
+    */
     public class DbQueryProcedure : DbProcedure {
 
         private Dictionary<String, Variate> _paramS2 = new Dictionary<String, Variate> ();
@@ -44,6 +44,14 @@ namespace Noear.Weed {
             if (_lazyload == null) { //如果是后续加载的话，不能清掉这些参数
                 this._paramS2.Clear();
             }
+
+            return this;
+        }
+
+        private DbQueryProcedure doSqlItem(String sqlCode) {
+            this.commandText = sqlCode;
+            this.paramS.Clear();
+            this._weedKey = null;
 
             return this;
         }
@@ -83,6 +91,12 @@ namespace Noear.Weed {
                 var mlist = Regex.Matches(sqlTxt, "@\\w+");
                 foreach (Match m in mlist) {
                     String key = m.Groups[0].Value;
+                    if (WeedConfig.isDebug) {
+                        if (_paramS2.ContainsKey(key) == false) {
+                            throw new WeedException("Lack of parameter:" + key);
+                        }
+                    }
+
                     doSet(_paramS2[key]);
                 }
 
@@ -99,6 +113,26 @@ namespace Noear.Weed {
             cmd.text = sqlTxt;
 
             return cmd;
+        }
+
+        public override int execute() {
+            tryLazyload();
+
+            if (context.allowMultiQueries) {
+                return base.execute();
+            } else {
+                int num = 0;
+                String[] sqlList = commandText.Split(';'); //支持多段SQL执行
+                foreach (String sql in sqlList) {
+                    if (sql.Length > 10) {
+                        doSqlItem(sql);
+
+                        num += base.execute();
+                    }
+                }
+
+                return num;
+            }
         }
     }
 }

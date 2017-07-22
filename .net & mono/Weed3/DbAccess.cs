@@ -85,7 +85,7 @@ namespace Noear.Weed {
         // 执行相关代码
         //
         /*执行命令（返回受影响数）*/
-        public int execute() {
+        public virtual int execute() {
             return new SQLer().execute(getCommand(), _tran);
         }
         

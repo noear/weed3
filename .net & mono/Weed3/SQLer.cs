@@ -14,8 +14,8 @@ namespace Noear.Weed {
         private DbConnection conn;
 
         private void tryClose() {
-            try { if (reader != null) { reader.Close(); reader = null; } } catch (Exception ex) { WeedLog.logException(null, ex); };
-            try { if (conn != null) { conn.Close(); conn = null; } } catch (Exception ex) { WeedLog.logException(null, ex); };
+            try { if (reader != null) { reader.Close(); reader = null; } } catch (Exception ex) { WeedConfig.logException(null, ex); };
+            try { if (conn != null) { conn.Close(); conn = null; } } catch (Exception ex) { WeedConfig.logException(null, ex); };
         }
 
         
@@ -28,7 +28,7 @@ namespace Noear.Weed {
                     return null;//new Variate(null, null);
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -51,7 +51,7 @@ namespace Noear.Weed {
                     return null;
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -78,7 +78,7 @@ namespace Noear.Weed {
                     return null;
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -106,7 +106,7 @@ namespace Noear.Weed {
 
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -138,7 +138,7 @@ namespace Noear.Weed {
 
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -159,7 +159,7 @@ namespace Noear.Weed {
 
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -190,7 +190,7 @@ namespace Noear.Weed {
 
             }
             catch (Exception ex) {
-                WeedLog.logException(cmd, ex);
+                WeedConfig.logException(cmd, ex);
                 throw ex;
             }
             finally {
@@ -211,6 +211,9 @@ namespace Noear.Weed {
         }
 
         private DbCommand buildCMD(Command cmd, DbConnection c, bool isInsert) {
+            //0.监听
+            WeedConfig.logExecute(cmd);
+
             //1.构建连接和命令(外部的c不能给conn)
             if (c == null) {
                 c = conn = cmd.context.getConnection();

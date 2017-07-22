@@ -42,7 +42,7 @@ namespace Noear.Weed {
                     tran.rollback(true);
                 }
                 catch (Exception ex) {
-                    WeedLog.logException(null, ex);
+                    WeedConfig.logException(null, ex);
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace Noear.Weed {
                     tran.close(true);
                 }
                 catch (Exception ex) {
-                    WeedLog.logException(null, ex);
+                    WeedConfig.logException(null, ex);
                 }
             }
         }

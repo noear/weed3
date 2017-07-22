@@ -1,4 +1,10 @@
-﻿3.0.4.41::
+﻿3.0.4.42::
+1.SQLBuilder::修改.添加 removeLast() （去除最后一个字符）
+2.DbContext::修改.添加 allowMultiQueries //是否支持多语句查询
+
+*.添加 SQLBuilder 的示例代码
+
+3.0.4.41::
 1.DbTable::修必.添加 insertList （批量插入数据）
 2.DbTableQuery::修改.添加 insertList （批量插入数据）
 3.cache/EmptyCache::新增

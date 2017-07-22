@@ -27,7 +27,7 @@ namespace Noear.Weed {
         }
 
         public Command lastCommand { get; internal set; }
-
+        public bool allowMultiQueries;
 
         public DbContext(String schemaName, string name) : this(schemaName, name, "") {
 
