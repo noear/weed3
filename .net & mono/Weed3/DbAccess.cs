@@ -232,14 +232,6 @@ namespace Noear.Weed {
             return this;
         }
 
-        //    public DbAccess usingCache(Act2<CacheUsing,Object> condition)
-        //    {
-        //        _cache.usingCache(condition);
-        //        return this;
-        //    }
-
-
-
         /*添加缓存标签*/
         public IQuery cacheTag(String tag) {
             _cache.cacheTag(tag);

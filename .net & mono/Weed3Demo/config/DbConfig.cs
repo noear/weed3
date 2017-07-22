@@ -16,9 +16,8 @@ namespace Weed3Demo {
         public static DbContext pc_pool  = new DbContext("pc_pool", "test");
         public static DbContext pc_bcf   = new DbContext("pc_bcf", "test");
 
-
-        //基于jdbc 无线程池的配置
-        //public static DbContext pc_user  = new DbContext("pc_user","jdbc:mysql://db.zheq.org:3306/pc_user","root","1234");
+        
+        //public static DbContext xxxx  = new DbContext("pc_user","jdbc:mysql://db.zheq.org:3306/pc_user","root","1234",null);
 
     }
 }

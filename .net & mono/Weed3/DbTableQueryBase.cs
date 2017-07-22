@@ -58,13 +58,7 @@ namespace Noear.Weed {
             _builder.append(" ) ");
             return (T)this;
         }
-
-        public long insert(Func<IDataItem, IDataItem> fun) {
-            DataItem item = new DataItem();
-            return insert(fun(item));
-        }
-
-
+        
         public long insert(IDataItem data) {
             if (data == null || data.count() == 0)
                 return 0;
@@ -112,16 +106,83 @@ namespace Noear.Weed {
             return compile().insert();
         }
 
-        public void insertAll(List<IDataItem> rowsValue) {
-            foreach (IDataItem row in rowsValue) {
-                insert(row);
+        public void insertList(List<IDataItem> valuesList) {
+            if (valuesList == null || valuesList.Count == 0)
+                return;
+
+            List<GetHandler> list2 = new List<GetHandler>();
+            foreach (IDataItem values in valuesList) {
+                list2.Add(values.get);
             }
+            insertList(valuesList[0], list2);
         }
-        
-        public int update(Func<IDataItem, IDataItem> fun) {
+
+        protected void insertList(IDataItem cols, List<GetHandler> valuesList) {
+            if (valuesList == null || valuesList.Count == 0)
+                return;
+
+            if (cols == null || cols.count() == 0)
+                return;
+
+            List<Object> args = new List<Object>();
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" INSERT INTO ").Append(_table).Append(" (");
+            foreach (String key in cols.keys()) {
+                sb.Append(_context.field(key)).Append(",");
+            }
+            sb.DeleteCharAt(sb.Length - 1);
+
+            sb.Append(") ");
+
+            sb.Append("VALUES");
+
+            foreach (GetHandler item in valuesList) {
+                sb.Append("(");
+
+                foreach (String key in cols.keys()) {
+                    Object val = item(key);
+
+                    if (val is String) {
+                        String val2 = (String)val;
+                        if (val2.IndexOf('$') == 0) { //说明是SQL函数
+                            sb.Append(val2.Substring(1)).Append(",");
+                        } else {
+                            sb.Append("?,");
+                            args.Add(val);
+                        }
+                    } else {
+                        sb.Append("?,");
+                        args.Add(val);
+                    }
+                }
+                sb.DeleteCharAt(sb.Length - 1);
+                sb.Append("),");
+            }
+
+            sb.DeleteCharAt(sb.Length - 1);
+            sb.Append(");");
+
+            _builder.append(sb.ToString(), args.ToArray());
+
+            compile().execute();
+        }
+
+
+        public long insert(Action<IDataItem> fun) {
             DataItem item = new DataItem();
-            return update(fun(item));
+            fun(item);
+
+            return insert(item);
         }
+
+        public int update(Action<IDataItem> fun) {
+            DataItem item = new DataItem();
+            fun(item);
+
+            return update(item);
+        }
+
 
         public int update(IDataItem data) {
             if (data == null || data.count() == 0)

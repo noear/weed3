@@ -16,6 +16,29 @@ namespace Weed3Demo.demo.cache {
             
         }
 
+        public static void demo_cache3() {
+            DbContext db = DbConfig.pc_bcf;
+            ICacheService cache = null;
+
+            //1.缓存并添加简易标签
+            db.call("user_get").set("xxx", 1)
+                .caching(cache)
+                .cacheTag("user_"+ 1)
+                .usingCache(60 * 1000)
+                .getItem(new UserInfoModel());
+
+            CacheTags tags = new CacheTags(cache);
+            //2.1.可根据标签清除缓存
+            tags.clear("user_" + 1);
+
+            //2.2.可根据标签更新缓存
+            tags.update<UserInfoModel>("user_" + 1, (m)=>{
+                m.name = "xxx";
+                return m;
+            });
+
+        }
+
         //带条件判断的缓存控制
         public static void demo_cache_condition() {
             DbContext db = DbConfig.pc_bcf;

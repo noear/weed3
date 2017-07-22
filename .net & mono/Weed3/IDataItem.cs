@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Noear.Weed {
-    public interface IDataItem {
+    public interface IDataItem  {
         int count();
         void clear();
         bool exists(string name);

@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 
-namespace Weed3Demo.test.store {
+namespace Weed3Demo.demo_ex {
     public class user_update : DbStoredProcedure {
         public user_update() : base(DbConfig.test) {
             call("user_update");

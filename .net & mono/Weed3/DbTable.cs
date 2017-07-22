@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Noear.Weed {
     public class DbTable : DbTableQueryBase<DbTable> {
@@ -30,6 +31,20 @@ namespace Noear.Weed {
         //只会更新不是null的数据
         public void update(GetHandler source) {
             update(DataItem.create(_item, source));
+        }
+
+        public void insertList<T>(List<T> valuesList, Func<T, GetHandler> hander) {
+            List<GetHandler> list2 = new List<GetHandler>();
+
+            foreach (T item in valuesList) {
+                list2.Add(hander(item));
+            }
+
+            insertList(list2);
+        }
+
+        public void insertList(List<GetHandler> valuesList) {
+            insertList(_item, valuesList);
         }
     }
 }

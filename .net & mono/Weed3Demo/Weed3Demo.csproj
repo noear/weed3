@@ -72,21 +72,23 @@
     <Compile Include="config\DbConfig.cs" />
     <Compile Include="demo\cache\Cache1Demo.cs" />
     <Compile Include="demo\model\UserInfoModel.cs" />
-    <Compile Include="demo\param\Param1Demo.cs" />
+    <Compile Include="demo\param\Param1Demo_tbl.cs" />
     <Compile Include="demo\param\Param2Demo_sql.cs" />
     <Compile Include="demo\store\Store1Demo.cs" />
     <Compile Include="demo\table\Table1Demo.cs" />
     <Compile Include="demo\tran\Tran1Demo.cs" />
     <Compile Include="demo\tran\Tran2Demo.cs" />
-    <Compile Include="demo_plus\store\demo_store.cs" />
-    <Compile Include="demo_plus\store\user_get_list.cs" />
+    <Compile Include="demo_plus\queryProcedure\demo_query.cs" />
+    <Compile Include="demo_plus\queryProcedure\user_get2.cs" />
+    <Compile Include="demo_plus\queryProcedure\user_get_list2.cs" />
+    <Compile Include="demo_plus\queryProcedure\user_update2.cs" />
+    <Compile Include="demo_plus\storeProcedure\demo_store.cs" />
+    <Compile Include="demo_plus\storeProcedure\user_get_list.cs" />
     <Compile Include="demo_plus\table\demo_table.cs" />
     <Compile Include="demo_plus\table\user_info.cs" />
-    <Compile Include="test\model\UserModel.cs" />
-    <Compile Include="test\store\user_get.cs" />
-    <Compile Include="test\store\user_update.cs" />
-    <Compile Include="test\table\users.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="demo_plus\storeProcedure\user_get.cs" />
+    <Compile Include="demo_plus\storeProcedure\user_update.cs" />
+    <Compile Include="demo_plus\table\user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

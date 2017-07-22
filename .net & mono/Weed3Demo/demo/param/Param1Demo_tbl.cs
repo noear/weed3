@@ -9,7 +9,7 @@ namespace Weed3Demo.demo.param {
     // $fun  :sql fun 
     // ?     :val
     // ?...  :[]
-    public class Param1Demo {
+    public class Param1Demo_tbl {
         public static void demo_value() {
             
            var m = DbConfig.pc_user.table("$.user_info")
