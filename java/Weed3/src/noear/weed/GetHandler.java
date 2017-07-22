@@ -5,5 +5,5 @@ package noear.weed;
  * 数据获取代理
  */
 public interface GetHandler {
-    public Object get(String key);
+    Object get(String name);
 }

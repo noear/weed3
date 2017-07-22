@@ -65,13 +65,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
-    public long insert(Fun1<IDataItem,IDataItem> fun) throws SQLException
-    {
-        DataItem item = new DataItem();
-
-        return insert(fun.run(item));
-    }
-
 
     public long insert(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
@@ -90,7 +83,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.deleteCharAt(sb.length() - 1);
 
-        sb.append(") VALUES (");
+        sb.append(") ");
+        sb.append("VALUES");
+        sb.append("(");
+
         data.forEach((key,value)->{
             if(value==null)
                 return;
@@ -118,17 +114,73 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return compile().insert();
     }
 
-    public void insertAll(List<IDataItem> rowsValue) throws SQLException{
-        for (IDataItem row : rowsValue) {
-            insert(row);
+    protected <T extends GetHandler> void insertList(IDataItem cols, List<T> valuesList)throws SQLException{
+        if(valuesList == null || valuesList.size()==0)
+            return;
+
+        if (cols == null || cols.count() == 0)
+            return;
+
+        List<Object> args = new ArrayList<Object>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" INSERT INTO ").append(_table).append(" (");
+        for(String key : cols.keys()){
+            sb.append(_context.field(key)).append(",");
         }
+        sb.deleteCharAt(sb.length() - 1);
+
+        sb.append(") ");
+
+        sb.append("VALUES");
+
+        for(GetHandler item : valuesList){
+            sb.append("(");
+
+            for(String key : cols.keys()){
+               Object val = item.get(key);
+
+                if (val instanceof String) {
+                    String val2 = (String)val;
+                    if (val2.indexOf('$') == 0) { //说明是SQL函数
+                        sb.append(val2.substring(1)).append(",");
+                    }
+                    else {
+                        sb.append("?,");
+                        args.add(val);
+                    }
+                }
+                else {
+                    sb.append("?,");
+                    args.add(val);
+                }
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append("),");
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(");");
+
+        _builder.append(sb.toString(), args.toArray());
+
+        compile().execute();
     }
 
-    public int update(Fun1<IDataItem,IDataItem> fun) throws SQLException
+    public long insert(Act1<IDataItem> fun) throws SQLException
     {
         DataItem item = new DataItem();
+        fun.run(item);
 
-        return update(fun.run(item));
+        return insert(item);
+    }
+
+    public int update(Act1<IDataItem> fun) throws SQLException
+    {
+        DataItem item = new DataItem();
+        fun.run(item);
+
+        return update(item);
     }
 
     public int update(IDataItem data) throws SQLException{

@@ -71,10 +71,6 @@ public class DbContext {
         else
             return DriverManager.getConnection(_url, _user, _password);
     }
-//
-//    public DbQueryProcedure sql(String code) {
-//        return new DbQueryProcedure(this).sql(code);
-//    }
 
     public DbQuery sql(String code, Object... args) {
         return new DbQuery(this).sql(new SQLBuilder().append(code, args));
@@ -91,8 +87,11 @@ public class DbContext {
     }
 
     /*获取process执行对象*/
-    public DbStoredProcedure call(String process) {
-        return new DbStoredProcedure(this).call(process);
+    public DbProcedure call(String process) {
+        if(process.indexOf(" ")>0)
+            return new DbQueryProcedure(this).sql(process);
+        else
+            return new DbStoredProcedure(this).call(process);
     }
 
 

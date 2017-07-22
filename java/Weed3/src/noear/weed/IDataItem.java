@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by yuety on 15/9/2.
  */
-public interface IDataItem extends Serializable {
+public interface IDataItem extends GetHandler, Serializable {
     int count();
     void clear();
     boolean exists(String name);
