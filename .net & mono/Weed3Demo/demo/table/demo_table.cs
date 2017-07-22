@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Weed3Demo.demo.model;
 
 namespace Weed3Demo.demo.table {
-    public class Table1Demo {
+    public class demo_table {
         static DbContext db = DbConfig.pc_user;
 
         public static void demo_insert() {

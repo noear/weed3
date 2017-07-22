@@ -40,25 +40,11 @@ namespace Noear.Weed {
             else
                 return insert(_item);
         }
-
         
-
-        public void insertList<T>(List<T> valuesList, Func<T, GetHandler> hander) {
-            if (_item != null) {
-                List<GetHandler> list2 = new List<GetHandler>();
-
-                foreach (T item in valuesList) {
-                    list2.Add(hander(item));
-                }
-
-                insertList(list2);
-            }
-        }
-
-        public void insertList(List<GetHandler> valuesList) {
-            if (_item != null) {
-                insertList(_item, valuesList);
-            }
-        }
+        //public void insertList(List<GetHandler> valuesList) {
+        //    if (_item != null) {
+        //        insertList(_item, valuesList);
+        //    }
+        //}
     }
 }

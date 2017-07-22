@@ -75,7 +75,8 @@
     <Compile Include="demo\param\Param1Demo_tbl.cs" />
     <Compile Include="demo\param\Param2Demo_sql.cs" />
     <Compile Include="demo\store\Store1Demo.cs" />
-    <Compile Include="demo\table\Table1Demo.cs" />
+    <Compile Include="demo\table\demo_table.cs" />
+    <Compile Include="demo\table\demo_table_inserlist.cs" />
     <Compile Include="demo\tran\Tran1Demo.cs" />
     <Compile Include="demo\tran\Tran2Demo.cs" />
     <Compile Include="demo_plus\queryProcedure\demo_query.cs" />
@@ -85,10 +86,11 @@
     <Compile Include="demo_plus\storeProcedure\demo_store.cs" />
     <Compile Include="demo_plus\storeProcedure\user_get_list.cs" />
     <Compile Include="demo_plus\table\demo_table.cs" />
-    <Compile Include="demo_plus\table\user_info.cs" />
+    <Compile Include="demo_plus\table\demo_table_inserlist.cs" />
+    <Compile Include="demo_plus\table\UserInfoM.cs" />
     <Compile Include="demo_plus\storeProcedure\user_get.cs" />
     <Compile Include="demo_plus\storeProcedure\user_update.cs" />
-    <Compile Include="demo_plus\table\user.cs" />
+    <Compile Include="demo_plus\table\UserM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

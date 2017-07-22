@@ -33,18 +33,18 @@ namespace Noear.Weed {
             update(DataItem.create(_item, source));
         }
 
-        public void insertList<T>(List<T> valuesList, Func<T, GetHandler> hander) {
-            List<GetHandler> list2 = new List<GetHandler>();
+        //public void insertList<T>(List<T> valuesList, Func<T, GetHandler> hander) {
+        //    List<GetHandler> list2 = new List<GetHandler>();
 
-            foreach (T item in valuesList) {
-                list2.Add(hander(item));
-            }
+        //    foreach (T item in valuesList) {
+        //        list2.Add(hander(item));
+        //    }
 
-            insertList(list2);
-        }
+        //    insertList(list2);
+        //}
 
-        public void insertList(List<GetHandler> valuesList) {
-            insertList(_item, valuesList);
-        }
+        //public void insertList(List<GetHandler> valuesList) {
+        //    insertList(_item, valuesList);
+        //}
     }
 }

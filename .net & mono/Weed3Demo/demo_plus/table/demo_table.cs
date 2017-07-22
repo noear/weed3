@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Weed3Demo.demo_ex.table {
     class demo_table {
         public void demo_insert() {
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
             tb.userID = 12;
             tb.sex = 1;//男的
 
@@ -18,7 +18,7 @@ namespace Weed3Demo.demo_ex.table {
         public void demo_insert2() {
             var data = new Dictionary<string, object>();//或其它字段类
 
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
             tb.insert((key)=> {
                 if (data.ContainsKey(key))
                     return data[key];
@@ -28,7 +28,7 @@ namespace Weed3Demo.demo_ex.table {
         }
 
         public void demo_update() {
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
             tb.sex = 1;//男的
 
             tb.where("id=?", 22).update();
@@ -36,7 +36,7 @@ namespace Weed3Demo.demo_ex.table {
 
         public void demo_update2() {
             var data = new Dictionary<string, object>();
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
             
             tb.where("id=?", 22).update((key)=> {
                 if (data.ContainsKey(key))
@@ -48,7 +48,7 @@ namespace Weed3Demo.demo_ex.table {
 
         public void demo_update3() {
             var data = new Dictionary<string, object>();
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
 
             tb.where("id=?", 22).update((key) => {
                 switch (key) {
@@ -60,19 +60,19 @@ namespace Weed3Demo.demo_ex.table {
         }
 
         public void demo_delete() {
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
 
             tb.where("id=?", 22).delete();
         }
 
         public void demo_select() {
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
 
             tb.where("id=?", 22).select("*");
         }
 
         public void demo_select_join() {
-            user_info tb = new user_info();
+            UserInfoM tb = new UserInfoM();
 
             tb.innerJoin("$.user_link l").on("user_id = l.user_id")
               .where("id=?", 22)

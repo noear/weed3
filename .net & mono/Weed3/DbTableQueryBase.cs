@@ -106,23 +106,41 @@ namespace Noear.Weed {
             return compile().insert();
         }
 
-        public void insertList(List<IDataItem> valuesList) {
+        public bool insertList<X>(List<X> valuesList, Action<X, DataItem> hander) {
+            List<DataItem> list2 = new List<DataItem>();
+
+            foreach (X values in valuesList) {
+                DataItem item = new DataItem();
+                hander(values, item);
+
+                list2.Add(item);
+            }
+
+            if (list2.Count > 0) {
+                return insertList(list2);
+            } else {
+                return false;
+            }
+        }
+
+        public bool insertList(List<DataItem> valuesList) {
             if (valuesList == null || valuesList.Count == 0)
-                return;
+                return false;
 
             List<GetHandler> list2 = new List<GetHandler>();
             foreach (IDataItem values in valuesList) {
                 list2.Add(values.get);
             }
-            insertList(valuesList[0], list2);
+
+            return insertList(valuesList[0], list2);
         }
 
-        protected void insertList(IDataItem cols, List<GetHandler> valuesList) {
+        protected bool insertList(IDataItem cols, List<GetHandler> valuesList) {
             if (valuesList == null || valuesList.Count == 0)
-                return;
+                return false;
 
             if (cols == null || cols.count() == 0)
-                return;
+                return false;
 
             List<Object> args = new List<Object>();
             StringBuilder sb = new StringBuilder();
@@ -165,7 +183,7 @@ namespace Noear.Weed {
 
             _builder.append(sb.ToString(), args.ToArray());
 
-            compile().execute();
+            return compile().execute() > 0;
         }
 
 

@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Weed3Demo.test.table {
-    public class user : DbTable {
-        public user() : base(DbConfig.test) {
+    public class UserM : DbTable {
+        public UserM() : base(DbConfig.test) {
             table("users u");
             set("UserID", () => UserID);
             set("Nickname", () => Nickname);
