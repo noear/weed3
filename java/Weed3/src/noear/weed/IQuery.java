@@ -4,6 +4,7 @@ import noear.weed.cache.CacheUsing;
 import noear.weed.cache.ICacheService;
 import noear.weed.ext.Act2;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 

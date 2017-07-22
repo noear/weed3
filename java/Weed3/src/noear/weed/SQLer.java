@@ -18,11 +18,11 @@ class SQLer {
     private  void tryClose()
     {
         try { if (rset != null){ rset.close(); rset=null;}} catch (Exception ex) {
-            WeedLog.logException(null, ex);};
+            WeedConfig.logException(null, ex);};
         try { if (stmt != null){ stmt.close(); stmt=null;}} catch (Exception ex) {
-            WeedLog.logException(null, ex);};
+            WeedConfig.logException(null, ex);};
         try { if (conn != null){ conn.close(); conn=null;}} catch (Exception ex) {
-            WeedLog.logException(null, ex);};
+            WeedConfig.logException(null, ex);};
     }
 
     public Variate getVariate(Command cmd,DbTran transaction) throws SQLException{
@@ -34,7 +34,7 @@ class SQLer {
             else
                 return null;//new Variate(null,null);
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -51,7 +51,7 @@ class SQLer {
                     try {
                         return new Variate(key,rset.getObject(key));
                     }catch (SQLException ex){
-                        WeedLog.logException(cmd, ex);
+                        WeedConfig.logException(cmd, ex);
                         return new Variate(key,null);
                     }
                 });
@@ -62,7 +62,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         }
         finally {
@@ -89,7 +89,7 @@ class SQLer {
                     try {
                         return new Variate(key, rset.getObject(key));
                     } catch (SQLException ex) {
-                        WeedLog.logException(cmd, ex);
+                        WeedConfig.logException(cmd, ex);
                         return new Variate(key, null);
                     }
                 });
@@ -103,7 +103,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         }
         finally {
@@ -133,7 +133,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -164,7 +164,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -182,7 +182,7 @@ class SQLer {
             return stmt.executeUpdate();
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -205,7 +205,7 @@ class SQLer {
                 return 0l;
 
         } catch (SQLException ex) {
-            WeedLog.logException(cmd, ex);
+            WeedConfig.logException(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -224,14 +224,17 @@ class SQLer {
     }
 
     private void buildCMD(Command cmd, Connection c, boolean isInsert) throws SQLException {
+        //0.监听
+        WeedConfig.logExecute(cmd);
+
         //1.构建连接和命令(外部的c不能给conn)
         if (c == null)
             c = conn = cmd.context.getConnection();
 
-        if (cmd.text.indexOf("{call")>=0)
+        if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.text);
         else {
-            if(isInsert)
+            if (isInsert)
                 stmt = c.prepareStatement(cmd.text, Statement.RETURN_GENERATED_KEYS);
             else
                 stmt = c.prepareStatement(cmd.text);

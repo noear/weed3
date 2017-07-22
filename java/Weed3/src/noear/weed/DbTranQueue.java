@@ -51,7 +51,7 @@ public class DbTranQueue {
             try {
                 tran.close(true);
             }catch (Exception ex) {
-                WeedLog.logException(null, ex);
+                WeedConfig.logException(null, ex);
             }
         }
     }

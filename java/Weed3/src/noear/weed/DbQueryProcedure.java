@@ -89,7 +89,7 @@ public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
     }
 
     @Override
-    protected Command getCommand(){
+    protected Command getCommand() throws SQLException{
         tryLazyload();
 
         Command cmd = new Command(this.context);
@@ -103,6 +103,11 @@ public class DbQueryProcedure extends DbAccess<DbQueryProcedure> {
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
                 String key = m.group(0);
+                if(WeedConfig.isDebug){
+                    if(_paramS2.containsKey(key)==false){
+                        throw new SQLException("Lack of parameter:"+key);
+                    }
+                }
                 doSet(_paramS2.get(key));
             }
 

@@ -23,7 +23,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /*访问参数*/
     public List<Variate> paramS = new ArrayList<Variate>();
     /*获取执行命令（由子类实现）*/
-    protected abstract Command getCommand();
+    protected abstract Command getCommand() throws SQLException;
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 
@@ -104,7 +104,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     public Object getValue() throws SQLException {
-        return new SQLer().getVariate(getCommand(), _tran).getValue();
+        Variate rst = new SQLer().getVariate(getCommand(), _tran);
+
+        if(rst == null)
+            return null;
+        else
+            return rst.getValue();
     }
 
     /*执行命令（返回符合条件的第一个值）*/
