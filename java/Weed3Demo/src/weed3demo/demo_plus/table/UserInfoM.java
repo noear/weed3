@@ -6,8 +6,8 @@ import weed3demo.config.DbConfig;
 /**
  * Created by yuety on 2017/7/22.
  */
-public class user_info extends DbTable {
-    public user_info() {
+public class UserInfoM extends DbTable {
+    public UserInfoM() {
         super(DbConfig.test);
 
         table("$.user_info u");

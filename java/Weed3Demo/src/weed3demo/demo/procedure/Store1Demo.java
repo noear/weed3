@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * Created by yuety on 2017/7/22.
  */
 public class Store1Demo {
-    //存储过程::
+    //1.存储过程::
     public static void demo_select() throws SQLException{
         DbContext db = DbConfig.pc_bcf;
 
@@ -26,7 +26,7 @@ public class Store1Demo {
                 .set("_age", 12).execute();
     }
 
-    //查询过程::
+    //2.查询过程::
     public static void demo_select2() throws SQLException{
         DbContext db = DbConfig.pc_bcf;
 

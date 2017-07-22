@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.ext.Act2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,11 @@ public class SQLBuilder {
 
     public SQLBuilder remove(int start, int length) {
         builder.delete(start, start+ length);
+        return this;
+    }
+
+    public SQLBuilder removeLast(){
+        builder.deleteCharAt(builder.length() - 1);
         return this;
     }
 
