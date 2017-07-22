@@ -1,6 +1,7 @@
 package noear.weed;
 
 import noear.weed.ext.Act1;
+import noear.weed.ext.Act2;
 import noear.weed.ext.Fun0;
 import noear.weed.ext.Fun1;
 
@@ -52,22 +53,7 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     }
 
 
-
-    public <T> void insertList(List<T> valuesList, Fun1<GetHandler, T> hander) throws SQLException {
-        if (_item != null) {
-            List<GetHandler> list2 = new ArrayList<>();
-
-            for (T item : valuesList) {
-                list2.add(hander.run(item));
-            }
-
-            insertList(list2);
-        }
-    }
-
-    public <T extends GetHandler> void insertList(List<T> valuesList) throws SQLException {
-        if (_item != null) {
-            insertList(_item, valuesList);
-        }
-    }
+//    public <T extends GetHandler> boolean insertList(List<T> valuesList) throws SQLException {
+//        return insertList(_item, valuesList);
+//    }
 }

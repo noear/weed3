@@ -1,6 +1,7 @@
 package noear.weed;
 
 import noear.weed.ext.Act1;
+import noear.weed.ext.Act2;
 import noear.weed.ext.Fun1;
 
 import java.sql.SQLException;
@@ -114,12 +115,36 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return compile().insert();
     }
 
-    protected <T extends GetHandler> void insertList(IDataItem cols, List<T> valuesList)throws SQLException{
+    public <T> boolean insertList(List<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
+        List<DataItem> list2 = new ArrayList<>();
+
+        for (T values : valuesList) {
+            DataItem item = new DataItem();
+            hander.run(values, item);
+
+            list2.add(item);
+        }
+
+        if (list2.size() > 0) {
+            return insertList(list2.get(0), list2);
+        }else{
+            return false;
+        }
+    }
+
+    public boolean insertList(List<DataItem> valuesList) throws SQLException {
+        if (valuesList == null || valuesList.size() == 0)
+            return false;
+
+        return insertList(valuesList.get(0), valuesList);
+    }
+
+    protected <T extends GetHandler> boolean insertList(IDataItem cols, List<T> valuesList)throws SQLException{
         if(valuesList == null || valuesList.size()==0)
-            return;
+            return false;
 
         if (cols == null || cols.count() == 0)
-            return;
+            return false;
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
@@ -164,7 +189,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         _builder.append(sb.toString(), args.toArray());
 
-        compile().execute();
+        return compile().execute() > 0;
     }
 
     public long insert(Act1<IDataItem> fun) throws SQLException

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by yuety on 2017/7/22.
  */
-public class Table1Demo {
+public class demo_table {
 
     static DbContext db = DbConfig.pc_user;
 

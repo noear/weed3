@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class demo_table {
     public void demo_insert() throws SQLException{
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
         tb.userID = 12;
         tb.sex = 1;//男的
 
@@ -19,7 +19,7 @@ public class demo_table {
     public void demo_insert2() throws SQLException {
         Map<String, String> data = new HashMap<>();//或其它字段类
 
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
         tb.insert((key) -> {
             if (data.containsKey(key))
                 return data.get(key);
@@ -29,7 +29,7 @@ public class demo_table {
     }
 
     public void demo_update() throws SQLException{
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
         tb.sex = 1;//男的
 
         tb.where("id=?", 22).update();
@@ -38,7 +38,7 @@ public class demo_table {
     public void demo_update2() throws SQLException{
         Map<String, Object> data = new HashMap<>();
 
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
 
         tb.where("id=?", 22).update((key) -> {
             if (data.containsKey(key))
@@ -50,7 +50,7 @@ public class demo_table {
 
     public void demo_update3() throws SQLException{
         Map<String, Object> data = new HashMap<>();
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
 
         tb.where("id=?", 22).update((key) -> {
             switch (key) {
@@ -65,19 +65,19 @@ public class demo_table {
     }
 
     public void demo_delete() throws SQLException {
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
 
         tb.where("id=?", 22).delete();
     }
 
     public void demo_select() throws SQLException{
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
 
         tb.where("id=?", 22).select("*");
     }
 
     public void demo_select_join() throws SQLException{
-        user_info tb = new user_info();
+        UserInfoM tb = new UserInfoM();
 
         tb.innerJoin("$.user_link l").on("user_id = l.user_id")
                 .where("id=?", 22)
