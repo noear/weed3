@@ -5,11 +5,11 @@
 与具体数据库无关（或许支持所有数据库）<br/>
 
 特点：<br/>
-1.0反射0注解<br/>
+1.零反射零注解<br/>
 2.漂亮的缓存控制<br/>
 3.纯代码无任何配置<br/>
 4.分布式事务集成<br/>
-5.还有万能的数据绑定<br/>
+5.万能的数据绑定<br/>
 
 占位符说明：<br/>
  $.       //数据库名占位数<br/>
@@ -24,8 +24,10 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例::入门级<br/>
+示例1.1::入门级<br/>
 ```java
+DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
+
 //简易.查询示例
 db.table("user_info") 
   .where("user_id<?", 10)
@@ -37,6 +39,13 @@ db.table("$.test")
   .set("log_time", "$DATE(NOW())")
   .insert();
 
+//简易.批量插入示例
+db.table("test")
+  .insertList(list,(d,m)->{
+      m.set("log_time", "$DATE(NOW())");
+      m.set("name",d.name);
+  });
+
 //简易.更新示例
 db.table("test")
   .set("txt", "NOW()xx")
@@ -46,17 +55,24 @@ db.table("test")
 
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
-  .set("xxx", 1) 
+  .set("xxx", 1)  //保持与存储过程参数的序顺一致
+  .getItem(new UserInfoModel()); 
+
+//简易.查询过程调用示例，及使用使用示例
+db.call("select * from user where user_id=@userID")
+  .set("@userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
   .getItem(new UserInfoModel()); 
 
 //简易.存储过程调用示例，及使用事务示例
-db.call("$.user_set").set("xxx", 1) 
-  .tran() //使用事务
-  .execute();
+db.tran(tran->{
+    db.call("$.user_set").set("xxx", 1) 
+      .tran(tran) //使用事务
+      .execute();
+});
 ```
-示例2::简单事务<br/>
+示例1.2::事务控制<br/>
 ```java
 //demo1:: //事务组
 db.tran((t) => {
@@ -83,7 +99,7 @@ db2.tran().join(queue).execute((t) => {
 
 queue.complete();
 ```
-示例3::简易缓存控制<br/>
+示例1.3::缓存控制<br/>
 ```java
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
@@ -118,13 +134,13 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
-示例4::把存储过程转成类<br/>
+示例2.1::[存储过程]映射类<br/>
 ```java
 public class user_get_by_id extends DbStoredProcedure
 {
     public user_get_by_id()
     {
-        super(Config.rock_user);
+        super(Config.user);
         call("user_get_by_id");
 
         //set("{colname}", ()->{popname});
@@ -134,15 +150,21 @@ public class user_get_by_id extends DbStoredProcedure
 
     public long user_id;
 }
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
 ```
 
-示例5::把查询片段转成类<br/>
+示例2.2::[查询过程]映身类<br/>
 ```java
 public class user_get_by_id extends DbQueryProcedure
 {
     public user_get_by_id()
     {
-        super(Config.rock_user);
+        super(Config.user);
         sql("SELECT * FROM `user` where user_id = @user_id;");
 
         //set("{colname}", ()->{popname});
@@ -152,6 +174,42 @@ public class user_get_by_id extends DbQueryProcedure
 
     public long user_id;
 }
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
+```
+
+示例2.3::数据模型类（或叫实体类等）<br/>
+```java
+public class UserInfoModel implements IBinder {
+    public long user_id;
+    public int role;
+    public String mobile;
+    public String udid;
+    public int city_id;
+    public String name;
+    public String icon;
+
+
+    public void bind(GetHandlerEx s) {
+        user_id = s.get("user_id").value(0l);
+        role    = s.get("role").value(0);
+        mobile  = s.get("mobile").value("");
+        udid    = s.get("udid").value("");
+        city_id = s.get("city_id").value(0);
+        name    = s.get("name").value("");
+        icon    = s.get("icon").value("");
+
+    }
+
+    public IBinder clone() {
+        return new UserInfoModel();
+    }
+}
+
 ```
 
 更多高级示例请参考Weed3Demo <br/>

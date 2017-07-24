@@ -45,6 +45,15 @@
             <systemPath>${basedir}/lib/Noear.Snacks3.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>Weed3</groupId>
+            <artifactId>Weed3</artifactId>
+            <version>1.0</version>
+
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Noear.Weed3.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>

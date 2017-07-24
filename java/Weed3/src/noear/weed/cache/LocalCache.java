@@ -1,5 +1,7 @@
 package noear.weed.cache;
 
+import noear.weed.ext.Fun1;
+
 import java.util.*;
 
 /**
@@ -7,7 +9,7 @@ import java.util.*;
  * 嵌入式缓存效率高；基于总量与超时双重管理(比自动超时要简单)
  *
  */
-public class LocalCache implements ICacheService {
+public class LocalCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
@@ -27,6 +29,7 @@ public class LocalCache implements ICacheService {
         _max = recordMax;
     }
 
+    @Override
     public void store(String key, Object obj, int seconds) {
         Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
         LocalCacheRecord val = new LocalCacheRecord(obj, seconds);
@@ -44,6 +47,7 @@ public class LocalCache implements ICacheService {
         }
     }
 
+    @Override
     public Object get(String key) {
         Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
         LocalCacheRecord val = mcc.get(hashKey);
@@ -60,6 +64,7 @@ public class LocalCache implements ICacheService {
             return val.data;
     }
 
+    @Override
     public void remove(String key) {
         Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
 
@@ -74,11 +79,28 @@ public class LocalCache implements ICacheService {
         _count = 0;
     }
 
+    @Override
     public int getDefalutSeconds() {
         return _defaultSeconds;
     }
 
+    @Override
     public String getCacheKeyHead() {
         return _cacheKeyHead;
+    }
+
+    //==================
+    //
+    @Override
+    public CacheTags tags() {
+        return new CacheTags(this);
+    }
+    @Override
+    public void clear(String tag) {
+        tags().clear(tag);
+    }
+    @Override
+    public <T> void update(String tag, Fun1<T, T> setter) {
+        tags().update(tag, setter);
     }
 }

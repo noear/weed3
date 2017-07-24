@@ -228,8 +228,9 @@ class SQLer {
         WeedConfig.logExecute(cmd);
 
         //1.构建连接和命令(外部的c不能给conn)
-        if (c == null)
+        if (c == null) {
             c = conn = cmd.context.getConnection();
+        }
 
         if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.text);
