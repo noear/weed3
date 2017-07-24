@@ -4,14 +4,13 @@ package noear.weed.cache;
  * Created by noear on 14-6-12.
  */
 public interface ICacheUsing<Q> {
-    public Q usingCache(boolean isCache);
+    Q usingCache(boolean isCache);
 
-    public Q usingCache(int seconds);
+    Q usingCache(int seconds);
 
-    public Q refurbishCache();
+    Q refurbishCache();
 
-    public Q refurbishCache(boolean isRefubish);
+    Q refurbishCache(boolean isRefubish);
 
-    public Q removeCache();
-
+    Q removeCache();
 }

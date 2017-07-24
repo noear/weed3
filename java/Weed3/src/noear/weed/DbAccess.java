@@ -231,12 +231,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         _tran = transaction;
         return (T)this;
     }
-
-    public T tran()
-    {
-        _tran = context.tran();
-        return (T)this;
-    }
+//    不能形成控制流,没意义
+//    public T tran()
+//    {
+//        _tran = context.tran();
+//        return (T)this;
+//    }
 
     //=======================
     //

@@ -22,6 +22,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="Weed3" />
+    <orderEntry type="module-library">
+      <library name="Maven: Weed3:Weed3:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/Noear.Weed3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
