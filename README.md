@@ -46,8 +46,8 @@ db.table("test")
 
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
-  .set("xxx", 1) 
-  .getItem(new UserInfoModel()); 
+  .set("xxx", 1)  //保持与存储过程参数的序顺一致
+  .getItem(new UserInfoModel()); 
 
 //简易.查询过程调用示例，及使用使用示例
 db.call("select * from user where user_id=@userID")
@@ -125,7 +125,7 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
-示例4::把存储过程转成类<br/>
+示例4::[存储过程]映身类<br/>
 ```java
 public class user_get_by_id extends DbStoredProcedure
 {
@@ -143,7 +143,7 @@ public class user_get_by_id extends DbStoredProcedure
 }
 ```
 
-示例5::把查询片段转成类<br/>
+示例5::[查询过程]映身类<br/>
 ```java
 public class user_get_by_id extends DbQueryProcedure
 {
