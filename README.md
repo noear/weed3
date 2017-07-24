@@ -148,6 +148,12 @@ public class user_get_by_id extends DbStoredProcedure
 
     public long user_id;
 }
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
 ```
 
 示例5::[查询过程]映身类<br/>
@@ -166,6 +172,12 @@ public class user_get_by_id extends DbQueryProcedure
 
     public long user_id;
 }
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
 ```
 
 示例6::数据模型类（或叫实体类等）<br/>
