@@ -52,11 +52,13 @@ db.call("user_get")
   .getItem(new UserInfoModel()); 
 
 //简易.存储过程调用示例，及使用事务示例
-db.call("$.user_set").set("xxx", 1) 
-  .tran() //使用事务
-  .execute();
+db.tran(tran->{
+    db.call("$.user_set").set("xxx", 1) 
+      .tran(tran) //使用事务
+      .execute();
+});
 ```
-示例2::简单事务<br/>
+示例2::事务相关<br/>
 ```java
 //demo1:: //事务组
 db.tran((t) => {
@@ -83,7 +85,7 @@ db2.tran().join(queue).execute((t) => {
 
 queue.complete();
 ```
-示例3::简易缓存控制<br/>
+示例3::缓存控制<br/>
 ```java
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
