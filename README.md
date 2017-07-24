@@ -24,7 +24,7 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例1.1::入门级<br/>
+示例1.1.1::入门级<br/>
 ```java
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
@@ -75,7 +75,6 @@ db.tran(tran->{
 
 示例1.1.2::不确定因素的连式处理支持<br/>
 ```java
-//demo1:: //事务组
 //连式处理::对不确定的条件拼装
 db.table("test")
   .expre(tb -> {
