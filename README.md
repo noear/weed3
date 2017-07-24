@@ -24,7 +24,7 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例1.1::入门级<br/>
+示例1.1.1::入门级<br/>
 ```java
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
@@ -72,6 +72,34 @@ db.tran(tran->{
       .execute();
 });
 ```
+
+示例1.1.2::不确定因素的连式处理支持<br/>
+```java
+//连式处理::对不确定的条件拼装
+db.table("test")
+  .expre(tb -> {
+      tb.where("1=1");
+
+      if (1 == 2) {
+          tb.and("mobile=?", "xxxx");
+      } else {
+          tb.and("icon=?", "xxxx");
+      }
+  }).select("*");
+  
+//连式处理::对不确定字段的插入
+db.table("test")
+  .expre(tb -> {
+      tb.set("name", "xxx");
+
+      if (1 == 2) {
+          tb.set("mobile", "xxxx");
+      } else {
+          tb.set("icon", "xxxx");
+      }
+  }).insert(); 
+```
+
 示例1.2::事务控制<br/>
 ```java
 //demo1:: //事务组
@@ -134,55 +162,8 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
-示例2.1::[存储过程]映射类<br/>
-```java
-public class user_get_by_id extends DbStoredProcedure
-{
-    public user_get_by_id()
-    {
-        super(Config.user);
-        call("user_get_by_id");
 
-        //set("{colname}", ()->{popname});
-        //
-        set("_user_id", ()->user_id);
-    }
-
-    public long user_id;
-}
-
-//使用示例
-user_get_by_id sp = new user_get_by_id();
-sp.user_id = 1;
-sp.caching(cache)
-  .getItem(new UserInfoModel());
-```
-
-示例2.2::[查询过程]映身类<br/>
-```java
-public class user_get_by_id extends DbQueryProcedure
-{
-    public user_get_by_id()
-    {
-        super(Config.user);
-        sql("SELECT * FROM `user` where user_id = @user_id;");
-
-        //set("{colname}", ()->{popname});
-        //
-        set("@user_id", ()->user_id);
-    }
-
-    public long user_id;
-}
-
-//使用示例
-user_get_by_id sp = new user_get_by_id();
-sp.user_id = 1;
-sp.caching(cache)
-  .getItem(new UserInfoModel());
-```
-
-示例2.3::数据模型类（或叫实体类等）<br/>
+示例2::数据模型类（或叫实体类等）<br/>
 ```java
 public class UserInfoModel implements IBinder {
     public long user_id;
@@ -209,6 +190,94 @@ public class UserInfoModel implements IBinder {
         return new UserInfoModel();
     }
 }
+
+```
+
+示例3.1::[存储过程]映射类<br/>
+```java
+public class user_get_by_id extends DbStoredProcedure
+{
+    public user_get_by_id()
+    {
+        super(Config.user);
+        call("user_get_by_id");
+
+        //set("{colname}", ()->{popname});
+        //
+        set("_user_id", ()->user_id);
+    }
+
+    public long user_id;
+}
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
+```
+
+示例3.2::[查询过程]映身类<br/>
+```java
+public class user_get_by_id extends DbQueryProcedure
+{
+    public user_get_by_id()
+    {
+        super(Config.user);
+        sql("SELECT * FROM `user` where user_id = @user_id;");
+
+        //set("{colname}", ()->{popname});
+        //
+        set("@user_id", ()->user_id);
+    }
+
+    public long user_id;
+}
+
+//使用示例
+user_get_by_id sp = new user_get_by_id();
+sp.user_id = 1;
+sp.caching(cache)
+  .getItem(new UserInfoModel());
+```
+
+示例3.3::[数据表]映射类<br/>
+```java
+public class UserM extends DbTable {
+    public UserM() {
+        super(DbConfig.test);
+
+        table("users u");
+        set("UserID", () -> UserID);
+        set("Nickname", () -> Nickname);
+        set("Sex", () -> Sex);
+        set("Icon", () -> Icon);
+        set("City", () -> City);
+    }
+
+    public Long UserID;
+    public String Nickname;
+    public Integer Sex;
+    public String Icon;
+    public String City;
+}
+
+//使用示例1
+UserM m = new UserM();
+m.UserID=1;
+m.Icon="http:///xxxx";
+m.insert();
+
+//使用示例2
+UserM m = new UserM();
+m.icon="http:///xxxx";
+m.where("UserID=?",1).update();
+
+//使用示例3
+UserM m = new UserM();
+m.where("sex=?",1)
+ .select("*")
+ .getList(new UserInfoModel());
 
 ```
 
