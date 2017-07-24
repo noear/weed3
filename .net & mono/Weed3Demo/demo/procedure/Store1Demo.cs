@@ -13,7 +13,7 @@ namespace Weed3Demo.demo.store {
               .set("user_id", 1).getItem(new UserInfoModel());
         }
 
-        public static void demo_updateOrInsert() {
+        public static void demo_update() {
             DbContext db = DbConfig.pc_bcf;
 
             db.call("user_update")
