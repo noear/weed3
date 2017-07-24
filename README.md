@@ -168,6 +168,36 @@ public class user_get_by_id extends DbQueryProcedure
 }
 ```
 
+示例6::数据模型类（或叫实体类等）<br/>
+```java
+public class UserInfoModel implements IBinder {
+    public long user_id;
+    public int role;
+    public String mobile;
+    public String udid;
+    public int city_id;
+    public String name;
+    public String icon;
+
+
+    public void bind(GetHandlerEx s) {
+        user_id = s.get("user_id").value(0l);
+        role    = s.get("role").value(0);
+        mobile  = s.get("mobile").value("");
+        udid    = s.get("udid").value("");
+        city_id = s.get("city_id").value(0);
+        name    = s.get("name").value("");
+        icon    = s.get("icon").value("");
+
+    }
+
+    public IBinder clone() {
+        return new UserInfoModel();
+    }
+}
+
+```
+
 更多高级示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
 
