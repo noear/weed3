@@ -26,6 +26,7 @@ QQ群：<br/>
 --------------------------------------<br/>
 示例1.1.1::入门级<br/>
 ```java
+//DbContext db  = new DbContext("user","proxool.xxx_db");
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
