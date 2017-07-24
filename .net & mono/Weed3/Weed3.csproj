@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\EmptyCache.cs" />
+    <Compile Include="Cache\ICacheServiceEx.cs" />
     <Compile Include="DbProcedure.cs" />
     <Compile Include="DbQueryProcedure.cs" />
     <Compile Include="Ext\DbTypeMapping.cs" />

@@ -41,7 +41,11 @@ namespace Noear.Weed {
 
             _fieldFormat = fieldFormat;
         }
-        
+
+        public DbContext(String schemaName, string connectionString, DbProviderFactory provider) : this(schemaName, connectionString, "", provider) {
+
+        }
+
         public DbContext(String schemaName, string connectionString, String fieldFormat, DbProviderFactory provider) {
             doInit(schemaName, connectionString, provider);
             _fieldFormat = fieldFormat;

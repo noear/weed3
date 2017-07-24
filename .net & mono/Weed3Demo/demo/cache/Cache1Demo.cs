@@ -7,7 +7,7 @@ namespace Weed3Demo.demo.cache {
         //普通的缓存控制
         public static void demo_cache() {
             DbContext db = DbConfig.pc_bcf;
-            ICacheService cache = null;
+            ICacheServiceEx cache = null;
 
             db.call("user_get").set("xxx", 1)
                 .caching(cache)
@@ -18,7 +18,7 @@ namespace Weed3Demo.demo.cache {
 
         public static void demo_cache3() {
             DbContext db = DbConfig.pc_bcf;
-            ICacheService cache = null;
+            ICacheServiceEx cache = null;
 
             //1.缓存并添加简易标签
             db.call("user_get").set("xxx", 1)
@@ -42,7 +42,7 @@ namespace Weed3Demo.demo.cache {
         //带条件判断的缓存控制
         public static void demo_cache_condition() {
             DbContext db = DbConfig.pc_bcf;
-            ICacheService cache = null;
+            ICacheServiceEx cache = null;
 
             db.call("user_get").set("xxx",1)
                 .caching(cache)
@@ -56,7 +56,7 @@ namespace Weed3Demo.demo.cache {
         //分割参数值，并实现对应分别缓存
         public static void demo_cache_split() {
             DbContext db = DbConfig.pc_bcf;
-            ICacheService cache = null;
+            ICacheServiceEx cache = null;
             
 
             var sp = db.call("user_get")

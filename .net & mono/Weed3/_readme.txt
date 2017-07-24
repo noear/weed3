@@ -1,4 +1,9 @@
-﻿3.0.4.42::
+﻿3.0.4.43::
+1.ICacheServiceEx::新增 扩展 ICacheService,增加对tags的获取与操作
+2.EmptyCache,LocalCache 升级为：ICacheServiceEx
+3.DbAccess::修改.取消 tran() //不能形成控制流,没意义
+
+3.0.4.42::
 1.SQLBuilder::修改.添加 removeLast() （去除最后一个字符）
 2.DbContext::修改.添加 allowMultiQueries //是否支持多语句查询
 

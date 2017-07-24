@@ -205,10 +205,11 @@ namespace Noear.Weed {
             return (X)this;
         }
 
-        public X tran() {
-            _tran = context.tran();
-            return (X)this;
-        }
+        //不能形成控制流,没意义
+        //public X tran() {
+        //    _tran = context.tran();
+        //    return (X)this;
+        //}
 
         //=======================
         //

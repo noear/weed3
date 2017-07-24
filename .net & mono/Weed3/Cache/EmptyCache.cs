@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Noear.Weed.Cache {
-    public class EmptyCache : ICacheService {
+    public class EmptyCache : ICacheServiceEx {
 
         public void store(String s, Object o, int i) {
 
@@ -28,6 +28,20 @@ namespace Noear.Weed.Cache {
 
         public String getCacheKeyHead() {
             return "";
+        }
+
+        //===================
+        //
+        public CacheTags tags() {
+            return new CacheTags(this);
+        }
+
+        public void clear(string tag) {
+            tags().clear(tag);
+        }
+
+        public void update<T>(string tag, Func<T, T> setter) where T:class {
+            tags().update<T>(tag, setter);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Noear.Weed.Cache {
-    public class LocalCache : ICacheService {
+    public class LocalCache : ICacheServiceEx {
         private String _cacheKeyHead;
         private int _defaultSeconds;
 
@@ -72,6 +72,21 @@ namespace Noear.Weed.Cache {
 
         public String getCacheKeyHead() {
             return _cacheKeyHead;
+        }
+
+
+        //===================
+        //
+        public CacheTags tags() {
+            return new CacheTags(this);
+        }
+
+        public void clear(string tag) {
+            tags().clear(tag);
+        }
+
+        public void update<T>(string tag, Func<T, T> setter) where T : class {
+            tags().update<T>(tag, setter);
         }
     }
 }
