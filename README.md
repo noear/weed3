@@ -37,6 +37,13 @@ db.table("$.test")
   .set("log_time", "$DATE(NOW())")
   .insert();
 
+//简易.批量插入示例
+db.table("test")
+  .insertList(list,(d,m)->{
+      m.set("log_time", "$DATE(NOW())");
+      m.set("name",d.name);
+  });
+
 //简易.更新示例
 db.table("test")
   .set("txt", "NOW()xx")
