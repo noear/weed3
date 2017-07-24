@@ -24,7 +24,7 @@ QQ群：<br/>
  22200020<br/>
  
 --------------------------------------<br/>
-示例::入门级<br/>
+示例1.1::入门级<br/>
 ```java
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
@@ -72,7 +72,7 @@ db.tran(tran->{
       .execute();
 });
 ```
-示例2::事务相关<br/>
+示例1.2::事务控制<br/>
 ```java
 //demo1:: //事务组
 db.tran((t) => {
@@ -99,7 +99,7 @@ db2.tran().join(queue).execute((t) => {
 
 queue.complete();
 ```
-示例3::缓存控制<br/>
+示例1.3::缓存控制<br/>
 ```java
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
@@ -134,7 +134,7 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
-示例4::[存储过程]映射类<br/>
+示例2.1::[存储过程]映射类<br/>
 ```java
 public class user_get_by_id extends DbStoredProcedure
 {
@@ -158,7 +158,7 @@ sp.caching(cache)
   .getItem(new UserInfoModel());
 ```
 
-示例5::[查询过程]映身类<br/>
+示例2.2::[查询过程]映身类<br/>
 ```java
 public class user_get_by_id extends DbQueryProcedure
 {
@@ -182,7 +182,7 @@ sp.caching(cache)
   .getItem(new UserInfoModel());
 ```
 
-示例6::数据模型类（或叫实体类等）<br/>
+示例2.3::数据模型类（或叫实体类等）<br/>
 ```java
 public class UserInfoModel implements IBinder {
     public long user_id;
