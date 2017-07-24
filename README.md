@@ -72,6 +72,35 @@ db.tran(tran->{
       .execute();
 });
 ```
+
+示例1.1.2::不确定因素的连式处理支持<br/>
+```java
+//demo1:: //事务组
+//连式处理::对不确定的条件拼装
+db.table("test")
+  .expre(tb -> {
+      tb.where("1=1");
+
+      if (1 == 2) {
+          tb.and("mobile=?", "xxxx");
+      } else {
+          tb.and("icon=?", "xxxx");
+      }
+  }).select("*");
+  
+//连式处理::对不确定字段的插入
+db.table("test")
+  .expre(tb -> {
+      tb.set("name", "xxx");
+
+      if (1 == 2) {
+          tb.set("mobile", "xxxx");
+      } else {
+          tb.set("icon", "xxxx");
+      }
+  }).insert(); 
+```
+
 示例1.2::事务控制<br/>
 ```java
 //demo1:: //事务组
