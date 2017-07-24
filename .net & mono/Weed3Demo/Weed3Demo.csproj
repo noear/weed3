@@ -77,6 +77,7 @@
     <Compile Include="demo\sqlbuilder\demo.cs" />
     <Compile Include="demo\procedure\Store1Demo.cs" />
     <Compile Include="demo\table\demo_table.cs" />
+    <Compile Include="demo\table\demo_table2.cs" />
     <Compile Include="demo\table\demo_table_inserlist.cs" />
     <Compile Include="demo\tran\Tran1Demo.cs" />
     <Compile Include="demo\tran\Tran2Demo.cs" />

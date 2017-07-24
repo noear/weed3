@@ -24,6 +24,11 @@ namespace Noear.Weed {
             _builder = new SQLBuilder();
         }
 
+        public T expre(Action<T> action) {
+            action((T)this);
+            return (T)this;
+        }
+
         protected internal T table(String table) { //相当于 from
             if (table.IndexOf('.') > 0)
                 _table = table;
