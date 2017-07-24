@@ -23,5 +23,9 @@
     call()->DbStoredProcedure 改为: call()->DbProcedure//新：根据输入情况反回：DbStoredProcedure 或 DbQueryProcedure
 }
 
-
 *.添加java版本 demo（即：Weed3Demo）
+
+3.0.4.38::
+1.DbTable::修改.添加 set(k,v) 设置值
+2.DbTableQuery::修改.添加 set(k,v) 设置值
+
