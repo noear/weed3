@@ -13,6 +13,7 @@ import java.sql.SQLException;
  */
 public class DbContext {
     public Command lastCommand;
+    public boolean allowMultiQueries;
 
     public DbContext(String schemaName,String url) {
         _schemaName = schemaName;

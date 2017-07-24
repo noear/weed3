@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 
 
 /**
- * Created by noear on 14-6-12.
- * 查询过程访问类（模拟存储过和）
+ * Created by noear on 17-6-12.
+ * 查询过程访问类（模拟存储过程）
  */
 public class DbQueryProcedure extends DbProcedure {
 
@@ -78,6 +78,9 @@ public class DbQueryProcedure extends DbProcedure {
         return this;
     }
 
+    //
+    //===========================================
+    //
     @Override
     public String getWeedKey() {
         return buildWeedKey(_paramS2.values());
@@ -132,16 +135,20 @@ public class DbQueryProcedure extends DbProcedure {
     public int execute() throws SQLException {
         tryLazyload();
 
-        int num = 0;
-        String[] sqlList = commandText.split(";"); //支持多段SQL执行
-        for (String sql : sqlList) {
-            if (sql.length() > 10) {
-                doSqlItem(sql);
+        if(context.allowMultiQueries){
+            return super.execute();
+        }else {
+            int num = 0;
+            String[] sqlList = commandText.split(";"); //支持多段SQL执行
+            for (String sql : sqlList) {
+                if (sql.length() > 10) {
+                    doSqlItem(sql);
 
-                num += super.execute();
+                    num += super.execute();
+                }
             }
-        }
 
-        return num;
+            return num;
+        }
     }
 }
