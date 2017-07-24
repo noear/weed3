@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace Weed3Demo.config {
-    public class AspCache : ICacheServiceEx {
+    public class AspCache : ICacheService {
         string _keyHead;
         int _defSeconds;
 

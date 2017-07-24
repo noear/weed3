@@ -7,7 +7,7 @@ using Noear.Weed.Cache;
 
 namespace Weed3Demo.config 
 {
-    internal class MemCache : ICacheServiceEx
+    internal class MemCache : ICacheService
     {
         MemcachedClient _cache = null;
 
