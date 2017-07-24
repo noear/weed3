@@ -47,6 +47,11 @@ db.table("test")
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
   .set("xxx", 1) 
+  .getItem(new UserInfoModel()); 
+
+//简易.查询过程调用示例，及使用使用示例
+db.call("select * from user where user_id=@userID")
+  .set("@userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
   .getItem(new UserInfoModel()); 
