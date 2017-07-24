@@ -125,13 +125,13 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
     return m;
 });
 ```
-示例4::[存储过程]映身类<br/>
+示例4::[存储过程]映射类<br/>
 ```java
 public class user_get_by_id extends DbStoredProcedure
 {
     public user_get_by_id()
     {
-        super(Config.rock_user);
+        super(Config.user);
         call("user_get_by_id");
 
         //set("{colname}", ()->{popname});
@@ -149,7 +149,7 @@ public class user_get_by_id extends DbQueryProcedure
 {
     public user_get_by_id()
     {
-        super(Config.rock_user);
+        super(Config.user);
         sql("SELECT * FROM `user` where user_id = @user_id;");
 
         //set("{colname}", ()->{popname});
