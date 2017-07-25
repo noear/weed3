@@ -26,14 +26,22 @@ QQ群：<br/>
 --------------------------------------<br/>
 示例1.1.1::入门级<br/>
 ```java
+//DbContext db  = new DbContext("user","proxool.xxx_db");
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getList(new UserInfoModel());
+  .getDataList(); //.getList(new UserInfoModel());
 
+//简易.关联查询示例
+db.table("user_info u")
+  .innerJoin("user_ex e").on("u.useer_id = e.user_id")
+  .where("u.user_id<?", 10)
+  .select("u.user_id,u.name,u.sex")
+  .getDataList();
+                
 //简易.插入示例
 db.table("$.test")
   .set("log_time", "$DATE(NOW())")
