@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.ext.Act1Ex;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,10 @@ public class DbTranQueue {
     private List<DbTran> queue = new ArrayList<DbTran>();
 
     public Object result;//用于存放中间结果
+    private boolean _isSucceed = false;
+    public boolean isSucceed(){
+        return _isSucceed;
+    }
 
     protected void add(DbTran tran)
     {
@@ -56,12 +62,35 @@ public class DbTranQueue {
         }
     }
 
+    //执行并结束事务
+    public DbTranQueue execute(Act1Ex<DbTranQueue,SQLException> handler) throws SQLException {
+        try {
+            handler.run(this);
+
+            commit();
+            _isSucceed = true;
+        }catch (Exception ex){
+            _isSucceed = false;
+
+            rollback(true);
+            throw ex;
+        }
+        finally {
+            close();
+        }
+
+        return this;
+    }
+
     /*结束事务
     * */
     public void complete() throws SQLException {
         try {
             commit();
+            _isSucceed = true;
         } catch (SQLException ex) {
+            _isSucceed = false;
+
             rollback(true);
             throw ex;
         } finally {

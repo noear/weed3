@@ -50,7 +50,40 @@ public class demo_table {
                 .delete();
     }
 
-    public static List<UserInfoModel> demo_select() throws SQLException{
+    public static DataList demo_select() throws SQLException{
+        DataList list = db.table("user_info")
+                .where("user_id<?", 10)
+                .select("user_id,name,sex")
+                .getDataList();
+
+        return list;
+    }
+
+    public static void demo_select1() throws SQLException {
+        db.table("user_info u")
+                .innerJoin("user_ex e").on("u.useer_id = e.user_id")
+                .where("u.user_id<?", 10)
+                .select("u.user_id,u.name,u.sex")
+                .getDataList();
+
+
+        db.table("user_info u")
+                .innerJoin("user_ex e").on("u.useer_id = e.user_id")
+                .where("u.user_id<?", 10)
+                .limit(10,20)
+                .select("u.user_id,u.name,u.sex")
+                .getDataList();
+
+        db.table("user_info u")
+                .innerJoin("user_ex e").on("u.useer_id = e.user_id")
+                .where("u.user_id<?", 10)
+                .groupBy("u.user_id")
+                .limit(10,20)
+                .select("u.user_id,COUNT(e.row_id)")
+                .getDataList();
+    }
+
+    public static List<UserInfoModel> demo_select2() throws SQLException{
         List<UserInfoModel> list = db.table("user_info")
                 .where("user_id<?", 10)
                 .select("user_id,name,sex")

@@ -185,7 +185,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         }
 
         sb.deleteCharAt(sb.length() - 1);
-        sb.append(");");
+        sb.append(";");
 
         _builder.append(sb.toString(), args.toArray());
 
@@ -290,10 +290,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public boolean exists() throws SQLException {
+        return exists(null);
+    }
 
-        limit(1);
+    public boolean exists(Act1<IQuery> expre) throws SQLException {
+        IQuery q = limit(1).select("1");
 
-        return select("1").getValue() != null;
+        if (expre != null) {
+            expre.run(q);
+        }
+
+        return q.getValue() != null;
     }
 
     String _hint = null;
