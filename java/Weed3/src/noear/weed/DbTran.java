@@ -18,6 +18,10 @@ public class DbTran {
     private DbContext _context = null;/*数据访问上下文*/
 
     public Object result;
+    private boolean _isSucceed = false;
+    public boolean isSucceed(){
+        return _isSucceed;
+    }
 
     public DbContext db()
     {
@@ -39,17 +43,19 @@ public class DbTran {
         _context = context;
     }
 
-    /*执行事务过程*/
+    /*执行事务过程 = action(...) + excute() */
     public DbTran execute(Act1Ex<DbTran,SQLException> handler) throws SQLException {
-        _handler = handler;
-
         try {
             connection = _context.getConnection();
 
             begin(false);
-            _handler.run(this);
+            handler.run(this);
             commit(false);
+
+            _isSucceed = true;
         } catch (SQLException ex) {
+            _isSucceed = false;
+
             if (queue == null)
                 rollback(false);
             else
@@ -59,6 +65,17 @@ public class DbTran {
             close(false);
         }
 
+        return this;
+    }
+
+    /*执行事务过程*/
+    public DbTran execute() throws SQLException {
+        return execute(_handler);
+    }
+
+
+    public DbTran action(Act1Ex<DbTran,SQLException> handler){
+        _handler = handler;
         return this;
     }
 
