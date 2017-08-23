@@ -17,10 +17,6 @@ namespace Noear.Weed {
         private DbContext _context = null;/*数据访问上下文*/
 
         public Object result;
-        private bool _isSucceed = false;
-        public bool isSucceed() {
-            return _isSucceed;
-        }
 
         public DbContext db() {
             return _context;
@@ -51,12 +47,8 @@ namespace Noear.Weed {
                 begin(false);
                 _handler(this);
                 commit(false);
-
-                _isSucceed = true;
             }
             catch (Exception ex) {
-                _isSucceed = false;
-
                 if (queue == null)
                     rollback(false);
                 else

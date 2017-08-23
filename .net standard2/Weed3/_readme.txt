@@ -1,15 +1,4 @@
-﻿3.0.4.47::
-1.DbTableQueryBase::修改.添加 insertList();
-
-3.0.4.45::
-1.DbTran::修改.添加 isSucceed();
-2.DbTranQueue::修改.添加 isSucceed();
-
-3.0.4.44::
-1.+exists(expr)
-
-
-3.0.4.43::
+﻿3.0.4.43::
 1.ICacheServiceEx::新增 扩展 ICacheService,增加对tags的获取与操作
 2.EmptyCache,LocalCache 升级为：ICacheServiceEx
 3.DbAccess::修改.取消 tran() //不能形成控制流,没意义
