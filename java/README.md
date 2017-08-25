@@ -4,6 +4,15 @@ Weed3Demo::使用示例<br/>
 更新说明<br/>
 ------------------<br/>
 <br/>
+3.0.4.48::<br/>
+1.IQuery::修改.取消 getValue(def,cacheCondition)<br/>
+2.IQuery::修改.添加 getVariate();<br/>
+3.IQuery::修改.添加 getVariate(cacheCondition);<br/>
+4.Variate::修改.添加 intValue(def); //支持自动将 int,long,BigDecimal 转为 int<br/>
+5.Variate::修改.添加 longValue(def); //同上<br/>
+6.DataItem::修改.添加 intValue2(); //同上<br/>
+7.DataItem::修改.添加 longValue2(); //同上<br/>
+<br/>
 3.0.4.47::
 1.DbTableQueryBase::修改.添加 insertList();<br/>
 <br/>
