@@ -184,7 +184,7 @@ namespace Noear.Weed {
             }
 
             sb.DeleteCharAt(sb.Length - 1);
-            sb.Append(");");
+            sb.Append(";");
 
             _builder.append(sb.ToString(), args.ToArray());
 
@@ -289,11 +289,17 @@ namespace Noear.Weed {
         }
 
         public bool exists() {
-            limit(1);
-
-            return select("1").getValue() != null;
+            return exists(null);
         }
-        
+
+        public bool exists(Action<IQuery> expre)  {
+            IQuery q = limit(1).select("1");
+
+            expre?.Invoke(q);
+
+            return q.getValue() != null;
+        }
+
         public IQuery select(String columns) {
 
             StringBuilder sb = new StringBuilder();

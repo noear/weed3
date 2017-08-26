@@ -12,6 +12,10 @@ namespace Noear.Weed {
         protected object _value;
         internal readonly  int   _hash;
 
+        internal Variate() {
+            _hash = 0;
+        }
+
         public Variate(String name, Object value) { 
             this._name = name;
             this._value = value;
@@ -66,6 +70,46 @@ namespace Noear.Weed {
                 else
                     throw new WeedException("无法将类型为“" + _value.GetType().ToString() + "”的对象强制转换为类型“" + typeof(T).ToString() + "”");
             }
+        }
+
+        public long longValue(long def) {
+            if (_value == null) {
+                return def;
+            }
+
+            if (_value is long){
+                return (long)_value;
+            }
+
+            if (_value is int){
+                return (int)_value;
+            }
+
+            if (_value is Decimal){
+                return (int)((Decimal)_value);
+            }
+
+            return def;
+        }
+
+        public int intValue(int def) {
+            if (_value == null) {
+                return def;
+            }
+
+            if (_value is long){
+                return (int)((long)_value);
+            }
+
+            if (_value is int){
+                return (int)_value;
+            }
+
+            if (_value is Decimal){
+                return (int)((Decimal)_value);
+            }
+
+            return def;
         }
     }
 }

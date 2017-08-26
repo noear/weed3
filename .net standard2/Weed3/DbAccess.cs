@@ -11,7 +11,7 @@ namespace Noear.Weed {
      * 数据库方问基类
      */
     [Serializable]
-    public abstract class DbAccess<X> : IWeedKey, IQuery where X :DbAccess<X>{
+    public abstract class DbAccess<X> : IWeedKey, IQuery where X : DbAccess<X> {
         public String commandText = null;
 
         /*数据库上下文*/
@@ -26,7 +26,7 @@ namespace Noear.Weed {
         public DbAccess(DbContext context) {
             this.context = context;
         }
-        
+
         /*IWeedKey begin*/
         protected String _weedKey;
         public virtual String getWeedKey() {
@@ -88,7 +88,7 @@ namespace Noear.Weed {
         public virtual int execute() {
             return new SQLer().execute(getCommand(), _tran);
         }
-        
+
         public Object getValue() {
             Variate rst = new SQLer().getVariate(getCommand(), _tran);
 
@@ -100,39 +100,43 @@ namespace Noear.Weed {
 
         /*执行命令（返回符合条件的第一个值）*/
         public T getValue<T>(T def) {
-            return getValue(def, null);
+            return getVariate(null).value(def);
         }
 
         /*执行命令（返回符合条件的第一个值）*/
-        public T getValue<T>(T def, Action<CacheUsing, T> cacheCondition) {
+        public Variate getVariate() {
+            return getVariate(null);
+        }
+
+        /*执行命令（返回符合条件的第一个值）*/
+        public Variate getVariate(Action<CacheUsing, Variate> cacheCondition) {
             Variate rst;
             if (_cache == null)
                 rst = new SQLer().getVariate(getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                rst = _cache.get(this.getWeedKey(), () => {
-                    return new SQLer().getVariate(getCommand(), _tran);
-                });
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getVariate(getCommand(), _tran)));
             }
             if (rst == null)
-                return def;
+                return new Variate();
             else
-                return rst.value(def);
+                return rst;
+
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>(T model) where T : class,IBinder {
+        public T getItem<T>(T model) where T : class, IBinder {
             return getItem<T>(model, null);
         }
 
         /*执行命令（返回一个模理）*/
-        public T getItem<T>(T model ,Action<CacheUsing, T> cacheCondition) where T : class,IBinder {
+        public T getItem<T>(T model, Action<CacheUsing, T> cacheCondition) where T : class, IBinder {
             T rst;
             if (_cache == null)
-                rst = new SQLer().getItem<T>(model,getCommand(), _tran);
+                rst = new SQLer().getItem<T>(model, getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(model,getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getItem<T>(model, getCommand(), _tran)));
             }
 
             if (rst == null)
@@ -142,17 +146,17 @@ namespace Noear.Weed {
         }
         /*执行命令（返回一个列表）*/
         public List<T> getList<T>(T model) where T : class, IBinder {
-            return getList<T>(model,null);
+            return getList<T>(model, null);
         }
 
         /*执行命令（返回一个列表）*/
-        public List<T> getList<T>(T model,Action<CacheUsing, List<T>> cacheCondition) where T : class, IBinder {
+        public List<T> getList<T>(T model, Action<CacheUsing, List<T>> cacheCondition) where T : class, IBinder {
             List<T> rst;
             if (_cache == null)
-                rst = new SQLer().getList<T>(model,getCommand(), _tran);
+                rst = new SQLer().getList<T>(model, getCommand(), _tran);
             else {
                 _cache.usingCache(cacheCondition);
-                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(model,getCommand(), _tran)));
+                rst = _cache.get(this.getWeedKey(), () => (new SQLer().getList<T>(model, getCommand(), _tran)));
             }
 
             if (rst == null)
@@ -161,9 +165,8 @@ namespace Noear.Weed {
                 return rst;
         }
 
-        public List<T> getArray<T>(String column) 
-        {
-           return getDataList().toArray<T>(column);
+        public List<T> getArray<T>(String column) {
+            return getDataList().toArray<T>(column);
         }
 
         public DataList getDataList() {

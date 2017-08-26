@@ -1,4 +1,24 @@
-﻿3.0.4.43::
+﻿3.0.4.48::
+1.IQuery::修改.取消 getValue(def,cacheCondition)
+2.IQuery::修改.添加 getVariate();
+3.IQuery::修改.添加 getVariate(cacheCondition);
+4.Variate::修改.添加 intValue(def); //支持自动将 int,long,BigDecimal 转为 int
+5.Variate::修改.添加 longValue(def); //同上
+6.DataItem::修改.添加 intValue2(); //同上
+7.DataItem::修改.添加 longValue2(); //同上
+
+3.0.4.47::
+1.DbTableQueryBase::修改.添加 insertList();
+
+3.0.4.45::
+1.DbTran::修改.添加 isSucceed();
+2.DbTranQueue::修改.添加 isSucceed();
+
+3.0.4.44::
+1.+exists(expr)
+
+
+3.0.4.43::
 1.ICacheServiceEx::新增 扩展 ICacheService,增加对tags的获取与操作
 2.EmptyCache,LocalCache 升级为：ICacheServiceEx
 3.DbAccess::修改.取消 tran() //不能形成控制流,没意义

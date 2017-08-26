@@ -10,6 +10,10 @@ namespace Noear.Weed {
         private List<DbTran> queue = new List<DbTran>();
 
         public Object result;//用于存放中间结果
+        private bool _isSucceed = false;
+        public bool isSucceed() {
+            return _isSucceed;
+        }
 
         internal void add(DbTran tran) {
             queue.Add(tran);
@@ -40,8 +44,7 @@ namespace Noear.Weed {
 
                 try {
                     tran.rollback(true);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     WeedConfig.logException(null, ex);
                 }
             }
@@ -52,11 +55,29 @@ namespace Noear.Weed {
             {
                 try {
                     tran.close(true);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     WeedConfig.logException(null, ex);
                 }
             }
+        }
+
+        //执行并结束事务
+        public DbTranQueue execute(Action<DbTranQueue> handler) {
+            try {
+                handler(this);
+
+                commit();
+                _isSucceed = true;
+            } catch (Exception ex) {
+                _isSucceed = false;
+
+                rollback(true);
+                throw ex;
+            } finally {
+                close();
+            }
+
+            return this;
         }
 
         /*结束事务
@@ -64,12 +85,13 @@ namespace Noear.Weed {
         public void complete() {
             try {
                 commit();
-            }
-            catch (Exception ex) {
+                _isSucceed = true;
+            } catch (Exception ex) {
+                _isSucceed = false;
+
                 rollback(true);
                 throw ex;
-            }
-            finally {
+            } finally {
                 close();
             }
         }

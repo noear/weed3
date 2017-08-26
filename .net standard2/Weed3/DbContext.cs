@@ -20,29 +20,28 @@ namespace Noear.Weed {
             if (providerString == null)
                 return null;
             
-            if (providerString.IndexOf(",") > 0)
+            //if (providerString.IndexOf(",") > 0)
                 return (DbProviderFactory)Activator.CreateInstance(Type.GetType(providerString, true, true));
-            else
-                return DbProviderFactories.GetFactory(providerString);
-            
+            //else
+                //return DbProviderFactories.GetFactory(providerString);
         }
 
         public Command lastCommand { get; internal set; }
         public bool allowMultiQueries;
 
+        /*
         public DbContext(String schemaName, string name) : this(schemaName, name, "") {
 
         }
 
         //fieldFormat："`%`"
         public DbContext(String schemaName, string name, string fieldFormat) {
-           
             var set = ConfigurationManager.ConnectionStrings[name];
             var p = provider(set.ProviderName);
             doInit(schemaName, set.ConnectionString, p);
 
             _fieldFormat = fieldFormat;
-        }
+        }*/
 
         public DbContext(String schemaName, string connectionString, DbProviderFactory provider) : this(schemaName, connectionString, "", provider) {
 
