@@ -12,24 +12,28 @@ import java.util.List;
  * Created by yuety on 14/11/12.
  */
 public interface IQuery {
-    public long getCount() throws SQLException;
-    public Object getValue() throws SQLException;
-    public <T> T getValue(T def) throws SQLException;
-    public Variate getVariate() throws SQLException;
-    public Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException;
-    public <T extends IBinder> T getItem(T model) throws SQLException;
-    public <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException;
-    public <T extends IBinder> List<T> getList(T model) throws SQLException;
-    public <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
-    public DataList getDataList() throws SQLException;
-    public DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
-    public DataItem getDataItem() throws SQLException;
-    public DataItem getDataItem(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+     long getCount() throws SQLException;
+     Object getValue() throws SQLException;
+     <T> T getValue(T def) throws SQLException;
 
-    public <T> List<T> getArray(String column) throws SQLException;
+     Variate getVariate() throws SQLException;
+     Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException;
 
-    public IQuery caching(ICacheService service);
-    public IQuery usingCache(boolean isCache);
-    public IQuery usingCache(int seconds);
-    public IQuery cacheTag(String tag);
+     <T extends IBinder> T getItem(T model) throws SQLException;
+     <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException;
+
+     <T extends IBinder> List<T> getList(T model) throws SQLException;
+     <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
+
+     DataList getDataList() throws SQLException;
+     DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+     DataItem getDataItem() throws SQLException;
+     DataItem getDataItem(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+
+     <T> List<T> getArray(String column) throws SQLException;
+
+     IQuery caching(ICacheService service);
+     IQuery usingCache(boolean isCache);
+     IQuery usingCache(int seconds);
+     IQuery cacheTag(String tag);
 }
