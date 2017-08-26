@@ -113,13 +113,17 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     /*执行命令（返回符合条件的第一个值）*/
-    public <T> T getValue(T def) throws SQLException
-    {
-        return getValue(def,null);
+    public <T> T getValue(T def) throws SQLException {
+        return getVariate(null).value(def);
     }
 
     /*执行命令（返回符合条件的第一个值）*/
-    public <T> T getValue(T def,Act2<CacheUsing,T> cacheCondition) throws SQLException {
+    public Variate getVariate() throws SQLException{
+        return getVariate(null);
+    }
+
+    /*执行命令（返回符合条件的第一个值）*/
+    public Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException{
         Variate rst;
         if (_cache == null)
             rst = new SQLer().getVariate(getCommand(), _tran);
@@ -127,13 +131,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             _cache.usingCache(cacheCondition);
             rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
         }
-
         if (rst == null)
-            return def;
+            return new Variate();
         else
-            return rst.value(def);
-    }
+            return rst;
 
+    }
 
 
     /*执行命令（返回一个模理）*/

@@ -4,6 +4,16 @@ Weed3Demo::使用示例<br/>
 更新说明<br/>
 ------------------<br/>
 <br/>
+3.0.4.47::
+1.DbTableQueryBase::修改.添加 insertList();<br/>
+<br/>
+3.0.4.45::<br/>
+1.DbTran::修改.添加 isSucceed();<br/>
+2.DbTranQueue::修改.添加 isSucceed();<br/>
+<br/>
+3.0.4.44::<br/>
+1.+exists(expr)<br/>
+<br/>
 3.0.4.42::<br/>
 1.SQLBuilder::修改.添加 removeLast() （去除最后一个字符）<br/>
 2.DbContext::修改.添加 allowMultiQueries //是否支持多语句查询<br/>

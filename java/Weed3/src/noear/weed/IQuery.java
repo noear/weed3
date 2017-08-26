@@ -15,7 +15,8 @@ public interface IQuery {
     public long getCount() throws SQLException;
     public Object getValue() throws SQLException;
     public <T> T getValue(T def) throws SQLException;
-    public <T> T getValue(T def, Act2<CacheUsing, T> cacheCondition) throws SQLException;
+    public Variate getVariate() throws SQLException;
+    public Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException;
     public <T extends IBinder> T getItem(T model) throws SQLException;
     public <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException;
     public <T extends IBinder> List<T> getList(T model) throws SQLException;

@@ -2,6 +2,7 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,10 @@ public class DataItem implements IDataItem{
             return new Variate(name, null);
     }
 
+    public void remove(String name){
+        _data.remove(name);
+    }
+
     public <T extends IBinder> T toItem(T item)
     {
         item.bind((key) -> getVariate(key));
@@ -60,8 +65,52 @@ public class DataItem implements IDataItem{
         return (int)get(name);
     }
 
+    public int getInt2(String name){
+        Object val = get(name);
+
+        if(val == null){
+            return 0;
+        }
+
+        if(val instanceof Long){
+            return (int) ((long)val);
+        }
+
+        if(val instanceof Integer){
+            return (int)val;
+        }
+
+        if(val instanceof BigDecimal){
+            return ((BigDecimal)val).intValue();
+        }
+
+        return 0;
+    }
+
     public long getLong(String name){
         return (long)get(name);
+    }
+
+    public long getLong2(String name){
+        Object val = get(name);
+
+        if(val == null){
+            return 0l;
+        }
+
+        if(val instanceof Long){
+            return (long)val;
+        }
+
+        if(val instanceof Integer){
+            return (int)val;
+        }
+
+        if(val instanceof BigDecimal){
+            return ((BigDecimal)val).longValue();
+        }
+
+        return 0l;
     }
 
     public double getDouble(String name){

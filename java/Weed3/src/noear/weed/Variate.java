@@ -13,6 +13,9 @@ public class Variate {
     protected Object _value;
     public final   int   _hash;
 
+    protected  Variate(){
+        _hash=0;
+    }
 
     public Variate(String name, Object value) {
         this._name = name;
@@ -57,6 +60,46 @@ public class Variate {
         else {
             return (T) _value;
         }
+    }
+
+    public long longValue(long def){
+        if(_value == null){
+            return def;
+        }
+
+        if(_value instanceof Long){
+            return (long)_value;
+        }
+
+        if(_value instanceof Integer){
+            return (int)_value;
+        }
+
+        if(_value instanceof BigDecimal){
+            return ((BigDecimal)_value).longValue();
+        }
+
+        return def;
+    }
+
+    public int intValue(int def){
+        if(_value == null){
+            return def;
+        }
+
+        if(_value instanceof Long){
+            return (int) ((long)_value);
+        }
+
+        if(_value instanceof Integer){
+            return (int)_value;
+        }
+
+        if(_value instanceof BigDecimal){
+            return ((BigDecimal)_value).intValue();
+        }
+
+        return def;
     }
 
 
