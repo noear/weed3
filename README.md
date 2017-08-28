@@ -134,6 +134,13 @@ db2.tran().join(queue).execute((t) => {
 });
 
 queue.complete();
+
+//demo2.1:: //事务队列简化写法
+new DbTranQueue().execute(qt->{
+     for (order_add_sync_stone sp : processList) {
+         sp.tran(qt).execute();
+     }
+ });
 ```
 示例1.3::缓存控制<br/>
 ```java
