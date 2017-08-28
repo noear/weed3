@@ -1,3 +1,6 @@
+3.0.4.49::
+1.使用getColumnLabel替代getColumnName获取列名
+
 3.0.4.48::
 1.IQuery::修改.取消 getValue(def,cacheCondition)
 2.IQuery::修改.添加 getVariate();

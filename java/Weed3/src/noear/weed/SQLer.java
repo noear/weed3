@@ -123,7 +123,7 @@ class SQLer {
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnName(i), rset.getObject(i));
+                    row.set(meta.getColumnLabel(i), rset.getObject(i));
                 }
             }
 
@@ -152,7 +152,7 @@ class SQLer {
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnName(i), rset.getObject(i));
+                    row.set(meta.getColumnLabel(i), rset.getObject(i));
                 }
 
                 table.addRow(row);
