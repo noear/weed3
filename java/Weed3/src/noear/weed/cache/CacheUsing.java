@@ -85,7 +85,7 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
     /// <param name="exec">执行方法</param>
     /// <param name="weedKey">缓存关健字</param>
     /// <returns></returns>
-    /*public <T> T get(String weedKey, Fun0<T> exec) {
+    public <T> T get(String weedKey, Fun0<T> exec) {
         if (this.cacheController == CacheState.NonUsing)
             return exec.run();
 
@@ -108,14 +108,14 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
                 }
             }
         }
-//      T temp = do_get(exec, this);
+
         if (onExecH != null)
             onExecH.run();
 
         return cacheT;
-    }*/
+    }
 
-    public <T> T get(String weedKey, Fun0Ex<T,SQLException> exec) throws SQLException{
+    public <T> T getEx(String weedKey, Fun0Ex<T,SQLException> exec) throws SQLException{
         if (this.cacheController == CacheState.NonUsing)
             return exec.run();
 

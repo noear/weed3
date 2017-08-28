@@ -129,7 +129,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getVariate(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
         }
         if (rst == null)
             return new Variate();
@@ -151,7 +151,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getItem(getCommand(), _tran, model);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
         }
 
         if(rst == null)
@@ -172,7 +172,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         else
         {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
         }
 
         if(rst == null)
@@ -198,7 +198,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getTable(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
         }
 
         if(rst == null)
@@ -219,7 +219,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getRow(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
         }
 
         if(rst == null)
