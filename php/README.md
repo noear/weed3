@@ -1,7 +1,7 @@
 # Weed for .net/mono/java/php
 超强跨平台轻量级ORM<br />
 <br />
-#demo::
+#demo for php::
 <br />
 ```php
 include 'Weed3.php';
