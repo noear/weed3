@@ -1,3 +1,11 @@
+3.0.4.50::
+1.DataItem::修改.取消 intValue2(); //同上
+2.DataItem::修改.取消 longValue2(); //同上
+*.由 DataItem.getVariate(name) 解决问题
+
+3.Variate::修改.添加 doubleValue(def); //同上
+
+
 3.0.4.49::
 1.使用getColumnLabel替代getColumnName获取列名
 
