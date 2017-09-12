@@ -15,6 +15,10 @@ public class SQLBuilder {
     StringBuilder b_builder = new StringBuilder();
     List<Object> b_paramS = new ArrayList<>();
 
+    public int indexOf(String str){
+        return builder.indexOf(str);
+    }
+
     public void clear()
     {
         builder.delete(0,builder.length());

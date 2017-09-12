@@ -27,9 +27,26 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 
+    protected Act1<Command> onCommandExpr = null;
+
+    public T onCommandBuilt(Act1<Command> expr){
+        this.onCommandExpr = expr;
+        return (T)this;
+    }
+
+    protected void logCommandBuilt(Command cmd){
+        if(onCommandExpr!=null){
+            onCommandExpr.run(cmd);
+        }
+    }
+
+
     public DbAccess(DbContext context){
         this.context = context;
     }
+
+
+
 
     /*IWeedKey begin*/
     protected String _weedKey;

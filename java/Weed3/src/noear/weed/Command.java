@@ -7,6 +7,10 @@ import java.util.List;
  * 命令
  */
 public class Command {
+    /*命令tag（用于寄存一些数据）*/
+    public String       tag;
+    /*是否进行日志*/
+    public boolean      isLog = false;
     /*命令id*/
     public String       key;
     /*命令文本*/
@@ -20,4 +24,6 @@ public class Command {
         this.context = context;
         this.context.lastCommand = this;
     }
+
+
 }

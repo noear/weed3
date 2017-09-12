@@ -2,7 +2,6 @@ package noear.weed;
 
 import noear.weed.ext.Act1;
 import noear.weed.ext.Act2;
-import noear.weed.ext.Fun1;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.List;
 /**
  * Created by yuety on 14/11/12.
  *
+ * #        //不加表空间（table(xxx) : 默认加表空间）
  * $.       //当前表空间
  * $NOW()   //说明这里是一个sql 函数
  * ?...     //说明这里是一个数组或查询结果
@@ -20,10 +20,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     String _table;
     DbContext _context;
     SQLBuilder _builder;
+    boolean _isLog = false;
 
     public DbTableQueryBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
+    }
+
+
+    public T log(Boolean isLog){
+        _isLog = isLog;
+        return (T)this;
     }
 
     public T expre(Act1<T> action){
@@ -32,12 +39,16 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     protected T table(String table) { //相当于 from
-        if (table.indexOf('.') > 0)
-            _table = table;
-        else
-            _table = "$." + table;
+        if(table.startsWith("#")){
+            _table = table.replace("#","");
+        }else {
+            if (table.indexOf('.') > 0)
+                _table = table;
+            else
+                _table = "$." + table;
+        }
 
-        return (T)this;
+        return (T) this;
     }
 
     //使用 ?... 支持数组参数
@@ -66,6 +77,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    public T from(String table){
+        _builder.append(" FROM ").append(table);
+        return (T)this;
+    }
 
     public long insert(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0)
@@ -244,8 +259,104 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return compile().execute();
     }
 
-    public int delete() throws SQLException{
-        _builder.insert("DELETE FROM " + _table);
+    public <T> boolean updateList(String pk, List<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
+        List<DataItem> list2 = new ArrayList<>();
+
+        for (T values : valuesList) {
+            DataItem item = new DataItem();
+            hander.run(values, item);
+
+            list2.add(item);
+        }
+
+        if (list2.size() > 0) {
+            return updateList(pk, list2.get(0), list2);
+        }else{
+            return false;
+        }
+    }
+
+    public boolean updateList(String pk, List<DataItem> valuesList) throws SQLException {
+        if (valuesList == null || valuesList.size() == 0)
+            return false;
+
+        return updateList(pk, valuesList.get(0), valuesList);
+    }
+
+    protected <T extends GetHandler> boolean updateList(String pk, IDataItem cols, List<T> valuesList)throws SQLException{
+        if(valuesList == null || valuesList.size()==0)
+            return false;
+
+        if (cols == null || cols.count() == 0)
+            return false;
+
+        List<Object> args = new ArrayList<Object>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(" INSERT INTO ").append(_table).append(" (");
+        for(String key : cols.keys()){
+            sb.append(_context.field(key)).append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+
+        sb.append(") ");
+
+        sb.append("VALUES");
+
+        for(GetHandler item : valuesList){
+            sb.append("(");
+
+            for(String key : cols.keys()){
+                Object val = item.get(key);
+
+                if (val instanceof String) {
+                    String val2 = (String)val;
+                    if (val2.indexOf('$') == 0) { //说明是SQL函数
+                        sb.append(val2.substring(1)).append(",");
+                    }
+                    else {
+                        sb.append("?,");
+                        args.add(val);
+                    }
+                }
+                else {
+                    sb.append("?,");
+                    args.add(val);
+                }
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append("),");
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(" ON DUPLICATE KEY UPDATE");
+        for(String key : cols.keys()){
+            if(pk.equals(key))
+                continue;
+
+            sb.append(" ").append(key).append("=VALUES(").append(key).append("),");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(";");
+
+        _builder.append(sb.toString(), args.toArray());
+
+        return compile().execute() > 0;
+    }
+
+    public int delete() throws SQLException {
+        StringBuilder sb  = new StringBuilder();
+
+        sb.append("DELETE ");
+
+        if(_builder.indexOf(" FROM ")<0){
+            sb.append(" FROM ").append(_table);
+        }else{
+            sb.append(_table);
+        }
+
+        _builder.insert(sb.toString());
+
         return compile().execute();
     }
 
@@ -309,6 +420,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return  (T)this;
     }
 
+    public long count() throws SQLException{
+        return select("COUNT(*)").getVariate().longValue(0l);
+    }
+
     public IQuery select(String columns) {
 
         StringBuilder sb = new StringBuilder();
@@ -330,6 +445,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         return rst;
     }
+
+
 
     protected DbTran _tran = null;
     public T tran(DbTran transaction)
@@ -354,6 +471,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         if(_tran!=null)
             temp.tran(_tran);
 
-        return temp;
+        return temp.onCommandBuilt((cmd)->{
+            cmd.tag   = _table;
+            cmd.isLog = _isLog;
+        });
     }
 }
