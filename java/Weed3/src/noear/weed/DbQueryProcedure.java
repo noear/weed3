@@ -1,14 +1,10 @@
 package noear.weed;
 
-import noear.weed.cache.CacheState;
 import noear.weed.ext.Act0;
 import noear.weed.ext.Fun0;
-import noear.weed.ext.Fun1;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,6 +123,8 @@ public class DbQueryProcedure extends DbProcedure {
 
         cmd.paramS  = this.paramS;
         cmd.text    = sqlTxt;
+
+        logCommandBuilt(cmd);
 
         return cmd;
     }

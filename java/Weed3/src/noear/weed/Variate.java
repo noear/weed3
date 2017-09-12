@@ -62,6 +62,34 @@ public class Variate {
         }
     }
 
+    public double doubleValue(double def){
+        if(_value == null){
+            return def;
+        }
+
+        if(_value instanceof Double){
+            return (double)_value;
+        }
+
+        if(_value instanceof Float){
+            return (double)((float)_value);
+        }
+
+        if(_value instanceof BigDecimal){
+            return ((BigDecimal)_value).doubleValue();
+        }
+
+        if(_value instanceof Long){
+            return (long)_value;
+        }
+
+        if(_value instanceof Integer){
+            return (int)_value;
+        }
+
+        return def;
+    }
+
     public long longValue(long def){
         if(_value == null){
             return def;
@@ -87,12 +115,12 @@ public class Variate {
             return def;
         }
 
-        if(_value instanceof Long){
-            return (int) ((long)_value);
-        }
-
         if(_value instanceof Integer){
             return (int)_value;
+        }
+
+        if(_value instanceof Long){
+            return (int) ((long)_value);
         }
 
         if(_value instanceof BigDecimal){

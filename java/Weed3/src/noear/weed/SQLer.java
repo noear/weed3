@@ -25,12 +25,12 @@ class SQLer {
             WeedConfig.logException(null, ex);};
     }
 
-    public Variate getVariate(Command cmd,DbTran transaction) throws SQLException{
+    public Variate getVariate(Command cmd,DbTran transaction) throws SQLException {
         try {
-            rset = query(cmd,transaction);
+            rset = query(cmd, transaction);
 
-            if (rset.next())
-                return new Variate(null,rset.getObject(1));
+            if (rset != null && rset.next())
+                return new Variate(null, rset.getObject(1));
             else
                 return null;//new Variate(null,null);
         } catch (SQLException ex) {
@@ -41,47 +41,43 @@ class SQLer {
         }
     }
 
-    public <T extends IBinder> T getItem(Command cmd, DbTran transaction,T model) throws SQLException
-    {
+    public <T extends IBinder> T getItem(Command cmd, DbTran transaction,T model) throws SQLException {
         try {
-            rset = query(cmd,transaction);
+            rset = query(cmd, transaction);
 
-            if(rset.next()) {
-                model.bind((key)->{
+            if (rset != null && rset.next()) {
+                model.bind((key) -> {
                     try {
-                        return new Variate(key,rset.getObject(key));
-                    }catch (SQLException ex){
+                        return new Variate(key, rset.getObject(key));
+                    } catch (SQLException ex) {
                         WeedConfig.logException(cmd, ex);
-                        return new Variate(key,null);
+                        return new Variate(key, null);
                     }
                 });
 
                 return model;
-            }
-            else
+            } else
                 return null;
 
         } catch (SQLException ex) {
             WeedConfig.logException(cmd, ex);
             throw ex;
-        }
-        finally {
+        } finally {
             tryClose();
         }
     }
 
-    public <T extends IBinder> List<T> getList(Command cmd, DbTran transaction,T model) throws SQLException
-    {
+    public <T extends IBinder> List<T> getList(Command cmd, DbTran transaction,T model) throws SQLException {
         List<T> list = new ArrayList<T>();
         try {
             rset = query(cmd, transaction);
 
-            while (rset.next()) {
+            while (rset != null && rset.next()) {
                 T item = (T) model.clone();
 
-                if(WeedConfig.isDebug){
-                    if(model.getClass().isInstance(item)==false){
-                        throw new SQLException(model.getClass()+" clone error("+item.getClass()+")");
+                if (WeedConfig.isDebug) {
+                    if (model.getClass().isInstance(item) == false) {
+                        throw new SQLException(model.getClass() + " clone error(" + item.getClass() + ")");
                     }
                 }
 
@@ -105,8 +101,7 @@ class SQLer {
         } catch (SQLException ex) {
             WeedConfig.logException(cmd, ex);
             throw ex;
-        }
-        finally {
+        } finally {
             tryClose();
         }
     }
@@ -118,12 +113,12 @@ class SQLer {
             rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
-            if (rset.next()) {
+            if (rset != null && rset.next()) {
 
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnName(i), rset.getObject(i));
+                    row.set(meta.getColumnLabel(i), rset.getObject(i));
                 }
             }
 
@@ -147,12 +142,12 @@ class SQLer {
             rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
-            while (rset.next()) {
+            while (rset != null && rset.next()) {
                 DataItem row = new DataItem();
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnName(i), rset.getObject(i));
+                    row.set(meta.getColumnLabel(i), rset.getObject(i));
                 }
 
                 table.addRow(row);
@@ -174,12 +169,16 @@ class SQLer {
     //执行
     public int execute(Command cmd,DbTran transaction)  throws SQLException {
         try {
-            if (transaction == null)
-                buildCMD(cmd, null, false);
-            else
-                buildCMD(cmd, transaction.connection, false);
+            if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+                return -1;
+            }
 
-            return stmt.executeUpdate();
+            int rst = stmt.executeUpdate();
+
+            //*.监听
+            WeedConfig.logExecuteAft(cmd);
+
+            return rst;
 
         } catch (SQLException ex) {
             WeedConfig.logException(cmd, ex);
@@ -191,14 +190,17 @@ class SQLer {
 
     public long insert(Command cmd,DbTran transaction)  throws SQLException {
         try {
-            if (transaction == null)
-                buildCMD(cmd, null, true);
-            else
-                buildCMD(cmd, transaction.connection, true);
+            if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), true)) {
+                return -1;
+            }
 
             stmt.executeUpdate();
 
             rset = stmt.getGeneratedKeys();
+
+            //*.监听
+            WeedConfig.logExecuteAft(cmd);
+
             if (rset.next())
                 return rset.getLong(1);//从1开始
             else
@@ -214,18 +216,24 @@ class SQLer {
 
     //查询
     private ResultSet query(Command cmd, DbTran transaction) throws SQLException {
-        if (transaction == null)
-            buildCMD(cmd, null, false);
-        else
-            buildCMD(cmd, transaction.connection, false);
+        if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+            return null;
+        }
 
         //3.执行
-        return stmt.executeQuery();
+        ResultSet rst = stmt.executeQuery();
+
+        //*.监听
+        WeedConfig.logExecuteAft(cmd);
+
+        return rst;
     }
 
-    private void buildCMD(Command cmd, Connection c, boolean isInsert) throws SQLException {
-        //0.监听
-        WeedConfig.logExecute(cmd);
+    private boolean buildCMD(Command cmd, Connection c, boolean isInsert) throws SQLException {
+        //*.监听
+        if(WeedConfig.logExecuteBef(cmd) == false){
+            return false;
+        }
 
         //1.构建连接和命令(外部的c不能给conn)
         if (c == null) {
@@ -247,5 +255,7 @@ class SQLer {
             stmt.setObject(idx, p.getValue());
             idx++;
         }
+
+        return true;
     }
 }

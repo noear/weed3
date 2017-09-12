@@ -1,12 +1,6 @@
 package noear.weed;
 
-import noear.weed.cache.CacheState;
 import noear.weed.ext.Fun0;
-import noear.weed.ext.Fun1;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -71,6 +65,8 @@ public class DbStoredProcedure extends DbProcedure {
         sb.append('}');
 
         cmd.text = sb.toString();
+
+        logCommandBuilt(cmd);
 
         return cmd;
     }

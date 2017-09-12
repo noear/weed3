@@ -27,9 +27,26 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /*获取访问标识（由子类实现）*/
     protected abstract String getCommandID();
 
+    protected Act1<Command> onCommandExpr = null;
+
+    public T onCommandBuilt(Act1<Command> expr){
+        this.onCommandExpr = expr;
+        return (T)this;
+    }
+
+    protected void logCommandBuilt(Command cmd){
+        if(onCommandExpr!=null){
+            onCommandExpr.run(cmd);
+        }
+    }
+
+
     public DbAccess(DbContext context){
         this.context = context;
     }
+
+
+
 
     /*IWeedKey begin*/
     protected String _weedKey;
@@ -129,7 +146,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getVariate(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
         }
         if (rst == null)
             return new Variate();
@@ -151,7 +168,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getItem(getCommand(), _tran, model);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
         }
 
         if(rst == null)
@@ -172,7 +189,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         else
         {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
         }
 
         if(rst == null)
@@ -198,7 +215,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getTable(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
         }
 
         if(rst == null)
@@ -219,7 +236,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             rst = new SQLer().getRow(getCommand(), _tran);
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.get(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
         }
 
         if(rst == null)

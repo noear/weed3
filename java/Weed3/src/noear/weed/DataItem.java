@@ -65,52 +65,8 @@ public class DataItem implements IDataItem{
         return (int)get(name);
     }
 
-    public int getInt2(String name){
-        Object val = get(name);
-
-        if(val == null){
-            return 0;
-        }
-
-        if(val instanceof Long){
-            return (int) ((long)val);
-        }
-
-        if(val instanceof Integer){
-            return (int)val;
-        }
-
-        if(val instanceof BigDecimal){
-            return ((BigDecimal)val).intValue();
-        }
-
-        return 0;
-    }
-
     public long getLong(String name){
         return (long)get(name);
-    }
-
-    public long getLong2(String name){
-        Object val = get(name);
-
-        if(val == null){
-            return 0l;
-        }
-
-        if(val instanceof Long){
-            return (long)val;
-        }
-
-        if(val instanceof Integer){
-            return (int)val;
-        }
-
-        if(val instanceof BigDecimal){
-            return ((BigDecimal)val).longValue();
-        }
-
-        return 0l;
     }
 
     public double getDouble(String name){

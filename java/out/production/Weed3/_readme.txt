@@ -1,3 +1,24 @@
+3.0.4.51::
+1.WeedConfig::修改.添加 onExecuteAft
+2.WeedConfig::修改.添加 onExecuteBef
+3.SQLer::修改.添加 监听的支持（通过:onExecuteAft,onExecuteBef）
+4.DbAccess::修改.添加 onCommandBuilt(...); //可再次为cmd做处理
+5.DbTableQueryBase::修改.添加 count();
+6.DbTableQueryBase::修改.添加 from();
+7.DbTableQueryBase::修改.添加 log(...);
+1.DbTableQueryBase::修改.添加 insertUpdate();
+
+3.0.4.50::
+1.DataItem::修改.取消 intValue2(); //同上
+2.DataItem::修改.取消 longValue2(); //同上
+*.由 DataItem.getVariate(name) 解决问题
+
+3.Variate::修改.添加 doubleValue(def); //同上
+
+
+3.0.4.49::
+1.使用getColumnLabel替代getColumnName获取列名
+
 3.0.4.48::
 1.IQuery::修改.取消 getValue(def,cacheCondition)
 2.IQuery::修改.添加 getVariate();
