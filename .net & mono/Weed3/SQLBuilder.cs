@@ -11,6 +11,10 @@ namespace Noear.Weed {
         StringBuilder b_builder = new StringBuilder();
         List<Object> b_paramS = new List<Object>();
 
+        public int indexOf(String str) {
+            return builder.ToString().IndexOf(str);
+        }
+
         public void clear() {
             builder.Clear();
             paramS.Clear();

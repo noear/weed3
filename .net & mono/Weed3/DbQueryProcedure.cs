@@ -112,6 +112,8 @@ namespace Noear.Weed {
             cmd.paramS = this.paramS;
             cmd.text = sqlTxt;
 
+            logCommandBuilt(cmd);
+
             return cmd;
         }
 

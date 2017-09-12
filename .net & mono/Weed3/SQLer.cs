@@ -12,6 +12,7 @@ namespace Noear.Weed {
 
         private DbReader reader;
         private DbConnection conn;
+        private DbCommand stmt;
 
         private void tryClose() {
             try { if (reader != null) { reader.Close(); reader = null; } } catch (Exception ex) { WeedConfig.logException(null, ex); };
@@ -42,7 +43,12 @@ namespace Noear.Weed {
                 reader = query(cmd, transaction);
                 if (reader.Read()) {
                     model.bind((key) => {
-                        return new Variate(key, reader[key]);
+                        try {
+                            return new Variate(key, reader[key]);
+                        } catch (Exception ex) {
+                            WeedConfig.logException(cmd, ex);
+                            return new Variate(key, null);
+                        }
                     });
 
                     return model;
@@ -64,12 +70,24 @@ namespace Noear.Weed {
             try {
                 reader = query(cmd, transaction);
                 while (reader.Read()) {
-                    model.bind((key) => {
-                        return new Variate(key, reader[key]);
+                    T item = (T)model.clone();
+
+                    if (WeedConfig.isDebug) {
+                        if (item is T) {
+                            throw new WeedException(model.GetType() + " clone error(" + item.GetType() + ")");
+                        }
+                    }
+
+                    item.bind((key) => {
+                        try {
+                            return new Variate(key, reader[key]);
+                        } catch (Exception ex) {
+                            WeedConfig.logException(cmd, ex);
+                            return new Variate(key, null);
+                        }
                     });
 
-                    list.Add(model);
-                    model = (T)model.clone();
+                    list.Add(item);
                 }
 
                 if (list.Count > 0)
@@ -149,14 +167,16 @@ namespace Noear.Weed {
         //执行
         public int execute(Command cmd, DbTran transaction) {
             try {
-                DbCommand dbcmd = null;
-                if (transaction == null)
-                    dbcmd = buildCMD(cmd, null, false);
-                else
-                    dbcmd = buildCMD(cmd, transaction.connection, false);
+                if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+                    return -1;
+                }
 
-                return dbcmd.ExecuteNonQuery();
+                int rst = stmt.ExecuteNonQuery();
 
+                //*.监听
+                WeedConfig.logExecuteAft(cmd);
+
+                return rst;
             }
             catch (Exception ex) {
                 WeedConfig.logException(cmd, ex);
@@ -169,25 +189,28 @@ namespace Noear.Weed {
 
         public long insert(Command cmd, DbTran transaction) {
             try {
-                DbCommand dbcmd = null;
-                if (transaction == null)
-                    dbcmd = buildCMD(cmd, null, true);
-                else
-                    dbcmd = buildCMD(cmd, transaction.connection, true);
+                if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), true)) {
+                    return -1;
+                }
 
-                if (dbcmd.CommandText.IndexOf("@@IDENTITY") > 0) {
-                    var obj = dbcmd.ExecuteScalar();
+                long rst = 0;
+                if (stmt.CommandText.IndexOf("@@IDENTITY") > 0) {
+                    var obj = stmt.ExecuteScalar();
 
                     if (obj is ulong)
-                        return (long)((ulong)obj);
+                        rst =(long)((ulong)obj);
                     else if (obj is long)
-                        return (long)obj;
+                        rst =(long)obj;
                     else
-                        return 0;
+                        rst = 0;
                 }
                 else
-                    return dbcmd.ExecuteNonQuery();
+                    rst = stmt.ExecuteNonQuery();
 
+                //*.监听
+                WeedConfig.logExecuteAft(cmd);
+
+                return rst;
             }
             catch (Exception ex) {
                 WeedConfig.logException(cmd, ex);
@@ -200,19 +223,24 @@ namespace Noear.Weed {
 
         //查询
         private DbReader query(Command cmd, DbTran transaction) {
-            DbCommand dbcmd = null;
-            if (transaction == null)
-                dbcmd = buildCMD(cmd, null, false);
-            else
-                dbcmd = buildCMD(cmd, transaction.connection, false);
-            
+            if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+                return null;
+            }
+
             //3.执行
-            return new DbReader(dbcmd.ExecuteReader());//stmt.executeQuery();
+            DbReader rst =  new DbReader(stmt.ExecuteReader());//stmt.executeQuery();
+
+            //*.监听
+            WeedConfig.logExecuteAft(cmd);
+
+            return rst;
         }
 
-        private DbCommand buildCMD(Command cmd, DbConnection c, bool isInsert) {
-            //0.监听
-            WeedConfig.logExecute(cmd);
+        private bool buildCMD(Command cmd, DbConnection c, bool isInsert) {
+            //*.监听
+            if (WeedConfig.logExecuteBef(cmd) == false) {
+                return false;
+            }
 
             //1.构建连接和命令(外部的c不能给conn)
             if (c == null) {
@@ -220,25 +248,25 @@ namespace Noear.Weed {
                 c.Open();
             }
             
-            DbCommand dbcmd = c.CreateCommand();
-            dbcmd.CommandText = cmd.text;
+            stmt = c.CreateCommand();
+            stmt.CommandText = cmd.text;
             if (cmd.text.IndexOf(' ') < 0) //没有空隔的是存储过程 
-                dbcmd.CommandType = System.Data.CommandType.StoredProcedure;
-            else 
-                dbcmd.CommandText = cmd.text;
+                stmt.CommandType = System.Data.CommandType.StoredProcedure;
+            else
+                stmt.CommandText = cmd.text;
 
             if (cmd.paramS != null) {
                 //2.设置参数值
                 foreach (Variate p in cmd.paramS) {
-                    var pm = dbcmd.CreateParameter();
+                    var pm = stmt.CreateParameter();
                     pm.ParameterName = p.getName();
                     pm.Value = p.getValue();
                     pm.DbType = p.getType();
-                    dbcmd.Parameters.Add(pm);
+                    stmt.Parameters.Add(pm);
                 }
             }
 
-            return dbcmd;
+            return true;
         }
     }
 }

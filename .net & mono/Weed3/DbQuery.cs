@@ -90,6 +90,8 @@ namespace Noear.Weed {
 
             cmd.text = sb.ToString();
 
+            logCommandBuilt(cmd);
+
             return cmd;
         }
     }

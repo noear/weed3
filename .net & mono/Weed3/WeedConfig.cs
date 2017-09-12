@@ -8,21 +8,36 @@ namespace Noear.Weed {
         public static bool isDebug = false;
 
         static Action<Command, Exception> onException_listener = null;
-        static Action<Command> onExecute_listener = null;
+        static Action<Command> onExecuteAft_listener = null;
+        static Func< Command, Boolean> onExecuteBef_listener = null;
+        static Action<Command> onLog_listener = null;
 
         internal static void logException(Command cmd, Exception ex) {
             if (onException_listener != null) {
-                onException_listener(cmd, ex);
+                try {
+                    onException_listener(cmd, ex);
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                }
             }
         }
 
-        internal static void logExecute(Command cmd) {
-            if (isDebug == false)
-                return;
-
-            if (onExecute_listener != null) {
-                onExecute_listener(cmd);
+        internal static void logExecuteAft(Command cmd) {
+            if (onExecuteAft_listener != null) {
+                onExecuteAft_listener(cmd);
             }
+
+            if (cmd.isLog && onLog_listener != null) {
+                onLog_listener(cmd);
+            }
+        }
+
+        internal static bool logExecuteBef(Command cmd) {
+            if (onExecuteBef_listener != null) {
+                return onExecuteBef_listener(cmd);
+            }
+
+            return true;
         }
 
 
@@ -34,8 +49,15 @@ namespace Noear.Weed {
             onException_listener = listener;
         }
 
-        public static void onExecute(Action<Command> listener) {
-            onExecute_listener = listener;
+        public static void onLog(Action<Command> listener) {
+            onLog_listener = listener;
+        }
+
+        public static void onExecuteAft(Action<Command> listener) {
+            onExecuteAft_listener = listener;
+        }
+        public static void onExecuteBef(Func<Command, Boolean> listener) {
+            onExecuteBef_listener = listener;
         }
     }
 }

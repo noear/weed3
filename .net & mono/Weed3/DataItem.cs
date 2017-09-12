@@ -41,6 +41,10 @@ namespace Noear.Weed {
                 return new Variate(name, null);
         }
 
+        public void remove(String name) {
+            _data.Remove(name);
+        }
+
         public T toItem<T>(T item) where T : IBinder {
             item.bind((key)=>{
                 return getVariate(key);
@@ -57,52 +61,8 @@ namespace Noear.Weed {
             return (int)_data[name];
         }
 
-        public int getInt2(String name) {
-            Object val = get(name);
-
-            if (val == null) {
-                return 0;
-            }
-
-            if (val is long){
-                return (int)((long)val);
-            }
-
-            if (val is int){
-                return (int)val;
-            }
-
-            if (val is Decimal){
-                return (int)((Decimal)val);
-            }
-
-            return 0;
-        }
-
         public long getLong(String name) {
             return (long)_data[name];
-        }
-
-        public long getLong2(String name) {
-            Object val = get(name);
-
-            if (val == null) {
-                return 0;
-            }
-
-            if (val is long){
-                return (long)val;
-            }
-
-            if (val is int){
-                return (int)val;
-            }
-
-            if (val is Decimal){
-                return (long)((Decimal)val);
-            }
-
-            return 0;
         }
 
         public double getDouble(String name) {

@@ -23,6 +23,17 @@ namespace Noear.Weed {
         /*获取访问标识（由子类实现）*/
         protected abstract String getCommandID();
 
+        private Action<Command> onCommandExpr = null;
+
+        public X onCommandBuilt(Action<Command> expr) {
+            this.onCommandExpr = expr;
+            return (X)this;
+        }
+
+        protected void logCommandBuilt(Command cmd) {
+            onCommandExpr?.Invoke(cmd);
+        }
+
         public DbAccess(DbContext context) {
             this.context = context;
         }

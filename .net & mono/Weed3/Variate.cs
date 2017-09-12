@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
 
 namespace Noear.Weed {
     /**
@@ -97,16 +96,40 @@ namespace Noear.Weed {
                 return def;
             }
 
+            if (_value is int) {
+                return (int)_value;
+            }
+
             if (_value is long){
                 return (int)((long)_value);
             }
 
-            if (_value is int){
+            if (_value is Decimal){
+                return (int)((Decimal)_value);
+            }
+
+            return def;
+        }
+
+        public double doubleValue(double def) {
+            if (_value == null) {
+                return def;
+            }
+
+            if (_value is double) {
+                return (double)_value;
+            }
+
+            if (_value is long) {
+                return (long)_value;
+            }
+
+            if (_value is int) {
                 return (int)_value;
             }
 
-            if (_value is Decimal){
-                return (int)((Decimal)_value);
+            if (_value is Decimal) {
+                return (double)((Decimal)_value);
             }
 
             return def;

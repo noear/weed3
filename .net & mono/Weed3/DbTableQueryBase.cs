@@ -18,10 +18,16 @@ namespace Noear.Weed {
         String _table;
         DbContext _context;
         SQLBuilder _builder;
+        bool _isLog = false;
 
         public DbTableQueryBase(DbContext context) {
             _context = context;
             _builder = new SQLBuilder();
+        }
+
+        public T log(Boolean isLog) {
+            _isLog = isLog;
+            return (T)this;
         }
 
         public T expre(Action<T> action) {
@@ -63,7 +69,12 @@ namespace Noear.Weed {
             _builder.append(" ) ");
             return (T)this;
         }
-        
+
+        public T from(String table) {
+            _builder.append(" FROM ").append(table);
+            return (T)this;
+        }
+
         public long insert(IDataItem data) {
             if (data == null || data.count() == 0)
                 return 0;
@@ -243,8 +254,107 @@ namespace Noear.Weed {
             return compile().execute();
         }
 
+        public bool updateList<T>(String pk, List<T> valuesList, Action<T, DataItem> hander) {
+            List<DataItem> list2 = new List<DataItem>();
+
+            foreach (T values in valuesList) {
+                DataItem item = new DataItem();
+                hander(values, item);
+
+                list2.Add(item);
+            }
+
+            if (list2.Count > 0) {
+                return updateList(pk, list2);
+            } else {
+                return false;
+            }
+        }
+
+        public bool updateList(String pk, List<DataItem> valuesList) {
+            if (valuesList == null || valuesList.Count == 0)
+                return false;
+
+            List<GetHandler> list2 = new List<GetHandler>();
+            foreach (IDataItem values in valuesList) {
+                list2.Add(values.get);
+            }
+
+            return updateList(pk, valuesList[0], list2);
+        }
+
+        protected bool updateList(String pk, IDataItem cols, List<GetHandler> valuesList) {
+            if (valuesList == null || valuesList.Count == 0)
+                return false;
+
+            if (cols == null || cols.count() == 0)
+                return false;
+
+            List<Object> args = new List<Object>();
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(" INSERT INTO ").Append(_table).Append(" (");
+            foreach (String key in cols.keys()) {
+                sb.Append(_context.field(key)).Append(",");
+            }
+            sb.Remove(sb.Length - 1, 1);
+
+            sb.Append(") ");
+
+            sb.Append("VALUES");
+
+            foreach (GetHandler item in valuesList) {
+                sb.Append("(");
+
+                foreach (String key in cols.keys()) {
+                    Object val = item(key);
+
+                    if (val is String) {
+                        String val2 = (String)val;
+                        if (val2.IndexOf('$') == 0) { //说明是SQL函数
+                            sb.Append(val2.Substring(1)).Append(",");
+                        } else {
+                            sb.Append("?,");
+                            args.Add(val);
+                        }
+                    } else {
+                        sb.Append("?,");
+                        args.Add(val);
+                    }
+                }
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append("),");
+            }
+
+            sb.Remove(sb.Length - 1, 1);
+            sb.Append(" ON DUPLICATE KEY UPDATE");
+            foreach (String key in cols.keys()) {
+                if (pk.Equals(key))
+                    continue;
+
+                sb.Append(" ").Append(key).Append("=VALUES(").Append(key).Append("),");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            sb.Append(";");
+
+            _builder.append(sb.ToString(), args.ToArray());
+
+            return compile().execute() > 0;
+        }
+
         public int delete() {
-            _builder.insert("DELETE FROM " + _table);
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("DELETE ");
+            
+            if (_builder.indexOf(" FROM ") < 0) {
+                sb.Append(" FROM ").Append(_table);
+            } else {
+                sb.Append(_table);
+            }
+
+            _builder.insert(sb.ToString());
+
             return compile().execute();
         }
 
@@ -300,6 +410,16 @@ namespace Noear.Weed {
             return q.getValue() != null;
         }
 
+        String _hint = null;
+        public T hint(String hint) {
+            _hint = hint;
+            return (T)this;
+        }
+
+        public long count() {
+            return select("COUNT(*)").getVariate().longValue(0);
+        }
+
         public IQuery select(String columns) {
 
             StringBuilder sb = new StringBuilder();
@@ -339,7 +459,10 @@ namespace Noear.Weed {
             if (_tran != null)
                 temp.tran(_tran);
 
-            return temp;
+            return temp.onCommandBuilt((cmd)=>{
+                cmd.tag = _table;
+                cmd.isLog = _isLog;
+            });
         }
     }
 }
