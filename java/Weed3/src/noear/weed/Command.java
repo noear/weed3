@@ -11,6 +11,8 @@ public class Command {
     public String       tag;
     /*是否进行日志*/
     public boolean      isLog = false;
+
+
     /*命令id*/
     public String       key;
     /*命令文本*/

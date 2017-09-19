@@ -1,3 +1,6 @@
+3.0.4.52::
+1.DbTableQueryBase::修改.添加 count(...);
+
 3.0.4.51::
 1.WeedConfig::修改.添加 onExecuteAft
 2.WeedConfig::修改.添加 onExecuteBef
@@ -6,7 +9,7 @@
 5.DbTableQueryBase::修改.添加 count();
 6.DbTableQueryBase::修改.添加 from();
 7.DbTableQueryBase::修改.添加 log(...);
-1.DbTableQueryBase::修改.添加 insertUpdate();
+1.DbTableQueryBase::修改.添加 updateList(); //测试
 
 3.0.4.50::
 1.DataItem::修改.取消 intValue2(); //同上

@@ -421,7 +421,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public long count() throws SQLException{
-        return select("COUNT(*)").getVariate().longValue(0l);
+        return count("COUNT(*)");
+    }
+
+    public long count(String expr) throws SQLException{
+        return select(expr).getVariate().longValue(0l);
     }
 
     public IQuery select(String columns) {
