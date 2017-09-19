@@ -416,8 +416,12 @@ namespace Noear.Weed {
             return (T)this;
         }
 
-        public long count() {
-            return select("COUNT(*)").getVariate().longValue(0);
+        public long count()  {
+        return count("COUNT(*)");
+    }
+
+        public long count(String expr) {
+            return select(expr).getVariate().longValue(0);
         }
 
         public IQuery select(String columns) {

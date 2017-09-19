@@ -1,4 +1,7 @@
-﻿3.0.4.51::
+﻿3.0.4.52::
+1.DbTableQueryBase::修改.添加 count(...);
+
+3.0.4.51::
 1.WeedConfig::修改.添加 onExecuteAft
 2.WeedConfig::修改.添加 onExecuteBef
 3.SQLer::修改.添加 监听的支持（通过:onExecuteAft,onExecuteBef）
