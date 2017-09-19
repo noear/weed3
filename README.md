@@ -300,6 +300,34 @@ m.where("sex=?",1)
 
 ```
 
+示例4::全局控制<br/>
+```java
+//开始debug模式，会有更多类型检查
+WeedConfig.isDebug = true; 
+
+//执行前检查代码 //不充许select 代码没有 limit 限制
+WeedConfig.onExecuteBef((cmd)->{
+    String sqltmp = cmd.text.toLowerCase();
+    if(sqltmp.indexOf("select ")>=0 && sqltmp.indexOf(" limit ")< 0&&sqltmp.indexOf("count")<0) {
+        return false;
+    }else{
+        return true;
+    }
+});
+
+//执行后打印代码
+WeedConfig.onExecuteAft((cmd) -> {
+    System.out.println(cmd.text); //执行后打印日志
+});
+
+//对执行进行日志处理
+WeedConfig.onLog((cmd) -> {
+    //....
+});
+db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行onLog日志处理
+
+```
+
 更多高级示例请参考Weed3Demo <br/>
 --------------------------------------<br/>
 
