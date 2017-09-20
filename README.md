@@ -33,9 +33,9 @@ QQ群：<br/>
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
-db.table("user_info").where("user_id<?", 10).exists();
-
 db.table("user_info").where("user_id<?", 10).count();
+
+db.table("user_info").where("user_id<?", 10).exists();
   
 db.table("user_info") 
   .where("user_id<?", 10)
