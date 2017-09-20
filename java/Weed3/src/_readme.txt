@@ -1,3 +1,6 @@
+3.0.4.53::
+1.DbTableQueryBase::修复 .top(...) 错误
+
 3.0.4.52::
 1.DbTableQueryBase::修改.添加 count(...);
 

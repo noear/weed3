@@ -7,59 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Command.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbAccess.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbContext.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbProcedure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQuery.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQueryProcedure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbStoredProcedure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQuery.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTran.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTranQueue.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandlerEx.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IBinder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IDataItem.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IQuery.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IWeedKey.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder$SQLPartBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ValueMapping.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Variate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/VariateEx.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheState.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheTags.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheUsing.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/EmptyCache.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheService.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheServiceEx.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheUsing.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCache.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCacheRecord.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act0.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1Ex.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/DbType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0Ex.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun1.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/_readme.txt" afterPath="$PROJECT_DIR$/Weed3/src/_readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" afterPath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" />
     </list>
     <ignored path="Weed3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,7 +31,7 @@
     <favorites_list name="Weed3" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -120,7 +71,7 @@
       <find>updateLi</find>
       <find>logCommandBuilt</find>
       <find>count</find>
-      <find>count</find>
+      <find>SELECT</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -182,9 +133,9 @@
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" />
+        <option value="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
         <option value="$PROJECT_DIR$/Weed3/src/_readme.txt" />
-        <option value="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
       </list>
     </option>
   </component>
@@ -222,6 +173,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,14 +184,20 @@
               <item name="Weed3" type="b2602c69:ProjectViewProjectNode" />
               <item name="Weed3" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Weed3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Weed3" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Weed3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Weed3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -811,7 +772,8 @@
       <workItem from="1505189005007" duration="604000" />
       <workItem from="1505210000553" duration="3290000" />
       <workItem from="1505275150350" duration="864000" />
-      <workItem from="1505808718456" duration="455000" />
+      <workItem from="1505808718456" duration="787000" />
+      <workItem from="1505812108261" duration="1349000" />
     </task>
     <task id="LOCAL-00001" summary="首次提交java代码。">
       <created>1441202557103</created>
@@ -915,7 +877,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139406000" />
+    <option name="totallyTimeSpent" value="141087000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -928,19 +890,19 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5880682" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5880682" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18739903" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1898223" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1371,6 +1333,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
           <caret line="228" column="19" lean-forward="true" selection-start-line="228" selection-start-column="19" selection-end-line="228" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1378,6 +1341,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#416#417#0" expanded="false" />
+            <element signature="e#459#460#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1389,31 +1356,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/_readme.txt">
+    <entry file="file://$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="37" />
+          <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="428" column="5" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="428" selection-end-column="5" />
-          <folding>
-            <element signature="e#1971#1979#0" expanded="true" />
-            <element signature="e#4090#4098#0" expanded="true" />
-            <element signature="e#5859#5867#0" expanded="true" />
-            <element signature="e#7801#7809#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="216">
+          <caret line="442" column="19" lean-forward="false" selection-start-line="442" selection-start-column="19" selection-end-line="442" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF">
+    <entry file="file://$PROJECT_DIR$/Weed3/src/_readme.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="35" />
           <folding />
         </state>
       </provider>

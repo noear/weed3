@@ -395,8 +395,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    private int _top = 0;
     public T top(int num) {
-        _builder.append(" TOP " + num + " ");
+        _top = num;
+        //_builder.append(" TOP " + num + " ");
         return (T)this;
     }
 
@@ -438,7 +440,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             _hint = null;
         }
 
-        sb.append(" SELECT ").append(columns).append(" FROM ").append(_table);
+        sb.append("SELECT ");
+
+        if(_top>0){
+            sb.append(" TOP ").append(_top).append(" ");
+        }
+
+        sb.append(columns).append(" FROM ").append(_table);
 
         _builder.backup();
         _builder.insert(sb.toString());
