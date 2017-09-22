@@ -4,6 +4,9 @@
 支持什么数据库？？？<br/>
 与具体数据库无关（或许支持所有数据库）<br/>
 
+理念：<br/>
+高性能、跨平台、轻量、有个性<br/>
+
 特点：<br/>
 1.零反射零注解<br/>
 2.漂亮的缓存控制（缓存服务由外部提供）<br/>
@@ -30,6 +33,10 @@ QQ群：<br/>
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
+db.table("user_info").where("user_id<?", 10).count();
+
+db.table("user_info").where("user_id<?", 10).exists();
+  
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
@@ -293,6 +300,34 @@ UserM m = new UserM();
 m.where("sex=?",1)
  .select("*")
  .getList(new UserInfoModel());
+
+```
+
+示例4::全局控制<br/>
+```java
+//开始debug模式，会有更多类型检查
+WeedConfig.isDebug = true; 
+
+//执行前检查代码 //不充许select 代码没有 limit 限制
+WeedConfig.onExecuteBef((cmd)->{
+    String sqltmp = cmd.text.toLowerCase();
+    if(sqltmp.indexOf("select ")>=0 && sqltmp.indexOf(" limit ")< 0&&sqltmp.indexOf("count")<0) {
+        return false;
+    }else{
+        return true;
+    }
+});
+
+//执行后打印代码
+WeedConfig.onExecuteAft((cmd) -> {
+    System.out.println(cmd.text); //执行后打印日志
+});
+
+//对执行进行日志处理
+WeedConfig.onLog((cmd) -> {
+    //....
+});
+db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行onLog日志处理
 
 ```
 

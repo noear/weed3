@@ -44,7 +44,7 @@ public class DataItemEx implements IDataItem{
     }
 
     public Object get(String name) {
-        return _data.get(name);
+        return _data.get(name).run();
     }
 
     public Variate getVariate(String name) {

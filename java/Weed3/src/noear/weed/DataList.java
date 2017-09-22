@@ -69,4 +69,18 @@ public class DataList implements Serializable {
         }
         return list;
     }
+
+    public String toJson(){
+        _JsonWriter jw = new _JsonWriter();
+
+        jw.WriteArrayStart();
+
+        for(DataItem r: rows){
+            r.buildJson(jw);
+        }
+
+        jw.WriteArrayEnd();
+
+        return jw.toJson();
+    }
 }
