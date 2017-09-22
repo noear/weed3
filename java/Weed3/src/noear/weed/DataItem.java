@@ -2,7 +2,6 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,5 +113,44 @@ public class DataItem implements IDataItem{
             }
         }
         return item;
+    }
+
+    public String toJson(){
+        _JsonWriter jw = new _JsonWriter();
+
+        buildJson(jw);
+
+        return jw.toJson();
+    }
+
+    protected void buildJson(_JsonWriter jw){
+        jw.WriteObjectStart();
+        for(String key : keys()){
+            Object val = get(key);
+
+            jw.WritePropertyName(key);
+
+            if(val == null)
+                jw.WriteNull();
+
+            if(val instanceof String)
+                jw.WriteValue((String)val);
+
+            if(val instanceof Date)
+                jw.WriteValue((Date)val);
+
+            if(val instanceof Boolean)
+                jw.WriteValue((Boolean)val);
+
+            if(val instanceof Integer)
+                jw.WriteValue((Integer)val);
+
+            if(val instanceof Long)
+                jw.WriteValue((Long)val);
+
+            jw.WriteValue(new Variate(null, val).doubleValue(0));
+
+        }
+        jw.WriteObjectEnd();
     }
 }
