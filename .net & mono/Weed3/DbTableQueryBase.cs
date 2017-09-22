@@ -254,10 +254,10 @@ namespace Noear.Weed {
             return compile().execute();
         }
 
-        public bool updateList<T>(String pk, List<T> valuesList, Action<T, DataItem> hander) {
+        public bool updateList<X>(String pk, List<X> valuesList, Action<X, DataItem> hander) {
             List<DataItem> list2 = new List<DataItem>();
 
-            foreach (T values in valuesList) {
+            foreach (X values in valuesList) {
                 DataItem item = new DataItem();
                 hander(values, item);
 
@@ -393,8 +393,10 @@ namespace Noear.Weed {
             return (T)this;
         }
 
+        private int _top;
         public T top(int num) {
-            _builder.append(" TOP " + num + " ");
+            _top = num;
+            //_builder.append(" TOP " + num + " ");
             return (T)this;
         }
 
@@ -429,7 +431,13 @@ namespace Noear.Weed {
             StringBuilder sb = new StringBuilder();
 
             //1.构建sql
-            sb.Append("SELECT ").Append(columns).Append(" FROM ").Append(_table);
+            sb.Append("SELECT ");
+
+            if (_top > 0) {
+                sb.Append(" TOP ").Append(_top).Append(" ");
+            }
+
+            sb.Append(columns).Append(" FROM ").Append(_table);
 
 
             _builder.backup();

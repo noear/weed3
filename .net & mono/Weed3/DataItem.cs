@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Noear.Weed {
-    public class DataItem  : IDataItem {
+    public class DataItem : IDataItem {
         Dictionary<String, Object> _data = new Dictionary<string, object>();
 
         public DataItem() { }
@@ -24,7 +24,7 @@ namespace Noear.Weed {
         public IEnumerable<string> keys() {
             return _data.Keys;
         }
-        
+
         public IDataItem set(String name, Object value) {
             _data[name] = value;
             return this;
@@ -46,7 +46,7 @@ namespace Noear.Weed {
         }
 
         public T toItem<T>(T item) where T : IBinder {
-            item.bind((key)=>{
+            item.bind((key) => {
                 return getVariate(key);
             });
 
@@ -89,8 +89,7 @@ namespace Noear.Weed {
             foreach (var kv in _data) {
                 if (kv.Value == null && _isUsingDbNull) {
                     callback(kv.Key, "$NULL");
-                }
-                else {
+                } else {
                     callback(kv.Key, kv.Value);
                 }
             }
@@ -108,6 +107,46 @@ namespace Noear.Weed {
                 }
             }
             return item;
+        }
+
+
+        public String toJson() {
+            _JsonWriter jw = new _JsonWriter();
+
+            buildJson(jw);
+
+            return jw.toJson();
+        }
+
+        internal void buildJson(_JsonWriter jw) {
+            jw.WriteObjectStart();
+            foreach (string key in keys()) {
+                Object val = get(key);
+
+                jw.WritePropertyName(key);
+
+                if (val == null)
+                    jw.WriteNull();
+
+                if (val is String)
+                    jw.WriteValue((String)val);
+
+                if (val is DateTime)
+                    jw.WriteValue((DateTime)val);
+
+                if (val is Boolean)
+                    jw.WriteValue((Boolean)val);
+
+                if (val is Int32)
+                    jw.WriteValue((Int32)val);
+
+                if (val is Int64)
+                    jw.WriteValue((Int64)val);
+
+                jw.WriteValue(new Variate(null, val).doubleValue(0));
+
+            }
+            jw.WriteObjectEnd();
         }
     }
 }

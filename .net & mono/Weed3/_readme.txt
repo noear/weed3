@@ -1,4 +1,11 @@
-﻿3.0.4.52::
+﻿3.0.4.54::
+1.DataItem::修改.添加 toJson()
+2.DataList::修改.添加 toJson()
+
+3.0.4.53::
+1.DbTableQueryBase::修复 .top(...) 错误
+
+3.0.4.52::
 1.DbTableQueryBase::修改.添加 count(...);
 
 3.0.4.51::

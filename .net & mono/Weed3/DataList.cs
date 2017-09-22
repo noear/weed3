@@ -57,5 +57,19 @@ namespace Noear.Weed {
             }
             return list;
         }
+
+        public String toJson() {
+            _JsonWriter jw = new _JsonWriter();
+
+            jw.WriteArrayStart();
+
+            foreach (DataItem r in rows) {
+                r.buildJson(jw);
+            }
+
+            jw.WriteArrayEnd();
+
+            return jw.toJson();
+        }
     }
 }

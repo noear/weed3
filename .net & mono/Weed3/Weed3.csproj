@@ -45,6 +45,7 @@
     <Compile Include="DataItemEx.cs" />
     <Compile Include="IDataItem.cs" />
     <Compile Include="Ext\DbReader.cs" />
+    <Compile Include="_JsonWriter.cs" />
     <Compile Include="VariateEx.cs" />
     <Compile Include="Cache\CacheState.cs" />
     <Compile Include="Cache\CacheTags.cs" />
