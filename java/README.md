@@ -4,6 +4,34 @@ Weed3Demo::使用示例<br/>
 更新说明<br/>
 ------------------<br/>
 <br/>
+3.0.4.54::<br/>
+1.DataItem::修改.添加 toJson()<br/>
+2.DataList::修改.添加 toJson()<br/>
+<br/>
+3.0.4.53::<br/>
+1.DbTableQueryBase::修复 .top(...) 错误<br/>
+<br/>
+3.0.4.52::<br/>
+1.DbTableQueryBase::修改.添加 count(...);<br/>
+<br/>
+3.0.4.51::<br/>
+1.WeedConfig::修改.添加 onExecuteAft<br/>
+2.WeedConfig::修改.添加 onExecuteBef<br/>
+3.SQLer::修改.添加 监听的支持（通过:onExecuteAft,onExecuteBef）<br/>
+4.DbAccess::修改.添加 onCommandBuilt(...); //可再次为cmd做处理<br/>
+5.DbTableQueryBase::修改.添加 count();<br/>
+6.DbTableQueryBase::修改.添加 from();<br/>
+7.DbTableQueryBase::修改.添加 log(...);<br/>
+1.DbTableQueryBase::修改.添加 updateList(); //测试<br/>
+<br/>
+3.0.4.50::<br/>
+1.DataItem::修改.取消 intValue2(); //同上<br/>
+2.DataItem::修改.取消 longValue2(); //同上<br/>
+*.由 DataItem.getVariate(name) 解决问题<br/>
+<br/>
+3.Variate::修改.添加 doubleValue(def); //同上<br/>
+
+<br/>
 3.0.4.48::<br/>
 1.IQuery::修改.取消 getValue(def,cacheCondition)<br/>
 2.IQuery::修改.添加 getVariate();<br/>
