@@ -4,6 +4,19 @@ Weed3Demo::使用示例<br/>
 更新说明<br/>
 ------------------<br/>
 <br/>
+3.0.4.60::<br/>
+1.DbContxt::修改.添加  isCompilationMode (编译模式;)<br/>
+/*<br/>
+DbContxt db = new DbContxt(...);<br/>
+db.isCompilationMode = true;<br/>
+db.table(...).where(...).select(...); //不会真正的执行<br/>
+db.lastCommand.text; //拿到执行的代码<br/>
+*/<br/>
+<br/>
+3.0.4.59:: //为JtSQL提供更友好的支持<br/>
+1.DataItem::修改.添加 get(index)<br/>
+2.DataList::修改.添加 toArray(index)<br/>
+<br/>
 3.0.4.54::<br/>
 1.DataItem::修改.添加 toJson()<br/>
 2.DataList::修改.添加 toJson()<br/>
