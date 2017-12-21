@@ -1,3 +1,16 @@
+3.0.4.60::
+1.DbContxt::修改.添加  isCompilationMode (编译模式;)
+/*
+DbContxt db = new DbContxt(...);
+db.isCompilationMode = true;
+db.table(...).where(...).select(...); //不会真正的执行
+db.lastCommand.text; //拿到执行的代码
+*/
+
+3.0.4.59:: //为JtSQL提供更友好的支持
+1.DataItem::修改.添加 get(index)
+2.DataList::修改.添加 toArray(index)
+
 3.0.4.54::
 1.DataItem::修改.添加 toJson()
 2.DataList::修改.添加 toJson()

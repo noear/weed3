@@ -60,12 +60,22 @@ public class DataList implements Serializable {
         return list;
     }
 
-    public <T> List<T> toArray(String column)
+    public <T> List<T> toArray(String columnName)
     {
         List<T> list = new ArrayList<T>();
 
         for (DataItem r : rows) {
-            list.add((T)r.get(column));
+            list.add((T)r.get(columnName));
+        }
+        return list;
+    }
+
+    public <T> List<T> toArray(int columnIndex)
+    {
+        List<T> list = new ArrayList<T>();
+
+        for (DataItem r : rows) {
+            list.add((T)r.get(columnIndex));
         }
         return list;
     }

@@ -2,15 +2,14 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yuety on 14-9-10.
  */
 public class DataItem implements IDataItem{
     HashMap<String,Object> _data = new HashMap<>();
+    List<String> _keys = new ArrayList<>();
 
     public DataItem() { }
     public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
@@ -24,16 +23,19 @@ public class DataItem implements IDataItem{
     public boolean exists(String name){
         return _data.containsKey(name);
     }
-    public Iterable<String> keys(){
-        return _data.keySet();
+    public List<String> keys(){
+        return _keys;
     }
 
     public IDataItem set(String name,Object value)
     {
         _data.put(name, value);
+        _keys.add(name);
         return this;
     }
-
+    public Object get(int index){
+        return get(_keys.get(index));
+    }
     public Object get(String name){
         return _data.get(name);
     }

@@ -26,6 +26,10 @@ class SQLer {
     }
 
     public Variate getVariate(Command cmd,DbTran transaction) throws SQLException {
+        if(cmd.context.isCompilationMode){
+            return null;
+        }
+
         try {
             rset = query(cmd, transaction);
 
@@ -42,6 +46,10 @@ class SQLer {
     }
 
     public <T extends IBinder> T getItem(Command cmd, DbTran transaction,T model) throws SQLException {
+        if(cmd.context.isCompilationMode){
+            return null;
+        }
+
         try {
             rset = query(cmd, transaction);
 
@@ -68,8 +76,13 @@ class SQLer {
     }
 
     public <T extends IBinder> List<T> getList(Command cmd, DbTran transaction,T model) throws SQLException {
-        List<T> list = new ArrayList<T>();
+        if(cmd.context.isCompilationMode){
+            return null;
+        }
+
         try {
+            List<T> list = new ArrayList<T>();
+
             rset = query(cmd, transaction);
 
             while (rset != null && rset.next()) {
@@ -107,9 +120,13 @@ class SQLer {
     }
 
     public DataItem getRow(Command cmd,DbTran transaction) throws SQLException {
-        DataItem row = new DataItem();
+        if(cmd.context.isCompilationMode){
+            return null;
+        }
 
         try {
+            DataItem row = new DataItem();
+
             rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
@@ -136,9 +153,13 @@ class SQLer {
     }
 
     public DataList getTable(Command cmd,DbTran transaction) throws SQLException {
-        DataList table = new DataList();
+        if(cmd.context.isCompilationMode){
+            return null;
+        }
 
         try {
+            DataList table = new DataList();
+
             rset = query(cmd, transaction);
             ResultSetMetaData meta = rset.getMetaData();
 
@@ -168,6 +189,10 @@ class SQLer {
 
     //执行
     public int execute(Command cmd,DbTran transaction)  throws SQLException {
+        if(cmd.context.isCompilationMode){
+            return 0;
+        }
+
         try {
             if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
                 return -1;
@@ -189,6 +214,10 @@ class SQLer {
     }
 
     public long insert(Command cmd,DbTran transaction)  throws SQLException {
+        if(cmd.context.isCompilationMode){
+            return 0;
+        }
+
         try {
             if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), true)) {
                 return -1;
@@ -241,12 +270,12 @@ class SQLer {
         }
 
         if (cmd.text.indexOf("{call") >= 0)
-            stmt = c.prepareCall(cmd.text);
+            stmt = c.prepareCall(cmd.fullText());
         else {
             if (isInsert)
-                stmt = c.prepareStatement(cmd.text, Statement.RETURN_GENERATED_KEYS);
+                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
             else
-                stmt = c.prepareStatement(cmd.text);
+                stmt = c.prepareStatement(cmd.fullText());
         }
 
         int idx = 1;

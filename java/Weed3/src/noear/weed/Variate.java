@@ -2,13 +2,14 @@ package noear.weed;
 
 import noear.weed.ext.DbType;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by noear on 14-6-12.
  * 数据库访问参数（支付范型）
  */
-public class Variate {
+public class Variate implements Serializable {
     protected String _name;
     protected Object _value;
     public final   int   _hash;

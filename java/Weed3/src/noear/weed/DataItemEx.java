@@ -3,15 +3,14 @@ package noear.weed;
 import noear.weed.ext.Act2;
 import noear.weed.ext.Fun0;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yuety on 15/9/2.
  */
 public class DataItemEx implements IDataItem{
     HashMap<String,Fun0<Object>> _data = new HashMap<>();
+    List<String> _keys = new ArrayList<>();
     boolean _isNotNull = false; //不需要null的数据
 
     public DataItemEx() { }
@@ -28,21 +27,26 @@ public class DataItemEx implements IDataItem{
         return _data.containsKey(name);
     }
 
-    public Iterable<String> keys() {
-        return _data.keySet();
+    public List<String> keys() {
+        return _keys;
     }
 
 
     public IDataItem set(String name, Object value) {
         _data.put(name,(()-> value));
+        _keys.add(name);
         return this;
     }
 
     public DataItemEx set(String name, Fun0<Object> value) {
         _data.put(name,value);
+        _keys.add(name);
         return this;
     }
 
+    public Object get(int index){
+        return get(_keys.get(index));
+    }
     public Object get(String name) {
         return _data.get(name).run();
     }

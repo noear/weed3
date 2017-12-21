@@ -15,6 +15,8 @@ public class DbContext {
     public Command lastCommand;
     public boolean allowMultiQueries;
 
+    public boolean isCompilationMode=false;
+
     public DbContext(String schemaName,String url) {
         _schemaName = schemaName;
         _url = url;
@@ -48,6 +50,12 @@ public class DbContext {
     private String _schemaName;
 
     private String _fieldFormat;
+
+    protected String _hint = null;
+    public DbContext hint(String hint) {
+        _hint = hint;
+        return this;
+    }
 
     public String field(String key){
         if(_fieldFormat == null || _fieldFormat.length()==0)

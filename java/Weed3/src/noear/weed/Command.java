@@ -27,5 +27,11 @@ public class Command {
         this.context.lastCommand = this;
     }
 
+    public String fullText() {
+        if (context._hint == null)
+            return text;
+        else
+            return context._hint + text;
+    }
 
 }
