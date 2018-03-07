@@ -3,6 +3,23 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+3.0.4.67<br/>
+1.DbTableQueryBase::修改.添加缓存控制接口::<br/>
++caching()<br/>
++usingCache();<br/>
++usingCache();<br/>
++cacheTag();<br/>
+<br/>
+3.0.4.66::<br/>
+1.DbTableQueryBase::修改.添加rightJoin(...)<br/>
+<br/>
+3.0.4.65::<br/>
+1.DbContxt::修改.添加 tranQueue(...);<br/>
+<br/>
+3.0.4.64::<br/>
+1.增加对$表达式的验证和过滤<br/>
+2.WeedConfig::修改.添加 isUsingValueExpression //是否开启$表达式支持（默认开启）<br/>
+3.DbTableQueryBase::修改.添加 usingExpr(...) //当前操作是否开启$表达式支持（默认为 isUsingValueExpression）<br/>
 <br/>
 3.0.4.60::<br/>
 1.DbContxt::修改.添加  isCompilationMode (编译模式;)<br/>
