@@ -7,28 +7,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Command.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Command.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3Demo/lib/Noear.Weed3.jar" afterPath="$PROJECT_DIR$/Weed3Demo/lib/Noear.Weed3.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbAccess.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbAccess.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbContext.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbContext.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IDataItem.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IDataItem.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLer.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ValueMapping.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ValueMapping.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Variate.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Variate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedConfig.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedConfig.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheUsing.class" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheUsing.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/_readme.txt" afterPath="$PROJECT_DIR$/Weed3/src/_readme.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ValueMapping.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/ValueMapping.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java" afterPath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" afterPath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" />
     </list>
     <ignored path="Weed3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,7 +53,18 @@
     <favorites_list name="Weed3" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="_readme.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Weed3/src/_readme.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -71,18 +75,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getColumnName</find>
-      <find>logExecute</find>
-      <find>exist</find>
-      <find>from</find>
-      <find>update</find>
-      <find>$.</find>
-      <find>onLog_listener</find>
-      <find>table</find>
-      <find>update(</find>
-      <find>insertList</find>
-      <find>getVariate</find>
-      <find>cmd</find>
       <find>onCommandBuilt</find>
       <find>delete(</find>
       <find>.indexOf(&quot; FROM &quot;)</find>
@@ -101,6 +93,18 @@
       <find>keys()</find>
       <find>Iterable</find>
       <find>lastCom</find>
+      <find>_name</find>
+      <find>$</find>
+      <find>set</find>
+      <find>indexOf('$') == 0</find>
+      <find>isSqlExpr</find>
+      <find>?...</find>
+      <find>tran(</find>
+      <find>tran</find>
+      <find>leftjoin</find>
+      <find>table(</find>
+      <find>$.</find>
+      <find>count(</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -114,7 +118,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get_list2.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/demo_store.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/demo_store.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get2.java" />
@@ -128,8 +131,6 @@
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table_inserlist.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table_inserlist.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserM.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQuery.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/procedure/Store1Demo.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/sqlbuilder/demo.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheUsing.java" />
@@ -137,34 +138,37 @@
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheServiceEx.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/EmptyCache.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/LocalCache.java" />
-        <option value="$PROJECT_DIR$/Weed3Demo/pom.xml" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table2.java" />
         <option value="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTranQueue.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTran.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/IQuery.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbQuery.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbQueryProcedure.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbStoredProcedure.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/ext/JsonWriter.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/JsonWriter.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/_JsonWriter.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/ValueMapping.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQuery.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/VariateEx.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbQuery.java" />
         <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java" />
-        <option value="$PROJECT_DIR$/Weed3/src/_readme.txt" />
+        <option value="$PROJECT_DIR$/Weed3Demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" />
         <option value="$PROJECT_DIR$/Weed3/META-INF/MANIFEST.MF" />
+        <option value="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" />
+        <option value="$PROJECT_DIR$/Weed3/src/_readme.txt" />
       </list>
     </option>
   </component>
@@ -221,10 +225,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -235,12 +237,14 @@
             <path>
               <item name="Weed3" type="b2602c69:ProjectViewProjectNode" />
               <item name="Weed3" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -828,7 +832,20 @@
       <workItem from="1512961631930" duration="409000" />
       <workItem from="1513494144707" duration="954000" />
       <workItem from="1513569834609" duration="590000" />
-      <workItem from="1513823465071" duration="1204000" />
+      <workItem from="1513823465071" duration="1590000" />
+      <workItem from="1515936695284" duration="1029000" />
+      <workItem from="1516353379520" duration="3430000" />
+      <workItem from="1516860020872" duration="22000" />
+      <workItem from="1516957566124" duration="280000" />
+      <workItem from="1517653186749" duration="57000" />
+      <workItem from="1517796691804" duration="616000" />
+      <workItem from="1517797439799" duration="52000" />
+      <workItem from="1517800741295" duration="816000" />
+      <workItem from="1520214477285" duration="272000" />
+      <workItem from="1520233451099" duration="603000" />
+      <workItem from="1520237642769" duration="522000" />
+      <workItem from="1520305996368" duration="962000" />
+      <workItem from="1520394302558" duration="42000" />
     </task>
     <task id="LOCAL-00001" summary="首次提交java代码。">
       <created>1441202557103</created>
@@ -932,33 +949,32 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="154357000" />
+    <option name="totallyTimeSpent" value="163446000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32737276" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33441034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5880682" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2673667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3232462" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -968,8 +984,10 @@
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32737276" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3232462" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1058,51 +1076,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/LocalCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/LocalCacheRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/ext/DbType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1182">
-          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTranQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="82" column="5" lean-forward="true" selection-start-line="64" selection-start-column="4" selection-end-line="82" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTran.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="35" column="28" lean-forward="true" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/GetHandlerEx.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1117,24 +1090,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/IQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheUsing.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="87" column="20" lean-forward="false" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1152,20 +1111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="13" column="33" lean-forward="false" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="69" column="29" lean-forward="true" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbQueryProcedure.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
@@ -1173,31 +1118,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbStoredProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="68" column="29" lean-forward="false" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="22" column="18" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
           <caret line="1501" column="15" lean-forward="false" selection-start-line="1501" selection-start-column="15" selection-end-line="1501" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/Weed3.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1243,13 +1167,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3Demo/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="24" column="21" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="24" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1271,20 +1188,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/VariateEx.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="11" lean-forward="false" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/ValueMapping.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1292,18 +1195,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="43" column="33" lean-forward="false" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="67" column="40" lean-forward="false" selection-start-line="67" selection-start-column="40" selection-end-line="67" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1318,10 +1213,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="903" column="12" lean-forward="false" selection-start-line="903" selection-start-column="12" selection-end-line="903" selection-end-column="12" />
-          <folding>
-            <element signature="e#23597#23598#0" expanded="false" />
-            <element signature="e#23651#23652#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1339,81 +1230,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="40" lean-forward="false" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-          <folding>
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#705#706#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="42" lean-forward="false" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="25" column="28" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="28" />
-          <folding>
-            <element signature="e#587#588#0" expanded="true" />
-            <element signature="e#615#616#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="32" column="31" lean-forward="false" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="477" column="20" lean-forward="false" selection-start-line="477" selection-start-column="20" selection-end-line="477" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1230">
           <caret line="84" column="12" lean-forward="false" selection-start-line="84" selection-start-column="12" selection-end-line="84" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="32" column="34" lean-forward="false" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1421,14 +1241,153 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="28" lean-forward="false" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/src/_readme.txt">
+    <entry file="file://$PROJECT_DIR$/Weed3/Weed3.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="6" selection-end-column="30" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/src.zip!/java/lang/Exception.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="44" column="40" lean-forward="false" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="117" column="33" lean-forward="false" selection-start-line="117" selection-start-column="33" selection-end-line="117" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/VariateEx.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="16" column="20" lean-forward="true" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="63" column="17" lean-forward="false" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/SerializeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="106" column="58" lean-forward="true" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="102" column="58" lean-forward="false" selection-start-line="102" selection-start-column="58" selection-end-line="102" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="28" lean-forward="false" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="97" column="51" lean-forward="false" selection-start-line="97" selection-start-column="51" selection-end-line="97" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTranQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="65" column="23" lean-forward="false" selection-start-line="65" selection-start-column="23" selection-end-line="65" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/DbConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran2Demo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="24" column="29" lean-forward="true" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran1Demo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-691">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbStoredProcedure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="44" lean-forward="true" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbProcedure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="13" column="46" lean-forward="false" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3Demo/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -1437,6 +1396,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="26" lean-forward="false" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/IQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="100" column="59" lean-forward="true" selection-start-line="100" selection-start-column="59" selection-end-line="100" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2243">
+          <caret line="312" column="5" lean-forward="true" selection-start-line="277" selection-start-column="4" selection-end-line="312" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="544" column="21" lean-forward="false" selection-start-line="544" selection-start-column="13" selection-end-line="544" selection-end-column="21" />
+          <folding>
+            <element signature="e#2046#2054#0" expanded="true" />
+            <element signature="e#4158#4166#0" expanded="true" />
+            <element signature="e#5920#5928#0" expanded="true" />
+            <element signature="e#7855#7863#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/src/_readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -1,5 +1,7 @@
 package noear.weed;
 
+import noear.weed.cache.CacheUsing;
+import noear.weed.cache.ICacheService;
 import noear.weed.ext.Act1;
 import noear.weed.ext.Act2;
 
@@ -109,7 +111,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
             if (value instanceof String) {
                 String val2 = (String)value;
-                if (val2.indexOf('$') == 0) { //说明是SQL函数
+                if (isSqlExpr(val2)) { //说明是SQL函数
                     sb.append(val2.substring(1)).append(",");
                 }
                 else {
@@ -182,7 +184,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
                 if (val instanceof String) {
                     String val2 = (String)val;
-                    if (val2.indexOf('$') == 0) { //说明是SQL函数
+                    if (isSqlExpr(val2)) { //说明是SQL函数
                         sb.append(val2.substring(1)).append(",");
                     }
                     else {
@@ -238,7 +240,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
             if (value instanceof String) {
                 String val2 = (String)value;
-                if (val2.indexOf('$') == 0) {
+                if (isSqlExpr(val2)) {
                     sb.append(_context.field(key)).append("=").append(val2.substring(1)).append(",");
                 }
                 else {
@@ -306,20 +308,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         for(GetHandler item : valuesList){
             sb.append("(");
 
-            for(String key : cols.keys()){
+            for(String key : cols.keys()) {
                 Object val = item.get(key);
 
                 if (val instanceof String) {
-                    String val2 = (String)val;
-                    if (val2.indexOf('$') == 0) { //说明是SQL函数
+                    String val2 = (String) val;
+                    if (isSqlExpr(val2)) { //说明是SQL函数
                         sb.append(val2.substring(1)).append(",");
-                    }
-                    else {
+                    } else {
                         sb.append("?,");
                         args.add(val);
                     }
-                }
-                else {
+                } else {
                     sb.append("?,");
                     args.add(val);
                 }
@@ -367,6 +367,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
     public T leftJoin(String table) {
         _builder.append(" LEFT JOIN ").append(table);
+        return (T)this;
+    }
+
+    public T rightJoin(String table) {
+        _builder.append(" RIGHT JOIN ").append(table);
         return (T)this;
     }
 
@@ -451,7 +456,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         _builder.backup();
         _builder.insert(sb.toString());
 
-        IQuery rst = compile();
+        DbQuery rst = compile();
+
+        if(_cache != null){
+            rst.cache(_cache);
+        }
 
         _builder.restore();
 
@@ -487,5 +496,55 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             cmd.tag   = _table;
             cmd.isLog = _isLog;
         });
+    }
+
+    private boolean _usingExpression = WeedConfig.isUsingValueExpression;
+    public T usingExpr(boolean isUsing){
+        _usingExpression = isUsing;
+        return (T)this;
+    }
+
+    private boolean isSqlExpr(String txt){
+        if(_usingExpression == false){
+            return false;
+        }
+
+        if(txt.startsWith("$") && txt.indexOf(" ")<0){ //不许有空隔（否则为非正常表达式）
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //=======================
+    //
+    // 缓存控制相关
+    //
+
+    protected CacheUsing _cache = null;
+    /*引用一个缓存服务*/
+    public T caching(ICacheService service)
+    {
+        _cache = new CacheUsing(service);
+        return (T)this;
+    }
+    /*是否使用缓存*/
+    public T usingCache (boolean isCache)
+    {
+        _cache.usingCache(isCache);
+        return (T)this;
+    }
+    /*使用缓存时间（单位：秒）*/
+    public T usingCache (int seconds)
+    {
+        _cache.usingCache(seconds);
+        return (T)this;
+    }
+
+    /*添加缓存标签*/
+    public T cacheTag(String tag)
+    {
+        _cache.cacheTag(tag);
+        return (T)this;
     }
 }

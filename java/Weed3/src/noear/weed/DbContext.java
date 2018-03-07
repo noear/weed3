@@ -118,4 +118,8 @@ public class DbContext {
         return new DbTran(this);
     }
 
+    public DbTranQueue tranQueue(Act1Ex<DbTranQueue,SQLException> handler) throws SQLException {
+        return new DbTranQueue().execute(handler);
+    }
+
 }

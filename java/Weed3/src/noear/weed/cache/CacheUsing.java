@@ -115,7 +115,7 @@ public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
         return cacheT;
     }
 
-    public <T> T getEx(String weedKey, Fun0Ex<T,SQLException> exec) throws SQLException{
+    public <T,E extends Throwable> T getEx(String weedKey, Fun0Ex<T,E> exec) throws E{
         if (this.cacheController == CacheState.NonUsing)
             return exec.run();
 

@@ -1,3 +1,23 @@
+3.0.4.67
+1.DbTableQueryBase::修改.添加缓存控制接口::
++caching()
++usingCache();
++usingCache();
++cacheTag();
+
+3.0.4.66::
+1.DbTableQueryBase::修改.添加rightJoin(...)
+
+3.0.4.65::
+1.DbContxt::修改.添加 tranQueue(...);
+
+3.0.4.64::
+1.增加对$表达式的验证和过滤
+2.WeedConfig::修改.添加 isUsingValueExpression //是否开启$表达式支持（默认开启）
+3.DbTableQueryBase::修改.添加 usingExpr(...) //当前操作是否开启$表达式支持（默认为 isUsingValueExpression）
+
+
+
 3.0.4.60::
 1.DbContxt::修改.添加  isCompilationMode (编译模式;)
 /*

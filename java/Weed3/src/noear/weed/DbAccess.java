@@ -306,4 +306,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         _cache.cacheTag(tag);
         return this;
     }
+
+    protected T cache(CacheUsing cacheUsing){
+        _cache = cacheUsing;
+        return (T)this;
+    }
 }

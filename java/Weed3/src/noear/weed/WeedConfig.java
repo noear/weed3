@@ -9,6 +9,7 @@ import noear.weed.ext.Fun1;
  */
 public final class WeedConfig {
     public static boolean isDebug = false;
+    public static boolean isUsingValueExpression=true;
 
     static Act2<Command,Exception> onException_listener = null;
     static Act1<Command> onExecuteAft_listener = null;
