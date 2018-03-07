@@ -1,0 +1,5 @@
+/Users/yuety/work_github/Weed3/.net & mono/Weed3/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/yuety/work_github/Weed3/.net & mono/Weed3/bin/Debug/Noear.Weed3.dll.mdb
+/Users/yuety/work_github/Weed3/.net & mono/Weed3/bin/Debug/Noear.Weed3.dll
+/Users/yuety/work_github/Weed3/.net & mono/Weed3/obj/Debug/Noear.Weed3.dll
+/Users/yuety/work_github/Weed3/.net & mono/Weed3/obj/Debug/Noear.Weed3.dll.mdb
