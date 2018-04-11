@@ -50,6 +50,10 @@ public class DbContext {
     private String _schemaName;
 
     private String _fieldFormat;
+    public DbContext fieldFormat(String format){
+        _fieldFormat = format;
+        return this;
+    }
 
     protected String _hint = null;
     public DbContext hint(String hint) {

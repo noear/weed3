@@ -2,6 +2,8 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
+import javax.swing.plaf.TextUI;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -155,4 +157,64 @@ public class DataItem implements IDataItem{
         }
         jw.WriteObjectEnd();
     }
+
+    public String serialize() throws Exception {
+        String data = null;
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(byteStream);
+            try {
+                out.writeObject(this);
+                data = byteStream.toString("ISO-8859-1");//必须是ISO-8859-1
+
+            } finally {
+                out.close();
+            }
+        }finally {
+            byteStream.close();
+        }
+
+        return data;
+    }
+
+    public String trySerialize(){
+        try{
+            return serialize();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static DataItem unserialize(String data) throws Exception{
+        if(data == null){
+            return null;
+        }
+
+        DataItem item = null;
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes("ISO-8859-1"));
+        try {
+            ObjectInputStream inp = new ObjectInputStream(byteStream);
+            try {
+                item = (DataItem) inp.readObject();
+            } finally {
+                byteStream.close();
+            }
+        }finally {
+            byteStream.close();
+        }
+
+        return item;
+    }
+
+    public static DataItem tryUnserialize(String data){
+        try{
+            return unserialize(data);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

@@ -131,6 +131,18 @@ public class Variate implements Serializable {
         return def;
     }
 
+    public String stringValue(String def){
+        if(_value == null){
+            return def;
+        }
+
+        if(_value instanceof String){
+            return (String)_value;
+        }else{
+            return _value.toString();
+        }
+    }
+
 
 //    private Object getDefault(DbType type)
 //    {

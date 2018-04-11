@@ -1,3 +1,12 @@
+3.0.4.72
+1.Variate::修改.添加 stringValue();
+
+3.0.4.70
+1.DataItem::修改.添加 unserialize(..),serialize()
+
+3.0.4.69
+1.DbContext::修改.添加 fieldFormat(...)
+
 3.0.4.67
 1.DbTableQueryBase::修改.添加缓存控制接口::
 +caching()

@@ -121,12 +121,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     public Object getValue() throws SQLException {
-        Variate rst = new SQLer().getVariate(getCommand(), _tran);
-
-        if(rst == null)
-            return null;
-        else
-            return rst.getValue();
+        return getVariate(null).getValue();
     }
 
     /*执行命令（返回符合条件的第一个值）*/
