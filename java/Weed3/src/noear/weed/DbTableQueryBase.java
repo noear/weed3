@@ -143,6 +143,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.deleteCharAt(sb.length() - 1);
         sb.append(");");
 
+        _builder.clear();
         _builder.append(sb.toString(), args.toArray());
 
         return compile().insert();
@@ -233,14 +234,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return insert(item);
     }
 
-    public void updateExt(IDataItem data, String... constraints) throws SQLException {
+
+
+    public void updateExt(IDataItem data, String constraints) throws SQLException {
+        String[] ff = constraints.split(",");
+
         this.where("1=1");
-        for (String f : constraints) {
+        for (String f : ff) {
             this.and(f + "=?", data.get(f));
         }
 
         if (this.exists()) {
-            for (String f : constraints) {
+            for (String f : ff) {
                data.remove(f);
             }
 
@@ -441,17 +446,33 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public boolean exists() throws SQLException {
-        return exists(null);
-    }
 
-    public boolean exists(Act1<IQuery> expre) throws SQLException {
-        IQuery q = limit(1).select("1");
+        StringBuilder sb = new StringBuilder();
 
-        if (expre != null) {
-            expre.run(q);
+        //1.构建sql
+        if(_hint!=null) {
+            sb.append(_hint);
+            _hint = null;
         }
 
-        return q.getValue() != null;
+        sb.append("SELECT * FROM ").append(_table);
+
+        _builder.backup();
+
+        _builder.insert(sb.toString());
+        _builder.insert("SELECT EXISTS (");
+        _builder.append(") n1");
+
+        DbQuery rst = compile();
+
+        if(_cache != null){
+            rst.cache(_cache);
+        }
+
+        _builder.restore();
+
+
+        return "1".equals(rst.getValue().toString());
     }
 
     String _hint = null;

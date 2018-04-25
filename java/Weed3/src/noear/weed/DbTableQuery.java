@@ -52,6 +52,12 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
             return update(_item);
     }
 
+    public void updateExt(String constraints)throws SQLException {
+        if (_item != null) {
+            updateExt(_item, constraints);
+        }
+    }
+
 
 //    public <T extends GetHandler> boolean insertList(List<T> valuesList) throws SQLException {
 //        return insertList(_item, valuesList);
