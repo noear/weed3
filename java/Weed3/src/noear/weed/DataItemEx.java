@@ -21,6 +21,7 @@ public class DataItemEx implements IDataItem{
     }
     public void clear() {
         _data.clear();
+        _keys.clear();
     }
 
     public boolean exists(String name) {
@@ -34,7 +35,9 @@ public class DataItemEx implements IDataItem{
 
     public IDataItem set(String name, Object value) {
         _data.put(name,(()-> value));
-        _keys.add(name);
+        if(_keys.contains(name) == false) {
+            _keys.add(name);
+        }
         return this;
     }
 
@@ -56,6 +59,11 @@ public class DataItemEx implements IDataItem{
             return new VariateEx(name, _data.get(name));
         else
             return new Variate(name, null);
+    }
+
+    public void remove(String name){
+        _data.remove(name);
+        _keys.remove(name);
     }
 
     public <T extends IBinder> T toItem(T item) {

@@ -15,6 +15,8 @@ public interface IDataItem extends GetHandler, Serializable {
     boolean exists(String name);
     List<String> keys();
 
+    void remove(String name);
+
     IDataItem set(String name, Object value);
     Object get(int index);
     Object get(String name);

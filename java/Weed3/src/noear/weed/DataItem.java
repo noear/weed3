@@ -2,7 +2,6 @@ package noear.weed;
 
 import noear.weed.ext.Act2;
 
-import javax.swing.plaf.TextUI;
 import java.io.*;
 import java.util.*;
 
@@ -32,7 +31,9 @@ public class DataItem implements IDataItem{
     public IDataItem set(String name,Object value)
     {
         _data.put(name, value);
-        _keys.add(name);
+        if(_keys.contains(name) == false) {
+            _keys.add(name);
+        }
         return this;
     }
     public Object get(int index){
@@ -51,6 +52,7 @@ public class DataItem implements IDataItem{
 
     public void remove(String name){
         _data.remove(name);
+        _keys.remove(name);
     }
 
     public <T extends IBinder> T toItem(T item)
@@ -134,25 +136,38 @@ public class DataItem implements IDataItem{
 
             jw.WritePropertyName(key);
 
-            if(val == null)
+            if(val == null) {
                 jw.WriteNull();
+                continue;
+            }
 
-            if(val instanceof String)
-                jw.WriteValue((String)val);
+            if(val instanceof String) {
+                jw.WriteValue((String) val);
+                continue;
+            }
 
-            if(val instanceof Date)
-                jw.WriteValue((Date)val);
+            if(val instanceof Date) {
+                jw.WriteValue((Date) val);
+                continue;
+            }
 
-            if(val instanceof Boolean)
-                jw.WriteValue((Boolean)val);
+            if(val instanceof Boolean) {
+                jw.WriteValue((Boolean) val);
+                continue;
+            }
 
-            if(val instanceof Integer)
-                jw.WriteValue((Integer)val);
+            if(val instanceof Integer) {
+                jw.WriteValue((Integer) val);
+                continue;
+            }
 
-            if(val instanceof Long)
-                jw.WriteValue((Long)val);
+            if(val instanceof Long) {
+                jw.WriteValue((Long) val);
+                continue;
+            }
 
-            jw.WriteValue(new Variate(null, val).doubleValue(0));
+            double val2 = new Variate(null, val).doubleValue(0);
+            jw.WriteValue(val2);
 
         }
         jw.WriteObjectEnd();
@@ -215,6 +230,4 @@ public class DataItem implements IDataItem{
             return null;
         }
     }
-
-
 }

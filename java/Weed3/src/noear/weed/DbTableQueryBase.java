@@ -59,8 +59,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    public T where() {
+        _builder.append(" WHERE ");
+        return (T)this;
+    }
+
     public T and(String and, Object... args) {
         _builder.append(" AND ").append(and, args);
+        return (T)this;
+    }
+
+    public T and() {
+        _builder.append(" AND ");
         return (T)this;
     }
 
@@ -68,6 +78,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         _builder.append(" OR ").append(or, args);
         return (T)this;
     }
+
+    public T or() {
+        _builder.append(" OR ");
+        return (T)this;
+    }
+
 
     public T begin() {
         _builder.append(" ( ");
@@ -215,6 +231,23 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         fun.run(item);
 
         return insert(item);
+    }
+
+    public void updateExt(IDataItem data, String... constraints) throws SQLException {
+        this.where("1=1");
+        for (String f : constraints) {
+            this.and(f + "=?", data.get(f));
+        }
+
+        if (this.exists()) {
+            for (String f : constraints) {
+               data.remove(f);
+            }
+
+            this.update(data);
+        } else {
+            this.insert(data);
+        }
     }
 
     public int update(Act1<IDataItem> fun) throws SQLException

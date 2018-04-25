@@ -1,3 +1,9 @@
+3.0.4.80
+1.添加 where(),and(),or() 空参数接口
+
+3.0.4.74
+1.DataItem::修复 toJson 对 Date 的处理
+
 3.0.4.72
 1.Variate::修改.添加 stringValue();
 

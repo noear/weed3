@@ -39,6 +39,14 @@ public class DataList implements Serializable {
             rows.clear();
     }
 
+    public DataItem getLastRow(){
+        if(getRowCount()>0){
+            return rows.get(getRowCount()-1);
+        }else{
+            return null;
+        }
+    }
+
     //----------
 
     public <T extends IBinder>  List<T> toList(T model) throws SQLException{

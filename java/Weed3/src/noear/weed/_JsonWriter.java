@@ -1,6 +1,8 @@
 package noear.weed;
 
 
+import noear.snacks.FormatHanlder;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -165,11 +167,13 @@ class _JsonWriter
 		_LastIsEnd = true;
 	}
 
-	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.fff");
+	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public final void WriteValue(Date val)
 	{
 		OnWriteBef();
+		_Writer.append('\"');
 		_Writer.append(df.format(val));
+		_Writer.append('\"');
 		_LastIsEnd = true;
 	}
 }
