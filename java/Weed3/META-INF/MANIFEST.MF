@@ -1,2 +1,0 @@
-Manifest-Version: 3.0.4.67
-

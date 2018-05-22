@@ -22,6 +22,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.42</version>
         </dependency>
 
         <dependency>
@@ -37,21 +38,15 @@
         </dependency>
 
         <dependency>
-            <groupId>Snacks3</groupId>
-            <artifactId>Snacks3</artifactId>
-            <version>1.0</version>
-
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Noear.Snacks3.jar</systemPath>
+            <groupId>org.noear</groupId>
+            <artifactId>snacks</artifactId>
+            <version>1.0.15</version>
         </dependency>
 
         <dependency>
-            <groupId>Weed3</groupId>
-            <artifactId>Weed3</artifactId>
-            <version>1.0</version>
-
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Noear.Weed3.jar</systemPath>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+            <version>3.0.4.80</version>
         </dependency>
 
     </dependencies>
@@ -73,4 +68,11 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>nexus-zm</id>
+            <name>Nexus zm</name>
+            <url>http://maven.data.zm/repository/maven-public/</url>
+        </repository>
+    </repositories>
 </project>

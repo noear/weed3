@@ -90,6 +90,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
+    public T begin(String and, Object... args) {
+        _builder.append(" ( ").append(and, args);
+        return (T)this;
+    }
+
     public T end() {
         _builder.append(" ) ");
         return (T)this;

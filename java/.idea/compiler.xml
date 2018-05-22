@@ -16,10 +16,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Weed3" />
         <module name="Weed3Demo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Weed3" target="1.8" />
       <module name="Weed3Demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>

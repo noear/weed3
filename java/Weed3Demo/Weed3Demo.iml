@@ -9,27 +9,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:unknown" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.42" level="project" />
     <orderEntry type="library" name="Maven: net.spy:spymemcached:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: redis.clients:jedis:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.4.2" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: Snacks3:Snacks3:1.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/Noear.Snacks3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: Weed3:Weed3:1.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/Noear.Weed3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: org.noear:snacks:1.0.15" level="project" />
+    <orderEntry type="library" name="Maven: org.noear:weed3:3.0.4.80" level="project" />
   </component>
 </module>

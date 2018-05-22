@@ -36,6 +36,19 @@ public class DataItem implements IDataItem{
         }
         return this;
     }
+
+    public DataItem setData(Map<String,Object> data){
+        data.forEach((k,v)->{
+            set(k,v);
+        });
+
+        return this;
+    }
+
+    public Map<String,Object> getData(){
+        return _data;
+    }
+
     public Object get(int index){
         return get(_keys.get(index));
     }
@@ -129,6 +142,7 @@ public class DataItem implements IDataItem{
         return jw.toJson();
     }
 
+
     protected void buildJson(_JsonWriter jw){
         jw.WriteObjectStart();
         for(String key : keys()){
@@ -173,6 +187,9 @@ public class DataItem implements IDataItem{
         jw.WriteObjectEnd();
     }
 
+    private static final String TEMP_ENCODING = "ISO-8859-1";
+    private static final String DEFAULT_ENCODING = "UTF-8";
+
     public String serialize() throws Exception {
         String data = null;
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -180,7 +197,8 @@ public class DataItem implements IDataItem{
             ObjectOutputStream out = new ObjectOutputStream(byteStream);
             try {
                 out.writeObject(this);
-                data = byteStream.toString("ISO-8859-1");//必须是ISO-8859-1
+                data = byteStream.toString(TEMP_ENCODING);//必须是ISO-8859-1
+                data = java.net.URLEncoder.encode(data, DEFAULT_ENCODING);
 
             } finally {
                 out.close();
@@ -207,7 +225,8 @@ public class DataItem implements IDataItem{
         }
 
         DataItem item = null;
-        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes("ISO-8859-1"));
+        data = java.net.URLDecoder.decode(data, DEFAULT_ENCODING);
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes(TEMP_ENCODING));
         try {
             ObjectInputStream inp = new ObjectInputStream(byteStream);
             try {
