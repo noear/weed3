@@ -14,14 +14,14 @@ public class LocalCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
-    private int _max = 50000;
+    private int _max = 10000;
     private int _count = 0;
 
     private List<Integer> mks = new ArrayList<Integer>(); //key的顺序记录
     private Map<Integer, LocalCacheRecord> mcc = new ConcurrentHashMap<Integer, LocalCacheRecord>();   //缓存存储器
 
     public LocalCache(String keyHeader, int defSeconds) {
-        this(keyHeader, defSeconds, 50000);
+        this(keyHeader, defSeconds, 10000);
     }
 
     public LocalCache(String keyHeader, int defSeconds, int recordMax) {
