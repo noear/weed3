@@ -4,6 +4,7 @@ import noear.weed.ext.DbType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by noear on 14-6-12.
@@ -88,6 +89,10 @@ public class Variate implements Serializable {
             return (int)_value;
         }
 
+        if(_value instanceof Date){
+            return ((Date)_value).getTime();
+        }
+
         return def;
     }
 
@@ -106,6 +111,10 @@ public class Variate implements Serializable {
 
         if(_value instanceof BigDecimal){
             return ((BigDecimal)_value).longValue();
+        }
+
+        if(_value instanceof Date){
+            return ((Date)_value).getTime();
         }
 
         return def;

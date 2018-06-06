@@ -454,19 +454,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         StringBuilder sb = new StringBuilder();
 
-        //1.构建sql
-        if(_hint!=null) {
-            sb.append(_hint);
-            _hint = null;
-        }
-
-        sb.append("SELECT * FROM ").append(_table);
+        sb.append("SELECT 1 FROM ").append(_table);
 
         _builder.backup();
 
         _builder.insert(sb.toString());
-        _builder.insert("SELECT EXISTS (");
-        _builder.append(") n1");
+        _builder.append(" LIMIT 1");
+
+        //1.构建sql
+        if(_hint!=null) {
+            _builder.insert(_hint);
+            _hint = null;
+        }
 
         DbQuery rst = compile();
 
@@ -477,7 +476,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         _builder.restore();
 
 
-        return "1".equals(rst.getValue().toString());
+        return rst.getValue() != null;
     }
 
     String _hint = null;
