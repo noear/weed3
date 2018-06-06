@@ -355,17 +355,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             for(String key : cols.keys()) {
                 Object val = item.get(key);
 
-                if (val instanceof String) {
-                    String val2 = (String) val;
-                    if (isSqlExpr(val2)) { //说明是SQL函数
-                        sb.append(val2.substring(1)).append(",");
+                if(val == null){
+                    sb.append("null,");
+                }else {
+                    if (val instanceof String) {
+                        String val2 = (String) val;
+                        if (isSqlExpr(val2)) { //说明是SQL函数
+                            sb.append(val2.substring(1)).append(",");
+                        } else {
+                            sb.append("?,");
+                            args.add(val);
+                        }
                     } else {
                         sb.append("?,");
                         args.add(val);
                     }
-                } else {
-                    sb.append("?,");
-                    args.add(val);
                 }
             }
             sb.deleteCharAt(sb.length() - 1);
