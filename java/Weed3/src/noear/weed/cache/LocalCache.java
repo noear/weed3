@@ -3,6 +3,7 @@ package noear.weed.cache;
 import noear.weed.ext.Fun1;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by yuety on 14-6-16.
@@ -17,7 +18,7 @@ public class LocalCache implements ICacheServiceEx {
     private int _count = 0;
 
     private List<Integer> mks = new ArrayList<Integer>(); //key的顺序记录
-    private HashMap<Integer, LocalCacheRecord> mcc = new HashMap<Integer, LocalCacheRecord>();   //缓存存储器
+    private Map<Integer, LocalCacheRecord> mcc = new ConcurrentHashMap<Integer, LocalCacheRecord>();   //缓存存储器
 
     public LocalCache(String keyHeader, int defSeconds) {
         this(keyHeader, defSeconds, 50000);
@@ -31,7 +32,7 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public void store(String key, Object obj, int seconds) {
-        Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
+        Integer hashKey = newKey(key);
         LocalCacheRecord val = new LocalCacheRecord(obj, seconds);
 
         mcc.put(hashKey, val);
@@ -49,13 +50,13 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public Object get(String key) {
-        Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
+        Integer hashKey = newKey(key);
         LocalCacheRecord val = mcc.get(hashKey);
 
         if (val == null)
             return null;
 
-        if (val.time < new Date().getTime()) {
+        if (val.timeout < System.currentTimeMillis()) {
             mcc.remove(hashKey);
             mks.remove(hashKey);
             _count--;
@@ -66,7 +67,7 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public void remove(String key) {
-        Integer hashKey = (_cacheKeyHead + "$" + key).hashCode();
+        Integer hashKey = newKey(key);
 
         mcc.remove(hashKey);
         mks.remove(hashKey);
@@ -77,6 +78,10 @@ public class LocalCache implements ICacheServiceEx {
         mks.clear();
         mcc.clear();
         _count = 0;
+    }
+
+    private Integer newKey(String key){
+        return (_cacheKeyHead + "$" + key).hashCode();
     }
 
     @Override

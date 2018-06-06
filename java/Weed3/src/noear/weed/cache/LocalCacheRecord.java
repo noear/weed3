@@ -7,10 +7,10 @@ import java.util.Date;
  */
 class LocalCacheRecord {
     public Object data;
-    public long time;
+    public long timeout;
 
     public LocalCacheRecord(Object val, int seconds) {
-        this.time = new Date().getTime() + seconds * 1000;
+        this.timeout = new Date().getTime() + seconds * 1000;
         this.data = val;
     }
 }
