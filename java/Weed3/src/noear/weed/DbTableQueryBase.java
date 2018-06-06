@@ -105,7 +105,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return (T)this;
     }
 
-    public long insert(IDataItem data) throws SQLException{
+    public long insert(IDataItem data) throws SQLException {
         if (data == null || data.count() == 0)
             return 0;
 
@@ -113,9 +113,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
-        data.forEach((key,value)->{
-            if(value==null)
-                return;
+        data.forEach((key, value) -> {
+//            if(value==null) //支持null插入
+//                return;
 
             sb.append(_context.field(key)).append(",");
         });
@@ -126,23 +126,22 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.append("VALUES");
         sb.append("(");
 
-        data.forEach((key,value)->{
-            if(value==null)
-                return;
-
-            if (value instanceof String) {
-                String val2 = (String)value;
-                if (isSqlExpr(val2)) { //说明是SQL函数
-                    sb.append(val2.substring(1)).append(",");
-                }
-                else {
+        data.forEach((key, value) -> {
+            if (value == null) {
+                sb.append("null,"); //充许插入null
+            } else {
+                if (value instanceof String) {
+                    String val2 = (String) value;
+                    if (isSqlExpr(val2)) { //说明是SQL函数
+                        sb.append(val2.substring(1)).append(",");
+                    } else {
+                        sb.append("?,");
+                        args.add(value);
+                    }
+                } else {
                     sb.append("?,");
                     args.add(value);
                 }
-            }
-            else {
-                sb.append("?,");
-                args.add(value);
             }
         });
         sb.deleteCharAt(sb.length() - 1);
@@ -178,8 +177,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return insertList(valuesList.get(0), valuesList);
     }
 
-    protected <T extends GetHandler> boolean insertList(IDataItem cols, List<T> valuesList)throws SQLException{
-        if(valuesList == null || valuesList.size()==0)
+    protected <T extends GetHandler> boolean insertList(IDataItem cols, List<T> valuesList)throws SQLException {
+        if (valuesList == null || valuesList.size() == 0)
             return false;
 
         if (cols == null || cols.count() == 0)
@@ -189,7 +188,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         StringBuilder sb = new StringBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
-        for(String key : cols.keys()){
+        for (String key : cols.keys()) {
             sb.append(_context.field(key)).append(",");
         }
         sb.deleteCharAt(sb.length() - 1);
@@ -198,25 +197,27 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.append("VALUES");
 
-        for(GetHandler item : valuesList){
+        for (GetHandler item : valuesList) {
             sb.append("(");
 
-            for(String key : cols.keys()){
-               Object val = item.get(key);
+            for (String key : cols.keys()) {
+                Object val = item.get(key);
 
-                if (val instanceof String) {
-                    String val2 = (String)val;
-                    if (isSqlExpr(val2)) { //说明是SQL函数
-                        sb.append(val2.substring(1)).append(",");
-                    }
-                    else {
+                if (val == null) {
+                    sb.append("null,");
+                } else {
+                    if (val instanceof String) {
+                        String val2 = (String) val;
+                        if (isSqlExpr(val2)) { //说明是SQL函数
+                            sb.append(val2.substring(1)).append(",");
+                        } else {
+                            sb.append("?,");
+                            args.add(val);
+                        }
+                    } else {
                         sb.append("?,");
                         args.add(val);
                     }
-                }
-                else {
-                    sb.append("?,");
-                    args.add(val);
                 }
             }
             sb.deleteCharAt(sb.length() - 1);
