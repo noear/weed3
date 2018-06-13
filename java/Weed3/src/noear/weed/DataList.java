@@ -3,12 +3,15 @@ package noear.weed;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 /**
  * Created by yuety on 14-9-10.
  */
-public class DataList implements Serializable {
+public class DataList implements Serializable,Iterable<DataItem> {
     private ArrayList<DataItem> rows = new ArrayList<DataItem>();
 
 
@@ -100,5 +103,20 @@ public class DataList implements Serializable {
         jw.WriteArrayEnd();
 
         return jw.toJson();
+    }
+
+    @Override
+    public Iterator<DataItem> iterator() {
+        return rows.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super DataItem> action) {
+        rows.forEach(action);
+    }
+
+    @Override
+    public Spliterator<DataItem> spliterator() {
+        return rows.spliterator();
     }
 }

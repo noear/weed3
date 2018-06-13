@@ -4,12 +4,13 @@ import noear.weed.ext.Act2;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Created by yuety on 14-9-10.
  */
-public class DataItem implements IDataItem{
-    HashMap<String,Object> _data = new HashMap<>();
+public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
+    Map<String,Object> _data = new HashMap<>();
     List<String> _keys = new ArrayList<>();
 
     public DataItem() { }
@@ -248,5 +249,23 @@ public class DataItem implements IDataItem{
             ex.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Iterator<Map.Entry<String, Object>> iterator() {
+        return _data.entrySet().iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Map.Entry<String, Object>> action) {
+        Objects.requireNonNull(action);
+        for (Map.Entry<String, Object> entry : _data.entrySet()) {
+            action.accept(entry);
+        }
+    }
+
+    @Override
+    public Spliterator<Map.Entry<String, Object>> spliterator() {
+        return _data.entrySet().spliterator();
     }
 }
