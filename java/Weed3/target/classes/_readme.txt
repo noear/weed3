@@ -1,3 +1,13 @@
+3.0.4.93
+1.DataItem 增加 Iterable 接口
+2.DataList 增加 Iterable 接口
+
+3.0.4.91
+1.DbTableQueryBase
+>插入添加null值的支持（之前会过滤掉）
+>批量插入添加null值的支持
+>批量更新添加null值的支持
+
 3.0.86
 1.DbTableQueryBase 添加控制接口（可实现更自由的条件控制）
 +begin()
