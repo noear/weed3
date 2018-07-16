@@ -27,6 +27,8 @@ public final class WeedConfig {
 
     protected static void logException(Command cmd,Exception ex) {
         if (onException_listener != null) {
+            cmd.timestop = System.currentTimeMillis();
+
             try {
                 onException_listener.run(cmd, ex);
             }catch (Exception e){
@@ -42,7 +44,7 @@ public final class WeedConfig {
             onExecuteAft_listener.run(cmd);
         }
 
-        if(cmd.isLog && onLog_listener != null){
+        if (cmd.isLog > 0 && onLog_listener != null) {
             onLog_listener.run(cmd);
         }
     }

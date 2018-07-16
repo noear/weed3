@@ -106,10 +106,10 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         paramS.add(value);
     }
 
-    private boolean _isLog;
-    public T log(Boolean isLog){
-        _isLog = isLog;
-        return (T)this;
+    private int _isLog;
+    public T log(boolean isLog) {
+        _isLog = isLog ? 1 : -1;
+        return (T) this;
     }
     //=======================
     //

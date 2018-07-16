@@ -1,7 +1,5 @@
 package noear.weed;
 
-import java.awt.*;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +12,7 @@ public class Command {
     /*命令tag（用于寄存一些数据）*/
     public String       tag;
     /*是否进行日志*/
-    public boolean      isLog = false;
+    public int      isLog; //def:0  no:-1 yes:1
 
 
     /*命令id*/

@@ -22,7 +22,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     String _table;
     DbContext _context;
     SQLBuilder _builder;
-    boolean _isLog = false;
+    int _isLog=0;
 
     public DbTableQueryBase(DbContext context) {
         _context = context;
@@ -30,9 +30,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
 
-    public T log(Boolean isLog){
-        _isLog = isLog;
-        return (T)this;
+    public T log(boolean isLog) {
+        _isLog = isLog ? 1 : -1;
+        return (T) this;
     }
 
     public T expre(Act1<T> action){
@@ -555,7 +555,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         if(_tran!=null)
             temp.tran(_tran);
 
-        return temp.log(_isLog).onCommandBuilt((cmd)->{
+        return temp.onCommandBuilt((cmd)->{
+            cmd.isLog = _isLog;
             cmd.tag   = _table;
         });
     }
