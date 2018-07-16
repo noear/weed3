@@ -555,9 +555,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         if(_tran!=null)
             temp.tran(_tran);
 
-        return temp.onCommandBuilt((cmd)->{
+        return temp.log(_isLog).onCommandBuilt((cmd)->{
             cmd.tag   = _table;
-            cmd.isLog = _isLog;
         });
     }
 

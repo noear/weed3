@@ -34,7 +34,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return (T)this;
     }
 
-    protected void logCommandBuilt(Command cmd){
+    protected void runCommandBuiltEvent(Command cmd){
+        cmd.isLog = _isLog;
+
         if(onCommandExpr!=null){
             onCommandExpr.run(cmd);
         }
@@ -102,6 +104,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     protected void doSet(Variate value){
         paramS.add(value);
+    }
+
+    private boolean _isLog;
+    public T log(Boolean isLog){
+        _isLog = isLog;
+        return (T)this;
     }
     //=======================
     //

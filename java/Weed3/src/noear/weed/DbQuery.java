@@ -67,7 +67,7 @@ public class DbQuery extends DbAccess<DbQuery> {
         cmd.text = sb.toString();
 
 
-        logCommandBuilt(cmd);
+        runCommandBuiltEvent(cmd);
 
         return cmd;
     }

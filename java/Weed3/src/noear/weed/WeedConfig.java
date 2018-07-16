@@ -27,6 +27,7 @@ public final class WeedConfig {
     }
 
     protected static void logExecuteAft(Command cmd) {
+        cmd.timestop = System.currentTimeMillis();
         if (onExecuteAft_listener != null) {
             onExecuteAft_listener.run(cmd);
         }
@@ -37,6 +38,8 @@ public final class WeedConfig {
     }
 
     protected static boolean logExecuteBef(Command cmd) {
+        cmd.timestart = System.currentTimeMillis();
+
         if (onExecuteBef_listener != null) {
             return onExecuteBef_listener.run(cmd);
         }

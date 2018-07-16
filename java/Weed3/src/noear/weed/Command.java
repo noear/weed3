@@ -22,6 +22,10 @@ public class Command {
     /*数据库上下文*/
     public DbContext context;
 
+    //开始计时
+    public long timestart = 0;
+    public long timestop = 0;
+
     public Command(DbContext context) {
         this.context = context;
         this.context.lastCommand = this;

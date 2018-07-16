@@ -66,7 +66,7 @@ public class DbStoredProcedure extends DbProcedure {
 
         cmd.text = sb.toString();
 
-        logCommandBuilt(cmd);
+        runCommandBuiltEvent(cmd);
 
         return cmd;
     }

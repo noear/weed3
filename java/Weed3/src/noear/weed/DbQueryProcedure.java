@@ -124,7 +124,7 @@ public class DbQueryProcedure extends DbProcedure {
         cmd.paramS  = this.paramS;
         cmd.text    = sqlTxt;
 
-        logCommandBuilt(cmd);
+        runCommandBuiltEvent(cmd);
 
         return cmd;
     }
