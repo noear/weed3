@@ -1,6 +1,9 @@
 package noear.weed;
 
+import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by noear on 14-9-5.
@@ -25,6 +28,27 @@ public class Command {
     //开始计时
     public long timestart = 0;
     public long timestop = 0;
+
+    private Map<String,Object> _paramMap;
+    public Map<String,Object> paramMap() {
+        if(_paramMap == null) {
+            _paramMap = new HashMap<>();
+
+            int idx = 0;
+            for (Variate v : paramS) {
+                _paramMap.put("v" + idx, v.getValue());
+                idx++;
+            }
+        }
+
+        return _paramMap;
+    }
+
+    //执行时长
+    public long timespan(){
+        return timestop  -timestart;
+    }
+
 
     public Command(DbContext context) {
         this.context = context;

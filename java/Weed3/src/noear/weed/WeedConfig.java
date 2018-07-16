@@ -16,6 +16,15 @@ public final class WeedConfig {
     static Fun1<Boolean,Command> onExecuteBef_listener = null;
     static Act1<Command> onLog_listener = null;
 
+
+    protected static boolean isEmpty(CharSequence s) {
+        if (s == null) {
+            return true;
+        } else {
+            return s.length() == 0;
+        }
+    }
+
     protected static void logException(Command cmd,Exception ex) {
         if (onException_listener != null) {
             try {
@@ -28,6 +37,7 @@ public final class WeedConfig {
 
     protected static void logExecuteAft(Command cmd) {
         cmd.timestop = System.currentTimeMillis();
+
         if (onExecuteAft_listener != null) {
             onExecuteAft_listener.run(cmd);
         }

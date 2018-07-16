@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.0.4.94</version>
+    <version>3.0.4.97</version>
     <packaging>jar</packaging>
 
     <properties>

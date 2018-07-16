@@ -1,3 +1,7 @@
+3.0.4.97
+1.添加性能计数
+2.所有执行对象都添加log(bool)
+
 3.0.4.93
 1.DataItem 增加 Iterable 接口
 2.DataList 增加 Iterable 接口
