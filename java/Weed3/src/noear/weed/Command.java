@@ -2,6 +2,7 @@ package noear.weed;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class Command {
     private Map<String,Object> _paramMap;
     public Map<String,Object> paramMap() {
         if(_paramMap == null) {
-            _paramMap = new HashMap<>();
+            _paramMap = new LinkedHashMap<>();
 
             int idx = 0;
             for (Variate v : paramS) {
