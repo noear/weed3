@@ -129,10 +129,10 @@ public class DbQueryProcedure extends DbProcedure {
                 }
 
                 Variate val = _paramS2.get(key);
-
-                if (val.getValue() instanceof Iterable) { //支持数组型参数
+                Object tmp = val.getValue();
+                if (tmp instanceof Iterable) { //支持数组型参数
                     StringBuilder sb = new StringBuilder();
-                    for (Object p2 : (Iterable) val) {
+                    for (Object p2 : (Iterable) tmp) {
                         doSet(new Variate(key, p2));
 
                         sb.append("?").append(",");
