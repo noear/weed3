@@ -99,21 +99,55 @@ public class DbQueryProcedure extends DbProcedure {
 
         String sqlTxt = this.commandText;
 
+//        {
+//            Pattern pattern = Pattern.compile("@\\w+");
+//            Matcher m = pattern.matcher(sqlTxt);
+//            while (m.find()) {
+//                String key = m.group(0);
+//                if(WeedConfig.isDebug){
+//                    if(_paramS2.containsKey(key)==false){
+//                        throw new SQLException("Lack of parameter:"+key);
+//                    }
+//                }
+//                doSet(_paramS2.get(key));
+//            }
+//
+//            for (String key : _paramS2.keySet()) {
+//                sqlTxt = sqlTxt.replace(key, "?");
+//            }
+//        }
+
         {
             Pattern pattern = Pattern.compile("@\\w+");
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
                 String key = m.group(0);
-                if(WeedConfig.isDebug){
-                    if(_paramS2.containsKey(key)==false){
-                        throw new SQLException("Lack of parameter:"+key);
+                if (WeedConfig.isDebug) {
+                    if (_paramS2.containsKey(key) == false) {
+                        throw new SQLException("Lack of parameter:" + key);
                     }
                 }
-                doSet(_paramS2.get(key));
-            }
 
-            for (String key : _paramS2.keySet()) {
-                sqlTxt = sqlTxt.replace(key, "?");
+                Variate val = _paramS2.get(key);
+
+                if (val.getValue() instanceof Iterable) { //支持数组型参数
+                    StringBuilder sb = new StringBuilder();
+                    for (Object p2 : (Iterable) val) {
+                        doSet(new Variate(key, p2));
+
+                        sb.append("?").append(",");
+                    }
+
+                    int len = sb.length();
+                    if (len > 0) {
+                        sb.deleteCharAt(len - 1);
+                    }
+
+                    sqlTxt = sqlTxt.replace(key, sb.toString());
+                } else {
+                    doSet(val);
+                    sqlTxt = sqlTxt.replace(key, "?");
+                }
             }
         }
 
