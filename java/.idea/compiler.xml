@@ -25,4 +25,9 @@
       <module name="Weed3Demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Weed3" options="-parameters" />
+    </option>
+  </component>
 </project>
