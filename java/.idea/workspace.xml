@@ -6,385 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="修复?...类型占位符bug">
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3.userprefs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3.userprefs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheTags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheTags.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheUsing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/CacheUsing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/EmptyCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/EmptyCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheServiceEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheServiceEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheUsing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/ICacheUsing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/LocalCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/LocalCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/LocalCacheRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Cache/LocalCacheRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Command.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Command.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataItemEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataItemEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DataList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbAccess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbQueryProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbQueryProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbStoredProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbStoredProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTableQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTableQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTableQueryBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTableQueryBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTran.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTran.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTranQueue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/DbTranQueue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/DbReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/DbReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/DbTypeMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/DbTypeMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/ExtUtil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Ext/ExtUtil.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/GetHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/GetHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/GetHandlerEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/GetHandlerEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IBinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IBinder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IDataItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IDataItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IWeedKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/IWeedKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/SQLBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/SQLBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/SQLer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/SQLer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/ValueMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/ValueMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Variate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Variate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/VariateEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/VariateEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Weed3.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/Weed3.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/WeedConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/WeedConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/WeedException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/WeedException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/_JsonWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/_JsonWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/bin/Debug/Noear.Weed3.dll.mdb" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/bin/Debug/Noear.Weed3.dll.mdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/Noear.Weed3.dll.mdb" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/Noear.Weed3.dll.mdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/Weed3.csproj.FilesWrittenAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3/obj/Debug/Weed3.csproj.FilesWrittenAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/App.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/Weed3Demo.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/Weed3Demo.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/_dll/MySql.Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/_dll/MySql.Data.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/CacheUtil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/CacheUtil.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/DbConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/DbConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/AspCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/AspCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/HashAlgorithms.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/HashAlgorithms.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/LogAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/LogAdapter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/MemcachedClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/MemcachedClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/MemcachedClientException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/MemcachedClientException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/PooledSocket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/PooledSocket.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/Serializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/Serializer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/ServerPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/ServerPool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/SocketPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/config/cache/MemcachedClientLibrary/SocketPool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/cache/Cache1Demo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/cache/Cache1Demo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/model/UserInfoModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/model/UserInfoModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/param/Param1Demo_tbl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/param/Param1Demo_tbl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/param/Param2Demo_sql.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/param/Param2Demo_sql.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/procedure/Store1Demo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/procedure/Store1Demo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/sqlbuilder/demo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/sqlbuilder/demo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table2.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table_inserlist.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/table/demo_table_inserlist.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/tran/Tran1Demo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/tran/Tran1Demo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/tran/Tran2Demo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo/tran/Tran2Demo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/demo_query.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/demo_query.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_get2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_get2.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_get_list2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_get_list2.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_update2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/queryProcedure/user_update2.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/demo_store.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/demo_store.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_get.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_get.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_get_list.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_get_list.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_update.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/storeProcedure/user_update.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/UserInfoM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/UserInfoM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/UserM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/UserM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/demo_table.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/demo_table.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/demo_table_inserlist.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net &amp; mono/Weed3Demo/demo_plus/table/demo_table_inserlist.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheTags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheTags.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheUsing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/CacheUsing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/EmptyCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/EmptyCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheServiceEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheServiceEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheUsing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/ICacheUsing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/LocalCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/LocalCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/LocalCacheRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Cache/LocalCacheRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Command.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Command.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DataItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DataItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DataItemEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DataItemEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DataList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DataList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbAccess.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbAccess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbQueryProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbQueryProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbStoredProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbStoredProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbTableQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbTableQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbTableQueryBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbTableQueryBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbTran.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbTran.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/DbTranQueue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/DbTranQueue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/DbReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/DbReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/DbTypeMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/DbTypeMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/ExtUtil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Ext/ExtUtil.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/GetHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/GetHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/GetHandlerEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/GetHandlerEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/IBinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/IBinder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/IDataItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/IDataItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/IQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/IQuery.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/IWeedKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/IWeedKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/SQLBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/SQLBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/SQLer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/SQLer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/ValueMapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/ValueMapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Variate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Variate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/VariateEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/VariateEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/Weed3.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/Weed3.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/WeedConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/WeedConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/WeedException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/WeedException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.net standard2/Weed3/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../.net standard2/Weed3/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/../LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/Noear.Weed3.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Noear.Weed3.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/Noear.Weed3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Noear.Weed3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/Noear.Weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Noear.Weed3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bin/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Noear_Weed3_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Noear_Weed3_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_42.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_spy_spymemcached_2_12_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_spy_spymemcached_2_12_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_pool2_2_4_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_pool2_2_4_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_noear_snacks_1_0_15.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_noear_snacks_1_0_15.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_noear_weed3_3_0_4_80.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_noear_weed3_3_0_4_80.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/Weed3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/Weed3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItemEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItemEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataList.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQueryProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQueryProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbStoredProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbStoredProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQueryBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQueryBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTran.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTran.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTranQueue.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTranQueue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandlerEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandlerEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IBinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IBinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IDataItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IDataItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder$SQLPartBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder$SQLPartBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ValueMapping.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ValueMapping.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Variate.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Variate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/VariateEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/VariateEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/_JsonWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/_JsonWriter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheState.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheTags.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheTags.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheUsing.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheUsing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/EmptyCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/EmptyCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheServiceEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheServiceEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheUsing.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheUsing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCacheRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCacheRecord.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/SecondCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/SecondCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1Ex.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1Ex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act2.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/DbType.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/DbType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Fun1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Fun1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/weed3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/Weed3Demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/Weed3Demo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/CacheUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/CacheUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/DbConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/DbConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/MemCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/MemCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/RedisCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/RedisCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/Base64Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/Base64Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/EncryptUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/EncryptUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/RedisX.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/RedisX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/SerializeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/SerializeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/TextUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/TextUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/cache/Cache1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/cache/Cache1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/model/UserInfoModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/model/UserInfoModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param1Demo_tbl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param1Demo_tbl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param2Demo_sql.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param2Demo_sql.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/procedure/Store1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/procedure/Store1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/sqlbuilder/demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/sqlbuilder/demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table_inserlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table_inserlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran2Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran2Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/demo_query.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/demo_query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get_list2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get_list2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_update2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_update2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/demo_store.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/demo_store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get_list.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get_list.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_update.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserInfoM.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserInfoM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserM.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table_inserlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table_inserlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/tran/Tran2Demo.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/tran/Tran2Demo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Noear_Weed3_jar/Noear.Weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Noear_Weed3_jar/Noear.Weed3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataItemEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DataList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQueryProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbQueryProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbStoredProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbStoredProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTableQueryBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTran.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTran.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTranQueue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/DbTranQueue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandlerEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/GetHandlerEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IBinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IBinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IDataItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IDataItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IWeedKey.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/IWeedKey.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder$SQLPartBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder$SQLPartBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/SQLer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ValueMapping.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ValueMapping.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Variate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/Variate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/VariateEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/VariateEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/WeedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/_JsonWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/_JsonWriter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheTags.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheTags.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheUsing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/CacheUsing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/EmptyCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/EmptyCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheServiceEx.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheServiceEx.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheUsing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/ICacheUsing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCacheRecord.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/cache/LocalCacheRecord.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act0.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act0.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1Ex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act1Ex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Act2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/DbType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/DbType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0Ex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun0Ex.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Weed3/noear/weed/ext/Fun1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../php/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../php/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../php/Weed3.php" beforeDir="false" afterPath="$PROJECT_DIR$/../php/Weed3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../php/Weed3_demo.php" beforeDir="false" afterPath="$PROJECT_DIR$/../php/Weed3_demo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/.net &amp; mono/Noear.Weed3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../release/.net &amp; mono/Noear.Weed3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/.net standard2/Noear.Weed3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../release/.net standard2/Noear.Weed3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/Noear.Weed3.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../release/Noear.Weed3.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/Noear.Weed3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../release/Noear.Weed3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/Noear.Weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../release/Noear.Weed3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../release/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../release/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/App.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/App.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Config.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Config.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Dao/Setting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Dao/Setting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/MainWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Model/ObjectModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Model/ObjectModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Model/PropertyModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Model/PropertyModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Properties/Resources.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Properties/Resources.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Properties/Settings.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Properties/Settings.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Properties/Settings.settings" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Properties/Settings.settings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/DbManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/DbManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/IParamsBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/IParamsBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/SourceConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/SourceConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/Templet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/Templet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/TempletApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/TempletApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/WeedBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/WeedBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/AQVar.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/AQVar.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/Addin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/Addin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/AddinCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/AddinCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/AddinItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/AddinItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/ICommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/ICommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/Mapping.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/Mapping.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/_addinsSettings.config" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/_addinsSettings.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/_app.config" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/Addins/_app.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/DbContextEx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/DbContextEx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Escape.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Escape.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JConvert.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JConvert.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JDom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JDom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Json/JItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/JsonWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/Lexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/LitJson/Lexer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/IOpsSerializable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/IOpsSerializable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/IXNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/IXNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/OpsReader.Ext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/OpsReader.Ext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/OpsReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/OpsReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.Ext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.Ext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.Serialize.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.Serialize.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XDom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/OPS/Xml/XList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/QColumn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/QColumn.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/QDbType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/QDbType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/Utils/exts/SDQ/QEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/Utils/exts/SDQ/QEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/ViewModel/MainViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/ViewModel/MainViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/ViewModel/ModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/ViewModel/ModelBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/_dll/MySql.Data.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/_dll/MySql.Data.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/_dll/Noear.Snacks3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/_dll/Noear.Snacks3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/_dll/Noear.Weed3.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/_dll/Noear.Weed3.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/access.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/access.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/mysql.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/mysql.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/oracle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/oracle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/sqlce.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/sqlce.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/sqlserver2000.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/sqlserver2000.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/builder/sqlserver2005.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/builder/sqlserver2005.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.cs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.cs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.java.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.java.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.pop.java.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_model.pop.java.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_process.cs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_process.cs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_process.java.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_process.java.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table.cs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table.cs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table.java.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table.java.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table_insert.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/cd_table_insert.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/html.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/html.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mssql9_ops.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mssql9_ops.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mssql9_sdq.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mssql9_sdq.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mysql_sdq.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/res/templet/sp_mysql_sdq.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/studio.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/studio.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studio/studio/weed.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../studio/studio/weed.ico" afterDir="false" />
-    </list>
+    <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="修复?...类型占位符bug" />
     <ignored path="Weed3.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -415,23 +37,23 @@
     <session id="-435041432">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="java" value="22" />
-          <entry key="xml" value="2" />
+          <entry key="xml" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JAVA" value="22" />
-          <entry key="XML" value="2" />
+          <entry key="XML" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -454,7 +76,7 @@
     <favorites_list name="Weed3" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -592,7 +214,7 @@
   <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="777" />
+    <option name="height" value="734" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -603,7 +225,7 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -625,7 +247,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1406,7 +1028,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20355412" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20678514" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -1783,7 +1405,7 @@
     <entry file="file://$PROJECT_DIR$/Weed3/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="22" />
         </state>
       </provider>
     </entry>
