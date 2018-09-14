@@ -3,6 +3,53 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+3.0.4.100<br/>
+1.cmd.isLog 改为 int 型（def:0 no:-1 yes:1）<br/>
+<br/>
+3.0.4.98<br/>
+1.添加性能计数<br/>
+2.所有执行对象都添加log(bool)<br/>
+<br/>
+3.0.4.93<br/>
+1.DataItem 增加 Iterable 接口<br/>
+2.DataList 增加 Iterable 接口<br/>
+<br/>
+3.0.4.91<br/>
+1.DbTableQueryBase<br/>
+>插入添加null值的支持（之前会过滤掉）<br/>
+>批量插入添加null值的支持<br/>
+>批量更新添加null值的支持<br/>
+<br/>
+3.0.4.86<br/>
+1.DbTableQueryBase 添加控制接口（可实现更自由的条件控制）<br/>
++begin()<br/>
++begint(...)<br/>
++end()<br/>
+-exists() //重构实现代码<br/>
+<br/>
+2.DataItem 添加序列化接口<br/>
++unserialize(...)<br/>
++tryUnserialize(...)<br/>
++serialize(...)<br/>
++trySerialize(...)<br/>
+<br/>
+3.0.4.81<br/>
+1.添加 updateExt(...) //即添加也更新<br/>
+<br/>
+3.0.4.80<br/>
+1.添加 where(),and(),or() 空参数接口<br/>
+<br/>
+3.0.4.74<br/>
+1.DataItem::修复 toJson 对 Date 的处理<br/>
+<br/>
+3.0.4.72<br/>
+1.Variate::修改.添加 stringValue();<br/>
+<br/>
+3.0.4.70<br/>
+1.DataItem::修改.添加 unserialize(..),serialize()<br/>
+<br/>
+3.0.4.69<br/>
+1.DbContext::修改.添加 fieldFormat(...)<br/>
 3.0.4.67<br/>
 1.DbTableQueryBase::修改.添加缓存控制接口::<br/>
 +caching()<br/>
