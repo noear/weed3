@@ -246,14 +246,16 @@ public class user_get_by_id extends DbQueryProcedure
     public user_get_by_id()
     {
         super(Config.user);
-        sql("SELECT * FROM `user` where user_id = @user_id;");
+        sql("SELECT * FROM `user` where user_id = @user_id and type in (@types);");
 
         //set("{colname}", ()->{popname});
         //
         set("@user_id", ()->user_id);
+        set("@types",()->types);
     }
 
     public long user_id;
+    publid List<int> types;
 }
 
 //使用示例
