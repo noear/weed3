@@ -255,7 +255,7 @@ public class user_get_by_id extends DbQueryProcedure
     }
 
     public long user_id;
-    publid List<int> types;
+    public List<int> types;
 }
 
 //使用示例
