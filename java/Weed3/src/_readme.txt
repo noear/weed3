@@ -15,7 +15,7 @@
 >批量插入添加null值的支持
 >批量更新添加null值的支持
 
-3.0.86
+3.0.4.86
 1.DbTableQueryBase 添加控制接口（可实现更自由的条件控制）
 +begin()
 +begint(...)
@@ -28,7 +28,7 @@
 +serialize(...)
 +trySerialize(...)
 
-3.0.81
+3.0.4.81
 1.添加 updateExt(...) //即添加也更新
 
 3.0.4.80

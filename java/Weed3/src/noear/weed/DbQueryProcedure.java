@@ -4,8 +4,7 @@ import noear.weed.ext.Act0;
 import noear.weed.ext.Fun0;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,6 +108,7 @@ public class DbQueryProcedure extends DbProcedure {
 //                        throw new SQLException("Lack of parameter:"+key);
 //                    }
 //                }
+//
 //                doSet(_paramS2.get(key));
 //            }
 //
@@ -118,6 +118,7 @@ public class DbQueryProcedure extends DbProcedure {
 //        }
 
         {
+            Map<String, String> tmpList = new HashMap<>();
             Pattern pattern = Pattern.compile("@\\w+");
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
@@ -143,11 +144,28 @@ public class DbQueryProcedure extends DbProcedure {
                         sb.deleteCharAt(len - 1);
                     }
 
-                    sqlTxt = sqlTxt.replace(key, sb.toString());
+                    tmpList.put(key, sb.toString());
                 } else {
                     doSet(val);
-                    sqlTxt = sqlTxt.replace(key, "?");
+                    tmpList.put(key, "?");
                 }
+            }
+
+            //按长倒排KEY
+            List<String> keyList = new ArrayList<>(tmpList.keySet());
+            Collections.sort(keyList, (o1, o2) -> {
+                int len = o2.length() - o1.length();
+                if (len > 0) {
+                    return 1;
+                } else if (len < 0) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+
+            for (String key : keyList) {
+                sqlTxt = sqlTxt.replace(key, tmpList.get(key));
             }
         }
 
