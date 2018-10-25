@@ -31,7 +31,7 @@ Weed3Demo::使用示例<br/>
 +begin()<br/>
 +begint(...)<br/>
 +end()<br/>
--exists() //重构实现代码<br/>
+-exists() //重构实现代码<br/> 
 <br/>
 2.DataItem 添加序列化接口<br/>
 +unserialize(...)<br/>
