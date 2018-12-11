@@ -25,10 +25,14 @@ public interface IQuery {
      <T extends IBinder> List<T> getList(T model) throws SQLException;
      <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
 
+
      DataList getDataList() throws SQLException;
      DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
      DataItem getDataItem() throws SQLException;
-     DataItem getDataItem(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
+     DataItem getDataItem(Act2<CacheUsing, DataItem> cacheCondition) throws SQLException;
+
+     <T> List<T> getEntityList(Class<T> cls) throws SQLException,ReflectiveOperationException;
+     <T> T getEntity(Class<T> cls) throws SQLException,ReflectiveOperationException;
 
      <T> List<T> getArray(String column) throws SQLException;
 

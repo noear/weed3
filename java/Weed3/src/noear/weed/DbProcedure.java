@@ -113,15 +113,18 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
         sb.append(this.getCommandID() + ":");
 
         for (Variate item : paramS) {
-            if (item.getName() == paramName)
+            if (item.getName() == paramName) {
                 sb.append("_" + value.trim());
+            }
             else {
                 Object val = item.getValue();
 
-                if (val == null)
+                if (val == null) {
                     sb.append("_null");
-                else
+                }
+                else {
                     sb.append("_" + val.toString());
+                }
             }
         }
 
