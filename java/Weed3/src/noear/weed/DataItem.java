@@ -3,6 +3,8 @@ package noear.weed;
 import noear.weed.ext.Act2;
 
 import java.io.*;
+import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -16,19 +18,24 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     public DataItem() { }
     public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
 
+    @Override
     public int count(){
         return _data.size();
     }
+    @Override
     public void clear(){
         _data.clear();
     }
+    @Override
     public boolean exists(String name){
         return _data.containsKey(name);
     }
+    @Override
     public List<String> keys(){
         return _keys;
     }
 
+    @Override
     public IDataItem set(String name,Object value)
     {
         _data.put(name, value);
@@ -38,37 +45,32 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return this;
     }
 
-    public DataItem setData(Map<String,Object> data){
-        data.forEach((k,v)->{
-            set(k,v);
-        });
-
-        return this;
-    }
-
-    public Map<String,Object> getData(){
-        return _data;
-    }
-
+    @Override
     public Object get(int index){
         return get(_keys.get(index));
     }
+    @Override
     public Object get(String name){
         return _data.get(name);
     }
+    @Override
     public Variate getVariate(String name)
     {
-        if (_data.containsKey(name))
+        if (_data.containsKey(name)) {
             return new Variate(name, get(name));
-        else
+        }
+        else {
             return new Variate(name, null);
+        }
     }
 
+    @Override
     public void remove(String name){
         _data.remove(name);
         _keys.remove(name);
     }
 
+    @Override
     public <T extends IBinder> T toItem(T item)
     {
         item.bind((key) -> getVariate(key));
@@ -76,38 +78,47 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return item;
     }
 
+    @Override
     public short getShort(String name){
         return (short)get(name);
     }
 
+    @Override
     public int getInt(String name){
         return (int)get(name);
     }
 
+    @Override
     public long getLong(String name){
         return (long)get(name);
     }
 
+    @Override
     public double getDouble(String name){
         return (double)get(name);
     }
 
+    @Override
     public float getFloat(String name){
         return (float)get(name);
     }
 
+    @Override
     public String getString(String name){
         return (String)get(name);
     }
 
+    @Override
     public boolean getBoolean(String name){
         return (boolean)get(name);
     }
 
+    @Override
     public Date getDateTime(String name){
         return (Date)get(name);
     }
 
+    @Override
     public void forEach(Act2<String, Object> callback)
     {
         for(Map.Entry<String,Object> kv : _data.entrySet()){
@@ -134,6 +145,8 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         }
         return item;
     }
+
+
 
     public String toJson(){
         _JsonWriter jw = new _JsonWriter();
@@ -267,5 +280,52 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     @Override
     public Spliterator<Map.Entry<String, Object>> spliterator() {
         return _data.entrySet().spliterator();
+    }
+
+
+    /** 从map加载数据 */
+    public DataItem setMap(Map<String,Object> data){
+        data.forEach((k,v)->{
+            set(k,v);
+        });
+
+        return this;
+    }
+
+    /** 获取map */
+    public Map<String,Object> getMap(){
+        return _data;
+    }
+
+
+    /** 从Entity 加载数据 */
+    public void fromEntity(Object obj) throws ReflectiveOperationException{
+        Field[] fields = obj.getClass().getDeclaredFields();
+        String fn = null;
+
+        for (Field f : fields) {
+            fn = f.getName();
+
+            set(f.getName(), f.get(obj));
+        }
+    }
+
+    /** 转为Entity */
+    public <T> T toEntity(Class<T> cls) throws ReflectiveOperationException{
+
+        Field[] fields = cls.getDeclaredFields();
+        String fn = null;
+
+        T item = cls.newInstance();
+
+        for (Field f : fields) {
+            fn = f.getName();
+
+            if (exists(fn)) {
+                f.set(item, get(fn));
+            }
+        }
+
+        return item;
     }
 }

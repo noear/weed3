@@ -1,6 +1,8 @@
 package noear.weed;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,16 +32,19 @@ public class DataList implements Serializable,Iterable<DataItem> {
     }
 
     public int getRowCount() {
-        if (rows == null)
+        if (rows == null) {
             return 0;
-        else
+        }
+        else {
             return rows.size();
+        }
     }
 
     public void clear()
     {
-        if (rows != null)
+        if (rows != null) {
             rows.clear();
+        }
     }
 
     public DataItem getLastRow(){
@@ -53,7 +58,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
     //----------
 
     public <T extends IBinder>  List<T> toList(T model) throws SQLException{
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<T>(getRowCount());
 
         for (DataItem r : rows) {
             T item = (T) model.clone();
@@ -71,6 +76,30 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 将所有列转为类做为数组的数据 */
+    public <T>  List<T> toEntityList(Class<T> cls) throws ReflectiveOperationException {
+        List<T> list = new ArrayList<T>(getRowCount());
+        Field[] fields = cls.getDeclaredFields();
+        String fn = null;
+
+        for (DataItem r : rows) {
+            T item = cls.newInstance();
+
+            for(Field f : fields){
+                fn = f.getName();
+
+                if(r.exists(fn)){
+                    f.set(item, r.get(fn));
+                }
+            }
+
+            list.add((T)item);
+        }
+        return list;
+    }
+
+
+    /** 选一列做为数组的数据 */
     public <T> List<T> toArray(String columnName)
     {
         List<T> list = new ArrayList<T>();
@@ -81,6 +110,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 选一列做为数组的数据 */
     public <T> List<T> toArray(int columnIndex)
     {
         List<T> list = new ArrayList<T>();

@@ -44,10 +44,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         if(table.startsWith("#")){
             _table = table.replace("#","");
         }else {
-            if (table.indexOf('.') > 0)
+            if (table.indexOf('.') > 0) {
                 _table = table;
-            else
+            }
+            else {
                 _table = "$." + table;
+            }
         }
 
         return (T) this;
@@ -106,8 +108,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public long insert(IDataItem data) throws SQLException {
-        if (data == null || data.count() == 0)
+        if (data == null || data.count() == 0) {
             return 0;
+        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
@@ -171,18 +174,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public boolean insertList(List<DataItem> valuesList) throws SQLException {
-        if (valuesList == null || valuesList.size() == 0)
+        if (valuesList == null || valuesList.size() == 0) {
             return false;
+        }
 
         return insertList(valuesList.get(0), valuesList);
     }
 
     protected <T extends GetHandler> boolean insertList(IDataItem cols, List<T> valuesList)throws SQLException {
-        if (valuesList == null || valuesList.size() == 0)
+        if (valuesList == null || valuesList.size() == 0) {
             return false;
+        }
 
-        if (cols == null || cols.count() == 0)
+        if (cols == null || cols.count() == 0) {
             return false;
+        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
@@ -270,8 +276,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public int update(IDataItem data) throws SQLException{
-        if (data == null || data.count() == 0)
+        if (data == null || data.count() == 0) {
             return 0;
+        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
@@ -279,8 +286,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.append("UPDATE ").append(_table).append(" SET ");
 
         data.forEach((key,value)->{
-            if(value==null)
+            if(value==null) {
                 return;
+            }
 
             if (value instanceof String) {
                 String val2 = (String)value;
@@ -323,18 +331,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public boolean updateList(String pk, List<DataItem> valuesList) throws SQLException {
-        if (valuesList == null || valuesList.size() == 0)
+        if (valuesList == null || valuesList.size() == 0) {
             return false;
+        }
 
         return updateList(pk, valuesList.get(0), valuesList);
     }
 
     protected <T extends GetHandler> boolean updateList(String pk, IDataItem cols, List<T> valuesList)throws SQLException{
-        if(valuesList == null || valuesList.size()==0)
+        if(valuesList == null || valuesList.size()==0) {
             return false;
+        }
 
-        if (cols == null || cols.count() == 0)
+        if (cols == null || cols.count() == 0) {
             return false;
+        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
@@ -379,8 +390,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.deleteCharAt(sb.length() - 1);
         sb.append(" ON DUPLICATE KEY UPDATE");
         for(String key : cols.keys()){
-            if(pk.equals(key))
+            if(pk.equals(key)) {
                 continue;
+            }
 
             sb.append(" ").append(key).append("=VALUES(").append(key).append("),");
         }
@@ -552,8 +564,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         _builder.clear();
 
-        if(_tran!=null)
+        if(_tran!=null) {
             temp.tran(_tran);
+        }
 
         return temp.onCommandBuilt((cmd)->{
             cmd.isLog = _isLog;

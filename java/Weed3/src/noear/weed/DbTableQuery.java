@@ -8,6 +8,7 @@ import noear.weed.ext.Fun1;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by noear on 14/11/12.
@@ -35,21 +36,45 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
+    public DbTableQuery setMap(Map<String,Object> data) {
+        if (_item == null) {
+            _item = new DataItem();
+        }
+
+        _item.setMap(data);
+
+        return this;
+    }
+
+    public DbTableQuery setEntity(Object data) throws ReflectiveOperationException{
+        if (_item == null) {
+            _item = new DataItem();
+        }
+
+        _item.fromEntity(data);
+
+        return this;
+    }
+
 
     //只会插入不是null的数据
     public long insert() throws SQLException {
-        if (_item == null)
+        if (_item == null) {
             return 0;
-        else
+        }
+        else {
             return insert(_item);
+        }
     }
 
     //只会更新不是null的数据
     public int update() throws SQLException {
-        if (_item == null)
+        if (_item == null) {
             return 0;
-        else
+        }
+        else {
             return update(_item);
+        }
     }
 
     public void updateExt(String constraints)throws SQLException {

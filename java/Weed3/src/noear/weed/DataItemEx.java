@@ -16,23 +16,28 @@ public class DataItemEx implements IDataItem{
     public DataItemEx() { }
     public DataItemEx(boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
 
+    @Override
     public int count() {
         return _data.size();
     }
+    @Override
     public void clear() {
         _data.clear();
         _keys.clear();
     }
 
+    @Override
     public boolean exists(String name) {
         return _data.containsKey(name);
     }
 
+    @Override
     public List<String> keys() {
         return _keys;
     }
 
 
+    @Override
     public IDataItem set(String name, Object value) {
         _data.put(name,(()-> value));
         if(_keys.contains(name) == false) {
@@ -47,25 +52,32 @@ public class DataItemEx implements IDataItem{
         return this;
     }
 
+    @Override
     public Object get(int index){
         return get(_keys.get(index));
     }
+    @Override
     public Object get(String name) {
         return _data.get(name).run();
     }
 
+    @Override
     public Variate getVariate(String name) {
-        if (_data.containsKey(name))
+        if (_data.containsKey(name)) {
             return new VariateEx(name, _data.get(name));
-        else
+        }
+        else {
             return new Variate(name, null);
+        }
     }
 
+    @Override
     public void remove(String name){
         _data.remove(name);
         _keys.remove(name);
     }
 
+    @Override
     public <T extends IBinder> T toItem(T item) {
         item.bind((key) -> getVariate(key));
 
@@ -73,34 +85,42 @@ public class DataItemEx implements IDataItem{
     }
 
 
+    @Override
     public short getShort(String name) {
         return (short)get(name);
     }
 
+    @Override
     public int getInt(String name) {
         return (int)get(name);
     }
 
+    @Override
     public long getLong(String name) {
         return (long)get(name);
     }
 
+    @Override
     public double getDouble(String name) {
         return (double)get(name);
     }
 
+    @Override
     public float getFloat(String name) {
         return (float)get(name);
     }
 
+    @Override
     public String getString(String name) {
         return (String)get(name);
     }
 
+    @Override
     public boolean getBoolean(String name) {
         return (boolean)get(name);
     }
 
+    @Override
     public Date getDateTime(String name) {
         return (Date)get(name);
     }
@@ -110,6 +130,7 @@ public class DataItemEx implements IDataItem{
     //
     //===========================
     //
+    @Override
     public void forEach(Act2<String, Object> callback)
     {
         for(Map.Entry<String,Fun0<Object>> kv : _data.entrySet()) {

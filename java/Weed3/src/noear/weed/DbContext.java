@@ -62,10 +62,12 @@ public class DbContext {
     }
 
     public String field(String key){
-        if(_fieldFormat == null || _fieldFormat.length()==0)
+        if(_fieldFormat == null || _fieldFormat.length()==0) {
             return key;
-        else
-            return _fieldFormat.replace("%",key);
+        }
+        else {
+            return _fieldFormat.replace("%", key);
+        }
     }
 
     /*是否配置了schema*/
@@ -79,10 +81,12 @@ public class DbContext {
     protected Object pool;
     /*获取连接*/
     public  Connection getConnection() throws SQLException {
-        if (_user == null)
+        if (_user == null) {
             return DriverManager.getConnection(_url);
-        else
+        }
+        else {
             return DriverManager.getConnection(_url, _user, _password);
+        }
     }
 
     public DbQuery sql(String code, Object... args) {
@@ -99,16 +103,18 @@ public class DbContext {
         return new DbQuery(this).sql(sqlBuilder);
     }
 
-    /*获取process执行对象*/
+    /**获取process执行对象*/
     public DbProcedure call(String process) {
-        if(process.indexOf(" ")>0)
+        if(process.indexOf(" ")>0) {
             return new DbQueryProcedure(this).sql(process);
-        else
+        }
+        else {
             return new DbStoredProcedure(this).call(process);
+        }
     }
 
 
-    /*获取一个表对象［用于操作插入也更新］*/
+    /**获取一个表对象［用于操作插入也更新］*/
     public DbTableQuery table(String table) {
         return new DbTableQuery(this).table(table);
     }

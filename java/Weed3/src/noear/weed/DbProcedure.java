@@ -29,8 +29,9 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
     {
         //如果没有缓存,则直接返回执行结果
         //
-        if (_cache == null ||_cache.cacheController == CacheState.NonUsing)
+        if (_cache == null ||_cache.cacheController == CacheState.NonUsing) {
             return getList(model);
+        }
 
 
         //1.获取所有分拆后的WeedCode

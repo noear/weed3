@@ -19,6 +19,7 @@ public interface IDataItem extends GetHandler, Serializable {
 
     IDataItem set(String name, Object value);
     Object get(int index);
+    @Override
     Object get(String name);
     Variate getVariate(String name);
     <T extends IBinder> T toItem(T item);

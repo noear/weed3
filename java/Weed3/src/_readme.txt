@@ -1,3 +1,12 @@
+3.0.4.104 （添加部分反射功能）
+1.DataItem
+  添加 fromEntity, toEntity
+  更新 setData->setMap, getData->getMap
+2.DbTableQuery
+  添加 setMap, setEntity
+3.DataList
+  添加 toEntityList
+
 3.0.4.103
 1.彻底解决@key相互包含的问题
 
