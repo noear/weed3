@@ -3,6 +3,17 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+3.0.4.106 （添加部分反射功能）<br/>
+1.DataItem<br/>
+  添加 fromEntity(obj), toEntity(cls)<br/>
+  改名 setData->setMap, getData->getMap<br/>
+2.DbTableQuery<br/>
+  添加 setMap(map), setEntity(obj)<br/>
+3.DataList<br/>
+  添加 toEntityList(cls)<br/>
+4.IQuery<br/>
+  添加 getList(cls), getItem(cls) //多态<br/>
+<br/>  
 3.0.4.103<br/>
 1.彻底解决@key类型参数相互包含的问题<br/>
 <br/>
