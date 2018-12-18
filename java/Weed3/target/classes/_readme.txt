@@ -1,3 +1,19 @@
+3.0.4.106
+1.IQuery
+  改名 getEntityList(cls)->getList(cls), getEntity(cls)->getItem(cls)
+
+
+3.0.4.105 （添加部分反射功能）
+1.DataItem
+  添加 fromEntity(obj), toEntity(cls)
+  改名 setData->setMap, getData->getMap
+2.DbTableQuery
+  添加 setMap(map), setEntity(obj)
+3.DataList
+  添加 toEntityList(cls)
+4.IQuery
+  添加 getEntityList(cls), getEntity(cls)
+
 3.0.4.103
 1.彻底解决@key相互包含的问题
 

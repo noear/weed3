@@ -1,4 +1,4 @@
-3.0.4.104 （添加部分反射功能）
+3.0.4.106 （添加部分反射功能）
 1.DataItem
   添加 fromEntity(obj), toEntity(cls)
   改名 setData->setMap, getData->getMap
@@ -7,7 +7,7 @@
 3.DataList
   添加 toEntityList(cls)
 4.IQuery
-  添加 getEntityList(cls), getEntity(cls)
+  添加 getList(cls), getItem(cls) //多态
 
 3.0.4.103
 1.彻底解决@key相互包含的问题

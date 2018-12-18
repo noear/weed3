@@ -228,12 +228,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     @Override
-    public  <T> List<T> getEntityList(Class<T> cls) throws SQLException,ReflectiveOperationException{
+    public  <T> List<T> getList(Class<T> cls) throws SQLException,ReflectiveOperationException{
         return getDataList().toEntityList(cls);
     }
 
     @Override
-    public  <T> T getEntity(Class<T> cls) throws SQLException,ReflectiveOperationException{
+    public  <T> T getItem(Class<T> cls) throws SQLException,ReflectiveOperationException{
         return getDataItem().toEntity(cls);
     }
 
