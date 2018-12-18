@@ -3,6 +3,12 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+3.0.4.103<br/>
+1.彻底解决@key类型参数相互包含的问题<br/>
+<br/>
+3.0.4.102<br/>
+1.@key类型参数添加Iterable类型支持<br/>
+<br/>
 3.0.4.100<br/>
 1.cmd.isLog 改为 int 型（def:0 no:-1 yes:1）<br/>
 <br/>
@@ -25,7 +31,7 @@ Weed3Demo::使用示例<br/>
 +begin()<br/>
 +begint(...)<br/>
 +end()<br/>
--exists() //重构实现代码<br/>
+-exists() //重构实现代码<br/> 
 <br/>
 2.DataItem 添加序列化接口<br/>
 +unserialize(...)<br/>
