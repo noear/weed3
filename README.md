@@ -40,7 +40,7 @@ db.table("user_info").where("user_id<?", 10).exists();
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getDataList(); //.getList(new UserInfoModel());
+  .getDataList(); //.getList(new UserInfoModel()); //.getList(UserInfoModel.class)::3.0.4.106支持
 
 //简易.关联查询示例
 db.table("user_info u")
@@ -52,6 +52,16 @@ db.table("user_info u")
 //简易.插入示例
 db.table("$.test")
   .set("log_time", "$DATE(NOW())")
+  .insert();
+
+//简易.插入示例2 //::3.0.4.106起支持
+db.table("$.test")
+  .setMap(map)
+  .insert();
+  
+//简易.插入示例3 //::3.0.4.106起支持
+db.table("$.test")
+  .setEntity(obj)
   .insert();
 
 //简易.批量插入示例
