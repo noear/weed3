@@ -8,7 +8,7 @@
 高性能、跨平台、轻量、有个性<br/>
 
 特点：<br/>
-1.零反射零注解<br/>
+1.零反射零注解(后来加了一点点反射的的可选功能...)<br/>
 2.漂亮的缓存控制（缓存服务由外部提供）<br/>
 3.纯代码无任何配置<br/>
 4.分布式事务集成<br/>
@@ -40,7 +40,7 @@ db.table("user_info").where("user_id<?", 10).exists();
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getDataList(); //.getList(new UserInfoModel());
+  .getDataList(); //.getList(new UserInfoModel()); //.getList(UserInfoModel.class)::3.0.4.106支持
 
 //简易.关联查询示例
 db.table("user_info u")
@@ -113,6 +113,26 @@ db.table("test")
           tb.set("icon", "xxxx");
       }
   }).insert(); 
+```
+示例1.1.3::基于反射功能（应用户要求...）<br/>
+```java
+//简易.插入示例2 //::3.0.4.106起支持
+db.table("$.test")
+  .setMap(map) //或 .setEntity(obj)
+  .insert();
+
+//简易.更新示例2
+db.table("test")
+  .setMap(map) //或 .setEntity(obj)
+  .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
+  .update();
+  
+//简易.查询过程调用示例，及使用使用示例
+db.call("select * from user where user_id=@userID")
+  .setMap(map) //或 .setEntity(obj)
+  .caching(cache)//使用缓存
+  .usingCache(60 * 100) //缓存时间
+  .getItem(UserInfoModel.class); 
 ```
 
 示例1.2::事务控制<br/>
