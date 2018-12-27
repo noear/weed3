@@ -1,4 +1,4 @@
-3.0.4.107 （添加部分反射功能）
+3.0.5.1 （添加部分反射功能）
 1.DbProcedure
   添加 setMap(map), setEntity(obj)
 

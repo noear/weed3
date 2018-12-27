@@ -73,7 +73,7 @@ public class DbQueryProcedure extends DbProcedure {
         _paramS2.put(param, new VariateEx(param, valueGetter));
         return this;
     }
-
+    @Override
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {
             map.forEach((k, v) -> {
@@ -82,7 +82,7 @@ public class DbQueryProcedure extends DbProcedure {
         }
         return this;
     }
-
+    @Override
     public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
         Field[] fields = obj.getClass().getDeclaredFields();
 

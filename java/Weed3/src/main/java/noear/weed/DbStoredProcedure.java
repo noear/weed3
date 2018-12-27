@@ -2,7 +2,6 @@ package noear.weed;
 
 import noear.weed.ext.Fun0;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 
@@ -34,6 +33,16 @@ public class DbStoredProcedure extends DbProcedure {
     public DbProcedure set(String param, Fun0<Object> valueGetter) {
         doSet(param, valueGetter);
         return this;
+    }
+
+    @Override
+    public DbProcedure setMap(Map<String, Object> map) {
+        throw new RuntimeException("DbStoredProcedure not support setMap");
+    }
+
+    @Override
+    public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
+        throw new RuntimeException("DbStoredProcedure not support setEntity");
     }
 
     @Override

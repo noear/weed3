@@ -19,7 +19,8 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
 
     abstract public DbProcedure set(String param, Object value);
     abstract public DbProcedure set(String param, Fun0<Object> valueGetter);
-
+    abstract public DbProcedure setMap(Map<String, Object> map);
+    abstract public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException;
 
     //=================================
     //
