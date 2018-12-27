@@ -1,3 +1,7 @@
+3.0.4.107 （添加部分反射功能）
+1.DbProcedure
+  添加 setMap(map), setEntity(obj)
+
 3.0.4.106 （添加部分反射功能）
 1.DataItem
   添加 fromEntity(obj), toEntity(cls)

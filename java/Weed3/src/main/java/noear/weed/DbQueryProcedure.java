@@ -3,6 +3,7 @@ package noear.weed;
 import noear.weed.ext.Act0;
 import noear.weed.ext.Fun0;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -70,6 +71,25 @@ public class DbQueryProcedure extends DbProcedure {
     @Override
     public DbProcedure set(String param, Fun0<Object> valueGetter) {
         _paramS2.put(param, new VariateEx(param, valueGetter));
+        return this;
+    }
+
+    public DbProcedure setMap(Map<String, Object> map) {
+        if (map != null) {
+            map.forEach((k, v) -> {
+                set("@" + k, v);
+            });
+        }
+        return this;
+    }
+
+    public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
+        Field[] fields = obj.getClass().getDeclaredFields();
+
+        for (Field f : fields) {
+            set("@" + f.getName(), f.get(obj));
+        }
+
         return this;
     }
 

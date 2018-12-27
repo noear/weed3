@@ -7,6 +7,7 @@ import noear.weed.ext.Fun1;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yuety on 2017/7/22.
@@ -90,8 +91,9 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
 
         String[] subKeyValue = doGet(paramName).getValue().toString().split(",");
 
-        for (String value : subKeyValue)
+        for (String value : subKeyValue) {
             list.add(do_buildSubWeedCode(paramName, value));
+        }
 
         return list;
     }
