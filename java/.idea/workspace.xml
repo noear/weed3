@@ -7,98 +7,94 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcc01a3b-a1dd-4918-988c-c41a1b43a589" name="Default" comment="修复?...类型占位符bug">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/Weed3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/Weed3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/_readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/_readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DataItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataItemEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DataItemEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DataList.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DataList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbProcedure.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbProcedure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbQueryProcedure.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbQueryProcedure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbStoredProcedure.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbStoredProcedure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbTableQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTableQueryBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbTableQueryBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTran.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbTran.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/DbTranQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbTranQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/GetHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/GetHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/GetHandlerEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/GetHandlerEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/IBinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/IBinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/IDataItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/IDataItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/IQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/IQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/IWeedKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/IWeedKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/SQLBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/SQLer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/SQLer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ValueMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ValueMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/Variate.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/Variate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/VariateEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/VariateEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/WeedConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/WeedConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/WeedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/WeedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/_JsonWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/_JsonWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheState.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/CacheState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheTags.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/CacheTags.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/CacheUsing.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/CacheUsing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/EmptyCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/EmptyCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/ICacheService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheServiceEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/ICacheServiceEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/ICacheUsing.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/ICacheUsing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/LocalCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/LocalCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/LocalCacheRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/LocalCacheRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/cache/SecondCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/cache/SecondCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Act0.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Act0.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Act1.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Act1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Act1Ex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Act1Ex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Act2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Act2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/DbType.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/DbType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Fun0.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Fun0.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Fun0Ex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Fun0Ex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/src/noear/weed/ext/Fun1.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/src/main/java/noear/weed/ext/Fun1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/_readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQueryProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQueryProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbStoredProcedure.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbStoredProcedure.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3/target/weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3/target/weed3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/Weed3Demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/Weed3Demo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/CacheUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/CacheUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/DbConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/DbConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/MemCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/cache/MemCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/cache/RedisCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/cache/RedisCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/Base64Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/utils/Base64Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/EncryptUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/utils/EncryptUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/RedisX.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/utils/RedisX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/SerializeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/utils/SerializeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/config/utils/TextUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/config/utils/TextUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/cache/Cache1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/cache/Cache1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/model/UserInfoModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/model/UserInfoModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param1Demo_tbl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/param/Param1Demo_tbl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/param/Param2Demo_sql.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/param/Param2Demo_sql.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/procedure/Store1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/procedure/Store1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/sqlbuilder/demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/sqlbuilder/demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/table/demo_table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/table/demo_table2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/table/demo_table_inserlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/table/demo_table_inserlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran1Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/tran/Tran1Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo/tran/Tran2Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo/tran/Tran2Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/demo_query.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/queryProcedure/demo_query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/queryProcedure/user_get2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_get_list2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/queryProcedure/user_get_list2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/queryProcedure/user_update2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/queryProcedure/user_update2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/demo_store.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/storeProcedure/demo_store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/storeProcedure/user_get.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_get_list.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/storeProcedure/user_get_list.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/storeProcedure/user_update.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/storeProcedure/user_update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserInfoM.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/table/UserInfoM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/UserM.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/table/UserM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/table/demo_table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Weed3Demo/src/weed3demo/demo_plus/table/demo_table_inserlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/Weed3Demo/src/main/java/weed3demo/demo_plus/table/demo_table_inserlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Noear_Weed3_jar/Noear.Weed3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Noear_Weed3_jar/Noear.Weed3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/Weed3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataItemEx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DataList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbAccess.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbProcedure.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQuery.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbQueryProcedure.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbStoredProcedure.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQuery.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTableQueryBase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTran.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/DbTranQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/GetHandlerEx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IBinder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IDataItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IQuery.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/IWeedKey.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder$SQLPartBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/SQLer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ValueMapping.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/Variate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/VariateEx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/WeedException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/_JsonWriter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheTags.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/CacheUsing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/EmptyCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheServiceEx.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/ICacheUsing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/LocalCacheRecord.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/cache/SecondCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act0.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act1Ex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Act2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/DbType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Fun0.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Fun0Ex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/classes/noear/weed/ext/Fun1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3/target/weed3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/Weed3Demo.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/CacheUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/DbConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/cache/MemCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/cache/RedisCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/Base64Util.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/EncryptUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/RedisX$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/RedisX$RedisUsing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/RedisX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/SerializeUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/config/utils/TextUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/cache/Cache1Demo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/model/UserInfoModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/param/Param1Demo_tbl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/param/Param2Demo_sql.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/procedure/Store1Demo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/sqlbuilder/demo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/table/demo_table.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/table/demo_table2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/table/demo_table_inserlist.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/tran/Tran1Demo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo/tran/Tran2Demo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/queryProcedure/demo_query.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/queryProcedure/user_get2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/queryProcedure/user_get_list2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/queryProcedure/user_update2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/storeProcedure/demo_store.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/storeProcedure/user_get.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/storeProcedure/user_get_list.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/storeProcedure/user_update.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/table/UserInfoM.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/table/UserM.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/table/demo_table.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Weed3Demo/target/classes/weed3demo/demo_plus/table/demo_table_inserlist.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Noear_Weed3_jar/Noear.Weed3.jar" beforeDir="false" />
     </list>
     <ignored path="Weed3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,7 +126,7 @@
     <session id="-435041432">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="22" />
+          <entry key="project.closed" value="23" />
           <entry key="project.open.time.0" value="7" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.2" value="2" />
@@ -144,31 +140,31 @@
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="java" value="114" />
-          <entry key="md" value="2" />
+          <entry key="md" value="3" />
           <entry key="properties" value="1" />
           <entry key="txt" value="16" />
-          <entry key="xml" value="20" />
+          <entry key="xml" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JAVA" value="114" />
-          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="PLAIN_TEXT" value="20" />
           <entry key="Properties" value="1" />
-          <entry key="XML" value="20" />
+          <entry key="XML" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="1732" />
-          <entry key="txt" value="357" />
+          <entry key="txt" value="364" />
           <entry key="xml" value="93" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="1732" />
-          <entry key="PLAIN_TEXT" value="357" />
+          <entry key="PLAIN_TEXT" value="364" />
           <entry key="XML" value="93" />
         </counts>
       </usages-collector>
@@ -179,29 +175,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbQueryProcedure.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Weed3/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Weed3/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -380,7 +358,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545912941771" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545912985450" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -1172,7 +1150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544514972503</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="3.0.5.1">
+      <created>1545912959249</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1545912959250</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1180,7 +1165,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.226979" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -1192,7 +1176,7 @@
       <window_info id="Palette&#9;" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3232462" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32465753" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32465753" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4561644" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1267,7 +1251,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="调整版本号" />
     <MESSAGE value="开放SQLBuilder 以获得更强大的可能。" />
     <MESSAGE value="修复 DbTable 插入bug" />
     <MESSAGE value="修复 DbTable 插入bug；修复Exists() bug; 为 DbTable 添加 t.tran() 事务方式" />
@@ -1292,7 +1275,8 @@
     <MESSAGE value="3.0.4.104 （添加部分反射功能）&#10;1.DataItem&#10;  添加 fromEntity, toEntity&#10;  更新 setData-&gt;setMap, getData-&gt;getMap&#10;2.DbTableQuery&#10;  添加 setMap, setEntity&#10;3.DataList&#10;  添加 toEntityList" />
     <MESSAGE value="3.0.4.104 （添加部分反射功能）&#10;1.DataItem&#10;  添加 fromEntity(obj), toEntity(cls)&#10;  改名 setData-&gt;setMap, getData-&gt;getMap&#10;2.DbTableQuery&#10;  添加 setMap(map), setEntity(obj)&#10;3.DataList&#10;  添加 toEntityList(cls)&#10;4.IQuery&#10;  添加 getEntityList(cls), getEntity(cls)" />
     <MESSAGE value="3.0.4.105" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.0.4.105" />
+    <MESSAGE value="3.0.5.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.0.5.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1609,13 +1593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/src/main/java/noear/weed/DbProcedure.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1647,17 +1624,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Weed3/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weed3/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1637">
+          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weed3/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
         </state>
       </provider>
     </entry>
