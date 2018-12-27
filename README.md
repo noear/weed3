@@ -54,16 +54,6 @@ db.table("$.test")
   .set("log_time", "$DATE(NOW())")
   .insert();
 
-//简易.插入示例2 //::3.0.4.106起支持
-db.table("$.test")
-  .setMap(map)
-  .insert();
-  
-//简易.插入示例3 //::3.0.4.106起支持
-db.table("$.test")
-  .setEntity(obj)
-  .insert();
-
 //简易.批量插入示例
 db.table("test")
   .insertList(list,(d,m)->{
@@ -123,6 +113,26 @@ db.table("test")
           tb.set("icon", "xxxx");
       }
   }).insert(); 
+```
+示例1.1.2::基于反射功能（应用户要求...）<br/>
+```java
+//简易.插入示例2 //::3.0.4.106起支持
+db.table("$.test")
+  .setMap(map) //或 .setEntity(obj)
+  .insert();
+
+//简易.更新示例2
+db.table("test")
+  .setMap(map) //或 .setEntity(obj)
+  .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
+  .update();
+  
+//简易.查询过程调用示例，及使用使用示例
+db.call("select * from user where user_id=@userID")
+  .setMap(map) //或 .setEntity(obj)
+  .caching(cache)//使用缓存
+  .usingCache(60 * 100) //缓存时间
+  .getItem(UserInfoModel.class); 
 ```
 
 示例1.2::事务控制<br/>
