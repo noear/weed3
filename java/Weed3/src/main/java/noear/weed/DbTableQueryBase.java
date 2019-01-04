@@ -156,7 +156,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return compile().insert();
     }
 
-    public <T> boolean insertList(List<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
+    public <T> boolean insertList(Iterable<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
         List<DataItem> list2 = new ArrayList<>();
 
         for (T values : valuesList) {
@@ -166,6 +166,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             list2.add(item);
         }
 
+
+
         if (list2.size() > 0) {
             return insertList(list2.get(0), list2);
         }else{
@@ -174,15 +176,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public boolean insertList(List<DataItem> valuesList) throws SQLException {
-        if (valuesList == null || valuesList.size() == 0) {
+        if (valuesList == null) {
             return false;
         }
 
         return insertList(valuesList.get(0), valuesList);
     }
 
-    protected <T extends GetHandler> boolean insertList(IDataItem cols, List<T> valuesList)throws SQLException {
-        if (valuesList == null || valuesList.size() == 0) {
+    protected <T extends GetHandler> boolean insertList(IDataItem cols, Iterable<T> valuesList)throws SQLException {
+        if (valuesList == null) {
             return false;
         }
 
@@ -202,6 +204,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.append(") ");
 
         sb.append("VALUES");
+
+        //记录当前长度用于后面比较
+        int sb_len = sb.length();
 
         for (GetHandler item : valuesList) {
             sb.append("(");
@@ -228,6 +233,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             }
             sb.deleteCharAt(sb.length() - 1);
             sb.append("),");
+        }
+
+        //如果长度没有增加，说明没有数据
+        if(sb_len == sb.length()){
+            return false;
         }
 
         sb.deleteCharAt(sb.length() - 1);
@@ -308,100 +318,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.deleteCharAt(sb.length() - 1);
 
+        _builder.backup();
         _builder.insert(sb.toString(), args.toArray());
 
-        return compile().execute();
-    }
+        int rst = compile().execute();
 
-    public <T> boolean updateList(String pk, List<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
-        List<DataItem> list2 = new ArrayList<>();
+        _builder.restore();
 
-        for (T values : valuesList) {
-            DataItem item = new DataItem();
-            hander.run(values, item);
-
-            list2.add(item);
-        }
-
-        if (list2.size() > 0) {
-            return updateList(pk, list2.get(0), list2);
-        }else{
-            return false;
-        }
-    }
-
-    public boolean updateList(String pk, List<DataItem> valuesList) throws SQLException {
-        if (valuesList == null || valuesList.size() == 0) {
-            return false;
-        }
-
-        return updateList(pk, valuesList.get(0), valuesList);
-    }
-
-    protected <T extends GetHandler> boolean updateList(String pk, IDataItem cols, List<T> valuesList)throws SQLException{
-        if(valuesList == null || valuesList.size()==0) {
-            return false;
-        }
-
-        if (cols == null || cols.count() == 0) {
-            return false;
-        }
-
-        List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(" INSERT INTO ").append(_table).append(" (");
-        for(String key : cols.keys()){
-            sb.append(_context.field(key)).append(",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-
-        sb.append(") ");
-
-        sb.append("VALUES");
-
-        for(GetHandler item : valuesList){
-            sb.append("(");
-
-            for(String key : cols.keys()) {
-                Object val = item.get(key);
-
-                if(val == null){
-                    sb.append("null,");
-                }else {
-                    if (val instanceof String) {
-                        String val2 = (String) val;
-                        if (isSqlExpr(val2)) { //说明是SQL函数
-                            sb.append(val2.substring(1)).append(",");
-                        } else {
-                            sb.append("?,");
-                            args.add(val);
-                        }
-                    } else {
-                        sb.append("?,");
-                        args.add(val);
-                    }
-                }
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            sb.append("),");
-        }
-
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append(" ON DUPLICATE KEY UPDATE");
-        for(String key : cols.keys()){
-            if(pk.equals(key)) {
-                continue;
-            }
-
-            sb.append(" ").append(key).append("=VALUES(").append(key).append("),");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append(";");
-
-        _builder.append(sb.toString(), args.toArray());
-
-        return compile().execute() > 0;
+        return rst;
     }
 
     public int delete() throws SQLException {
