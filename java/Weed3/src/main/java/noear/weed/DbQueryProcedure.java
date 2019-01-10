@@ -4,6 +4,7 @@ import noear.weed.ext.Act0;
 import noear.weed.ext.Fun0;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -85,9 +86,12 @@ public class DbQueryProcedure extends DbProcedure {
     @Override
     public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
         Field[] fields = obj.getClass().getDeclaredFields();
-
+        int fm = 0;
         for (Field f : fields) {
-            set("@" + f.getName(), f.get(obj));
+            fm = f.getModifiers();
+            if(Modifier.isTransient(fm)==false) {
+                set("@" + f.getName(), f.get(obj));
+            }
         }
 
         return this;

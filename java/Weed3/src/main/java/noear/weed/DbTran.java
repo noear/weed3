@@ -43,10 +43,25 @@ public class DbTran {
         _context = context;
     }
 
+    /*开始连接（用于单连接操作）*/
+    public DbTran connect(){
+        try {
+            if(connection == null) {
+                connection = _context.getConnection();
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return this;
+    }
+
     /*执行事务过程 = action(...) + excute() */
     public DbTran execute(Act1Ex<DbTran,SQLException> handler) throws SQLException {
         try {
-            connection = _context.getConnection();
+            if(connection==null) {
+                connection = _context.getConnection();
+            }
 
             begin(false);
             handler.run(this);
