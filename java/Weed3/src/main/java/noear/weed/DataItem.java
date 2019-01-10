@@ -1,11 +1,10 @@
 package noear.weed;
 
+import noear.weed.annotation.DbField;
 import noear.weed.ext.Act2;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -302,11 +301,12 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     /** 从Entity 加载数据 */
     public void fromEntity(Object obj) throws ReflectiveOperationException{
         Field[] fields = obj.getClass().getDeclaredFields();
-        int fm = 0;
+        DbField fa;
 
         for (Field f : fields) {
-            fm = f.getModifiers();
-            if(Modifier.isTransient(fm)==false) {
+            fa = f.getAnnotation(DbField.class);
+
+            if(fa == null || fa.exclude()==false) {
                 set(f.getName(), f.get(obj));
             }
         }
