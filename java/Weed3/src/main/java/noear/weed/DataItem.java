@@ -1,7 +1,7 @@
 package noear.weed;
 
-import noear.weed.annotation.DbField;
 import noear.weed.ext.Act2;
+import noear.weed.utils.EntityUtil;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -299,35 +299,15 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
 
     /** 从Entity 加载数据 */
-    public void fromEntity(Object obj) throws ReflectiveOperationException{
-        Field[] fields = obj.getClass().getDeclaredFields();
-        DbField fa;
-
-        for (Field f : fields) {
-            fa = f.getAnnotation(DbField.class);
-
-            if(fa == null || fa.exclude()==false) {
-                set(f.getName(), f.get(obj));
-            }
-        }
+    public void fromEntity(Object obj) throws ReflectiveOperationException {
+        EntityUtil.fromEntity(obj,(k, v)->{
+            set(k, v);
+        });
     }
 
     /** 转为Entity */
     public  <T> T toEntity(Class<T> cls) throws ReflectiveOperationException{
-
         Field[] fields = cls.getDeclaredFields();
-        String fn = null;
-
-        T item = cls.newInstance();
-
-        for (Field f : fields) {
-            fn = f.getName();
-
-            if (exists(fn)) {
-                f.set(item, get(fn));
-            }
-        }
-
-        return item;
+        return EntityUtil.toEntity(cls,fields,this);
     }
 }

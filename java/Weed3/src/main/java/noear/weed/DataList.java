@@ -1,6 +1,7 @@
 package noear.weed;
 
-import java.io.IOException;
+import noear.weed.utils.EntityUtil;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
@@ -80,19 +81,9 @@ public class DataList implements Serializable,Iterable<DataItem> {
     public <T>  List<T> toEntityList(Class<T> cls) throws ReflectiveOperationException {
         List<T> list = new ArrayList<T>(getRowCount());
         Field[] fields = cls.getDeclaredFields();
-        String fn = null;
 
         for (DataItem r : rows) {
-            T item = cls.newInstance();
-
-            for(Field f : fields){
-                fn = f.getName();
-
-                if(r.exists(fn)){
-                    f.set(item, r.get(fn));
-                }
-            }
-
+            T item = EntityUtil.toEntity(cls,fields,r);
             list.add((T)item);
         }
         return list;
