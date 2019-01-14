@@ -1,3 +1,6 @@
+3.0.5.10
+1.添加tb.usingNull()接口 //默认为false
+
 3.0.5.1 （添加部分反射功能）
 1.DbProcedure
   添加 setMap(map), setEntity(obj)

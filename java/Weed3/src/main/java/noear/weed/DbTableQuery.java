@@ -1,13 +1,6 @@
 package noear.weed;
 
-import noear.weed.ext.Act1;
-import noear.weed.ext.Act2;
-import noear.weed.ext.Fun0;
-import noear.weed.ext.Fun1;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

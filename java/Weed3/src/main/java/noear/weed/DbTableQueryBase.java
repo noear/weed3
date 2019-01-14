@@ -117,8 +117,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         data.forEach((key, value) -> {
-//            if(value==null) //支持null插入
-//                return;
+            if(value==null) {
+                if(_usingNull == false) {
+                    return;
+                }
+            }
 
             sb.append(_context.field(key)).append(",");
         });
@@ -131,7 +134,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         data.forEach((key, value) -> {
             if (value == null) {
-                sb.append("null,"); //充许插入null
+                if(_usingNull) {
+                    sb.append("null,"); //充许插入null
+                }
             } else {
                 if (value instanceof String) {
                     String val2 = (String) value;
@@ -258,6 +263,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
 
 
+
     public void updateExt(IDataItem data, String constraints) throws SQLException {
         String[] ff = constraints.split(",");
 
@@ -297,6 +303,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         data.forEach((key,value)->{
             if(value==null) {
+                if (_usingNull) {
+                    sb.append(_context.field(key)).append("=null,");
+                }
                 return;
             }
 
@@ -496,6 +505,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             cmd.isLog = _isLog;
             cmd.tag   = _table;
         });
+    }
+
+    private boolean _usingNull = WeedConfig.isUsingValueNull;
+    public T usingNull(boolean isUsing){
+        _usingNull = isUsing;
+        return (T)this;
     }
 
     private boolean _usingExpression = WeedConfig.isUsingValueExpression;

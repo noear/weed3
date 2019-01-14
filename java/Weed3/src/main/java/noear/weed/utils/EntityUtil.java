@@ -25,7 +25,9 @@ public class EntityUtil {
 
             if (fa == null || fa.exclude() == false) {
                 val = EntityUtil.getFieldValue(cls, obj, f);
-                setter.run(f.getName(), val);
+                if(val != null) {
+                    setter.run(f.getName(), val);
+                }
             }
         }
     }
