@@ -330,6 +330,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         _builder.backup();
         _builder.insert(sb.toString(), args.toArray());
 
+        if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
+            throw new RuntimeException("Lack of update condition!!!");
+        }
+
         int rst = compile().execute();
 
         _builder.restore();

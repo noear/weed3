@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * Created by yuety on 14-9-10.
  */
 public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
-    Map<String,Object> _data = new HashMap<>();
+    Map<String,Object> _data = new LinkedHashMap<>();
     List<String> _keys = new ArrayList<>();
 
     public DataItem() { }

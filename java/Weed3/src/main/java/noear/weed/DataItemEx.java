@@ -9,7 +9,7 @@ import java.util.*;
  * Created by yuety on 15/9/2.
  */
 public class DataItemEx implements IDataItem{
-    HashMap<String,Fun0<Object>> _data = new HashMap<>();
+    HashMap<String,Fun0<Object>> _data = new LinkedHashMap<>();
     List<String> _keys = new ArrayList<>();
     boolean _isNotNull = false; //不需要null的数据
 

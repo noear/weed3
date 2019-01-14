@@ -1,8 +1,7 @@
 package noear.weed;
 
-import noear.weed.ext.Act2;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -92,10 +91,18 @@ public class SQLBuilder {
                         }
 
                         int len = sb.length();
-                        if (len > 0)
+                        if (len > 0) {
                             sb.deleteCharAt(len - 1);
+                        }
 
                         int idx = builder.indexOf("?...");
+
+                        //imporved by Yukai
+                        if (len == 0) {
+                            builder.replace(idx, idx + 4, "null");
+                        } else {
+                            builder.replace(idx, idx + 4, sb.toString());
+                        }
 
                         builder.replace(idx, idx + 4, sb.toString());
                     }
