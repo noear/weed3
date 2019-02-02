@@ -1,5 +1,8 @@
+3.0.5.11
+1.添加更新无条件时抛异常（可以改掉配置）
+
 3.0.5.10
-1.添加tb.usingNull()接口 //默认为false
+1.添加tb.usingNull(true)接口 //默认为false
 
 3.0.5.1 （添加部分反射功能）
 1.DbProcedure

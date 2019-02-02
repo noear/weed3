@@ -1,7 +1,6 @@
 package noear.weed;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -103,8 +102,6 @@ public class SQLBuilder {
                         } else {
                             builder.replace(idx, idx + 4, sb.toString());
                         }
-
-                        builder.replace(idx, idx + 4, sb.toString());
                     }
                     else if (p1 instanceof DbQuery) {
 

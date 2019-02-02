@@ -6,6 +6,7 @@ import noear.weed.ext.Act2;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +77,9 @@ public class EntityUtil {
     }
 
     public static void setFieldValue(Class<?> tCls,Object tObj,Field field, Object val) throws ReflectiveOperationException {
+
+        val = typeChange(val,field.getType());
+
         if(_fieldSetLib.containsKey(field)){
             Method setFun = _fieldSetLib.get(field);
             if(setFun == null){
@@ -107,5 +111,19 @@ public class EntityUtil {
         }
 
         field.set(tObj,val);
+    }
+
+    public static Object typeChange(Object val, Class<?> type){
+        if(val instanceof BigDecimal){
+            if(Long.class == type || Long.TYPE == type){
+                return ((BigDecimal)val).longValue();
+            }
+
+            if(Integer.class == type || Integer.TYPE == type){
+                return ((BigDecimal)val).intValue();
+            }
+        }
+
+        return val;
     }
 }

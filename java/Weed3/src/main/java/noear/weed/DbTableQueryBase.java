@@ -7,6 +7,7 @@ import noear.weed.ext.Act2;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -161,7 +162,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return compile().insert();
     }
 
-    public <T> boolean insertList(Iterable<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
+    public <T> boolean insertList(Collection<T> valuesList, Act2<T,DataItem> hander) throws SQLException {
         List<DataItem> list2 = new ArrayList<>();
 
         for (T values : valuesList) {
@@ -188,7 +189,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         return insertList(valuesList.get(0), valuesList);
     }
 
-    protected <T extends GetHandler> boolean insertList(IDataItem cols, Iterable<T> valuesList)throws SQLException {
+    protected <T extends GetHandler> boolean insertList(IDataItem cols, Collection<T> valuesList)throws SQLException {
         if (valuesList == null) {
             return false;
         }
