@@ -41,6 +41,14 @@ public class DbDataSource implements DataSource {
         this.password = password;
     }
 
+    public void setDriverClassName(String driverClass) {
+        try {
+            Class.forName(driverClass);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
 
     @Override
     public Connection getConnection() throws SQLException {
