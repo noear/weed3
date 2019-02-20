@@ -9,10 +9,10 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
 public class DbDataSource implements DataSource {
-    private PrintWriter logWriter;
-    private String url;
-    private String username;
-    private String password;
+    protected PrintWriter logWriter;
+    protected String url;
+    protected String username;
+    protected String password;
 
     public DbDataSource(String url) {
         this.logWriter = new PrintWriter(System.out);
