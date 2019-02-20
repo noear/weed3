@@ -3,8 +3,8 @@ package noear.weed;
 import noear.weed.ext.Act1;
 import noear.weed.ext.Act1Ex;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
@@ -17,10 +17,13 @@ public class DbContext {
 
     public boolean isCompilationMode=false;
 
-    public DbContext(String schemaName,String url) {
-        _schemaName = schemaName;
-        _url = url;
+    public DbContext(){
 
+    }
+
+    public DbContext(String schemaName, String url) {
+        _schemaName = schemaName;
+        _dataSource = new DbDataSource(url);
         _fieldFormat = "";
     }
 
@@ -28,26 +31,40 @@ public class DbContext {
     //fieldFormat："`%`"
     public DbContext(String schemaName,String url,String fieldFormat) {
         _schemaName = schemaName;
-        _url = url;
-
+        _dataSource = new DbDataSource(url);
         _fieldFormat = fieldFormat;
     }
 
     //基于手动配置（无线程池）
     public DbContext(String schemaName,String url, String user,String password, String fieldFormat) {
         _schemaName = schemaName;
-        _url = url;
-        _user = user;
-        _password = password;
-
+        _dataSource = new DbDataSource(url,user,password);
         _fieldFormat = fieldFormat;
     }
 
-    private String _url;
-    private String _user;
-    private String _password;
+    public DbContext(String schemaName, DataSource dataSource) {
+        _schemaName = schemaName;
+        _dataSource = dataSource;
+        _fieldFormat = "";
+    }
+
+    public DbContext(String schemaName, DataSource dataSource, String fieldFormat) {
+        _schemaName = schemaName;
+        _dataSource = dataSource;
+        _fieldFormat = fieldFormat;
+    }
+
+    private DataSource _dataSource;
+    public DbContext dataSource(DataSource dataSource){
+        _dataSource = dataSource;
+        return this;
+    }
 
     private String _schemaName;
+    public DbContext schemaName(String schemaName){
+        _schemaName=schemaName;
+        return this;
+    }
 
     private String _fieldFormat;
     public DbContext fieldFormat(String format){
@@ -78,15 +95,9 @@ public class DbContext {
         return _schemaName;
     }
 
-    protected Object pool;
     /*获取连接*/
     public  Connection getConnection() throws SQLException {
-        if (_user == null) {
-            return DriverManager.getConnection(_url);
-        }
-        else {
-            return DriverManager.getConnection(_url, _user, _password);
-        }
+        return _dataSource.getConnection();
     }
 
     public DbQuery sql(String code, Object... args) {
