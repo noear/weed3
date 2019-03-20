@@ -208,6 +208,7 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
 
 示例2::数据模型类（或叫实体类等）<br/>
 ```java
+//方案1：基于IBinder接口，精细控制
 public class UserInfoModel implements IBinder {
     public long user_id;
     public int role;
@@ -233,7 +234,16 @@ public class UserInfoModel implements IBinder {
         return new UserInfoModel();
     }
 }
-
+//方案2：最简化
+public class UserInfoModel {
+    public long user_id;
+    public int role;
+    public String mobile;
+    public String udid;
+    public int city_id;
+    public String name;
+    public String icon;
+}
 ```
 
 示例3.1::[存储过程]映射类<br/>
