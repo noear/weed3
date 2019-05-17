@@ -30,6 +30,7 @@ QQ群：<br/>
 示例1.1.1::入门级<br/>
 ```java
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
+//DbContext db  = new DbContext("user",new DruidDataSource(...)); //使用DataSource配置的示例(Druid线程池)
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
@@ -207,6 +208,7 @@ tags.update<UserInfoModel>("user_" + 1, (m)=>{
 
 示例2::数据模型类（或叫实体类等）<br/>
 ```java
+//方案1：基于IBinder接口，精细控制
 public class UserInfoModel implements IBinder {
     public long user_id;
     public int role;
@@ -232,7 +234,16 @@ public class UserInfoModel implements IBinder {
         return new UserInfoModel();
     }
 }
-
+//方案2：最简化
+public class UserInfoModel {
+    public long user_id;
+    public int role;
+    public String mobile;
+    public String udid;
+    public int city_id;
+    public String name;
+    public String icon;
+}
 ```
 
 示例3.1::[存储过程]映射类<br/>
