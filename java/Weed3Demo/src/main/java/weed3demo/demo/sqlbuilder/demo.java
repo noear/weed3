@@ -27,6 +27,8 @@ public class demo {
             sb.append("insert into user_info(user_id,mobile,icon) values(?,?,?);", m.user_id, m.mobile, m.icon);
         }
 
+        db.sql("").getCount();
+
         db.sql(sb);
     }
 

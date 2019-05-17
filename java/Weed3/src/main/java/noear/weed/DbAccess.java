@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by noear on 14-9-5.
@@ -264,6 +265,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     @Override
+    public List<Map<String, Object>> getMapList() throws SQLException {
+        return getDataList().getMapList();
+    }
+
+    @Override
     public DataItem getDataItem() throws SQLException
     {
         return getDataItem(null);
@@ -287,6 +293,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         else {
             return rst;
         }
+    }
+
+    @Override
+    public Map<String, Object> getMap() throws SQLException {
+        return getDataItem().getMap();
     }
 
     protected DbTran _tran = null;

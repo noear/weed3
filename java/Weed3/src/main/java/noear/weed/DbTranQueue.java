@@ -88,7 +88,7 @@ public class DbTranQueue {
         try {
             commit();
             _isSucceed = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             _isSucceed = false;
 
             rollback(true);

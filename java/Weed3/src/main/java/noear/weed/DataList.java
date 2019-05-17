@@ -5,10 +5,7 @@ import noear.weed.utils.EntityUtil;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -57,6 +54,17 @@ public class DataList implements Serializable,Iterable<DataItem> {
     }
 
     //----------
+
+    //转为map数组
+    public List<Map<String,Object>> getMapList(){
+        List<Map<String,Object>> list  =new ArrayList<>(getRowCount());
+
+        for (DataItem r : rows) {
+            list.add(r.getMap());
+        }
+
+        return list;
+    }
 
     public <T extends IBinder>  List<T> toList(T model) throws SQLException{
         List<T> list = new ArrayList<T>(getRowCount());

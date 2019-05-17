@@ -60,6 +60,10 @@ public class DbContext {
         return this;
     }
 
+    public DataSource dataSource(){
+        return _dataSource;
+    }
+
     private String _schemaName;
     public DbContext schemaName(String schemaName){
         _schemaName=schemaName;
