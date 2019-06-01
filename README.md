@@ -26,6 +26,9 @@
 QQ群：<br/>
  22200020<br/>
  
+更新日志：<br/>
+ https://github.com/noear/Weed3/blob/master/java/Weed3/_readme.txt <br/>
+ 
 ```xml
 <dependency>
   <groupId>org.noear</groupId>
