@@ -26,6 +26,14 @@
 QQ群：<br/>
  22200020<br/>
  
+```xml
+<dependency>
+  <groupId>org.noear</groupId>
+  <artifactId>weed3</artifactId>
+  <version>3.1.6</version>
+</dependency>
+```
+ 
 --------------------------------------<br/>
 示例1.1.1::入门级<br/>
 ```java
