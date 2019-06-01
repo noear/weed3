@@ -52,14 +52,15 @@ db.table("user_info").where("user_id<?", 10).exists();
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getDataList(); //.getList(new UserInfoModel()); //.getList(UserInfoModel.class)::3.0.4.106支持
+  .getDataList(); //.getMapList() //.getList(new UserInfoModel()) //.getList(UserInfoModel.class)
 
 //简易.关联查询示例
 db.table("user_info u")
   .innerJoin("user_ex e").on("u.useer_id = e.user_id")
   .where("u.user_id<?", 10)
+  .limit(1)
   .select("u.user_id,u.name,u.sex")
-  .getDataList();
+  .getDataItem(); //.getMap() //.getItem(new UserInfoModel()) //.getItem(UserInfoModel.class)
                 
 //简易.插入示例
 db.table("$.test")
@@ -144,7 +145,7 @@ db.call("select * from user where user_id=@userID")
   .setMap(map) //或 .setEntity(obj)
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
-  .getItem(UserInfoModel.class); 
+  .getItem(UserInfoModel.class);  //.getMap()
 ```
 
 示例1.2::事务控制<br/>
@@ -187,7 +188,7 @@ new DbTranQueue().execute(qt->{
 db.call("user_get").set("xxx", 1)
     .caching(cache)
     .usingCache(60 * 1000)
-    .getItem(new UserInfoModel());
+    .getItem(new UserInfoModel()); //.getMap()
     
 //根据查询结果控制缓存
 db.call("user_get").set("xxx",1)
@@ -204,7 +205,7 @@ db.call("user_get").set("xxx", 1)
     .caching(cache)
     .cacheTag("user_"+ 1)
     .usingCache(60 * 1000)
-    .getItem(new UserInfoModel());
+    .getItem(new UserInfoModel()); //.getMap()
 
 CacheTags tags = new CacheTags(cache);
 //2.1.可根据标签清除缓存
@@ -278,7 +279,7 @@ public class user_get_by_id extends DbStoredProcedure
 user_get_by_id sp = new user_get_by_id();
 sp.user_id = 1;
 sp.caching(cache)
-  .getItem(new UserInfoModel());
+  .getItem(new UserInfoModel()); //.getMap()
 ```
 
 示例3.2::[查询过程]映身类<br/>
@@ -304,7 +305,7 @@ public class user_get_by_id extends DbQueryProcedure
 user_get_by_id sp = new user_get_by_id();
 sp.user_id = 1;
 sp.caching(cache)
-  .getItem(new UserInfoModel());
+  .getItem(new UserInfoModel()); 
 ```
 
 示例3.3::[数据表]映射类<br/>
@@ -343,7 +344,7 @@ m.where("UserID=?",1).update();
 UserM m = new UserM();
 m.where("sex=?",1)
  .select("*")
- .getList(new UserInfoModel());
+ .getList(new UserInfoModel()); 
 
 ```
 
