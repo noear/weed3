@@ -3,6 +3,25 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+<br/>
+3.1.6<br/>
+1.将包名：noear.weed 改为：org.noear.weed<br/>
+2.List<Map<String,Object>> getMapList() <br/>
+3.Map<String,Object> getMap() <br/>
+<br/>
+3.0.5.15<br/>
+1.DataList添加getMapList() -> list<map><br/>
+<br/>
+3.0.5.11<br/>
+1.添加更新无条件时抛异常（可以改掉配置）<br/>
+<br/>
+3.0.5.10<br/>
+1.添加tb.usingNull(true)接口 //默认为false<br/>
+<br/>
+3.0.5.1 （添加部分反射功能）<br/>
+1.DbProcedure<br/>
+  添加 setMap(map), setEntity(obj)<br/>
+<br/>
 3.0.4.106 （添加部分反射功能）<br/>
 1.DataItem<br/>
   添加 fromEntity(obj), toEntity(cls)<br/>
