@@ -268,6 +268,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     public void updateExt(IDataItem data, String constraints) throws SQLException {
         String[] ff = constraints.split(",");
 
+        if(ff.length==0){
+            throw new RuntimeException("Please enter constraints");
+        }
+
         this.where("1=1");
         for (String f : ff) {
             this.and(f + "=?", data.get(f));

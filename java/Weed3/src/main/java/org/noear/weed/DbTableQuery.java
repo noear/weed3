@@ -39,6 +39,24 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
+//    public DbTableQuery setMap(Map<String,Object> data, String... cols) {
+//        if (cols.length == 0) {
+//            throw new RuntimeException("Please enter cols");
+//        }
+//
+//        if (_item == null) {
+//            _item = new DataItem();
+//        }
+//
+//        for (String c : cols) {
+//            if (data.containsKey(c)) {
+//                _item.set(c, data.get(c));
+//            }
+//        }
+//
+//        return this;
+//    }
+
     public DbTableQuery setEntity(Object data) throws ReflectiveOperationException{
         if (_item == null) {
             _item = new DataItem();

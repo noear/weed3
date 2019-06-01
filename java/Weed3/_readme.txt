@@ -1,5 +1,7 @@
-3.1.5.15
+3.1.6
 1.将包名：noear.weed 改为：org.noear.weed
+2.List<Map<String,Object>> getMapList()
+3.Map<String,Object> getMap()
 
 3.0.5.15
 1.DataList添加getMapList() -> list<map>
