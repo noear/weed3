@@ -52,7 +52,7 @@ db.table("user_info").where("user_id<?", 10).exists();
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getDataList(); //.getMapList() //.getList(new UserInfoModel()) //.getList(UserInfoModel.class)
+  .getMapList(); //.getDataList() //.getList(new UserInfoModel()) //.getList(UserInfoModel.class)
 
 //简易.关联查询示例
 db.table("user_info u")
@@ -60,7 +60,7 @@ db.table("user_info u")
   .where("u.user_id<?", 10)
   .limit(1)
   .select("u.user_id,u.name,u.sex")
-  .getDataItem(); //.getMap() //.getItem(new UserInfoModel()) //.getItem(UserInfoModel.class)
+  .getMap(); //.getDataItem() //.getItem(new UserInfoModel()) //.getItem(UserInfoModel.class)
                 
 //简易.插入示例
 db.table("$.test")
