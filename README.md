@@ -33,7 +33,7 @@ QQ群：<br/>
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.6</version>
+  <version>3.1.6.1</version>
 </dependency>
 ```
  
@@ -41,7 +41,7 @@ QQ群：<br/>
 示例1.1.1::入门级<br/>
 ```java
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
-//DbContext db  = new DbContext("user",new DruidDataSource(...)); //使用DataSource配置的示例(Druid线程池)
+//DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
 
 //简易.查询示例
@@ -184,6 +184,12 @@ new DbTranQueue().execute(qt->{
 ```
 示例1.3::缓存控制<br/>
 ```java
+/*
+ * 内置了 EmptyCache（空缓存）、LocalCache（本地缓存）、SecondCache（二级缓存） 
+ * 可以自己对memcached，redis 等进行包装后使用
+ */
+ICacheService cache = new EmptyCache();// 
+
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
     .caching(cache)
@@ -232,11 +238,11 @@ public class UserInfoModel implements IBinder {
 
 
     public void bind(GetHandlerEx s) {
-        user_id = s.get("user_id").value(0l);
+        user_id = s.get("user_id").value(0l); //.value(x) 直接强类型转换，提供更高的性能
         role    = s.get("role").value(0);
         mobile  = s.get("mobile").value("");
         udid    = s.get("udid").value("");
-        city_id = s.get("city_id").value(0);
+        city_id = s.get("city_id").intValue(0);//.xxxValue(x) 根据类型判断后再转换，兼容性更好（特殊情况下用）
         name    = s.get("name").value("");
         icon    = s.get("icon").value("");
 
