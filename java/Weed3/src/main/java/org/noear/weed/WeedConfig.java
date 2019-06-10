@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Created by yuety on 14/11/20.
+ * Created by noear on 14/11/20.
  */
 public final class WeedConfig {
     public static boolean isDebug = false;

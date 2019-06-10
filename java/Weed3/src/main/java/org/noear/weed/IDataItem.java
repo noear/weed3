@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by yuety on 15/9/2.
+ * Created by noear on 15/9/2.
  */
 public interface IDataItem extends GetHandler, Serializable {
     int count();

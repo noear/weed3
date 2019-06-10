@@ -5,7 +5,7 @@ import org.noear.weed.ext.DbType;
 import org.noear.weed.ext.Fun0;
 
 /**
- * Created by yuety on 15/9/2.
+ * Created by noear on 15/9/2.
  */
 public class VariateEx extends Variate {
     protected Fun0<Object> _valueGetter;

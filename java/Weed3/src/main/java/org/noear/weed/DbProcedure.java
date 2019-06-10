@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public abstract class DbProcedure extends DbAccess<DbProcedure> {
     public DbProcedure(DbContext context) {

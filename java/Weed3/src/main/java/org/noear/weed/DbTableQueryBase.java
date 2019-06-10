@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by yuety on 14/11/12.
+ * Created by noear on 14/11/12.
  *
  * #        //不加表空间（table(xxx) : 默认加表空间）
  * $.       //当前表空间

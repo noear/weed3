@@ -3,7 +3,7 @@ package org.noear.weed.cache;
 import org.noear.weed.ext.Fun1;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class EmptyCache implements ICacheServiceEx {
     @Override

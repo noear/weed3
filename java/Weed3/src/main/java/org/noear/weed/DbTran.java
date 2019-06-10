@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Created by yuety on 14-9-16.
+ * Created by noear on 14-9-16.
  */
 public class DbTran {
     protected Connection connection;

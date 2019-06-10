@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yuety on 14/11/12.
+ * Created by noear on 14/11/12.
  */
 public interface IQuery {
      long getCount() throws SQLException;

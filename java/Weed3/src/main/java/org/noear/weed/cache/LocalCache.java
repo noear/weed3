@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * Created by yuety on 19-06-05
+ * Created by noear on 19-06-05
  * 嵌入式缓存效率高；
  *
  */
@@ -14,8 +14,8 @@ public class LocalCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
-    private Map<String, LocalCacheRecord> _data = new ConcurrentHashMap<>();   //缓存存储器
-    private ScheduledExecutorService      _exec = Executors.newSingleThreadScheduledExecutor();
+    private Map<String, Entity>             _data = new ConcurrentHashMap<>();   //缓存存储器
+    private static ScheduledExecutorService _exec = Executors.newSingleThreadScheduledExecutor(); //线程池
 
     public LocalCache(String keyHeader, int defSeconds) {
         _cacheKeyHead = keyHeader;
@@ -26,7 +26,7 @@ public class LocalCache implements ICacheServiceEx {
     public void store(String key, Object obj, int seconds) {
         remove(key);
 
-        LocalCacheRecord val = new LocalCacheRecord(obj);
+        Entity val = new Entity(obj);
         if(seconds>0){
             val.future = _exec.schedule(()->{
                 _data.remove(key);
@@ -38,14 +38,14 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public Object get(String key) {
-        LocalCacheRecord val = _data.get(key);
+        Entity val = _data.get(key);
 
         return val == null ? null : val.value;
     }
 
     @Override
     public void remove(String key) {
-        LocalCacheRecord val = _data.remove(key);
+        Entity val = _data.remove(key);
         if (val != null) {
             if (val.future != null) {
                 val.future.cancel(true);
@@ -54,7 +54,7 @@ public class LocalCache implements ICacheServiceEx {
     }
 
     public void clear() {
-        for (LocalCacheRecord val : _data.values()) {
+        for (Entity val : _data.values()) {
             if (val.future != null) {
                 val.future.cancel(true);
             }
@@ -86,5 +86,18 @@ public class LocalCache implements ICacheServiceEx {
     @Override
     public <T> void update(String tag, Fun1<T, T> setter) {
         tags().update(tag, setter);
+    }
+
+
+
+    
+    //存储实体
+    private static class Entity {
+        public Object value;
+        public Future future;
+
+        public Entity(Object val) {
+            this.value = val;
+        }
     }
 }

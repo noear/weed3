@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * Created by yuety on 14-9-10.
+ * Created by noear on 14-9-10.
  */
 public class DataList implements Serializable,Iterable<DataItem> {
     private ArrayList<DataItem> rows = new ArrayList<DataItem>();

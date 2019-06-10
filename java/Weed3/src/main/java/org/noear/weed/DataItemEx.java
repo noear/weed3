@@ -6,7 +6,7 @@ import org.noear.weed.ext.Fun0;
 import java.util.*;
 
 /**
- * Created by yuety on 15/9/2.
+ * Created by noear on 15/9/2.
  */
 public class DataItemEx implements IDataItem{
     HashMap<String, Fun0<Object>> _data = new LinkedHashMap<>();

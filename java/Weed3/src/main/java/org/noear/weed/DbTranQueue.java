@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yuety on 14/10/30.
+ * Created by noear on 14/10/30.
  */
 public class DbTranQueue {
     private List<DbTran> queue = new ArrayList<DbTran>();
