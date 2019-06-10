@@ -232,11 +232,11 @@ public class UserInfoModel implements IBinder {
 
 
     public void bind(GetHandlerEx s) {
-        user_id = s.get("user_id").value(0l);
+        user_id = s.get("user_id").value(0l); //.value(x) 直接强类型转换，提供更高的性能
         role    = s.get("role").value(0);
         mobile  = s.get("mobile").value("");
         udid    = s.get("udid").value("");
-        city_id = s.get("city_id").value(0);
+        city_id = s.get("city_id").intValue(0);//.xxxValue(x) 根据类型判断后再转换，兼容性更好（特殊情况下用）
         name    = s.get("name").value("");
         icon    = s.get("icon").value("");
 
