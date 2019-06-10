@@ -184,6 +184,12 @@ new DbTranQueue().execute(qt->{
 ```
 示例1.3::缓存控制<br/>
 ```java
+/*
+ * 内置了 EmptyCache（空缓存）、LocalCache（本地缓存）、SecondCache（二级缓存） 
+ * 可以自己对memcached，redis 等进行包装后使用
+ */
+ICacheService cache = new EmptyCache();// 
+
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
     .caching(cache)
