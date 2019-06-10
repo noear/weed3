@@ -3,7 +3,7 @@ package weed3demo.config;
 import noear.weed.DbContext;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class DbConfig {
     //数据库配置

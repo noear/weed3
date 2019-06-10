@@ -4,7 +4,7 @@ import noear.weed.GetHandlerEx;
 import noear.weed.IBinder;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class UserInfoModel implements IBinder {
     public long user_id;

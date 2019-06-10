@@ -7,7 +7,7 @@ import weed3demo.config.DbConfig;
 import java.util.Date;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 
 //如果原来是存储过程的代码，可以通过[DbQueryProcedure]快速切换过来

@@ -18,11 +18,11 @@ class SQLer {
     private  void tryClose()
     {
         try { if (rset != null){ rset.close(); rset=null;}} catch (Exception ex) {
-            WeedConfig.logException(null, ex);};
+            WeedConfig.runExceptionEvent(null, ex);};
         try { if (stmt != null){ stmt.close(); stmt=null;}} catch (Exception ex) {
-            WeedConfig.logException(null, ex);};
+            WeedConfig.runExceptionEvent(null, ex);};
         try { if (conn != null){ conn.close(); conn=null;}} catch (Exception ex) {
-            WeedConfig.logException(null, ex);};
+            WeedConfig.runExceptionEvent(null, ex);};
     }
 
     public Variate getVariate(Command cmd,DbTran transaction) throws SQLException {
@@ -38,7 +38,7 @@ class SQLer {
             else
                 return null;//new Variate(null,null);
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -58,7 +58,7 @@ class SQLer {
                     try {
                         return new Variate(key, rset.getObject(key));
                     } catch (SQLException ex) {
-                        WeedConfig.logException(cmd, ex);
+                        WeedConfig.runExceptionEvent(cmd, ex);
                         return new Variate(key, null);
                     }
                 });
@@ -68,7 +68,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -98,7 +98,7 @@ class SQLer {
                     try {
                         return new Variate(key, rset.getObject(key));
                     } catch (SQLException ex) {
-                        WeedConfig.logException(cmd, ex);
+                        WeedConfig.runExceptionEvent(cmd, ex);
                         return new Variate(key, null);
                     }
                 });
@@ -112,7 +112,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -145,7 +145,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -180,7 +180,7 @@ class SQLer {
                 return null;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -188,38 +188,38 @@ class SQLer {
     }
 
     //执行
-    public int execute(Command cmd,DbTran transaction)  throws SQLException {
+    public int execute(Command cmd,DbTran tran)  throws SQLException {
         if(cmd.context.isCompilationMode){
             return 0;
         }
 
         try {
-            if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+            if (false == buildCMD(cmd, tran, false)) {
                 return -1;
             }
 
             int rst = stmt.executeUpdate();
 
             //*.监听
-            WeedConfig.logExecuteAft(cmd);
+            WeedConfig.runExecuteAftEvent(cmd);
 
             return rst;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
         }
     }
 
-    public long insert(Command cmd,DbTran transaction)  throws SQLException {
+    public long insert(Command cmd,DbTran tran)  throws SQLException {
         if(cmd.context.isCompilationMode){
             return 0;
         }
 
         try {
-            if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), true)) {
+            if (false == buildCMD(cmd, tran, true)) {
                 return -1;
             }
 
@@ -228,7 +228,7 @@ class SQLer {
             rset = stmt.getGeneratedKeys();
 
             //*.监听
-            WeedConfig.logExecuteAft(cmd);
+            WeedConfig.runExecuteAftEvent(cmd);
 
             if (rset.next())
                 return rset.getLong(1);//从1开始
@@ -236,7 +236,7 @@ class SQLer {
                 return 0l;
 
         } catch (SQLException ex) {
-            WeedConfig.logException(cmd, ex);
+            WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
             tryClose();
@@ -244,8 +244,8 @@ class SQLer {
     }
 
     //查询
-    private ResultSet query(Command cmd, DbTran transaction) throws SQLException {
-        if (false == buildCMD(cmd, (transaction == null ? null : transaction.connection), false)) {
+    private ResultSet query(Command cmd, DbTran tran) throws SQLException {
+        if (false == buildCMD(cmd, tran, false)) {
             return null;
         }
 
@@ -253,21 +253,20 @@ class SQLer {
         ResultSet rst = stmt.executeQuery();
 
         //*.监听
-        WeedConfig.logExecuteAft(cmd);
+        WeedConfig.runExecuteAftEvent(cmd);
 
         return rst;
     }
 
-    private boolean buildCMD(Command cmd, Connection c, boolean isInsert) throws SQLException {
+    private boolean buildCMD(Command cmd, DbTran tran, boolean isInsert) throws SQLException {
         //*.监听
-        if(WeedConfig.logExecuteBef(cmd) == false){
+        if(WeedConfig.runExecuteBefEvent(cmd) == false){
             return false;
         }
 
+
         //1.构建连接和命令(外部的c不能给conn)
-        if (c == null) {
-            c = conn = cmd.context.getConnection();
-        }
+        Connection c = (tran == null ? cmd.context.getConnection() : tran.connection);
 
         if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.fullText());
@@ -277,6 +276,8 @@ class SQLer {
             else
                 stmt = c.prepareStatement(cmd.fullText());
         }
+
+        WeedConfig.runExecuteStmEvent(cmd,stmt,tran);
 
         int idx = 1;
         //2.设置参数值

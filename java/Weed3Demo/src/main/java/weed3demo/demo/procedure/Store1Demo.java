@@ -7,7 +7,7 @@ import weed3demo.demo.model.UserInfoModel;
 import java.sql.SQLException;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class Store1Demo {
     //1.存储过程::

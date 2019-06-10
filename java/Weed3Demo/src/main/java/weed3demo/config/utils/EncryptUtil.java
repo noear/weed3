@@ -3,7 +3,7 @@ package weed3demo.config.utils;
 import java.security.MessageDigest;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class EncryptUtil {
     public static String sha1(String cleanData)

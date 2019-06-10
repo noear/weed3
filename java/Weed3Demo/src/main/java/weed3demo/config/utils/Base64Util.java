@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 import java.util.Base64;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public final class Base64Util {
     public static String encode(String text){

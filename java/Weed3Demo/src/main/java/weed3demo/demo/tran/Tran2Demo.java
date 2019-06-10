@@ -7,7 +7,7 @@ import weed3demo.config.DbConfig;
 import java.sql.SQLException;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class Tran2Demo {
     //不同函数串一起，跨多个数据库（分布式）

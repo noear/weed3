@@ -6,7 +6,7 @@ import net.spy.memcached.transcoders.SerializingTranscoder;
 import noear.snacks.ONode;
 
 /**
- * Created by yuety on 2017/7/4.
+ * Created by noear on 2017/7/4.
  */
 public class SerializeUtil {
     private static SerializingTranscoder tc = new SerializingTranscoder();

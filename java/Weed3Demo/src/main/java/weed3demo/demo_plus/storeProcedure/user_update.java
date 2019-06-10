@@ -7,7 +7,7 @@ import weed3demo.config.DbConfig;
 import java.util.Date;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class user_update extends DbStoredProcedure {
     public user_update() {

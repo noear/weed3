@@ -7,7 +7,7 @@ import weed3demo.config.DbConfig;
 import java.sql.SQLException;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class Tran1Demo {
     /*所有的执行在一个事务控制范围内*/

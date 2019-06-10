@@ -4,7 +4,7 @@ import noear.weed.DbStoredProcedure;
 import weed3demo.config.DbConfig;
 
 /**
- * Created by yuety on 2017/7/22.
+ * Created by noear on 2017/7/22.
  */
 public class user_get_list extends DbStoredProcedure {
     public user_get_list() {
