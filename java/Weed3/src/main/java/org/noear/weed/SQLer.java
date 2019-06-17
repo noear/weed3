@@ -264,9 +264,13 @@ class SQLer {
             return false;
         }
 
-
         //1.构建连接和命令(外部的c不能给conn)
-        Connection c = (tran == null ? cmd.context.getConnection() : tran.connection);
+        Connection c = null;
+        if(tran == null){
+            c = conn = cmd.context.getConnection();
+        }else{
+            c = tran.connection; //事务时，conn 须为 null
+        }
 
         if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.fullText());

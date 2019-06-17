@@ -6,6 +6,8 @@ import org.noear.weed.ext.Act1Ex;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by noear on 14-6-12.
@@ -16,6 +18,17 @@ public class DbContext {
     public boolean allowMultiQueries;
 
     public boolean isCompilationMode=false;
+
+    //添加特性支持
+    private Map<String,String> _attrMap = new HashMap<>();
+    public DbContext attrSet(String name, String value){
+        _attrMap.put(name,value);
+        return this;
+    }
+    public String attr(String name){
+        return _attrMap.get(name);
+    }
+
 
     public DbContext(){
 
