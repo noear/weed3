@@ -97,6 +97,17 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 选两列做为MAP的数据 */
+    public <T> Map<String,Object> toMap(String keyColumn,String valColumn)
+    {
+        Map<String,Object> map = new HashMap<>();
+
+        for (DataItem r : rows) {
+            map.put(r.getString(keyColumn),r.get(valColumn));
+        }
+        return map;
+    }
+
 
     /** 选一列做为数组的数据 */
     public <T> List<T> toArray(String columnName)

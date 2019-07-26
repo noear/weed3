@@ -31,6 +31,10 @@ public class Tran1Demo {
         //1.建立主事务，并执于
         DbTranQueue queue = new DbTranQueue();
 
+        queue.execute((qt)->{
+            db.table("").tran().select("");
+        });
+
         db.tran().join(queue).execute((t) -> {
             db.sql("insert into test(txt) values(?)", "cc").tran(t).execute();
             db.sql("insert into test(txt) values(?)", "dd").tran(t).execute();

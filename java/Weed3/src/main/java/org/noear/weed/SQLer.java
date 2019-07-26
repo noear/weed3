@@ -225,15 +225,21 @@ class SQLer {
 
             stmt.executeUpdate();
 
-            rset = stmt.getGeneratedKeys();
+            try {
+                rset = stmt.getGeneratedKeys(); //乎略错误
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
 
             //*.监听
             WeedConfig.runExecuteAftEvent(cmd);
 
-            if (rset.next())
+            if (rset!= null && rset.next()) {
                 return rset.getLong(1);//从1开始
-            else
+            }
+            else {
                 return 0l;
+            }
 
         } catch (SQLException ex) {
             WeedConfig.runExceptionEvent(cmd, ex);
