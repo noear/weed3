@@ -33,7 +33,7 @@ QQ群：<br/>
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.6.3</version>
+  <version>3.1.6.5</version>
 </dependency>
 ```
  
