@@ -1,4 +1,4 @@
-# Weed for .net/mono/java/php
+# Weed for java/.net/mono/php
 超强跨平台轻量级ORM（无反射；缓存控制；分布式事务；万能绑定）<br/>
 
 支持什么数据库？？？<br/>
@@ -33,7 +33,7 @@ QQ群：<br/>
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.6.3</version>
+  <version>3.1.6.5</version>
 </dependency>
 ```
  
