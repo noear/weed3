@@ -11,7 +11,7 @@
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Java project for weed3</description>
-    <url>https://github.com/noear/solon</url>
+    <url>https://github.com/noear/weed3</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
