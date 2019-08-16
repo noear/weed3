@@ -97,15 +97,37 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 选1列做为MAP的key，并把行数据做为val */
+    public Map<String,Object> toMap(String keyColumn){
+        return toMap(keyColumn,null);
+    }
+
     /** 选两列做为MAP的数据 */
-    public <T> Map<String,Object> toMap(String keyColumn,String valColumn)
+    public Map<String,Object> toMap(String keyColumn,String valColumn)
     {
         Map<String,Object> map = new HashMap<>();
 
-        for (DataItem r : rows) {
-            map.put(r.getString(keyColumn),r.get(valColumn));
+        if(valColumn == null || valColumn.length()==0){
+            for (DataItem r : rows) {
+                map.put(r.get(keyColumn).toString(),r);
+            }
+        }else{
+            for (DataItem r : rows) {
+                map.put(r.get(keyColumn).toString(),r.get(valColumn));
+            }
         }
+
         return map;
+    }
+
+    public <T> Set<T> toSet(String column)
+    {
+        Set<T> set = new HashSet<>();
+
+        for (DataItem r : rows) {
+            set.add((T)r.get(column));
+        }
+        return set;
     }
 
 
