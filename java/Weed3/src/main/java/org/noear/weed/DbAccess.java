@@ -128,6 +128,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return new SQLer().execute(getCommand(),_tran);
     }
 
+    /*执行命令（返回受影响数；简化命令）*/
+    public int exec() throws SQLException
+    {
+        return new SQLer().execute(getCommand(),_tran);
+    }
+
     @Override
     public long getCount() throws SQLException
     {

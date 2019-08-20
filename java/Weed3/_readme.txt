@@ -1,3 +1,6 @@
+3.1.7
+1.添加db.exec()接口
+
 3.1.6
 1.将包名：noear.weed 改为：org.noear.weed
 2.List<Map<String,Object>> getMapList()

@@ -131,6 +131,11 @@ public class DbContext {
         return new DbQuery(this).sql(sqlBuilder);
     }
 
+
+    public int exec(String code, Object... args) throws Exception{
+        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
+    }
+
     /**获取process执行对象*/
     public DbProcedure call(String process) {
         if(process.indexOf(" ")>0) {
