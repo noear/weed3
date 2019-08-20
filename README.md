@@ -33,7 +33,7 @@ QQ群：<br/>
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.6.6</version>
+  <version>3.1.7</version>
 </dependency>
 ```
  
@@ -43,6 +43,9 @@ QQ群：<br/>
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
+
+//快速.执行示例
+db.exec("UPDATE xxx SET a=?",1);
 
 //简易.查询示例
 db.table("user_info").where("user_id<?", 10).count();
