@@ -83,6 +83,13 @@ db.table("test")
   .set("num", 44)
   .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
   .update();
+  
+//简易.更新插入一体
+db.table("test")
+  .set("obj_id", 1)
+  .set("meta_key", "name")
+  .set("meta_val", 44)
+  .updateExt("obj_id,meta_key"); //如果存在则更新；否则插入
 
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
