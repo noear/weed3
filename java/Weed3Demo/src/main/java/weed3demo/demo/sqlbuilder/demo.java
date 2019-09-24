@@ -1,7 +1,7 @@
 package weed3demo.demo.sqlbuilder;
 
-import noear.weed.DbContext;
-import noear.weed.SQLBuilder;
+import org.noear.weed.DbContext;
+import org.noear.weed.SQLBuilder;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
 import weed3demo.demo_plus.table.UserInfoM;

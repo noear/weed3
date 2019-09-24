@@ -27,6 +27,7 @@ public interface IQuery {
      <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
 
      <T> T getItem(Class<T> cls) throws SQLException,ReflectiveOperationException;
+
      <T> List<T> getList(Class<T> cls) throws SQLException,ReflectiveOperationException;
 
      DataList getDataList() throws SQLException;

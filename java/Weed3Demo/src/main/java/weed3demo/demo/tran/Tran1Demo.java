@@ -1,7 +1,7 @@
 package weed3demo.demo.tran;
 
-import noear.weed.DbContext;
-import noear.weed.DbTranQueue;
+import org.noear.weed.DbContext;
+import org.noear.weed.DbTranQueue;
 import weed3demo.config.DbConfig;
 
 import java.sql.SQLException;

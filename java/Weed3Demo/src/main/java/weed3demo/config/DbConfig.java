@@ -1,6 +1,6 @@
 package weed3demo.config;
 
-import noear.weed.DbContext;
+import org.noear.weed.DbContext;
 
 /**
  * Created by noear on 2017/7/22.

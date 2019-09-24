@@ -1,8 +1,8 @@
 package weed3demo.config;
 
 import weed3demo.config.cache.MemCache;
-import noear.weed.cache.ICacheService;
-import noear.weed.cache.LocalCache;
+import org.noear.weed.cache.ICacheService;
+import org.noear.weed.cache.LocalCache;
 
 /**
  * Created by noear on 2017/7/22.

@@ -1,6 +1,6 @@
 package weed3demo.demo.param;
 
-import noear.weed.IQuery;
+import org.noear.weed.IQuery;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
 

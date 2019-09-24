@@ -1,6 +1,6 @@
 package weed3demo.demo_plus.table;
 
-import noear.weed.DbTable;
+import org.noear.weed.DbTable;
 import weed3demo.config.DbConfig;
 
 /**

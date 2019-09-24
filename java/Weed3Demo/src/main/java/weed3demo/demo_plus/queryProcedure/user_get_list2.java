@@ -1,6 +1,6 @@
 package weed3demo.demo_plus.queryProcedure;
 
-import noear.weed.DbQueryProcedure;
+import org.noear.weed.DbQueryProcedure;
 import weed3demo.config.DbConfig;
 
 /**

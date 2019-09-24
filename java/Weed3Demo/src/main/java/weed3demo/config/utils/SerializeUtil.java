@@ -3,7 +3,7 @@ package weed3demo.config.utils;
 import net.spy.memcached.CachedData;
 import net.spy.memcached.transcoders.SerializingTranscoder;
 
-import noear.snacks.ONode;
+import org.noear.snack.ONode;
 
 /**
  * Created by noear on 2017/7/4.
@@ -22,11 +22,11 @@ public class SerializeUtil {
         return obj.toJson();
     }
 
-    public  static  <T> T byString(String str) {
+    public  static  <T> T byString(String str) throws Exception{
         if(str == null)
             return null;
 
-        ONode obj = ONode.tryLoad(str);
+        ONode obj = ONode.fromStr(str);
 
         int flags = obj.get("flags").getInt();
         String data_b64 =obj.get("data").getString();

@@ -1,6 +1,6 @@
 package weed3demo.config.cache;
 
-import noear.weed.cache.ICacheService;
+import org.noear.weed.cache.ICacheService;
 import weed3demo.config.CacheUtil;
 import weed3demo.config.utils.*;
 

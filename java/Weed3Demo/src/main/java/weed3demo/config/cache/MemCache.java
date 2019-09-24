@@ -5,7 +5,7 @@ import net.spy.memcached.ConnectionFactoryBuilder;
 import net.spy.memcached.MemcachedClient;
 import net.spy.memcached.auth.AuthDescriptor;
 import net.spy.memcached.auth.PlainCallbackHandler;
-import noear.weed.cache.ICacheService;
+import org.noear.weed.cache.ICacheService;
 import weed3demo.config.utils.EncryptUtil;
 
 /**

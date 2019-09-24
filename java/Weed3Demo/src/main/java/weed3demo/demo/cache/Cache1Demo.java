@@ -1,10 +1,10 @@
 package weed3demo.demo.cache;
 
-import noear.weed.DbContext;
-import noear.weed.DbProcedure;
-import noear.weed.DbStoredProcedure;
-import noear.weed.cache.CacheTags;
-import noear.weed.cache.ICacheService;
+import org.noear.weed.DbContext;
+import org.noear.weed.DbProcedure;
+import org.noear.weed.DbStoredProcedure;
+import org.noear.weed.cache.CacheTags;
+import org.noear.weed.cache.ICacheService;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
 

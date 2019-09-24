@@ -1,8 +1,8 @@
 package weed3demo.demo.table;
 
-import noear.weed.DataItem;
-import noear.weed.DataList;
-import noear.weed.DbContext;
+import org.noear.weed.DataItem;
+import org.noear.weed.DataList;
+import org.noear.weed.DbContext;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
 
