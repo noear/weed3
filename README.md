@@ -33,7 +33,7 @@ QQ群：<br/>
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.6.5</version>
+  <version>3.1.7</version>
 </dependency>
 ```
  
@@ -43,6 +43,9 @@ QQ群：<br/>
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234",null);
+
+//快速.执行示例
+db.exec("DELETE FROM user_info WHERE user_id<?",10);
 
 //简易.查询示例
 db.table("user_info").where("user_id<?", 10).count();
@@ -80,6 +83,13 @@ db.table("test")
   .set("num", 44)
   .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
   .update();
+  
+//简易.更新插入一体
+db.table("test")
+  .set("obj_id", 1)
+  .set("meta_key", "name")
+  .set("meta_val", 44)
+  .updateExt("obj_id,meta_key"); //如果存在则更新；否则插入
 
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
