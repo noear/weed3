@@ -19,7 +19,7 @@ public class DbContext {
     public Command lastCommand;
     /** 充许多片段执行 */
     public boolean allowMultiQueries;
-
+    /** 编译模式（用于产生代码） */
     public boolean isCompilationMode=false;
 
 

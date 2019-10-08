@@ -22,9 +22,11 @@ public class DbQueryProcedure extends DbProcedure {
         super(context);
     }
 
-    /*延后初始化接口*/
+    /** 延后初始化接口 */
     private Act0 _lazyload;
+    /** 是否已尝试延后加载 */
     private boolean _is_lazyload;
+
     protected void lazyload(Act0 action){
         _lazyload = action;
         _is_lazyload = false;
