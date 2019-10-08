@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
+import org.noear.weed.utils.TextUtil;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -14,7 +15,9 @@ import java.util.Map;
  * 数据库上下文
  */
 public class DbContext {
+    /** 最后次执行命令*/
     public Command lastCommand;
+    /** 充许多片段执行 */
     public boolean allowMultiQueries;
 
     public boolean isCompilationMode=false;
@@ -30,42 +33,28 @@ public class DbContext {
     }
 
 
-    public DbContext(){
-
-    }
-
-    public DbContext(String schemaName, String url) {
-        _schemaName = schemaName;
-        _dataSource = new DbDataSource(url);
-        _fieldFormat = "";
-    }
+    // 构建函数 start
+    public DbContext(){}
 
     //基于线程池配置（如："proxool."）
     //fieldFormat："`%`"
-    public DbContext(String schemaName,String url,String fieldFormat) {
+    public DbContext(String schemaName, String url) {
         _schemaName = schemaName;
         _dataSource = new DbDataSource(url);
-        _fieldFormat = fieldFormat;
     }
 
     //基于手动配置（无线程池）
-    public DbContext(String schemaName,String url, String user,String password, String fieldFormat) {
+    public DbContext(String schemaName, String url, String user, String password) {
         _schemaName = schemaName;
         _dataSource = new DbDataSource(url,user,password);
-        _fieldFormat = fieldFormat;
     }
 
     public DbContext(String schemaName, DataSource dataSource) {
         _schemaName = schemaName;
         _dataSource = dataSource;
-        _fieldFormat = "";
     }
 
-    public DbContext(String schemaName, DataSource dataSource, String fieldFormat) {
-        _schemaName = schemaName;
-        _dataSource = dataSource;
-        _fieldFormat = fieldFormat;
-    }
+    // 构建函数 end
 
     private DataSource _dataSource;
     public DbContext dataSource(DataSource dataSource){
@@ -83,24 +72,72 @@ public class DbContext {
         return this;
     }
 
+    //字段格式符
     private String _fieldFormat;
-    public DbContext fieldFormat(String format){
+    private String _fieldFormat_start;
+    //对象格式符
+    private String _objectFormat;
+    private String _objectFormat_start;
+    /**
+     * 字段格式符
+     * */
+
+    public DbContext fieldFormat(String format) {
         _fieldFormat = format;
+        if (format != null && format.length() > 1) {
+            _fieldFormat_start = format.substring(0, 1);
+        }else{
+            _fieldFormat_start="";
+        }
+
+        return this;
+    }
+
+    /**
+     * 对象格式符
+     * */
+    public DbContext objectFormat(String format){
+        _objectFormat = format;
+        if (format != null && format.length() > 1) {
+            _objectFormat_start = format.substring(0, 1);
+        }else{
+            _objectFormat_start="";
+        }
         return this;
     }
 
     protected String _hint = null;
+    /**
+     * 代码注解
+     * */
     public DbContext hint(String hint) {
         _hint = hint;
         return this;
     }
 
-    public String field(String key){
-        if(_fieldFormat == null || _fieldFormat.length()==0) {
-            return key;
+    public String field(String name){
+        if(TextUtil.isEmpty(_fieldFormat)) {
+            return name;
         }
         else {
-            return _fieldFormat.replace("%", key);
+            if(name.startsWith(_fieldFormat_start)){
+                return name;
+            }else {
+                return _fieldFormat.replace("%", name);
+            }
+        }
+    }
+
+    public String object(String name){
+        if(TextUtil.isEmpty(_objectFormat)) {
+            return name;
+        }
+        else {
+            if(name.startsWith(_objectFormat_start)){
+                return name;
+            }else {
+                return _objectFormat.replace("%", name);
+            }
         }
     }
 

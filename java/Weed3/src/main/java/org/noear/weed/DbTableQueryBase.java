@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.noear.weed.WeedConfig.isUsingTableSpace;
+
 /**
  * Created by noear on 14/11/12.
  *
@@ -49,7 +51,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
                 _table = table;
             }
             else {
-                _table = "$." + table;
+                if(isUsingTableSpace){
+                    _table = "$." + table;
+                }else{
+                    _table = table; //"$." + table;
+                }
+
             }
         }
 

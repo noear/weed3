@@ -16,6 +16,7 @@ public final class WeedConfig {
     public static boolean isDebug = false;
     public static boolean isUsingValueExpression=true;
     public static boolean isUsingValueNull=false;
+    public static boolean isUsingTableSpace=false;
     public static boolean isUpdateMustConditional=true;
 
     static Set<Act2<Command,Exception>> onException_listener = new LinkedHashSet<>();
