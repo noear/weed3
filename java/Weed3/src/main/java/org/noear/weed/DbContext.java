@@ -161,7 +161,7 @@ public class DbContext {
     public boolean hasSchema(){return _schemaName!=null;}
 
     /*获取schema*/
-    public String schema(){
+    public String getSchema(){
         return _schemaName;
     }
 

@@ -4,7 +4,6 @@ import org.noear.weed.ext.Fun0;
 
 import java.util.Map;
 
-
 /**
  * Created by noear on 14-6-12.
  * 存储过程访问类
@@ -60,8 +59,8 @@ public class DbStoredProcedure extends DbProcedure {
         StringBuilder sb = new StringBuilder();
         sb.append("{call ");
 
-        if(context.hasSchema()) {
-            sb.append(context.schema()).append(".");
+        if(WeedConfig.isUsingTableSpace && context.hasSchema()) {
+            sb.append(context.getSchema()).append(".");
         }
 
         sb.append(commandText.trim());

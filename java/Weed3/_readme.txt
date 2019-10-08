@@ -1,3 +1,8 @@
+3.1.9
+1.DbContext构造函数，取消fieldFormat参数
+2.DbTableQueryBase，添加append()无限制添加代码
+3.添加objectFormat机制（用于格式化对象）
+
 3.1.7
 1.添加db.exec()接口
 
