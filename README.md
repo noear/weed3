@@ -19,6 +19,7 @@
  $fun     //SQL函数占位符<br/>
  ?        //参数占位符<br/>
  ?...     //数组型参数占位符<br/>
+ @...     //参数变量占位符<br/>
 
 网站:<br/>
  http://www.noear.org<br/>
@@ -81,7 +82,7 @@ db.table("test")
 db.table("test")
   .set("txt", "NOW()xx")
   .set("num", 44)
-  .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
+  .where("id IN (?...)", new int[] { 15,14,16}) //数组参数
   .update();
   
 //简易.更新插入一体
@@ -97,7 +98,7 @@ db.call("user_get")
   .getItem(new UserInfoModel()); 
 
 //简易.查询过程调用示例，及使用使用示例
-db.call("select * from user where user_id=@userID")
+db.call("select * from user where user_id=@userID") //@userID,参数占位符
   .set("@userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
@@ -105,7 +106,7 @@ db.call("select * from user where user_id=@userID")
 
 //简易.存储过程调用示例，及使用事务示例
 db.tran(tran->{
-    db.call("$.user_set").set("xxx", 1) 
+    db.call("user_set").set("xxx", 1) 
       .tran(tran) //使用事务
       .execute();
 });
