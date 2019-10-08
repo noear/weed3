@@ -1,3 +1,6 @@
+# QQ交流群：
+22200020
+
 # Weed for java
 超强跨平台轻量级ORM（无反射；无注解；缓存控制；事务队列；万能绑定）<br/>
 
@@ -23,9 +26,6 @@
 
 网站:<br/>
  http://www.noear.org<br/>
-
-QQ群：<br/>
- 22200020<br/>
  
 更新日志：<br/>
  https://github.com/noear/Weed3/blob/master/java/Weed3/_readme.txt <br/>
