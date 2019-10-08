@@ -23,7 +23,7 @@ public class DbContext {
     public boolean isCompilationMode=false;
 
 
-    //数据集合名称
+    //数据集名称
     private String _schemaName;
     //字段格式符
     private String _fieldFormat;
@@ -131,6 +131,7 @@ public class DbContext {
         return _codeHint;
     }
 
+    /** 字段格式化 */
     public String field(String name) {
         if (TextUtil.isEmpty(_fieldFormat)) {
             return name;
@@ -143,6 +144,7 @@ public class DbContext {
         }
     }
 
+    /** 对象格式化 */
     public String object(String name) {
         if (TextUtil.isEmpty(_objectFormat)) {
             return name;
