@@ -93,8 +93,8 @@ db.table("test")
 
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
-  .set("xxx", 1)  //保持与存储过程参数的序顺一致
-  .getItem(new UserInfoModel()); 
+  .set("xxx", 1)  //保持与存储过程参数的序顺一致
+  .getItem(new UserInfoModel()); 
 
 //简易.查询过程调用示例，及使用使用示例
 db.call("select * from user where user_id=@userID")
