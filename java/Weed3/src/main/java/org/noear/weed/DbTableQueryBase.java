@@ -54,9 +54,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
                 if(isUsingTableSpace){
                     _table = "$." + table;
                 }else{
-                    _table = table; //"$." + table;
+                    _table = _context.object(table); //"$." + table;
                 }
-
             }
         }
 
@@ -370,17 +369,23 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public T innerJoin(String table) {
-        _builder.append(" INNER JOIN ").append(table);
+        _builder.append(" INNER JOIN ").append(_context.object(table));
         return (T)this;
     }
 
     public T leftJoin(String table) {
-        _builder.append(" LEFT JOIN ").append(table);
+        _builder.append(" LEFT JOIN ").append(_context.object(table));
         return (T)this;
     }
 
     public T rightJoin(String table) {
-        _builder.append(" RIGHT JOIN ").append(table);
+        _builder.append(" RIGHT JOIN ").append(_context.object(table));
+        return (T)this;
+    }
+
+    /** 添加无限制代码 */
+    public T append(String code,  Object... args){
+        _builder.append(code, args);
         return (T)this;
     }
 

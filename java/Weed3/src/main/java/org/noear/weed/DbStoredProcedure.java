@@ -61,7 +61,7 @@ public class DbStoredProcedure extends DbProcedure {
         sb.append("{call ");
 
         if(context.hasSchema()) {
-            sb.append(context.getSchema()).append(".");
+            sb.append(context.schema()).append(".");
         }
 
         sb.append(commandText.trim());

@@ -55,10 +55,10 @@ public class Command {
     }
 
     public String fullText() {
-        if (context._hint == null)
+        if (context.codeHint() == null)
             return text;
         else
-            return context._hint + text;
+            return context.codeHint() + text;
     }
 
 }

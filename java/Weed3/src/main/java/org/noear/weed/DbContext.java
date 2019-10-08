@@ -22,18 +22,25 @@ public class DbContext {
 
     public boolean isCompilationMode=false;
 
-    //添加特性支持
+
+    //数据集合名称
+    private String _schemaName;
+    //字段格式符
+    private String _fieldFormat;
+    private String _fieldFormat_start;
+    //对象格式符
+    private String _objectFormat;
+    private String _objectFormat_start;
+    //特性支持
     private Map<String,String> _attrMap = new HashMap<>();
-    public DbContext attrSet(String name, String value){
-        _attrMap.put(name,value);
-        return this;
-    }
-    public String attr(String name){
-        return _attrMap.get(name);
-    }
+    //数据源
+    private DataSource _dataSource;
+    //代码注解
+    private String _codeHint = null;
 
-
+    //
     // 构建函数 start
+    //
     public DbContext(){}
 
     //基于线程池配置（如："proxool."）
@@ -54,35 +61,43 @@ public class DbContext {
         _dataSource = dataSource;
     }
 
+    //
     // 构建函数 end
+    //
 
-    private DataSource _dataSource;
-    public DbContext dataSource(DataSource dataSource){
+    /** 特性设置 */
+    public DbContext attrSet(String name, String value){
+        _attrMap.put(name,value);
+        return this;
+    }
+    /** 特性获取 */
+    public String attr(String name){
+        return _attrMap.get(name);
+    }
+
+
+    /** 数据源设置 */
+    public DbContext dataSourceSet(DataSource dataSource){
         _dataSource = dataSource;
         return this;
     }
 
+    /** 获取数据源 */
     public DataSource dataSource(){
         return _dataSource;
     }
 
-    private String _schemaName;
-    public DbContext schemaName(String schemaName){
+
+
+    /** 数据集合名称设置 */
+    public DbContext schemaNameSet(String schemaName){
         _schemaName=schemaName;
         return this;
     }
 
-    //字段格式符
-    private String _fieldFormat;
-    private String _fieldFormat_start;
-    //对象格式符
-    private String _objectFormat;
-    private String _objectFormat_start;
-    /**
-     * 字段格式符
-     * */
 
-    public DbContext fieldFormat(String format) {
+    /** 字段格式符设置 */
+    public DbContext fieldFormatSet(String format) {
         _fieldFormat = format;
         if (format != null && format.length() > 1) {
             _fieldFormat_start = format.substring(0, 1);
@@ -93,10 +108,8 @@ public class DbContext {
         return this;
     }
 
-    /**
-     * 对象格式符
-     * */
-    public DbContext objectFormat(String format){
+    /** 对象格式符设置 */
+    public DbContext objectFormatSet(String format){
         _objectFormat = format;
         if (format != null && format.length() > 1) {
             _objectFormat_start = format.substring(0, 1);
@@ -106,36 +119,37 @@ public class DbContext {
         return this;
     }
 
-    protected String _hint = null;
-    /**
-     * 代码注解
-     * */
-    public DbContext hint(String hint) {
-        _hint = hint;
+
+    /** 代码注解设置 */
+    public DbContext codeHintSet(String hint) {
+        _codeHint = hint;
         return this;
     }
 
-    public String field(String name){
-        if(TextUtil.isEmpty(_fieldFormat)) {
+    /** 代码注解获取 */
+    public String codeHint(){
+        return _codeHint;
+    }
+
+    public String field(String name) {
+        if (TextUtil.isEmpty(_fieldFormat)) {
             return name;
-        }
-        else {
-            if(name.startsWith(_fieldFormat_start)){
+        } else {
+            if (name.startsWith(_fieldFormat_start)) {
                 return name;
-            }else {
+            } else {
                 return _fieldFormat.replace("%", name);
             }
         }
     }
 
-    public String object(String name){
-        if(TextUtil.isEmpty(_objectFormat)) {
+    public String object(String name) {
+        if (TextUtil.isEmpty(_objectFormat)) {
             return name;
-        }
-        else {
-            if(name.startsWith(_objectFormat_start)){
+        } else {
+            if (name.startsWith(_objectFormat_start) || name.indexOf(" ") > 0) {
                 return name;
-            }else {
+            } else {
                 return _objectFormat.replace("%", name);
             }
         }
@@ -145,35 +159,43 @@ public class DbContext {
     public boolean hasSchema(){return _schemaName!=null;}
 
     /*获取schema*/
-    public String getSchema(){
+    public String schema(){
         return _schemaName;
     }
 
-    /*获取连接*/
+    //
+    // 执行能力支持
+    //
+
+    /** 获取连接 */
     public  Connection getConnection() throws SQLException {
         return _dataSource.getConnection();
     }
 
+    /** 执行代码，返回影响行数 */
+    public int exec(String code, Object... args) throws Exception{
+        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
+    }
+
+    /** 输入SQL，获取查询器 */
     public DbQuery sql(String code, Object... args) {
-        return new DbQuery(this).sql(new SQLBuilder().append(code, args));
+        return sql(new SQLBuilder().append(code, args));
     }
 
-    public DbQuery sql(Act1<SQLBuilder> sqlBuilder) {
+    /** 输入SQL builder，获取查询器 */
+    public DbQuery sql(Act1<SQLBuilder> buildRuner) {
         SQLBuilder sql = new SQLBuilder();
-        sqlBuilder.run(sql);
-        return new DbQuery(this).sql(sql);
+        buildRuner.run(sql);
+        return sql(sql);
     }
 
+    /** 输入SQL builder，获取查询器 */
     public DbQuery sql(SQLBuilder sqlBuilder) {
         return new DbQuery(this).sql(sqlBuilder);
     }
 
 
-    public int exec(String code, Object... args) throws Exception{
-        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
-    }
-
-    /**获取process执行对象*/
+    /** 输入process name，获取process执行对象*/
     public DbProcedure call(String process) {
         if(process.indexOf(" ")>0) {
             return new DbQueryProcedure(this).sql(process);
