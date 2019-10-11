@@ -66,6 +66,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 将所有列转为类做为数组的数据（类为：IBinder 子类） */
     public <T extends IBinder>  List<T> toList(T model) throws SQLException{
         List<T> list = new ArrayList<T>(getRowCount());
 
@@ -120,6 +121,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return map;
     }
 
+    /** 选一列做为SET的数据 */
     public <T> Set<T> toSet(String column)
     {
         Set<T> set = new HashSet<>();
@@ -153,6 +155,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return list;
     }
 
+    /** 转为json字符串 */
     public String toJson(){
         _JsonWriter jw = new _JsonWriter();
 

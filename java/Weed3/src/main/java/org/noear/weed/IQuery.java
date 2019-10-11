@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.cache.CacheUsing;
+import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act2;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * Created by noear on 14/11/12.
  */
-public interface IQuery {
+public interface IQuery extends ICacheController<IQuery> {
      long getCount() throws SQLException;
      Object getValue() throws SQLException;
      <T> T getValue(T def) throws SQLException;
@@ -40,8 +41,9 @@ public interface IQuery {
 
      <T> List<T> getArray(String column) throws SQLException;
 
-     IQuery caching(ICacheService service);
-     IQuery usingCache(boolean isCache);
-     IQuery usingCache(int seconds);
-     IQuery cacheTag(String tag);
+     //改由：ICacheController 定义
+//     IQuery caching(ICacheService service);
+//     IQuery usingCache(boolean isCache);
+//     IQuery usingCache(int seconds);
+//     IQuery cacheTag(String tag);
 }

@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.cache.CacheUsing;
+import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
@@ -21,7 +22,7 @@ import static org.noear.weed.WeedConfig.isUsingTableSpace;
  * $NOW()   //说明这里是一个sql 函数
  * ?...     //说明这里是一个数组或查询结果
  */
-public class DbTableQueryBase<T extends DbTableQueryBase>  {
+public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheController<DbTableQueryBase> {
 
     String _table;
     DbContext _context;
@@ -409,6 +410,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
     public T groupBy(String groupBy) {
         _builder.append(" GROUP BY ").append(formatColumns(groupBy));
+        return (T)this;
+    }
+
+    public T having(String having){
+        _builder.append(" HAVING ").append(having);
         return (T)this;
     }
 
