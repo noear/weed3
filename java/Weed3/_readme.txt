@@ -1,3 +1,6 @@
+3.1.9
+1. set(),table("aaa","aaa a", "aaa as a"),join(like table()),select("a,b b,c as c,SUM(d)"),orderBy("a ASC,B,a.a"),groupBy("a.a") 添加关键字处理
+
 3.1.8
 1.DbContext构造函数，取消fieldFormat参数
 2.DbTableQueryBase，添加append()无限制添加代码
