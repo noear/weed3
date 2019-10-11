@@ -31,12 +31,7 @@ public class DbContext {
 
     //数据集名称
     private String _schemaName;
-    //字段格式符
-    private String _fieldFormat;
-    private String _fieldFormat_start;
-    //对象格式符
-    private String _objectFormat;
-    private String _objectFormat_start;
+    private DbFormater _formater = new DbFormater();
     //特性支持
     private Map<String, String> _attrMap = new HashMap<>();
     //数据源
@@ -219,13 +214,7 @@ public class DbContext {
      * 字段格式符设置
      */
     public DbContext fieldFormatSet(String format) {
-        _fieldFormat = format;
-        if (format != null && format.length() > 1) {
-            _fieldFormat_start = format.substring(0, 1);
-        } else {
-            _fieldFormat_start = "";
-        }
-
+        _formater.fieldFormatSet(format);
         return this;
     }
 
@@ -233,60 +222,11 @@ public class DbContext {
      * 对象格式符设置
      */
     public DbContext objectFormatSet(String format) {
-        _objectFormat = format;
-        if (format != null && format.length() > 1) {
-            _objectFormat_start = format.substring(0, 1);
-        } else {
-            _objectFormat_start = "";
-        }
+        _formater.objectFormatSet(format);
         return this;
     }
 
-
-    /**
-     * 字段格式化（用于：set(..,v)）
-     */
-    public String field(String name) {
-        if (StringUtils.isEmpty(_fieldFormat)) {
-            return name;
-        } else {
-            if (name.startsWith(_fieldFormat_start)) {
-                return name;
-            } else {
-                return _fieldFormat.replace("%", name);
-            }
-        }
+    public DbFormater formater(){
+        return _formater;
     }
-
-    /**
-     * 对象格式化（用于：from(..), join(..)）
-     */
-    public String object(String name) {
-        if (StringUtils.isEmpty(_objectFormat)) {
-            return name;
-        }
-
-        if (name.startsWith(_objectFormat_start) || name.indexOf(".") > 0) {
-            return name;
-        }
-
-        if (name.indexOf(" ") < 0) {
-            return _objectFormat.replace("%", name);
-        }
-
-        String[] ss = name.split(" ");
-
-        if (ss.length != 2) {
-            return name;
-        }
-
-        StringBuilder sb = StringUtils.borrowBuilder();
-
-        sb.append(_objectFormat.replace("%", ss[0]))
-          .append(" ")
-          .append(ss[1]);
-
-        return StringUtils.releaseBuilder(sb);
-    }
-
 }

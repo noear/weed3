@@ -28,6 +28,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     SQLBuilder _builder;
     int _isLog=0;
 
+    protected String formatObject(String name){
+        return _context.formater().formatObject(name);
+    }
+
+    protected String formatField(String name){
+        return _context.formater().formatField(name);
+    }
+
+    protected String formatColumns(String columns){
+        return _context.formater().formatColumns(columns);
+    }
+
     public DbTableQueryBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
@@ -55,7 +67,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
                 if(isUsingTableSpace){
                     _table = "$." + table;
                 }else{
-                    _table = _context.object(table); //"$." + table;
+                    _table = formatObject(table); //"$." + table;
                 }
             }
         }
@@ -131,7 +143,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
                 }
             }
 
-            sb.append(_context.field(key)).append(",");
+            sb.append(formatField(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);
@@ -210,7 +222,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         for (String key : cols.keys()) {
-            sb.append(_context.field(key)).append(",");
+            sb.append(formatField(key)).append(",");
         }
         sb.deleteCharAt(sb.length() - 1);
 
@@ -316,7 +328,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         data.forEach((key,value)->{
             if(value==null) {
                 if (_usingNull) {
-                    sb.append(_context.field(key)).append("=null,");
+                    sb.append(formatField(key)).append("=null,");
                 }
                 return;
             }
@@ -324,15 +336,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (isSqlExpr(val2)) {
-                    sb.append(_context.field(key)).append("=").append(val2.substring(1)).append(",");
+                    sb.append(formatField(key)).append("=").append(val2.substring(1)).append(",");
                 }
                 else {
-                    sb.append(_context.field(key)).append("=?,");
+                    sb.append(formatField(key)).append("=?,");
                     args.add(value);
                 }
             }
             else {
-                sb.append(_context.field(key)).append("=?,");
+                sb.append(formatField(key)).append("=?,");
                 args.add(value);
             }
         });
@@ -370,17 +382,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public T innerJoin(String table) {
-        _builder.append(" INNER JOIN ").append(_context.object(table));
+        _builder.append(" INNER JOIN ").append(formatObject(table));
         return (T)this;
     }
 
     public T leftJoin(String table) {
-        _builder.append(" LEFT JOIN ").append(_context.object(table));
+        _builder.append(" LEFT JOIN ").append(formatObject(table));
         return (T)this;
     }
 
     public T rightJoin(String table) {
-        _builder.append(" RIGHT JOIN ").append(_context.object(table));
+        _builder.append(" RIGHT JOIN ").append(formatObject(table));
         return (T)this;
     }
 
@@ -396,12 +408,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
     }
 
     public T groupBy(String groupBy) {
-        _builder.append(" GROUP BY ").append(groupBy);
+        _builder.append(" GROUP BY ").append(formatColumns(groupBy));
         return (T)this;
     }
 
     public T orderBy(String orderBy) {
-        _builder.append(" ORDER BY ").append(orderBy);
+        _builder.append(" ORDER BY ").append(formatColumns(orderBy));
         return (T)this;
     }
 
@@ -481,7 +493,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
             sb.append(" TOP ").append(_top).append(" ");
         }
 
-        sb.append(columns).append(" FROM ").append(_table);
+        sb.append(formatColumns(columns)).append(" FROM ").append(_table);
 
         _builder.backup();
         _builder.insert(sb.toString());
