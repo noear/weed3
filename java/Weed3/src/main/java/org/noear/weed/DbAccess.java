@@ -5,6 +5,7 @@ import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Fun0;
+import org.noear.weed.utils.StringUtils;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -64,7 +65,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     protected String buildWeedKey(Collection<Variate> args){
         if(_weedKey==null)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = StringUtils.borrowBuilder();
 
             sb.append(getCommandID()).append(":");
 
@@ -72,7 +73,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
                 sb.append("_").append(p.getValue());
             }
 
-            _weedKey=sb.toString();
+            _weedKey= StringUtils.releaseBuilder(sb);
         }
         return _weedKey;
     }

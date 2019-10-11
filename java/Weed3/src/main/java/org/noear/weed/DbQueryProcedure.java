@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.ext.Act0;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtil;
+import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -151,7 +152,7 @@ public class DbQueryProcedure extends DbProcedure {
                 Variate val = _paramS2.get(key);
                 Object tmp = val.getValue();
                 if (tmp instanceof Iterable) { //支持数组型参数
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = StringUtils.borrowBuilder();
                     for (Object p2 : (Iterable) tmp) {
                         doSet(new Variate(key, p2));
 
@@ -163,7 +164,7 @@ public class DbQueryProcedure extends DbProcedure {
                         sb.deleteCharAt(len - 1);
                     }
 
-                    tmpList.put(key, sb.toString());
+                    tmpList.put(key, StringUtils.releaseBuilder(sb));
                 } else {
                     doSet(val);
                     tmpList.put(key, "?");

@@ -4,6 +4,7 @@ import org.noear.weed.cache.CacheUsing;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         }
 
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         data.forEach((key, value) -> {
@@ -163,7 +164,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.append(");");
 
         _builder.clear();
-        _builder.append(sb.toString(), args.toArray());
+        _builder.append(StringUtils.releaseBuilder(sb), args.toArray());
 
         return compile().insert();
     }
@@ -308,7 +309,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         }
 
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append("UPDATE ").append(_table).append(" SET ");
 
@@ -339,7 +340,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
         sb.deleteCharAt(sb.length() - 1);
 
         _builder.backup();
-        _builder.insert(sb.toString(), args.toArray());
+        _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
 
         if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of update condition!!!");
@@ -423,13 +424,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase>  {
 
     public boolean exists() throws SQLException {
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append("SELECT 1 FROM ").append(_table);
 
         _builder.backup();
 
-        _builder.insert(sb.toString());
+        _builder.insert(StringUtils.releaseBuilder(sb));
         _builder.append(" LIMIT 1");
 
         //1.构建sql

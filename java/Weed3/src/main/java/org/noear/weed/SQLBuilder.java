@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.utils.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,10 +82,11 @@ public class SQLBuilder {
             paramS = new ArrayList<Object>();
 
             if (args.length > 0) {
-                StringBuilder builder = new StringBuilder(code);
+                StringBuilder builder = StringUtils.borrowBuilder();
+                builder.append(code);
                 for (Object p1 : args) {
                     if (p1 instanceof Iterable) { //将数组转为单体
-                        StringBuilder sb = new StringBuilder();
+                        StringBuilder sb = StringUtils.borrowBuilder();
                         for (Object p2 : (Iterable) p1) {
                             paramS.add(p2);
                             sb.append("?").append(",");
@@ -95,12 +98,13 @@ public class SQLBuilder {
                         }
 
                         int idx = builder.indexOf("?...");
+                        String tmp = StringUtils.releaseBuilder(sb);
 
                         //imporved by Yukai
                         if (len == 0) {
                             builder.replace(idx, idx + 4, "null");
                         } else {
-                            builder.replace(idx, idx + 4, sb.toString());
+                            builder.replace(idx, idx + 4, tmp);
                         }
                     }
                     else if (p1 instanceof DbQuery) {
@@ -122,7 +126,7 @@ public class SQLBuilder {
                     }
                 }
 
-                this.code = builder.toString();
+                this.code = StringUtils.releaseBuilder(builder);
             }
             else {
                 this.code = code;

@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Fun0;
+import org.noear.weed.utils.StringUtils;
 
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class DbStoredProcedure extends DbProcedure {
         cmd.key      = getCommandID();
         cmd.paramS  = this.paramS;
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
         sb.append("{call ");
 
         if(WeedConfig.isUsingTableSpace && context.hasSchema()) {
@@ -75,7 +76,7 @@ public class DbStoredProcedure extends DbProcedure {
         }
         sb.append('}');
 
-        cmd.text = sb.toString();
+        cmd.text = StringUtils.releaseBuilder(sb);
 
         runCommandBuiltEvent(cmd);
 
