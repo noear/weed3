@@ -95,31 +95,6 @@ public class DbContext {
         return this;
     }
 
-
-    /** 字段格式符设置 */
-    public DbContext fieldFormatSet(String format) {
-        _fieldFormat = format;
-        if (format != null && format.length() > 1) {
-            _fieldFormat_start = format.substring(0, 1);
-        }else{
-            _fieldFormat_start="";
-        }
-
-        return this;
-    }
-
-    /** 对象格式符设置 */
-    public DbContext objectFormatSet(String format){
-        _objectFormat = format;
-        if (format != null && format.length() > 1) {
-            _objectFormat_start = format.substring(0, 1);
-        }else{
-            _objectFormat_start="";
-        }
-        return this;
-    }
-
-
     /** 代码注解设置 */
     public DbContext codeHintSet(String hint) {
         _codeHint = hint;
@@ -131,31 +106,6 @@ public class DbContext {
         return _codeHint;
     }
 
-    /** 字段格式化 */
-    public String field(String name) {
-        if (TextUtil.isEmpty(_fieldFormat)) {
-            return name;
-        } else {
-            if (name.startsWith(_fieldFormat_start)) {
-                return name;
-            } else {
-                return _fieldFormat.replace("%", name);
-            }
-        }
-    }
-
-    /** 对象格式化 */
-    public String object(String name) {
-        if (TextUtil.isEmpty(_objectFormat)) {
-            return name;
-        } else {
-            if (name.startsWith(_objectFormat_start) || name.indexOf(" ") > 0) {
-                return name;
-            } else {
-                return _objectFormat.replace("%", name);
-            }
-        }
-    }
 
     /*是否配置了schema*/
     public boolean hasSchema(){return _schemaName!=null;}
@@ -224,6 +174,62 @@ public class DbContext {
 
     public DbTranQueue tranQueue(Act1Ex<DbTranQueue,SQLException> handler) throws SQLException {
         return new DbTranQueue().execute(handler);
+    }
+
+    //
+    // 格式化处理
+    //
+
+    /** 字段格式符设置 */
+    public DbContext fieldFormatSet(String format) {
+        _fieldFormat = format;
+        if (format != null && format.length() > 1) {
+            _fieldFormat_start = format.substring(0, 1);
+        }else{
+            _fieldFormat_start="";
+        }
+
+        return this;
+    }
+
+    /** 对象格式符设置 */
+    public DbContext objectFormatSet(String format){
+        _objectFormat = format;
+        if (format != null && format.length() > 1) {
+            _objectFormat_start = format.substring(0, 1);
+        }else{
+            _objectFormat_start="";
+        }
+        return this;
+    }
+
+
+
+
+    /** 字段格式化 */
+    public String field(String name) {
+        if (TextUtil.isEmpty(_fieldFormat)) {
+            return name;
+        } else {
+            if (name.startsWith(_fieldFormat_start)) {
+                return name;
+            } else {
+                return _fieldFormat.replace("%", name);
+            }
+        }
+    }
+
+    /** 对象格式化 */
+    public String object(String name) {
+        if (TextUtil.isEmpty(_objectFormat)) {
+            return name;
+        } else {
+            if (name.startsWith(_objectFormat_start) || name.indexOf(" ") > 0) {
+                return name;
+            } else {
+                return _objectFormat.replace("%", name);
+            }
+        }
     }
 
 }
