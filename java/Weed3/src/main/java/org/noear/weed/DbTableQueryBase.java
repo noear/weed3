@@ -41,6 +41,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return _context.formater().formatColumns(columns);
     }
 
+    protected String formatCondition(String condition){
+        return _context.formater().formatCondition(condition);
+    }
+
+
     public DbTableQueryBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
@@ -78,7 +83,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
     //使用 ?... 支持数组参数
     public T where(String where, Object... args) {
-        _builder.append(" WHERE ").append(where, args);
+        _builder.append(" WHERE ").append(formatCondition(where), args);
         return (T)this;
     }
 
@@ -88,7 +93,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     public T and(String and, Object... args) {
-        _builder.append(" AND ").append(and, args);
+        _builder.append(" AND ").append(formatCondition(and), args);
         return (T)this;
     }
 
@@ -98,7 +103,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     public T or(String or, Object... args) {
-        _builder.append(" OR ").append(or, args);
+        _builder.append(" OR ").append(formatCondition(or), args);
         return (T)this;
     }
 
@@ -114,7 +119,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     public T begin(String and, Object... args) {
-        _builder.append(" ( ").append(and, args);
+        _builder.append(" ( ").append(formatCondition(and), args);
         return (T)this;
     }
 

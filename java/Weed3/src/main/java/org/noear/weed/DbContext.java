@@ -226,6 +226,10 @@ public class DbContext {
         return this;
     }
 
+    public DbContext formaterSet(DbFormater formater){
+        _formater = formater;
+        return this;
+    }
     public DbFormater formater(){
         return _formater;
     }

@@ -5,11 +5,11 @@ import org.noear.weed.utils.StringUtils;
 /** 提供格式处理 */
 public class DbFormater {
     //字段格式符
-    private String _fieldFormat;
-    private String _fieldFormat_start;
+    protected String _fieldFormat;
+    protected String _fieldFormat_start;
     //对象格式符
-    private String _objectFormat;
-    private String _objectFormat_start;
+    protected String _objectFormat;
+    protected String _objectFormat_start;
 
     /**
      * 字段格式符设置
@@ -37,7 +37,7 @@ public class DbFormater {
 
 
     /**
-     * 字段格式化（用于：set(..,v)）
+     * 格式化字段（用于：set(..,v)）
      */
     public String formatField(String name) {
         if (StringUtils.isEmpty(_fieldFormat)) {
@@ -53,7 +53,7 @@ public class DbFormater {
 
 
     /**
-     * 多列格式化（用于：select(..) orderBy(..) groupBy(..)）
+     * 格式化多列（用于：select(..) orderBy(..) groupBy(..)）
      */
     public String formatColumns(String columns) {
         if (StringUtils.isEmpty(_fieldFormat)) {
@@ -93,8 +93,13 @@ public class DbFormater {
         return _fieldFormat.replace("%", name);
     }
 
+    //格式化条件（用于：where() and() or()） //暂时不实现
+    public String formatCondition(String condition){
+        return condition;
+    }
+
     /**
-     * 对象格式化（用于：from(..), join(..)）
+     * 格式化对象（用于：from(..), join(..)）
      */
     public String formatObject(String name) {
         if (StringUtils.isEmpty(_objectFormat)) {
