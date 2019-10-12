@@ -27,9 +27,11 @@ public interface IQuery extends ICacheController<IQuery> {
      <T extends IBinder> List<T> getList(T model) throws SQLException;
      <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
 
-     <T> T getItem(Class<T> cls) throws SQLException,ReflectiveOperationException;
+     <T> T getItem(Class<T> cls) throws SQLException;
+     <T> T getItem(Class<T> cls,Act2<CacheUsing, T> cacheCondition) throws SQLException;
 
-     <T> List<T> getList(Class<T> cls) throws SQLException,ReflectiveOperationException;
+     <T> List<T> getList(Class<T> cls) throws SQLException;
+     <T> List<T> getList(Class<T> cls,Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
 
      DataList getDataList() throws SQLException;
      DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;

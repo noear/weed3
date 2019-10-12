@@ -15,7 +15,15 @@ public class EntityUtil {
     private static Map<Field,Method> _fieldSetLib = new HashMap<>();
     private static Map<Field,Method> _fieldGetLib = new HashMap<>();
 
-    public static void fromEntity(Object obj, Act2<String,Object> setter) throws ReflectiveOperationException{
+    public static void fromEntity(Object obj, Act2<String,Object> setter){
+        try{
+            fromEntity_do(obj,setter);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private static void fromEntity_do(Object obj, Act2<String,Object> setter) throws ReflectiveOperationException{
         Class<?> cls = obj.getClass();
         Field[] fields = obj.getClass().getDeclaredFields();
         DbField fa;
@@ -31,7 +39,15 @@ public class EntityUtil {
         }
     }
 
-    public  static  <T> T toEntity(Class<T> cls, Field[] fields, DataItem data) throws ReflectiveOperationException{
+    public  static  <T> T toEntity(Class<T> cls, Field[] fields, DataItem data){
+        try{
+            return toEntity_do(cls,fields,data);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private    static  <T> T toEntity_do(Class<T> cls, Field[] fields, DataItem data) throws ReflectiveOperationException{
         String key = null;
         T item = cls.newInstance();
 

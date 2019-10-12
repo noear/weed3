@@ -299,14 +299,14 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
 
     /** 从Entity 加载数据 */
-    public void fromEntity(Object obj) throws ReflectiveOperationException {
+    public void fromEntity(Object obj)  {
         EntityUtil.fromEntity(obj,(k, v)->{
             set(k, v);
         });
     }
 
     /** 转为Entity */
-    public  <T> T toEntity(Class<T> cls) throws ReflectiveOperationException{
+    public  <T> T toEntity(Class<T> cls) {
         Field[] fields = cls.getDeclaredFields();
         return EntityUtil.toEntity(cls,fields,this);
     }

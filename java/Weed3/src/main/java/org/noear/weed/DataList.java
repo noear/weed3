@@ -87,7 +87,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
     }
 
     /** 将所有列转为类做为数组的数据 */
-    public <T>  List<T> toEntityList(Class<T> cls) throws ReflectiveOperationException {
+    public <T>  List<T> toEntityList(Class<T> cls)  {
         List<T> list = new ArrayList<T>(getRowCount());
         Field[] fields = cls.getDeclaredFields();
 

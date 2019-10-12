@@ -238,13 +238,37 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     @Override
-    public  <T> List<T> getList(Class<T> cls) throws SQLException,ReflectiveOperationException{
+    public  <T> List<T> getList(Class<T> cls) throws SQLException{
         return getDataList().toEntityList(cls);
     }
 
     @Override
-    public  <T> T getItem(Class<T> cls) throws SQLException,ReflectiveOperationException{
+    public <T> List<T> getList(Class<T> cls, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException {
+        return getDataList((cu,dl)->{
+            try {
+                List<T> list = dl.toEntityList(cls);
+                cacheCondition.run(cu, list);
+            }catch (Exception ex){
+                throw new RuntimeException(ex);
+            }
+        }).toEntityList(cls);
+    }
+
+    @Override
+    public  <T> T getItem(Class<T> cls) throws SQLException{
         return getDataItem().toEntity(cls);
+    }
+
+    @Override
+    public <T> T getItem(Class<T> cls, Act2<CacheUsing, T> cacheCondition) throws SQLException {
+        return getDataItem((cu,di)->{
+            try {
+                T dm = di.toEntity(cls);
+                cacheCondition.run(cu, dm);
+            }catch (Exception ex){
+                throw new RuntimeException(ex);
+            }
+        }).toEntity(cls);
     }
 
     @Override
