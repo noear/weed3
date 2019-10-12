@@ -3,7 +3,7 @@ package org.noear.weed;
 import org.noear.weed.utils.StringUtils;
 
 /** 提供格式处理 */
-public class DbFormater {
+public class DbFormater implements IDbFormater{
     //字段格式符
     protected String _fieldFormat;
     protected String _fieldFormat_start;
