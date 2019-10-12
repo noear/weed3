@@ -42,10 +42,4 @@ public interface IQuery extends ICacheController<IQuery> {
      Map<String,Object> getMap() throws SQLException;
 
      <T> List<T> getArray(String column) throws SQLException;
-
-     //改由：ICacheController 定义
-//     IQuery caching(ICacheService service);
-//     IQuery usingCache(boolean isCache);
-//     IQuery usingCache(int seconds);
-//     IQuery cacheTag(String tag);
 }
