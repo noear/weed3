@@ -1,4 +1,4 @@
-package weed3demo.demo_plus.queryProcedure;
+package weed3demo.demo_plus.queryProcedure_lazyload;
 
 import weed3demo.demo.model.UserInfoModel;
 

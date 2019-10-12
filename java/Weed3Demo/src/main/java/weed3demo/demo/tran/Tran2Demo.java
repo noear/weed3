@@ -34,7 +34,7 @@ public class Tran2Demo {
         DbTran tran = new DbTran(DbConfig.pc_user);
 
         tran.join(queue).execute((t) -> {
-            t.db().sql("insert into $.test(txt) values(?)", "cc").tran(t).execute();
+            t.db().sql("insert into $.test(txt) values(?)", "cc").tran(t).insert();
             t.db().sql("insert into $.test(txt) values(?)", "dd").tran(t).execute();
             t.db().sql("insert into $.test(txt) values(?)", "ee").tran(t).execute();
 

@@ -21,6 +21,7 @@ public class demo_table {
         long row_id = db.table("test")
                 .insert(new DataItem().set("log_time", "$DATE(NOW())"));
 
+
         if (row_id == 0)
             return;
     }
