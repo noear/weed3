@@ -33,7 +33,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.1.8</version>
+  <version>3.1.9.1</version>
 </dependency>
 ```
  
