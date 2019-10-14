@@ -17,13 +17,4 @@ public class XmlSqlFactory {
     public static IXmlSqlBuilder get(String name){
         return _sqlMap.get(name);
     }
-
-    public static SQLBuilder getSqlBuilder(String name, Map map) {
-        IXmlSqlBuilder xmlSqlBuilder = _sqlMap.get(name);
-        if (xmlSqlBuilder != null) {
-            return xmlSqlBuilder.build(map);
-        }
-
-        return null;
-    }
 }

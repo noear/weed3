@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtil;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.xml.IXmlSqlBuilder;
 import org.noear.weed.xml.XmlSqlFactory;
 
 import java.util.HashMap;
@@ -72,7 +73,12 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.key      = getCommandID();
 
 
-        SQLBuilder sqlBuilder = XmlSqlFactory.getSqlBuilder(_sqlName, _map);
+        IXmlSqlBuilder xmlSqlBuilder = XmlSqlFactory.get(_sqlName);
+        if(xmlSqlBuilder == null) {
+            throw new RuntimeException("Xml sql @" + _sqlName + " does not exist");
+        }
+
+        SQLBuilder sqlBuilder = xmlSqlBuilder.build(_map);
 
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;

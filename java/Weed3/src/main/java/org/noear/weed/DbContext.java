@@ -179,16 +179,16 @@ public class DbContext {
      * 输入process name，获取process执行对象
      */
     public DbProcedure call(String process) {
+        if (process.startsWith("@")) {
+            XmlSqlLoader.tryLoad();
+            return new DbSqlProcedure(this).sql(process.substring(1));
+        }
+
         if (process.indexOf(" ") > 0) {
             return new DbQueryProcedure(this).sql(process);
-        } else if(process.startsWith("@")){
-
-            XmlSqlLoader.tryLoad();
-
-            return new DbSqlProcedure(this).sql(process);
-        } else {
-            return new DbStoredProcedure(this).call(process);
         }
+
+        return new DbStoredProcedure(this).call(process);
     }
 
 
