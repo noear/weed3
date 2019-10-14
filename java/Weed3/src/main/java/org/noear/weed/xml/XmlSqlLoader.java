@@ -8,12 +8,35 @@ import java.util.List;
 public class XmlSqlLoader {
     public static XmlSqlLoader _g = new XmlSqlLoader();
 
+    private static String _lock = "";
 
+    private  boolean is_loaed = false;
     private List<File> xmlFiles = new ArrayList<>();
     /**
      * 加载扩展文件夹（或文件）
      * */
     public static void load() throws Exception{
+        if(_g.is_loaed == false){
+            synchronized (_lock){
+                if(_g.is_loaed == false){
+                    _g.is_loaed = true;
+
+                    _g.do_load();
+                }
+            }
+        }
+    }
+
+    public static void tryLoad(){
+        try{
+            load();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void do_load() throws Exception{
         URL path = getResource("/weed3/");
         File dic = new File(path.toURI());
         _g.do_load(dic);

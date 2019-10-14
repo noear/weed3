@@ -2,7 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
-import org.noear.weed.utils.StringUtils;
+import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -181,6 +181,11 @@ public class DbContext {
     public DbProcedure call(String process) {
         if (process.indexOf(" ") > 0) {
             return new DbQueryProcedure(this).sql(process);
+        } else if(process.startsWith("@")){
+
+            XmlSqlLoader.tryLoad();
+
+            return new DbSqlProcedure(this).sql(process);
         } else {
             return new DbStoredProcedure(this).call(process);
         }
