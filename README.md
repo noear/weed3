@@ -376,16 +376,19 @@ m.where("sex=?",1)
     </sql> 
 </mapper>
 ```
-示例::java调用<br/>
+示例::java调用（直接调用即可，其它不用干）<br/>
 ```java
 //使用方案1（已支持）
-db.call("sql.weed.test.user_add").set("user_id",12).insert();
+db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
 //使用方案2（随后支持）
-@mapping("sql.weed.test")
+// DbUserMapper.java 生成代码（类的名字与xml文件名一致）
+package sql.weed.test;
 public interface DbUserMapper{
     long user_add(int user_id);
 }
+
+//使用 DbUserMapper
 DbUserMapper um = WeedProxy.get(DbUserMapper.class);
 um.user_add(12);
 
