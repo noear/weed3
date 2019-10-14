@@ -1,23 +1,22 @@
-package org.noear.weed;
+package org.noear.weed.xml;
 
+import org.noear.weed.DbContext;
+import org.noear.weed.DbProcedure;
+import org.noear.weed.Variate;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.DbNamspace;
 import org.noear.weed.utils.StringUtils;
-import org.noear.weed.xml.XmlSqlBlock;
-import org.noear.weed.xml.XmlSqlFactory;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class WeedProxy {
+public class XmlSqlProxy {
 
     /** 创建接口调用代理客户端 */
     public static  <T> T get(Class<?> clz ) {
@@ -47,7 +46,15 @@ public class WeedProxy {
         Parameter[] names = method.getParameters();
         for (int i = 0, len = names.length; i < len; i++) {
             if (vals[i] != null) {
-                _map.put(names[i].getName(), vals[i]);
+                String key = names[i].getName();
+                Object val = vals[i];
+
+                //如果是_map参数，则做特殊处理
+                if("_map".equals(key) && val instanceof Map){
+                    _map.putAll((Map<String, Object>)val);
+                }else {
+                    _map.put(key, val);
+                }
             }
         }
 
