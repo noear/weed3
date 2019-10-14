@@ -1,8 +1,9 @@
-package weed3demo.mapper;
+package org.noear.weed.xml;
 
 import org.w3c.dom.Document;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class XmlSqlBlock {
     public String _namespace;

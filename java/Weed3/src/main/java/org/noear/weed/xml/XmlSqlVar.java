@@ -1,4 +1,4 @@
-package weed3demo.mapper;
+package org.noear.weed.xml;
 
 public class XmlSqlVar {
     public String mark;

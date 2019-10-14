@@ -1,29 +1,32 @@
-package weed3demo.mapper;
+package org.noear.weed.xml;
 
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.net.URL;
-import java.util.*;
+import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlSqlCompiler {
-    @Test
-    public  void load() throws Exception {
-        URL file_uri = getResource("/weed3/mapper.xml");
 
-        Document doc = parse(file_uri);
+    //将xml解析为java code
+    public static String parse(File xmlFile) throws Exception{
+        if(xmlFile == null){
+            return null;
+        }
+
+
+        Document doc = parseDoc(xmlFile);
 
         Node nm = doc.getDocumentElement();
-        Map map;
-
 
         String namespace = attr(nm, "namespace");
+        String classname = xmlFile.getName().replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
 
@@ -31,20 +34,43 @@ public class XmlSqlCompiler {
 
         sb.append("import java.util.Map;\n");
         sb.append("import java.util.Collection;\n");
-        sb.append("import org.noear.weed.SQLBuilder;\n\n");
+        sb.append("import org.noear.weed.SQLBuilder;\n");
+        sb.append("import org.noear.weed.xml.XmlSqlFactory;\n\n");
 
+        NodeList sql_items = doc.getElementsByTagName("sql");
 
-        NodeList nl = doc.getElementsByTagName("sql");
-        for (int i = 0, len = nl.getLength(); i < len; i++) {
-            Node n = nl.item(i);
+        sb.append("public class ").append(classname).append("{");
+
+        //构造函数
+        newLine(sb, 1).append("private static final String _namespace=\"").append(namespace).append("\";");
+        newLine(sb, 1).append("public ").append(classname).append("(){");
+
+        for (int i = 0, len = sql_items.getLength(); i < len; i++) {
+            Node n = sql_items.item(i);
+            String id_str = attr(n,"id");
+            if(id_str!= null){
+                newLine(sb,2).append("XmlSqlFactory.register(_namespace + \".")
+                        .append(id_str).append("\",")
+                        .append("this::").append(id_str).append(");");
+
+            }
+        }
+
+        newLine(sb, 1).append("}");
+
+        //代码码函数
+        for (int i = 0, len = sql_items.getLength(); i < len; i++) {
+            Node n = sql_items.item(i);
             parseSqlNode(doc, sb, n, namespace);
         }
 
-        System.out.println(sb.toString());
+        sb.append("}\n");
+
+        return sb.toString();
     }
 
     //xml:解析 sql 指令节点
-    private void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace) {
+    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 
@@ -64,11 +90,7 @@ public class XmlSqlCompiler {
         //构建申明的变量
         _parseDeclare(dblock);
 
-        sb.append("public class ").append(dblock._id).append(" implements IXmlSqlBuilder{");
-
-
-        newLine(sb, depth).append("@Override");
-        newLine(sb, depth).append("public SQLBuilder build(Map map){");
+        newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map){");
 
         //构建代码体和变量
         StringBuilder sb2 = new StringBuilder();
@@ -98,10 +120,10 @@ public class XmlSqlCompiler {
         sb.append("\n");
         newLine(sb, depth + 1).append("return sb;");
         newLine(sb, depth).append("}\n");
-        sb.append("}\n\n");
+
     }
 
-    private void _parseDeclare(XmlSqlBlock dblock) {
+    private static void _parseDeclare(XmlSqlBlock dblock) {
         if (dblock._declare == null) {
             return;
         }
@@ -117,7 +139,7 @@ public class XmlSqlCompiler {
         }
     }
 
-    private void _parseNodeList(NodeList nl, StringBuilder sb, XmlSqlBlock dblock, int depth) {
+    private static void _parseNodeList(NodeList nl, StringBuilder sb, XmlSqlBlock dblock, int depth) {
         for (int i = 0, len = nl.getLength(); i < len; i++) {
             Node n = nl.item(i);
 
@@ -125,7 +147,7 @@ public class XmlSqlCompiler {
         }
     }
 
-    private void _parseNode(Node n, StringBuilder sb, XmlSqlBlock dblock,  int depth){
+    private static void _parseNode(Node n, StringBuilder sb, XmlSqlBlock dblock,  int depth){
         int type = n.getNodeType();
 
         if (type == 3) {//text
@@ -155,7 +177,7 @@ public class XmlSqlCompiler {
     }
 
     //xml:解析 if 指令节点
-    private void parseIfNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+    private static void parseIfNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
         String _test = attr(n, "test");
 
         newLine(sb, depth).append("if(").append(_test).append("){");
@@ -167,7 +189,7 @@ public class XmlSqlCompiler {
 
 
     //xml:解析 for 指令节点
-    private void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+    private static void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
         String _var_str = attr(n, "var").trim();
 
         if(_var_str.indexOf(":")<0 || _var_str.length() < 3){
@@ -191,7 +213,7 @@ public class XmlSqlCompiler {
     }
 
     //sb:新起一行代码
-    private StringBuilder newLine(StringBuilder sb, int depth){
+    private static StringBuilder newLine(StringBuilder sb, int depth){
         sb.append("\n");
         while (depth>0){
             sb.append("  ");
@@ -202,7 +224,7 @@ public class XmlSqlCompiler {
     }
 
     //xml:读取属性
-    private String attr(Node n, String name){
+    private static String attr(Node n, String name){
         Node tmp = n.getAttributes().getNamedItem(name);
         if(tmp == null){
             return null;
@@ -211,15 +233,20 @@ public class XmlSqlCompiler {
         }
     }
 
+    private static DocumentBuilderFactory dbf = null;
+    private static DocumentBuilder db = null;
     //xml:解析文档
-    private Document parse(URL url) throws Exception{
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        return db.parse(url.toString());
+    private static Document parseDoc(File xmlFile) throws Exception{
+        if(dbf ==null) {
+            dbf = DocumentBuilderFactory.newInstance();
+            db = dbf.newDocumentBuilder();
+        }
+
+        return db.parse(xmlFile);
     }
 
     //sql::格式化字符串
-    private void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt){
+    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt){
         String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
 
@@ -298,20 +325,5 @@ public class XmlSqlCompiler {
                 sb.append(",").append(v.name);
             });
         }
-    }
-
-    //res::获取资源的RUL
-    public static URL getResource(String name) {
-        URL url = XmlSqlCompiler.class.getResource(name);
-        if (url == null) {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            if (loader != null) {
-                url = loader.getResource(name);
-            } else {
-                url = ClassLoader.getSystemResource(name);
-            }
-        }
-
-        return url;
     }
 }

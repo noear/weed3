@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="org.xxx.xxx">
+<mapper namespace="org.xxx.xxx2">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
