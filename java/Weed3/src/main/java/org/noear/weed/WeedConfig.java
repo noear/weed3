@@ -28,6 +28,8 @@ public final class WeedConfig {
     static Set<Act2<Command,Exception>> onException_listener = new LinkedHashSet<>();
     static Set<Act1<Command>> onLog_listener = new LinkedHashSet<>();
 
+    static Set<Act1<Command>>           onCommandBuilt_listener = new LinkedHashSet();
+
     //执行之前
     static Set<Fun1<Boolean,Command>>   onExecuteBef_listener = new LinkedHashSet<>();
     //执行声明
@@ -50,6 +52,14 @@ public final class WeedConfig {
 
             onException_listener.forEach(fun->{
                 fun.run(cmd,ex);
+            });
+        }
+    }
+
+    protected static void runCommandBuiltEvent(Command cmd) {
+        if (onCommandBuilt_listener.size() > 0) {
+            onCommandBuilt_listener.forEach(fun->{
+                fun.run(cmd);
             });
         }
     }
@@ -92,26 +102,30 @@ public final class WeedConfig {
     //--------------------------------------
     //
     //
-
+    /** 出现异常时 */
     public static void onException(Act2<Command,Exception> listener)
     {
         onException_listener.add(listener);
     }
 
+    /** 可以记日志时 */
     public static void onLog(Act1<Command> listener){
         onLog_listener.add(listener);
     }
 
-
-    //执行之前
+    /** 命令构建完成时 */
+    public static void onCommandBuilt(Act1<Command> listener){
+        onCommandBuilt_listener.add(listener);
+    }
+    /** 执行之前 */
     public static void onExecuteBef(Fun1<Boolean,Command> listener){
         onExecuteBef_listener.add(listener);
     }
-    //执行声明
+    /** 执行之中 */
     public static void onExecuteStm(Act3<Command,Statement,DbTran> listener){
         onExecuteStm_listener.add(listener);
     }
-    //执行之后
+    /** 执行之后 */
     public static void onExecuteAft(Act1<Command> listener){
         onExecuteAft_listener.add(listener);
     }

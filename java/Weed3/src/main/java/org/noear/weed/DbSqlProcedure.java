@@ -4,18 +4,15 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtil;
 import org.noear.weed.utils.StringUtils;
-import org.noear.weed.xml.IXmlSqlBuilder;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by noear on 14-6-12.
+ * Created by noear on 19-10-14.
  * SQL过程访问类
  */
 public class DbSqlProcedure extends DbProcedure {
@@ -88,6 +85,15 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;
 
+        tryCachController(block);
+
+        runCommandBuiltEvent(cmd);
+
+        return cmd;
+    }
+
+    /** 尝试缓存控制 */
+    private void tryCachController(XmlSqlBlock block){
         //配置化缓存处理（有配置，并且未手动配置过缓存）...
         if(StringUtils.isEmpty(block._caching) == false && this._cache == null){
             ICacheServiceEx cache = WeedConfig.libOfCache.get(block._caching);
@@ -117,10 +123,5 @@ public class DbSqlProcedure extends DbProcedure {
                 }
             }
         }
-
-
-        runCommandBuiltEvent(cmd);
-
-        return cmd;
     }
 }

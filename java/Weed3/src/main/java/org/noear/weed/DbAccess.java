@@ -44,6 +44,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         if(onCommandExpr!=null){
             onCommandExpr.run(cmd);
         }
+
+        //全局监听
+        WeedConfig.runCommandBuiltEvent(cmd);
     }
 
 
