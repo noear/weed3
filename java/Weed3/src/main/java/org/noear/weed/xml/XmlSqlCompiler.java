@@ -1,5 +1,6 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -26,6 +27,7 @@ public class XmlSqlCompiler {
         Node nm = doc.getDocumentElement();
 
         String namespace = attr(nm, "namespace");
+        String db = attr(nm, ":db");
         String classname = xmlFile.getName().replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
@@ -61,7 +63,7 @@ public class XmlSqlCompiler {
         //代码码函数
         for (int i = 0, len = sql_items.getLength(); i < len; i++) {
             Node n = sql_items.item(i);
-            parseSqlNode(doc, sb, n, namespace, classname);
+            parseSqlNode(doc, sb, n, namespace, db, classname);
         }
 
         sb.append("}\n");
@@ -70,7 +72,7 @@ public class XmlSqlCompiler {
     }
 
     //xml:解析 sql 指令节点
-    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace, String classname) {
+    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace, String db, String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 
@@ -81,6 +83,14 @@ public class XmlSqlCompiler {
 
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
+
+        String db_tmp = attr(n, ":db");
+        if(StringUtils.isEmpty(db_tmp)) {
+            dblock._db = db;
+        }else{
+            dblock._db = db_tmp;
+        }
+
 
         dblock._caching = attr(n, ":caching");
         dblock._usingCache = attr(n, ":usingCache");

@@ -1,7 +1,5 @@
 package org.noear.weed.xml;
 
-import org.w3c.dom.Document;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -15,12 +13,21 @@ public class XmlSqlBlock {
     public String _declare;
     public String _return;
 
+    public String _db;
+
     public String _caching;
     public String _cacheClear;
     public String _cacheTag;
     public String _usingCache;
 
     public String action;
+    public boolean isSelect(){
+        return "SELECT".equals(action);
+    }
+
+    public boolean isInsert(){
+        return "INSERT".equals(action);
+    }
 
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
     public void varPut(XmlSqlVar dv) {
