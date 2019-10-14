@@ -291,8 +291,8 @@ class SQLer {
 
         int idx = 1;
         //2.设置参数值
-        for (Variate p : cmd.paramS) {
-            stmt.setObject(idx, p.getValue());
+        for (Object v : cmd.paramS) {
+            stmt.setObject(idx, v);
             idx++;
         }
 

@@ -118,25 +118,6 @@ public class DbQueryProcedure extends DbProcedure {
 
         String sqlTxt = this.commandText;
 
-//        {
-//            Pattern pattern = Pattern.compile("@\\w+");
-//            Matcher m = pattern.matcher(sqlTxt);
-//            while (m.find()) {
-//                String key = m.group(0);
-//                if(WeedConfig.isDebug){
-//                    if(_paramS2.containsKey(key)==false){
-//                        throw new SQLException("Lack of parameter:"+key);
-//                    }
-//                }
-//
-//                doSet(_paramS2.get(key));
-//            }
-//
-//            for (String key : _paramS2.keySet()) {
-//                sqlTxt = sqlTxt.replace(key, "?");
-//            }
-//        }
-
         {
             Map<String, String> tmpList = new HashMap<>();
             Pattern pattern = Pattern.compile("@\\w+");
@@ -193,7 +174,11 @@ public class DbQueryProcedure extends DbProcedure {
             sqlTxt.replace("$",context.getSchema());
         }
 
-        cmd.paramS  = this.paramS;
+        cmd.paramS = new ArrayList<>();
+        for(Variate v : this.paramS){
+            cmd.paramS.add(v.getValue());
+        }
+        
         cmd.text    = sqlTxt;
 
         runCommandBuiltEvent(cmd);

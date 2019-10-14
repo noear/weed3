@@ -20,7 +20,7 @@ public class Command {
     /*命令文本*/
     public String       text;
     /*命令参数*/
-    public List<Variate> paramS;
+    public List<Object> paramS;
     /*数据库上下文*/
     public DbContext context;
 
@@ -34,8 +34,8 @@ public class Command {
             _paramMap = new LinkedHashMap<>();
 
             int idx = 0;
-            for (Variate v : paramS) {
-                _paramMap.put("v" + idx, v.getValue());
+            for (Object v : paramS) {
+                _paramMap.put("v" + idx, v);
                 idx++;
             }
         }

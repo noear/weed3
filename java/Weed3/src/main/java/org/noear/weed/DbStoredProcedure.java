@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -55,7 +56,10 @@ public class DbStoredProcedure extends DbProcedure {
         Command cmd = new Command(this.context);
 
         cmd.key      = getCommandID();
-        cmd.paramS  = this.paramS;
+        cmd.paramS   = new ArrayList<>();
+        for(Variate v : this.paramS){
+            cmd.paramS.add(v.getValue());
+        }
 
         StringBuilder sb = StringUtils.borrowBuilder();
         sb.append("{call ");

@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by noear on 14-9-5.
@@ -46,7 +47,10 @@ public class DbQuery extends DbAccess<DbQuery> {
         Command cmd = new Command(this.context);
 
         cmd.key     = getCommandID();
-        cmd.paramS  = this.paramS;
+        cmd.paramS = new ArrayList<>();
+        for(Variate v : this.paramS){
+            cmd.paramS.add(v.getValue());
+        }
 
         StringBuilder sb = new StringBuilder(commandText);
 
