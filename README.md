@@ -367,7 +367,7 @@ m.where("sex=?",1)
 ```
 
 ### 二、xml配置用法
-示例::xml配置<br/>
+示例::xml配置（/weed3/DbUserMapper.xml）<br/>
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="sql.weed.test">
