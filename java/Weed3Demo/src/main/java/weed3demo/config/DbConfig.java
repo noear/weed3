@@ -17,5 +17,5 @@ public class DbConfig {
     public static DbContext pc_pool  = new DbContext("pc_pool", "test");
     public static DbContext pc_bcf   = new DbContext("pc_bcf", "test");
 
-    public static DbContext xxxx  = new DbContext("pc_user","jdbc:mysql://db.zheq.org:3306/pc_user","root","1234");
+    //public static DbContext xxxx  = new DbContext("pc_user","jdbc:mysql://db.zheq.org:3306/pc_user","root","1234");
 }

@@ -46,6 +46,12 @@
             <artifactId>weed3</artifactId>
             <version>3.1.7</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
