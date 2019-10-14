@@ -18,11 +18,26 @@ for 循环控制指令
 name:type    = 变量申明
 @{name:type} = 变量注入
 ${name:type} = 变量替换
+
+//列表([]替代<>)
+:return="List[weed3demo.mapper.UserModel]" => List<UserModel>
+:return="List[String]" => List<String> （Date,Long,...大写开头的单值类型）
+:return="MapList" => List<Map<String,Object>>
+:return="DataList" => DataList
+
+//一行
+:return="weed3demo.mapper.UserModel" => UserModel
+:return="Map" => Map<String,Object>
+:return="DataItem" => DataItem
+
+//单值
+:return="String" => String （任何单职类型）
 -->
 <mapper namespace="org.xxx.xxx" :db="testdb">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
+
     <sql id="user_add_if" :return="int">
         INSERT user(user_id
         <if test="mobile !=null">
@@ -60,7 +75,7 @@ ${name:type} = 变量替换
 
     <sql id="user_get"
          :declare="foList:int,user_id:long"
-         :return="weed3demo.mapper.UserModel"
+         :return="List[weed3demo.mapper.UserModel]"
          :caching="localCache"
          :cacheTag="user_${user_id},user_1">
         SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile=@{mobile:String}

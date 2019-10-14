@@ -14,6 +14,7 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class XmlSqlProxy {
@@ -42,7 +43,7 @@ public class XmlSqlProxy {
         }
 
         //2.构建参数
-        Map<String, Object> _map = new HashMap<>();
+        Map<String, Object> _map = new LinkedHashMap<>();
         Parameter[] names = method.getParameters();
         for (int i = 0, len = names.length; i < len; i++) {
             if (vals[i] != null) {
@@ -58,6 +59,7 @@ public class XmlSqlProxy {
             }
         }
 
+        //3.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(xml_name);
         if(block == null){
             throw new RuntimeException("Xmlsql does not exist:" +xml_name);
@@ -71,10 +73,10 @@ public class XmlSqlProxy {
             throw new RuntimeException("WeedConfig.libOfDb does not exist:@"+block._db);
         }
 
-        //3.生成命令
+        //4.生成命令
         DbProcedure sp = db.call("@"+xml_name).setMap(_map);
 
-        //4.构建输出
+        //5.构建输出
         Class<?> rst_type = method.getReturnType();
         Type     rst_type2 = method.getGenericReturnType();
 

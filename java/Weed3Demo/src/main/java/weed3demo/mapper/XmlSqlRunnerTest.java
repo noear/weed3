@@ -3,11 +3,9 @@ package weed3demo.mapper;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
-import org.noear.weed.WeedProxy;
-import org.noear.weed.xml.XmlSqlCompiler;
 import org.noear.weed.xml.XmlSqlLoader;
+import org.noear.weed.xml.XmlSqlProxy;
 
-import java.io.File;
 import java.net.URL;
 
 public class XmlSqlRunnerTest {
@@ -18,7 +16,7 @@ public class XmlSqlRunnerTest {
 
         XmlSqlLoader.load();
 
-        Mapper api = WeedProxy.get(Mapper.class);
+        Mapper api = XmlSqlProxy.get(Mapper.class);
         api.user_get("mobile,sex",10,"18658857337");
     }
 
