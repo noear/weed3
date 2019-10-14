@@ -8,6 +8,9 @@ import org.noear.weed.xml.IXmlSqlBuilder;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,11 +104,16 @@ public class DbSqlProcedure extends DbProcedure {
                 }
 
                 if(StringUtils.isEmpty(block._cacheTag) == false){
-                    this.cacheTag(block.format(block._cacheTag, _map));
+                    Arrays.asList(block.format(block._cacheTag, _map).split(",")).forEach((k)->{
+                        this.cacheTag(k.trim());
+                    });
+
                 }
             }else{
-                if(StringUtils.isEmpty(block._cacheClear)){
-                    cache.clear(block.format(block._cacheClear, _map));
+                if(StringUtils.isEmpty(block._cacheClear) == false){
+                    Arrays.asList(block.format(block._cacheClear, _map).split(",")).forEach((k)->{
+                        cache.clear(k.trim());
+                    });
                 }
             }
         }
