@@ -83,11 +83,15 @@ public class XmlSqlCompiler {
 
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
+        if (dblock._return != null && dblock._return.indexOf("[") > 0) {
+            dblock._return = dblock._return.replace("[", "<")
+                                           .replace("]", ">");
+        }
 
         String db_tmp = attr(n, ":db");
-        if(StringUtils.isEmpty(db_tmp)) {
+        if (StringUtils.isEmpty(db_tmp)) {
             dblock._db = db;
-        }else{
+        } else {
             dblock._db = db_tmp;
         }
 

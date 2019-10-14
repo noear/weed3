@@ -10,8 +10,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WeedProxy {
@@ -80,14 +83,46 @@ public class WeedProxy {
                     return sp.getItem(rst_type);
                 }
             }else{
+                if(block._return.startsWith("List<")){
+                    return sp.getDataList().toArray(0);
+                }
+
                 //普通职处理
                 switch (block._return){
                     case "Map":
                         return sp.getMap();
                     case "MapList":
                         return sp.getMapList();
-                    default:
-                        return sp.getValue();
+                    case "DataItem":
+                        return sp.getDataItem();
+                    case "DataList":
+                        return sp.getDataList();
+                    default: {
+                        Variate val = sp.getVariate();
+
+                        if(val.getValue()==null){
+                            return 0;
+                        }
+
+                        //解决 BigDecimal BigInteger 问题
+                        if(block._return.toLowerCase().startsWith("int")){
+                            return val.intValue(0);
+                        }
+
+                        if(block._return.toLowerCase().startsWith("long")){
+                            return val.longValue(0);
+                        }
+
+                        if(block._return.toLowerCase().startsWith("doub")){
+                            return val.doubleValue(0);
+                        }
+
+                        if(block._return.toLowerCase().startsWith("str")){
+                            return val.stringValue(null);
+                        }
+
+                        return val.getValue();
+                    }
                 }
             }
         }else{

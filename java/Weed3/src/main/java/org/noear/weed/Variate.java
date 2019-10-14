@@ -4,6 +4,7 @@ import org.noear.weed.ext.DbType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -77,8 +78,8 @@ public class Variate implements Serializable {
             return (double)((float)_value);
         }
 
-        if(_value instanceof BigDecimal){
-            return ((BigDecimal)_value).doubleValue();
+        if(_value instanceof Number){
+            return ((Number)_value).doubleValue();
         }
 
         if(_value instanceof Long){
@@ -109,8 +110,8 @@ public class Variate implements Serializable {
             return (int)_value;
         }
 
-        if(_value instanceof BigDecimal){
-            return ((BigDecimal)_value).longValue();
+        if(_value instanceof Number){
+            return ((Number)_value).longValue();
         }
 
         if(_value instanceof Date){
@@ -133,8 +134,8 @@ public class Variate implements Serializable {
             return (int) ((long)_value);
         }
 
-        if(_value instanceof BigDecimal){
-            return ((BigDecimal)_value).intValue();
+        if(_value instanceof Number){
+            return ((Number)_value).intValue();
         }
 
         return def;
