@@ -1,28 +1,25 @@
 package weed3demo.mapper;
 
 import org.junit.Test;
-import org.noear.weed.xml.*;
+import org.noear.weed.DbContext;
+import org.noear.weed.WeedConfig;
+import org.noear.weed.WeedProxy;
+import org.noear.weed.xml.XmlSqlCompiler;
+import org.noear.weed.xml.XmlSqlLoader;
 
 import java.io.File;
 import java.net.URL;
 
-public class XmlSqlCompilerTest {
+public class XmlSqlRunnerTest {
     @Test
     public  void test() throws Exception {
-        URL url = getResource("/weed3/mapper.xml");
 
-        String code = XmlSqlCompiler.parse( new File(url.toURI()));
+        WeedConfig.libOfDb.put("testdb",new DbContext());
 
-        System.out.println(code);
+        XmlSqlLoader.load();
 
-//        XmlSqlLoader.load();
-//
-//        IXmlSqlBuilder tmp = XmlSqlFactory.get("org.xxx.xxx.user_add");
-//        if(tmp == null){
-//            return;
-//        }else{
-//            System.out.println("已找到 IXmlSqlBuilder: org.xxx.xxx.user_add");
-//        }
+        Mapper api = WeedProxy.get(Mapper.class);
+        api.user_get("mobile,sex",10,"18658857337");
     }
 
     public static URL getResource(String name) {
@@ -38,6 +35,4 @@ public class XmlSqlCompilerTest {
 
         return url;
     }
-
-
 }

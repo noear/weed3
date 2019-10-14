@@ -19,7 +19,7 @@ name:type    = 变量申明
 @{name:type} = 变量注入
 ${name:type} = 变量替换
 -->
-<mapper namespace="org.xxx.xxx">
+<mapper namespace="org.xxx.xxx" :db="testdb">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
@@ -37,7 +37,7 @@ ${name:type} = 变量替换
 
     <sql id="user_add_for">
         INSERT user(id,mobile,sex) VALUES
-        <for var="m:org.xxx.UserModel" items="list">
+        <for var="m:weed3demo.mapper.UserModel" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
@@ -59,8 +59,8 @@ ${name:type} = 变量替换
     </sql>
 
     <sql id="user_get"
-         :declare="foList:int,xxx:String"
-         :return="org.noear.test.UserModel"
+         :declare="foList:int,user_id:long"
+         :return="weed3demo.mapper.UserModel"
          :caching="localCache"
          :cacheTag="user_${user_id},user_1">
         SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile=@{mobile:String}
