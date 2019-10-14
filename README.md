@@ -43,8 +43,7 @@
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
- ### 纯java用法
---------------------------------------<br/>
+ ### 一、纯java用法
 示例1.1.1::入门级<br/>
 ```java
 //快速.执行示例
@@ -277,7 +276,7 @@ public class UserInfoModel {
 }
 ```
 
-示例3.1::[存储过程]映射类<br/>
+示例3.1::[存储过程]映射类（存储过程实体化）<br/>
 ```java
 public class user_get_by_id extends DbStoredProcedure
 {
@@ -301,7 +300,7 @@ sp.caching(cache)
   .getItem(new UserInfoModel()); //.getMap()
 ```
 
-示例3.2::[查询过程]映身类<br/>
+示例3.2::[查询过程]映身类（查询过程实体化）<br/>
 ```java
 public class user_get_by_id extends DbQueryProcedure
 {
@@ -367,7 +366,10 @@ m.where("sex=?",1)
 
 ```
 
-示例4::全局控制<br/>
+### 二、xml配置用
+
+
+### 三、全局控制和执行监听
 ```java
 //开始debug模式，会有更多类型检查
 WeedConfig.isDebug = true; 
@@ -392,7 +394,6 @@ WeedConfig.onLog((cmd) -> {
     //....
 });
 db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行onLog日志处理
-
 ```
 
 更多高级示例请参考Weed3Demo <br/>
