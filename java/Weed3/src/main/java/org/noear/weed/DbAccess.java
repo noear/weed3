@@ -371,8 +371,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     protected CacheUsing _cache = null;
     /*引用一个缓存服务*/
     @Override
-    public IQuery caching(ICacheService service)
-    {
+    public IQuery caching(ICacheService service) {
         _cache = new CacheUsing(service);
         return this;
     }

@@ -61,7 +61,7 @@ public class XmlSqlCompiler {
         //代码码函数
         for (int i = 0, len = sql_items.getLength(); i < len; i++) {
             Node n = sql_items.item(i);
-            parseSqlNode(doc, sb, n, namespace);
+            parseSqlNode(doc, sb, n, namespace, classname);
         }
 
         sb.append("}\n");
@@ -70,13 +70,13 @@ public class XmlSqlCompiler {
     }
 
     //xml:解析 sql 指令节点
-    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace) {
+    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace, String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 
-        dblock.xmldoc = doc;
-
         dblock._namespace = namespace;
+        dblock._classname = classname;
+
         dblock._id = attr(n, "id");
 
         dblock._declare = attr(n, ":declare");
@@ -101,8 +101,8 @@ public class XmlSqlCompiler {
 
         //1.打印变量
         int var_num = 0;
-        for(XmlSqlVar dv : dblock.varMap.values()){
-            if(dv.type!=null && dv.type.length()>0) {
+        for (XmlSqlVar dv : dblock.varMap.values()) {
+            if (dv.type != null && dv.type.length() > 0) {
                 var_num++;
                 newLine(sb, depth + 1)
                         .append(dv.type).append(" ").append(dv.name).append("=")
@@ -110,7 +110,7 @@ public class XmlSqlCompiler {
             }
         }
 
-        if(var_num>0) {
+        if (var_num > 0) {
             sb.append("\n");
         }
 
@@ -121,6 +121,8 @@ public class XmlSqlCompiler {
         newLine(sb, depth + 1).append("return sb;");
         newLine(sb, depth).append("}\n");
 
+        //注册块
+        XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
 
     private static void _parseDeclare(XmlSqlBlock dblock) {
@@ -250,6 +252,7 @@ public class XmlSqlCompiler {
         String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
 
+        //0.确定动作
         if(dblock.action==null){
             txt2 = txt.trim().toUpperCase();
 

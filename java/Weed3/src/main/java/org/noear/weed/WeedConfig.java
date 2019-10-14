@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Act3;
@@ -7,7 +8,9 @@ import org.noear.weed.ext.Fun1;
 
 import java.sql.Statement;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by noear on 14/11/20.
@@ -18,6 +21,9 @@ public final class WeedConfig {
     public static boolean isUsingValueNull=false;
     public static boolean isUsingTableSpace=false;
     public static boolean isUpdateMustConditional=true;
+
+    public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
+    public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();
 
     static Set<Act2<Command,Exception>> onException_listener = new LinkedHashSet<>();
     static Set<Act1<Command>> onLog_listener = new LinkedHashSet<>();

@@ -1,9 +1,11 @@
 package org.noear.weed;
 
+import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtil;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.IXmlSqlBuilder;
+import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
 import java.util.HashMap;
@@ -73,15 +75,41 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.key      = getCommandID();
 
 
-        IXmlSqlBuilder xmlSqlBuilder = XmlSqlFactory.get(_sqlName);
-        if(xmlSqlBuilder == null) {
+        XmlSqlBlock block = XmlSqlFactory.get(_sqlName);
+        if(block == null || block.builder==null) {
             throw new RuntimeException("Xml sql @" + _sqlName + " does not exist");
         }
 
-        SQLBuilder sqlBuilder = xmlSqlBuilder.build(_map);
+        SQLBuilder sqlBuilder = block.builder.build(_map);
 
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;
+
+        //配置化缓存处理（有配置，并且未手动配置过缓存）...
+        if(StringUtils.isEmpty(block._caching) == false && this._cache == null){
+            ICacheServiceEx cache = WeedConfig.libOfCache.get(block._caching);
+
+            if(cache == null){
+                throw new RuntimeException("WeedConfig.libOfCache does not exist:@"+block._caching);
+            }
+
+            if("SELECT".equals(block.action)){
+                this.caching(cache);
+
+                if(StringUtils.isEmpty(block._usingCache) == false){
+                    this.usingCache(Integer.parseInt(block._usingCache));
+                }
+
+                if(StringUtils.isEmpty(block._cacheTag) == false){
+                    this.cacheTag(block.format(block._cacheTag, _map));
+                }
+            }else{
+                if(StringUtils.isEmpty(block._cacheClear)){
+                    cache.clear(block.format(block._cacheClear, _map));
+                }
+            }
+        }
+
 
         runCommandBuiltEvent(cmd);
 
