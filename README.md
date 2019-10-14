@@ -366,7 +366,30 @@ m.where("sex=?",1)
 
 ```
 
-### 二、xml配置用
+### 二、xml配置用法
+示例::xml配置<br/>
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<mapper namespace="sql.weed.test">
+    <sql id="user_add" :return="long">
+        INSERT user(user_id) VALUES(@{user_id:int})
+    </sql> 
+</mapper>
+```
+示例::java调用<br/>
+```java
+//使用方案1（已支持）
+db.call("sql.weed.test.user_add").set("user_id",12).insert();
+
+//使用方案2（随后支持）
+@mapping("sql.weed.test")
+public interface DbUserMapper{
+    long user_add(int user_id);
+}
+DbUserMapper um = WeedProxy.get(DbUserMapper.class);
+um.user_add(12);
+
+```
 
 
 ### 三、全局控制和执行监听
