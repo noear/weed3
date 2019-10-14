@@ -36,14 +36,17 @@
   <version>3.2.0.1</version>
 </dependency>
 ```
- 
---------------------------------------<br/>
-示例1.1.1::入门级<br/>
+
+实例化数据库上下文（一切都在上面操作）
 ```java
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
-
+```
+ ### 纯java用法
+--------------------------------------<br/>
+示例1.1.1::入门级<br/>
+```java
 //快速.执行示例
 db.exec("DELETE FROM user_info WHERE user_id<?",10);
 
