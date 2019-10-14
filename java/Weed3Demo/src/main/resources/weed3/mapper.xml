@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--
+sql 定义代码块
+ :return
+ :declare
+
+ :caching
+ :cacheClear
+ :cacheTag
+ :usingCache
+
+if 是个判断控制（没有else）
+ test
+for 是个xun环控制
+ var
+ items
+
+name:type = 变量
+@{name:type} = 做为SQL变量注入
+${name:type} = 模板替换
+-->
 <mapper namespace="org.xxx.xxx">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
@@ -9,18 +29,18 @@
             ,mobile
         </if>
         ) VALUES(@{user_id:int}
-        <if test="mobile !=null">
+        <if test='(mobile !=null) || (mobile.startsWith("xml"))'>
             ,@{mobile:String}
         </if>
         )
     </sql>
 
-<!--    <sql id="user_add_for">-->
-<!--        INSERT user(id,mobile,sex) VALUES-->
-<!--        <for var="m:org.xxx.UserModel" items="list">-->
-<!--            (@{m.user_id},@{m.mobile},@{m.sex})-->
-<!--        </for>-->
-<!--    </sql>-->
+    <sql id="user_add_for">
+        INSERT user(id,mobile,sex) VALUES
+        <for var="m:org.xxx.UserModel" items="list">
+            (@{m.user_id},@{m.mobile},@{m.sex})
+        </for>
+    </sql>
 <!--    <sql id="user_add_for_if">-->
 <!--        INSERT user(id,mobile,sex) VALUES-->
 <!--        <for var="m:org.xxx.UserModel" items="list">-->
@@ -38,13 +58,19 @@
             AND sex=@{sex:int}
         </if>
     </sql>
-    <sql id="user_set" :caching="localCache" :cacheClear="user_${user_id}">
+    <sql id="user_set"
+         :caching="localCache"
+         :cacheClear="user_${user_id},user_1">
         UPDATE user SET mobile=@{mobile:String},sex=@{sex:int}
         <if test="icon != null">
             icon=@{icon:String}
         </if>
     </sql>
-    <sql id="user_get" :declare="foList:int" :return="org.noear.test.UserModel" :caching="localCache" :cacheTag="user_${user_id}">
+    <sql id="user_get"
+         :declare="foList:int,xxx:String"
+         :return="org.noear.test.UserModel"
+         :caching="localCache"
+         :cacheTag="user_${user_id},user_1">
         SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile=@{mobile:String}
         <if test="foList == 0">
             AND type='article'
@@ -57,16 +83,15 @@
         </if>
     </sql>
 </mapper>
-        <!--
-        //使用示例
-        db.call("@userdb.user_set").set("user_id",12).insert()
-        db.call("@userdb.user_add").setMap(map).insert()
+<!--
+//使用示例
+db.call("@userdb.user_set").set("user_id",12).insert()
+db.call("@userdb.user_add").setMap(map).insert()
 
-        //
-        public interface userdb{
-            UserModel user_get(int user_id, Act1<CacheUsing> cu);
-        }
+//
+public interface userdb{
+    UserModel user_get(int user_id);
+}
+userdb.user_get(12);
 
-        userdb.user_get(12,(uc)->{ uc.caching(cache).cacheTag('user_id') })
-
-        -->
+-->
