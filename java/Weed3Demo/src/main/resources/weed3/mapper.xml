@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-sql 定义代码块
- :return
- :declare
+sql 代码块定义指令
+ :return（属性：返回类型）
+ :declare（属性：变量预申明）
 
- :caching
- :cacheClear
- :cacheTag
- :usingCache
+ :caching（属性：缓存服务）
+ :cacheClear（属性：清除缓存）
+ :cacheTag（属性：缓存标签）
+ :usingCache（属性：缓存时间,int）
 
-if 是个判断控制（没有else）
- test
-for 是个xun环控制
- var
- items
+if 判断控制指令（没有else）
+ test （属性：判断检测代码）
+for 循环控制指令
+ var （属性：循环变量申明）
+ items （属性：集合变量名称）
 
-name:type = 变量
-@{name:type} = 做为SQL变量注入
-${name:type} = 模板替换
+name:type    = 变量申明
+@{name:type} = 变量注入
+${name:type} = 变量替换
 -->
 <mapper namespace="org.xxx.xxx">
     <sql id="user_add" :return="int">
@@ -41,23 +41,14 @@ ${name:type} = 模板替换
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
-<!--    <sql id="user_add_for_if">-->
-<!--        INSERT user(id,mobile,sex) VALUES-->
-<!--        <for var="m:org.xxx.UserModel" items="list">-->
-<!--            <if test="m.mobile != null">-->
-<!--                (@{m.user_id},'${m.mobile}',@{m.sex})-->
-<!--            </if>-->
-<!--            <if test="m.mobile == null">-->
-<!--                (@{m.user_id},@{m.mobile},@{m.sex})-->
-<!--            </if>-->
-<!--        </for>-->
-<!--    </sql>-->
+
     <sql id="user_del">
         DELETE FROM user WHERE id=@{user_id:long}
         <if test="sex > 0">
             AND sex=@{sex:int}
         </if>
     </sql>
+
     <sql id="user_set"
          :caching="localCache"
          :cacheClear="user_${user_id},user_1">
@@ -66,6 +57,7 @@ ${name:type} = 模板替换
             icon=@{icon:String}
         </if>
     </sql>
+
     <sql id="user_get"
          :declare="foList:int,xxx:String"
          :return="org.noear.test.UserModel"
@@ -84,11 +76,11 @@ ${name:type} = 模板替换
     </sql>
 </mapper>
 <!--
-//使用示例
+//使用方案1
 db.call("@userdb.user_set").set("user_id",12).insert()
 db.call("@userdb.user_add").setMap(map).insert()
 
-//
+//使用方案2
 public interface userdb{
     UserModel user_get(int user_id);
 }
