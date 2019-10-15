@@ -34,7 +34,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.0.4</version>
+  <version>3.2.0.5</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
