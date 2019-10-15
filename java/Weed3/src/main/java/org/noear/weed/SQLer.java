@@ -25,13 +25,13 @@ class SQLer {
             WeedConfig.runExceptionEvent(null, ex);};
     }
 
-    public Variate getVariate(Command cmd,DbTran transaction) throws SQLException {
+    public Variate getVariate(Command cmd) throws SQLException {
         if(cmd.context.isCompilationMode){
             return null;
         }
 
         try {
-            rset = query(cmd, transaction);
+            rset = query(cmd);
 
             if (rset != null && rset.next())
                 return new Variate(null, rset.getObject(1));
@@ -45,13 +45,13 @@ class SQLer {
         }
     }
 
-    public <T extends IBinder> T getItem(Command cmd, DbTran transaction,T model) throws SQLException {
+    public <T extends IBinder> T getItem(Command cmd, T model) throws SQLException {
         if(cmd.context.isCompilationMode){
             return null;
         }
 
         try {
-            rset = query(cmd, transaction);
+            rset = query(cmd);
 
             if (rset != null && rset.next()) {
                 model.bind((key) -> {
@@ -75,7 +75,7 @@ class SQLer {
         }
     }
 
-    public <T extends IBinder> List<T> getList(Command cmd, DbTran transaction,T model) throws SQLException {
+    public <T extends IBinder> List<T> getList(Command cmd, T model) throws SQLException {
         if(cmd.context.isCompilationMode){
             return null;
         }
@@ -83,7 +83,7 @@ class SQLer {
         try {
             List<T> list = new ArrayList<T>();
 
-            rset = query(cmd, transaction);
+            rset = query(cmd);
 
             while (rset != null && rset.next()) {
                 T item = (T) model.clone();
@@ -119,7 +119,7 @@ class SQLer {
         }
     }
 
-    public DataItem getRow(Command cmd,DbTran transaction) throws SQLException {
+    public DataItem getRow(Command cmd) throws SQLException {
         if(cmd.context.isCompilationMode){
             return null;
         }
@@ -127,7 +127,7 @@ class SQLer {
         try {
             DataItem row = new DataItem();
 
-            rset = query(cmd, transaction);
+            rset = query(cmd);
             ResultSetMetaData meta = rset.getMetaData();
 
             if (rset != null && rset.next()) {
@@ -152,7 +152,7 @@ class SQLer {
         }
     }
 
-    public DataList getTable(Command cmd,DbTran transaction) throws SQLException {
+    public DataList getTable(Command cmd) throws SQLException {
         if(cmd.context.isCompilationMode){
             return null;
         }
@@ -160,7 +160,7 @@ class SQLer {
         try {
             DataList table = new DataList();
 
-            rset = query(cmd, transaction);
+            rset = query(cmd);
             ResultSetMetaData meta = rset.getMetaData();
 
             while (rset != null && rset.next()) {
@@ -194,7 +194,7 @@ class SQLer {
         }
 
         try {
-            if (false == buildCMD(cmd, tran, false)) {
+            if (false == buildCMD(cmd, false)) {
                 return -1;
             }
 
@@ -219,7 +219,7 @@ class SQLer {
         }
 
         try {
-            if (false == buildCMD(cmd, tran, true)) {
+            if (false == buildCMD(cmd, true)) {
                 return -1;
             }
 
@@ -250,8 +250,8 @@ class SQLer {
     }
 
     //查询
-    private ResultSet query(Command cmd, DbTran tran) throws SQLException {
-        if (false == buildCMD(cmd, tran, false)) {
+    private ResultSet query(Command cmd) throws SQLException {
+        if (false == buildCMD(cmd, false)) {
             return null;
         }
 
@@ -264,7 +264,7 @@ class SQLer {
         return rst;
     }
 
-    private boolean buildCMD(Command cmd, DbTran tran, boolean isInsert) throws SQLException {
+    private boolean buildCMD(Command cmd, boolean isInsert) throws SQLException {
         //*.监听
         if(WeedConfig.runExecuteBefEvent(cmd) == false){
             return false;
@@ -272,10 +272,10 @@ class SQLer {
 
         //1.构建连接和命令(外部的c不能给conn)
         Connection c = null;
-        if(tran == null){
+        if(cmd.tran == null){
             c = conn = cmd.context.getConnection();
         }else{
-            c = tran.connection; //事务时，conn 须为 null
+            c = cmd.tran.connection; //事务时，conn 须为 null
         }
 
         if (cmd.text.indexOf("{call") >= 0)
@@ -287,7 +287,7 @@ class SQLer {
                 stmt = c.prepareStatement(cmd.fullText());
         }
 
-        WeedConfig.runExecuteStmEvent(cmd,stmt,tran);
+        WeedConfig.runExecuteStmEvent(cmd,stmt);
 
         int idx = 1;
         //2.设置参数值

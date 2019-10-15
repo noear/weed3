@@ -9,22 +9,25 @@ import java.util.Map;
  * 命令
  */
 public class Command {
-    /*命令tag（用于寄存一些数据）*/
+    /** 命令tag（用于寄存一些数据）*/
     public String       tag;
-    /*是否进行日志*/
+    /** 是否进行日志 */
     public int      isLog; //def:0  no:-1 yes:1
 
 
-    /*命令id*/
+    /** 命令id */
     public String       key;
-    /*命令文本*/
+    /** 命令文本 */
     public String       text;
-    /*命令参数*/
+    /** 命令参数 */
     public List<Object> paramS;
-    /*数据库上下文*/
+    /** 数据库上下文 */
     public DbContext context;
 
-    //开始计时
+    /** 数据处理事务 */
+    public DbTran tran;
+
+    //计时变量
     public long timestart = 0;
     public long timestop = 0;
 
@@ -49,9 +52,14 @@ public class Command {
     }
 
 
-    public Command(DbContext context) {
+    public Command(DbContext context, DbTran tran) {
         this.context = context;
         this.context.lastCommand = this;
+        this.tran = tran;
+
+        if(tran == null){
+            this.tran = DbThreadUtil.tranGet();
+        }
     }
 
     public String fullText() {

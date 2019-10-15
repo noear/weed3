@@ -169,11 +169,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     public Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException{
         Variate rst;
         if (_cache == null) {
-            rst = new SQLer().getVariate(getCommand(), _tran);
+            rst = new SQLer().getVariate(getCommand());
         }
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getVariate(getCommand())));
         }
         if (rst == null) {
             return new Variate();
@@ -196,11 +196,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     public <T extends IBinder> T getItem(T model,Act2<CacheUsing,T> cacheCondition) throws SQLException {
         T rst;
         if (_cache == null) {
-            rst = new SQLer().getItem(getCommand(), _tran, model);
+            rst = new SQLer().getItem(getCommand(), model);
         }
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), model)));
         }
 
         if(rst == null) {
@@ -221,12 +221,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     public <T extends IBinder> List<T> getList(T model,Act2<CacheUsing,List<T>> cacheCondition) throws SQLException {
         List<T> rst;
         if (_cache == null) {
-            rst = new SQLer().getList(getCommand(), _tran, model);
+            rst = new SQLer().getList(getCommand(), model);
         }
         else
         {
             _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), _tran, model)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), model)));
         }
 
         if(rst == null) {
@@ -288,11 +288,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     {
         DataList rst;
         if (_cache == null) {
-            rst = new SQLer().getTable(getCommand(), _tran);
+            rst = new SQLer().getTable(getCommand());
         }
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getTable(getCommand())));
         }
 
         if(rst == null) {
@@ -319,11 +319,11 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     {
         DataItem rst;
         if (_cache == null) {
-            rst = new SQLer().getRow(getCommand(), _tran);
+            rst = new SQLer().getRow(getCommand());
         }
         else {
             _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand(), _tran)));
+            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getRow(getCommand())));
         }
 
         if(rst == null) {
@@ -358,7 +358,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return _tran;
     }
 
-    public DbTran tran() throws SQLException
+    public DbTran tran()
     {
         _tran = context.tran();
 

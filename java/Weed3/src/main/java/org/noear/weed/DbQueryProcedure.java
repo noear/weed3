@@ -112,7 +112,7 @@ public class DbQueryProcedure extends DbProcedure {
     protected Command getCommand() throws SQLException{
         tryLazyload();
 
-        Command cmd = new Command(this.context);
+        Command cmd = new Command(this.context, _tran);
 
         cmd.key      = getCommandID();
 

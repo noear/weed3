@@ -33,7 +33,7 @@ public final class WeedConfig {
     //执行之前
     static Set<Fun1<Boolean,Command>>   onExecuteBef_listener = new LinkedHashSet<>();
     //执行声明
-    static Set<Act3<Command,Statement,DbTran>> onExecuteStm_listener = new LinkedHashSet<>();
+    static Set<Act2<Command,Statement>> onExecuteStm_listener = new LinkedHashSet<>();
     //执行之后
     static Set<Act1<Command>>           onExecuteAft_listener = new LinkedHashSet();
 
@@ -74,10 +74,10 @@ public final class WeedConfig {
         return true;
     }
 
-    protected static void runExecuteStmEvent(Command cmd, Statement stm, DbTran tran) {
+    protected static void runExecuteStmEvent(Command cmd, Statement stm) {
         if (onExecuteStm_listener.size() > 0) {
             onExecuteStm_listener.forEach(fun->{
-                fun.run(cmd, stm, tran);
+                fun.run(cmd, stm);
             });
         }
     }
@@ -122,7 +122,7 @@ public final class WeedConfig {
         onExecuteBef_listener.add(listener);
     }
     /** 执行之中 */
-    public static void onExecuteStm(Act3<Command,Statement,DbTran> listener){
+    public static void onExecuteStm(Act2<Command,Statement> listener){
         onExecuteStm_listener.add(listener);
     }
     /** 执行之后 */

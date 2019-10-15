@@ -44,7 +44,7 @@ public class DbQuery extends DbAccess<DbQuery> {
     @Override
     protected Command getCommand() {
 
-        Command cmd = new Command(this.context);
+        Command cmd = new Command(this.context,_tran);
 
         cmd.key     = getCommandID();
         cmd.paramS = new ArrayList<>();
