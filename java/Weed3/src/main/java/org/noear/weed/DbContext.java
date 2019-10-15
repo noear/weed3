@@ -63,6 +63,17 @@ public class DbContext {
         _dataSource = dataSource;
     }
 
+    /**
+     * 名字设置
+     * */
+    public DbContext nameSet(String name) {
+        if (name != null) {
+            //如果第一次赋值，自动注册到db库里
+            WeedConfig.libOfDb.put(name, this);
+        }
+        return this;
+    }
+
     //
     // 构建函数 end
     //
