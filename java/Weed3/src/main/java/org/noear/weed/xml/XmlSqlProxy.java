@@ -4,7 +4,6 @@ import org.noear.weed.DbContext;
 import org.noear.weed.DbProcedure;
 import org.noear.weed.Variate;
 import org.noear.weed.WeedConfig;
-import org.noear.weed.annotation.DbNamspace;
 import org.noear.weed.utils.StringUtils;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
@@ -32,7 +31,7 @@ public class XmlSqlProxy {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();
 
-        DbNamspace c_meta = clazz.getAnnotation(DbNamspace.class);
+        Namspace c_meta = clazz.getAnnotation(Namspace.class);
         String fun_name = method.getName();
 
         String xml_name = null;

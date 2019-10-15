@@ -1,4 +1,4 @@
-package org.noear.weed.annotation;
+package org.noear.weed.xml;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DbNamspace {
+public @interface Namspace {
     String value();
 }
