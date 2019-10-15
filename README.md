@@ -34,10 +34,10 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.0.2</version>
+  <version>3.2.0.4</version>
 </dependency>
 
-<!-- 插件，用于生成xml sql mapper -->
+<!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
@@ -104,20 +104,19 @@ db.table("test")
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
   .set("xxx", 1)  //保持与存储过程参数的序顺一致
-  .getItem(new UserInfoModel()); 
+  .getItem(UserInfoModel.class);  //基于反射
 
 //简易.查询过程调用示例，及使用使用示例
 db.call("select * from user where user_id=@userID") //@userID,参数占位符
   .set("@userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
-  .getItem(new UserInfoModel()); 
+  .getItem(new UserInfoModel());  //要求：UserInfoModel 为 IBinder
 
 //简易.存储过程调用示例，及使用事务示例
 db.tran(tran->{
     db.call("user_set").set("xxx", 1) 
-      .tran(tran) //使用事务
-      .execute();
+      .execute(); //将在事务内执行
 });
 ```
 
@@ -168,41 +167,7 @@ db.call("select * from user where user_id=@userID")
   .getItem(UserInfoModel.class);  //.getMap()
 ```
 
-示例1.2::事务控制<br/>
-```java
-//demo1:: //事务组
-db.tran((t) => {
-    //以下操作在同一个事务里执行
-    t.db().sql("insert into test(txt) values(?)", "cc").tran(t).execute();
-    t.db().sql("insert into test(txt) values(?)", "dd").tran(t).execute();
-    t.db().sql("insert into test(txt) values(?)", "ee").tran(t).execute();
-
-    t.db().sql("update test set txt='1' where id=1").tran(t).execute();
-});
-
-//demo2:: //事务队列
-DbTranQueue queue = new DbTranQueue();
-
-db.tran().join(queue).execute((t) => {
-    db.sql("insert into test(txt) values(?)", "cc").tran(t).execute();
-    db.sql("insert into test(txt) values(?)", "dd").tran(t).execute();
-    db.sql("insert into test(txt) values(?)", "ee").tran(t).execute();
-});
-
-db2.tran().join(queue).execute((t) => {
-    db2.sql("insert into test(txt) values(?)", "gg").tran(t).execute();
-});
-
-queue.complete();
-
-//demo2.1:: //事务队列简化写法
-new DbTranQueue().execute(qt->{
-     for (order_add_sync_stone sp : processList) {
-         sp.tran(qt).execute();
-     }
- });
-```
-示例1.3::缓存控制<br/>
+示例1.2::缓存控制<br/>
 ```java
 /*
  * 内置了 EmptyCache（空缓存）、LocalCache（本地缓存）、SecondCache（二级缓存） 
@@ -378,7 +343,7 @@ m.where("sex=?",1)
 示例::xml配置（~/resources/weed3/DbUserMapper.xml）<br/>
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="sql.weed.test">
+<mapper namespace="sql.weed.test" :db="userdb">
     <sql id="user_add" :return="long">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql> 
@@ -390,20 +355,61 @@ m.where("sex=?",1)
 db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
 //使用方案2（随后支持）
-// DbUserMapper.java 生成代码（类的名字与xml文件名一致）
+// DbUserMapper.java 生成代码（类的名字与xml文件名一致） //文件可以移到别处去
 package sql.weed.test;
+
+@Namespace("sql.weed.test")
 public interface DbUserMapper{
     long user_add(int user_id);
 }
 
 //使用 DbUserMapper
-DbUserMapper um = WeedProxy.get(DbUserMapper.class);
+DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
 
+### 三、事务控制
 
-### 三、全局控制和执行监听
+```java
+//demo1:: //事务组
+DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class);
+
+db.tran((t) => {
+    //以下操作，会在 t 事务内执行（下面的操作，汇集了weed3所有的接口模式）
+    db.table("test").set("txt", "cc").insert();
+    db.sql("update test set txt='1' where id=1").execute();
+    db.call("user_add_sp").set("_txt","bb").insert();
+    um.user_add(12);
+});
+
+//demo2:: //事务队列
+DbTranQueue queue = new DbTranQueue();
+
+db.tran().join(queue).execute((t) => {
+    //以下操作，会在 t 事务内执行
+    db.sql("insert into test(txt) values(?)", "cc").execute();
+    db.sql("insert into test(txt) values(?)", "dd").execute();
+    db.sql("insert into test(txt) values(?)", "ee").execute();
+});
+
+db2.tran().join(queue).execute((t2) => {
+    //以下操作，会在 t2 事务内执行
+    db2.sql("insert into test(txt) values(?)", "gg").execute();
+});
+
+//统一提交执行（失败，则统一回滚）
+queue.complete();
+
+//demo2.1:: //事务队列简化写法
+new DbTranQueue().execute(qt->{
+     for (order_add_sync_stone sp : processList) {
+         sp.tran(qt).execute();
+     }
+ });
+ ```
+
+### 四、全局控制和执行监听
 ```java
 //开始debug模式，会有更多类型检查
 WeedConfig.isDebug = true; 
