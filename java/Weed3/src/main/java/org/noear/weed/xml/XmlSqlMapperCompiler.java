@@ -16,15 +16,19 @@ import java.util.regex.Pattern;
 
 public class XmlSqlMapperCompiler {
 
-    public static void generator() throws Exception{
-        URL path = IOUtils.getResource("/weed3/");
-        File dic = new File(path.toURI());
+    public static void generatorAll() {
+        try {
+            URL path = IOUtils.getResource("/weed3/");
+            File dic = new File(path.toURI());
 
-        if (dic.isDirectory()) {
-            File[] tmps = dic.listFiles();
-            for (File tmp : tmps) {
-                generator(tmp);
+            if (dic.isDirectory()) {
+                File[] tmps = dic.listFiles();
+                for (File tmp : tmps) {
+                    generator(tmp);
+                }
             }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
