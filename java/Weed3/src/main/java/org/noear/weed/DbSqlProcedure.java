@@ -80,7 +80,13 @@ public class DbSqlProcedure extends DbProcedure {
             throw new RuntimeException("Xml sql @" + _sqlName + " does not exist");
         }
 
-        SQLBuilder sqlBuilder = block.builder.build(_map);
+        SQLBuilder sqlBuilder = null;
+        try {
+            sqlBuilder = block.builder.build(_map);
+        }catch (Throwable ex){
+            System.out.println(block.getClasscode(true));
+            throw ex;
+        }
 
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;

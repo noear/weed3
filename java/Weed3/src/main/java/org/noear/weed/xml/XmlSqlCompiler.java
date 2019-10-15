@@ -78,6 +78,7 @@ public class XmlSqlCompiler {
 
         dblock._namespace = namespace;
         dblock._classname = classname;
+        dblock._classcode = sb;
 
         dblock._id = attr(n, "id");
 
