@@ -346,7 +346,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return (T)this;
     }
 
-    public DbTran tran(DbTranQueue queue) throws SQLException
+    public DbTran tran(DbTranQueue queue)
     {
         _tran = context.tran();
         _tran.join(queue);

@@ -36,13 +36,13 @@ public class DbSqlProcedure extends DbProcedure {
     @Override
     public DbProcedure set(String param, Object value) {
         _map.put(param,value);
+        _onSet(param,value);
         return this;
     }
 
     @Override
     public DbProcedure set(String param, Fun0<Object> valueGetter) {
-        _map.put(param,valueGetter.run());
-        return this;
+        throw new RuntimeException("DbSqlProcedure not support set(name,valueGetter)");
     }
 
     @Override
@@ -50,6 +50,7 @@ public class DbSqlProcedure extends DbProcedure {
         if (map != null) {
             map.forEach((k, v) -> {
                 _map.put(k,v);
+                _onSet(k,v);
             });
         }
         return this;
@@ -59,8 +60,22 @@ public class DbSqlProcedure extends DbProcedure {
     public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
         EntityUtils.fromEntity(obj,(k, v)->{
             _map.put(k,v);
+
+            _onSet(k,v);
         });
         return this;
+    }
+
+    private void _onSet(String name, Object val){
+        if("_tran".equals(name)){
+            if(val instanceof DbTran){
+                this.tran((DbTran)val);
+            }
+
+            if(val instanceof DbTranQueue){
+                this.tran((DbTranQueue)val);
+            }
+        }
     }
 
     @Override
