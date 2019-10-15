@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class XmlSqlMapperGenerator {
 
+    /** 生成 java 类 */
     public static void generate() {
         try {
             URL path = IOUtils.getResource("/weed3/");
