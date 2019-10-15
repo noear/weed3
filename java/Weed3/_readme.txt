@@ -1,3 +1,9 @@
+3.2.0.2::
+2.添加xml mapper 代码生成器（meven plugin）
+
+3.2.0.1::
+1.添加xml mapper 支持
+
 3.1.9
 1. set(),table("aaa","aaa a", "aaa as a"),join(like table()),select("a,b b,c as c,SUM(d)"),orderBy("a ASC,B,a.a"),groupBy("a.a") 添加关键字处理
 
