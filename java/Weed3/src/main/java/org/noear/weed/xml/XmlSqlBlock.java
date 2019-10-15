@@ -1,5 +1,7 @@
 package org.noear.weed.xml;
 
+import org.w3c.dom.Node;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,6 +24,9 @@ public class XmlSqlBlock {
     public String _cacheClear;
     public String _cacheTag;
     public String _usingCache;
+
+    //临时变量
+    protected Map<String, Node> __nodeMap;
 
     public StringBuilder getClasscode(boolean lineNo){
         if(lineNo){

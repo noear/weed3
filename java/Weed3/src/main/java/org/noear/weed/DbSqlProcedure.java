@@ -91,7 +91,7 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;
 
-        tryCachController(block);
+        tryCacheController(block);
 
         runCommandBuiltEvent(cmd);
 
@@ -99,7 +99,7 @@ public class DbSqlProcedure extends DbProcedure {
     }
 
     /** 尝试缓存控制 */
-    private void tryCachController(XmlSqlBlock block){
+    private void tryCacheController(XmlSqlBlock block){
         //配置化缓存处理（有配置，并且未手动配置过缓存）...
         if(StringUtils.isEmpty(block._caching) == false && this._cache == null){
             ICacheServiceEx cache = WeedConfig.libOfCache.get(block._caching);

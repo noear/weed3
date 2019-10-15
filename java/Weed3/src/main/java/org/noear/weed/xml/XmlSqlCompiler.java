@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -39,7 +40,15 @@ public class XmlSqlCompiler {
         sb.append("import org.noear.weed.SQLBuilder;\n");
         sb.append("import org.noear.weed.xml.XmlSqlFactory;\n\n");
 
-        NodeList sql_items = doc.getElementsByTagName("sql");
+        Map<String,Node> node_map = new HashMap<>();
+        NodeList sql_list = doc.getElementsByTagName("sql");
+        for (int i = 0, len = sql_list.getLength(); i < len; i++) {
+            Node n = sql_list.item(i);
+            String id = attr(n,"id");
+            if(id!=null){
+                node_map.put(id,n);
+            }
+        }
 
         sb.append("public class ").append(classname).append("{");
 
@@ -47,8 +56,8 @@ public class XmlSqlCompiler {
         newLine(sb, 1).append("private static final String _namespace=\"").append(namespace).append("\";");
         newLine(sb, 1).append("public ").append(classname).append("(){");
 
-        for (int i = 0, len = sql_items.getLength(); i < len; i++) {
-            Node n = sql_items.item(i);
+        for (int i = 0, len = sql_list.getLength(); i < len; i++) {
+            Node n = sql_list.item(i);
             String id_str = attr(n,"id");
             if(id_str!= null){
                 newLine(sb,2).append("XmlSqlFactory.register(_namespace + \".")
@@ -61,20 +70,24 @@ public class XmlSqlCompiler {
         newLine(sb, 1).append("}");
 
         //代码码函数
-        for (int i = 0, len = sql_items.getLength(); i < len; i++) {
-            Node n = sql_items.item(i);
-            parseSqlNode(doc, sb, n, namespace, db, classname);
+        for (int i = 0, len = sql_list.getLength(); i < len; i++) {
+            Node n = sql_list.item(i);
+            parseSqlNode(node_map, sb, n, namespace, db, classname);
         }
 
         sb.append("}\n");
+
+        node_map.clear();
 
         return sb.toString();
     }
 
     //xml:解析 sql 指令节点
-    private static void parseSqlNode(Document doc, StringBuilder sb,Node n, String namespace, String db, String classname) {
+    private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace, String db, String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
+
+        dblock.__nodeMap = nodeMap;
 
         dblock._namespace = namespace;
         dblock._classname = classname;
@@ -136,6 +149,7 @@ public class XmlSqlCompiler {
         newLine(sb, depth + 1).append("return sb;");
         newLine(sb, depth).append("}\n");
 
+        dblock.__nodeMap = null;
         //注册块
         XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
@@ -190,6 +204,13 @@ public class XmlSqlCompiler {
                 parseForNode(sb,dblock,n,depth);
                 return;
             }
+
+            if("ref".equals(tagName)){
+                parseRefNode(sb,dblock,n,depth);
+                return;
+            }
+
+            _parseNodeList(n.getChildNodes(),sb,dblock,depth);
         }
     }
 
@@ -204,6 +225,17 @@ public class XmlSqlCompiler {
         newLine(sb, depth).append("}");
     }
 
+    //xml:解析 ref 指令节点
+    private static void parseRefNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+        String _sql_id = attr(n, "sql");
+        if (StringUtils.isEmpty(_sql_id) == false) {
+            Node ref_n = dblock.__nodeMap.get(_sql_id);
+            if (ref_n == null) {
+                throw new RuntimeException("sql node @" + _sql_id + " can't find");
+            }
+            _parseNode(ref_n, sb, dblock, depth);
+        }
+    }
 
     //xml:解析 for 指令节点
     private static void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
