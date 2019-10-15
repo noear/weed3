@@ -1,7 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act2;
-import org.noear.weed.utils.EntityUtil;
+import org.noear.weed.utils.EntityUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -300,7 +300,7 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
     /** 从Entity 加载数据 */
     public void fromEntity(Object obj)  {
-        EntityUtil.fromEntity(obj,(k, v)->{
+        EntityUtils.fromEntity(obj,(k, v)->{
             set(k, v);
         });
     }
@@ -308,6 +308,6 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     /** 转为Entity */
     public  <T> T toEntity(Class<T> cls) {
         Field[] fields = cls.getDeclaredFields();
-        return EntityUtil.toEntity(cls,fields,this);
+        return EntityUtils.toEntity(cls,fields,this);
     }
 }

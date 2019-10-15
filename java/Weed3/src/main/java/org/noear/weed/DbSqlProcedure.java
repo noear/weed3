@@ -2,7 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Fun0;
-import org.noear.weed.utils.EntityUtil;
+import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
@@ -57,7 +57,7 @@ public class DbSqlProcedure extends DbProcedure {
 
     @Override
     public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
-        EntityUtil.fromEntity(obj,(k, v)->{
+        EntityUtils.fromEntity(obj,(k, v)->{
             _map.put(k,v);
         });
         return this;

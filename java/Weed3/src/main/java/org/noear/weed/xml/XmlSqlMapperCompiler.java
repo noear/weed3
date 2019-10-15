@@ -1,5 +1,6 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.utils.IOUtils;
 import org.noear.weed.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -8,20 +9,49 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.net.URL;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlSqlMapperCompiler {
 
+    public static void generator() throws Exception{
+        URL path = IOUtils.getResource("/weed3/");
+        File dic = new File(path.toURI());
+
+        if (dic.isDirectory()) {
+            File[] tmps = dic.listFiles();
+            for (File tmp : tmps) {
+                generator(tmp);
+            }
+        }
+    }
+
+    public static void generator(File xmlFile) throws Exception {
+        JavaCodeBlock block = parse(xmlFile);
+        if (block == null) {
+            return;
+        }
+
+        String dic_path = "src/main/java/"+ block._namespace.replace(".", "/");
+
+        new File(dic_path).mkdirs();
+
+        String file_path = dic_path + "/" + block._classname + ".java";
+        File file = new File(file_path);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        IOUtils.fileWrite(file, block._code);
+    }
+
     //将xml解析为java code
-    public static String parse(File xmlFile) throws Exception{
+    public static JavaCodeBlock parse(File xmlFile) throws Exception{
         if(xmlFile == null){
             return null;
         }
-
 
         Document doc = parseDoc(xmlFile);
 
@@ -36,11 +66,12 @@ public class XmlSqlMapperCompiler {
         sb.append("package ").append(namespace).append(";\n\n");
 
         sb.append("import java.util.Map;\n");
+        sb.append("import java.util.List;\n");
         sb.append("import java.util.Collection;\n\n");
 
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
-        sb.append("import org.noear.weed.xml.Namspace;\n\n");
+        sb.append("import org.noear.weed.xml.Namespace;\n\n");
 
 
         Map<String,Node> node_map = new HashMap<>();
@@ -69,7 +100,13 @@ public class XmlSqlMapperCompiler {
 
         node_map.clear();
 
-        return sb.toString();
+        JavaCodeBlock codeBlock = new JavaCodeBlock();
+
+        codeBlock._namespace = namespace;
+        codeBlock._classname =classname;
+        codeBlock._code = sb.toString();
+
+        return codeBlock;
     }
 
     private static void writerBlock(StringBuilder sb, XmlSqlBlock block){

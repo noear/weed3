@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityUtil {
+public class EntityUtils {
     //为设置和获取的函数进行缓存
     private static Map<Field,Method> _fieldSetLib = new HashMap<>();
     private static Map<Field,Method> _fieldGetLib = new HashMap<>();
@@ -33,7 +33,7 @@ public class EntityUtil {
             fa = f.getAnnotation(DbField.class);
 
             if (fa == null || fa.exclude() == false) {
-                val = EntityUtil.getFieldValue(cls, obj, f);
+                val = EntityUtils.getFieldValue(cls, obj, f);
                 setter.run(f.getName(), val);
             }
         }
@@ -55,7 +55,7 @@ public class EntityUtil {
             key = f.getName();
 
             if (data.exists(key)) {
-                EntityUtil.setFieldValue(cls,item,f,data.get(key));
+                EntityUtils.setFieldValue(cls,item,f,data.get(key));
             }
         }
 

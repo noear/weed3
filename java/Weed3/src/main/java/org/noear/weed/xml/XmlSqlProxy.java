@@ -12,7 +12,6 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class XmlSqlProxy {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();
 
-        Namspace c_meta = clazz.getAnnotation(Namspace.class);
+        Namespace c_meta = clazz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
 
         String xml_name = null;

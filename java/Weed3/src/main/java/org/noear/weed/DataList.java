@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.utils.EntityUtil;
+import org.noear.weed.utils.EntityUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -92,7 +92,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
         Field[] fields = cls.getDeclaredFields();
 
         for (DataItem r : rows) {
-            T item = EntityUtil.toEntity(cls,fields,r);
+            T item = EntityUtils.toEntity(cls,fields,r);
             list.add((T)item);
         }
         return list;

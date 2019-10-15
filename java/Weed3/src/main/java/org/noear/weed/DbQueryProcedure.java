@@ -2,7 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act0;
 import org.noear.weed.ext.Fun0;
-import org.noear.weed.utils.EntityUtil;
+import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -87,7 +87,7 @@ public class DbQueryProcedure extends DbProcedure {
     }
     @Override
     public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
-        EntityUtil.fromEntity(obj,(k, v)->{
+        EntityUtils.fromEntity(obj,(k, v)->{
             set("@" + k, v);
         });
         return this;

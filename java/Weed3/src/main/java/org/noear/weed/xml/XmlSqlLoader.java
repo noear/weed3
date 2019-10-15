@@ -1,5 +1,7 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.utils.IOUtils;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class XmlSqlLoader {
 
     private  boolean is_loaed = false;
     private List<File> xmlFiles = new ArrayList<>();
+
     /**
      * 加载扩展文件夹（或文件）
      * */
@@ -37,7 +40,7 @@ public class XmlSqlLoader {
     }
 
     private void do_load() throws Exception{
-        URL path = getResource("/weed3/");
+        URL path = IOUtils.getResource("/weed3/");
         File dic = new File(path.toURI());
         _g.do_load(dic);
 
@@ -47,21 +50,14 @@ public class XmlSqlLoader {
             codes.add(code);
         }
 
-        boolean is_ok = StringJavaCompiler.instance().compiler(codes);
+        boolean is_ok = JavaStringCompiler.instance().compiler(codes);
         if(is_ok){
-            StringJavaCompiler.instance().loadClassAll(true);
+            JavaStringCompiler.instance().loadClassAll(true);
         }else{
-            String error = StringJavaCompiler.instance().getCompilerMessage();
+            String error = JavaStringCompiler.instance().getCompilerMessage();
             System.out.println(error);
             throw new RuntimeException(error);
         }
-    }
-
-    /**
-     * 加载扩展具体的jar文件
-     * */
-    public static void loadXml(File file) {
-        _g.do_loadFile(file);
     }
 
 
@@ -97,20 +93,5 @@ public class XmlSqlLoader {
                 ex.printStackTrace();
             }
         }
-    }
-
-    //res::获取资源的RUL
-    public static URL getResource(String name) {
-        URL url = XmlSqlLoader.class.getResource(name);
-        if (url == null) {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            if (loader != null) {
-                url = loader.getResource(name);
-            } else {
-                url = ClassLoader.getSystemResource(name);
-            }
-        }
-
-        return url;
     }
 }

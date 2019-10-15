@@ -12,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringJavaCompiler {
-    static StringJavaCompiler _instance;
-    public static StringJavaCompiler instance(){
+public class JavaStringCompiler {
+    static JavaStringCompiler _instance;
+    public static JavaStringCompiler instance(){
         if(_instance == null){
-            _instance = new StringJavaCompiler();
+            _instance = new JavaStringCompiler();
         }
 
         return _instance;
@@ -34,7 +34,7 @@ public class StringJavaCompiler {
     //存放编译过程中输出的信息
     private DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
 
-    public StringJavaCompiler() {
+    public JavaStringCompiler() {
         //标准的内容管理器,更换成自己的实现，覆盖部分方法
         StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(diagnosticsCollector, null, null);
         javaFileManager = new StringJavaFileManage(standardFileManager);
