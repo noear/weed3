@@ -12,17 +12,38 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class XmlSqlProxy {
 
-    /** 创建接口调用代理客户端 */
+    /** 获取代理实例 */
     public static  <T> T get(Class<?> clz ) {
         return (T) Proxy.newProxyInstance(
                 clz.getClassLoader(),
                 new Class[]{clz},
                 (proxy, method, args) -> proxy_call(proxy, method, args));
+    }
+
+    private static String _lock = "";
+    private static Map<Class<?>,Object> _cache = new HashMap<>();
+
+    /** 获取代理单例 */
+    public static <T>  T getSingleton(Class<?> clz ){
+        Object tmp = _cache.get(clz);
+        if(tmp == null){
+            synchronized (_lock){
+                tmp = _cache.get(clz);
+                if(tmp == null) {
+                    tmp = get(clz);
+                    _cache.put(clz,tmp);
+                }
+            }
+        }
+
+        return (T)tmp;
     }
 
     /** 执行调用代理 */
