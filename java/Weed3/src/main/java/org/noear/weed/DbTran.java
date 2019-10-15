@@ -64,7 +64,11 @@ public class DbTran {
             }
 
             begin(false);
+
+            DbTranUtil.currentSet(this);
             handler.run(this);
+            DbTranUtil.currentRemove();
+
             commit(false);
 
             _isSucceed = true;

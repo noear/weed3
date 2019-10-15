@@ -58,7 +58,7 @@ public class Command {
         this.tran = tran;
 
         if(tran == null){
-            this.tran = DbThreadUtil.tranGet();
+            this.tran = DbTranUtil.current();
         }
     }
 

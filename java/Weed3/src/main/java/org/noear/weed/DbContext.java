@@ -200,13 +200,7 @@ public class DbContext {
     }
 
     public DbTran tran(Act1Ex<DbTran, SQLException> handler) throws SQLException {
-        DbTran tran = new DbTran(this);
-
-        DbThreadUtil.tranStart(tran);
-        tran.execute(handler);
-        DbThreadUtil.tranEnd();
-
-        return tran;
+        return new DbTran(this);
     }
 
     public DbTran tran() {
@@ -214,13 +208,7 @@ public class DbContext {
     }
 
     public DbTranQueue tranQueue(Act1Ex<DbTranQueue, SQLException> handler) throws SQLException {
-        DbTranQueue tq = new DbTranQueue();
-
-        DbThreadUtil.tranQueueStart(tq);
-        tq.execute(handler);
-        DbThreadUtil.tranQueueEnd();
-
-         return tq;
+        return new DbTranQueue();
     }
 
     //
