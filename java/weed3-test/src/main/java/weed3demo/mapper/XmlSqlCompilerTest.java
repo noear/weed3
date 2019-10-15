@@ -42,7 +42,7 @@ public class XmlSqlCompilerTest {
     public  void test21() throws Exception {
         URL url = getResource("/weed3/mapper.xml");
 
-        XmlSqlMapperCompiler.generator(new File(url.toURI()));
+        //XmlSqlMapperGenerator.generator(new File(url.toURI()));
 
 //        JavaCodeBlock block = XmlSqlMapperCompiler.parse( new File(url.toURI()));
 //
@@ -51,7 +51,7 @@ public class XmlSqlCompilerTest {
 
     @Test
     public  void test22() throws Exception {
-        XmlSqlMapperCompiler.generator();
+        //XmlSqlMapperGenerator.generator();
 
 //        JavaCodeBlock block = XmlSqlMapperCompiler.parse( new File(url.toURI()));
 //

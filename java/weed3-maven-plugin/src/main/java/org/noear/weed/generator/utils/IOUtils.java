@@ -1,4 +1,4 @@
-package org.noear.weed.utils;
+package org.noear.weed.generator.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;

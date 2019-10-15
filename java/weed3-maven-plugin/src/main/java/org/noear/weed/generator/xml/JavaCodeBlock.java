@@ -1,4 +1,4 @@
-package org.noear.weed.xml;
+package org.noear.weed.generator.xml;
 
 public class JavaCodeBlock {
     public String _namespace;

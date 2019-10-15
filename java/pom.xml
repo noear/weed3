@@ -17,8 +17,9 @@
     </properties>
 
     <modules>
-        <module>Weed3</module>
-        <module>Weed3Demo</module>
+        <module>weed3</module>
+        <module>weed3-maven-plugin</module>
+        <module>weed3-test</module>
     </modules>
 
    

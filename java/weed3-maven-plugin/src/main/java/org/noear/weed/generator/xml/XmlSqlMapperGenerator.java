@@ -1,7 +1,8 @@
-package org.noear.weed.xml;
+package org.noear.weed.generator.xml;
 
-import org.noear.weed.utils.IOUtils;
-import org.noear.weed.utils.StringUtils;
+
+import org.noear.weed.generator.utils.IOUtils;
+import org.noear.weed.generator.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -9,44 +10,41 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.net.URI;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlSqlMapperGenerator {
 
     /** 生成 java 类 */
-    public static void generate() {
+    public static void generate(File baseDir, File sourceDir) {
         try {
-            URL path = IOUtils.getResource("/weed3/");
-            File dic = new File(path.toURI());
+            String path = (baseDir.getAbsolutePath() + "/src/main/resources/weed3");
+            File dic = new File(path);
 
             if (dic.isDirectory()) {
                 File[] tmps = dic.listFiles();
                 for (File tmp : tmps) {
-                    generateFile(tmp);
+                    generateFile(sourceDir, tmp);
                 }
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
 
-    private static String dic_java;
-    public static void generateFile(File xmlFile) throws Exception {
-        if(dic_java == null) {
-            String dic_root = IOUtils.getResource("/").toString().replace("target/classes/", "").substring(5);
-            dic_java = dic_root + "src/main/java/";
-        }
-
+    public static void generateFile(File sourceDir, File xmlFile) throws Exception {
         JavaCodeBlock block = parse(xmlFile);
         if (block == null) {
             return;
         }
 
-        String dic_path = dic_java + block._namespace.replace(".", "/");
+        String dic_path = sourceDir.getAbsolutePath()+"/" + block._namespace.replace(".", "/");
 
         new File(dic_path).mkdirs();
 
@@ -86,7 +84,7 @@ public class XmlSqlMapperGenerator {
         sb.append("import org.noear.weed.xml.Namespace;\n\n");
 
 
-        Map<String,Node> node_map = new HashMap<>();
+        Map<String,Node> node_map = new HashMap<String,Node>();
         NodeList sql_list = doc.getElementsByTagName("sql");
         for (int i = 0, len = sql_list.getLength(); i < len; i++) {
             Node n = sql_list.item(i);
@@ -128,25 +126,22 @@ public class XmlSqlMapperGenerator {
             sb.append("void");
         }
         else{
-            switch (block._return){
-                case "Map":
-                    sb.append("Map<String,Object>");
-                    break;
-                case "MapList":
-                    sb.append("List<Map<String,Object>>");
-                    break;
-
-                default:
-                    sb.append(block._return);
-                    break;
+            if("Map".equals(block._return)){
+                sb.append("Map<String,Object>");
+            } else if("MapList".equals(block._return)){
+                sb.append("List<Map<String,Object>>");
+            } else{
+                sb.append(block._return);
             }
         }
 
         sb.append(" ").append(block._id).append("(");
 
-        block.varMap.forEach((k,v)->{
+        for(String k : block.varMap.keySet()){
+            XmlSqlVar v = block.varMap.get(k);
+
             sb.append(v.type).append(" ").append(v.name).append(",");
-        });
+        }
 
         if(block.varMap.size()>0){
             sb.deleteCharAt(sb.length()-1);
@@ -374,7 +369,7 @@ public class XmlSqlMapperGenerator {
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt){
         String txt2 = null;
-        Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
+        Map<String, XmlSqlVar> tmpList = new LinkedHashMap<String, XmlSqlVar>();
 
         //0.确定动作
         if(dblock.action==null){
@@ -448,9 +443,10 @@ public class XmlSqlMapperGenerator {
                 txt2 = txt2.replace(dv.mark, "?");
             }
             sb.append("\"").append(txt2).append(" \"");
-            tmpList.forEach((k, v) -> {
+            for(String k : tmpList.keySet()){
+                XmlSqlVar v = tmpList.get(k);
                 sb.append(",").append(v.name);
-            });
+            }
         }
     }
 }

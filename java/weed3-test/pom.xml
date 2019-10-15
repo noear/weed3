@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>weed3-demo</artifactId>
+    <artifactId>weed3-test</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
-            <version>3.2.0.1</version>
+            <version>3.2.0.2</version>
         </dependency>
 
 
@@ -58,9 +58,17 @@
 
     </dependencies>
 
+
+
     <build>
         <finalName>admin-rock</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3-maven-plugin</artifactId>
+                <version>0.0.1</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
