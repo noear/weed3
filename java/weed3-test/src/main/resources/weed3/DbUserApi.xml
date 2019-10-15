@@ -38,7 +38,7 @@ ${name:type} = 变量替换
 //单值
 :return="String" => String （任何单职类型）
 -->
-<mapper namespace="org.xxx.xxx" :db="testdb">
+<mapper namespace="weed3demo.xmlsql" :db="testdb">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>

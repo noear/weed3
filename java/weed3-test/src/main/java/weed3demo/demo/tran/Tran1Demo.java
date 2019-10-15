@@ -10,6 +10,18 @@ import java.sql.SQLException;
  * Created by noear on 2017/7/22.
  */
 public class Tran1Demo {
+
+    /*
+    private static void test_db1_tran_old() throws SQLException {
+        //1.简单处理
+        DbConfig.pc_user.tran((t) -> {
+            t.db().sql("insert into test(txt) values(?)", "cc").tran(t).execute();
+            t.db().sql("insert into test(txt) values(?)", "dd").tran(t).execute();
+
+            t.db().sql("update test set txt='1' where id=1").tran(t).execute();
+        });
+    }*/
+
     /*所有的执行在一个事务控制范围内*/
     private static void test_db1_tran() throws SQLException {
         //1.简单处理
