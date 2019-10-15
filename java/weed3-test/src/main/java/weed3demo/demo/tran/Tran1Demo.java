@@ -33,7 +33,8 @@ public class Tran1Demo {
         DbTranQueue queue = new DbTranQueue();
 
         queue.execute((qt)->{
-            db.table("").tran().select("");
+            db.table("").tran(db.tran().join(qt))
+                    .select("");
         });
 
         db.tran().join(queue).execute((t) -> {
@@ -44,7 +45,8 @@ public class Tran1Demo {
 
         //2.执行第二个事务
         db2.tran().join(queue).execute((t) -> {
-            db2.sql("insert into test(txt) values(?)", "gg").execute();
+            db2.sql("insert into test(txt) values(?)", "gg")
+                    .execute();
         });
 
         queue.complete();
