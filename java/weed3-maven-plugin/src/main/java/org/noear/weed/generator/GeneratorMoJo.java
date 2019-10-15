@@ -18,9 +18,10 @@ public class GeneratorMoJo extends AbstractMojo {
     private File sourceDir;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info(baseDir.getAbsolutePath());
-        getLog().info(sourceDir.getAbsolutePath());
+        //getLog().info(baseDir.getAbsolutePath());
+        //getLog().info(sourceDir.getAbsolutePath());
 
+        System.out.println("Start building files:");
         XmlSqlMapperGenerator.generate(baseDir, sourceDir);
         //getLog().info("Hello MavenPlugin, I'm Weed3.");
     }

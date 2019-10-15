@@ -61,6 +61,7 @@ public class DbFormater implements IDbFormater{
         }
 
         StringBuilder sb = StringUtils.borrowBuilder();
+        //将列切分
         String[] ss = columns.split(",");
 
         for(int i=0,len=ss.length; i<len; i++){
@@ -68,10 +69,21 @@ public class DbFormater implements IDbFormater{
 
             if(name.indexOf(" ")>0){
                 int idx = name.indexOf(" ");
-                //类假：xxx_name name;xxx_name as name; name ASC;
-                sb.append(format_column_do(name.substring(0,idx)))
-                  .append(name.substring(idx))
-                  .append(",");
+                //类假：xxx_name name;xxx_name as name; name ASC; a.xxx_name name,DISTINCT name
+
+                String left = name.substring(0,idx).trim();
+                String left_up = left.toUpperCase();
+
+                if("ALL".equals(left_up)
+                        || "DISTINCT".equals(left_up)
+                        || "DISTINCTROW".equals(left_up)
+                        || "TOP".equals(left_up)){
+                    sb.append(name).append(",");
+                }else{
+                    sb.append(format_column_do(left))
+                            .append(name.substring(idx))
+                            .append(",");
+                }
             }else{
                 sb.append(format_column_do(name)).append(",");
             }
@@ -86,7 +98,7 @@ public class DbFormater implements IDbFormater{
 
 
     private String format_column_do(String name){
-        if (name.startsWith(_fieldFormat_start) || name.equals("*") || name.indexOf(".") > 0 || name.indexOf("(") > 0) {
+        if (name.startsWith(_fieldFormat_start) || name.equals("*") || name.indexOf(".") > 0 || name.indexOf(")") > 0) {
             return name;
         }
 

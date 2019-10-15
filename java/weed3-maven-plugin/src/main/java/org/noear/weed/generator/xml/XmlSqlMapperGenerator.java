@@ -55,6 +55,7 @@ public class XmlSqlMapperGenerator {
         }
 
         IOUtils.fileWrite(file, block._code);
+        System.out.println("Generated : "+file.getAbsolutePath());
     }
 
     //将xml解析为java code
@@ -120,8 +121,13 @@ public class XmlSqlMapperGenerator {
     }
 
     private static void writerBlock(StringBuilder sb, XmlSqlBlock block){
-        newLine(sb,1);
+        //写入注释
+        if(block._note != null && block._note.length()>0){
+            newLine(sb,1).append("/** ").append(block._note).append(" */");
+        }
 
+        //写入接口定义
+        newLine(sb,1);
         if(StringUtils.isEmpty(block._return)){
             sb.append("void");
         }
@@ -163,6 +169,7 @@ public class XmlSqlMapperGenerator {
 
         dblock._id = attr(n, "id");
 
+        dblock._note = attr(n, ":note");
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
         if (dblock._return != null && dblock._return.indexOf("[") > 0) {
