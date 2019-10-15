@@ -28,13 +28,20 @@ public class XmlSqlMapperCompiler {
         }
     }
 
+
+    private static String dic_java;
     public static void generator(File xmlFile) throws Exception {
+        if(dic_java == null) {
+            String dic_root = IOUtils.getResource("/").toString().replace("target/classes/", "").substring(5);
+            dic_java = dic_root + "src/main/java/";
+        }
+
         JavaCodeBlock block = parse(xmlFile);
         if (block == null) {
             return;
         }
 
-        String dic_path = "src/main/java/"+ block._namespace.replace(".", "/");
+        String dic_path = dic_java + block._namespace.replace(".", "/");
 
         new File(dic_path).mkdirs();
 
