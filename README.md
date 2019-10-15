@@ -10,7 +10,7 @@
 高性能、跨平台、轻量、有个性<br/>
 
 特点：<br/>
-1.零反射零注解(后来加了一点点反射的的可选功能...)<br/>
+1.零反射零注解（后来加了一点点反射的的可选功能...）<br/>
 2.漂亮的缓存控制（缓存服务由外部提供）<br/>
 3.纯代码无任何配置<br/>
 4.分布式事务集成<br/>
@@ -34,14 +34,14 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.0.4</version>
+  <version>3.2.0.5</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.0.2</version>
+    <version>3.2.0.3</version>
 </plugin>
 ```
 
