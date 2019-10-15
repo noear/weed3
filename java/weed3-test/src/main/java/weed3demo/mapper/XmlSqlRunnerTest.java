@@ -6,13 +6,16 @@ import org.noear.weed.WeedConfig;
 import org.noear.weed.xml.XmlSqlLoader;
 import org.noear.weed.xml.XmlSqlProxy;
 
+
 import java.net.URL;
 
 public class XmlSqlRunnerTest {
+
     @Test
     public  void test() throws Exception {
 
         WeedConfig.libOfDb.put("testdb",new DbContext());
+
 
         XmlSqlLoader.load();
 

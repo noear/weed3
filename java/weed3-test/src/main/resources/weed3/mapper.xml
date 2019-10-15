@@ -3,6 +3,7 @@
 sql 代码块定义指令
   :return（属性：返回类型）
   :declare（属性：变量预申明）
+  :db
 
   :caching（属性：缓存服务）
   :cacheClear（属性：清除缓存）
@@ -17,6 +18,7 @@ for 循环控制指令
   items （属性：集合变量名称）
 
 ref 引用代码块指令
+  sql （属性：代码块ID）
 
 name:type    = 变量申明
 @{name:type} = 变量注入
@@ -39,6 +41,22 @@ ${name:type} = 变量替换
 <mapper namespace="org.xxx.xxx" :db="testdb">
     <sql id="user_add" :return="int">
         INSERT user(user_id) VALUES(@{user_id:int})
+    </sql>
+
+    <tran id="db_sql">
+        <ref sql="user_add"/>
+    </tran>
+
+    <sql id="xxx" :return="int">
+        INSERT user(user_id
+        <if test="mobile !=null">
+            ,mobile
+        </if>
+        ) VALUES(@{user_id:int}
+        <if test='(mobile !=null) || (mobile.startsWith("xml"))'>
+            ,@{mobile:String}
+        </if>
+        )
     </sql>
 
     <sql id="user_add_if" :return="int">
