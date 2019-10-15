@@ -14,9 +14,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XmlSqlMapperCompiler {
+public class XmlSqlMapperGenerator {
 
-    public static void generatorAll() {
+    public static void generate() {
         try {
             URL path = IOUtils.getResource("/weed3/");
             File dic = new File(path.toURI());
@@ -24,7 +24,7 @@ public class XmlSqlMapperCompiler {
             if (dic.isDirectory()) {
                 File[] tmps = dic.listFiles();
                 for (File tmp : tmps) {
-                    generator(tmp);
+                    generateFile(tmp);
                 }
             }
         }catch (Exception ex){
@@ -34,7 +34,7 @@ public class XmlSqlMapperCompiler {
 
 
     private static String dic_java;
-    public static void generator(File xmlFile) throws Exception {
+    public static void generateFile(File xmlFile) throws Exception {
         if(dic_java == null) {
             String dic_root = IOUtils.getResource("/").toString().replace("target/classes/", "").substring(5);
             dic_java = dic_root + "src/main/java/";
