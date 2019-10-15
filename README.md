@@ -30,11 +30,19 @@
  https://github.com/noear/Weed3/blob/master/java/Weed3/_readme.txt <br/>
  
 ```xml
+<!-- 框架 -->
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.0.1</version>
+  <version>3.2.0.2</version>
 </dependency>
+
+<!-- 插件，用于生成xml sql mapper -->
+<plugin>
+    <groupId>org.noear</groupId>
+    <artifactId>weed3-maven-plugin</artifactId>
+    <version>3.2.0.2</version>
+</plugin>
 ```
 
 实例化数据库上下文（一切都在上面操作）
