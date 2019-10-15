@@ -2,10 +2,11 @@
 <!--
 sql 代码块定义指令
   :return（属性：返回类型）
-  :declare（属性：变量预申明）
-  :db
+  :declare（属性：变量类型预申明）
+  :db （属性：数据库上下文，通过WeedConfig.libOfDb获取）
+  :note（属性：注解）
 
-  :caching（属性：缓存服务）
+  :caching（属性：缓存服务，通过WeedConfig.libOfCache获取）
   :cacheClear（属性：清除缓存）
   :cacheTag（属性：缓存标签）
   :usingCache（属性：缓存时间,int）
@@ -39,15 +40,11 @@ ${name:type} = 变量替换
 :return="String" => String （任何单职类型）
 -->
 <mapper namespace="weed3demo.xmlsql" :db="testdb">
-    <sql id="user_add" :return="int">
+    <sql id="user_add" :return="long" :note="添加用户">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
 
-    <tran id="db_sql">
-        <ref sql="user_add"/>
-    </tran>
-
-    <sql id="xxx" :return="int">
+    <sql id="user_add_if" :return="long" :note="添加用户2">
         INSERT user(user_id
         <if test="mobile !=null">
             ,mobile
@@ -59,26 +56,14 @@ ${name:type} = 变量替换
         )
     </sql>
 
-    <sql id="user_add_if" :return="int">
-        INSERT user(user_id
-        <if test="mobile !=null">
-            ,mobile
-        </if>
-        ) VALUES(@{user_id:int}
-        <if test='(mobile !=null) || (mobile.startsWith("xml"))'>
-            ,@{mobile:String}
-        </if>
-        )
-    </sql>
-
-    <sql id="user_add_for">
+    <sql id="user_add_for" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:weed3demo.mapper.UserModel" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
 
-    <sql id="user_del">
+    <sql id="user_del" :note="删除一个用户">
         DELETE FROM user WHERE id=@{user_id:long}
         <if test="sex > 0">
             AND sex=@{sex:int}
@@ -86,6 +71,7 @@ ${name:type} = 变量替换
     </sql>
 
     <sql id="user_set"
+         :note="更新一个用户，并清理相关相存"
          :caching="localCache"
          :cacheClear="user_${user_id},user_1">
         UPDATE user SET mobile=@{mobile:String},sex=@{sex:int}
@@ -97,6 +83,7 @@ ${name:type} = 变量替换
     </sql>
 
     <sql id="user_get"
+         :note="获取一批符合条件的用户"
          :declare="foList:int,user_id:long"
          :return="List[weed3demo.mapper.UserModel]"
          :caching="localCache"
