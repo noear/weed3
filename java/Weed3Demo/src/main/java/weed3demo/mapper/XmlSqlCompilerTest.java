@@ -8,22 +8,56 @@ import java.net.URL;
 
 public class XmlSqlCompilerTest {
     @Test
-    public  void test() throws Exception {
+    public  void test1() throws Exception {
+        String dic_root = getResource("/").toString().replace("target/classes/","");
+        String dic_java = dic_root +"src/main/java/";
+
+        System.out.println(dic_java);
+    }
+
+    @Test
+    public  void test11() throws Exception {
         URL url = getResource("/weed3/mapper.xml");
 
         String code = XmlSqlCompiler.parse( new File(url.toURI()));
 
         System.out.println(code);
-
-//        XmlSqlLoader.load();
-//
-//        IXmlSqlBuilder tmp = XmlSqlFactory.get("org.xxx.xxx.user_add");
-//        if(tmp == null){
-//            return;
-//        }else{
-//            System.out.println("已找到 IXmlSqlBuilder: org.xxx.xxx.user_add");
-//        }
     }
+
+    @Test
+    public  void test12() throws Exception {
+
+        XmlSqlLoader.load();
+
+        XmlSqlBlock tmp = XmlSqlFactory.get("org.xxx.xxx.user_add");
+
+        if(tmp == null){
+            return;
+        }else{
+            System.out.println("已找到 IXmlSqlBuilder: org.xxx.xxx.user_add");
+        }
+    }
+
+    @Test
+    public  void test21() throws Exception {
+        URL url = getResource("/weed3/mapper.xml");
+
+        XmlSqlMapperCompiler.generator(new File(url.toURI()));
+
+//        JavaCodeBlock block = XmlSqlMapperCompiler.parse( new File(url.toURI()));
+//
+//        System.out.println(block._code);
+    }
+
+    @Test
+    public  void test22() throws Exception {
+        XmlSqlMapperCompiler.generator();
+
+//        JavaCodeBlock block = XmlSqlMapperCompiler.parse( new File(url.toURI()));
+//
+//        System.out.println(block._code);
+    }
+
 
     public static URL getResource(String name) {
         URL url = XmlSqlLoader.class.getResource(name);
