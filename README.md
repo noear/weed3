@@ -104,14 +104,14 @@ db.table("test")
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
   .set("xxx", 1)  //保持与存储过程参数的序顺一致
-  .getItem(new UserInfoModel()); 
+  .getItem(UserInfoModel.class);  //基于反射
 
 //简易.查询过程调用示例，及使用使用示例
 db.call("select * from user where user_id=@userID") //@userID,参数占位符
   .set("@userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
-  .getItem(new UserInfoModel()); 
+  .getItem(new UserInfoModel());  //要求：UserInfoModel 为 IBinder
 
 //简易.存储过程调用示例，及使用事务示例
 db.tran(tran->{
@@ -343,7 +343,7 @@ m.where("sex=?",1)
 示例::xml配置（~/resources/weed3/DbUserMapper.xml）<br/>
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="sql.weed.test">
+<mapper namespace="sql.weed.test" :db="userdb">
     <sql id="user_add" :return="long">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql> 
@@ -355,14 +355,16 @@ m.where("sex=?",1)
 db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
 //使用方案2（随后支持）
-// DbUserMapper.java 生成代码（类的名字与xml文件名一致）
+// DbUserMapper.java 生成代码（类的名字与xml文件名一致） //文件可以移到别处去
 package sql.weed.test;
+
+@Namespace("sql.weed.test")
 public interface DbUserMapper{
     long user_add(int user_id);
 }
 
 //使用 DbUserMapper
-DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class);
+DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
