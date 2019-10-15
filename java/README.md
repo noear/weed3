@@ -3,7 +3,23 @@ Weed3Demo::使用示例<br/>
 <br/>
 更新说明<br/>
 ------------------<br/>
+<br>
+3.2.0.2::<br>
+1.添加xml mapper 代码生成器（meven plugin）<br/>
 <br/>
+3.2.0.1::<br/>
+1.添加xml mapper 支持<br/>
+<br/>
+3.1.9<br/>
+1.set(),table("aaa","aaa a", "aaa as a"),join(like table()),select("a,b b,c as c,SUM(d)"),orderBy("a ASC,B,a.a"),groupBy("a.a") 添加关键字处理<br/>
+<br/>
+3.1.8<br/>
+1.DbContext构造函数，取消fieldFormat参数<br>
+2.DbTableQueryBase，添加append()无限制添加代码<br>
+3.添加objectFormat机制（用于格式化对象）<br>
+<br>
+3.1.7<br>
+1.添加db.exec()接口<br>
 3.1.6<br/>
 1.将包名：noear.weed 改为：org.noear.weed<br/>
 2.List<Map<String,Object>> getMapList() <br/>
@@ -52,10 +68,10 @@ Weed3Demo::使用示例<br/>
 <br/>
 3.0.4.91<br/>
 1.DbTableQueryBase<br/>
->插入添加null值的支持（之前会过滤掉）<br/>
->批量插入添加null值的支持<br/>
->批量更新添加null值的支持<br/>
-<br/>
+> 插入添加null值的支持（之前会过滤掉）<br/>
+批量插入添加null值的支持<br/>
+批量更新添加null值的支持<br/>
+
 3.0.4.86<br/>
 1.DbTableQueryBase 添加控制接口（可实现更自由的条件控制）<br/>
 +begin()<br/>
