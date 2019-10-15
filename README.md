@@ -37,7 +37,7 @@
   <version>3.2.0.3</version>
 </dependency>
 
-<!-- 插件，用于生成xml sql mapper -->
+<!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
