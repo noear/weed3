@@ -200,7 +200,7 @@ public class DbContext {
         return new DbTableQuery(this).table(table);
     }
 
-    public DbTran tran(Act1Ex<DbTran, SQLException> handler) throws SQLException {
+    public DbTran tran(Act1Ex<DbTran, Exception> handler) throws Exception {
         return new DbTran(this).execute(handler);
     }
 
@@ -208,7 +208,7 @@ public class DbContext {
         return new DbTran(this);
     }
 
-    public DbTranQueue tranQueue(Act1Ex<DbTranQueue, SQLException> handler) throws SQLException {
+    public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Exception> handler) throws Exception {
         return new DbTranQueue().execute(handler);
     }
 

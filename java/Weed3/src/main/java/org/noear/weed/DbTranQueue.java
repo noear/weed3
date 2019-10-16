@@ -63,7 +63,7 @@ public class DbTranQueue {
     }
 
     //执行并结束事务
-    public DbTranQueue execute(Act1Ex<DbTranQueue,SQLException> handler) throws SQLException {
+    public DbTranQueue execute(Act1Ex<DbTranQueue,Exception> handler) throws Exception {
         try {
             handler.run(this);
 

@@ -12,7 +12,7 @@ public class DbTran {
     protected Connection connection;
     private DbTranQueue queue;
 
-    private Act1Ex<DbTran,SQLException> _handler = null;
+    private Act1Ex<DbTran,Exception> _handler = null;
 
     //当前为master事务时，才会用到这个字段;(用于记录这个队列里，最后一个事务；方便下一个事务设置before)
     private DbContext _context = null;/*数据访问上下文*/
@@ -57,7 +57,7 @@ public class DbTran {
     }
 
     /*执行事务过程 = action(...) + excute() */
-    public DbTran execute(Act1Ex<DbTran,SQLException> handler) throws SQLException {
+    public DbTran execute(Act1Ex<DbTran,Exception> handler) throws Exception {
         try {
             if(connection==null) {
                 connection = _context.getConnection();
@@ -72,7 +72,7 @@ public class DbTran {
             commit(false);
 
             _isSucceed = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             _isSucceed = false;
 
             if (queue == null)
@@ -88,12 +88,12 @@ public class DbTran {
     }
 
     /*执行事务过程*/
-    public DbTran execute() throws SQLException {
+    public DbTran execute() throws Exception {
         return execute(_handler);
     }
 
 
-    public DbTran action(Act1Ex<DbTran,SQLException> handler){
+    public DbTran action(Act1Ex<DbTran,Exception> handler){
         _handler = handler;
         return this;
     }
