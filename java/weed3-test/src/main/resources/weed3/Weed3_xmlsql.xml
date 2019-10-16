@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+sql 代码块定义指令
+  :return（属性：返回类型）
+  :declare（属性：变量类型预申明）
+  :db （属性：数据库上下文name）
+  :note（属性：注解）
+
+  :caching（属性：缓存服务name）
+  :cacheClear（属性：清除缓存）
+  :cacheTag（属性：缓存标签）
+  :usingCache（属性：缓存时间,int）
+
+if 判断控制指令（没有else）
+  test （属性：判断检测代码）
+
+for 循环控制指令
+  var （属性：循环变量申明）
+  items （属性：集合变量名称）
+
+ref 引用代码块指令
+  sql （属性：代码块id）
+
+name:type    = 变量申明
+@{name:type} = 变量注入
+${name:type} = 变量替换
+
+//列表([]替代<>)
+:return="List[weed3demo.mapper.UserModel]" => List<UserModel>
+:return="List[String]" => List<String> （Date,Long,...大写开头的单值类型）
+:return="MapList" => List<Map<String,Object>>
+:return="DataList" => DataList
+
+//一行
+:return="weed3demo.mapper.UserModel" => UserModel
+:return="Map" => Map<String,Object>
+:return="DataItem" => DataItem
+
+//单值
+:return="String" => String （任何单职类型）
+-->
+<mapper namespace="weed3demo.xmlsql2" :db="testdb">
+    <sql id="user_add" :return="long" :note="添加用户">
+        INSERT user(user_id) VALUES(@{user_id:int})
+    </sql>
+
+    <sql id="user_add_for" :return="long" :note="批量添加用户3">
+        INSERT user(id,mobile,sex) VALUES
+        <for var="m:weed3demo.mapper.UserModel" items="list">
+            (@{m.user_id},@{m.mobile},@{m.sex})
+        </for>
+    </sql>
+
+    <sql id="user_del" :note="删除一个用户">
+        DELETE FROM user WHERE id=@{user_id:long}
+        <if test="sex > 0">
+            AND sex=@{sex:int}
+        </if>
+    </sql>
+
+    <sql id="user_set"
+         :note="更新一个用户，并清理相关相存"
+         :caching="localCache"
+         :cacheClear="user_${user_id},user_1">
+        UPDATE user SET mobile=@{mobile:String},sex=@{sex:int}
+        <if test="icon != null">
+            icon=@{icon:String}
+        </if>
+    </sql>
+
+    <sql id="user_get_list"
+         :note="获取一批符合条件的用户"
+         :declare="foList:int,user_id:long"
+         :return="List[weed3demo.mapper.UserModel]"
+         :caching="localCache"
+         :cacheTag="user_${user_id},user_1">
+        SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
+        <if test="foList == 0">
+            AND type='article'
+        </if>
+        <if test="foList == 1">
+            AND type='post'
+        </if>
+    </sql>
+
+    <sql id="user_cols1">name,title,style,label</sql>
+    <sql id="user_cols2">name,title</sql>
+
+    <sql id="user_get_list2"
+         :note="获取一批符合条件的用户"
+         :declare="foList:int,user_id:long"
+         :return="List[weed3demo.mapper.UserModel]"
+         :caching="localCache"
+         :cacheTag="user_${user_id},user_1">
+        SELECT id,
+        <if test="foList == 0">
+            <ref sql="user_cols1"/>
+        </if>
+        <if test="foList == 1">
+            <ref sql="user_cols2"/>
+        </if>
+        FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
+
+    </sql>
+</mapper>
+<!--
+//使用方案1
+db.call("@userdb.user_set").set("user_id",12).insert()
+db.call("@userdb.user_add").setMap(map).insert()
+
+//使用方案2
+public interface userdb{
+    UserModel user_get(int user_id);
+}
+userdb.user_get(12);
+
+-->

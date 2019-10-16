@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.noear.weed.xml.*;
 
 import java.io.File;
+import java.math.*;
 import java.net.URL;
 
 public class XmlSqlCompilerTest {
@@ -17,7 +18,7 @@ public class XmlSqlCompilerTest {
 
     @Test
     public  void test11() throws Exception {
-        URL url = getResource("/weed3/mapper.xml");
+        URL url = getResource("/weed3/UserMapper.xml");
 
         String code = XmlSqlCompiler.parse( new File(url.toURI()));
 
