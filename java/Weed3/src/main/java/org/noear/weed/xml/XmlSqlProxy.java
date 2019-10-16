@@ -5,22 +5,19 @@ import org.noear.weed.DbProcedure;
 import org.noear.weed.Variate;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.utils.StringUtils;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.Proxy;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class XmlSqlProxy {
 
     /** 获取代理实例 */
     public static  <T> T get(Class<?> clz ) {
+        XmlSqlLoader.tryLoad();
+
         return (T) Proxy.newProxyInstance(
                 clz.getClassLoader(),
                 new Class[]{clz},
@@ -104,7 +101,7 @@ public class XmlSqlProxy {
                 //实体化处理
                 if(Collection.class.isAssignableFrom(rst_type)){
                     //是实体集合
-                    rst_type2  =((ParameterizedTypeImpl) rst_type2).getActualTypeArguments()[0];
+                    rst_type2  =((ParameterizedType) rst_type2).getActualTypeArguments()[0];
                     return sp.getList((Class<?>)rst_type2);
                 }else{
                     //是单实体

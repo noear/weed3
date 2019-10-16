@@ -38,6 +38,7 @@ public class DbContext {
     private DataSource _dataSource;
     //代码注解
     private String _codeHint = null;
+    private String _name;
 
     //
     // 构建函数 start
@@ -63,83 +64,72 @@ public class DbContext {
         _dataSource = dataSource;
     }
 
-    /**
-     * 名字设置
-     * */
+    /** 名字设置 */
     public DbContext nameSet(String name) {
         if (name != null) {
             //如果第一次赋值，自动注册到db库里
             WeedConfig.libOfDb.put(name, this);
         }
+        _name = name;
         return this;
+    }
+    /** 名字获取 */
+    public String name(){
+        return _name;
     }
 
     //
     // 构建函数 end
     //
 
-    /**
-     * 特性设置
-     */
+    /** 特性设置 */
     public DbContext attrSet(String name, String value) {
         _attrMap.put(name, value);
         return this;
     }
 
-    /**
-     * 特性获取
-     */
+    /** 特性获取 */
     public String attr(String name) {
         return _attrMap.get(name);
     }
 
 
-    /**
-     * 数据源设置
-     */
+    /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
         _dataSource = dataSource;
         return this;
     }
 
-    /**
-     * 获取数据源
-     */
+    /** 获取数据源 */
     public DataSource dataSource() {
         return _dataSource;
     }
 
 
-    /**
-     * 数据集合名称设置
-     */
+    /** 数据集合名称设置 */
     public DbContext schemaNameSet(String schemaName) {
         _schemaName = schemaName;
         return this;
     }
 
-    /**
-     * 代码注解设置
-     */
+    /** 代码注解设置 */
     public DbContext codeHintSet(String hint) {
         _codeHint = hint;
         return this;
     }
 
-    /**
-     * 代码注解获取
-     */
+    /** 代码注解获取 */
     public String codeHint() {
         return _codeHint;
     }
 
 
-    /*是否配置了schema*/
+    /** 是否配置了schema */
     public boolean hasSchema() {
         return _schemaName != null;
     }
 
-    /*获取schema*/
+    /** 获取schema */
     public String getSchema() {
         return _schemaName;
     }

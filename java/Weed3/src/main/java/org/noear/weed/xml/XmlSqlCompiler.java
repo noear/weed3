@@ -35,8 +35,8 @@ public class XmlSqlCompiler {
 
         sb.append("package ").append(namespace).append(";\n\n");
 
-        sb.append("import java.util.Map;\n");
-        sb.append("import java.util.Collection;\n");
+        sb.append("import java.math.*;\n");
+        sb.append("import java.util.*;\n");
         sb.append("import org.noear.weed.SQLBuilder;\n");
         sb.append("import org.noear.weed.xml.XmlSqlFactory;\n\n");
 
@@ -298,13 +298,13 @@ public class XmlSqlCompiler {
     }
 
     //sql::格式化字符串
-    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt){
+    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
         String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
 
         //0.确定动作
         if(dblock.action==null){
-            txt2 = txt.trim().toUpperCase();
+            txt2 = txt0.trim().toUpperCase();
 
             if(txt2.startsWith("INSERT")){
                 dblock.action = "INSERT";
@@ -323,7 +323,7 @@ public class XmlSqlCompiler {
             }
         }
 
-        txt2 = txt;
+        txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
         //1.处理${xxx},${xxx,type}
         {
             tmpList.clear();
