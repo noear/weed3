@@ -12,11 +12,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class XmlSqlMapperGenerator {
 
@@ -68,6 +67,7 @@ public class XmlSqlMapperGenerator {
 
         Node nm = doc.getDocumentElement();
 
+        Set<String> importSet = new HashSet<>();
         String namespace = attr(nm, "namespace");
         String db = attr(nm, ":db");
         String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
@@ -76,13 +76,15 @@ public class XmlSqlMapperGenerator {
 
         sb.append("package ").append(namespace).append(";\n\n");
 
-        sb.append("import java.util.Map;\n");
-        sb.append("import java.util.List;\n");
-        sb.append("import java.util.Collection;\n\n");
+        sb.append("import java.math.*;\n");
+        sb.append("import java.sql.SQLException;\n");
+        sb.append("import java.util.*;\n\n");
 
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
         sb.append("import org.noear.weed.xml.Namespace;\n\n");
+
+        StringBuilder sb2 = new StringBuilder();
 
 
         Map<String,Node> node_map = new HashMap<String,Node>();
@@ -95,8 +97,8 @@ public class XmlSqlMapperGenerator {
             }
         }
 
-        sb.append("@Namespace(\"").append(namespace).append("\")\n");
-        sb.append("public interface ").append(classname).append("{");
+        sb2.append("@Namespace(\"").append(namespace).append("\")\n");
+        sb2.append("public interface ").append(classname).append("{");
 
         //构建block
         StringBuilder sb_tmp  =new StringBuilder();
@@ -104,10 +106,22 @@ public class XmlSqlMapperGenerator {
             Node n = sql_list.item(i);
             XmlSqlBlock block = parseSqlNode(node_map, sb_tmp, n, namespace, db, classname);
 
-            writerBlock(sb, block);
+            writerBlock(sb2, block);
+
+            importSet.addAll(block.impTypeSet);
         }
 
-        sb.append("\n}\n");
+        sb2.append("\n}\n");
+
+        for(String type : importSet.stream().sorted().collect(Collectors.toList())){
+            sb.append("import ").append(type).append(";\n");
+        }
+        if(importSet.size()>0){
+            newLine(sb,0);
+        }
+
+        sb.append(sb2);
+
 
         node_map.clear();
 
@@ -153,7 +167,7 @@ public class XmlSqlMapperGenerator {
             sb.deleteCharAt(sb.length()-1);
         }
 
-        sb.append(");");
+        sb.append(") throws Exception;");
     }
 
     //xml:解析 sql 指令节点
@@ -172,9 +186,13 @@ public class XmlSqlMapperGenerator {
         dblock._note = attr(n, ":note");
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
-        if (dblock._return != null && dblock._return.indexOf("[") > 0) {
-            dblock._return = dblock._return.replace("[", "<")
-                                           .replace("]", ">");
+        if (dblock._return != null) {
+            TypeBlock tBlock = new TypeBlock(dblock._return);
+
+            dblock._return = tBlock.newType;
+            if(tBlock.impType!=null){
+                dblock.impTypeSet.add(tBlock.impType);
+            }
         }
 
         String db_tmp = attr(n, ":db");
@@ -374,13 +392,13 @@ public class XmlSqlMapperGenerator {
     }
 
     //sql::格式化字符串
-    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt){
+    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
         String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<String, XmlSqlVar>();
 
         //0.确定动作
         if(dblock.action==null){
-            txt2 = txt.trim().toUpperCase();
+            txt2 = txt0.trim().toUpperCase();
 
             if(txt2.startsWith("INSERT")){
                 dblock.action = "INSERT";
@@ -399,7 +417,7 @@ public class XmlSqlMapperGenerator {
             }
         }
 
-        txt2 = txt;
+        txt2 = txt0.replace("\n"," ").replace("\"","\\\"");
         //1.处理${xxx},${xxx,type}
         {
             tmpList.clear();

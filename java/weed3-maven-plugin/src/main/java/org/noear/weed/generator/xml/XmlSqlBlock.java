@@ -2,7 +2,9 @@ package org.noear.weed.generator.xml;
 
 import org.w3c.dom.Node;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.LinkedHashMap;
@@ -49,13 +51,6 @@ public class XmlSqlBlock {
     }
 
     public String action;
-    public boolean isSelect(){
-        return "SELECT".equals(action);
-    }
-
-    public boolean isInsert(){
-        return "INSERT".equals(action);
-    }
 
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<String, XmlSqlVar>();
     public void varPut(XmlSqlVar dv) {
@@ -63,8 +58,21 @@ public class XmlSqlBlock {
             return;
         }
 
+        if(dv.type.indexOf(".")>0){
+            TypeBlock tBlock = new TypeBlock(dv.type);
+            if(tBlock.impType!=null) {
+                impTypeSet.add(tBlock.impType);
+            }
+
+            dv.type = tBlock.newType;
+        }
+
         varMap.put(dv.name, dv);
     }
+    public Set<String> impTypeSet = new HashSet<>();
+
+
+
 
     public String format(String txt, Map map) {
         String txt2 = txt;
