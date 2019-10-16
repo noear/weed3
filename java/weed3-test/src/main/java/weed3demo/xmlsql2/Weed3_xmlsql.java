@@ -1,4 +1,4 @@
-package weed3demo.xmlsql;
+package weed3demo.xmlsql2;
 
 import java.math.*;
 import java.sql.SQLException;
@@ -10,8 +10,8 @@ import org.noear.weed.xml.Namespace;
 
 import weed3demo.mapper.UserModel;
 
-@Namespace("weed3demo.xmlsql")
-public interface DbUserApi{
+@Namespace("weed3demo.xmlsql2")
+public interface Weed3_xmlsql{
   /** 添加用户 */
   long user_add(int user_id) throws SQLException;
   /** 批量添加用户3 */
