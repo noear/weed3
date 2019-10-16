@@ -3,6 +3,7 @@ package weed3demo.mapper;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
+import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.xml.XmlSqlLoader;
 import org.noear.weed.xml.XmlSqlProxy;
 
@@ -14,8 +15,8 @@ public class XmlSqlRunnerTest {
     @Test
     public  void test() throws Exception {
 
-        WeedConfig.libOfDb.put("testdb",new DbContext());
-
+        //new ICacheServiceEx().nameSet("sdf");
+        //new DbContext().nameSet("testdb");
 
         XmlSqlLoader.load();
 

@@ -3,10 +3,10 @@
 sql 代码块定义指令
   :return（属性：返回类型）
   :declare（属性：变量类型预申明）
-  :db （属性：数据库上下文，通过WeedConfig.libOfDb获取）
+  :db （属性：数据库上下文name）
   :note（属性：注解）
 
-  :caching（属性：缓存服务，通过WeedConfig.libOfCache获取）
+  :caching（属性：缓存服务name）
   :cacheClear（属性：清除缓存）
   :cacheTag（属性：缓存标签）
   :usingCache（属性：缓存时间,int）
@@ -19,7 +19,7 @@ for 循环控制指令
   items （属性：集合变量名称）
 
 ref 引用代码块指令
-  sql （属性：代码块ID）
+  sql （属性：代码块id）
 
 name:type    = 变量申明
 @{name:type} = 变量注入
@@ -44,18 +44,6 @@ ${name:type} = 变量替换
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
 
-    <sql id="user_add_if" :return="long" :note="添加用户2">
-        INSERT user(user_id
-        <if test="mobile !=null">
-            ,mobile
-        </if>
-        ) VALUES(@{user_id:int}
-        <if test='(mobile !=null) || (mobile.startsWith("xml"))'>
-            ,@{mobile:String}
-        </if>
-        )
-    </sql>
-
     <sql id="user_add_for" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:weed3demo.mapper.UserModel" items="list">
@@ -77,27 +65,42 @@ ${name:type} = 变量替换
         UPDATE user SET mobile=@{mobile:String},sex=@{sex:int}
         <if test="icon != null">
             icon=@{icon:String}
-        </if>;
-
-        <ref sql="user_del" />
+        </if>
     </sql>
 
-    <sql id="user_get"
+    <sql id="user_get_list"
          :note="获取一批符合条件的用户"
          :declare="foList:int,user_id:long"
          :return="List[weed3demo.mapper.UserModel]"
          :caching="localCache"
          :cacheTag="user_${user_id},user_1">
-        SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile=@{mobile:String}
+        SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
         <if test="foList == 0">
             AND type='article'
         </if>
         <if test="foList == 1">
-            AND type='colub'
-        </if>
-        <if test="foList == 2">
             AND type='post'
         </if>
+    </sql>
+
+    <sql id="user_cols1">name,title,style,label</sql>
+    <sql id="user_cols2">name,title</sql>
+
+    <sql id="user_get_list2"
+         :note="获取一批符合条件的用户"
+         :declare="foList:int,user_id:long"
+         :return="List[weed3demo.mapper.UserModel]"
+         :caching="localCache"
+         :cacheTag="user_${user_id},user_1">
+        SELECT id,
+        <if test="foList == 0">
+            <ref sql="user_cols1"/>
+        </if>
+        <if test="foList == 1">
+            <ref sql="user_cols2"/>
+        </if>
+        FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
+
     </sql>
 </mapper>
 <!--

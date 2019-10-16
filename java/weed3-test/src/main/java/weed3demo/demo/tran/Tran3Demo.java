@@ -14,7 +14,7 @@ public class Tran3Demo {
         //1.简单处理
         DbConfig.pc_user.tran((t) -> {
             //
-            // 此表达式内的操作，会自动加入事务（3.2.0.3 开始支持）
+            // 此表达式内的操作，会自动加入事务
             //
             t.db().sql("insert into test(txt) values(?)", "cc").insert();
             t.db().sql("update test set txt='1' where id=1").execute();
