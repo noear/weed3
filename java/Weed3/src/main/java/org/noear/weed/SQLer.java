@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -292,7 +293,11 @@ class SQLer {
         int idx = 1;
         //2.设置参数值
         for (Object v : cmd.paramS) {
-            stmt.setObject(idx, v);
+            if(v == null){
+                stmt.setNull(idx,Types.VARCHAR);
+            }else {
+                stmt.setObject(idx, v);
+            }
             idx++;
         }
 
