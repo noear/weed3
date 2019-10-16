@@ -564,14 +564,16 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
-    private boolean isSqlExpr(String txt){
-        if(_usingExpression == false){
+    private boolean isSqlExpr(String txt) {
+        if (_usingExpression == false) {
             return false;
         }
 
-        if(txt.startsWith("$") && txt.indexOf(" ")<0){ //不许有空隔（否则为非正常表达式）
+        if (txt.startsWith("$")
+                && txt.indexOf(" ") < 0
+                && txt.length() < 100) { //不能出现空隔，且100字符以内。否则视为普通字符串值
             return true;
-        }else{
+        } else {
             return false;
         }
     }
