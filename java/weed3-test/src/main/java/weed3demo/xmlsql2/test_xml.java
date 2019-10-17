@@ -51,16 +51,15 @@ public class test_xml{
 
         sb.append("INSERT user(id,mobile,sex) VALUES ");
         {
-            String m_sep = "#";
             int m_index = 0;
             Iterator<weed3demo.mapper.UserModel> m_iterator = list.iterator();
-            while (m_iterator.hasNext()) {
+            while (m_iterator.hasNext()){
                 weed3demo.mapper.UserModel m = m_iterator.next();
 
-                sb.append("(?,?,?) ", m.user_id, m.mobile, m.sex);
+                sb.append("(?,?,?) ",m.user_id,m.mobile,m.sex);
 
-                if (m_sep != null && m_iterator.hasNext()) {
-                    sb.append(m_sep);
+                if(m_iterator.hasNext()){
+                    sb.append("#");
                 }
                 m_index++;
             }

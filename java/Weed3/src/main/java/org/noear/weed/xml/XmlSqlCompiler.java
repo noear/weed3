@@ -151,7 +151,7 @@ public class XmlSqlCompiler {
 
         //0.确定动作
         {
-            String txt2 = "# "+dblock._texts.toString().trim().toUpperCase();
+            String txt2 = dblock._texts.insert(0,"# ").toString().trim().toUpperCase();
 
             if(dblock._action==null && txt2.indexOf(" INSERT ")>0){
                 dblock._action = "INSERT";
@@ -264,7 +264,6 @@ public class XmlSqlCompiler {
         /**
          * //编译结果示例
          * {
-         *     String m_sep = "#"; //@sep配置
          *     int m_index = 0; //新生的 m_index 变量
          *     Iterator<weed3demo.mapper.UserModel> m_iterator = list.iterator(); //@items配置
          *     while (m_iterator.hasNext()) {
@@ -272,8 +271,8 @@ public class XmlSqlCompiler {
          *
          *         sb.append("(?,?,?) ", m.user_id, m.mobile, m.sex);
          *
-         *         if (m_sep != null && m_iterator.hasNext()) {
-         *             sb.append(m_sep);
+         *         if (m_iterator.hasNext()) { //当 @sep 不为空
+         *             sb.append(",");
          *         }
          *         m_index++;
          *     }
@@ -301,13 +300,6 @@ public class XmlSqlCompiler {
 
         //***start for
         newLine(sb, depth0).append("{");
-        //::定义@sep变量
-        newLine(sb, depth).append("String ").append(_var.name).append("_sep = ");
-        if(StringUtils.isEmpty(_sep_str)){
-            sb.append("null;");
-        }else{
-            sb.append("\"").append(_sep_str.replace("\"","\\\"")).append("\";");
-        }
         //::定义@index变量
         newLine(sb, depth).append("int ").append(_var.name).append("_index = 0;");
         //::定义@iterator变量
@@ -322,9 +314,11 @@ public class XmlSqlCompiler {
         _parseNodeList(n.getChildNodes(), sb, dblock, depth + 1);
 
         sb.append("\n");
-        newLine(sb, depth+1).append("if(").append(_var.name).append("_sep != null && ").append(_var.name).append("_iterator.hasNext()").append("){");
-        newLine(sb, depth+2).append("sb.append(").append(_var.name).append("_sep);");
-        newLine(sb, depth+1).append("}");
+        if(StringUtils.isEmpty(_sep_str) == false) {
+            newLine(sb, depth + 1).append("if(").append(_var.name).append("_iterator.hasNext()").append("){");
+            newLine(sb, depth + 2).append("sb.append(\"").append(_sep_str).append("\");");
+            newLine(sb, depth + 1).append("}");
+        }
 
         //索引变量++
         newLine(sb, depth+1).append(_var.name).append("_index++;");

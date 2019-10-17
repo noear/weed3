@@ -18,4 +18,11 @@
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
+
+    <sql id="user_add_for2" :return="long" :note="批量添加用户3">
+        INSERT user(id,mobile,sex) VALUES
+        <for var="m:weed3demo.mapper.UserModel" items="list">
+            (@{m.user_id},@{m.mobile},@{m.sex})
+        </for>
+    </sql>
 </mapper>
