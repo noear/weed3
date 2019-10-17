@@ -105,7 +105,11 @@ public class XmlSqlMapperGenerator {
             Node n = sql_list.item(i);
             XmlSqlBlock block = parseSqlNode(node_map, sb_tmp, n, namespace, db, classname);
 
+            //打印接口中块***
             writerBlock(sb2, block);
+            if(i<len-1) {
+                sb2.append("\n");
+            }
 
             importSet.addAll(block.impTypeSet);
         }
@@ -136,11 +140,11 @@ public class XmlSqlMapperGenerator {
     private static void writerBlock(StringBuilder sb, XmlSqlBlock block){
         //写入注释
         if(block._note != null && block._note.length()>0){
-            newLine(sb,1).append("/** ").append(block._note).append(" */");
+            newLine(sb,2).append("//").append(block._note);
         }
 
         //写入接口定义
-        newLine(sb,1);
+        newLine(sb,2);
         if(StringUtils.isEmpty(block._return)){
             sb.append("void");
         }
@@ -159,10 +163,12 @@ public class XmlSqlMapperGenerator {
         for(String k : block.varMap.keySet()){
             XmlSqlVar v = block.varMap.get(k);
 
-            sb.append(v.type).append(" ").append(v.name).append(",");
+            sb.append(v.type).append(" ").append(v.name).append(", ");
         }
 
         if(block.varMap.size()>0){
+            //删掉最后的：(, )
+            sb.deleteCharAt(sb.length()-1);
             sb.deleteCharAt(sb.length()-1);
         }
 
@@ -273,7 +279,7 @@ public class XmlSqlMapperGenerator {
     private static void _parseNode(Node n, StringBuilder sb, XmlSqlBlock dblock,  int depth){
         int type = n.getNodeType();
 
-        if (type == 3) {//text
+        if (type == 3 || type == 4) {//text or CDATA
             String text = n.getTextContent().trim();
 
             if (text.length() > 0) {

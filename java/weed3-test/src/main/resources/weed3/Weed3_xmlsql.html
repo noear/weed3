@@ -73,9 +73,9 @@ ${name:type} = 变量替换
          :declare="foList:int,user_id:long"
          :return="List[weed3demo.mapper.UserModel]"
          :caching="localCache"
-         :cacheTag="user_${user_id},user_1">
+         :cacheTag="user_${user_id},user_1"><![CDATA[
         SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
-        <if test="foList == 0">
+        ]]><if test="foList == 0">
             AND type='article'
         </if>
         <if test="foList == 1">

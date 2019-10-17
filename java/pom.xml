@@ -20,6 +20,8 @@
         <module>weed3</module>
         <module>weed3-maven-plugin</module>
         <module>weed3-test</module>
+        <module>weed3-test-Springboot</module>
+        <module>weed3-test-solon</module>
     </modules>
 
    

@@ -205,7 +205,7 @@ public class XmlSqlCompiler {
     private static void _parseNode(Node n, StringBuilder sb, XmlSqlBlock dblock,  int depth){
         int type = n.getNodeType();
 
-        if (type == 3) {//text
+        if (type == 3 || type == 4) {//text or CDATA
             String text = n.getTextContent().trim();
 
             if (text.length() > 0) {

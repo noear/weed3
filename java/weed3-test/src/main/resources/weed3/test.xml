@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mapper namespace="weed3demo.xmlsql2" :db="testdb">
+    <sql id="user_add" :return="long" :note="添加用户"><![CDATA[
+        INSERT user(user_id,mobile) VALUES(@{user_id:int},@{mobile:String})
+    ]]></sql>
+
+    <sql id="user_add_for" :return="long" :note="批量添加用户3">
+        INSERT user(id,mobile,sex) VALUES
+        <for var="m:weed3demo.mapper.UserModel" items="list">
+            (@{m.user_id},@{m.mobile},@{m.sex})
+        </for>
+    </sql>
+</mapper>
