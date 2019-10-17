@@ -27,6 +27,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     String _table;
     DbContext _context;
     SQLBuilder _builder;
+    SQLBuilder _builder_bef;
     int _isLog=0;
 
     protected String formatObject(String name){
@@ -49,6 +50,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     public DbTableQueryBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
+        _builder_bef = new SQLBuilder();
     }
 
 
@@ -77,6 +79,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
                 }
             }
         }
+
+        return (T) this;
+    }
+
+    public T with(String name, String code, Object... args) {
+        if (_builder_bef.length() < 6) {
+            _builder_bef.append(" WITH ");
+        }else{
+            _builder_bef.append("," );
+        }
+
+        _builder_bef.append(formatField(name))
+                .append(" AS (")
+                .append(code, args)
+                .append(") ");
 
         return (T) this;
     }
@@ -445,6 +462,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+
+
     public boolean exists() throws SQLException {
 
         StringBuilder sb = StringUtils.borrowBuilder();
@@ -507,6 +526,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         sb.append(formatColumns(columns)).append(" FROM ").append(_table);
 
         _builder.backup();
+
+        if(_builder_bef.length()>0){
+            _builder.insert(_builder_bef);
+        }
+
         _builder.insert(sb.toString());
 
         DbQuery rst = compile();

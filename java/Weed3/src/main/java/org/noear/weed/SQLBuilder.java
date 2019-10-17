@@ -45,6 +45,12 @@ public class SQLBuilder {
         return this;
     }
 
+    public SQLBuilder insert(SQLBuilder part) {
+        builder.insert(0, part.toString());
+        paramS.addAll(0, part.paramS);
+        return this;
+    }
+
     public SQLBuilder append(String code,  Object... args) {
         SQLPartBuilder pb = new SQLPartBuilder(code, args);
 
