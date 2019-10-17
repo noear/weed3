@@ -42,8 +42,11 @@ public class XmlSqlLoader {
     private void do_load() throws Exception{
         URL path = IOUtils.getResource("/weed3/");
         File dic = new File(path.toURI());
+
+        //描述文件（只能是.xml）
         _g.do_load(dic);
 
+        //构建代码
         List<String> codes = new ArrayList<>();
         for(File file : _g.xmlFiles){
             String code = XmlSqlCompiler.parse(file);
@@ -84,7 +87,6 @@ public class XmlSqlLoader {
         if (file.isFile()) {
             String path = file.getAbsolutePath();
             try {
-                //尝试加载jar包
                 if (path.endsWith(".xml")) {
                     xmlFiles.add(file);
                     return;

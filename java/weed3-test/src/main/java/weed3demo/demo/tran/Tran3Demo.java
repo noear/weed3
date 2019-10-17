@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Tran3Demo {
     /*所有的执行在一个事务控制范围内*/
-    private static void test_db1_tran() throws SQLException {
+    private static void test_db1_tran() throws Exception {
         DbUserApi dbUserApi = XmlSqlProxy.getSingleton(DbUserApi.class);
 
         //1.简单处理

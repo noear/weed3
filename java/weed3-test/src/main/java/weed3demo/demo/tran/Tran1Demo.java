@@ -23,7 +23,7 @@ public class Tran1Demo {
     }*/
 
     /*所有的执行在一个事务控制范围内*/
-    private static void test_db1_tran() throws SQLException {
+    private static void test_db1_tran() throws Exception {
         //1.简单处理
         DbConfig.pc_user.tran((t) -> {
             //
@@ -37,7 +37,7 @@ public class Tran1Demo {
     }
 
     /*2个数据库的事务（在同一个函数内，分布式）*/
-    public static void test_db2_tran() throws SQLException {
+    public static void test_db2_tran() throws Exception {
         DbContext db = DbConfig.pc_user;
         DbContext db2 = DbConfig.pc_base;
 
@@ -65,7 +65,7 @@ public class Tran1Demo {
     }
 
     /*2个数据库的事务，后面的根据前面的执行结果再决定要不要跟进（在同一个函数内，分布式）*/
-    public static void test_db2_tran2() throws SQLException {
+    public static void test_db2_tran2() throws Exception {
         DbContext db = DbConfig.pc_user;
         DbContext db2 = DbConfig.pc_base;
 

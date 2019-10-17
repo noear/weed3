@@ -25,7 +25,9 @@ public class XmlSqlMapperGenerator {
             if (dic.isDirectory()) {
                 File[] tmps = dic.listFiles();
                 for (File tmp : tmps) {
-                    generateFile(sourceDir, tmp);
+                    if(tmp.getName().endsWith(".xml")) {
+                        generateFile(sourceDir, tmp);
+                    }
                 }
             }
         } catch (Exception ex) {
