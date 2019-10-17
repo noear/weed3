@@ -1,5 +1,10 @@
 package org.noear.weed.generator.xml;
 
+//
+// 变量类型：name, name:type,@{name:type},${name:type}
+//
+// 类型情况：type,x.x.type,[type],[x.x.type]。后三种需要导入或转换
+//
 public class TypeBlock {
     public String oldType;
     public String newType;
