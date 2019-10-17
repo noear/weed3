@@ -150,6 +150,28 @@ public class XmlSqlCompiler {
         newLine(sb, depth).append("}\n");
 
         dblock.__nodeMap = null;
+
+        //0.确定动作
+        {
+            String txt2 = "# "+dblock.texts.toString().trim().toUpperCase();
+
+            if(dblock._action==null && txt2.indexOf(" INSERT ")>0){
+                dblock._action = "INSERT";
+            }
+
+            if(dblock._action==null && txt2.indexOf(" DELETE ")>0){
+                dblock._action = "DELETE";
+            }
+
+            if(dblock._action==null && txt2.indexOf(" UPDATE ")>0){
+                dblock._action = "UPDATE";
+            }
+
+            if(dblock._action==null && txt2.indexOf(" SELECT ")>0){
+                dblock._action = "SELECT";
+            }
+        }
+
         //注册块
         XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
@@ -299,31 +321,11 @@ public class XmlSqlCompiler {
 
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
-        String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
 
-        //0.确定动作
-        if(dblock.action==null){
-            txt2 = txt0.trim().toUpperCase();
+        String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
+        dblock.texts.append(txt2);
 
-            if(txt2.startsWith("INSERT")){
-                dblock.action = "INSERT";
-            }
-
-            if(txt2.startsWith("DELETE")){
-                dblock.action = "DELETE";
-            }
-
-            if(txt2.startsWith("UPDATE")){
-                dblock.action = "UPDATE";
-            }
-
-            if(txt2.startsWith("SELECT")){
-                dblock.action = "SELECT";
-            }
-        }
-
-        txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
         //1.处理${xxx},${xxx,type}
         {
             tmpList.clear();

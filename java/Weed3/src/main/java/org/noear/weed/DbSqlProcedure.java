@@ -123,7 +123,7 @@ public class DbSqlProcedure extends DbProcedure {
                 throw new RuntimeException("WeedConfig.libOfCache does not exist:@"+block._caching);
             }
 
-            if("SELECT".equals(block.action)){
+            if(block.isSelect()){
                 this.caching(cache);
 
                 if(StringUtils.isEmpty(block._usingCache) == false){

@@ -27,6 +27,7 @@ public class XmlSqlBlock {
 
     //临时变量
     protected Map<String, Node> __nodeMap;
+    protected StringBuilder texts = new StringBuilder();
 
     public StringBuilder getClasscode(boolean lineNo){
         if(lineNo){
@@ -47,13 +48,13 @@ public class XmlSqlBlock {
         }
     }
 
-    public String action;
+    public String _action;
     public boolean isSelect(){
-        return "SELECT".equals(action);
+        return "SELECT".equals(_action);
     }
 
     public boolean isInsert(){
-        return "INSERT".equals(action);
+        return "INSERT".equals(_action);
     }
 
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
