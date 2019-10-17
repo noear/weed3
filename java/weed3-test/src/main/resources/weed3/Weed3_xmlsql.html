@@ -4,7 +4,7 @@ sql 代码块定义指令
   :return（属性：返回类型）
   :declare（属性：变量类型预申明）
   :db （属性：数据库上下文name）
-  :note（属性：注解）
+  :note（属性：注释）
 
   :caching（属性：缓存服务name）
   :cacheClear（属性：清除缓存）
@@ -14,9 +14,11 @@ sql 代码块定义指令
 if 判断控制指令（没有else）
   test （属性：判断检测代码）
 
-for 循环控制指令
+for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index）
   var （属性：循环变量申明）
   items （属性：集合变量名称）
+  sep? （属性：分隔符，可不填）
+
 
 ref 引用代码块指令
   sql （属性：代码块id）

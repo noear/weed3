@@ -8,9 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,7 +131,7 @@ public class XmlSqlCompiler {
             if (dv.type != null && dv.type.length() > 0) {
                 var_num++;
                 newLine(sb, depth + 1)
-                        .append(dv.type).append(" ").append(dv.name).append("=")
+                        .append(dv.type).append(" ").append(dv.name).append(" = ")
                         .append("(").append(dv.type).append(")map.get(\"").append(dv.name).append("\");");
             }
         }
@@ -263,6 +261,26 @@ public class XmlSqlCompiler {
 
     //xml:解析 for 指令节点
     private static void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+        /**
+         * //编译结果示例
+         * {
+         *     String m_sep = "#"; //@sep配置
+         *     int m_index = 0; //新生的 m_index 变量
+         *     Iterator<weed3demo.mapper.UserModel> m_iterator = list.iterator(); //@items配置
+         *     while (m_iterator.hasNext()) {
+         *         weed3demo.mapper.UserModel m = m_iterator.next(); //@var配置
+         *
+         *         sb.append("(?,?,?) ", m.user_id, m.mobile, m.sex);
+         *
+         *         if (m_sep != null && m_iterator.hasNext()) {
+         *             sb.append(m_sep);
+         *         }
+         *         m_index++;
+         *     }
+         * }
+         * */
+        String _items = attr(n, "items");
+        String _sep_str = attr(n, "sep");
         String _var_str = attr(n, "var").trim();
 
         if(_var_str.indexOf(":")<0 || _var_str.length() < 3){
@@ -275,17 +293,50 @@ public class XmlSqlCompiler {
         String[] kv = _var_str.split(":");
 
         XmlSqlVar _var = new XmlSqlVar(_var_str,kv[0].trim(),kv[1].trim());
-        String _items = attr(n, "items");
 
-        //newLine(sb, depth).append("Iterable<").append(_var.type).append("> ").append(_items).append("=(Iterable<").append(_var.type).append(">)map.get(\"").append(_items).append("\");");
-        newLine(sb, depth).append("for(").append(_var.type).append(" ").append(_var.name).append(" : ").append(_items).append("){");
 
+        //索引变量
+        int depth0 = depth;
+        depth++;
+
+        //***start for
+        newLine(sb, depth0).append("{");
+        //::定义@sep变量
+        newLine(sb, depth).append("String ").append(_var.name).append("_sep = ");
+        if(StringUtils.isEmpty(_sep_str)){
+            sb.append("null;");
+        }else{
+            sb.append("\"").append(_sep_str.replace("\"","\\\"")).append("\";");
+        }
+        //::定义@index变量
+        newLine(sb, depth).append("int ").append(_var.name).append("_index = 0;");
+        //::定义@iterator变量
+        newLine(sb, depth).append("Iterator<").append(_var.type).append("> ").append(_var.name).append("_iterator").append(" = ").append(_items).append(".iterator();");
+
+        //使用withle(iterator.hasNext()) 进行循环
+        newLine(sb, depth).append("while (").append(_var.name).append("_iterator.hasNext()){");
+        //::#var变量
+        newLine(sb, depth+1).append(_var.type).append(" ").append(_var.name).append(" = ").append(_var.name).append("_iterator.next();\n");
+
+        //循环内部代码体
         _parseNodeList(n.getChildNodes(), sb, dblock, depth + 1);
+
+        sb.append("\n");
+        newLine(sb, depth+1).append("if(").append(_var.name).append("_sep != null && ").append(_var.name).append("_iterator.hasNext()").append("){");
+        newLine(sb, depth+2).append("sb.append(").append(_var.name).append("_sep);");
+        newLine(sb, depth+1).append("}");
+
+        //索引变量++
+        newLine(sb, depth+1).append(_var.name).append("_index++;");
+
+        newLine(sb, depth).append("}");
+
+        //***end for
+        newLine(sb, depth0).append("}");
+
 
         XmlSqlVar _itemsVar = new XmlSqlVar(_items, _items, "Collection<" + _var.type + ">");
         dblock.varPut(_itemsVar);
-
-        newLine(sb, depth).append("}");
     }
 
     //sb:新起一行代码
