@@ -4,6 +4,14 @@
         INSERT user(user_id,mobile) VALUES(@{user_id:int},@{mobile:String})
     ]]></sql>
 
+    <sql id="user_set" :return="long" :note="更新用户"><![CDATA[
+        UPDATE user SET sex=1 WHERE id IN(@{user_list:List[Integer]})
+    ]]></sql>
+
+    <sql id="user_set2" :return="long" :note="添加用户"><![CDATA[
+        UPDATE user SET sex=1 WHERE id IN(@{user_list:List[Integer]})
+    ]]></sql>
+
     <sql id="user_add_for" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:weed3demo.mapper.UserModel" items="list">

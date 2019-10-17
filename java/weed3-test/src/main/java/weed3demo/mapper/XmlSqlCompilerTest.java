@@ -18,7 +18,7 @@ public class XmlSqlCompilerTest {
 
     @Test
     public  void test11() throws Exception {
-        URL url = getResource("/weed3/UserMapper.xml");
+        URL url = getResource("/weed3/test.xml");
 
         String code = XmlSqlCompiler.parse( new File(url.toURI()));
 

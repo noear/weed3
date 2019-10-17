@@ -338,7 +338,7 @@ public class XmlSqlCompiler {
             while (m.find()) {
                 XmlSqlVar dv = new XmlSqlVar();
                 dv.mark = m.group(0);
-                dv.name = m.group(1).trim();
+                dv.name = m.group(1).trim().replace("[","<").replace("]",">");
                 if (dv.name.indexOf(":") > 0) {
                     String[] kv = dv.name.split(":");
                     dv.name = kv[0].trim();
@@ -363,7 +363,7 @@ public class XmlSqlCompiler {
             while (m.find()) {
                 XmlSqlVar dv = new XmlSqlVar();
                 dv.mark = m.group(0);
-                dv.name = m.group(1).trim();
+                dv.name = m.group(1).trim().replace("[","<").replace("]",">");
                 if (dv.name.indexOf(":") > 0) {
                     String[] kv = dv.name.split(":");
                     dv.name = kv[0].trim();
@@ -375,8 +375,13 @@ public class XmlSqlCompiler {
             }
 
             for (XmlSqlVar dv : tmpList.values()) {
-                txt2 = txt2.replace(dv.mark, "?");
+                if(dv.type != null && dv.type.indexOf(">")>0){
+                    txt2 = txt2.replace(dv.mark, "?...");
+                }else{
+                    txt2 = txt2.replace(dv.mark, "?");
+                }
             }
+
             sb.append("\"").append(txt2).append(" \"");
             tmpList.forEach((k, v) -> {
                 sb.append(",").append(v.name);
