@@ -1,6 +1,5 @@
 package org.noear.weed.generator.xml;
 
-
 import org.noear.weed.generator.utils.IOUtils;
 import org.noear.weed.generator.utils.StringUtils;
 import org.w3c.dom.Document;
