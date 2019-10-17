@@ -10,8 +10,6 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -395,27 +393,6 @@ public class XmlSqlMapperGenerator {
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
         String txt2 = null;
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<String, XmlSqlVar>();
-
-        //0.确定动作
-        if(dblock.action==null){
-            txt2 = txt0.trim().toUpperCase();
-
-            if(txt2.startsWith("INSERT")){
-                dblock.action = "INSERT";
-            }
-
-            if(txt2.startsWith("DELETE")){
-                dblock.action = "DELETE";
-            }
-
-            if(txt2.startsWith("UPDATE")){
-                dblock.action = "UPDATE";
-            }
-
-            if(txt2.startsWith("SELECT")){
-                dblock.action = "SELECT";
-            }
-        }
 
         txt2 = txt0.replace("\n"," ").replace("\"","\\\"");
         //1.处理${xxx},${xxx,type}

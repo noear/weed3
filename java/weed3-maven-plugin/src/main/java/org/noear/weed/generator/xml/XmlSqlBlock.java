@@ -50,8 +50,6 @@ public class XmlSqlBlock {
         }
     }
 
-    public String action;
-
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<String, XmlSqlVar>();
     public void varPut(XmlSqlVar dv) {
         if (dv.type == null || dv.type.length() == 0) {
@@ -71,31 +69,4 @@ public class XmlSqlBlock {
     }
     public Set<String> impTypeSet = new HashSet<>();
 
-
-
-
-    public String format(String txt, Map map) {
-        String txt2 = txt;
-        Pattern pattern = Pattern.compile("\\$\\{(.+?)\\}");
-        Matcher m = pattern.matcher(txt2);
-
-        while (m.find()) {
-            String mark = m.group(0);
-            String name = m.group(1).trim();
-
-            if (name.indexOf(":") > 0) {
-                String[] kv = name.split(":");
-                name = kv[0].trim();
-            }
-
-            Object val = map.get(name);
-            if (val == null) {
-                throw new RuntimeException("Parameter does not exist:@" + name);
-            }
-
-            txt2 = txt2.replace(mark, val.toString());
-        }
-
-        return txt2;
-    }
 }
