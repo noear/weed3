@@ -27,7 +27,7 @@ public class XmlSqlBlock {
 
     //临时变量
     protected Map<String, Node> __nodeMap;
-    protected StringBuilder texts = new StringBuilder();
+    protected StringBuilder _texts = new StringBuilder();
 
     public StringBuilder getClasscode(boolean lineNo){
         if(lineNo){

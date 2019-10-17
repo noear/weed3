@@ -153,7 +153,7 @@ public class XmlSqlCompiler {
 
         //0.确定动作
         {
-            String txt2 = "# "+dblock.texts.toString().trim().toUpperCase();
+            String txt2 = "# "+dblock._texts.toString().trim().toUpperCase();
 
             if(dblock._action==null && txt2.indexOf(" INSERT ")>0){
                 dblock._action = "INSERT";
@@ -170,6 +170,8 @@ public class XmlSqlCompiler {
             if(dblock._action==null && txt2.indexOf(" SELECT ")>0){
                 dblock._action = "SELECT";
             }
+
+            dblock._texts = null;
         }
 
         //注册块
@@ -324,7 +326,7 @@ public class XmlSqlCompiler {
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
 
         String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
-        dblock.texts.append(txt2);
+        dblock._texts.append(txt2);
 
         //1.处理${xxx},${xxx,type}
         {
