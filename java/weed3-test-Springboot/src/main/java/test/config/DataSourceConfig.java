@@ -29,6 +29,7 @@ public class DataSourceConfig {
     @Primary
     public DbContext db() throws Exception {
         return new DbContext()
+                .schemaNameSet("generator")
                 .dataSourceSet(dataSource)
                 .nameSet("db");
     }

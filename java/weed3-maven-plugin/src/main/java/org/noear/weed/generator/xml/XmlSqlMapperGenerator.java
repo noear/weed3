@@ -357,8 +357,10 @@ public class XmlSqlMapperGenerator {
         _parseNodeList(n.getChildNodes(), sb, dblock, depth + 1);
 
         //注到
-        XmlSqlVar _itemsVar = new XmlSqlVar(_items, _items, "Collection<" + _var.type + ">");
-        dblock.varPut(_itemsVar);
+        if (_items.indexOf(".") < 0) {
+            XmlSqlVar _itemsVar = new XmlSqlVar(_items, _items, "Collection<" + _var.type + ">");
+            dblock.varPut(_itemsVar);
+        }
 
         newLine(sb, depth).append("}");
     }
