@@ -79,6 +79,18 @@ public class XmlSqlCompiler {
         return sb.toString();
     }
 
+    private static DocumentBuilderFactory dbf = null;
+    private static DocumentBuilder db = null;
+    //xml:解析文档
+    private static Document parseDoc(File xmlFile) throws Exception{
+        if(dbf ==null) {
+            dbf = DocumentBuilderFactory.newInstance();
+            db = dbf.newDocumentBuilder();
+        }
+
+        return db.parse(xmlFile);
+    }
+
     //xml:解析 sql 指令节点
     private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace, String db, String classname) {
         int depth = 1;
@@ -176,6 +188,7 @@ public class XmlSqlCompiler {
         XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
 
+    /** 解析申明的变量 */
     private static void _parseDeclare(XmlSqlBlock dblock) {
         //（属性：外部输入变量申明；默认会自动生成）
         if (dblock._param != null) {
@@ -202,6 +215,31 @@ public class XmlSqlCompiler {
                     XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
                     dblock.varPut(dv);
                 }
+            }
+        }
+    }
+
+    /** 解析缓存标签 */
+    private static void _parseCachaTag(XmlSqlBlock dblock){
+        if(dblock._cacheTag != null){
+            Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheTag);
+
+            while (m.find()) {
+                XmlSqlVar dv = parseTxtVar(m);
+
+                dv.label=0; //cache tag
+                dblock.tagMap.put(dv.mark,dv);
+            }
+        }
+
+        if(dblock._cacheClear != null){
+            Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheClear);
+
+            while (m.find()) {
+                XmlSqlVar dv = parseTxtVar(m);
+
+                dv.label=1;//cache clear
+                dblock.tagMap.put(dv.mark,dv);
             }
         }
     }
@@ -349,6 +387,72 @@ public class XmlSqlCompiler {
         }
     }
 
+
+    //sql::格式化字符串
+    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
+        Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
+
+        String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
+        dblock._texts.append(txt2);
+
+        //1.处理${xxx},${xxx:type}
+        {
+            tmpList.clear();
+
+            Matcher m = XmlSqlVar.varRepExp.matcher(txt2);
+
+            while (m.find()) {
+                XmlSqlVar dv = parseTxtVar(m);
+
+                tmpList.put(dv.name, dv);
+                dblock.varPut(dv);
+            }
+
+            for (XmlSqlVar dv : tmpList.values()) {
+                txt2 = txt2.replace(dv.mark, "\"+" + dv.name + "+\"");
+            }
+        }
+
+        //2.找出@{xxx},@{xxx:type}
+        {
+            tmpList.clear();
+
+            Matcher m = XmlSqlVar.varComExp.matcher(txt2);
+            while (m.find()) {
+                XmlSqlVar dv = parseTxtVar(m);
+
+                tmpList.put(dv.name, dv);
+                dblock.varPut(dv);
+            }
+
+            for (XmlSqlVar dv : tmpList.values()) {
+                if(dv.type != null && dv.type.indexOf(">")>0){
+                    txt2 = txt2.replace(dv.mark, "?...");
+                }else{
+                    txt2 = txt2.replace(dv.mark, "?");
+                }
+            }
+
+            sb.append("\"").append(txt2).append(" \"");
+            tmpList.forEach((k, v) -> {
+                sb.append(",").append(v.name);
+            });
+        }
+    }
+    private static XmlSqlVar parseTxtVar(Matcher m){
+        XmlSqlVar dv = new XmlSqlVar();
+        dv.mark = m.group(0);
+        dv.name = m.group(1).trim().replace("[","<").replace("]",">");
+        if (dv.name.indexOf(":") > 0) {
+            String[] kv = dv.name.split(":");
+            dv.name = kv[0].trim();
+            dv.type = kv[1].trim();
+        }
+
+        return dv;
+    }
+
+
     //sb:新起一行代码
     private static StringBuilder newLine(StringBuilder sb, int depth){
         sb.append("\n");
@@ -367,86 +471,6 @@ public class XmlSqlCompiler {
             return null;
         }else{
             return tmp.getNodeValue();
-        }
-    }
-
-    private static DocumentBuilderFactory dbf = null;
-    private static DocumentBuilder db = null;
-    //xml:解析文档
-    private static Document parseDoc(File xmlFile) throws Exception{
-        if(dbf ==null) {
-            dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-        }
-
-        return db.parse(xmlFile);
-    }
-
-
-
-    //sql::格式化字符串
-    private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
-        Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
-
-        String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
-        dblock._texts.append(txt2);
-
-        //1.处理${xxx},${xxx,type}
-        {
-            tmpList.clear();
-
-            Matcher m = XmlSqlVar.varRepExp.matcher(txt2);
-
-            while (m.find()) {
-                XmlSqlVar dv = new XmlSqlVar();
-                dv.mark = m.group(0);
-                dv.name = m.group(1).trim().replace("[","<").replace("]",">");
-                if (dv.name.indexOf(":") > 0) {
-                    String[] kv = dv.name.split(":");
-                    dv.name = kv[0].trim();
-                    dv.type = kv[1].trim();
-                }
-
-                tmpList.put(dv.name, dv);
-                dblock.varPut(dv);
-            }
-
-            for (XmlSqlVar dv : tmpList.values()) {
-                txt2 = txt2.replace(dv.mark, "\"+" + dv.name + "+\"");
-            }
-        }
-
-        //2.找出@{xxx},@{xxx:type}
-        {
-            tmpList.clear();
-
-            Matcher m = XmlSqlVar.varComExp.matcher(txt2);
-            while (m.find()) {
-                XmlSqlVar dv = new XmlSqlVar();
-                dv.mark = m.group(0);
-                dv.name = m.group(1).trim().replace("[","<").replace("]",">");
-                if (dv.name.indexOf(":") > 0) {
-                    String[] kv = dv.name.split(":");
-                    dv.name = kv[0].trim();
-                    dv.type = kv[1].trim();
-                }
-
-                tmpList.put(dv.name, dv);
-                dblock.varPut(dv);
-            }
-
-            for (XmlSqlVar dv : tmpList.values()) {
-                if(dv.type != null && dv.type.indexOf(">")>0){
-                    txt2 = txt2.replace(dv.mark, "?...");
-                }else{
-                    txt2 = txt2.replace(dv.mark, "?");
-                }
-            }
-
-            sb.append("\"").append(txt2).append(" \"");
-            tmpList.forEach((k, v) -> {
-                sb.append(",").append(v.name);
-            });
         }
     }
 }

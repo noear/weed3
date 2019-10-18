@@ -1,5 +1,8 @@
 package org.noear.weed;
 
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.ext.Act1;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +24,10 @@ public class Command {
     public String       text;
     /** 命令参数 */
     public List<Object> paramS;
-    /** 数据库上下文 */
+    /** 数据库上下文（肯定且必须有） */
     public DbContext context;
+    /** 缓存服务对象（可能有，可能没有） */
+    public ICacheServiceEx cache;
 
     /** 数据处理事务 */
     public DbTran tran;
@@ -68,5 +73,7 @@ public class Command {
         else
             return context.codeHint() + text;
     }
+
+    public Act1<Command> onExecuteAft = null;
 
 }

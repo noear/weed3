@@ -83,6 +83,11 @@ public final class WeedConfig {
     }
 
     protected static void runExecuteAftEvent(Command cmd) {
+        if(cmd.onExecuteAft != null){
+            cmd.onExecuteAft.run(cmd);
+            cmd.onExecuteAft = null; //执行之后，就会清掉
+        }
+
         cmd.timestop = System.currentTimeMillis();
 
         if (onExecuteAft_listener.size() > 0) {

@@ -1,6 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
@@ -106,7 +105,7 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.text = sqlBuilder.toString();
         cmd.paramS  = sqlBuilder.paramS;
 
-        tryCacheController(block);
+        tryCacheController(cmd, block);
 
         runCommandBuiltEvent(cmd);
 
@@ -114,32 +113,38 @@ public class DbSqlProcedure extends DbProcedure {
     }
 
     /** 尝试缓存控制 */
-    private void tryCacheController(XmlSqlBlock block){
+    private void tryCacheController(Command cmd, XmlSqlBlock block){
         //配置化缓存处理（有配置，并且未手动配置过缓存）...
         if(StringUtils.isEmpty(block._caching) == false && this._cache == null){
-            ICacheServiceEx cache = WeedConfig.libOfCache.get(block._caching);
+            //寄存缓存对象
+            cmd.cache = WeedConfig.libOfCache.get(block._caching);
 
-            if(cache == null){
+            //如果不存在，则提示异常
+            if(cmd.cache  == null){
                 throw new RuntimeException("WeedConfig.libOfCache does not exist:@"+block._caching);
             }
 
             if(block.isSelect()){
-                this.caching(cache);
+                //如果是查询，可以在处理之前添加控制
+                this.caching(cmd.cache);
 
                 if(StringUtils.isEmpty(block._usingCache) == false){
                     this.usingCache(Integer.parseInt(block._usingCache));
                 }
 
                 if(StringUtils.isEmpty(block._cacheTag) == false){
-                    Arrays.asList(block.formatTags(block._cacheTag, _map).split(",")).forEach((k)->{
+                    Arrays.asList(block.formatTags(block, 0, _map).split(",")).forEach((k)->{
                         this.cacheTag(k.trim());
                     });
                 }
             }else{
                 if(StringUtils.isEmpty(block._cacheClear) == false){
-                    Arrays.asList(block.formatTags(block._cacheClear, _map).split(",")).forEach((k)->{
-                        cache.clear(k.trim());
-                    });
+                    //如果是非查询，需要在执行后处理清理动作
+                    cmd.onExecuteAft = (c)->{
+                        Arrays.asList(block.formatTags(block, 1, _map).split(",")).forEach((k)->{
+                            c.cache.clear(k.trim());
+                        });
+                    };
                 }
             }
         }

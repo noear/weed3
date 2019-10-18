@@ -74,26 +74,18 @@ public class XmlSqlBlock {
         varMap.put(dv.name, dv);
     }
 
-    public String formatTags(String txt, Map map) {
-        String txt2 = txt;
+    public String formatTags(XmlSqlBlock block, int label, Map map) {
+        String txt2 = (label == 1 ? block._cacheClear : block._cacheTag);
 
-        Matcher m = XmlSqlVar.varRepExp.matcher(txt);
+        for (XmlSqlVar dv : block.tagMap.values()) {
+            if (dv.label == label) {
+                Object val = map.get(dv.name);
+                if (val == null) {
+                    throw new RuntimeException("Parameter does not exist:@" + dv.name);
+                }
 
-        while (m.find()) {
-            String mark = m.group(0);
-            String name = m.group(1).trim();
-
-            if (name.indexOf(":") > 0) {
-                String[] kv = name.split(":");
-                name = kv[0].trim();
+                txt2 = txt2.replace(dv.mark, val.toString());
             }
-
-            Object val = map.get(name);
-            if (val == null) {
-                throw new RuntimeException("Parameter does not exist:@" + name);
-            }
-
-            txt2 = txt2.replace(mark, val.toString());
         }
 
         return txt2;
