@@ -93,6 +93,7 @@ public class XmlSqlCompiler {
 
         dblock._id = attr(n, "id");
 
+        dblock._param = attr(n, ":param");
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
         if (dblock._return != null && dblock._return.indexOf("[") > 0) {
@@ -113,7 +114,7 @@ public class XmlSqlCompiler {
         dblock._cacheTag = attr(n, ":cacheTag");
         dblock._cacheClear = attr(n, ":cacheClear");
 
-        //构建申明的变量
+        //构建需要申明的变量
         _parseDeclare(dblock);
 
         newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map){");
@@ -177,17 +178,31 @@ public class XmlSqlCompiler {
     }
 
     private static void _parseDeclare(XmlSqlBlock dblock) {
-        if (dblock._declare == null) {
-            return;
-        }
-        String[] ss = dblock._declare.split(",");
-        for (int i = 0, len = ss.length; i < len; i++) {
-            String tmp = ss[i].trim();
-            if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
-                String[] kv = tmp.split(":");
+        //（属性：外部输入变量申明；默认会自动生成）
+        if (dblock._param != null) {
+            String[] ss = dblock._param.split(",");
+            for (int i = 0, len = ss.length; i < len; i++) {
+                String tmp = ss[i].trim();
+                if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
+                    String[] kv = tmp.split(":");
 
-                XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
-                dblock.varPut(dv);
+                    XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
+                    dblock.varPut(dv);
+                }
+            }
+        }
+
+        //（属性：内部变量类型预申明）
+        if (dblock._declare != null) {
+            String[] ss = dblock._declare.split(",");
+            for (int i = 0, len = ss.length; i < len; i++) {
+                String tmp = ss[i].trim();
+                if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
+                    String[] kv = tmp.split(":");
+
+                    XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
+                    dblock.varPut(dv);
+                }
             }
         }
     }
@@ -329,8 +344,10 @@ public class XmlSqlCompiler {
         newLine(sb, depth0).append("}");
 
 
-        XmlSqlVar _itemsVar = new XmlSqlVar(_items, _items, "Collection<" + _var.type + ">");
-        dblock.varPut(_itemsVar);
+        if(_items.indexOf(".")<0) { // m.users , 这种，不需要申明变量
+            XmlSqlVar _itemsVar = new XmlSqlVar(_items, _items, "Collection<" + _var.type + ">");
+            dblock.varPut(_itemsVar);
+        }
     }
 
     //sb:新起一行代码
