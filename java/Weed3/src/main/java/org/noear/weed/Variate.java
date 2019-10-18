@@ -3,8 +3,6 @@ package org.noear.weed;
 import org.noear.weed.ext.DbType;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 /**

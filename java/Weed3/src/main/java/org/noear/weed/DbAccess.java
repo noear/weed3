@@ -189,72 +189,53 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     @Override
     public <T extends IBinder> T getItem(T model) throws SQLException {
         return getDataItem().toItem(model);
-//        return getItem(model,null) ;
     }
 
     /*执行命令（返回一个模理）*/
     @Override
     public <T extends IBinder> T getItem(T model,Act2<CacheUsing,T> cacheCondition) throws SQLException {
-        return getDataItem((cu,di)->{
+        if(cacheCondition == null){
+            return getItem(model);
+        }
+
+        VarHolder _tmp = new VarHolder();
+
+        getDataItem((cu, di) -> {
             try {
-                T dm = di.toItem(model);
-                cacheCondition.run(cu, dm);
-            }catch (Exception ex){
+                _tmp._value = di.toItem(model);
+                cacheCondition.run(cu, (T) _tmp._value);
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-        }).toItem(model);
-//        T rst;
-//        if (_cache == null) {
-//            rst = new SQLer().getItem(getCommand(), model);
-//        }
-//        else {
-//            _cache.usingCache(cacheCondition);
-//            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), model)));
-//        }
-//
-//        if(rst == null) {
-//            return model;
-//        }
-//        else {
-//            return rst;
-//        }
+        });
+        //为了减少转换次数
+        return (T) _tmp._value;
     }
     /*执行命令（返回一个列表）*/
     @Override
     public <T extends IBinder> List<T> getList(T model) throws SQLException{
         return getDataList().toList(model);
-//        return getList(model,null);
     }
 
     /*执行命令（返回一个列表）*/
     @Override
     public <T extends IBinder> List<T> getList(T model,Act2<CacheUsing,List<T>> cacheCondition) throws SQLException {
+        if(cacheCondition == null){
+            return getList(model);
+        }
 
-        return getDataList((cu,dl)->{
+        VarHolder _tmp = new VarHolder();
+
+        getDataList((cu,dl)->{
             try {
-                List<T> list = dl.toList(model);
-                cacheCondition.run(cu, list);
+                _tmp._value = dl.toList(model);
+                cacheCondition.run(cu, (List<T>)_tmp._value);
             }catch (Exception ex){
                 throw new RuntimeException(ex);
             }
-        }).toList(model);
+        });
 
-//        List<T> rst;
-//        if (_cache == null) {
-//            rst = new SQLer().getList(getCommand(), model);
-//        }
-//        else
-//        {
-//            _cache.usingCache(cacheCondition);
-//            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), model)));
-//        }
-//
-//        if(rst == null) {
-//            return new ArrayList<>();
-//        }
-//        else {
-//            return rst;
-//        }
+        return (List<T>)_tmp._value;
     }
 
     @Override
@@ -271,14 +252,22 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     @Override
     public <T> List<T> getList(Class<T> cls, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException {
-        return getDataList((cu,dl)->{
+        if(cacheCondition == null){
+            return getList(cls);
+        }
+
+        VarHolder _tmp = new VarHolder();
+
+        getDataList((cu,dl)->{
             try {
-                List<T> list = dl.toEntityList(cls);
-                cacheCondition.run(cu, list);
+                _tmp._value = dl.toEntityList(cls);
+                cacheCondition.run(cu, (List<T>)_tmp._value);
             }catch (Exception ex){
                 throw new RuntimeException(ex);
             }
-        }).toEntityList(cls);
+        });
+
+        return (List<T>)_tmp._value;
     }
 
     @Override
@@ -288,14 +277,22 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     @Override
     public <T> T getItem(Class<T> cls, Act2<CacheUsing, T> cacheCondition) throws SQLException {
-        return getDataItem((cu,di)->{
+        if(cacheCondition == null){
+            return getItem(cls);
+        }
+
+        VarHolder _tmp = new VarHolder();
+
+        getDataItem((cu, di) -> {
             try {
-                T dm = di.toEntity(cls);
-                cacheCondition.run(cu, dm);
-            }catch (Exception ex){
+                _tmp._value = di.toEntity(cls);
+                cacheCondition.run(cu, (T) _tmp._value);
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-        }).toEntity(cls);
+        });
+
+        return (T) _tmp._value;
     }
     // <--
 
