@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
 import org.noear.weed.xml.XmlSqlLoader;
+import org.noear.weed.xml.XmlSqlProxy;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -150,6 +151,10 @@ public class DbContext {
      */
     public int exec(String code, Object... args) throws Exception {
         return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
+    }
+
+    public <T> T mapper(Class<T> cls){
+        return XmlSqlProxy.getSingleton(cls);
     }
 
     /**
