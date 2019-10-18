@@ -213,7 +213,7 @@ class SQLer {
             tryClose();
         }
     }
-
+    //插入
     public long insert(Command cmd,DbTran tran)  throws SQLException {
         if(cmd.context.isCompilationMode){
             return 0;
@@ -235,6 +235,7 @@ class SQLer {
             //*.监听
             WeedConfig.runExecuteAftEvent(cmd);
 
+            //这里，是与.execute()区别的地方
             if (rset!= null && rset.next()) {
                 return rset.getLong(1);//从1开始
             }

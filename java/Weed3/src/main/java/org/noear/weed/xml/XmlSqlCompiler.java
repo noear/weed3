@@ -127,6 +127,7 @@ public class XmlSqlCompiler {
 
         //构建需要申明的变量
         _parseDeclare(dblock);
+        _parseCachaTag(dblock);
 
         newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map){");
 
@@ -220,26 +221,24 @@ public class XmlSqlCompiler {
     }
 
     /** 解析缓存标签 */
-    private static void _parseCachaTag(XmlSqlBlock dblock){
-        if(dblock._cacheTag != null){
-            Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheTag);
-
-            while (m.find()) {
-                XmlSqlVar dv = parseTxtVar(m);
-
-                dv.label=0; //cache tag
-                dblock.tagMap.put(dv.mark,dv);
-            }
-        }
-
-        if(dblock._cacheClear != null){
+    private static void _parseCachaTag(XmlSqlBlock dblock) {
+        if (dblock._cacheClear != null) {
             Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheClear);
 
             while (m.find()) {
                 XmlSqlVar dv = parseTxtVar(m);
+                dv.label = 0;//cache clear
+                dblock.tagMap.put(dv.mark, dv);
+            }
+        }
 
-                dv.label=1;//cache clear
-                dblock.tagMap.put(dv.mark,dv);
+        if (dblock._cacheTag != null) {
+            Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheTag);
+
+            while (m.find()) {
+                XmlSqlVar dv = parseTxtVar(m);
+                dv.label = 1; //cache tag
+                dblock.tagMap.put(dv.mark, dv);
             }
         }
     }

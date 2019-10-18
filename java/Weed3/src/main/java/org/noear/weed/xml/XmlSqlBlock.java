@@ -1,7 +1,10 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.DataItem;
+import org.noear.weed.IBinder;
 import org.w3c.dom.Node;
 
+import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -74,12 +77,40 @@ public class XmlSqlBlock {
         varMap.put(dv.name, dv);
     }
 
-    public String formatTags(XmlSqlBlock block, int label, Map map) {
-        String txt2 = (label == 1 ? block._cacheClear : block._cacheTag);
+    //构建清除的cache tag
+    public String formatRemoveTags(XmlSqlBlock block, Map map) {
+        String txt2 = block._cacheClear;
 
         for (XmlSqlVar dv : block.tagMap.values()) {
-            if (dv.label == label) {
+            if (dv.label == 0) {
                 Object val = map.get(dv.name);
+                if (val == null) {
+                    throw new RuntimeException("Parameter does not exist:@" + dv.name);
+                }
+
+                txt2 = txt2.replace(dv.mark, val.toString());
+            }
+        }
+
+        return txt2;
+    }
+
+    //构建添加的cache tag
+    public String formatAppendTags(XmlSqlBlock block, Map map, Object rst) {
+        String txt2 = block._cacheTag;
+
+        for (XmlSqlVar dv : block.tagMap.values()) {
+            if (dv.label == 0) {
+                //1.先从入参取值
+                Object val = map.get(dv.name);
+
+                if(val == null && rst!=null){
+                    //尝试去结果取值（sql xml 输出的，只会是）
+                    if(rst instanceof DataItem){
+                        val = ((DataItem)rst).get(dv.name);
+                    }
+                }
+
                 if (val == null) {
                     throw new RuntimeException("Parameter does not exist:@" + dv.name);
                 }
