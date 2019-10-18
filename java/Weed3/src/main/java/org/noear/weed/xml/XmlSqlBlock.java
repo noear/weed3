@@ -26,6 +26,9 @@ public class XmlSqlBlock {
     public String _cacheTag;
     public String _usingCache;
 
+    //缓存标签集合
+    public Map<String, XmlSqlVar> tagMap = new LinkedHashMap<>();
+
     //临时变量
     protected Map<String, Node> __nodeMap;
     protected StringBuilder _texts = new StringBuilder();
@@ -50,14 +53,18 @@ public class XmlSqlBlock {
     }
 
     public String _action;
+    /** 是否为select 操作 */
     public boolean isSelect(){
         return "SELECT".equals(_action);
     }
 
+    /** 是否为 insert 操作 */
     public boolean isInsert(){
         return "INSERT".equals(_action);
     }
+    //其它的操作不需要判断
 
+    /** 变量标签集合 */
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
     public void varPut(XmlSqlVar dv) {
         if (dv.type == null || dv.type.length() == 0) {
@@ -67,10 +74,10 @@ public class XmlSqlBlock {
         varMap.put(dv.name, dv);
     }
 
-    public String format(String txt, Map map) {
+    public String formatTags(String txt, Map map) {
         String txt2 = txt;
-        Pattern pattern = Pattern.compile("\\$\\{(.+?)\\}");
-        Matcher m = pattern.matcher(txt2);
+
+        Matcher m = XmlSqlVar.varRepExp.matcher(txt);
 
         while (m.find()) {
             String mark = m.group(0);

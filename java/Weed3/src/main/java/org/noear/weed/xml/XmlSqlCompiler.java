@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class XmlSqlCompiler {
 
@@ -383,6 +382,8 @@ public class XmlSqlCompiler {
         return db.parse(xmlFile);
     }
 
+
+
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
         Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
@@ -394,8 +395,7 @@ public class XmlSqlCompiler {
         {
             tmpList.clear();
 
-            Pattern pattern = Pattern.compile("\\$\\{(.+?)\\}");
-            Matcher m = pattern.matcher(txt2);
+            Matcher m = XmlSqlVar.varRepExp.matcher(txt2);
 
             while (m.find()) {
                 XmlSqlVar dv = new XmlSqlVar();
@@ -420,8 +420,7 @@ public class XmlSqlCompiler {
         {
             tmpList.clear();
 
-            Pattern pattern = Pattern.compile("@\\{(.+?)\\}");
-            Matcher m = pattern.matcher(txt2);
+            Matcher m = XmlSqlVar.varComExp.matcher(txt2);
             while (m.find()) {
                 XmlSqlVar dv = new XmlSqlVar();
                 dv.mark = m.group(0);

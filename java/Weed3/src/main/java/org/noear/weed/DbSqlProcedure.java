@@ -131,14 +131,13 @@ public class DbSqlProcedure extends DbProcedure {
                 }
 
                 if(StringUtils.isEmpty(block._cacheTag) == false){
-                    Arrays.asList(block.format(block._cacheTag, _map).split(",")).forEach((k)->{
+                    Arrays.asList(block.formatTags(block._cacheTag, _map).split(",")).forEach((k)->{
                         this.cacheTag(k.trim());
                     });
-
                 }
             }else{
                 if(StringUtils.isEmpty(block._cacheClear) == false){
-                    Arrays.asList(block.format(block._cacheClear, _map).split(",")).forEach((k)->{
+                    Arrays.asList(block.formatTags(block._cacheClear, _map).split(",")).forEach((k)->{
                         cache.clear(k.trim());
                     });
                 }
