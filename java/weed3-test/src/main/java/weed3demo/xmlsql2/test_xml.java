@@ -56,11 +56,20 @@ public class test_xml{
             while (m_iterator.hasNext()){
                 weed3demo.mapper.UserModel m = m_iterator.next();
 
-                sb.append("(?,?,?) ",m.user_id,m.mobile,m.sex);
+                if(m.users != null){
+                    {
+                        int m2_index = 0;
+                        Iterator<weed3demo.mapper.UserModel> m2_iterator = m.users.iterator();
+                        while (m2_iterator.hasNext()){
+                            weed3demo.mapper.UserModel m2 = m2_iterator.next();
 
-                if(m_iterator.hasNext()){
-                    sb.append("#");
+                            sb.append("(?,?,?) ",m2.user_id,m2.mobile,m2.sex);
+
+                            m2_index++;
+                        }
+                    }
                 }
+
                 m_index++;
             }
         }

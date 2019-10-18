@@ -189,6 +189,7 @@ public class XmlSqlMapperGenerator {
         dblock._id = attr(n, "id");
 
         dblock._note = attr(n, ":note");
+        dblock._param = attr(n, ":param");
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
         if (dblock._return != null) {
@@ -253,17 +254,29 @@ public class XmlSqlMapperGenerator {
     }
 
     private static void _parseDeclare(XmlSqlBlock dblock) {
-        if (dblock._declare == null) {
-            return;
-        }
-        String[] ss = dblock._declare.split(",");
-        for (int i = 0, len = ss.length; i < len; i++) {
-            String tmp = ss[i].trim();
-            if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
-                String[] kv = tmp.split(":");
+        if (dblock._param != null) {
+            String[] ss = dblock._param.split(",");
+            for (int i = 0, len = ss.length; i < len; i++) {
+                String tmp = ss[i].trim();
+                if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
+                    String[] kv = tmp.split(":");
 
-                XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
-                dblock.varPut(dv);
+                    XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
+                    dblock.varPut(dv);
+                }
+            }
+        }
+
+        if (dblock._declare != null) {
+            String[] ss = dblock._declare.split(",");
+            for (int i = 0, len = ss.length; i < len; i++) {
+                String tmp = ss[i].trim();
+                if (tmp.indexOf(":") > 0 && tmp.length() > 3) {
+                    String[] kv = tmp.split(":");
+
+                    XmlSqlVar dv = new XmlSqlVar(tmp, kv[0].trim(), kv[1].trim());
+                    dblock.varPut(dv);
+                }
             }
         }
     }

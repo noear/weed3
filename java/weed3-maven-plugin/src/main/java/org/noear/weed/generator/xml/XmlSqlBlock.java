@@ -14,6 +14,7 @@ public class XmlSqlBlock {
     public StringBuilder _classcode;
 
     public String _id;
+    public String _param;
     public String _declare;
     public String _return;
 

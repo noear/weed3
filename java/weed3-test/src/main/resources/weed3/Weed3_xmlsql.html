@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
 sql 代码块定义指令
+  :param?（属性：外部输入变量申明；默认会自动生成::新增***）
   :return（属性：返回类型）
-  :declare（属性：变量类型预申明）
+  :declare（属性：内部变量类型预申明）
   :db （属性：数据库上下文name）
   :note（属性：描述、说明、注解）
 
@@ -14,10 +15,10 @@ sql 代码块定义指令
 if 判断控制指令（没有else）
   test （属性：判断检测代码）
 
-for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index）
+for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::新增***）
   var （属性：循环变量申明）
   items （属性：集合变量名称）
-  sep? （属性：分隔符，可不填）
+  sep? （属性：分隔符::新增***）
 
 
 ref 引用代码块指令
@@ -54,7 +55,7 @@ ${name:type} = 变量替换
     </sql>
 
     <sql id="user_del" :note="删除一个用户">
-        DELETE FROM user WHERE id=@{user_id:long}
+        DELETE FROM user WHERE id=@{m.user_id:long}
         <if test="sex > 0">
             AND sex=@{sex:int}
         </if>
