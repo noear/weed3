@@ -24,7 +24,7 @@ for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::�
 ref 引用代码块指令
   sql （属性：代码块id）
 
-name:type    = 变量申明
+name:type    = 变量申明（可用于属性：:param, :declare，var，或宏定义 @{..},${..}）
 @{name:type} = 变量注入
 ${name:type} = 变量替换
 
@@ -43,7 +43,13 @@ ${name:type} = 变量替换
 :return="String" => String （任何单职类型）
 -->
 <mapper namespace="weed3demo.xmlsql2" :db="testdb">
-    <sql id="user_add" :return="long" :note="添加用户">
+    <sql id="user_add1" :return="long"
+         :param="m:weed3demo.mapper.UserModel,sex:int"
+         :note="添加用户">
+        INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
+    </sql>
+
+    <sql id="user_add2" :return="long" :note="添加用户">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
 
