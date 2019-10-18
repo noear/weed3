@@ -1,9 +1,6 @@
 package org.noear.weed.xml;
 
-import org.noear.weed.DbContext;
-import org.noear.weed.DbProcedure;
-import org.noear.weed.Variate;
-import org.noear.weed.WeedConfig;
+import org.noear.weed.*;
 import org.noear.weed.utils.StringUtils;
 
 import java.lang.reflect.*;
@@ -102,10 +99,19 @@ public class XmlSqlProxy {
                 if(Collection.class.isAssignableFrom(rst_type)){
                     //是实体集合
                     rst_type2  =((ParameterizedType) rst_type2).getActualTypeArguments()[0];
-                    return sp.getList((Class<?>)rst_type2);
+
+                    if(IBinder.class.isAssignableFrom(rst_type)){
+                        return sp.getList((IBinder) rst_type.newInstance());
+                    }else{
+                        return sp.getList((Class<?>)rst_type2);
+                    }
                 }else{
                     //是单实体
-                    return sp.getItem(rst_type);
+                    if(IBinder.class.isAssignableFrom(rst_type)){
+                        return sp.getItem((IBinder) rst_type.newInstance());
+                    }else{
+                        return sp.getItem(rst_type);
+                    }
                 }
             }else{
                 if(block._return.startsWith("List<")){

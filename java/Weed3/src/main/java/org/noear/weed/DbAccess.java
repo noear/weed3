@@ -188,53 +188,73 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /*执行命令（返回一个模理）*/
     @Override
     public <T extends IBinder> T getItem(T model) throws SQLException {
-        return getItem(model,null) ;
+        return getDataItem().toItem(model);
+//        return getItem(model,null) ;
     }
 
     /*执行命令（返回一个模理）*/
     @Override
     public <T extends IBinder> T getItem(T model,Act2<CacheUsing,T> cacheCondition) throws SQLException {
-        T rst;
-        if (_cache == null) {
-            rst = new SQLer().getItem(getCommand(), model);
-        }
-        else {
-            _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), model)));
-        }
-
-        if(rst == null) {
-            return model;
-        }
-        else {
-            return rst;
-        }
+        return getDataItem((cu,di)->{
+            try {
+                T dm = di.toItem(model);
+                cacheCondition.run(cu, dm);
+            }catch (Exception ex){
+                throw new RuntimeException(ex);
+            }
+        }).toItem(model);
+//        T rst;
+//        if (_cache == null) {
+//            rst = new SQLer().getItem(getCommand(), model);
+//        }
+//        else {
+//            _cache.usingCache(cacheCondition);
+//            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getItem(getCommand(), model)));
+//        }
+//
+//        if(rst == null) {
+//            return model;
+//        }
+//        else {
+//            return rst;
+//        }
     }
     /*执行命令（返回一个列表）*/
     @Override
     public <T extends IBinder> List<T> getList(T model) throws SQLException{
-        return getList(model,null);
+        return getDataList().toList(model);
+//        return getList(model,null);
     }
 
     /*执行命令（返回一个列表）*/
     @Override
     public <T extends IBinder> List<T> getList(T model,Act2<CacheUsing,List<T>> cacheCondition) throws SQLException {
-        List<T> rst;
-        if (_cache == null) {
-            rst = new SQLer().getList(getCommand(), model);
-        }
-        else
-        {
-            _cache.usingCache(cacheCondition);
-            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), model)));
-        }
 
-        if(rst == null) {
-            return new ArrayList<>();
-        }
-        else {
-            return rst;
-        }
+        return getDataList((cu,dl)->{
+            try {
+                List<T> list = dl.toList(model);
+                cacheCondition.run(cu, list);
+            }catch (Exception ex){
+                throw new RuntimeException(ex);
+            }
+        }).toList(model);
+
+//        List<T> rst;
+//        if (_cache == null) {
+//            rst = new SQLer().getList(getCommand(), model);
+//        }
+//        else
+//        {
+//            _cache.usingCache(cacheCondition);
+//            rst = _cache.getEx(this.getWeedKey(), () -> (new SQLer().getList(getCommand(), model)));
+//        }
+//
+//        if(rst == null) {
+//            return new ArrayList<>();
+//        }
+//        else {
+//            return rst;
+//        }
     }
 
     @Override
@@ -243,6 +263,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return getDataList().toArray(column);
     }
 
+    // -->
     @Override
     public  <T> List<T> getList(Class<T> cls) throws SQLException{
         return getDataList().toEntityList(cls);
@@ -276,6 +297,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             }
         }).toEntity(cls);
     }
+    // <--
 
     @Override
     public DataList getDataList() throws SQLException
