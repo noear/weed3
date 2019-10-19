@@ -156,6 +156,19 @@ public class XmlSqlCompiler {
         //2.打印代码体
         sb.append(sb2);
 
+        //3.打印预处理变量（cache tag 用到的，带.的变量）
+        if(dblock.tagMap.size()>0){
+            sb.append("\n");
+        }
+        for(XmlSqlVar dv : dblock.tagMap.values()){
+            if(dv.name.indexOf(".") > 0){
+                newLine(sb,depth+1)
+                        .append("map.put(\"").append(dv.name).append("\", ")
+                        .append(dv.name).append(");");
+            }
+        }
+
+        //4.结束并返回
         sb.append("\n");
         newLine(sb, depth + 1).append("return sb;");
         newLine(sb, depth).append("}\n");

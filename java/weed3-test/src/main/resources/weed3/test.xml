@@ -2,7 +2,8 @@
 <mapper namespace="weed3demo.xmlsql2" :db="testdb">
     <sql id="user_add" :return="long"
          :param="m:weed3demo.mapper.UserModel,sex:int"
-         :note="添加用户"><![CDATA[
+         :note="添加用户"
+         :cacheClear="user_${m.user_id}"><![CDATA[
         INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
     ]]></sql>
 

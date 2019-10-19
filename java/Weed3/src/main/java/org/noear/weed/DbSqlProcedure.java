@@ -6,7 +6,6 @@ import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
