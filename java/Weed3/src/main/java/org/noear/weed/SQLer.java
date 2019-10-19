@@ -293,11 +293,11 @@ class SQLer {
 
         int idx = 1;
         //2.设置参数值
-        for (Object v : cmd.paramS) {
-            if(v == null){
+        for (Variate v : cmd.paramS) {
+            if(v.getValue() == null){
                 stmt.setNull(idx,Types.VARCHAR);
             }else {
-                stmt.setObject(idx, v);
+                stmt.setObject(idx, v.getValue());
             }
             idx++;
         }

@@ -13,8 +13,6 @@ import java.util.ArrayList;
  */
 public class DbQuery extends DbAccess<DbQuery> {
 
-
-
     public DbQuery(DbContext context)
     {
         super(context);
@@ -47,10 +45,7 @@ public class DbQuery extends DbAccess<DbQuery> {
         Command cmd = new Command(this.context,_tran);
 
         cmd.key     = getCommandID();
-        cmd.paramS = new ArrayList<>();
-        for(Variate v : this.paramS){
-            cmd.paramS.add(v.getValue());
-        }
+        cmd.paramS = this.paramS;
 
         StringBuilder sb = new StringBuilder(commandText);
 

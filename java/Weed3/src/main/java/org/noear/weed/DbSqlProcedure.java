@@ -6,6 +6,7 @@ import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class DbSqlProcedure extends DbProcedure {
     private String _sqlName;
-    private Map<String,Object> _map = new HashMap<>();
+    private Map<String,Variate> _map = new HashMap<>();
 
     public DbSqlProcedure(DbContext context){
         super(context);
@@ -34,7 +35,7 @@ public class DbSqlProcedure extends DbProcedure {
 
     @Override
     public DbProcedure set(String param, Object value) {
-        _map.put(param,value);
+        _map.put(param,new Variate(param,value));
         _onSet(param,value);
         return this;
     }
@@ -48,7 +49,7 @@ public class DbSqlProcedure extends DbProcedure {
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {
             map.forEach((k, v) -> {
-                _map.put(k,v);
+                _map.put(k,new Variate(k,v));
                 _onSet(k,v);
             });
         }
@@ -58,7 +59,7 @@ public class DbSqlProcedure extends DbProcedure {
     @Override
     public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
         EntityUtils.fromEntity(obj,(k, v)->{
-            _map.put(k,v);
+            _map.put(k,new Variate(k,v));
 
             _onSet(k,v);
         });
@@ -83,6 +84,11 @@ public class DbSqlProcedure extends DbProcedure {
     }
 
     @Override
+    public String getWeedKey() {
+        return buildWeedKey(_map.values());
+    }
+
+    @Override
     protected Command getCommand(){
         Command cmd = new Command(this.context,_tran);
 
@@ -102,8 +108,12 @@ public class DbSqlProcedure extends DbProcedure {
             throw ex;
         }
 
+        for (Object p1 : sqlBuilder.paramS) {
+            doSet("", p1);
+        }
+
         cmd.text = sqlBuilder.toString();
-        cmd.paramS  = sqlBuilder.paramS;
+        cmd.paramS  = this.paramS;
 
         tryCacheController(cmd, block);
 

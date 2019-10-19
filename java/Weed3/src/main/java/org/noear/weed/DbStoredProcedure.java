@@ -56,10 +56,7 @@ public class DbStoredProcedure extends DbProcedure {
         Command cmd = new Command(this.context,_tran);
 
         cmd.key      = getCommandID();
-        cmd.paramS   = new ArrayList<>();
-        for(Variate v : this.paramS){
-            cmd.paramS.add(v.getValue());
-        }
+        cmd.paramS   = this.paramS;
 
         StringBuilder sb = StringUtils.borrowBuilder();
         sb.append("{call ");

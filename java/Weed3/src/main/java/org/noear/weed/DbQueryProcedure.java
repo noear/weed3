@@ -135,7 +135,7 @@ public class DbQueryProcedure extends DbProcedure {
                 if (tmp instanceof Iterable) { //支持数组型参数
                     StringBuilder sb = StringUtils.borrowBuilder();
                     for (Object p2 : (Iterable) tmp) {
-                        doSet(new Variate(key, p2));
+                        doSet(new Variate(key, p2));//对this.paramS进行设值
 
                         sb.append("?").append(",");
                     }
@@ -147,7 +147,7 @@ public class DbQueryProcedure extends DbProcedure {
 
                     tmpList.put(key, StringUtils.releaseBuilder(sb));
                 } else {
-                    doSet(val);
+                    doSet(val); //对this.paramS进行设值
                     tmpList.put(key, "?");
                 }
             }
@@ -174,10 +174,7 @@ public class DbQueryProcedure extends DbProcedure {
             sqlTxt.replace("$",context.getSchema());
         }
 
-        cmd.paramS = new ArrayList<>();
-        for(Variate v : this.paramS){
-            cmd.paramS.add(v.getValue());
-        }
+        cmd.paramS = this.paramS;
         
         cmd.text    = sqlTxt;
 

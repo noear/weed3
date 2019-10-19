@@ -23,7 +23,7 @@ public class Command {
     /** 命令文本 */
     public String       text;
     /** 命令参数 */
-    public List<Object> paramS;
+    public List<Variate> paramS;
     /** 数据库上下文（肯定且必须有） */
     public DbContext context;
     /** 缓存服务对象（可能有，可能没有） */
