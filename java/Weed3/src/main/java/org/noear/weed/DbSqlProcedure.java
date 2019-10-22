@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class DbSqlProcedure extends DbProcedure {
     private String _sqlName;
-    private Map<String,Variate> _map = new HashMap<>();
+    private Map<String,Object> _map = new HashMap<>(); //不能用:Variate, IXmlSqlBuilder 不支持
 
     public DbSqlProcedure(DbContext context){
         super(context);
@@ -34,7 +34,7 @@ public class DbSqlProcedure extends DbProcedure {
 
     @Override
     public DbProcedure set(String param, Object value) {
-        _map.put(param,new Variate(param,value));
+        _map.put(param,value);
         _onSet(param,value);
         return this;
     }
@@ -48,7 +48,7 @@ public class DbSqlProcedure extends DbProcedure {
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {
             map.forEach((k, v) -> {
-                _map.put(k,new Variate(k,v));
+                _map.put(k,v);
                 _onSet(k,v);
             });
         }
@@ -58,7 +58,7 @@ public class DbSqlProcedure extends DbProcedure {
     @Override
     public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
         EntityUtils.fromEntity(obj,(k, v)->{
-            _map.put(k,new Variate(k,v));
+            _map.put(k,v);
 
             _onSet(k,v);
         });
@@ -84,7 +84,19 @@ public class DbSqlProcedure extends DbProcedure {
 
     @Override
     public String getWeedKey() {
-        return buildWeedKey(_map.values());
+        if(_weedKey==null)
+        {
+            StringBuilder sb = StringUtils.borrowBuilder();
+
+            sb.append(getCommandID()).append(":");
+
+            for(Object p: _map.values()) {
+                sb.append("_").append(p);
+            }
+
+            _weedKey= StringUtils.releaseBuilder(sb);
+        }
+        return _weedKey;
     }
 
     @Override

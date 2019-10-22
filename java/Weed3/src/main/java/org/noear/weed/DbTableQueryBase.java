@@ -109,6 +109,33 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+    public T whereEq(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" = ? ",val);
+        return (T)this;
+    }
+    public T whereLt(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" < ? ",val);
+        return (T)this;
+    }
+    public T whereLte(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" <= ? ",val);
+        return (T)this;
+    }
+    public T whereGt(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" > ? ",val);
+        return (T)this;
+    }
+    public T whereGte(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" >= ? ",val);
+        return (T)this;
+    }
+    public T whereLk(String filed, String val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" LIKE ? ",val);
+        return (T)this;
+    }
+
+
+
     public T and(String and, Object... args) {
         _builder.append(" AND ").append(formatCondition(and), args);
         return (T)this;
@@ -119,6 +146,31 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+    public T andEq(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" = ? ",val);
+        return (T)this;
+    }
+    public T andLt(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" < ? ",val);
+        return (T)this;
+    }
+    public T andLte(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" <= ? ",val);
+        return (T)this;
+    }
+    public T andGt(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" > ? ",val);
+        return (T)this;
+    }
+    public T andGte(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" >= ? ",val);
+        return (T)this;
+    }
+    public T andLk(String filed, String val){
+        _builder.append(" AND ").append(formatField(filed)).append(" LIKE ? ",val);
+        return (T)this;
+    }
+
     public T or(String or, Object... args) {
         _builder.append(" OR ").append(formatCondition(or), args);
         return (T)this;
@@ -126,6 +178,31 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
     public T or() {
         _builder.append(" OR ");
+        return (T)this;
+    }
+
+    public T orEq(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" = ? ",val);
+        return (T)this;
+    }
+    public T orLt(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" < ? ",val);
+        return (T)this;
+    }
+    public T orLte(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" <= ? ",val);
+        return (T)this;
+    }
+    public T orGt(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" > ? ",val);
+        return (T)this;
+    }
+    public T orGte(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" >= ? ",val);
+        return (T)this;
+    }
+    public T orLk(String filed, String val){
+        _builder.append(" OR ").append(formatField(filed)).append(" LIKE ? ",val);
         return (T)this;
     }
 

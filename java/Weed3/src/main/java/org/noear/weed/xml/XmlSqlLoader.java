@@ -13,7 +13,7 @@ public class XmlSqlLoader {
     private static String _lock = "";
 
     private  boolean is_loaed = false;
-    private List<File> xmlFiles = new ArrayList<>();
+    private List<URL> xmlFiles = new ArrayList<>();
 
     /**
      * 加载扩展文件夹（或文件）
@@ -40,15 +40,14 @@ public class XmlSqlLoader {
     }
 
     private void do_load() throws Exception{
-        URL path = IOUtils.getResource("/weed3/");
-        File dic = new File(path.toURI());
-
-        //描述文件（只能是.xml）
-        _g.do_load(dic);
+        XmlFileScaner.scan("weed3", ".xml")
+                .stream()
+                .map(k -> IOUtils.getResource(k))
+                .forEach(url -> _g.xmlFiles.add(url));
 
         //构建代码
         List<String> codes = new ArrayList<>();
-        for(File file : _g.xmlFiles){
+        for(URL file : _g.xmlFiles){
             String code = XmlSqlCompiler.parse(file);
             codes.add(code);
         }
@@ -65,35 +64,4 @@ public class XmlSqlLoader {
 
 
     private XmlSqlLoader() { }
-
-    /** 如果是目录的话，只处理一级 */
-    private void do_load(File file) {
-        if (file.exists() == false) {
-            return;
-        }
-
-        if (file.isDirectory()) {
-            File[] tmps = file.listFiles();
-            for (File tmp : tmps) {
-                do_loadFile(tmp);
-            }
-        } else {
-            do_loadFile(file);
-        }
-    }
-
-
-    private void do_loadFile(File file) {
-        if (file.isFile()) {
-            String path = file.getAbsolutePath();
-            try {
-                if (path.endsWith(".xml")) {
-                    xmlFiles.add(file);
-                    return;
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 }

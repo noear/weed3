@@ -26,9 +26,9 @@ public class XmlSqlCompilerTest {
 
     @Test
     public  void test11() throws Exception {
-        URL url = getResource("/weed3/test.xml");
+        URL url = getResource("/weed3/FeedMapper.xml");
 
-        String code = XmlSqlCompiler.parse( new File(url.toURI()));
+        String code = XmlSqlCompiler.parse( url);
 
         System.out.println(code);
     }

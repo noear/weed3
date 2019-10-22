@@ -3,7 +3,9 @@ package org.noear.weed.utils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
 
 public class IOUtils {
 
@@ -29,5 +31,20 @@ public class IOUtils {
         }
 
         return url;
+    }
+
+    /** 获取资源URL集*/
+    public static Enumeration<URL> getResources(String name) throws IOException {
+        Enumeration<URL> urls = IOUtils.class.getClassLoader().getResources(name);
+        if (urls == null || urls.hasMoreElements()==false) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            if (loader != null) {
+                urls = loader.getResources(name);
+            } else {
+                urls = ClassLoader.getSystemResources(name);
+            }
+        }
+
+        return urls;
     }
 }
