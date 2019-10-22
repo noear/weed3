@@ -1,5 +1,7 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.utils.StringUtils;
+
 import javax.tools.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,11 +65,11 @@ public class JavaStringCompiler {
 
     /** 获取编译信息(错误 警告) */
     public String getCompilerMessage() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
         for (Diagnostic diagnostic : diagnosticsCollector.getDiagnostics()) {
             sb.append(diagnostic.toString()).append("\r\n");
         }
-        return sb.toString();
+        return StringUtils.releaseBuilder(sb);
     }
 
     /** 获取类的全名称（根据源码获取）*/

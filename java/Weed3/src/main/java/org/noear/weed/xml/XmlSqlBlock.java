@@ -76,6 +76,8 @@ public class XmlSqlBlock {
 
         varMap.put(dv.name, dv);
     }
+    /** 变量记数器 */
+    public int varNum = 0;
 
     //构建清除的cache tag
     public String formatRemoveTags(XmlSqlBlock block, Map map) {

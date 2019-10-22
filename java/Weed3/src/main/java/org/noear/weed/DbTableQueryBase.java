@@ -232,7 +232,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     protected <T extends GetHandler> boolean insertList(IDataItem cols, Collection<T> valuesList)throws SQLException {
-        if (valuesList == null) {
+        if (valuesList == null || valuesList.size() == 0) {
             return false;
         }
 
@@ -241,7 +241,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         }
 
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         for (String key : cols.keys()) {
@@ -291,7 +291,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         sb.deleteCharAt(sb.length() - 1);
         sb.append(";");
 
-        _builder.append(sb.toString(), args.toArray());
+        _builder.append(StringUtils.releaseBuilder(sb), args.toArray());
 
         return compile().execute() > 0;
     }
@@ -303,9 +303,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
         return insert(item);
     }
-
-
-
 
     public void updateExt(IDataItem data, String constraints) throws SQLException {
         String[] ff = constraints.split(",");
@@ -389,7 +386,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     public int delete() throws SQLException {
-        StringBuilder sb  = new StringBuilder();
+        StringBuilder sb  = StringUtils.borrowBuilder();
 
         sb.append("DELETE ");
 
@@ -399,7 +396,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
             sb.append(_table);
         }
 
-        _builder.insert(sb.toString());
+        _builder.insert(StringUtils.releaseBuilder(sb));
 
         return compile().execute();
     }
@@ -509,7 +506,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
     public IQuery select(String columns) {
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         //1.构建sql
         if(_hint!=null) {
@@ -531,7 +528,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
             _builder.insert(_builder_bef);
         }
 
-        _builder.insert(sb.toString());
+        _builder.insert(StringUtils.releaseBuilder(sb));
 
         DbQuery rst = compile();
 

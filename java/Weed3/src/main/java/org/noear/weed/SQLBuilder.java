@@ -33,7 +33,7 @@ public class SQLBuilder {
     //还原状态
     protected void restore() {
         clear();
-        builder.append(b_builder.toString());
+        builder.append(b_builder);
         paramS.addAll(b_paramS);
     }
 
@@ -46,7 +46,7 @@ public class SQLBuilder {
     }
 
     public SQLBuilder insert(SQLBuilder part) {
-        builder.insert(0, part.toString());
+        builder.insert(0, part.builder);
         paramS.addAll(0, part.paramS);
         return this;
     }
@@ -59,13 +59,72 @@ public class SQLBuilder {
         return this;
     }
 
+    public SQLBuilder append(SQLBuilder part) {
+        builder.append(part.builder);
+        paramS.addAll(part.paramS);
+        return this;
+    }
+
     public SQLBuilder remove(int start, int length) {
         builder.delete(start, start+ length);
         return this;
     }
 
     public SQLBuilder removeLast(){
-        builder.deleteCharAt(builder.length() - 1);
+        builder.setLength(builder.length() - 1);
+        return this;
+    }
+
+    public SQLBuilder trimEnd(String str) {
+        int len = str.length();
+        if(len>0) {
+            String tmp = builder.toString().trim();
+
+            while (true) {
+                int idx = tmp.lastIndexOf(str);
+                if (idx == tmp.length() - len) {
+                    tmp = tmp.substring(0, tmp.length() - len);
+                } else {
+                    break;
+                }
+            }
+            builder.setLength(0);
+            builder.append(tmp);
+        }
+
+        return this;
+    }
+
+
+
+    public SQLBuilder trimStart(String str) {
+        int len = str.length();
+        if(len>0) {
+            String tmp = builder.toString().trim();
+
+            while (true) {
+                int idx = tmp.indexOf(str);
+                if (idx == 0) {
+                    tmp = tmp.substring(len);
+                } else {
+                    break;
+                }
+            }
+            builder.setLength(0);
+            builder.append(tmp);
+        }
+        return this;
+    }
+
+    //添加前缀
+    public SQLBuilder addPrefix(String str){
+        builder.insert(0,str);
+        return this;
+    }
+
+    //添加后缀
+    public SQLBuilder addSuffix(String str){
+        builder.append(str);
         return this;
     }
 
@@ -85,7 +144,7 @@ public class SQLBuilder {
 
         public SQLPartBuilder(String code,  Object[] args) {
 
-            paramS = new ArrayList<Object>();
+            paramS = new ArrayList<>();
 
             if (args.length > 0) {
                 StringBuilder builder = StringUtils.borrowBuilder();

@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.cache.CacheState;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.ext.Fun1;
+import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
         List<ValueMapping> vmlist = new ArrayList<>(do_splitWeedCode(splitParamName));
 
         List<T> list = new ArrayList<T>(vmlist.size());
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         //2.根据WeedCode=>WeedKey获取已缓存的数据
         //
@@ -67,7 +68,8 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
         {
             sb.delete(sb.length() - 1, 1);
 
-            doGet(splitParamName).setValue(sb.toString());
+            String value = StringUtils.releaseBuilder(sb);
+            doGet(splitParamName).setValue(value);
 
             List<T> newList1 = getList(model);
 
@@ -111,7 +113,7 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
     }
 
     private ValueMapping do_buildSubWeedCode(String paramName, String value) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append(this.getCommandID() + ":");
 
@@ -131,6 +133,6 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
             }
         }
 
-        return new ValueMapping(value, sb.toString());
+        return new ValueMapping(value, StringUtils.releaseBuilder(sb));
     }
 }

@@ -126,8 +126,8 @@ public class XmlSqlCompiler {
         dblock._cacheClear = attr(n, ":cacheClear");
 
         //构建需要申明的变量
-        _parseDeclare(dblock);
-        _parseCachaTag(dblock);
+        _parseSqlDeclare(dblock);
+        _parseSqlCachaTag(dblock);
 
         newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map){");
 
@@ -135,7 +135,7 @@ public class XmlSqlCompiler {
         StringBuilder sb2 = new StringBuilder();
         {
             newLine(sb2, depth + 1).append("SQLBuilder sb = new SQLBuilder();\n");
-            _parseNodeList(n.getChildNodes(), sb2, dblock, depth + 1);
+            _parseNodeList(n.getChildNodes(),"sb", sb2, dblock, depth + 1);
         }
 
         //1.打印变量
@@ -203,7 +203,7 @@ public class XmlSqlCompiler {
     }
 
     /** 解析申明的变量 */
-    private static void _parseDeclare(XmlSqlBlock dblock) {
+    private static void _parseSqlDeclare(XmlSqlBlock dblock) {
         //（属性：外部输入变量申明；默认会自动生成）
         if (dblock._param != null) {
             String[] ss = dblock._param.split(",");
@@ -234,7 +234,7 @@ public class XmlSqlCompiler {
     }
 
     /** 解析缓存标签 */
-    private static void _parseCachaTag(XmlSqlBlock dblock) {
+    private static void _parseSqlCachaTag(XmlSqlBlock dblock) {
         if (dblock._cacheClear != null) {
             Matcher m = XmlSqlVar.varRepExp.matcher(dblock._cacheClear);
 
@@ -256,22 +256,22 @@ public class XmlSqlCompiler {
         }
     }
 
-    private static void _parseNodeList(NodeList nl, StringBuilder sb, XmlSqlBlock dblock, int depth) {
+    private static void _parseNodeList(NodeList nl, String sqlBuilderName,  StringBuilder sb, XmlSqlBlock dblock, int depth) {
         for (int i = 0, len = nl.getLength(); i < len; i++) {
             Node n = nl.item(i);
 
-            _parseNode(n,sb,dblock,depth);
+            _parseNode(n,sqlBuilderName, sb,dblock,depth);
         }
     }
 
-    private static void _parseNode(Node n, StringBuilder sb, XmlSqlBlock dblock,  int depth){
+    private static void _parseNode(Node n, String sqlBuilderName, StringBuilder sb, XmlSqlBlock dblock,  int depth){
         int type = n.getNodeType();
 
         if (type == 3 || type == 4) {//text or CDATA
             String text = n.getTextContent().trim();
 
             if (text.length() > 0) {
-                newLine(sb, depth).append("sb.append(");
+                newLine(sb, depth).append(sqlBuilderName).append(".append(");
                 parseTxt(sb,dblock,text);
                 sb.append(");");
             }
@@ -281,50 +281,90 @@ public class XmlSqlCompiler {
             String tagName = n.getNodeName();
 
             if ("if".equals(tagName)) {
-                parseIfNode(sb,dblock,n,depth);
+                parseIfNode(sb, sqlBuilderName, dblock, n, depth);
                 return;
             }
 
 
-            if("for".equals(tagName)){
-                parseForNode(sb,dblock,n,depth);
+            if ("for".equals(tagName)) {
+                parseForNode(sb, sqlBuilderName, dblock, n, depth);
                 return;
             }
 
-            if("ref".equals(tagName)){
-                parseRefNode(sb,dblock,n,depth);
+            if ("ref".equals(tagName)) {
+                parseRefNode(sb, sqlBuilderName, dblock, n, depth);
                 return;
             }
 
-            _parseNodeList(n.getChildNodes(),sb,dblock,depth);
+            if ("trim".equals(tagName)) {
+                parseTrimNode(sb, sqlBuilderName, dblock, n, depth);
+                return;
+            }
+
+            _parseNodeList(n.getChildNodes(), sqlBuilderName, sb, dblock, depth);
         }
     }
 
+    //xml:解析 trim 指令节点
+    private static void parseTrimNode(StringBuilder sb, String sqlBuilderName , XmlSqlBlock dblock, Node n , int depth) {
+        String _trimStart = attr(n, "trimStart");//开始去除
+        String _trimEnd = attr(n, "trimEnd");//结属去除
+        String _prefix = attr(n, "prefix");//添前缀
+        String _suffix = attr(n, "suffix");//添后缀
+
+        dblock.varNum++;
+
+        String varName = "sb"+dblock.varNum;
+
+        sb.append("\n");
+        newLine(sb, depth).append("SQLBuilder ").append(varName).append(" = new SQLBuilder();  /*trim node*/");
+
+        _parseNodeList(n.getChildNodes(), varName, sb, dblock, depth);
+
+        if(StringUtils.isEmpty(_trimStart) == false){
+            newLine(sb, depth).append(varName).append(".trimStart(\"").append(_trimStart.trim()).append("\");");
+        }
+
+        if(StringUtils.isEmpty(_trimEnd) == false){
+            newLine(sb, depth).append(varName).append(".trimEnd(\"").append(_trimEnd.trim()).append("\");");
+        }
+
+        if(StringUtils.isEmpty(_prefix) == false){
+            newLine(sb, depth).append(varName).append(".addPrefix(\"").append(_prefix.trim()).append("\");");
+        }
+
+        if(StringUtils.isEmpty(_suffix) == false){
+            newLine(sb, depth).append(varName).append(".addSuffix(\"").append(_suffix.trim()).append("\");");
+        }
+
+        newLine(sb, depth).append(sqlBuilderName).append(".append(").append(varName).append(");\n");
+    }
+
     //xml:解析 if 指令节点
-    private static void parseIfNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+    private static void parseIfNode(StringBuilder sb,String sqlBuilderName, XmlSqlBlock dblock, Node n , int depth) {
         String _test = attr(n, "test");
 
-        newLine(sb, depth).append("if(").append(_test).append("){");
+        newLine(sb, depth).append("if(").append(_test).append("){ /*if node*/");
 
-        _parseNodeList(n.getChildNodes(), sb, dblock, depth + 1);
+        _parseNodeList(n.getChildNodes(),sqlBuilderName, sb, dblock, depth + 1);
 
         newLine(sb, depth).append("}");
     }
 
     //xml:解析 ref 指令节点
-    private static void parseRefNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+    private static void parseRefNode(StringBuilder sb, String sqlBuilderName,XmlSqlBlock dblock, Node n , int depth) {
         String _sql_id = attr(n, "sql");
         if (StringUtils.isEmpty(_sql_id) == false) {
             Node ref_n = dblock.__nodeMap.get(_sql_id);
             if (ref_n == null) {
                 throw new RuntimeException("sql node @" + _sql_id + " can't find");
             }
-            _parseNode(ref_n, sb, dblock, depth);
+            _parseNode(ref_n,sqlBuilderName, sb, dblock, depth);
         }
     }
 
     //xml:解析 for 指令节点
-    private static void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
+    private static void parseForNode(StringBuilder sb,String sqlBuilderName, XmlSqlBlock dblock, Node n , int depth) {
         /**
          * //编译结果示例
          * {
@@ -363,7 +403,7 @@ public class XmlSqlCompiler {
         depth++;
 
         //***start for
-        newLine(sb, depth0).append("{");
+        newLine(sb, depth0).append("{ /*for node*/");
         //::定义@index变量
         newLine(sb, depth).append("int ").append(_var.name).append("_index = 0;");
         //::定义@iterator变量
@@ -375,12 +415,12 @@ public class XmlSqlCompiler {
         newLine(sb, depth+1).append(_var.type).append(" ").append(_var.name).append(" = ").append(_var.name).append("_iterator.next();\n");
 
         //循环内部代码体
-        _parseNodeList(n.getChildNodes(), sb, dblock, depth + 1);
+        _parseNodeList(n.getChildNodes(),sqlBuilderName, sb, dblock, depth + 1);
 
         sb.append("\n");
         if(StringUtils.isEmpty(_sep_str) == false) {
             newLine(sb, depth + 1).append("if(").append(_var.name).append("_iterator.hasNext()").append("){");
-            newLine(sb, depth + 2).append("sb.append(\"").append(_sep_str).append("\");");
+            newLine(sb, depth + 2).append(sqlBuilderName).append(".append(\"").append(_sep_str).append("\");");
             newLine(sb, depth + 1).append("}");
         }
 
@@ -451,6 +491,8 @@ public class XmlSqlCompiler {
             });
         }
     }
+
+    //解析文本本里的变量
     private static XmlSqlVar parseTxtVar(Matcher m){
         XmlSqlVar dv = new XmlSqlVar();
         dv.mark = m.group(0);
