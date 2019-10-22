@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.*;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XmlSqlCompiler {
 
@@ -34,6 +35,7 @@ public class XmlSqlCompiler {
 
         sb.append("import java.math.*;\n");
         sb.append("import java.util.*;\n");
+        sb.append("import org.noear.weed.utils.*;\n");
         sb.append("import org.noear.weed.SQLBuilder;\n");
         sb.append("import org.noear.weed.xml.XmlSqlFactory;\n\n");
 
@@ -344,11 +346,37 @@ public class XmlSqlCompiler {
     private static void parseIfNode(StringBuilder sb,String sqlBuilderName, XmlSqlBlock dblock, Node n , int depth) {
         String _test = attr(n, "test");
 
+        if(_test.indexOf("?")>0){
+            _test = parseIfTestExpr(_test);
+        }
+
         newLine(sb, depth).append("if(").append(_test).append("){ /*if node*/");
 
         _parseNodeList(n.getChildNodes(),sqlBuilderName, sb, dblock, depth + 1);
 
         newLine(sb, depth).append("}");
+    }
+
+    private static String parseIfTestExpr(String test) {
+        Pattern r = Pattern.compile("([\\w\\.]*?)\\?(\\?|\\!|\\w*)");
+        Matcher m = r.matcher(test);
+        if (m.find()) {
+            String vname = m.group(1);
+            String vfun = "?" + m.group(2);
+            if ("??".equals(vfun)) {
+                String newStr = "StringUtils.isEmpty(" + vname + ")";
+
+                test = test.replace(m.group(), newStr);
+            }
+
+            if ("?!".equals(vfun)) {
+                String newStr = "StringUtils.isEmpty(" + vname + ")==false";
+
+                test = test.replace(m.group(), newStr);
+            }
+        }
+
+        return test;
     }
 
     //xml:解析 ref 指令节点
