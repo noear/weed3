@@ -7,7 +7,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
+import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class XmlSqlCompiler {
 
     //将xml解析为java code
-    public static String parse(File xmlFile) throws Exception{
+    public static String parse(URL xmlFile) throws Exception{
         if(xmlFile == null){
             return null;
         }
@@ -25,9 +25,13 @@ public class XmlSqlCompiler {
 
         Node nm = doc.getDocumentElement();
 
+        String filepath = xmlFile.getPath();
+        int filename_idx = filepath.lastIndexOf("/")+1;
+        String filename = filepath.substring(filename_idx);
+
         String namespace = attr(nm, "namespace");
         String db = attr(nm, ":db");
-        String classname = xmlFile.getName().replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
+        String classname = filename.replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
 
@@ -84,13 +88,13 @@ public class XmlSqlCompiler {
     private static DocumentBuilderFactory dbf = null;
     private static DocumentBuilder db = null;
     //xml:解析文档
-    private static Document parseDoc(File xmlFile) throws Exception{
+    private static Document parseDoc(URL xmlFile) throws Exception{
         if(dbf ==null) {
             dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
         }
 
-        return db.parse(xmlFile);
+        return db.parse(xmlFile.openStream());
     }
 
     //xml:解析 sql 指令节点
@@ -344,7 +348,13 @@ public class XmlSqlCompiler {
 
     //xml:解析 if 指令节点
     private static void parseIfNode(StringBuilder sb,String sqlBuilderName, XmlSqlBlock dblock, Node n , int depth) {
-        String _test = attr(n, "test");
+        String _test = attr(n, "test")
+                        .replace(" lt "," < ")
+                        .replace(" lte "," <= ")
+                        .replace(" gt "," > ")
+                        .replace(" gte "," >= ")
+                        .replace(" and ", " && ")
+                        .replace(" or ", " || ");
 
         if(_test.indexOf("?")>0){
             _test = parseIfTestExpr(_test);
@@ -364,13 +374,13 @@ public class XmlSqlCompiler {
             String vname = m.group(1);
             String vfun = "?" + m.group(2);
             if ("??".equals(vfun)) {
-                String newStr = "StringUtils.isEmpty(" + vname + ")";
+                String newStr = vname+" != null";
 
                 test = test.replace(m.group(), newStr);
             }
 
             if ("?!".equals(vfun)) {
-                String newStr = "StringUtils.isEmpty(" + vname + ")==false";
+                String newStr = "StringUtils.isEmpty(" + vname + ") == false";
 
                 test = test.replace(m.group(), newStr);
             }
