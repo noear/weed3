@@ -18,9 +18,11 @@ weed3 xml sql更新记录
 -->
 <!--
 sql 代码块定义指令
+  :require（属性：导入包或类）
   :param?（属性：外部输入变量申明；默认会自动生成::新增***）
-  :return（属性：返回类型）
   :declare（属性：内部变量类型预申明）
+  :return（属性：返回类型）
+
   :db （属性：数据库上下文name）
   :note（属性：描述、说明、注解）
 
@@ -31,6 +33,13 @@ sql 代码块定义指令
 
 if 判断控制指令（没有else）
   test （属性：判断检测代码）
+     //xml避免语法增强:
+     //lt(<) lte(<=) gt(>) gte(>=) and(&&) or(||)
+        //例：m.sex gt 12 :: m.sex >=12
+     //简化语法增强:
+     //??(非null,var!=null) ?!(非空字符串,StringUtils.isEmpty(var)==false)
+        //例：m.icon??  ::m.icon!=null
+        //例：m.icon?!  ::StringUtils.isEmpty(m.icon)==false
 
 for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::新增***）
   var （属性：循环变量申明）
