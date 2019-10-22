@@ -1,6 +1,7 @@
 package weed3demo.mapper;
 
 import org.junit.Test;
+import org.noear.weed.SQLBuilder;
 import org.noear.weed.xml.*;
 
 import java.io.File;
@@ -8,6 +9,13 @@ import java.math.*;
 import java.net.URL;
 
 public class XmlSqlCompilerTest {
+    @Test
+    public void test0() {
+        SQLBuilder sb = new SQLBuilder();
+        String tmp = sb.addPrefix("and b=1 and c=2, ").trimStart("and").trimEnd(",").addPrefix("select * from xxx where ").toString();
+
+        assert tmp != null;
+    }
     @Test
     public  void test1() throws Exception {
         String dic_root = getResource("/").toString().replace("target/classes/","");

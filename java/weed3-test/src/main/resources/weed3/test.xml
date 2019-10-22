@@ -7,6 +7,32 @@
         INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
     ]]></sql>
 
+    <sql id="user_add3" :return="long"
+         :param="m:weed3demo.mapper.UserModel,sex:int"
+         :note="添加用户"
+         :cacheClear="user_${m.user_id}">
+        INSERT user
+        <trim prefix="(" suffix=")" trimEnd=",">
+            user_id,sex,
+            <if test="m.mobile != null">
+                mobile,
+            </if>
+            <if test="m.icon != null">
+                icon,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" trimEnd=",">
+            @{m.user_id},@{sex},
+            <if test="m.mobile != null">
+                @{m.mobile},
+            </if>
+            <if test="m.icon != null">
+                @{m.icon},
+            </if>
+        </trim>
+    </sql>
+
     <sql id="user_add_for" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:weed3demo.mapper.UserModel" sep="#" items="list">

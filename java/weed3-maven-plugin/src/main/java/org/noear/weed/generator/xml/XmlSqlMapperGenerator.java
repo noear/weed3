@@ -76,7 +76,7 @@ public class XmlSqlMapperGenerator {
         sb.append("package ").append(namespace).append(";\n\n");
 
         sb.append("import java.math.*;\n");
-        sb.append("import java.sql.SQLException;\n");
+        sb.append("import java.time.*;\n");
         sb.append("import java.util.*;\n\n");
 
         sb.append("import org.noear.weed.DataItem;\n");
