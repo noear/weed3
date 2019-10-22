@@ -1,3 +1,6 @@
+3.2.0.15::
+1.xml mapper 添加 trim 指令
+
 3.2.0.2::
 2.添加xml mapper 代码生成器（meven plugin）
 
