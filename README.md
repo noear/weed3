@@ -34,14 +34,14 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.0.15</version>
+  <version>3.2.1</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.0.15</version>
+    <version>3.2.1</version>
 </plugin>
 ```
 
@@ -173,7 +173,7 @@ db.call("select * from user where user_id=@userID")
  * 内置了 EmptyCache（空缓存）、LocalCache（本地缓存）、SecondCache（二级缓存） 
  * 可以自己对memcached，redis 等进行包装后使用
  */
-ICacheService cache = new EmptyCache();// 
+ICacheServiceEx cache = new EmptyCache();// 
 
 //最简单的缓存控制
 db.call("user_get").set("xxx", 1)
@@ -198,12 +198,11 @@ db.call("user_get").set("xxx", 1)
     .usingCache(60 * 1000)
     .getItem(new UserInfoModel()); //.getMap()
 
-CacheTags tags = new CacheTags(cache);
 //2.1.可根据标签清除缓存
-tags.clear("user_" + 1);
+cache.clear("user_" + 1);
 
 //2.2.可根据标签更新缓存
-tags.update<UserInfoModel>("user_" + 1, (m)=>{
+cache.update<UserInfoModel>("user_" + 1, (m)=>{
     m.name = "xxx";
     return m;
 });
