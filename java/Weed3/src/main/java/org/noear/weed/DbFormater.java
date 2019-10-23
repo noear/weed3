@@ -60,6 +60,10 @@ public class DbFormater implements IDbFormater{
             return columns;
         }
 
+        if(columns.indexOf(")")>0){
+            return columns;
+        }
+
         StringBuilder sb = StringUtils.borrowBuilder();
         //将列切分
         String[] ss = columns.split(",");
