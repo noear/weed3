@@ -5,5 +5,5 @@ import org.noear.weed.SQLBuilder;
 import java.util.Map;
 
 public interface IXmlSqlBuilder {
-    SQLBuilder build(Map map);
+    SQLBuilder build(Map map) throws Exception;
 }

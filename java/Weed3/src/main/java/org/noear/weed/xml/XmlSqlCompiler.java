@@ -135,7 +135,7 @@ public class XmlSqlCompiler {
         _parseSqlDeclare(dblock);
         _parseSqlCachaTag(dblock);
 
-        newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map){");
+        newLine(sb, depth).append("public SQLBuilder ").append(dblock._id).append("(Map map) throws Exception{");
 
         //构建代码体和变量
         StringBuilder sb2 = new StringBuilder();

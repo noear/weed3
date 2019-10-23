@@ -116,7 +116,7 @@ public class DbSqlProcedure extends DbProcedure {
             sqlBuilder = block.builder.build(_map);
         }catch (Throwable ex){
             System.out.println(block.getClasscode(true));
-            throw ex;
+            throw new RuntimeException(ex);
         }
 
         for (Object p1 : sqlBuilder.paramS) {
