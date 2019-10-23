@@ -1,11 +1,7 @@
 package weed3demo.mapper;
 
 import org.junit.Test;
-import org.noear.weed.DbContext;
-import org.noear.weed.WeedConfig;
-import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.xml.XmlSqlLoader;
-import org.noear.weed.xml.XmlSqlProxy;
 
 
 import java.net.URL;

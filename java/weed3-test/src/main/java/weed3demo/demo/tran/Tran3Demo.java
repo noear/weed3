@@ -1,10 +1,7 @@
 package weed3demo.demo.tran;
 
-import org.noear.weed.xml.XmlSqlProxy;
-import weed3demo.config.DbConfig;
 //import weed3demo.xmlsql.DbUserApi;
 
-import java.sql.SQLException;
 
 public class Tran3Demo {
     /*所有的执行在一个事务控制范围内*/

@@ -5,43 +5,15 @@ import org.noear.weed.utils.StringUtils;
 
 import java.lang.reflect.*;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class XmlSqlProxy {
+public class XmlSqlMapperHandler implements InvocationHandler {
 
-    /** 获取代理实例 */
-    public static  <T> T get(Class<?> clz ) {
-        XmlSqlLoader.tryLoad();
+    public static final XmlSqlMapperHandler g = new XmlSqlMapperHandler();
 
-        return (T) Proxy.newProxyInstance(
-                clz.getClassLoader(),
-                new Class[]{clz},
-                (proxy, method, args) -> proxy_call(proxy, method, args));
-    }
-
-    private static String _lock = "";
-    private static Map<Class<?>,Object> _cache = new HashMap<>();
-
-    /** 获取代理单例 */
-    public static <T>  T getSingleton(Class<?> clz ){
-        Object tmp = _cache.get(clz);
-        if(tmp == null){
-            synchronized (_lock){
-                tmp = _cache.get(clz);
-                if(tmp == null) {
-                    tmp = get(clz);
-                    _cache.put(clz,tmp);
-                }
-            }
-        }
-
-        return (T)tmp;
-    }
-
-    /** 执行调用代理 */
-    private static Object proxy_call(Object proxy, Method method, Object[] vals) throws Throwable {
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();
 
@@ -91,7 +63,7 @@ public class XmlSqlProxy {
 
         //5.构建输出
         Class<?> rst_type = method.getReturnType();
-        Type     rst_type2 = method.getGenericReturnType();
+        Type rst_type2 = method.getGenericReturnType();
 
         if(block.isSelect()){
             if(block._return.indexOf(".")>0){
