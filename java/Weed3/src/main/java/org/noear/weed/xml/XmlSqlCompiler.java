@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XmlSqlCompiler {
+class XmlSqlCompiler {
 
     //将xml解析为java code
     public static String parse(URL xmlFile) throws Exception{

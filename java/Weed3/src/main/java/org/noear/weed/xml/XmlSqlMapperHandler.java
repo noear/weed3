@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class XmlSqlMapperHandler implements InvocationHandler {
+class XmlSqlMapperHandler implements InvocationHandler {
 
     public static final XmlSqlMapperHandler g = new XmlSqlMapperHandler();
 

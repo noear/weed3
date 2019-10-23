@@ -16,7 +16,7 @@ import java.util.jar.JarFile;
 /**
  * 资源扫描器
  * */
-public class XmlFileScaner {
+class XmlFileScaner {
     /**
      * 扫描路径下的的资源（path 扫描路径，suffix 文件后缀）
      * */

@@ -1,9 +1,5 @@
 package org.noear.weed.xml;
 
-import org.noear.weed.DbContext;
-import org.noear.weed.DbQuery;
-import org.noear.weed.SQLBuilder;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
