@@ -46,9 +46,9 @@ for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::�
   items （属性：集合变量名称）
   sep? （属性：分隔符::新增***）
 
-trim 修剪控制指令
-  trimStart（属性：开始去除）
-  trimEnd（属性：结尾去除）
+trim 修剪指令
+  trimStart（属性：开始位去除）
+  trimEnd（属性：结尾位去除）
   prefix（属性：添加前缀）
   suffix（属性：添加后缀）
 
@@ -113,14 +113,19 @@ ${name:type} = 变量替换
          :declare="foList:int,user_id:long"
          :return="List[weed3demo.mapper.UserModel]"
          :caching="localCache"
-         :cacheTag="user_${user_id},user_1"><![CDATA[
-        SELECT id,${cols:String} FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
-        ]]><if test="foList == 0">
-            AND type='article'
-        </if>
-        <if test="foList == 1">
-            AND type='post'
-        </if>
+         :cacheTag="user_${user_id},user_1">
+        SELECT id,${cols:String} FROM user
+        <trim prefix="WHERE" trimStart="AND ">
+            <if test="mobile?!">
+                AND mobile LIKE '${mobile:String}%'
+            </if>
+            <if test="foList == 0">
+                AND type='article'
+            </if>
+            <if test="foList == 1">
+                AND type='post'
+            </if>
+        </trim>
     </sql>
 
     <sql id="user_cols1">name,title,style,label</sql>
