@@ -5,6 +5,7 @@ import org.noear.weed.DbProcedure;
 import org.noear.weed.DbStoredProcedure;
 import org.noear.weed.cache.CacheTags;
 import org.noear.weed.cache.ICacheService;
+import org.noear.weed.cache.ICacheServiceEx;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
 
@@ -17,7 +18,7 @@ public class Cache1Demo {
     //普通的缓存控制
     public static void demo_cache() throws SQLException{
         DbContext db = DbConfig.pc_bcf;
-        ICacheService cache = null;
+        ICacheServiceEx cache = null;
 
         db.call("user_get").set("xxx", 1)
                 .caching(cache)
@@ -28,7 +29,7 @@ public class Cache1Demo {
 
     public static void demo_cache3() throws SQLException{
         DbContext db = DbConfig.pc_bcf;
-        ICacheService cache = null;
+        ICacheServiceEx cache = null;
 
         //1.缓存并添加简易标签
         db.call("user_get").set("xxx", 1)
@@ -37,12 +38,12 @@ public class Cache1Demo {
                 .usingCache(60 * 1000)
                 .getItem(new UserInfoModel());
 
-        CacheTags tags = new CacheTags(cache);
+
         //2.1.可根据标签清除缓存
-        tags.clear("user_" + 1);
+        cache.clear("user_" + 1);
 
         //2.2.可根据标签更新缓存
-        tags.update("user_" + 1, (UserInfoModel m)->{
+        cache.update("user_" + 1, (UserInfoModel m)->{
             m.name = "xxx";
             return m;
         });
