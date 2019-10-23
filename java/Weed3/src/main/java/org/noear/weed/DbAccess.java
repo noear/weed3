@@ -129,6 +129,18 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return new SQLer().insert(getCommand(),_tran);
     }
 
+    /*执行更新（返回受影响数）*/
+    public int update() throws SQLException
+    {
+        return execute();
+    }
+
+    /*执行删除（返回受影响数）*/
+    public int delete() throws SQLException
+    {
+        return execute();
+    }
+
     /*执行命令（返回受影响数）*/
     public int execute() throws SQLException
     {
@@ -242,6 +254,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     public <T> List<T> getArray(String column) throws SQLException
     {
         return getDataList().toArray(column);
+    }
+
+    @Override
+    public <T> List<T> getArray(int columnIndex) throws SQLException
+    {
+        return getDataList().toArray(columnIndex);
     }
 
     // -->

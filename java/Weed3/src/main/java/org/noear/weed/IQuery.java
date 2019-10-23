@@ -42,4 +42,5 @@ public interface IQuery extends ICacheController<IQuery> {
      Map<String,Object> getMap() throws SQLException;
 
      <T> List<T> getArray(String column) throws SQLException;
+     <T> List<T> getArray(int columnIndex) throws SQLException;
 }
