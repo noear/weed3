@@ -35,6 +35,6 @@ public class XmlSqlMapper {
         return (T) Proxy.newProxyInstance(
                 clz.getClassLoader(),
                 new Class[]{clz},
-                (proxy, method, args) -> XmlSqlMapperHandler.g);
+                XmlSqlMapperHandler.g);
     }
 }

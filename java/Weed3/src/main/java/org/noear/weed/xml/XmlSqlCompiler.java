@@ -8,11 +8,13 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class XmlSqlCompiler {
+public class XmlSqlCompiler {
 
     //将xml解析为java code
     public static String parse(URL xmlFile) throws Exception{
