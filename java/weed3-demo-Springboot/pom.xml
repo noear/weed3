@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>weed3-test-Springboot</artifactId>
+    <artifactId>weed3-demo-Springboot</artifactId>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
