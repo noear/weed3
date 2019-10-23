@@ -1,3 +1,10 @@
+3.2.0.17::
+1.xml mapper 添加 jar 包运行支持
+2.DbAccess 添加 update(), delete(); //本质是执行：execute()
+3.添加whereEq(),whereLt(),whereLte(),whereGt(),whereGte(),whereLk()
+  添加andEq(),andLt(),andLte(),andGt(),andGte(),andLk()
+  添加orEq(),orLt(),orLte(),orGt(),orGte(),orLk()
+
 3.2.0.15::
 1.xml mapper 添加 trim 指令
 
