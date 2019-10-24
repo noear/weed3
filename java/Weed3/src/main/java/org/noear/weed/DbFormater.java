@@ -44,7 +44,7 @@ public class DbFormater implements IDbFormater{
             return name;
         }
 
-        if (name.startsWith(_fieldFormat_start) || name.indexOf(".") > 0) {
+        if (name.startsWith(_fieldFormat_start) || name.indexOf(".") > 0 || name.indexOf(")")>0) {
             return name;
         }
 
