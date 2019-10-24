@@ -32,6 +32,7 @@
     <version>5.1.47</version>
 </dependency>
 ```
+
 * 不用任何配置，三行代码就可运行
 ```java
 // hello world 走起...（数据库链接改个对口的...）
