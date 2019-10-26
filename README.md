@@ -1,7 +1,7 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-超轻量级ORM（无反射；无注解；缓存控制；事务队列；万能绑定）<br/>
+微型ORM（无反射；无注解；高性能；缓存控制；事务队列；万能绑定）<br/>
 
 支持什么数据库？？？<br/>
 与具体数据库无关（或许支持所有数据库）<br/>
@@ -34,7 +34,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.1.3</version>
+  <version>3.2.1.4</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->

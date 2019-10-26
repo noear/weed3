@@ -1,4 +1,4 @@
-### Weed3 一个超轻量级ORM框架（只有0.1Mb哦）
+### Weed3 一个微型ORM框架（只有0.1Mb哦）
 [源码：https://github.com/noear/weed3](https://github.com/noear/weed3)
 [源码：https://gitee.com/noear/weed3](https://gitee.com/noear/weed3)
 
@@ -32,6 +32,7 @@
     <version>5.1.47</version>
 </dependency>
 ```
+
 * 不用任何配置，三行代码就可运行
 ```java
 // hello world 走起...（数据库链接改个对口的...）
