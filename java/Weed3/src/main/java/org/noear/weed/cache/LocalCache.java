@@ -73,23 +73,6 @@ public class LocalCache implements ICacheServiceEx {
         return _cacheKeyHead;
     }
 
-    //==================
-    //
-    @Override
-    public CacheTags tags() {
-        return new CacheTags(this);
-    }
-    @Override
-    public void clear(String tag) {
-        tags().clear(tag);
-    }
-    @Override
-    public <T> void update(String tag, Fun1<T, T> setter) {
-        tags().update(tag, setter);
-    }
-
-
-
     
     //存储实体
     private static class Entity {

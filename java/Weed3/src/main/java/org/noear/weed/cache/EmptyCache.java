@@ -30,21 +30,4 @@ public class EmptyCache implements ICacheServiceEx {
     public String getCacheKeyHead() {
         return "";
     }
-
-
-
-    //==================
-    //
-    @Override
-    public CacheTags tags() {
-        return new CacheTags(this);
-    }
-    @Override
-    public void clear(String tag) {
-        tags().clear(tag);
-    }
-    @Override
-    public <T> void update(String tag, Fun1<T, T> setter) {
-        tags().update(tag, setter);
-    }
 }

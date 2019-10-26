@@ -106,11 +106,6 @@ public class CacheTags {
                 continue;
             }
 
-
-//            if ((temp instanceof T) == false) {
-//                return;
-//            }
-
             try {
                 T obj = (T) temp;
                 if (obj != null) {
