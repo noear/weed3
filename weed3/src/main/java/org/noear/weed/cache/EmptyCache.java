@@ -1,7 +1,5 @@
 package org.noear.weed.cache;
 
-import org.noear.weed.ext.Fun1;
-
 /**
  * Created by noear on 2017/7/22.
  */
