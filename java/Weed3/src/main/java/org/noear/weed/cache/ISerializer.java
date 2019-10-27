@@ -1,7 +1,5 @@
 package org.noear.weed.cache;
 
-import java.io.IOException;
-
 /**
  * 对象序列化接口
  * */
