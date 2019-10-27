@@ -26,8 +26,6 @@
 
         <module>weed3-maven-plugin</module>
         <module>weed3-test</module>
-        <module>weed3-demo-Springboot</module>
-        <module>weed3-demo-solon</module>
     </modules>
 
    
