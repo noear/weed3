@@ -405,7 +405,9 @@ public interface DbUserMapper{
 }
 
 //使用 DbUserMapper
-DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class); //获取个单例
+db.nameSet("userdb");
+
+DbUserMapper um = XmlSqlMapper.get(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
