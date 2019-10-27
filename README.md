@@ -34,7 +34,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.1.5</version>
+  <version>3.2.1.6</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
@@ -51,6 +51,48 @@
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
+
+##### 缓存服务支持
+###### 1.内置缓存服务
+* org.noear.weed.cache.EmptyCache // 空缓存
+* org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map实现）
+* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现）
+###### 2.扩展缓存服务
+* org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
+```xml
+<dependency>
+  <groupId>org.noear</groupId>
+  <artifactId>weed3.cache.ehcache</artifactId>
+  <version>3.0.1.1</version>
+</dependency>
+```
+* org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
+```xml
+<dependency>
+  <groupId>org.noear</groupId>
+  <artifactId>weed3.cache.j2cache</artifactId>
+  <version>3.0.1.1</version>
+</dependency>
+```
+* org.noear.weed.cache.memcached.MemCache // 基于memcached封装
+```xml
+<dependency>
+  <groupId>org.noear</groupId>
+  <artifactId>weed3.cache.memcached</artifactId>
+  <version>3.0.1.1</version>
+</dependency>
+```
+* org.noear.weed.cache.redis.RedisCache // 基于redis封装
+```xml
+<dependency>
+  <groupId>org.noear</groupId>
+  <artifactId>weed3.cache.redis</artifactId>
+  <version>3.0.1.2</version>
+</dependency>
+```
+* 也可以自己封装个 ICacheServiceEx ...
+
+
  ### 一、纯java用法
 示例1.1.1::入门级<br/>
 ```java
@@ -363,7 +405,9 @@ public interface DbUserMapper{
 }
 
 //使用 DbUserMapper
-DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class); //获取个单例
+db.nameSet("userdb");
+
+DbUserMapper um = XmlSqlMapper.get(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
