@@ -54,11 +54,11 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 
 ##### 缓存服务支持
 ###### 1.内置缓存服务
-* org.noear.weed.cache.EmptyCache : ICacheServiceEx 空缓存
-* org.noear.weed.cache.LocalCache : ICacheServiceEx 轻量级本地缓存（基于Map实现）
-* org.noear.weed.cache.SecondCache : ICacheServiceEx 二级缓存（组装两个 ICacheServiceEx 实现）
+* org.noear.weed.cache.EmptyCache // 空缓存
+* org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map实现）
+* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现）
 ###### 2.扩展缓存服务
-* org.noear.weed.cache.ehcache.EhCache : ICacheServiceEx 基于ehcache封装
+* org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
 ```xml
 <dependency>
   <groupId>org.noear</groupId>
@@ -66,7 +66,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
   <version>3.0.1.1</version>
 </dependency>
 ```
-* org.noear.weed.cache.j2cache.J2Cache : ICacheServiceEx 基于国人开发的J2Cache封装
+* org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
 ```xml
 <dependency>
   <groupId>org.noear</groupId>
@@ -74,7 +74,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
   <version>3.0.1.1</version>
 </dependency>
 ```
-* org.noear.weed.cache.memcached.MemCache : ICacheServiceEx 基于memcached封装
+* org.noear.weed.cache.memcached.MemCache // 基于memcached封装
 ```xml
 <dependency>
   <groupId>org.noear</groupId>
@@ -82,7 +82,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
   <version>3.0.1.1</version>
 </dependency>
 ```
-* org.noear.weed.cache.redis.RedisCache : ICacheServiceEx 基于redis封装
+* org.noear.weed.cache.redis.RedisCache // 基于redis封装
 ```xml
 <dependency>
   <groupId>org.noear</groupId>
