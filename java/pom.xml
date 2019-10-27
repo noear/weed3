@@ -21,8 +21,8 @@
 
         <module>weed3.cache.memcached</module>
         <module>weed3.cache.redis</module>
-        <module>weed3.cache.caffeine</module>
         <module>weed3.cache.ehcache</module>
+        <module>weed3.cache.j2cache</module>
 
         <module>weed3-maven-plugin</module>
         <module>weed3-test</module>
