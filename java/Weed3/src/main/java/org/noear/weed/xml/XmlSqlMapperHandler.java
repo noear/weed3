@@ -1,6 +1,7 @@
 package org.noear.weed.xml;
 
 import org.noear.weed.*;
+import org.noear.weed.annotation.Sql;
 import org.noear.weed.utils.StringUtils;
 
 import java.lang.reflect.*;
@@ -14,6 +15,47 @@ class XmlSqlMapperHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] vals) throws Throwable {
+
+        Sql ann = method.getAnnotation(Sql.class);
+        if (ann == null) {
+            return forXml(proxy, method, vals);
+        } else {
+            return forAnn(proxy, method, vals, ann);
+        }
+
+    }
+
+    private Object forAnn(Object proxy, Method method, Object[] vals, Sql ann) throws Throwable {
+        DbContext db = new DbContext();
+
+        DbProcedure tmp = db.call(ann.value());
+
+        Map<String, Object> _map = new LinkedHashMap<>();
+        Parameter[] names = method.getParameters();
+        for (int i = 0, len = names.length; i < len; i++) {
+            if (vals[i] != null) {
+                String key = names[i].getName();
+                Object val = vals[i];
+
+                //如果是_map参数，则做特殊处理
+                if ("_map".equals(key) && val instanceof Map) {
+                    _map.putAll((Map<String, Object>) val);
+                } else {
+                    _map.put(key, val);
+                }
+            }
+        }
+
+        tmp.setMap(_map);
+
+        //5.构建输出
+        Class<?> rst_type = method.getReturnType();
+        Type rst_type2 = method.getGenericReturnType();
+
+        return null;
+    }
+
+    private Object forXml(Object proxy, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();
 
@@ -21,9 +63,9 @@ class XmlSqlMapperHandler implements InvocationHandler {
         String fun_name = method.getName();
 
         String xml_name = null;
-        if(c_meta == null){
-            xml_name = clazz.getPackage().getName()+"."+fun_name;
-        }else {
+        if (c_meta == null) {
+            xml_name = clazz.getPackage().getName() + "." + fun_name;
+        } else {
             xml_name = c_meta.value() + "." + fun_name;
         }
 
@@ -36,9 +78,9 @@ class XmlSqlMapperHandler implements InvocationHandler {
                 Object val = vals[i];
 
                 //如果是_map参数，则做特殊处理
-                if("_map".equals(key) && val instanceof Map){
-                    _map.putAll((Map<String, Object>)val);
-                }else {
+                if ("_map".equals(key) && val instanceof Map) {
+                    _map.putAll((Map<String, Object>) val);
+                } else {
                     _map.put(key, val);
                 }
             }
@@ -46,52 +88,52 @@ class XmlSqlMapperHandler implements InvocationHandler {
 
         //3.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(xml_name);
-        if(block == null){
-            throw new RuntimeException("Xmlsql does not exist:" +xml_name);
+        if (block == null) {
+            throw new RuntimeException("Xmlsql does not exist:" + xml_name);
         }
 
-        if(StringUtils.isEmpty(block._db)){
-            throw new RuntimeException(xml_name +":missing :db configuration");
+        if (StringUtils.isEmpty(block._db)) {
+            throw new RuntimeException(xml_name + ":missing :db configuration");
         }
         DbContext db = WeedConfig.libOfDb.get(block._db);
-        if(db == null){
-            throw new RuntimeException("WeedConfig.libOfDb does not exist:@"+block._db);
+        if (db == null) {
+            throw new RuntimeException("WeedConfig.libOfDb does not exist:@" + block._db);
         }
 
         //4.生成命令
-        DbProcedure sp = db.call("@"+xml_name).setMap(_map);
+        DbProcedure sp = db.call("@" + xml_name).setMap(_map);
 
         //5.构建输出
         Class<?> rst_type = method.getReturnType();
         Type rst_type2 = method.getGenericReturnType();
 
-        if(block.isSelect()){
-            if(block._return.indexOf(".")>0){
+        if (block.isSelect()) {
+            if (block._return.indexOf(".") > 0) {
                 //实体化处理
-                if(Collection.class.isAssignableFrom(rst_type)){
+                if (Collection.class.isAssignableFrom(rst_type)) {
                     //是实体集合
-                    rst_type2  =((ParameterizedType) rst_type2).getActualTypeArguments()[0];
+                    rst_type2 = ((ParameterizedType) rst_type2).getActualTypeArguments()[0];
 
-                    if(IBinder.class.isAssignableFrom(rst_type)){
+                    if (IBinder.class.isAssignableFrom(rst_type)) {
                         return sp.getList((IBinder) rst_type.newInstance());
-                    }else{
-                        return sp.getList((Class<?>)rst_type2);
+                    } else {
+                        return sp.getList((Class<?>) rst_type2);
                     }
-                }else{
+                } else {
                     //是单实体
-                    if(IBinder.class.isAssignableFrom(rst_type)){
+                    if (IBinder.class.isAssignableFrom(rst_type)) {
                         return sp.getItem((IBinder) rst_type.newInstance());
-                    }else{
+                    } else {
                         return sp.getItem(rst_type);
                     }
                 }
-            }else{
-                if(block._return.startsWith("List<")){
+            } else {
+                if (block._return.startsWith("List<")) {
                     return sp.getDataList().toArray(0);
                 }
 
                 //普通职处理
-                switch (block._return){
+                switch (block._return) {
                     case "Map":
                         return sp.getMap();
                     case "MapList":
@@ -103,24 +145,24 @@ class XmlSqlMapperHandler implements InvocationHandler {
                     default: {
                         Variate val = sp.getVariate();
 
-                        if(val.getValue()==null){
+                        if (val.getValue() == null) {
                             return 0;
                         }
 
                         //解决 BigDecimal BigInteger 问题
-                        if(block._return.toLowerCase().startsWith("int")){
+                        if (block._return.toLowerCase().startsWith("int")) {
                             return val.intValue(0);
                         }
 
-                        if(block._return.toLowerCase().startsWith("long")){
+                        if (block._return.toLowerCase().startsWith("long")) {
                             return val.longValue(0);
                         }
 
-                        if(block._return.toLowerCase().startsWith("doub")){
+                        if (block._return.toLowerCase().startsWith("doub")) {
                             return val.doubleValue(0);
                         }
 
-                        if(block._return.toLowerCase().startsWith("str")){
+                        if (block._return.toLowerCase().startsWith("str")) {
                             return val.stringValue(null);
                         }
 
@@ -128,19 +170,19 @@ class XmlSqlMapperHandler implements InvocationHandler {
                     }
                 }
             }
-        }else{
-            if(block.isInsert()){
+        } else {
+            if (block.isInsert()) {
                 long rst = sp.insert();
-                if(Boolean.class.isAssignableFrom(rst_type)){
-                    return rst>0;
-                }else{
+                if (Boolean.class.isAssignableFrom(rst_type)) {
+                    return rst > 0;
+                } else {
                     return rst;
                 }
-            }else{
+            } else {
                 int rst = sp.execute();
-                if(Boolean.class.isAssignableFrom(rst_type)){
-                    return rst>0;
-                }else{
+                if (Boolean.class.isAssignableFrom(rst_type)) {
+                    return rst > 0;
+                } else {
                     return rst;
                 }
             }

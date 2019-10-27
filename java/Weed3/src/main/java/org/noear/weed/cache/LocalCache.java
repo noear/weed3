@@ -1,7 +1,5 @@
 package org.noear.weed.cache;
 
-import org.noear.weed.ext.Fun1;
-
 import java.util.Map;
 import java.util.concurrent.*;
 
