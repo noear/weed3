@@ -1,3 +1,14 @@
+3.2.1.6
+1.为缓存服务组件开发提供支持
+  >修改 ICacheServiceEx 的 tag 相关操作，改为默认实现
+  >添加 ISerializer<T> 接口，定义统一的缓存序列化接口
+  >添加 EncryptUtils 提供加密接口，用于维短key的长度
+
+2.增加 weed3.cache.* 相关项目，提供包装好的缓存扩展
+
+3.2.1::
+1.完善 xm mapper 功能
+
 3.2.0.17::
 1.xml mapper 添加 jar 包运行支持
 2.DbAccess 添加 update(), delete(); //本质是执行：execute()
