@@ -288,12 +288,14 @@ public class XmlSqlCompiler {
         if (type == 1) {//elem
             String tagName = n.getNodeName();
 
+            //if控制指令
             if ("if".equals(tagName)) {
                 parseIfNode(sb, sqlBuilderName, dblock, n, depth);
                 return;
             }
 
 
+            //for控制指令
             if ("for".equals(tagName)) {
                 parseForNode(sb, sqlBuilderName, dblock, n, depth);
                 return;
@@ -501,7 +503,13 @@ public class XmlSqlCompiler {
             }
 
             for (XmlSqlVar dv : tmpList.values()) {
-                txt2 = txt2.replace(dv.mark, "\"+" + dv.name + "+\"");
+                //如果没有type 申明，采用 map.get()
+                if(StringUtils.isEmpty(dv.type)){
+                    txt2 = txt2.replace(dv.mark, "\"+ map.get(\"" + dv.name + "\") +\"");
+                }else{
+                    txt2 = txt2.replace(dv.mark, "\"+ " + dv.name + " +\"");
+                }
+
             }
         }
 
@@ -527,7 +535,12 @@ public class XmlSqlCompiler {
 
             sb.append("\"").append(txt2).append(" \"");
             tmpList.forEach((k, v) -> {
-                sb.append(",").append(v.name);
+                //如果没有type 申明，采用 map.get()
+                if(StringUtils.isEmpty(v.type)){
+                    sb.append(",map.get(\"").append(v.name).append("\")");
+                }else{
+                    sb.append(",").append(v.name);
+                }
             });
         }
     }
