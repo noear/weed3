@@ -32,7 +32,7 @@ public class XmlSqlCompiler {
         String filename = filepath.substring(filename_idx);
 
         String namespace = attr(nm, "namespace");
-        String db = attr(nm, ":db");
+
         String classname = filename.replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
@@ -77,7 +77,7 @@ public class XmlSqlCompiler {
         //代码码函数
         for (int i = 0, len = sql_list.getLength(); i < len; i++) {
             Node n = sql_list.item(i);
-            parseSqlNode(node_map, sb, n, namespace, db, classname);
+            parseSqlNode(node_map, sb, n, namespace, classname);
         }
 
         sb.append("}\n");
@@ -100,7 +100,7 @@ public class XmlSqlCompiler {
     }
 
     //xml:解析 sql 指令节点
-    private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace, String db, String classname) {
+    private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace,  String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 

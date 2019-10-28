@@ -27,7 +27,8 @@ class XmlSqlMapperHandler implements InvocationHandler {
     }
 
     private Object forAnn(Object proxy, Method method, Object[] vals, Sql ann) throws Throwable {
-        DbContext db = new DbContext();
+        Class<?> clazz = method.getDeclaringClass();
+        DbContext db = WeedConfig.libOfDb.get(clazz);
 
         DbProcedure tmp = db.call(ann.value());
 
