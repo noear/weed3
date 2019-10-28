@@ -6,8 +6,8 @@ import org.noear.weed.cache.LocalCache;
 
 public class App {
     public static void main(String[] args){
-
-        ICacheServiceEx cache = new LocalCache("test",60).nameSet("test");
+        //新建个缓存服务，并通过nameSet 注册到 全局 libOfCache
+        new LocalCache("test",60).nameSet("test");
 
         XApp app = XApp.start(App.class,args);
 
