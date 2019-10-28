@@ -65,22 +65,35 @@ public class DbQueryProcedure extends DbProcedure {
         return this;
     }
 
+    private void set_do(String param, Object value){
+        _paramS2.put(param,new Variate(param,value));
+    }
     @Override
     public DbProcedure set(String param, Object value) {
-        _paramS2.put(param,new Variate(param,value));
+        if(param.startsWith("@")){
+            set_do(param.substring(1),value);
+        }else{
+            set_do(param,value);
+        }
+
         return this;
     }
 
     @Override
     public DbProcedure set(String param, Fun0<Object> valueGetter) {
-        _paramS2.put(param, new VariateEx(param, valueGetter));
+        if(param.startsWith("@")){
+            _paramS2.put(param.substring(1), new VariateEx(param, valueGetter));
+        }else{
+            _paramS2.put(param, new VariateEx(param, valueGetter));
+        }
+
         return this;
     }
     @Override
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {
             map.forEach((k, v) -> {
-                set("@" + k, v);
+                set_do( k, v);
             });
         }
         return this;
@@ -88,7 +101,7 @@ public class DbQueryProcedure extends DbProcedure {
     @Override
     public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
         EntityUtils.fromEntity(obj,(k, v)->{
-            set("@" + k, v);
+            set_do(k, v);
         });
         return this;
     }
@@ -120,22 +133,24 @@ public class DbQueryProcedure extends DbProcedure {
 
         {
             Map<String, String> tmpList = new HashMap<>();
-            Pattern pattern = Pattern.compile("@\\w+");
+            Pattern pattern = Pattern.compile("[@\\$]{1}\\{?(\\w+)\\}?");
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
-                String key = m.group(0);
+                String mark = m.group(0);
+                String name = m.group(1);
+
                 if (WeedConfig.isDebug) {
-                    if (_paramS2.containsKey(key) == false) {
-                        throw new SQLException("Lack of parameter:" + key);
+                    if (_paramS2.containsKey(name) == false) {
+                        throw new SQLException("Lack of parameter:" + name);
                     }
                 }
 
-                Variate val = _paramS2.get(key);
+                Variate val = _paramS2.get(name);
                 Object tmp = val.getValue();
                 if (tmp instanceof Iterable) { //支持数组型参数
                     StringBuilder sb = StringUtils.borrowBuilder();
                     for (Object p2 : (Iterable) tmp) {
-                        doSet(new Variate(key, p2));//对this.paramS进行设值
+                        doSet(new Variate(name, p2));//对this.paramS进行设值
 
                         sb.append("?").append(",");
                     }
@@ -145,10 +160,14 @@ public class DbQueryProcedure extends DbProcedure {
                         sb.deleteCharAt(len - 1);
                     }
 
-                    tmpList.put(key, StringUtils.releaseBuilder(sb));
+                    tmpList.put(name, StringUtils.releaseBuilder(sb));
                 } else {
-                    doSet(val); //对this.paramS进行设值
-                    tmpList.put(key, "?");
+                    if(mark.startsWith("@")){
+                        doSet(val); //对this.paramS进行设值
+                        tmpList.put(name, "?");
+                    }else{
+                        tmpList.put(name, val.stringValue(""));
+                    }
                 }
             }
 
