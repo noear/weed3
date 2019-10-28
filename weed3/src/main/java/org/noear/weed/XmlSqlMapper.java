@@ -1,10 +1,12 @@
-package org.noear.weed.xml;
+package org.noear.weed;
+
+import org.noear.weed.xml.XmlSqlLoader;
 
 import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XmlSqlMapper {
+class XmlSqlMapper {
     private static String _lock = "";
     private static Map<Class<?>, Object> _cache = new HashMap<>();
 

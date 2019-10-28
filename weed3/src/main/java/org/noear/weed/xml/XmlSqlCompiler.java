@@ -120,13 +120,6 @@ public class XmlSqlCompiler {
                                            .replace("]", ">");
         }
 
-        String db_tmp = attr(n, ":db");
-        if (StringUtils.isEmpty(db_tmp)) {
-            dblock._db = db;
-        } else {
-            dblock._db = db_tmp;
-        }
-
 
         dblock._caching = attr(n, ":caching");
         dblock._usingCache = attr(n, ":usingCache");

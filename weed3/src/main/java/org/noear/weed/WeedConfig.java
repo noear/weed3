@@ -23,7 +23,7 @@ public final class WeedConfig {
     public static boolean isUpdateMustConditional=true;
 
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
-    public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();
+    public static Map<Class, DbContext> libOfDb = new ConcurrentHashMap<>();
 
     static Set<Act2<Command,Exception>> onException_listener = new LinkedHashSet<>();
     static Set<Act1<Command>> onLog_listener = new LinkedHashSet<>();

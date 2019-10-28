@@ -23,8 +23,6 @@ public class XmlSqlBlock {
     public String _require;//（属性：导入包或类）
     public String _return;//（属性：返回类型）
 
-    public String _db;
-
     public String _caching;
     public String _cacheClear;
     public String _cacheTag;

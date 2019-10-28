@@ -1,8 +1,9 @@
-package org.noear.weed.xml;
+package org.noear.weed;
 
-import org.noear.weed.*;
 import org.noear.weed.annotation.Sql;
-import org.noear.weed.utils.StringUtils;
+import org.noear.weed.xml.Namespace;
+import org.noear.weed.xml.XmlSqlBlock;
+import org.noear.weed.xml.XmlSqlFactory;
 
 import java.lang.reflect.*;
 import java.util.Collection;
@@ -58,6 +59,7 @@ class XmlSqlMapperHandler implements InvocationHandler {
     private Object forXml(Object proxy, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();
+        DbContext db = WeedConfig.libOfDb.get(clazz);
 
         Namespace c_meta = clazz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
@@ -90,14 +92,6 @@ class XmlSqlMapperHandler implements InvocationHandler {
         XmlSqlBlock block = XmlSqlFactory.get(xml_name);
         if (block == null) {
             throw new RuntimeException("Xmlsql does not exist:" + xml_name);
-        }
-
-        if (StringUtils.isEmpty(block._db)) {
-            throw new RuntimeException(xml_name + ":missing :db configuration");
-        }
-        DbContext db = WeedConfig.libOfDb.get(block._db);
-        if (db == null) {
-            throw new RuntimeException("WeedConfig.libOfDb does not exist:@" + block._db);
         }
 
         //4.生成命令

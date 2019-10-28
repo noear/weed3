@@ -4,16 +4,15 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlLoader;
-import org.noear.weed.xml.XmlSqlMapper;
 
 import javax.sql.DataSource;
 import java.net.URI;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
 
 /**
  * Created by noear on 14-6-12.
@@ -104,22 +103,9 @@ public class DbContext {
             _dataSource = new DbDataSource(url, username, password);
         }
 
-        if(StringUtils.isEmpty(name)==false){
-            nameSet(name);
-        }
-
         return this;
     }
 
-    /** 名字设置 */
-    public DbContext nameSet(String name) {
-        if (name != null) {
-            //如果第一次赋值，自动注册到db库里
-            WeedConfig.libOfDb.put(name, this);
-        }
-        _name = name;
-        return this;
-    }
     /** 名字获取 */
     public String name(){
         return _name;
@@ -200,6 +186,14 @@ public class DbContext {
      */
     public Connection getConnection() throws SQLException {
         return _dataSource.getConnection();
+    }
+
+    public <T> T mapper(Class<T> clz){
+        if(WeedConfig.libOfDb.containsKey(clz) == false) {
+            WeedConfig.libOfDb.put(clz, this);
+        }
+
+        return XmlSqlMapper.get(clz);
     }
 
     /**
