@@ -16,7 +16,7 @@ public class XmlSqlHandlerForAnn {
         Class<?> clazz = method.getDeclaringClass();
         DbContext db = WeedConfig.libOfDb.get(clazz);
 
-        String sqlUp = " " + ann.value().toUpperCase();
+        String sqlUp = "# " + ann.value().toUpperCase();
         DbProcedure sp = db.call(ann.value());
 
         Map<String, Object> _map = new LinkedHashMap<>();
@@ -61,50 +61,51 @@ public class XmlSqlHandlerForAnn {
         String rst_type_str = rst_type.getName();
         String rst_type2_str = null;
 
+        if (DataItem.class.isAssignableFrom(rst_type)) {
+            return sp.getDataItem();
+        }
 
-        if (rst_type_str.startsWith("java.util.") || rst_type_str.startsWith("java") == false) {
-            //可能是实体化，可能是Map，可能是List，可能是List<Map>
+        if (DataList.class.isAssignableFrom(rst_type)) {
+            return sp.getDataList();
+        }
+
+        if (Map.class.isAssignableFrom(rst_type)) {
+            return sp.getMap();
+        }
+
+        if (Collection.class.isAssignableFrom(rst_type)) {
+            //是实体集合
             //
-            if (Collection.class.isAssignableFrom(rst_type)) {
-                //是实体集合
-                //
-                rst_type2 = ((ParameterizedType) rst_type2).getActualTypeArguments()[0];
-                rst_type2_str = rst_type2.getTypeName();
+            rst_type2 = ((ParameterizedType) rst_type2).getActualTypeArguments()[0];
+            rst_type2_str = rst_type2.getTypeName();
 
-                if (rst_type2_str.startsWith("java.") == false) {
-                    //
-                    //list<Model>
-                    //
-                    if (IBinder.class.isAssignableFrom(rst_type)) {
-                        return sp.getList((IBinder) rst_type.newInstance());
-                    } else {
-                        return sp.getList((Class<?>) rst_type2);
-                    }
+            if (rst_type2_str.startsWith("java.") == false) {
+                //
+                //list<Model>
+                //
+                if (IBinder.class.isAssignableFrom(rst_type)) {
+                    return sp.getList((IBinder) rst_type.newInstance());
                 } else {
-                    //list<Map>
-                    if (rst_type2_str.indexOf("Map") > 0) {
-                        return sp.getMapList();
-                    } else {
-                        //list<Object>
-                        return sp.getDataList().toArray(0);
-                    }
+                    return sp.getList((Class<?>) rst_type2);
                 }
             } else {
-                //是单实体
-                if (IBinder.class.isAssignableFrom(rst_type)) {
-                    return sp.getItem((IBinder) rst_type.newInstance());
+                //list<Map>
+                if (rst_type2_str.indexOf("Map") > 0) {
+                    return sp.getMapList();
                 } else {
-                    return sp.getItem(rst_type);
+                    //list<Object>
+                    return sp.getDataList().toArray(0);
                 }
             }
         }
 
-        if (rst_type == DataItem.class) {
-            return sp.getDataItem();
-        }
-
-        if (rst_type == DataList.class) {
-            return sp.getDataList();
+        //是单实体
+        if (rst_type_str.startsWith("java") == false && rst_type_str.indexOf(".") > 0) {
+            if (IBinder.class.isAssignableFrom(rst_type)) {
+                return sp.getItem((IBinder) rst_type.newInstance());
+            } else {
+                return sp.getItem(rst_type);
+            }
         }
 
         Variate val = sp.getVariate();

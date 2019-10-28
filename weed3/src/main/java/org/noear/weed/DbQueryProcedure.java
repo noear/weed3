@@ -133,11 +133,14 @@ public class DbQueryProcedure extends DbProcedure {
 
         {
             Map<String, String> tmpList = new HashMap<>();
-            Pattern pattern = Pattern.compile("[@\\$]{1}\\{?(\\w+)\\}?");
+            Pattern pattern = Pattern.compile("@(\\w+)|[@\\$]{1}\\{?(\\w+)\\}?");
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
                 String mark = m.group(0);
                 String name = m.group(1);
+                if(StringUtils.isEmpty(name)){
+                    name = m.group(2);
+                }
 
                 if (WeedConfig.isDebug) {
                     if (_paramS2.containsKey(name) == false) {
@@ -160,13 +163,13 @@ public class DbQueryProcedure extends DbProcedure {
                         sb.deleteCharAt(len - 1);
                     }
 
-                    tmpList.put(name, StringUtils.releaseBuilder(sb));
+                    tmpList.put(mark, StringUtils.releaseBuilder(sb));
                 } else {
                     if(mark.startsWith("@")){
                         doSet(val); //对this.paramS进行设值
-                        tmpList.put(name, "?");
+                        tmpList.put(mark, "?");
                     }else{
-                        tmpList.put(name, val.stringValue(""));
+                        tmpList.put(mark, val.stringValue(""));
                     }
                 }
             }
