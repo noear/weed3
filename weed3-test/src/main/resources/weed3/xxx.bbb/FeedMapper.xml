@@ -7,11 +7,11 @@
     <!-- post -->
 
     <sql id="post_get_by_post_id" :return="zm.data.code.estuaryapi.models.estuary.PostModel" :caching="cache_estuary" :cacheTag="post_${post_id}" :note="根据id获取文章">
-        SELECT * FROM `post` WHERE `post_id` = @{post_id:long} LIMIT 1
+        SELECT * FROM `post` WHERE `post_id` = ${post_id} LIMIT 1
     </sql>
 
     <sql id="post_get_list_by_post_id" :return="List[zm.data.code.estuaryapi.models.estuary.PostModel]" :caching="cache_estuary" :note="根据id获取文章列表">
-        SELECT * FROM `post` WHERE `post_id` IN (@{post_ids:Iterable[Long]})
+        SELECT * FROM `post` WHERE `post_id` IN (@{post_ids})
     </sql>
 
     <!-- post_info -->

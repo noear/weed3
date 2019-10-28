@@ -1,7 +1,7 @@
 package weed3demo.xmlsql2;
 
 import java.math.*;
-import java.sql.SQLException;
+import java.time.*;
 import java.util.*;
 
 import org.noear.weed.DataItem;
@@ -14,6 +14,9 @@ import weed3demo.mapper.UserModel;
 public interface test{
     //添加用户
     long user_add(UserModel m, int sex) throws Exception;
+
+    //添加用户
+    long user_add3(UserModel m, int sex) throws Exception;
 
     //批量添加用户3
     long user_add_for(Collection<UserModel> list) throws Exception;
