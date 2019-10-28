@@ -193,7 +193,7 @@ public class DbContext {
             WeedConfig.libOfDb.put(clz, this);
         }
 
-        return XmlSqlMapper.get(clz);
+        return XSqlMapper.get(clz);
     }
 
     /**

@@ -133,7 +133,7 @@ public class DbQueryProcedure extends DbProcedure {
 
         {
             Map<String, String> tmpList = new HashMap<>();
-            Pattern pattern = Pattern.compile("@(\\w+)|[@\\$]{1}\\{?(\\w+)\\}?");
+            Pattern pattern = Pattern.compile("@(\\w+)|[@\\$]{1}\\{(\\w+)\\}");
             Matcher m = pattern.matcher(sqlTxt);
             while (m.find()) {
                 String mark = m.group(0);

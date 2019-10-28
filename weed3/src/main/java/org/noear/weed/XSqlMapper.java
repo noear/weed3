@@ -6,7 +6,7 @@ import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.Map;
 
-class XmlSqlMapper {
+class XSqlMapper {
     private static String _lock = "";
     private static Map<Class<?>, Object> _cache = new HashMap<>();
 
@@ -37,6 +37,6 @@ class XmlSqlMapper {
         return (T) Proxy.newProxyInstance(
                 clz.getClassLoader(),
                 new Class[]{clz},
-                XmlSqlMapperHandler.g);
+                XSqlMapperHandler.g);
     }
 }

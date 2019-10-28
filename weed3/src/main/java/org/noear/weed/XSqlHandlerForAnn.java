@@ -1,25 +1,39 @@
-package org.noear.weed.xml;
+package org.noear.weed;
 
 import org.noear.weed.*;
 import org.noear.weed.annotation.Sql;
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.utils.StringUtils;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class XmlSqlHandlerForAnn {
+public class XSqlHandlerForAnn {
     public static Object forAnn(Object proxy, Method method, Object[] vals, Sql ann) throws Throwable {
         Class<?> clazz = method.getDeclaringClass();
         DbContext db = WeedConfig.libOfDb.get(clazz);
 
+        String _caching = ann.caching();
+        String _cacheClear = ann.cacheClear();
+
+        //获取缓存服务
+        ICacheServiceEx cache_tmp = null;
+        if (StringUtils.isEmpty(_caching) == false) {
+            cache_tmp = WeedConfig.libOfCache.get(_caching);
+
+            if (cache_tmp == null) {
+                throw new RuntimeException("WeedConfig.libOfCache does not exist:@" + _caching);
+            }
+        }
+        ICacheServiceEx cache = cache_tmp;
+
+
         String sqlUp = "# " + ann.value().toUpperCase();
         DbProcedure sp = db.call(ann.value());
 
-        Map<String, Object> _map = new LinkedHashMap<>();
+        Map<String, Object> _map = new HashMap<>();
         Parameter[] names = method.getParameters();
         for (int i = 0, len = names.length; i < len; i++) {
             if (vals[i] != null) {
@@ -38,23 +52,74 @@ public class XmlSqlHandlerForAnn {
         sp.setMap(_map);
 
         if (sqlUp.indexOf(" DELETE ") > 0 || sqlUp.indexOf(" UPDATE ") > 0) {
-            return sp.execute();
+            int rst = sp.execute();
+
+            if (cache != null && StringUtils.isEmpty(_cacheClear) == false) {
+                Arrays.asList(formatTag(_cacheClear, _map).split(",")).forEach((k) -> {
+                    cache.clear(k);
+                });
+            }
+
+            return rst;
         }
 
         if (sqlUp.indexOf(" INSERT ") > 0) {
-            return sp.insert();
+            long rst = sp.insert();
+
+            if (cache != null && StringUtils.isEmpty(_cacheClear) == false) {
+                Arrays.asList(formatTag(_cacheClear, _map).split(",")).forEach((k) -> {
+                    cache.clear(k);
+                });
+            }
+
+            return rst;
         }
 
         if (sqlUp.indexOf(" SELECT ") > 0) {
             //5.构建输出
-            return forSelect(sp, method, ann);
+            return forSelect(sp, _map, method, ann, cache);
 
         }
 
         return null;
     }
 
-    private static Object forSelect(DbProcedure sp, Method method, Sql ann) throws Throwable {
+    private static Object forSelect(DbProcedure sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
+        String _cacheTag = ann.cacheTag();
+        int    _usingCache = ann.usingCache();
+
+        if(cache!=null) {
+            //缓存处理
+            //
+            sp.caching(cache);
+
+            //缓存时间控制
+            if (_usingCache > 0) {
+                sp.usingCache(_usingCache);
+            }
+
+            //缓存标签处理
+            if(StringUtils.isEmpty(_cacheTag) == false) {
+                _cacheTag = formatTag(_cacheTag, map);
+
+                if (_cacheTag.indexOf("}") < 0) {
+                    Arrays.asList(_cacheTag.split(",")).forEach((k)->{
+                        sp.cacheTag(k);
+                    });
+                }else{
+                    String _cacheTag2 = _cacheTag;
+                    sp._cache.usingCache((cu,rst)->{
+                        if(rst instanceof DataItem){
+                            Arrays.asList(formatTag(_cacheTag2, ((DataItem)rst).getMap()).split(",")).forEach((k)->{
+                                sp.cacheTag(k);
+                            });
+                        }
+                    });
+                }
+            }
+        }
+
+
         Class<?> rst_type = method.getReturnType();
         Type rst_type2 = method.getGenericReturnType();
 
@@ -119,5 +184,23 @@ public class XmlSqlHandlerForAnn {
         }
 
         return val.getValue();
+    }
+
+    private static String formatTag(String tags, Map map) {
+        String tags2 = tags;
+
+        Pattern pattern = Pattern.compile("\\$\\{(\\w+)\\}");
+        Matcher m = pattern.matcher(tags);
+        while (m.find()) {
+            String mark = m.group(0);
+            String name = m.group(1);
+            if(map.containsKey(name)){
+                String val = String.valueOf(map.get(name));
+
+                tags2 = tags2.replace(mark, val);
+            }
+        }
+
+        return tags2;
     }
 }
