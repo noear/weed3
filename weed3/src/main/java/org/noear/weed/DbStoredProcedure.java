@@ -61,8 +61,8 @@ public class DbStoredProcedure extends DbProcedure {
         StringBuilder sb = StringUtils.borrowBuilder();
         sb.append("{call ");
 
-        if(WeedConfig.isUsingTableSpace && context.hasSchema()) {
-            sb.append(context.getSchema()).append(".");
+        if(WeedConfig.isUsingTableSpace && context.schemaHas()) {
+            sb.append(context.schema()).append(".");
         }
 
         sb.append(commandText.trim());

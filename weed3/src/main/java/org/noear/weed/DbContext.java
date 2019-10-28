@@ -2,14 +2,18 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
+import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 import org.noear.weed.xml.XmlSqlMapper;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by noear on 14-6-12.
@@ -31,7 +35,7 @@ public class DbContext {
 
 
     //数据集名称
-    private String _schemaName;
+    private String _schema;
     private IDbFormater _formater = new DbFormater();
     //特性支持
     private Map<String, String> _attrMap = new HashMap<>();
@@ -47,22 +51,64 @@ public class DbContext {
     public DbContext() {
     }
 
+    public DbContext(Properties properties) {
+        propertiesSet(properties);
+    }
+
     //基于线程池配置（如："proxool."）
     //fieldFormat："`%`"
-    public DbContext(String schemaName, String url) {
-        _schemaName = schemaName;
+    public DbContext(String schema, String url) {
+        _schema = schema;
         _dataSource = new DbDataSource(url);
     }
 
     //基于手动配置（无线程池）
-    public DbContext(String schemaName, String url, String user, String password) {
-        _schemaName = schemaName;
-        _dataSource = new DbDataSource(url, user, password);
+    public DbContext(String schema, String url, String username, String password) {
+        _schema = schema;
+        _dataSource = new DbDataSource(url, username, password);
     }
 
-    public DbContext(String schemaName, DataSource dataSource) {
-        _schemaName = schemaName;
+    public DbContext(String schema, DataSource dataSource) {
+        _schema = schema;
         _dataSource = dataSource;
+    }
+
+    public DbContext propertiesSet(Properties prop){
+        String schema = prop.getProperty("schema");
+
+        String name = prop.getProperty("name");
+        String url = prop.getProperty("url");
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+        String driverClassName = prop.getProperty("driverClassName");
+
+        if(StringUtils.isEmpty(url) || url.startsWith("jdbc:")==false){
+            throw new RuntimeException("配置有问题!");
+        }
+
+        if(StringUtils.isEmpty(driverClassName) == false){
+            driverSet(driverClassName);
+        }
+
+        if(StringUtils.isEmpty(_schema)) {
+            _schema = schema;
+        }
+
+        if(StringUtils.isEmpty(_schema)) {
+            _schema = URI.create(url.substring(5)).getPath().substring(1);
+        }
+
+        if(StringUtils.isEmpty(username)){
+            _dataSource = new DbDataSource(url);
+        }else{
+            _dataSource = new DbDataSource(url, username, password);
+        }
+
+        if(StringUtils.isEmpty(name)==false){
+            nameSet(name);
+        }
+
+        return this;
     }
 
     /** 名字设置 */
@@ -95,6 +141,16 @@ public class DbContext {
     }
 
 
+    /** 设置JDBC驱动 */
+    public DbContext driverSet(String driverClassName){
+        try{
+            Class.forName(driverClassName);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return this;
+    }
+
     /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
         _dataSource = dataSource;
@@ -108,8 +164,8 @@ public class DbContext {
 
 
     /** 数据集合名称设置 */
-    public DbContext schemaNameSet(String schemaName) {
-        _schemaName = schemaName;
+    public DbContext schemaSet(String schema) {
+        _schema = schema;
         return this;
     }
 
@@ -126,13 +182,13 @@ public class DbContext {
 
 
     /** 是否配置了schema */
-    public boolean hasSchema() {
-        return _schemaName != null;
+    public boolean schemaHas() {
+        return _schema != null;
     }
 
     /** 获取schema */
-    public String getSchema() {
-        return _schemaName;
+    public String schema() {
+        return _schema;
     }
 
     //
