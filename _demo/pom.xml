@@ -18,6 +18,7 @@
 
     <modules>
         <module>_demo.weed3_solon</module>
+        <module>_demo.weed3_springboot</module>
     </modules>
 
 </project>
