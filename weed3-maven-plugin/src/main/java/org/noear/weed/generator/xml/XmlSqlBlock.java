@@ -18,7 +18,6 @@ public class XmlSqlBlock {
     public String _declare;
     public String _return;
 
-    public String _db;
     public String _note;
 
     public String _caching;

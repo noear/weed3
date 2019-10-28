@@ -74,7 +74,7 @@ public class XmlSqlMapperGenerator {
 
         Set<String> importSet = new HashSet<>();
         String namespace = attr(nm, "namespace");
-        String db = attr(nm, ":db");
+
         String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
@@ -109,7 +109,7 @@ public class XmlSqlMapperGenerator {
         StringBuilder sb_tmp  =new StringBuilder();
         for (int i = 0, len = sql_list.getLength(); i < len; i++) {
             Node n = sql_list.item(i);
-            XmlSqlBlock block = parseSqlNode(node_map, sb_tmp, n, namespace, db, classname);
+            XmlSqlBlock block = parseSqlNode(node_map, sb_tmp, n, namespace, classname);
 
             //打印接口中块***
             writerBlock(sb2, block);
@@ -182,7 +182,7 @@ public class XmlSqlMapperGenerator {
     }
 
     //xml:解析 sql 指令节点
-    private static XmlSqlBlock parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace, String db, String classname) {
+    private static XmlSqlBlock parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace, String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 
@@ -206,14 +206,6 @@ public class XmlSqlMapperGenerator {
                 dblock.impTypeSet.add(tBlock.impType);
             }
         }
-
-        String db_tmp = attr(n, ":db");
-        if (StringUtils.isEmpty(db_tmp)) {
-            dblock._db = db;
-        } else {
-            dblock._db = db_tmp;
-        }
-
 
         dblock._caching = attr(n, ":caching");
         dblock._usingCache = attr(n, ":usingCache");
