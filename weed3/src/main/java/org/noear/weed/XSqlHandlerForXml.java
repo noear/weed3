@@ -1,6 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.*;
 import org.noear.weed.xml.Namespace;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
@@ -13,7 +12,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class XSqlHandlerForXml {
+class XSqlHandlerForXml {
     public static Object forXml(Object proxy, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
         Class<?> clazz = method.getDeclaringClass();

@@ -1,6 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.*;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.utils.StringUtils;
@@ -10,7 +9,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XSqlHandlerForAnn {
+class XSqlHandlerForAnn {
     public static Object forAnn(Object proxy, Method method, Object[] vals, Sql ann) throws Throwable {
         Class<?> clazz = method.getDeclaringClass();
         DbContext db = WeedConfig.libOfDb.get(clazz);
