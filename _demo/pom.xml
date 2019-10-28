@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>Weed3-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>_demo</artifactId>
+    <version>0.0.1</version>
     <packaging>pom</packaging>
 
-    <name>parent</name>
+    <name>${project.artifactId}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,18 +17,7 @@
     </properties>
 
     <modules>
-        <module>_test</module>
-        <module>_demo</module>
-
-        <module>weed3</module>
-
-        <module>weed3.cache.memcached</module>
-        <module>weed3.cache.redis</module>
-        <module>weed3.cache.ehcache</module>
-        <module>weed3.cache.j2cache</module>
-
-        <module>weed3-maven-plugin</module
+        <module>_demo.weed3_solon</module>
     </modules>
 
-   
 </project>
