@@ -6,8 +6,8 @@ import org.noear.weed.WeedConfig;
 public class SwiftDemo {
     public void demo() throws Exception{
         //定义两个上下文（具体配置不加了）
-        DbContext db = new DbContext().nameSet("xxx");
-        DbContext db_r = new DbContext().nameSet("xxx_r");
+        DbContext db = new DbContext();
+        DbContext db_r = new DbContext();
 
         //监听命令构建事件
         WeedConfig.onCommandBuilt((cmd)->{
@@ -23,10 +23,10 @@ public class SwiftDemo {
 
     public void demo2() throws Exception{
         //定义两个上下文
-        DbContext xxx = new DbContext().nameSet("xxx");
-        DbContext xxx_r = new DbContext().nameSet("xxx_r");
-        DbContext yyy = new DbContext().nameSet("yyy");
-        DbContext yyy_r = new DbContext().nameSet("yyy_r");
+        DbContext xxx = new DbContext();
+        DbContext xxx_r = new DbContext();
+        DbContext yyy = new DbContext();
+        DbContext yyy_r = new DbContext();
         //
         // .. 假如有很多库
         //

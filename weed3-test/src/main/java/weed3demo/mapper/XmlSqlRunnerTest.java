@@ -2,7 +2,6 @@ package weed3demo.mapper;
 
 import org.junit.Test;
 import org.noear.weed.xml.XmlSqlLoader;
-import org.noear.weed.xml.XmlSqlMapper;
 
 
 import java.net.URL;
