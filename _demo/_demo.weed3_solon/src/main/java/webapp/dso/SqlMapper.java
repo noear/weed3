@@ -8,6 +8,9 @@ import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.xml.Namespace;
 
+//
+// xml sql
+//
 @Namespace("webapp.dso")
 public interface SqlMapper{
     //随便取条数据
