@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>1.0.3.7</version>
+        <version>1.0.3.8</version>
     </parent>
 
     <dependencies>
@@ -34,7 +34,6 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
-            <version>3.2.1.9</version>
         </dependency>
 
         <dependency>

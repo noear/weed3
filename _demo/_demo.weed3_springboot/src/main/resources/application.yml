@@ -1,0 +1,22 @@
+spring:
+  freemarker:
+    template-loader-path=classpath: /view
+  mvc:
+    static-path-pattern: /static/**
+
+server.port: 8080
+
+
+test:
+  db:
+    schema: rock
+    url: jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+    driverClassName: com.mysql.jdbc.Driver
+    username: demo
+    password: UL0hHlg0Ybq60xyb
+  db2:
+    schema: rock
+    jdbcUrl: jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+    driverClassName: com.mysql.jdbc.Driver
+    username: demo
+    password: UL0hHlg0Ybq60xyb

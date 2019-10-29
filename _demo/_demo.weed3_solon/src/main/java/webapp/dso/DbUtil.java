@@ -1,11 +1,17 @@
 package webapp.dso;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.solon.annotation.XInject;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XMap;
 import org.noear.weed.DbContext;
 
+import java.util.Properties;
+
 public class DbUtil {
+
+    @XInject("test.db")
+    Properties xxx;
     //
     //直接配置 数据库上下文
     //

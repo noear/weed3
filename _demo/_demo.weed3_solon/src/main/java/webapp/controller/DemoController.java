@@ -5,34 +5,39 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 
 import org.noear.solon.core.ModelAndView;
+import org.noear.weed.DbContext;
 import webapp.dso.*;
 import webapp.model.AppxModel;
 
 @XSingleton(true)
 @XController
 public class DemoController {
+
+    DbContext db1 = DbUtil.db1;
+    DbContext db2 = DbUtil.db2;
+
     @XMapping("/demo1/json")
     public Object demo1() throws Exception{
-        return DbUtil.db1.table("appx").limit(1).select("*").getMap();
+        return db1.table("appx").limit(1).select("*").getMap();
     }
 
     @XMapping("/demo2/json")
     public Object demo2() throws Exception{
-        return DbUtil.db2.table("appx").limit(1).select("*").getMap();
+        return db2.table("appx").limit(1).select("*").getMap();
     }
 
     @XMapping("/demo3/html")
     public ModelAndView demo3() throws Exception{
         ModelAndView mv = new ModelAndView("view.ftl");
 
-        mv.put("map",DbUtil.db2.call("@webapp.dso.appx_get").getMap());
+        mv.put("map",db2.call("@webapp.dso.appx_get").getMap());
 
         return mv;
     }
 
     @XMapping("/demo4/html")
     public Object demo4() throws Exception{
-        SqlMapper tmp = DbUtil.db2.mapper(SqlMapper.class);
+        SqlMapper tmp = db2.mapper(SqlMapper.class);
 
         ModelAndView mv = new ModelAndView("view.ftl");
 
@@ -43,14 +48,14 @@ public class DemoController {
 
     @XMapping("/demo5/json")
     public Object demo5() throws Exception{
-        SqlMapper2 tmp = DbUtil.db2.mapper(SqlMapper2.class);
+        SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
 
         return tmp.appx_get();
     }
 
     @XMapping("/demo6/json")
     public AppxModel demo6() throws Exception{
-        SqlMapper2 tmp = DbUtil.db2.mapper(SqlMapper2.class);
+        SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
 
         return tmp.appx_get2(1);
     }
@@ -58,21 +63,21 @@ public class DemoController {
     @XMapping("/demo6_1/json")
     public Object demo6_1() throws Exception{
         return
-        DbUtil.db2.call("select * from appx where app_id = @app_id limit 1")
+        db2.call("select * from appx where app_id = @app_id limit 1")
                 .set("app_id",1)
                 .getItem(AppxModel.class);
     }
 
     @XMapping("/demo7/json")
     public Object demo7() throws Exception{
-        SqlMapper2 tmp = DbUtil.db2.mapper(SqlMapper2.class);
+        SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
 
         return tmp.appx_get3("appx",1);
     }
 
     @XMapping("/demo8/json")
     public Object demo8() throws Exception{
-        SqlMapper2 tmp = DbUtil.db2.mapper(SqlMapper2.class);
+        SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
 
         return tmp.appx_getlist(1);
     }
