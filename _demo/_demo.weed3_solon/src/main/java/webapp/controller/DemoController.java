@@ -13,8 +13,8 @@ import webapp.model.AppxModel;
 @XController
 public class DemoController {
 
-    DbContext db1 = DbUtil.db1;
-    DbContext db2 = DbUtil.db2;
+    DbContext db1 = DbConfig.db1;
+    DbContext db2 = DbConfig.db2;
 
     @XMapping("/demo1/json")
     public Object demo1() throws Exception{
