@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 public class DemoController {
-
     @Autowired
     @Qualifier("db1")
     DbContext db1;
@@ -24,14 +23,8 @@ public class DemoController {
     @Qualifier("db2")
     DbContext db2;
 
-    //demo1:使用数据库查询，并返回json
-    @GetMapping("/")
-    public Object home(){
-        ModelAndView mv = new ModelAndView("nav.ftl");
-        return mv;
-    }
 
-    //demo2:使用带连接池的数据库查询，并返回json
+    //demo1:使用数据库查询，并返回json
     @GetMapping("/demo1/json")
     public Object demo1() throws Exception{
         Map map = db1.table("appx").limit(1).select("*").getMap();
@@ -39,19 +32,19 @@ public class DemoController {
         return map;
     }
 
-    //demo3:使用带连接池的数据库查询，并返回html
+    //demo2:使用带连接池的数据库查询，并返回json
     @GetMapping("/demo2/json")
     public Object demo2() throws Exception{
         return db2.table("appx").limit(1).select("*").getMap();
     }
 
-    //demo4:使用Xmlsql Mapper查询，并返回html
+    //demo3:使用带连接池的数据库查询，并返回json
     @GetMapping("/demo3/json")
     public Object demo3() throws Exception{
         return db2.call("@webapp.dso.appx_get").getMap();
     }
 
-    //demo5:使用sql 注解查询，并返回int
+    //demo4:使用Xmlsql Mapper查询，并返回json
     @GetMapping("/demo4/json")
     public Object demo4() throws Exception{
         SqlMapper tmp = db2.mapper(SqlMapper.class);
@@ -59,7 +52,7 @@ public class DemoController {
         return tmp.appx_get();
     }
 
-    //demo6:使用sql querey查询，并返回model
+    //demo5:使用sql 注解查询，并返回int
     @GetMapping("/demo5/json")
     public Object demo5() throws Exception{
         SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
