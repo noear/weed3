@@ -34,14 +34,14 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.1.8</version>
+  <version>3.2.2</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.1.1</version>
+    <version>3.2.2</version>
 </plugin>
 ```
 
@@ -380,7 +380,19 @@ m.where("sex=?",1)
 
 ```
 
-### 二、xml配置用法
+### 二、sql 注解用法
+```java
+public interface DbAppApi {
+    @Sql("select app_id from appx limit 1")
+    int appx_get() throws Exception;
+}
+
+//使用
+var DbAppApi api = db.mapper(DbAppApi.class);
+int app_id = api.appx_get();
+```
+
+### 三、xml mapper用法
 示例::xml配置（~/resources/weed3/DbUserMapper.xml）<br/>
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -412,7 +424,7 @@ um.user_add(12);
 
 ```
 
-### 三、事务控制
+### 四、事务控制
 
 ```java
 //demo1:: //事务组
@@ -452,7 +464,7 @@ new DbTranQueue().execute(qt->{
  });
  ```
 
-### 四、全局控制和执行监听
+### 五、全局控制和执行监听
 ```java
 //开始debug模式，会有更多类型检查
 WeedConfig.isDebug = true; 
