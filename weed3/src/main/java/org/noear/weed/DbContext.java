@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
+import org.noear.weed.ext.Get1;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 
@@ -51,7 +52,11 @@ public class DbContext {
     }
 
     public DbContext(Properties properties) {
-        propertiesSet(properties);
+        propSet(properties);
+    }
+
+    public DbContext(Map map) {
+        propSet(map);
     }
 
     //基于线程池配置（如："proxool."）
@@ -72,17 +77,32 @@ public class DbContext {
         _dataSource = dataSource;
     }
 
-    public DbContext propertiesSet(Properties prop){
-        String schema = prop.getProperty("schema");
+    private String get_do(Get1<?,Object> sets, String name){
+        Object tmp = sets.get(name);
+        if(tmp!=null){
+            return tmp.toString();
+        }else{
+            return null;
+        }
+    }
 
-        String name = prop.getProperty("name");
-        String url = prop.getProperty("url");
-        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
-        String driverClassName = prop.getProperty("driverClassName");
+    public DbContext propSet(Map prop){
+        return propSet(prop::get);
+    }
+
+    public DbContext propSet( Properties prop){
+        return propSet(prop::get);
+    }
+
+    public DbContext propSet(Get1<?,Object> sets){
+        String schema = get_do(sets,"schema");
+        String url = get_do(sets,"url");
+        String username = get_do(sets,"username");
+        String password = get_do(sets,"password");
+        String driverClassName = get_do(sets,"driverClassName");
 
         if(StringUtils.isEmpty(url) || url.startsWith("jdbc:")==false){
-            throw new RuntimeException("配置有问题!");
+            throw new RuntimeException("url 配置有问题!");
         }
 
         if(StringUtils.isEmpty(driverClassName) == false){
