@@ -34,14 +34,14 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.1.6</version>
+  <version>3.2.1.8</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.1.1</version>
 </plugin>
 ```
 
