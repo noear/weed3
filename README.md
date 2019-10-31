@@ -323,12 +323,12 @@ public class user_get_by_id extends DbQueryProcedure
     public user_get_by_id()
     {
         super(Config.user);
-        sql("SELECT * FROM `user` where user_id = @user_id and type in (@types);");
+        sql("SELECT * FROM `user` where user_id = @{user_id} and type in (@{types});");
 
         //set("{colname}", ()->{popname});
         //
-        set("@user_id", ()->user_id);
-        set("@types",()->types);
+        set("user_id", ()->user_id);
+        set("types",()->types);
     }
 
     public long user_id;
@@ -409,7 +409,7 @@ int app_id = api.appx_get();
 //使用方案1（已支持）
 db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
-//使用方案2（随后支持）
+//使用方案2
 // DbUserMapper.java 生成代码（类的名字与xml文件名一致） //文件可以移到别处去
 package sql.weed.test;
 
@@ -418,10 +418,7 @@ public interface DbUserMapper{
     long user_add(int user_id);
 }
 
-//使用 DbUserMapper
-db.nameSet("userdb");
-
-DbUserMapper um = XmlSqlMapper.get(DbUserMapper.class); //获取个单例
+DbUserMapper um = db.mapper(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
