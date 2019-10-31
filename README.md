@@ -21,13 +21,11 @@
  $fun     //SQL函数占位符<br/>
  ?        //参数占位符<br/>
  ?...     //数组型参数占位符<br/>
- @...     //参数变量占位符<br/>
+ @{.}     //参数变量占位符<br/>
+ #{.}     //替换变量占位符<br/>
 
-网站:<br/>
- http://www.noear.org<br/>
- 
-更新日志：<br/>
- https://github.com/noear/Weed3/blob/master/java/Weed3/_readme.txt <br/>
+相关文章：
+* [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
  
 ```xml
 <!-- 框架 -->
