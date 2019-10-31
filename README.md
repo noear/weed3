@@ -27,9 +27,9 @@
 相关文章：
 * [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
  
-主要框架： 
+引用 Maven： 
 ```xml
-<!-- 框架 -->
+<!-- 主框架 -->
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
