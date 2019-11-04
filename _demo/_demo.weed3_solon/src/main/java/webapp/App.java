@@ -3,11 +3,14 @@ package webapp;
 import org.noear.solon.XApp;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
+import org.noear.weed.xml.XmlSqlLoader;
 
 public class App {
     public static void main(String[] args){
         //新建个缓存服务，并通过nameSet 注册到 全局 libOfCache
         new LocalCache("test",60).nameSet("test");
+
+        XmlSqlLoader.tryLoad();
 
         XApp app = XApp.start(App.class,args);
 
