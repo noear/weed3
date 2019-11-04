@@ -27,7 +27,7 @@
         <module>weed3.cache.ehcache</module>
         <module>weed3.cache.j2cache</module>
 
-        <module>weed3-maven-plugin</module
+        <module>weed3-maven-plugin</module>
     </modules>
 
    

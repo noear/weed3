@@ -1,5 +1,6 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.utils.AssertUtils;
 import org.noear.weed.utils.StringUtils;
 
 import javax.tools.*;
@@ -25,18 +26,23 @@ class JavaStringCompiler {
     }
 
     //java的放编译后字节码(key:类全名,value:编译之后输出的字节码)
-    private Map<String, ByteJavaFileObject> javaFileMap = new ConcurrentHashMap<>();
+    private final Map<String, ByteJavaFileObject> javaFileMap = new ConcurrentHashMap<>();
     //java的编译器
-    private JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
+    private final JavaCompiler javaCompiler;
     //java的文件管理器
     private JavaFileManager javaFileManager;
     //java的类加载器
     private StringClassLoader javaClassLoader;
 
     //存放编译过程中输出的信息
-    private DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
+    private final DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
 
     public JavaStringCompiler() {
+
+        javaCompiler = ToolProvider.getSystemJavaCompiler();
+
+        AssertUtils.notNull(javaCompiler,"ToolProvider.getSystemJavaCompiler() failed to execute");
+
         //标准的内容管理器,更换成自己的实现，覆盖部分方法
         StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(diagnosticsCollector, null, null);
         javaFileManager = new StringJavaFileManage(standardFileManager);
