@@ -1,13 +1,13 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-微型ORM（无反射；无注解；高性能；缓存控制；事务队列；万能绑定）<br/>
+微型ORM（支持：java sql，xml sql，注解 sql；事务；缓存）<br/>
 
 支持什么数据库？？？<br/>
 与具体数据库无关（或许支持所有数据库）<br/>
 
 理念：<br/>
-高性能、跨平台、轻量、有个性<br/>
+高性能、跨平台、轻量、有个性；不喜欢反射、不喜欢配置...<br/>
 
 特点：<br/>
 1.零反射零注解（后来加了一点点反射的的可选功能...）<br/>
@@ -21,16 +21,15 @@
  $fun     //SQL函数占位符<br/>
  ?        //参数占位符<br/>
  ?...     //数组型参数占位符<br/>
- @...     //参数变量占位符<br/>
+ @{.}     //参数变量占位符<br/>
+ ${.}     //替换变量占位符<br/>
 
-网站:<br/>
- http://www.noear.org<br/>
+相关文章：
+* [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
  
-更新日志：<br/>
- https://github.com/noear/Weed3/blob/master/java/Weed3/_readme.txt <br/>
- 
+引用 Maven： 
 ```xml
-<!-- 框架 -->
+<!-- 主框架 -->
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
@@ -323,12 +322,12 @@ public class user_get_by_id extends DbQueryProcedure
     public user_get_by_id()
     {
         super(Config.user);
-        sql("SELECT * FROM `user` where user_id = @user_id and type in (@types);");
+        sql("SELECT * FROM `user` where user_id = @{user_id} and type in (@{types});");
 
         //set("{colname}", ()->{popname});
         //
-        set("@user_id", ()->user_id);
-        set("@types",()->types);
+        set("user_id", ()->user_id);
+        set("types",()->types);
     }
 
     public long user_id;
@@ -409,7 +408,7 @@ int app_id = api.appx_get();
 //使用方案1（已支持）
 db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
-//使用方案2（随后支持）
+//使用方案2
 // DbUserMapper.java 生成代码（类的名字与xml文件名一致） //文件可以移到别处去
 package sql.weed.test;
 
@@ -418,10 +417,7 @@ public interface DbUserMapper{
     long user_add(int user_id);
 }
 
-//使用 DbUserMapper
-db.nameSet("userdb");
-
-DbUserMapper um = XmlSqlMapper.get(DbUserMapper.class); //获取个单例
+DbUserMapper um = db.mapper(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
 ```
