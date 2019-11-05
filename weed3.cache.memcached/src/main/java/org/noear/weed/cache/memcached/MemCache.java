@@ -8,30 +8,52 @@ import net.spy.memcached.auth.PlainCallbackHandler;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.utils.EncryptUtils;
 
+import java.util.Properties;
+
 public class MemCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
     private MemcachedClient _cache = null;
 
+    public MemCache(Properties prop) {
+        this(prop, prop.getProperty("keyHeader"), 0);
+    }
+
+    public MemCache(Properties prop, String keyHeader, int defSeconds) {
+        String defSeconds_str = prop.getProperty("defSeconds");
+        String server = prop.getProperty("server");
+        String user = prop.getProperty("user");
+        String password = prop.getProperty("password");
+
+        if(defSeconds ==0){
+            defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
+        }
+
+        do_init(keyHeader, defSeconds, server, user, password);
+    }
+
     public MemCache(String keyHeader, int defSeconds, String server, String user, String password) {
+        do_init(keyHeader, defSeconds, server, user, password);
+    }
+
+    private void do_init(String keyHeader, int defSeconds, String server, String user, String password) {
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
 
         try {
-            if (server.indexOf("aliyun") > 0) {
-                //1.阿里云
+            if (TextUtils.isEmpty(user) && TextUtils.isEmpty(password)) {
+
+                _cache = new MemcachedClient(new ConnectionFactoryBuilder()
+                        .setProtocol(ConnectionFactoryBuilder.Protocol.BINARY).build(),
+                        AddrUtil.getAddresses(server));
+            }else{
                 AuthDescriptor ad = new AuthDescriptor(new String[]{"PLAIN"},
                         new PlainCallbackHandler(user, password));
 
                 _cache = new MemcachedClient(new ConnectionFactoryBuilder()
                         .setProtocol(ConnectionFactoryBuilder.Protocol.BINARY)
                         .setAuthDescriptor(ad).build(),
-                        AddrUtil.getAddresses(server));
-            } else {
-                //2.本地
-                _cache = new MemcachedClient(new ConnectionFactoryBuilder()
-                        .setProtocol(ConnectionFactoryBuilder.Protocol.BINARY).build(),
                         AddrUtil.getAddresses(server));
             }
         } catch (Exception ex) {
