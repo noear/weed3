@@ -26,8 +26,12 @@ public class MemCache implements ICacheServiceEx {
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");
 
-        if(defSeconds ==0){
+        if (defSeconds == 0) {
             defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
+        }
+
+        if (defSeconds < 10) {
+            defSeconds = 60;
         }
 
         do_init(keyHeader, defSeconds, server, user, password);
@@ -42,7 +46,7 @@ public class MemCache implements ICacheServiceEx {
         _defaultSeconds = defSeconds;
 
         try {
-            if (TextUtils.isEmpty(user) && TextUtils.isEmpty(password)) {
+            if (TextUtils.isEmpty(user) || TextUtils.isEmpty(password)) {
 
                 _cache = new MemcachedClient(new ConnectionFactoryBuilder()
                         .setProtocol(ConnectionFactoryBuilder.Protocol.BINARY).build(),
