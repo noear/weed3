@@ -33,7 +33,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.2.1</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
@@ -80,7 +80,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.memcached</artifactId>
-  <version>3.2.1.1</version>
+  <version>3.2.1.3</version>
 </dependency>
 ```
 * org.noear.weed.cache.redis.RedisCache // 基于redis封装
