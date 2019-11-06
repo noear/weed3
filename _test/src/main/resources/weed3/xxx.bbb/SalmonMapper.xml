@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<mapper namespace="zm.data.code.salmonapi.dso.db.mapper" :db="db_salmon">
+
+    <!-- salmon_user -->
+
+    <sql id="salmon_user_add" :return="long" :cacheClear="salmon_user_${user_id}" :note="新增用户">
+        INSERT INTO `salmon_user` (`user_id`, `stage`, `group`, `ip`, `imid`, `platform`)
+        VALUES (@{user_id:long}, @{stage:int}, @{group:int}, @{ip:String}, @{imid:String}, @{platform:String})
+    </sql>
+
+    <sql id="salmon_user_get_by_user_id" :return="zm.data.code.salmonapi.models.salmon.SalmonUserModel" :caching="cache_salmon" :cacheTag="salmon_user_${user_id}" :note="根据user_id获取用户">
+        SELECT * FROM `salmon_user` WHERE `user_id` = @{user_id:long} LIMIT 1
+    </sql>
+
+    <!-- salmon_feed -->
+
+    <sql id="salmon_feed_add" :return="long" :cacheClear="salmon_feed_user_id_${user_id}" :note="新增用户">
+        INSERT INTO `salmon_feed` (`feed_id`, `user_id`, `category`, `posts`, `create_date`, `create_fulltime`)
+        VALUES (@{feed_id:long}, @{user_id:long}, @{category:long}, @{posts:String}, @{create_date:int}, @{create_fulltime:Date})
+    </sql>
+
+    <sql id="salmon_feed_get_recent" :return="List[zm.data.code.salmonapi.models.salmon.SalmonFeedModel]" :caching="cache_salmon" :cacheTag="salmon_feed_user_id_${user_id}" :note="获取用户最近feed">
+        SELECT * FROM `salmon_feed` WHERE `user_id` = @{user_id:long} ORDER BY `feed_id` DESC LIMIT @{rows:int}
+    </sql>
+
+    <!-- salmon_post -->
+
+    <sql id="salmon_post_set_popularity" :cacheClear="salmon_post" :note="更新文章热度">
+        UPDATE `salmon_post` SET `popularity` = @{popularity:double} WHERE `post_id` = @{post_id:long}
+    </sql>
+
+    <sql id="salmon_post_get" :return="zm.data.code.salmonapi.models.salmon.SalmonPostModel" :caching="cache_salmon" :cacheTag="salmon_post" :note="获取文章">
+        SELECT * FROM `salmon_post` WHERE `post_id` = @{post_id:long}
+    </sql>
+
+    <sql id="salmon_post_get_list" :return="List[zm.data.code.salmonapi.models.salmon.SalmonPostModel]" :caching="cache_salmon" :cacheTag="salmon_post" :note="获取文章">
+        SELECT * FROM `salmon_post` WHERE `post_id` IN (@{post_ids:List[Long]})
+    </sql>
+
+    <sql id="salmon_post_get_most_popular_each_category" :return="List[zm.data.code.salmonapi.models.salmon.SalmonPostModel]" :caching="cache_salmon" :cacheTag="salmon_post" :note="获取每个分类最热门文章">
+        SELECT * FROM `salmon_post` WHERE `post_id` IN (SELECT `post_id` FROM (SELECT `post_id`, MAX(`popularity`) FROM `salmon_post` WHERE `release_fulltime` >= @{release_fulltime:Date} AND `post_id` NOT IN (@{excluding:Iterable[Long]})
+        <if test="category_main != 0">
+            AND `category_main` = @{category_main:long}
+        </if>
+        GROUP BY `category_main`) AS `salmon_post_most_popular`)
+    </sql>
+
+    <sql id="salmon_post_get_newest_each_category" :return="List[zm.data.code.salmonapi.models.salmon.SalmonPostModel]" :caching="cache_salmon" :cacheTag="salmon_post" :note="获取每个分类最新文章">
+        SELECT * FROM `salmon_post` WHERE `post_id` IN (SELECT MAX(`post_id`) FROM `salmon_post` WHERE `release_fulltime` >= @{release_fulltime:Date} AND `post_id` NOT IN (@{excluding:Iterable[Long]})
+        <if test="category_main != 0">
+            AND `category_main` = @{category_main:long}
+        </if>
+        GROUP BY `category_main`)
+    </sql>
+
+    <!-- salmon_category -->
+
+    <sql id="salmon_category_refresh_popularity" :cacheClear="salmon_category" :note="更新分类热度">
+        UPDATE `salmon_category` SET `popularity` = (SELECT AVG(`popularity`) FROM (SELECT `popularity` FROM `salmon_post` WHERE `release_fulltime` >= @{release_fulltime:Date} AND `category_main` = @{category:long} LIMIT @{rows:int}) AS `salmon_post_popularity_top`) WHERE `category_id` = @{category:long}
+    </sql>
+
+    <sql id="salmon_category_get_all" :return="List[zm.data.code.salmonapi.models.salmon.SalmonCategoryModel]" :caching="cache_salmon" :cacheTag="salmon_category" :note="获取分类">
+        SELECT * FROM `salmon_category`
+    </sql>
+
+    <!-- salmon_behavior -->
+
+    <sql id="salmon_behavior_add" :return="long" :cacheClear="salmon_behavior" :note="新增行为记录">
+        INSERT INTO `salmon_behavior` (`behavior_id`, `user_id`, `post_id`, `type`, `duration`)
+        VALUES (@{behavior_id:long}, @{user_id:long}, @{post_id:long}, @{type:int}, @{duration:int})
+    </sql>
+
+    <sql id="salmon_behavior_get" :return="List[zm.data.code.salmonapi.models.salmon.SalmonBehaviorModel]" :caching="cache_salmon" :cacheTag="salmon_behavior" :note="获取用户行为记录">
+        SELECT * FROM `salmon_behavior` WHERE `user_id` = @{user_id:long} AND `type` = @{type:int} ORDER BY `behavior_id` DESC LIMIT @{rows:int}
+    </sql>
+
+    <sql id="salmon_behavior_get_quantity_each_type" :return="List[zm.data.code.salmonapi.models.vo.SalmonBehaviorTypeQuantity]" :caching="cache_salmon" :cacheTag="salmon_behavior" :note="获取用户行为记录数量">
+        SELECT `type`, COUNT(*) AS `quantity` FROM `salmon_behavior` WHERE `post_id` = @{post_id:long} GROUP BY `type`
+    </sql>
+
+</mapper>
