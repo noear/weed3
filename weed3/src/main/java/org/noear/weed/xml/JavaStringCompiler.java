@@ -41,7 +41,7 @@ class JavaStringCompiler {
 
         javaCompiler = ToolProvider.getSystemJavaCompiler();
 
-        AssertUtils.notNull(javaCompiler,"ToolProvider.getSystemJavaCompiler() failed to execute");
+        AssertUtils.notNull(javaCompiler,"ToolProvider.getSystemJavaCompiler() failed to execute!");
 
         //标准的内容管理器,更换成自己的实现，覆盖部分方法
         StandardJavaFileManager standardFileManager = javaCompiler.getStandardFileManager(diagnosticsCollector, null, null);

@@ -12,16 +12,16 @@ public class XmlSqlLoader {
 
     private static String _lock = "";
 
-    private  boolean is_loaed = false;
+    private boolean is_loaed = false;
     private List<URL> xmlFiles = new ArrayList<>();
 
     /**
      * 加载扩展文件夹（或文件）
-     * */
-    public static void load() throws Exception{
-        if(_g.is_loaed == false){
-            synchronized (_lock){
-                if(_g.is_loaed == false){
+     */
+    public static void load() throws Exception {
+        if (_g.is_loaed == false) {
+            synchronized (_lock) {
+                if (_g.is_loaed == false) {
                     _g.is_loaed = true;
 
                     _g.do_load();
@@ -30,32 +30,42 @@ public class XmlSqlLoader {
         }
     }
 
-    public static void tryLoad(){
-        try{
+    public static void tryLoad() {
+        try {
             load();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
     }
 
-    private void do_load() throws Exception{
+    private void do_load() throws Exception {
         XmlFileScaner.scan("weed3", ".xml")
                 .stream()
                 .map(k -> IOUtils.getResource(k))
                 .forEach(url -> _g.xmlFiles.add(url));
 
+        if (_g.xmlFiles.size() == 0) {
+            return;
+        }
+
         //构建代码
         List<String> codes = new ArrayList<>();
-        for(URL file : _g.xmlFiles){
+        for (URL file : _g.xmlFiles) {
             String code = XmlSqlCompiler.parse(file);
-            codes.add(code);
+            if (code != null) {
+                codes.add(code);
+            }
+        }
+
+        if (codes.size() == 0) {
+            return;
         }
 
         boolean is_ok = JavaStringCompiler.instance().compiler(codes);
-        if(is_ok){
+        if (is_ok) {
             JavaStringCompiler.instance().loadClassAll(true);
-        }else{
+        } else {
             String error = JavaStringCompiler.instance().getCompilerMessage();
             System.out.println(error);
             throw new RuntimeException(error);
@@ -63,5 +73,6 @@ public class XmlSqlLoader {
     }
 
 
-    private XmlSqlLoader() { }
+    private XmlSqlLoader() {
+    }
 }
