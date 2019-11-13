@@ -57,7 +57,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 ###### 1.内置缓存服务
 * org.noear.weed.cache.EmptyCache // 空缓存
 * org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map+超时实现）
-* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现）
+* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现；也可以多级拼装）
 ###### 2.扩展缓存服务
 * org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
 ```xml
