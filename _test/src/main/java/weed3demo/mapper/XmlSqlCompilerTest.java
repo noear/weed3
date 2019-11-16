@@ -32,6 +32,15 @@ public class XmlSqlCompilerTest {
     }
 
     @Test
+    public  void test13() throws Exception {
+        URL url = getResource("/weed3/test.xml");
+
+        String code = XmlSqlCompiler.parse( url);
+
+        System.out.println(code);
+    }
+
+    @Test
     public  void test12() throws Exception {
 
         XmlSqlLoader.load();

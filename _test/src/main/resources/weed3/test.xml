@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="weed3demo.xmlsql2" :db="testdb">
-    <sql id="user_add" :return="long"
+    <sql id="user_add" :return="List[Long]"
          :param="m:weed3demo.mapper.UserModel,sex:int"
          :note="添加用户"
          :cacheClear="user_${m.user_id}"><![CDATA[

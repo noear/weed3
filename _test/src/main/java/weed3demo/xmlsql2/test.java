@@ -13,7 +13,7 @@ import weed3demo.mapper.UserModel;
 @Namespace("weed3demo.xmlsql2")
 public interface test{
     //添加用户
-    long user_add(UserModel m, int sex) throws Exception;
+    List<Long> user_add(UserModel m, int sex) throws Exception;
 
     //添加用户
     long user_add3(UserModel m, int sex) throws Exception;

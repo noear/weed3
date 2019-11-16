@@ -65,11 +65,16 @@ class XSqlHandlerForXml {
                     //是实体集合
                     rst_type2 = ((ParameterizedType) rst_type2).getActualTypeArguments()[0];
 
-                    if (IBinder.class.isAssignableFrom(rst_type)) {
-                        return sp.getList((IBinder) rst_type.newInstance());
-                    } else {
-                        return sp.getList((Class<?>) rst_type2);
+                    if(block._return.indexOf("java.lang.")>0){
+                        return sp.getDataList().toArray(0);
+                    }else{
+                        if (IBinder.class.isAssignableFrom(rst_type)) {
+                            return sp.getList((IBinder) rst_type.newInstance());
+                        } else {
+                            return sp.getList((Class<?>) rst_type2);
+                        }
                     }
+
                 } else {
                     //是单实体
                     if (IBinder.class.isAssignableFrom(rst_type)) {
