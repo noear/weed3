@@ -33,7 +33,7 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.2.1</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
@@ -56,8 +56,8 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 ##### 缓存服务支持
 ###### 1.内置缓存服务
 * org.noear.weed.cache.EmptyCache // 空缓存
-* org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map实现）
-* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现）
+* org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map+超时实现）
+* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现；也可以多级拼装）
 ###### 2.扩展缓存服务
 * org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
 ```xml
@@ -80,7 +80,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.memcached</artifactId>
-  <version>3.2.1.1</version>
+  <version>3.2.1.3</version>
 </dependency>
 ```
 * org.noear.weed.cache.redis.RedisCache // 基于redis封装
