@@ -1,9 +1,11 @@
 package webapp;
 
 import org.noear.solon.XApp;
+import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.xml.XmlSqlLoader;
+import webapp.dso.DbConfig;
 
 public class App {
     public static void main(String[] args){
@@ -17,6 +19,8 @@ public class App {
         app.get("/",(c)->{
             c.render("nav.htm", null);
         });
+
+
 
         /*
         *  测试用到的表结构

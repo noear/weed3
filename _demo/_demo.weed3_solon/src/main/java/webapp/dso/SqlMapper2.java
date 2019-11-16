@@ -23,4 +23,7 @@ public interface SqlMapper2 {
 
     @Sql("select * from appx limit 4")
     List<AppxModel> appx_getlist(int app_id) throws Exception;
+
+    @Sql("select app_id from appx limit 4")
+    List<Integer> appx_getids() throws Exception;
 }

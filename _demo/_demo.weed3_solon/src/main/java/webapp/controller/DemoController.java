@@ -9,6 +9,8 @@ import org.noear.weed.DbContext;
 import webapp.dso.*;
 import webapp.model.AppxModel;
 
+import java.util.List;
+
 @XSingleton(true)
 @XController
 public class DemoController {
@@ -39,6 +41,12 @@ public class DemoController {
     public Object demo4() throws Exception{
         SqlMapper tmp = db2.mapper(SqlMapper.class);
 
+        List<Integer> ary = tmp.appx_get3();
+
+        if(ary == null){
+            return null;
+        }
+
         ModelAndView mv = new ModelAndView("view.ftl");
 
         mv.put("map", tmp.appx_get());
@@ -49,6 +57,12 @@ public class DemoController {
     @XMapping("/demo5/json")
     public Object demo5() throws Exception{
         SqlMapper2 tmp = db2.mapper(SqlMapper2.class);
+
+        List<Integer> ary = tmp.appx_getids();
+
+        if(ary == null){
+            return null;
+        }
 
         return tmp.appx_get();
     }
