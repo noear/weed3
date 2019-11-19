@@ -31,7 +31,8 @@ public class LocalCache implements ICacheServiceEx {
                 ent = new Entity(obj);
                 _data.put(key, ent);
             }else{
-                //如果已存储，取消超时处理
+                //如果已存储，取消超时处理，且更新值
+                ent.value = obj;
                 ent.futureDel();
             }
 
