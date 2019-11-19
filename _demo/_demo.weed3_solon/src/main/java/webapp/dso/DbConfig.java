@@ -4,10 +4,19 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XMap;
 import org.noear.weed.DbContext;
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
 
 import java.util.Properties;
 
 public class DbConfig {
+
+    //
+    //缓存服务配置:: //新建个缓存服务，并通过nameSet 注册到 全局 libOfCache
+    //
+    public final static ICacheServiceEx cache = new LocalCache("test",60).nameSet("test");
+
+
     //
     //直接配置 数据库上下文
     //
