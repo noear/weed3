@@ -28,10 +28,7 @@ public class LocalCache implements ICacheServiceEx {
             Entity val = _data.get(key);
             if (val != null) {
                 //如果已存储，取消超时处理
-                if (val.future != null) {
-                    val.future.cancel(true);
-                    val.future = null;
-                }
+                val.futureDel();
             } else {
                 //如果末存在，则新建实体
                 val = new Entity(obj);
@@ -60,21 +57,14 @@ public class LocalCache implements ICacheServiceEx {
             Entity val = _data.remove(key);
 
             if (val != null) {
-                if (val.future != null) {
-                    val.future.cancel(true);
-                    val.future = null;
-                }
+                val.futureDel();
             }
         }
     }
 
     public void clear() {
         for (Entity val : _data.values()) {
-            //尝试取消超时
-            if (val.future != null) {
-                val.future.cancel(true);
-                val.future = null;
-            }
+            val.futureDel();
         }
 
         _data.clear();
@@ -98,6 +88,13 @@ public class LocalCache implements ICacheServiceEx {
 
         public Entity(Object val) {
             this.value = val;
+        }
+
+        protected void futureDel(){
+            if (future != null) {
+                future.cancel(true);
+                future = null;
+            }
         }
     }
 }
