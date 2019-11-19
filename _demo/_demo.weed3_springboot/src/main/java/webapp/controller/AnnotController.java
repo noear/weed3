@@ -18,7 +18,7 @@ public class AnnotController {
 
     @RequestMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
-        ModelAndView mv = new ModelAndView("view.ftl");
+        ModelAndView mv = new ModelAndView("/view.ftl");
 
         Object _map = demo3();
         mv.addObject("map", _map);
