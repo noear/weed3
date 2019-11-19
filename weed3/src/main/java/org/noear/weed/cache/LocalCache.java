@@ -27,7 +27,7 @@ public class LocalCache implements ICacheServiceEx {
         synchronized (key.intern()) {
             Entity ent = _data.get(key);
             if (ent == null) {
-               //如果末存在，则新建实体
+                //如果末存在，则新建实体
                 ent = new Entity(obj);
                 _data.put(key, ent);
             }else{
