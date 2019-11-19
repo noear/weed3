@@ -26,13 +26,13 @@ public class LocalCache implements ICacheServiceEx {
     public void store(String key, Object obj, int seconds) {
         synchronized (key.intern()) {
             Entity ent = _data.get(key);
-            if (ent != null) {
-                //如果已存储，取消超时处理
-                ent.futureDel();
-            } else {
-                //如果末存在，则新建实体
+            if (ent == null) {
+               //如果末存在，则新建实体
                 ent = new Entity(obj);
                 _data.put(key, ent);
+            }else{
+                //如果已存储，取消超时处理
+                ent.futureDel();
             }
 
             if (seconds > 0) {
