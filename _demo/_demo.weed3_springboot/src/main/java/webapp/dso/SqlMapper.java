@@ -1,10 +1,14 @@
 package webapp.dso;
 
-import org.noear.weed.xml.Namespace;
-import webapp.model.AppxModel;
+import java.math.*;
+import java.time.*;
+import java.util.*;
 
-import java.util.List;
-import java.util.Map;
+import org.noear.weed.DataItem;
+import org.noear.weed.DataList;
+import org.noear.weed.xml.Namespace;
+
+import webapp.model.AppxModel;
 
 @Namespace("webapp.dso")
 public interface SqlMapper{
