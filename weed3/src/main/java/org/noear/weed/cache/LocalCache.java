@@ -13,7 +13,7 @@ public class LocalCache implements ICacheServiceEx {
     private int _defaultSeconds;
 
     private Map<String, Entity>             _data = new ConcurrentHashMap<>();   //缓存存储器
-    private static ScheduledExecutorService _exec = Executors.newSingleThreadScheduledExecutor(); //线程池
+    private static ScheduledExecutorService _exec = Executors.newSingleThreadScheduledExecutor(); //计划线程池（用于超时处理）
 
     public LocalCache(String keyHeader, int defSeconds) {
         _cacheKeyHead = keyHeader;
