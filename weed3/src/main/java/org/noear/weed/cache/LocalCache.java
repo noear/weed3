@@ -22,16 +22,27 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public void store(String key, Object obj, int seconds) {
-        remove(key);
+        synchronized (key.intern()) {
+            Entity val = _data.get(key);
+            if (val != null) {
+                //如果已存储，取消超时处理
+                if (val.future != null) {
+                    val.future.cancel(true);
+                    val.future = null;
+                }
+            } else {
+                //如果末存在
+                val = new Entity(obj);
+                _data.put(key, val);
+            }
 
-        Entity val = new Entity(obj);
-        if(seconds>0){
-            val.future = _exec.schedule(()->{
-                _data.remove(key);
-            },seconds, TimeUnit.SECONDS);
+            if (seconds > 0) {
+                //设定新的超时
+                val.future = _exec.schedule(() -> {
+                    _data.remove(key);
+                }, seconds, TimeUnit.SECONDS);
+            }
         }
-
-        _data.put(key, val);
     }
 
     @Override
@@ -43,18 +54,24 @@ public class LocalCache implements ICacheServiceEx {
 
     @Override
     public void remove(String key) {
-        Entity val = _data.remove(key);
-        if (val != null) {
-            if (val.future != null) {
-                val.future.cancel(true);
+        synchronized (key.intern()) {
+            Entity val = _data.remove(key);
+
+            if (val != null) {
+                if (val.future != null) {
+                    val.future.cancel(true);
+                    val.future = null;
+                }
             }
         }
     }
 
     public void clear() {
         for (Entity val : _data.values()) {
+            //尝试取消超时
             if (val.future != null) {
                 val.future.cancel(true);
+                val.future = null;
             }
         }
 
