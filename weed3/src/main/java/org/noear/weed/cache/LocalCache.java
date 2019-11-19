@@ -12,8 +12,10 @@ public class LocalCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
-    private Map<String, Entity>             _data = new ConcurrentHashMap<>();   //缓存存储器
-    private static ScheduledExecutorService _exec = Executors.newSingleThreadScheduledExecutor(); //计划线程池（用于超时处理）
+    //缓存存储器
+    private Map<String, Entity>             _data = new ConcurrentHashMap<>();
+    //计划线程池（用于超时处理）
+    private static ScheduledExecutorService _exec = Executors.newSingleThreadScheduledExecutor();
 
     public LocalCache(String keyHeader, int defSeconds) {
         _cacheKeyHead = keyHeader;
@@ -31,7 +33,7 @@ public class LocalCache implements ICacheServiceEx {
                     val.future = null;
                 }
             } else {
-                //如果末存在
+                //如果末存在，则新建实体
                 val = new Entity(obj);
                 _data.put(key, val);
             }
