@@ -20,14 +20,14 @@ public class DbConfig {
     //
     //直接配置 数据库上下文
     //
-    public final static DbContext db1 = new DbContext(Aop.prop().getProp("test.db"));
+    public final static DbContext db1 = new DbContext(Aop.prop().getProp("test.db1"));
 
 
     //
     //使用连接池 配置 数据库上下文
     //
     private final static HikariDataSource dataSource(){
-        XMap map = Aop.prop().getXmap("test.db");
+        XMap map = Aop.prop().getXmap("test.db2");
 
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(map.get("url"));
