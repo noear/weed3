@@ -22,6 +22,9 @@ public class JavaController {
     @Qualifier("cache")
     ICacheServiceEx cache;
 
+    //
+    // 好久没弄 spring boot 了，视图没弄出来（试下面几个json的）
+    //
     @RequestMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("/view.ftl");

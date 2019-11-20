@@ -16,6 +16,9 @@ public class AnnotController {
     @Qualifier("db2")
     DbContext db2;
 
+    //
+    // 好久没弄 spring boot 了，视图没弄出来（试下面几个json的）
+    //
     @RequestMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("/view.ftl");
