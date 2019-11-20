@@ -1,14 +1,9 @@
 package weed3demo.demo.table;
 
-import org.noear.weed.DataItem;
-import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQuery;
 import weed3demo.config.DbConfig;
-import weed3demo.demo.model.UserInfoModel;
 
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by noear on 2017/7/22.
