@@ -124,24 +124,24 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     //
     // 执行相关代码
     //
-    /*执行插入（返回自增ID）*/
+    /** 执行插入（返回自增ID）*/
     public long insert() throws SQLException{
         return new SQLer().insert(getCommand(),_tran);
     }
 
-    /*执行更新（返回受影响数）*/
+    /** 执行更新（返回受影响数）*/
     public int update() throws SQLException
     {
         return execute();
     }
 
-    /*执行删除（返回受影响数）*/
+    /** 执行删除（返回受影响数）*/
     public int delete() throws SQLException
     {
         return execute();
     }
 
-    /*执行命令（返回受影响数）*/
+    /** 执行命令（返回受影响数）*/
     public int execute() throws SQLException
     {
         return new SQLer().execute(getCommand(),_tran);
