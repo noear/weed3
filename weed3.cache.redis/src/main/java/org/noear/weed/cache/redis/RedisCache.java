@@ -25,7 +25,9 @@ public class RedisCache implements ICacheServiceEx {
         String maxTotaol_str = prop.getProperty("maxTotaol");
 
         if (defSeconds == 0) {
-            defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
+            if(TextUtils.isEmpty(defSeconds_str) == false){
+                defSeconds = Integer.parseInt(defSeconds_str);
+            }
         }
 
         int db = 1;
