@@ -4,6 +4,8 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.ISerializer;
 import org.noear.weed.utils.EncryptUtils;
 
+import java.util.Properties;
+
 public class RedisCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
@@ -11,11 +13,57 @@ public class RedisCache implements ICacheServiceEx {
     private RedisX _cache = null;
     private ISerializer<String> _serializer = null;
 
+    public RedisCache(Properties prop) {
+        this(prop, prop.getProperty("keyHeader"), 0);
+    }
+
+    public RedisCache(Properties prop, String keyHeader, int defSeconds) {
+        String defSeconds_str = prop.getProperty("defSeconds");
+        String server = prop.getProperty("server");
+        String password = prop.getProperty("password");
+        String db_str = prop.getProperty("db");
+        String maxTotaol_str = prop.getProperty("maxTotaol");
+
+        if (defSeconds == 0) {
+            defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
+        }
+
+        int db = 1;
+        int maxTotaol = 200;
+
+        if (TextUtils.isEmpty(db_str) == false) {
+            db = Integer.parseInt(db_str);
+        }
+
+        if (TextUtils.isEmpty(maxTotaol_str) == false) {
+            maxTotaol = Integer.parseInt(maxTotaol_str);
+        }
+
+
+        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, Snack3Serializer.instance);
+    }
+
     public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol) {
-        this(keyHeader, defSeconds, server, password, db, maxTotaol, Snack3Serializer.instance);
+        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, Snack3Serializer.instance);
     }
 
     public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
+        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, serializer);
+    }
+
+    private void do_init(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
+        if (defSeconds < 10) {
+            defSeconds = 60;
+        }
+
+        if (db < 1) {
+            db = 1;
+        }
+
+        if (maxTotaol < 10) {
+            maxTotaol = 10;
+        }
+
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
 
