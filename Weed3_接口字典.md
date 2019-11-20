@@ -5,7 +5,7 @@
 // 构建相关
 //
 
--build(builder:(tq)->{}) -> self //通过表达式构建自己
+-build(builder:(q)->{}) -> self //通过表达式构建自己
 
 //例: db.table("user u")
 //      .with("a","select type num from group by type")
@@ -72,7 +72,7 @@
 -limit(rows:int) -> self //添加SQL limit语句
 -limit(start:int, rows:int) -> self //添加SQL limit语句
 
--top(rows:int) //添加SQL top 语句
+-top(rows:int) -> self //添加SQL top 语句
 
 -append(code:String,args:Object...) ->self //添加无限制代码 //可使用?,?...占位符（ ?... 表示数组占位符）
 
@@ -104,8 +104,8 @@
 // 控制相关
 //
 -log(isLog:boolean) -> self //标记是否记录日志
--usingNull(isUsing:boolean) //充许使用null插入或更新
--usingExpr(isUsing:boolean) //充许使用$表达式做为set值
+-usingNull(isUsing:boolean) -> self //充许使用null插入或更新
+-usingExpr(isUsing:boolean) -> self //充许使用$表达式做为set值
 
 
 //
@@ -118,10 +118,10 @@
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 ```
 #### db.call("process") -> new:DbProcedure
 ```swift
@@ -167,10 +167,10 @@
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 
 ```
 
@@ -203,10 +203,10 @@
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 ```
 
 #### db.mapper(Class<?>) -> SqlMapper? proxy
