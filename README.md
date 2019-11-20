@@ -166,7 +166,7 @@ db.tran(tran->{
 ```java
 //连式处理::对不确定的条件拼装
 db.table("test")
-  .expre(tb -> {
+  .build(tb -> {
       tb.where("1=1");
 
       if (1 == 2) {
@@ -178,7 +178,7 @@ db.table("test")
   
 //连式处理::对不确定字段的插入
 db.table("test")
-  .expre(tb -> {
+  .build(tb -> {
       tb.set("name", "xxx");
 
       if (1 == 2) {
