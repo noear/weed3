@@ -6,7 +6,6 @@ import java.util.Map;
 /**
  * Created by noear on 14/11/12.
  *
- * $.       //表空间占位数（即数据库名）
  * $fcn     //SQL函数占位符
  * ?        //参数占位符
  * ?...     //数组型参数占位符
@@ -68,7 +67,11 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     }
 
 
-    //只会插入不是null的数据
+
+    /**
+     * 执行插入并返回自增值，使用set接口的数据
+     * （默认，只会插入不是null的数据）
+     * */
     public long insert() throws SQLException {
         if (_item == null) {
             return 0;
@@ -78,7 +81,10 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         }
     }
 
-    //只会更新不是null的数据
+    /**
+     * 执行更新并返回影响行数，使用set接口的数据
+     * （默认，只会更新不是null的数据）
+     * */
     public int update() throws SQLException {
         if (_item == null) {
             return 0;
@@ -88,6 +94,10 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         }
     }
 
+    /**
+     * 使用set接口的数据,根据约束字段自动插入或更新
+     * （默认，只会更新不是null的数据）
+     * */
     public void updateExt(String constraints)throws SQLException {
         if (_item != null) {
             updateExt(_item, constraints);
