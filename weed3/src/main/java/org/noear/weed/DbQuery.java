@@ -29,11 +29,6 @@ public class DbQuery extends DbAccess<DbQuery> {
         return this;
     }
 
-    public long insert() throws SQLException
-    {
-        return new SQLer().insert(getCommand(),_tran);
-    }
-
     @Override
     protected String getCommandID() {
         return this.commandText;
