@@ -20,7 +20,7 @@ public class demo_table2 {
     public static void demo_expr1() throws SQLException {
           //连式处理::对不确定字段的插入
           db.table("test")
-            .expre(tb -> {
+            .build(tb -> {
                 tb.set("name", "xxx");
 
                 if (1 == 2) {
@@ -34,7 +34,7 @@ public class demo_table2 {
     public static void demo_expr2() throws SQLException {
           //连式处理::对不确定的条件拼装
           db.table("test")
-            .expre(tb -> {
+            .build(tb -> {
                 tb.where("1=1");
 
                 if (1 == 2) {
