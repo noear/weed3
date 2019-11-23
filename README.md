@@ -3,10 +3,12 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-微型ORM（支持：java sql，xml sql，注解 sql；事务；缓存）<br/>
+微型ORM（支持：java sql，xml sql，注解 sql；事务；缓存）
 
-支持什么数据库？？？<br/>
-与具体数据库无关（或许支持所有数据库）<br/>
+
+支持什么数据库？？？
+
+与具体数据库无关（或许支持所有数据库）
 
 #### 理念：
 高性能、跨平台、轻量、有个性；不喜欢反射、不喜欢配置...
@@ -50,7 +52,7 @@
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
 
-##### 缓存服务支持
+#### 缓存服务支持： 
 ###### 1.内置缓存服务
 * org.noear.weed.cache.EmptyCache // 空缓存
 * org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map+超时实现）
@@ -66,7 +68,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 
 
  ### 一、纯java用法
-示例1.1.1::入门级<br/>
+示例1.1.1::入门级
 ```java
 //快速.执行示例
 db.exec("DELETE FROM user_info WHERE user_id<?",10);
