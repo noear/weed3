@@ -43,14 +43,6 @@
 | org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
 
-实例化数据库上下文（一切都在上面操作）
-```java
-//DbContext db  = new DbContext(properties); //使用Properties配置的示例
-//DbContext db  = new DbContext(map); //使用Map配置的示例
-//DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
-//DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
-DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
-```
 
 #### 缓存服务支持： 
 ###### 1.内置缓存服务
@@ -73,6 +65,15 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
     <artifactId>weed3</artifactId>
     <version>3.2.3</version>
 </dependency>
+```
+
+#### 实例化数据库上下文：（一切都在上面操作）
+```java
+//DbContext db  = new DbContext(properties); //使用Properties配置的示例
+//DbContext db  = new DbContext(map); //使用Map配置的示例
+//DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
+//DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
+DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
 
 ### 一、纯java用法
