@@ -24,7 +24,6 @@
             <groupId>net.oschina.j2cache</groupId>
             <artifactId>j2cache-core</artifactId>
             <version>2.7.6-release</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
