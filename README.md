@@ -66,7 +66,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 
 * 也可以自己封装个 ICacheServiceEx ...
 
-### 零、Meven配置
+#### Meven配置：
 ```xml
 <dependency>
     <groupId>org.noear</groupId>
