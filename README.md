@@ -29,22 +29,17 @@
 相关文章：
 * [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
  
-引用 Maven： 
-```xml
-<!-- 主框架 -->
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3</artifactId>
-  <version>3.2.3</version>
-</dependency>
-
-<!-- meven 插件，用于生成xml sql mapper -->
-<plugin>
-    <groupId>org.noear</groupId>
-    <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.3</version>
-</plugin>
-```
+组件： 
+| 组件 | 说明 |
+| --- | --- |
+| org.noear:weed3-parent | 框架版本管理 |
+| org.noear:weed3 | 主框架 |
+| org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
+| | |
+| org.noear:weed3.cache.memcached| 基于 Memcached 封装的扩展缓存服务 |
+| org.noear:weed3.cache.redis| 基于 Redis 封装的扩展缓存服务 |
+| org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
+| org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
 
 实例化数据库上下文（一切都在上面操作）
 ```java
@@ -61,38 +56,12 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 * org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map+超时实现）
 * org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现；也可以多级拼装）
 ###### 2.扩展缓存服务
-* org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3.cache.ehcache</artifactId>
-  <version>3.2.3</version>
-</dependency>
-```
-* org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3.cache.j2cache</artifactId>
-  <version>3.2.3</version>
-</dependency>
-```
 * org.noear.weed.cache.memcached.MemCache // 基于memcached封装
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3.cache.memcached</artifactId>
-  <version>3.2.3</version>
-</dependency>
-```
 * org.noear.weed.cache.redis.RedisCache // 基于redis封装
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3.cache.redis</artifactId>
-  <version>3.2.3</version>
-</dependency>
-```
+* org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
+* org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
+
+
 * 也可以自己封装个 ICacheServiceEx ...
 
 
