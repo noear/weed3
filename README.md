@@ -35,14 +35,14 @@
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3</artifactId>
-  <version>3.2.2.5</version>
+  <version>3.2.3</version>
 </dependency>
 
 <!-- meven 插件，用于生成xml sql mapper -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.2.2</version>
+    <version>3.2.3</version>
 </plugin>
 ```
 
@@ -66,7 +66,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.ehcache</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.3</version>
 </dependency>
 ```
 * org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
@@ -74,7 +74,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.j2cache</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.3</version>
 </dependency>
 ```
 * org.noear.weed.cache.memcached.MemCache // 基于memcached封装
@@ -82,7 +82,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.memcached</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.3</version>
 </dependency>
 ```
 * org.noear.weed.cache.redis.RedisCache // 基于redis封装
@@ -90,7 +90,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 <dependency>
   <groupId>org.noear</groupId>
   <artifactId>weed3.cache.redis</artifactId>
-  <version>3.2.2</version>
+  <version>3.2.3</version>
 </dependency>
 ```
 * 也可以自己封装个 ICacheServiceEx ...
