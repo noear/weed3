@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>weed3-parent</artifactId>
-    <version>3.2.2.6</version>
+    <version>3.2.3</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -24,12 +24,15 @@
             <email>noear@live.cn</email>
             <organization>noear.org</organization>
             <organizationUrl>http://www.noear.org</organizationUrl>
+            <url>https://github.com/noear</url>
+            <timezone>GMT+8</timezone>
         </developer>
     </developers>
     <scm>
         <connection>scm:git:git@github.com:noear/Weed3.git</connection>
         <developerConnection>scm:git:git@github.com:noear/Weed3.git</developerConnection>
         <url>https://github.com/noear/Weed3</url>
+        <tag>master</tag>
     </scm>
 
 
@@ -38,7 +41,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <weed3.ver>3.2.2.6</weed3.ver>
+        <weed3.ver>3.2.3</weed3.ver>
         <snack3.ver>3.1.3</snack3.ver>
     </properties>
 
