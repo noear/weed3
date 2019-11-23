@@ -132,8 +132,8 @@ db.call("user_get")
   .getItem(UserInfoModel.class);  //基于反射
 
 //简易.查询过程调用示例，及使用使用示例
-db.call("select * from user where user_id=@userID") //@userID,参数占位符
-  .set("@userID", 1) 
+db.call("select * from user where user_id=@{userID}") //@{userID},为变量占位符
+  .set("userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
   .getItem(new UserInfoModel());  //要求：UserInfoModel 为 IBinder
@@ -185,7 +185,7 @@ db.table("test")
   .update();
   
 //简易.查询过程调用示例，及使用使用示例
-db.call("select * from user where user_id=@userID")
+db.call("select * from user where user_id=@{userID}")
   .setMap(map) //或 .setEntity(obj)
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
