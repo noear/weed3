@@ -5,10 +5,10 @@
 
     <groupId>org.noear</groupId>
     <artifactId>Weed3-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>dev</version>
     <packaging>pom</packaging>
 
-    <name>parent</name>
+    <name>root</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +28,8 @@
         <module>weed3.cache.j2cache</module>
 
         <module>weed3-maven-plugin</module>
+
+        <module>weed3-parent</module>
     </modules>
 
    
