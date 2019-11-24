@@ -1,8 +1,12 @@
 spring:
-  freemarker:
-    template-loader-path=classpath: /view
   mvc:
-    static-path-pattern: /static/**
+    view:
+      prefix: /
+      suffix: .htm
+#  freemarker:
+#    template-loader-path=classpath: /view
+#  mvc:
+#    static-path-pattern: /static/**
 
 server.port: 8080
 
