@@ -21,7 +21,7 @@ public class XmlController {
     //
     @RequestMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
-        ModelAndView mv = new ModelAndView("/view.ftl");
+        ModelAndView mv = new ModelAndView("view");
 
         //
         // 直接通过 call @{namespace}.{id} 调用

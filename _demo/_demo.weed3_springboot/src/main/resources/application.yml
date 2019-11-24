@@ -4,7 +4,7 @@ spring:
       prefix: /
       suffix: .htm
 #  freemarker:
-#    template-loader-path=classpath: /view
+#    template-loader-path=classpath: /WEB-INF/view/
 #  mvc:
 #    static-path-pattern: /static/**
 

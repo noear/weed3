@@ -27,7 +27,7 @@ public class JavaController {
     //
     @RequestMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
-        ModelAndView mv = new ModelAndView("/view.ftl");
+        ModelAndView mv = new ModelAndView("view");
 
         Object _map = demo3();
         mv.addObject("map", _map);
