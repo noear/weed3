@@ -147,10 +147,11 @@ class XSqlHandlerForAnn {
                 //
                 //list<Model>
                 //
-                if (IBinder.class.isAssignableFrom(rst_type)) {
-                    return sp.getList((IBinder) rst_type.newInstance());
+                Class<?> rst_clz2 = (Class<?>)rst_type2;
+                if (IBinder.class.isAssignableFrom(rst_clz2)) {
+                    return sp.getList((IBinder) rst_clz2.newInstance());
                 } else {
-                    return sp.getList((Class<?>) rst_type2);
+                    return sp.getList(rst_clz2);
                 }
             } else {
                 //list<Map>
