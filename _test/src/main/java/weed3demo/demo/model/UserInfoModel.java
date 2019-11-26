@@ -23,7 +23,7 @@ public class UserInfoModel implements IBinder {
         role    = s.get("role").value(0);
         mobile  = s.get("mobile").value("");
         udid    = s.get("udid").value("");
-        city_id = s.get("city_id").value(0);
+        city_id = s.get("city_id").intValue(0);
         name    = s.get("name").value("");
         icon    = s.get("icon").value("");
 
