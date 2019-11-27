@@ -16,7 +16,7 @@
         select * from ${tb:String} where app_id = @{app_id:int} limit 1
     </sql>
 
-    <sql id="appx_getlist" :return="List[AppxModel]">
+    <sql id="appx_getlist" :return="List[webapp.model.AppxModel]">
         select * from appx where app_id>@{app_id:int} order by app_id asc limit 4
     </sql>
 

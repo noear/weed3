@@ -22,24 +22,16 @@ public class XSqlUtil {
         }
 
         //4.生成命令
-        DbProcedure sp = db.call( sqlid).setMap(paramS);
+        DbProcedure sp = db.call( sqlid);
+        if(paramS!=null) {
+            sp.setMap(paramS);
+        }
 
         //5.构建输出
         if (block.isSelect()) {
-            Class<?> rst_type = rClz;
-            if(rClz == null) {
-                if (StringUtils.isEmpty(block._return) == false) {
-                    rst_type  = Class.forName(block._return);
-                }else{
-                    rst_type = Void.TYPE;
-                }
-            }
-
             if (block._return.indexOf(".") > 0) {
                 //实体化处理
-                if (Collection.class.isAssignableFrom(rst_type)) {
-
-
+                if (block._return_item != null) {
                     //是实体集合
                     if (block._return.indexOf("java.lang.") > 0) {
                         return sp.getDataList().toArray(0);
@@ -53,6 +45,15 @@ public class XSqlUtil {
                     }
 
                 } else {
+                    Class<?> rst_type = rClz;
+                    if(rClz == null) {
+                        if (StringUtils.isEmpty(block._return) == false) {
+                            rst_type  = Class.forName(block._return);
+                        }else{
+                            rst_type = Void.TYPE;
+                        }
+                    }
+
                     //是单实体
                     if (IBinder.class.isAssignableFrom(rst_type)) {
                         return sp.getItem((IBinder) rst_type.newInstance());
