@@ -1,14 +1,10 @@
 package org.noear.weed.xml;
 
 import org.noear.weed.DataItem;
-import org.noear.weed.IBinder;
 import org.w3c.dom.Node;
 
-import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class XmlSqlBlock {
     private static final String _lock ="";
@@ -22,6 +18,7 @@ public class XmlSqlBlock {
     public String _declare; //（属性：内部变量类型预申明）
     public String _require;//（属性：导入包或类）
     public String _return;//（属性：返回类型）
+    public String _return_item;
 
     public String _caching;
     public String _cacheClear;

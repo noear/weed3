@@ -117,9 +117,14 @@ public class XmlSqlCompiler {
         dblock._return = attr(n, ":return");
         if (dblock._return != null && dblock._return.indexOf("[") > 0) {
             dblock._return = dblock._return.replace("[", "<")
-                                           .replace("]", ">");
-        }
+                    .replace("]", ">");
 
+            int start = dblock._return.indexOf("<");
+            int end = dblock._return.indexOf(">");
+            if (start >= 0 && end > start) {
+                dblock._return_item = dblock._return.substring(start + 1, end);
+            }
+        }
 
         dblock._caching = attr(n, ":caching");
         dblock._usingCache = attr(n, ":usingCache");
