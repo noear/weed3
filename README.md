@@ -19,6 +19,7 @@
 * 3.纯代码无任何配置
 * 4.分布式事务集成
 * 5.万能的数据绑定
+* 6.接口少简单
 
 #### 相关文章：
 * [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
@@ -408,7 +409,7 @@ um.user_add(12);
 
 ```java
 //demo1:: //事务组
-DbUserMapper um = XmlSqlProxy.getSingleton(DbUserMapper.class);
+DbUserMapper um = db.mapper(DbUserMapper.class);
 
 db.tran((t) => {
     //以下操作，会在 t 事务内执行（下面的操作，汇集了weed3所有的接口模式）
@@ -452,7 +453,7 @@ WeedConfig.isDebug = true;
 //执行前检查代码 //不充许select 代码没有 limit 限制
 WeedConfig.onExecuteBef((cmd)->{
     String sqltmp = cmd.text.toLowerCase();
-    if(sqltmp.indexOf("select ")>=0 && sqltmp.indexOf(" limit ")< 0&&sqltmp.indexOf("count")<0) {
+    if(sqltmp.indexOf("select ")>=0 && sqltmp.indexOf(" limit ")< 0 && sqltmp.indexOf("count")<0) {
         return false;
     }else{
         return true;
