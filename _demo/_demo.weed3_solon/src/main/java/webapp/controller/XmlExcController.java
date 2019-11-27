@@ -34,7 +34,7 @@ public class XmlExcController {
         map.put("app_id", 48);
         map.put("tb","appx");
 
-        Object tmp = db2.exec("@webapp.dso.appx_get3", map);
+        Object tmp = db2.mapper("@webapp.dso.appx_get3", map);
         mv.put("map", tmp);
 
         return mv;
@@ -45,7 +45,7 @@ public class XmlExcController {
     public Object demo1() throws Exception {
         Map<String, Object> map = new HashMap<>();
 
-        Object tmp = db2.exec("@webapp.dso.appx_get", map);
+        Object tmp = db2.mapper("@webapp.dso.appx_get", map);
         return tmp;
     }
 
