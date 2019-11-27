@@ -7,8 +7,10 @@ import org.noear.solon.core.ModelAndView;
 import org.noear.weed.DbContext;
 import webapp.dso.DbConfig;
 import webapp.dso.SqlMapper;
+import webapp.model.AppxModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @XMapping("/xmlexc")
@@ -32,7 +34,7 @@ public class XmlExcController {
         map.put("app_id", 48);
         map.put("tb","appx");
 
-        Object tmp = db2.exec("@webapp.dso.appx_get3");
+        Object tmp = db2.exec("@webapp.dso.appx_get3", map);
         mv.put("map", tmp);
 
         return mv;
@@ -51,7 +53,7 @@ public class XmlExcController {
     public Object demo2() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
-        Object tmp = db2.exec("@webapp.dso.appx_get2", map);
+        AppxModel tmp = db2.exec("@webapp.dso.appx_get2", map);
         return tmp;
     }
 
@@ -60,7 +62,7 @@ public class XmlExcController {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
         map.put("tb","appx");
-        Object tmp = db2.exec("@webapp.dso.appx_get3", map);
+        Map tmp = db2.exec("@webapp.dso.appx_get3", map);
         return tmp;
     }
 
@@ -68,14 +70,14 @@ public class XmlExcController {
     public Object demo4() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 1);
-        Object tmp = db2.exec("@webapp.dso.appx_getlist", map);
+        List<AppxModel> tmp = db2.exec("@webapp.dso.appx_getlist", map);
         return tmp;
     }
 
     @XMapping("demo5/json")
     public Object demo5() throws Exception {
         Map<String, Object> map = new HashMap<>();
-        Object tmp = db2.exec("@webapp.dso.appx_getids", map);
+        List<Integer> tmp = db2.exec("@webapp.dso.appx_getids", map);
         return tmp;
     }
 
