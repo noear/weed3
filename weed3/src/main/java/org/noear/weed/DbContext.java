@@ -65,6 +65,9 @@ public class DbContext extends DbContextBase<DbContext>{
         return _dataSource.getConnection();
     }
 
+    /**
+     * 印映一个接口代理
+     * */
     public <T> T mapper(Class<T> clz){
         if(WeedConfig.libOfDb.containsKey(clz) == false) {
             WeedConfig.libOfDb.put(clz, this);
@@ -74,14 +77,17 @@ public class DbContext extends DbContextBase<DbContext>{
     }
 
     /**
+     * 印映一份数据
+     * */
+    public <T> T mapper(String sqlid, Map<String,Object> paramS) throws Exception {
+        return (T) XSqlUtil.exec(this, sqlid, paramS, null, null);
+    }
+
+    /**
      * 执行代码，返回影响行数
      */
     public int exec(String code, Object... args) throws Exception {
         return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
-    }
-
-    public <T> T exec(String sqlid, Map<String,Object> paramS) throws Exception {
-        return (T) XSqlUtil.exec(this, sqlid, paramS, null, null);
     }
 
     /**

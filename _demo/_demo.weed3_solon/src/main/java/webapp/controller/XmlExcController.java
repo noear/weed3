@@ -53,7 +53,7 @@ public class XmlExcController {
     public Object demo2() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
-        AppxModel tmp = db2.exec("@webapp.dso.appx_get2", map);
+        AppxModel tmp = db2.mapper("@webapp.dso.appx_get2", map);
         return tmp;
     }
 
@@ -62,7 +62,7 @@ public class XmlExcController {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
         map.put("tb","appx");
-        Map tmp = db2.exec("@webapp.dso.appx_get3", map);
+        Map tmp = db2.mapper("@webapp.dso.appx_get3", map);
         return tmp;
     }
 
@@ -70,14 +70,14 @@ public class XmlExcController {
     public Object demo4() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 1);
-        List<AppxModel> tmp = db2.exec("@webapp.dso.appx_getlist", map);
+        List<AppxModel> tmp = db2.mapper("@webapp.dso.appx_getlist", map);
         return tmp;
     }
 
     @XMapping("demo5/json")
     public Object demo5() throws Exception {
         Map<String, Object> map = new HashMap<>();
-        List<Integer> tmp = db2.exec("@webapp.dso.appx_getids", map);
+        List<Integer> tmp = db2.mapper("@webapp.dso.appx_getids", map);
         return tmp;
     }
 
