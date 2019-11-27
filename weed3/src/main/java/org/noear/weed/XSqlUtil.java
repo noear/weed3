@@ -34,7 +34,7 @@ public class XSqlUtil {
                 if (block._return_item != null) {
                     //是实体集合
                     if (block._return.indexOf("java.lang.") > 0) {
-                        return sp.getDataList().toArray(0);
+                        return sp.getArray(0);
                     } else {
                         Class<?> rst_clz2 = item_type(rType, block);
                         if (IBinder.class.isAssignableFrom(rst_clz2)) {
