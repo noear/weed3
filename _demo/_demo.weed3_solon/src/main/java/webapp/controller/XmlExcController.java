@@ -76,8 +76,7 @@ public class XmlExcController {
 
     @XMapping("demo5/json")
     public Object demo5() throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        List<Integer> tmp = db2.mapper("@webapp.dso.appx_getids", map);
+        List<Integer> tmp = db2.mapper("@webapp.dso.appx_getids", null);
         return tmp;
     }
 
