@@ -16,7 +16,7 @@ public class AnnotController {
     DbContext db2 = DbConfig.db2;
 
     @XMapping("demo0/test")
-    public Object test(Integer sql) throws Exception {
+    public Object test(String sql) throws Exception {
         //
         // mysql 8.0 才支持
         //
