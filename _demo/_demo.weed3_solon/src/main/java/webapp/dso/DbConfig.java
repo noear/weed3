@@ -20,7 +20,9 @@ public class DbConfig {
     //
     //直接配置 数据库上下文
     //
-    public final static DbContext db1 = new DbContext(Aop.prop().getProp("test.db1"));
+    public final static DbContext db1 = new DbContext(Aop.prop().getProp("test.db1"))
+            .objectFormatSet("`%`")
+            .fieldFormatSet("`%`");
 
 
     //
@@ -36,5 +38,8 @@ public class DbConfig {
 
         return dataSource;
     }
-    public final static DbContext db2 = new DbContext().dataSourceSet(dataSource());
+    public final static DbContext db2 = new DbContext()
+            .dataSourceSet(dataSource())
+            .objectFormatSet("`%`")
+            .fieldFormatSet("`%`");
 }
