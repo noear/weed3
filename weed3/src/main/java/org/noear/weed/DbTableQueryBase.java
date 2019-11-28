@@ -171,13 +171,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     /** 添加SQL where in(?...) 语句 */
-    public T whereIn(String filed, Collection<Object> ary){
+    public T whereIn(String filed, Iterable<Object> ary){
         _builder.append(" WHERE ").append(formatField(filed)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL where not in(?...) 语句 */
-    public T whereNin(String filed, Collection<Object> ary){
+    public T whereNin(String filed, Iterable<Object> ary){
         _builder.append(" WHERE ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
@@ -233,13 +233,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     /** 添加SQL and in(?...) 语句 */
-    public T andIn(String filed, Collection<Object> ary){
+    public T andIn(String filed, Iterable<Object> ary){
         _builder.append(" AND ").append(formatField(filed)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL and not in(?...) 语句 */
-    public T andNin(String filed, Collection<Object> ary){
+    public T andNin(String filed, Iterable<Object> ary){
         _builder.append(" AND ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
@@ -300,13 +300,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     }
 
     /** 添加SQL or in(?...) 语句 */
-    public T orIn(String filed, Collection<Object> ary){
+    public T orIn(String filed, Iterable<Object> ary){
         _builder.append(" OR ").append(formatField(filed)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL or not in(?...) 语句 */
-    public T orNin(String filed, Collection<Object> ary){
+    public T orNin(String filed, Iterable<Object> ary){
         _builder.append(" OR ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }

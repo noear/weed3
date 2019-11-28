@@ -24,6 +24,8 @@
 -whereGt(filed:String,val:Object) -> self //添加SQL where > 语句
 -whereGte(filed:String,val:Object) -> self //添加SQL where >= 语句
 -whereLk(filed:String,val:String) -> self //添加SQL where like 语句
+-whereIn(filed:String,ary:List<Object>) -> self //添加SQL where like 语句
+-whereNin(filed:String,ary:String) -> self //添加SQL where like 语句
 
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
