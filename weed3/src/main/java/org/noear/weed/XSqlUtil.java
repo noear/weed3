@@ -21,7 +21,7 @@ public class XSqlUtil {
         }
 
         //4.生成命令
-        DbProcedure sp = db.call( sqlid);
+        DbProcedure sp = db.call(sqlid);
         if(paramS!=null) {
             sp.setMap(paramS);
         }
