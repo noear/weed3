@@ -730,11 +730,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
         _builder.backup();
 
+        _builder.insert(StringUtils.releaseBuilder(sb));
+
         if(_builder_bef.length()>0){
             _builder.insert(_builder_bef);
         }
-
-        _builder.insert(StringUtils.releaseBuilder(sb));
 
         DbQuery rst = compile();
 

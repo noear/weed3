@@ -15,6 +15,19 @@ import webapp.dso.SqlAnnotation;
 public class AnnotController {
     DbContext db2 = DbConfig.db2;
 
+    @XMapping("demo0/test")
+    public Object test() throws Exception {
+        //
+        // mysql 8.0 才支持
+        //
+         return db2.table("ag").innerJoin("ax").on("ag.agroup_id = ax.agroup_id")
+                .limit(10)
+                .with("ax","select * from appx")
+                .with("ag","select * from appx_agroup where agroup_id<10")
+                .select("ax.*")
+                .getMapList();
+    }
+
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("view.ftl");
