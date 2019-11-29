@@ -39,9 +39,9 @@ public class DbExec {
         //
         String name = sqlid.substring(1);
 
-        XmlSqlBlock block = XmlSqlFactory.get(sqlid);
+        XmlSqlBlock block = XmlSqlFactory.get(name);
         if(block == null){
-            throw new RuntimeException("Xml sql @" +sqlid);
+            throw new RuntimeException("Xml sql @" +name);
         }
 
         SQLBuilder s = block.builder.build(paramS);
