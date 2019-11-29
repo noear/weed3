@@ -47,7 +47,7 @@ public class DbExec {
         SQLBuilder s = block.builder.build(paramS);
         String sql = " "+s.toString().toLowerCase();
 
-        if(sql.indexOf(" insert to ")>=0) {
+        if(sql.indexOf(" insert into ")>=0) {
             return master.sql(s).insert();
         }else{
             return master.sql(s).execute();
