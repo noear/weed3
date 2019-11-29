@@ -5,7 +5,6 @@
 # Weed for java
 微型ORM（支持：java sql，xml sql，annotation sql；事务；缓存）
 
-
 支持什么数据库？？？
 
 与具体数据库无关（或许支持所有数据库）
