@@ -23,14 +23,14 @@ public class DbExec {
      * @param sqlid =@{包名}.id
      * @return 自增ID或影响行数
      *
-     * 示例1：
-     * long id = DbExec.execute("@xxx.user_add",new DbMap().add("m",userModel).add("type",2));    //将userModel做为m变量在xmlsql里用
+     * 示例1：//将userModel做为m变量在xmlsql里用
+     * long id = DbExec.execute("@xxx.user_add",new DbMap().add("m",userModel).add("type",2));
      *
-     * 示例2：
-     * long id = DbExec.execute("@xxx.user_add",new DbMap().add("name",name).add("sex",1));    //将各变量依次设置
+     * 示例2：//将各变量依次设置
+     * long id = DbExec.execute("@xxx.user_add",new DbMap().add("name",name).add("sex",1));
      *
-     * 示例3：
-     * long id = DbExec.execute("@xxx.user_add",new DbMap(userModel));    //将userModel的字段分散为变量
+     * 示例3：//将userModel的字段分散为变量
+     * long id = DbExec.execute("@xxx.user_add",new DbMap(userModel));
      *
      * */
     public static long execute(String sqlid, DbMap paramS) throws Exception{
