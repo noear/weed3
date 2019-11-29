@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.noear/weed3.svg)](https://search.maven.org/search?q=weed3)
+[![Maven Central](https://img.shields.io/maven-central/v/org.noear/weed3.svg)](https://mvnrepository.com/search?q=weed3)
 
 ` QQ交流群：22200020 `
 
