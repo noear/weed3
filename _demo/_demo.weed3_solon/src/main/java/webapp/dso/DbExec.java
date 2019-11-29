@@ -55,8 +55,9 @@ public class DbExec {
     }
 
     /**
-     * 批量执行：
+     * 批量执行：insert,update,delete
      *
+     * @return 返回与sqlid对应的结果Map
      * */
     public static Map<String,Long> executeBatch(Map<String,DbMap> sqlidAndParmaSList) throws Exception{
         Map<String,Long> map = new HashMap<>();
