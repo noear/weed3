@@ -472,57 +472,66 @@ WeedConfig.onLog((cmd) -> {
 db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行onLog日志处理
 ```
 
-更多高级示例请参考Weed3Demo <br/>
---------------------------------------<br/>
-# Weed3 接口字典
+更多高级示例请参考Weed3Demo
+
+
+# Weed3接口字典
 #### db.table("table") -> new:DbTableQuery
 ```swift
 //
 // 构建相关
 //
 
--build(builder:(tq)->{}) -> self //通过表达式构建自己
+-build(builder:(q)->{}) -> self //通过表达式构建自己
 
 //例: db.table("user u")
 //      .with("a","select type num from group by type")
 //      .where("u.type in(select a.type) and u.type2 in (select a.type)")
 //      .select("u.*")
 //      .getMapList();
--with(name:String,code:String,args:Object...) -> self //添加SQL with 语句
+-with(name:String,code:String,args:Object...) -> self   //添加SQL with 语句
 
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -where() -> self //添加SQL where 关键字
--whereEq(filed:String,val:Object) -> self //添加SQL where = 语句
--whereLt(filed:String,val:Object) -> self //添加SQL where < 语句
--whereLte(filed:String,val:Object) -> self //添加SQL where <= 语句
--whereGt(filed:String,val:Object) -> self //添加SQL where > 语句
--whereGte(filed:String,val:Object) -> self //添加SQL where >= 语句
--whereLk(filed:String,val:String) -> self //添加SQL where like 语句
+-whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
+-whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
+-whereLte(filed:String,val:Object) -> self              //添加SQL where <= 语句
+-whereGt(filed:String,val:Object) -> self               //添加SQL where > 语句
+-whereGte(filed:String,val:Object) -> self              //添加SQL where >= 语句
+-whereLk(filed:String,val:String) -> self               //添加SQL where like 语句
+-whereIn(filed:String,ary:Iterable<Object>) -> self     //添加SQL where in 语句
+-whereNin(filed:String,ary:Iterable<Object>) -> self    //添加SQL where not in 语句
+
 
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -and() -> self //添加SQL where 关键字
--andEq(filed:String,val:Object) -> self //添加SQL and = 语句
--andLt(filed:String,val:Object) -> self //添加SQL and < 语句
--andLte(filed:String,val:Object) -> self //添加SQL and <= 语句
--andGt(filed:String,val:Object) -> self //添加SQL and > 语句
--andGte(filed:String,val:Object) -> self //添加SQL and >= 语句
--andLk(filed:String,val:String) -> self //添加SQL and like 语句
+-andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
+-andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
+-andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
+-andGt(filed:String,val:Object) -> self             //添加SQL and > 语句
+-andGte(filed:String,val:Object) -> self            //添加SQL and >= 语句
+-andLk(filed:String,val:String) -> self             //添加SQL and like 语句
+-andIn(filed:String,ary:Iterable<Object>) -> self   //添加SQL where in 语句
+-andNin(filed:String,ary:Iterable<Object>) -> self  //添加SQL where not in 语句
 
 
 //例1：.or("name=?","x"); 
 //例2: .or("(name=? or id=?)","x",1)
 -or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -or() -> self //添加SQL or 关键字
--orEq(filed:String,val:Object) -> self //添加SQL or = 语句
--orLt(filed:String,val:Object) -> self //添加SQL or < 语句
--orLte(filed:String,val:Object) -> self //添加SQL or <= 语句
--orGt(filed:String,val:Object) -> self //添加SQL or > 语句
--orGte(filed:String,val:Object) -> self //添加SQL or >= 语句
--orLk(filed:String,val:String) -> self //添加SQL or like 语句
+-orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
+-orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
+-orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
+-orGt(filed:String,val:Object) -> self              //添加SQL or > 语句
+-orGte(filed:String,val:Object) -> self             //添加SQL or >= 语句
+-orLk(filed:String,val:String) -> self              //添加SQL or like 语句
+-orIn(filed:String,ary:Iterable<Object>) -> self    //添加SQL or in 语句
+-orNin(filed:String,ary:Iterable<Object>) -> self   //添加SQL or not in 语句
+
 
 -begin() -> self //添加左括号
 -begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）
@@ -548,7 +557,7 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 -limit(rows:int) -> self //添加SQL limit语句
 -limit(start:int, rows:int) -> self //添加SQL limit语句
 
--top(rows:int) //添加SQL top 语句
+-top(rows:int) -> self //添加SQL top 语句
 
 -append(code:String,args:Object...) ->self //添加无限制代码 //可使用?,?...占位符（ ?... 表示数组占位符）
 
@@ -580,8 +589,8 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 // 控制相关
 //
 -log(isLog:boolean) -> self //标记是否记录日志
--usingNull(isUsing:boolean) //充许使用null插入或更新
--usingExpr(isUsing:boolean) //充许使用$表达式做为set值
+-usingNull(isUsing:boolean) -> self //充许使用null插入或更新
+-usingExpr(isUsing:boolean) -> self //充许使用$表达式做为set值
 
 
 //
@@ -594,10 +603,10 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 ```
 #### db.call("process") -> new:DbProcedure
 ```swift
@@ -643,10 +652,10 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 
 ```
 
@@ -679,10 +688,10 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //
 // 缓存控制相关
 //
--caching(service:ICacheService) //使用一个缓存服务
--usingCache(isCache:boolean) //是否使用缓存
--usingCache(seconds:int) //使用缓存时间（单位：秒）
--cacheTag(tag:String) //为缓存添加标签
+-caching(service:ICacheService) -> self //使用一个缓存服务
+-usingCache(isCache:boolean) -> self //是否使用缓存
+-usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
+-cacheTag(tag:String) -> self //为缓存添加标签
 ```
 
 #### db.mapper(Class<?>) -> SqlMapper? proxy
