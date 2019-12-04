@@ -6,9 +6,6 @@ import org.noear.solon.annotation.XSingleton;
 import org.noear.weed.DbContext;
 import webapp.dso.DbConfig;
 
-import static org.noear.weed.OrderBy.ASC;
-import static org.noear.weed.OrderBy.DESC;
-
 @XMapping("/test")
 @XSingleton(true)
 @XController
@@ -41,7 +38,7 @@ public class TestController {
         // mysql 8.0 才支持
         //
         Object tmp = db2.table("ax")
-                .orderBy("app_id", DESC)
+                .orderByDesc("app_id")
                 .limit(2)
                 .with("ax", db2.table("appx").selectQ("*"))
                 .select("ax.*")

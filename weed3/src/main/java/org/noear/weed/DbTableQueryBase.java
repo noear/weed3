@@ -661,8 +661,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
-    public T orderBy(String filed, OrderBy by) {
-        _builder.append(" ORDER BY ").append(formatField(filed)).append(" ").append(by.name);
+    public T orderByAsc(String fileds) {
+        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" ASC ");
+        return (T)this;
+    }
+
+    public T orderByDesc(String fileds) {
+        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
         return (T)this;
     }
 
