@@ -15,7 +15,7 @@ import static org.noear.weed.OrderBy.DESC;
 public class TestController {
     DbContext db2 = DbConfig.db2;
 
-    @XMapping("demo0/test1")
+    @XMapping("demo1")
     public Object test(String sql) throws Exception {
         //
         // mysql 8.0 才支持
@@ -35,7 +35,7 @@ public class TestController {
         }
     }
 
-    @XMapping("demo0/test2")
+    @XMapping("demo2")
     public Object test2(String sql) throws Exception {
         //
         // mysql 8.0 才支持
