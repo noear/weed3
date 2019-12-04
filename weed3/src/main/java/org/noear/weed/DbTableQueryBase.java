@@ -117,6 +117,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T) this;
     }
 
+    public T with(String name, SelectQ select) {
+        if (_builder_bef.length() < 6) {
+            _builder_bef.append(" WITH ");
+        }else{
+            _builder_bef.append("," );
+        }
+
+        _builder_bef.append(formatField(name))
+                .append(" AS (")
+                .append(select)
+                .append(") ");
+
+        return (T) this;
+    }
+
     /** 添加SQL where 语句
      * 可使用?,?...占位符（ ?... 表示数组占位符）
      *
@@ -712,6 +727,27 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
 
     public IQuery select(String columns) {
 
+        select_do(columns);
+
+        DbQuery rst = compile();
+
+        if(_cache != null){
+            rst.cache(_cache);
+        }
+
+        _builder.restore();
+
+        return rst;
+    }
+
+    public SelectQ selectQ(String columns) {
+
+        select_do(columns);
+
+        return new SelectQ(_builder);
+    }
+
+    private void select_do(String columns){
         StringBuilder sb = StringUtils.borrowBuilder();
 
         //1.构建sql
@@ -735,18 +771,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         if(_builder_bef.length()>0){
             _builder.insert(_builder_bef);
         }
-
-        DbQuery rst = compile();
-
-        if(_cache != null){
-            rst.cache(_cache);
-        }
-
-        _builder.restore();
-
-        return rst;
     }
-
 
 
     protected DbTran _tran = null;

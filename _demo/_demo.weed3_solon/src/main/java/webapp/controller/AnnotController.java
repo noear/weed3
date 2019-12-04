@@ -20,18 +20,19 @@ public class AnnotController {
         //
         // mysql 8.0 才支持
         //
-         Object tmp = db2.table("ag").innerJoin("ax").on("ag.agroup_id = ax.agroup_id")
+        Object tmp = db2.table("ag").innerJoin("ax").on("ag.agroup_id = ax.agroup_id")
                 .limit(10)
-                .with("ax","select * from appx")
-                .with("ag","select * from appx_agroup where agroup_id<10")
+                .with("ax", db2.table("appx").selectQ("*"))
+                .with("ag", db2.table("appx_agroup").where("agroup_id < 10").selectQ("*"))
+                .with("ah", "select * from appx_agroup where agroup_id<?",10)
                 .select("ax.*")
                 .getMapList();
 
-         if(sql == null){
-             return tmp;
-         }else{
-             return db2.lastCommand.text;
-         }
+        if (sql == null) {
+            return tmp;
+        } else {
+            return db2.lastCommand.text;
+        }
     }
 
     @XMapping("demo0/html")
