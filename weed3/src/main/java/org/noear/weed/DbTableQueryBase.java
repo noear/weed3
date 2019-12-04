@@ -661,6 +661,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+    public T orderBy(String filed, OrderBy by) {
+        _builder.append(" ORDER BY ").append(formatField(filed)).append(" ").append(by.name);
+        return (T)this;
+    }
+
     /** 添加SQL limit语句 */
     public T limit(int start, int rows) {
         _builder.append(" LIMIT " + start + "," + rows + " ");
