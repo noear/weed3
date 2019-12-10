@@ -67,7 +67,6 @@ public class DbTran {
 
             DbTranUtil.currentSet(this);
             handler.run(this);
-            DbTranUtil.currentRemove();
 
             commit(false);
 
@@ -81,6 +80,7 @@ public class DbTran {
                 queue.rollback(false);
             throw ex;
         } finally {
+            DbTranUtil.currentRemove();
             close(false);
         }
 
