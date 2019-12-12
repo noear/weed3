@@ -1,6 +1,4 @@
-### Weed3 一个微型ORM框架（只有0.1Mb哦）
-[源码：https://github.com/noear/weed3](https://github.com/noear/weed3)
-[源码：https://gitee.com/noear/weed3](https://gitee.com/noear/weed3)
+# Weed3 一个新的微型ORM框架（只有0.1Mb哦）
 
 > 05年的时候开始写这个框架的1代版本。。。
 08年时进入互联网公司重构写了2代版本。。。
@@ -8,13 +6,18 @@
 最近被迫加了xml mapper的支持（总是有人因为这个问题数落它）。。。
 终于包也变大到0.1Mb了。。。
 
+
 上次一个群里的朋友说，这是个清奇的框架。这个讲法很有意思啊。。
+
 
 总体上来讲，这个框架的特点就是`不喜欢反射、不喜欢配置`（但仍然避免不了）！！！是希望通过良好的接口设计，来完全成简洁的操控体验。`或许你觉得随便手写点sql都比它好`（怎么可能呢，哈哈~~）
 
+
 对于一些老人来说，这样描述可能给较好：它相当于 mybatis + mybatis-puls （有个对标物，容易理解些）。。。不过我没用过它们，可能讲得也不对。
 
+
 另外，它很小，它很快，它很自由（也有人说，太自由反而难控制）
+
 
 ### 【1】先Hello world一下
 * 建个任何类型的java项目，引入框架包
@@ -22,7 +25,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.1.3</version>
+    <version>3.2.3.7</version>
 </dependency>
 
 <!-- 这个是顺带的，数据库连接器总要有一个 -->
@@ -38,7 +41,9 @@
 // hello world 走起...（数据库链接改个对口的...）
 public static void main(String[] args){
     DbContext db  = new DbContext("user","jdbc:mysql://127.0.0.1:3306/user","root","1234");
+    
     String rst = db.sql("SELECT 'hello world!'").getValue();//获取值
+  
     System.out.println(rst);
 }
 ```
@@ -49,24 +54,11 @@ public static void main(String[] args){
 weed3 支持`纯java链式写法` 或者 `xml mapper写法`。安排上会先介绍纯java写法。。。再慢慢讲开来。
 
 ### 【2.1】开始纯java使用
-> 纯java使用时，有三大接口可用：`db.table(..), db.call(..), db.sql()`。一般使用`db.table(..)`接口进行链式操作居多。它的接口采用与SQL映射的方式命名。。。使用的人，容易想到能有哪些链式接口。像：`.where(..) .and(..) .innerJoin(..) `等...
+> 纯java使用时，有三大接口可用：`db.table(..)`， `db.call(..)`， ` db.sql()`。一般使用`db.table(..)`接口进行链式操作居多。它的接口采用与SQL映射的方式命名。。。使用的人，容易想到能有哪些链式接口。像：`.where(..) .and(..) .innerJoin(..) `等...
 
-> 链式操作的套路：
-以 `db.table(..)` 开始。
-以 `.update(..)` 或 `.insert(..)` 或 `.delete(..)` 或 `.select(..)`。
-其中`.select(..)` 会返回`IQuery`接口，提供了各种类型结果的选择。
+> 链式操作的套路：以 `db.table(..)` 开始。以 `.update(..)` 或 `.insert(..)` 或 `.delete(..)` 或 `.select(..)`。其中`.select(..)` 会返回`IQuery`接口，提供了各种类型结果的选择。
 
-##### 首先，添加meven依赖
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3</artifactId>
-  <version>3.2.1.3</version>
-</dependency>
-
-<!-- 数据库连接器，我就不管了 -->
-```
-##### 然后，实例化数据库上下文对象
+##### 首先，实例化数据库上下文对象
 * 所有weed3的操作，都是基于DbContext。所以要先实列化一下。。。
 1. 需要有配置，可以在`application.properties`获取，可以通过配置服务获取，可以临时手写一下。。
 > 如果是 Spring 框架，可以通过注解获取配置
@@ -74,6 +66,12 @@ weed3 支持`纯java链式写法` 或者 `xml mapper写法`。安排上会先介
 
 2.有配置之后开始实列化DbContext。这里临时手写一下。
 ```java
+//使用Properties配置的示例
+DbContext db  = new DbContext(properties); 
+
+//使用Map配置的示例
+DbContext db  = new DbContext(map); 
+
 //使用proxool线程池配置的示例（好像现在不流行了）
 DbContext db  = new DbContext("user","proxool.xxx_db"); 
 
@@ -205,9 +203,10 @@ var qr = db.table("test").set("sex",1);
 if(icon!=null){
   qr.set("icon",icon);
 }
-qr.where("mobile=?","111").update();  
+qr.where("mobile=?","111").update();
+
 //2.链式操作套路
-db.table("test").set("sex",1).expre((tb)->{ //加个表达式
+db.table("test").set("sex",1).build((tb)->{ //加个表达式
   if(icon!=null){
     tb.set("icon",icon);
   }
@@ -703,23 +702,15 @@ public interface IQuery extends ICacheController<IQuery> {
 ```
 ### 【3.1】开始Xml Mapper的使用
 ##### 准备开始做个简单的例子
-> 这次需要引用一个meven插件（玩过mybatis都懂的）
+> 这次需要再引用一个meven插件（玩过mybatis都懂的）
 
-框架引用
-```xml
-<dependency>
-  <groupId>org.noear</groupId>
-  <artifactId>weed3</artifactId>
-  <version>3.2.1.3</version>
-</dependency>
-```
 meven插件引用（用于生成mapper类）
 ```xml
 <!-- 放到 build / plugins / 下面 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.3.7</version>
 </plugin>
 ```
 ###### Xml文件位置约定
@@ -729,7 +720,7 @@ meven插件引用（用于生成mapper类）
 * resources/weed3/DbUserApi.xml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="weed3demo.xmlsql" :db="testdb">
+<mapper namespace="weed3demo.xmlsql">
     <sql id="user_get" 
          :return="weed3demo.mapper.UserModel" 
          :note="获取用户信息">
@@ -766,7 +757,7 @@ public static void main(String[] args){
   DbContext db = new DbContext(...).nameSet("testdb");
 
   //通过代理获取xml mapper
-  DbUserApi dbUserApi = XmlSqlMapper.get(DbUserApi.class);
+  DbUserApi dbUserApi = db.mapper(DbUserApi.class);
   //使用它
   UserModel tmp = dbUserApi.user_get(10);
 }
@@ -776,7 +767,7 @@ public static void main(String[] args){
 `这个示例里把各种情况应该呈现出来了`
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="weed3demo.xmlsql2" :db="testdb">
+<mapper namespace="weed3demo.xmlsql2">
     <sql id="user_add1" :return="long"
          :param="m:weed3demo.mapper.UserModel,sex:int"
          :note="添加用户">
@@ -860,7 +851,6 @@ sql 代码块定义指令
   :declare（属性：内部变量类型预申明）
   :return（属性：返回类型）
 
-  :db （属性：数据库上下文name）
   :note（属性：描述、说明、注解）
 
   :caching（属性：缓存服务name） //是对 ICacheController 接口的映射
@@ -913,7 +903,7 @@ ${name:type} = 变量替换（用于代码块，或:cacheTag，或:cacheClear）
 
 //单值
 :return="String" //将返回 String （或别的任何单职类型）
-```
+ ```
 ### 【4】事务和事务队列
 ##### 之前讲过插入和更新
 ##### 这次讲事务（写操作总会傍随事务嘛...）
@@ -921,22 +911,22 @@ ${name:type} = 变量替换（用于代码块，或:cacheTag，或:cacheClear）
 * 1.事务（主要用于单个库）
 ```java
 //demo1:: //事务组 // 在一个事务里，做4个插入//如果出错了，自动回滚
-DbUserApi dbUserApi = XmlSqlProxy.getSingleton(DbUserApi.class);
+DbUserApi dbUserApi = db.mapper(DbUserApi.class);
 
 db.tran((t) -> {
     //
     // 此表达式内的操作，会自动加入事务
     //
-//sql接口
+		//sql接口
     db.sql("insert into test(txt) values(?)", "cc").insert();
     db.sql("update test set txt='1' where id=1").execute();
-//call接口
+		//call接口
     db.call("user_del").set("_user_id",10).execute();
-//table()接口
+		//table()接口
     db.table("a_config").set("cfg_id",1).insert();
-//xml mapper
+		//xml mapper
     dbUserApi.user_add(12);
-//大家使用统一的事务模式
+		//大家使用统一的事务模式
 });
 ```
 

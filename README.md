@@ -3,23 +3,18 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-微型ORM（支持：java sql，xml sql，annotation sql；事务；缓存）
-
-
-支持什么数据库？？？
-
-与具体数据库无关（或许支持所有数据库）
+微型ORM（支持：java sql，xml sql，annotation sql；事务；缓存；等...）
 
 #### 理念：
 高性能、跨平台、轻量、有个性；不喜欢反射、不喜欢配置...
 
 #### 特点：
-* 1.零反射零注解（后来加了一点点反射的的可选功能...）
-* 2.漂亮的缓存控制（缓存服务由外部提供）
-* 3.纯代码无任何配置
-* 4.分布式事务集成
+* 1.几乎零反射零注解
+* 2.漂亮的缓存控制
+* 3.纯代码无多余配置
+* 4.分布式事务支持
 * 5.万能的数据绑定
-* 6.接口少简单
+* 6.接口少而简单
 
 #### 相关文章：
 * [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
@@ -56,7 +51,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.3.6</version>
+    <version>3.2.3.7</version>
 </dependency>
 ```
 
