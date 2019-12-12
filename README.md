@@ -51,7 +51,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.3.7</version>
+    <version>3.2.3.8</version>
 </dependency>
 ```
 
@@ -480,7 +480,6 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--whereIf(condition:boolean, code:String, Object...)			//条件版的where()
 -where() -> self //添加SQL where 关键字
 -whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
 -whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
