@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.noear.weed.WeedConfig.isUsingTableSpace;
 
@@ -144,6 +145,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+    public T whereIf(boolean condition, String code, Object... args) {
+        if (condition) {
+            where(code, args);
+        }
+        return (T) this;
+    }
+
     /** 添加SQL where 关键字 */
     public T where() {
         _builder.append(" WHERE ");
@@ -210,6 +218,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
+    public T andIf(boolean condition, String code, Object... args) {
+        if (condition) {
+            and(code, args);
+        }
+        return (T) this;
+    }
+
     /** 添加SQL where 关键字 */
     public T and() {
         _builder.append(" AND ");
@@ -270,6 +285,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
     public T or(String code, Object... args) {
         _builder.append(" OR ").append(formatCondition(code), args);
         return (T)this;
+    }
+
+    public T orIf(boolean condition, String code, Object... args) {
+        if (condition) {
+            or(code, args);
+        }
+        return (T) this;
     }
 
     /** 添加SQL or 关键字 */

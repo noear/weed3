@@ -18,6 +18,13 @@ public interface IDataItem extends GetHandler, Serializable {
     void remove(String name);
 
     IDataItem set(String name, Object value);
+    default IDataItem setIf(boolean condition, String name, Object value){
+        if(condition){
+            set(name,value);
+        }
+        return this;
+    }
+
     Object get(int index);
     @Override
     Object get(String name);

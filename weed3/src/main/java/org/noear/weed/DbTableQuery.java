@@ -17,6 +17,13 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         super(context);
     }
 
+    public DbTableQuery setIf(boolean condition, String name, Object value){
+        if(condition){
+            set(name,value);
+        }
+
+        return this;
+    }
 
     public DbTableQuery set(String name, Object value) {
         if (_item == null) {
