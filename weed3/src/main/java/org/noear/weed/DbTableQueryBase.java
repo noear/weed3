@@ -145,12 +145,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> implements ICacheContr
         return (T)this;
     }
 
-    public T whereIf(boolean condition, String code, Object... args) {
-        if (condition) {
-            where(code, args);
-        }
-        return (T) this;
-    }
+    //
+    // 不能有 whereIf //太危险了。。。可能会造成更新所有
+    //
 
     /** 添加SQL where 关键字 */
     public T where() {
