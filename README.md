@@ -145,27 +145,17 @@ db.tran(tran->{
 ```java
 //连式处理::对不确定的条件拼装
 db.table("test")
-  .build(tb -> {
-      tb.where("1=1");
-
-      if (1 == 2) {
-          tb.and("mobile=?", "xxxx");
-      } else {
-          tb.and("icon=?", "xxxx");
-      }
-  }).select("*");
+  .where("1=1")
+  .andIf(1 == 2, "mobile=?", "xxxx")
+  .andIf(1 != 2, "icon=?", "xxxx")
+  .select("*");
   
 //连式处理::对不确定字段的插入
 db.table("test")
-  .build(tb -> {
-      tb.set("name", "xxx");
-
-      if (1 == 2) {
-          tb.set("mobile", "xxxx");
-      } else {
-          tb.set("icon", "xxxx");
-      }
-  }).insert(); 
+  .set("name", "xxx")
+  .setIf(1==2,"mobile", "xxxx")
+  .setIf(1!=2,"icon", "xxxx")
+  .insert(); 
 ```
 示例1.1.3::基于反射功能（应用户要求...）<br/>
 ```java
@@ -471,6 +461,7 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 
 
 # Weed3接口字典
+
 #### db.table("table") -> new:DbTableQuery
 ```swift
 //
@@ -489,6 +480,7 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-whereIf(condition:boolean, code:String, Object...)			//条件版的where()
 -where() -> self //添加SQL where 关键字
 -whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
 -whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
@@ -503,7 +495,8 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--and() -> self //添加SQL where 关键字
+-andIf(condition:boolean, code:String, Object...)		//条件版的and()
+-and() -> self 	//添加SQL and 关键字
 -andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
 -andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
 -andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
@@ -517,7 +510,8 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 //例1：.or("name=?","x"); 
 //例2: .or("(name=? or id=?)","x",1)
 -or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--or() -> self //添加SQL or 关键字
+-orIf(condition:boolean, code:String, Object...)		//条件版的or()
+-or() -> self		//添加SQL or 关键字
 -orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
 -orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
 -orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
@@ -532,9 +526,12 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 -begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）
 -end() -> self //添加右括号
 
--set(name:String,value:Object) -> self
+-set(name:String, value:Object) -> self
+-setIf(condition:boolean, name:String, value:Object) -> self	//条件版的set()
 -setMap(data:Map<String,Object>) -> self
+-setMapIf(data:Map<String,Object>, condition:(k,v)->boolean) -> self	//条件版的setMapIf()
 -setEntity(data:Object) -> self
+-setEntityIf(data:Object, condition:(k,v)->boolean) -> self		//条件版的setEntityIf()
 
 
 
@@ -622,9 +619,12 @@ db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行on
 // 变量设置相关
 //
 -set(param:String,value:Object) -> self //设置变量
+-setIf(condition:boolean, param:String,value:Object) -> self //条件版的set()
 -set(param:String,valueGetter:()->Object) -> self //设置变量
 -setMap(map:Map<String,Object>) -> self //设置变量(将map输入)
+-setMapIf(map:Map<String,Object>, condition:(k,v)->boolean) -> self //条件版的setMap()
 -setEntity(obj:Object) -> self //设置变量(将实体输入)
+-setEntityIf(obj:Object, condition:(k,v)->boolean) -> self //条件版的setEntity()
 
 //
 // 执行相关
@@ -732,6 +732,8 @@ public interface IQuery extends ICacheController<IQuery> {
      <T> List<T> getArray(int columnIndex) throws SQLException;
 }
 ```
+
+
 
 
 
