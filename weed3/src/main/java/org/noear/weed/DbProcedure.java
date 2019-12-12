@@ -3,6 +3,8 @@ package org.noear.weed;
 import org.noear.weed.cache.CacheState;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.ext.Fun1;
+import org.noear.weed.ext.Fun2;
+import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -21,7 +23,32 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
     abstract public DbProcedure set(String param, Object value);
     abstract public DbProcedure set(String param, Fun0<Object> valueGetter);
     abstract public DbProcedure setMap(Map<String, Object> map);
-    abstract public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException;
+    abstract public DbProcedure setEntity(Object obj);
+
+    public DbProcedure setIf(boolean condition, String param, Object value){
+        if(condition){
+            set(param,value);
+        }
+        return this;
+    }
+    public DbProcedure setMapIf(Map<String, Object> map, Fun2<Boolean,String,Object> condition){
+        if(map!=null){
+            map.forEach((k,v)->{
+                if(condition.run(k,v)){
+                    set(k,v);
+                }
+            });
+        }
+        return this;
+    }
+    public DbProcedure setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
+        EntityUtils.fromEntity(obj, (k, v) -> {
+            if (condition.run(k, v)) {
+                set(k, v);
+            }
+        });
+        return this;
+    }
 
     //=================================
     //

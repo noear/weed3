@@ -99,7 +99,7 @@ public class DbQueryProcedure extends DbProcedure {
         return this;
     }
     @Override
-    public DbProcedure setEntity(Object obj) throws  RuntimeException,ReflectiveOperationException{
+    public DbProcedure setEntity(Object obj) {
         EntityUtils.fromEntity(obj,(k, v)->{
             set_do(k, v);
         });

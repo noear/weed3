@@ -56,7 +56,7 @@ public class DbSqlProcedure extends DbProcedure {
     }
 
     @Override
-    public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
+    public DbProcedure setEntity(Object obj){
         EntityUtils.fromEntity(obj,(k, v)->{
             _map.put(k,v);
 

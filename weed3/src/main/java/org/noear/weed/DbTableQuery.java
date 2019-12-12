@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.Fun2;
+
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -17,6 +19,19 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         super(context);
     }
 
+    private void item_init(){
+        if (_item == null) {
+            _item = new DataItem();
+        }
+    }
+
+    public DbTableQuery set(String name, Object value) {
+        item_init();
+        _item.set(name, value);
+
+        return this;
+    }
+
     public DbTableQuery setIf(boolean condition, String name, Object value){
         if(condition){
             set(name,value);
@@ -25,54 +40,34 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
-    public DbTableQuery set(String name, Object value) {
-        if (_item == null) {
-            _item = new DataItem();
-        }
-
-        _item.set(name, value);
-
-        return this;
-    }
-
     public DbTableQuery setMap(Map<String,Object> data) {
-        if (_item == null) {
-            _item = new DataItem();
-        }
-
+        item_init();
         _item.setMap(data);
 
         return this;
     }
 
-//    public DbTableQuery setMap(Map<String,Object> data, String... cols) {
-//        if (cols.length == 0) {
-//            throw new RuntimeException("Please enter cols");
-//        }
-//
-//        if (_item == null) {
-//            _item = new DataItem();
-//        }
-//
-//        for (String c : cols) {
-//            if (data.containsKey(c)) {
-//                _item.set(c, data.get(c));
-//            }
-//        }
-//
-//        return this;
-//    }
-
-    public DbTableQuery setEntity(Object data) throws ReflectiveOperationException{
-        if (_item == null) {
-            _item = new DataItem();
-        }
-
-        _item.fromEntity(data);
+    public DbTableQuery setMapIf(Map<String,Object> data, Fun2<Boolean,String,Object> condition) {
+        item_init();
+        _item.setMapIf(data, condition);
 
         return this;
     }
 
+    public DbTableQuery setEntity(Object data) {
+        item_init();
+        _item.setEntity(data);
+
+        return this;
+    }
+
+    public DbTableQuery setEntityIf(Object data, Fun2<Boolean,String,Object> condition) {
+        item_init();
+
+        _item.setEntityIf(data, condition);
+
+        return this;
+    }
 
 
     /**

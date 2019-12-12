@@ -1,6 +1,8 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act2;
+import org.noear.weed.ext.Fun1;
+import org.noear.weed.ext.Fun2;
 import org.noear.weed.utils.EntityUtils;
 
 import java.io.*;
@@ -292,13 +294,43 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return this;
     }
 
+    public DataItem setMapIf(Map<String,Object> data, Fun2<Boolean,String,Object> condition) {
+        data.forEach((k, v) -> {
+            if (condition.run(k, v)) {
+                set(k, v);
+            }
+        });
+
+        return this;
+    }
+
+    /** 从Entity 加载数据 */
+    public void setEntity(Object obj)  {
+        EntityUtils.fromEntity(obj,(k, v)->{
+            set(k, v);
+        });
+    }
+
+    public void setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
+        EntityUtils.fromEntity(obj, (k, v) -> {
+            if (condition.run(k, v)) {
+                set(k, v);
+            }
+        });
+    }
+
     /** 获取map */
     public Map<String,Object> getMap(){
         return _data;
     }
 
 
-    /** 从Entity 加载数据 */
+    /**
+     *  从Entity 加载数据
+     *
+     *  可改用：setEntity
+     *  */
+    @Deprecated
     public void fromEntity(Object obj)  {
         EntityUtils.fromEntity(obj,(k, v)->{
             set(k, v);

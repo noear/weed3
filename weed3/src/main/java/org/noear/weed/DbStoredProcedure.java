@@ -42,7 +42,7 @@ public class DbStoredProcedure extends DbProcedure {
     }
 
     @Override
-    public DbProcedure setEntity(Object obj) throws RuntimeException ,ReflectiveOperationException{
+    public DbProcedure setEntity(Object obj) {
         throw new RuntimeException("DbStoredProcedure not support setEntity");
     }
 
