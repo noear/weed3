@@ -1,3 +1,7 @@
+
+3.2.3.7
+1.添加setIf(..),whereIf(..),andIf(..),orIf(..)
+
 3.2.1.6
 1.为缓存服务组件开发提供支持
   >修改 ICacheServiceEx 的 tag 相关操作，改为默认实现

@@ -25,6 +25,18 @@ public class demo_table2 {
                 }
             }).insert();
     }
+    public static void demo_expr1_2() throws SQLException {
+        //新方案
+        String icon = "xxxx";
+
+        db.table("test")
+                .set("name", "xxx")
+                .setIf(1 == 2, "mobile", "xxxx")
+                .setIf(icon != null, "icon", icon)
+                .insert();
+    }
+
+
 
     public static void demo_expr2() throws SQLException {
           //连式处理::对不确定的条件拼装
@@ -40,4 +52,12 @@ public class demo_table2 {
             }).select("*");
     }
 
+    public static void demo_expr2_2() throws SQLException {
+        //新方案
+        db.table("test")
+                .where("1=1")
+                .andIf(1 == 2, "mobile=?", "xxxx")
+                .andIf(1 != 2, "icon=?", "xxxx")
+                .select("*");
+    }
 }

@@ -17,6 +17,7 @@
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-whereIf(condition:boolean, code:String, Object...)			//条件版的where()
 -where() -> self //添加SQL where 关键字
 -whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
 -whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
@@ -31,7 +32,8 @@
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--and() -> self //添加SQL where 关键字
+-andIf(condition:boolean, code:String, Object...)		//条件版的and()
+-and() -> self 	//添加SQL and 关键字
 -andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
 -andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
 -andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
@@ -45,7 +47,8 @@
 //例1：.or("name=?","x"); 
 //例2: .or("(name=? or id=?)","x",1)
 -or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--or() -> self //添加SQL or 关键字
+-orIf(condition:boolean, code:String, Object...)		//条件版的or()
+-or() -> self		//添加SQL or 关键字
 -orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
 -orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
 -orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
@@ -60,9 +63,12 @@
 -begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）
 -end() -> self //添加右括号
 
--set(name:String,value:Object) -> self
+-set(name:String, value:Object) -> self
+-setIf(condition:boolean, name:String, value:Object) -> self	//条件版的set()
 -setMap(data:Map<String,Object>) -> self
+-setMapIf(data:Map<String,Object>, condition:(k,v)->boolean) -> self	//条件版的setMapIf()
 -setEntity(data:Object) -> self
+-setEntityIf(data:Object, condition:(k,v)->boolean) -> self		//条件版的setEntityIf()
 
 
 
@@ -150,9 +156,12 @@
 // 变量设置相关
 //
 -set(param:String,value:Object) -> self //设置变量
+-setIf(condition:boolean, param:String,value:Object) -> self //条件版的set()
 -set(param:String,valueGetter:()->Object) -> self //设置变量
 -setMap(map:Map<String,Object>) -> self //设置变量(将map输入)
+-setMapIf(map:Map<String,Object>, condition:(k,v)->boolean) -> self //条件版的setMap()
 -setEntity(obj:Object) -> self //设置变量(将实体输入)
+-setEntityIf(obj:Object, condition:(k,v)->boolean) -> self //条件版的setEntity()
 
 //
 // 执行相关
