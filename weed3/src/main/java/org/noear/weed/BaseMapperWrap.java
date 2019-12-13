@@ -148,6 +148,17 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public Object selectObj(String column, Act1<WhereQ> condition) {
+        return RunUtils.call(()-> {
+            DbTableQuery qr = db().table(tableName());
+
+            condition.run(new WhereQ(qr));
+
+            return qr.select(column).getValue();
+        });
+    }
+
+    @Override
     public Map<String, Object> selectMap(Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
@@ -190,6 +201,17 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
             condition.run(new WhereQ(qr));
 
             return qr.select("*").getMapList();
+        });
+    }
+
+    @Override
+    public List<Object> selectObjs(String column, Act1<WhereQ> condition) {
+        return RunUtils.call(() -> {
+            DbTableQuery qr = db().table(tableName());
+
+            condition.run(new WhereQ(qr));
+
+            return qr.select(column).getArray(column);
         });
     }
 

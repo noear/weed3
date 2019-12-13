@@ -29,6 +29,7 @@ public interface BaseMapper<T> {
 
     T selectOne(T entity);
     T selectOne(Act1<WhereQ> condition);
+    Object selectObj(String column, Act1<WhereQ> condition);
 
     Map<String, Object> selectMap(Act1<WhereQ> condition);
 
@@ -36,6 +37,7 @@ public interface BaseMapper<T> {
 
     List<T> selectList(Act1<WhereQ> condition);
     List<Map<String, Object>> selectMaps(Act1<WhereQ> condition);
+    List<Object> selectObjs(String column, Act1<WhereQ> condition);
 
     List<T> selectPage(int start, int end, Act1<WhereQ> condition);
     List<Map<String, Object>> selectMapsPage(int start, int end, Act1<WhereQ> condition);

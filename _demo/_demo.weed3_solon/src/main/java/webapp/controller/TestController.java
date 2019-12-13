@@ -56,8 +56,14 @@ public class TestController {
 
     @XMapping("demo3")
     public Object test3(String sql) throws Exception {
+
+
         BaseMapper<AppxModel> mapper = db2.mapper();
         Object tmp = mapper.selectById(48);
+
+        mapper.selectOne(m -> m.where("id=?", 12).and("b=12"));
+
+        mapper.selectOne(m -> m.whereEq("id", 12).and("b=12"));
 
         if (sql == null) {
             return tmp;

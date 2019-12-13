@@ -4,11 +4,15 @@ import org.noear.solon.XApp;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
+import org.noear.weed.ext.Act0;
 import org.noear.weed.xml.XmlSqlLoader;
 import webapp.dso.DbConfig;
+import webapp.model.AppxModel;
 
 public class App {
     public static void main(String[] args){
+        Act0 tmp2 = AppxModel::new;
+
         XmlSqlLoader.tryLoad();
 
         XApp app = XApp.start(App.class,args);
