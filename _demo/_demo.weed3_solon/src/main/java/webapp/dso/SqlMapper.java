@@ -4,6 +4,7 @@ import java.math.*;
 import java.time.*;
 import java.util.*;
 
+import org.noear.weed.BaseMapper;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.xml.Namespace;
@@ -11,7 +12,7 @@ import org.noear.weed.xml.Namespace;
 import webapp.model.AppxModel;
 
 @Namespace("webapp.dso")
-public interface SqlMapper{
+public interface SqlMapper extends BaseMapper<AppxModel> {
     //随便取条数据的ID
     int appx_get() throws Exception;
 
