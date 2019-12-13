@@ -27,11 +27,10 @@ public interface BaseMapper<T> {
 
     Map<String, Object> selectMap(Act1<WhereQ> condition);
 
-
     Long selectCount(Act1<WhereQ> condition);
 
     List<T> selectList(Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMaps(Act1<WhereQ> condition);
 
     List<T> selectPage(int start, int end, Act1<WhereQ> condition);
     List<Map<String, Object>> selectMapsPage(int start, int end, Act1<WhereQ> condition);

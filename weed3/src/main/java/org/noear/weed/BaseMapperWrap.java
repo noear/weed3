@@ -169,7 +169,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<Map<String, Object>> selectMapList(Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMaps(Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
