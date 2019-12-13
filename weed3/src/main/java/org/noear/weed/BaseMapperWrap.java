@@ -8,10 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public class BaseMapperWrap<T> implements BaseMapper<T> {
-    private DbContext db(){
-        return null;
+    private DbContext _db;
+    public BaseMapperWrap(DbContext db){
+        _db = db;
     }
-
+    private DbContext db(){
+        return _db;
+    }
 
     private TypeRef entityType(){
         return new TypeRef<T>() {};
