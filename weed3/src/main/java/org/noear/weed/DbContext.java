@@ -322,7 +322,7 @@ public class DbContext {
      * */
     @Deprecated
     public int exec(String code, Object... args) throws Exception {
-        return exe(code,args);
+        return exe(code, args);
     }
 
 
