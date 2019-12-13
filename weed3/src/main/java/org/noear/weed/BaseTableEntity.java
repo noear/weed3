@@ -13,6 +13,10 @@ class BaseTableEntity {
     public BaseTableEntity(BaseMapper baseMapper) {
         entityType = (Class<?>) baseMapper.entityType();
 
+        if(entityType == Object.class){
+            throw new RuntimeException("请为BaseMapper申明实体类型");
+        }
+
         DbTable ann = entityType.getAnnotation(DbTable.class);
         if (ann != null) {
             tableName = ann.value();
