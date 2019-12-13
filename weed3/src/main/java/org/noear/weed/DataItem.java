@@ -203,68 +203,68 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         jw.WriteObjectEnd();
     }
 
-    private static final String TEMP_ENCODING = "ISO-8859-1";
-    private static final String DEFAULT_ENCODING = "UTF-8";
+//    private static final String TEMP_ENCODING = "ISO-8859-1";
+//    private static final String DEFAULT_ENCODING = "UTF-8";
 
-    public String serialize() throws Exception {
-        String data = null;
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(byteStream);
-            try {
-                out.writeObject(this);
-                data = byteStream.toString(TEMP_ENCODING);//必须是ISO-8859-1
-                data = java.net.URLEncoder.encode(data, DEFAULT_ENCODING);
+//    public String serialize() throws Exception {
+//        String data = null;
+//        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+//        try {
+//            ObjectOutputStream out = new ObjectOutputStream(byteStream);
+//            try {
+//                out.writeObject(this);
+//                data = byteStream.toString(TEMP_ENCODING);//必须是ISO-8859-1
+//                data = java.net.URLEncoder.encode(data, DEFAULT_ENCODING);
+//
+//            } finally {
+//                out.close();
+//            }
+//        }finally {
+//            byteStream.close();
+//        }
+//
+//        return data;
+//    }
+//
+//    public String trySerialize(){
+//        try{
+//            return serialize();
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
 
-            } finally {
-                out.close();
-            }
-        }finally {
-            byteStream.close();
-        }
+//    public static DataItem unserialize(String data) throws Exception{
+//        if(data == null){
+//            return null;
+//        }
+//
+//        DataItem item = null;
+//        data = java.net.URLDecoder.decode(data, DEFAULT_ENCODING);
+//        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes(TEMP_ENCODING));
+//        try {
+//            ObjectInputStream inp = new ObjectInputStream(byteStream);
+//            try {
+//                item = (DataItem) inp.readObject();
+//            } finally {
+//                byteStream.close();
+//            }
+//        }finally {
+//            byteStream.close();
+//        }
+//
+//        return item;
+//    }
 
-        return data;
-    }
-
-    public String trySerialize(){
-        try{
-            return serialize();
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public static DataItem unserialize(String data) throws Exception{
-        if(data == null){
-            return null;
-        }
-
-        DataItem item = null;
-        data = java.net.URLDecoder.decode(data, DEFAULT_ENCODING);
-        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes(TEMP_ENCODING));
-        try {
-            ObjectInputStream inp = new ObjectInputStream(byteStream);
-            try {
-                item = (DataItem) inp.readObject();
-            } finally {
-                byteStream.close();
-            }
-        }finally {
-            byteStream.close();
-        }
-
-        return item;
-    }
-
-    public static DataItem tryUnserialize(String data){
-        try{
-            return unserialize(data);
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }
+//    public static DataItem tryUnserialize(String data){
+//        try{
+//            return unserialize(data);
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
 
     @Override
     public Iterator<Map.Entry<String, Object>> iterator() {
