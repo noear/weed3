@@ -260,12 +260,31 @@ public class DbContext {
         return (T) XSqlUtil.exec(this, sqlid, paramS, null, null);
     }
 
+
     /**
-     * 执行代码，返回影响行数
+     * 获取一个表对象［用于操作插入也更新］
      */
-    public int exec(String code, Object... args) throws Exception {
-        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
+    public DbTableQuery table(String table) {
+        return new DbTableQuery(this).table(table);
     }
+
+
+    /**
+     * 输入process name，获取process执行对象
+     */
+    public DbProcedure call(String process) {
+        if (process.startsWith("@")) {
+            XmlSqlLoader.tryLoad();
+            return new DbSqlProcedure(this).sql(process.substring(1));
+        }
+
+        if (process.indexOf(" ") > 0) {
+            return new DbQueryProcedure(this).sql(process);
+        }
+
+        return new DbStoredProcedure(this).call(process);
+    }
+
 
     /**
      * 输入SQL，获取查询器
@@ -292,28 +311,22 @@ public class DbContext {
 
 
     /**
-     * 输入process name，获取process执行对象
+     * 执行代码，返回影响行数
      */
-    public DbProcedure call(String process) {
-        if (process.startsWith("@")) {
-            XmlSqlLoader.tryLoad();
-            return new DbSqlProcedure(this).sql(process.substring(1));
-        }
-
-        if (process.indexOf(" ") > 0) {
-            return new DbQueryProcedure(this).sql(process);
-        }
-
-        return new DbStoredProcedure(this).call(process);
+    public int exe(String code, Object... args) throws Exception {
+        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
     }
-
 
     /**
-     * 获取一个表对象［用于操作插入也更新］
-     */
-    public DbTableQuery table(String table) {
-        return new DbTableQuery(this).table(table);
+     * 请改用 exe()
+     * */
+    @Deprecated
+    public int exec(String code, Object... args) throws Exception {
+        return exe(code,args);
     }
+
+
+
 
     public DbTran tran(Act1Ex<DbTran, Exception> handler) throws Exception {
         return new DbTran(this).execute(handler);
