@@ -314,7 +314,7 @@ public class DbContext {
      * 执行代码，返回影响行数
      */
     public int exe(String code, Object... args) throws Exception {
-        return new DbQuery(this).sql(new SQLBuilder().append(code, args)).execute();
+        return sql(code, args).execute();
     }
 
     /**
@@ -324,9 +324,6 @@ public class DbContext {
     public int exec(String code, Object... args) throws Exception {
         return exe(code,args);
     }
-
-
-
 
 
 
