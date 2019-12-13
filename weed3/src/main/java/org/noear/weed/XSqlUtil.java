@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class XSqlUtil {
+
     /**
      * @param sqlid =@{namespace}.{id}
      */
@@ -19,6 +20,11 @@ public class XSqlUtil {
         if (block == null) {
             throw new RuntimeException("Xmlsql does not exist:" + sqlid);
         }
+
+        return exec(db, block, sqlid, paramS, rClz, rType);
+    }
+
+    protected static Object exec(DbContext db, XmlSqlBlock block, String sqlid, Map<String, Object> paramS, Class<?> rClz, Type rType) throws Exception {
 
         //4.生成命令
         DbProcedure sp = db.call(sqlid);

@@ -46,7 +46,21 @@ class XSqlHandlerForXml {
         }
 
         Class<?> type1 = method.getReturnType();
-        Type     type2 = method.getGenericReturnType();
-        return XSqlUtil.exec(db,"@" + xml_name, _map, type1, type2);
+        Type type2 = method.getGenericReturnType();
+
+        String sqlid = "@" + xml_name;
+
+        //3.获取代码块，并检测有效性
+        XmlSqlBlock block = XmlSqlFactory.get(xml_name);
+        if (block == null) {
+            if (BaseMapper.class.isAssignableFrom(clazz)) {
+                Object tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
+                return method.invoke(tmp, _map.values());
+            } else {
+                throw new RuntimeException("Xmlsql does not exist:" + sqlid);
+            }
+        }
+
+        return XSqlUtil.exec(db, block, "@" + xml_name, _map, type1, type2);
     }
 }
