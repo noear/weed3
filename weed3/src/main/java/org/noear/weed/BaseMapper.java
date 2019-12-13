@@ -4,10 +4,15 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.TypeRef;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
 public interface BaseMapper<T> {
+    default Type entityType() {
+        return (new TypeRef<T>() {}).getType();
+    }
+
     Long insert(T entity);
 
     Integer deleteById(Object id);

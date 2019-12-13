@@ -242,6 +242,11 @@ public class DbContext {
         return _dataSource.getConnection();
     }
 
+
+    public <T> BaseMapper<T> mapper(){
+        return new BaseMapperWrap<>(this);
+    }
+
     /**
      * 印映一个接口代理
      * */

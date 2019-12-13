@@ -3,8 +3,11 @@ package webapp.controller;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
+import org.noear.weed.BaseMapper;
+import org.noear.weed.BaseMapperWrap;
 import org.noear.weed.DbContext;
 import webapp.dso.DbConfig;
+import webapp.model.AppxModel;
 
 @XMapping("/test")
 @XSingleton(true)
@@ -21,7 +24,7 @@ public class TestController {
                 .limit(10)
                 .with("ax", db2.table("appx").selectQ("*"))
                 .with("ag", db2.table("appx_agroup").where("agroup_id < 10").selectQ("*"))
-                .with("ah", "select * from appx_agroup where agroup_id<?",10)
+                .with("ah", "select * from appx_agroup where agroup_id<?", 10)
                 .select("ax.*")
                 .getMapList();
 
@@ -43,6 +46,18 @@ public class TestController {
                 .with("ax", db2.table("appx").selectQ("*"))
                 .select("ax.*")
                 .getMapList();
+
+        if (sql == null) {
+            return tmp;
+        } else {
+            return db2.lastCommand.text;
+        }
+    }
+
+    @XMapping("demo3")
+    public Object test3(String sql) throws Exception {
+        BaseMapper<AppxModel> mapper = db2.mapper();
+        Object tmp = mapper.selectById(48);
 
         if (sql == null) {
             return tmp;

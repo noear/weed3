@@ -2,31 +2,42 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.RunUtils;
-import org.noear.weed.utils.TypeRef;
 
 import java.util.List;
 import java.util.Map;
 
 public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
+    private BaseTableEntity _table;
+
     public BaseMapperWrap(DbContext db){
         _db = db;
+        _table = new BaseTableEntity(this);
     }
+
+    public BaseMapperWrap(DbContext db, BaseMapper<T> baseMapper){
+        _db = db;
+        _table = new BaseTableEntity(baseMapper);
+    }
+
+
     private DbContext db(){
         return _db;
     }
 
-    private TypeRef entityType(){
-        return new TypeRef<T>() {};
-    }
-
     private String tableName(){
-        return entityType().getType().getTypeName();
+        return _table.tableName;
     }
 
     private String pk(){
-        return null;
+        return _table.pkName;
     }
+
+    private Class<?> entityClz(){
+        return _table.entityType;
+    }
+
+
 
     @Override
     public Long insert(T entity)  {
@@ -90,7 +101,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public T selectById(Object id) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
                 -> db().table(tableName()).whereEq(pk(), id).limit(1).select("*").getItem(clz));
@@ -98,7 +109,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public List<T> selectBatchIds(Iterable<Object> idList) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
                 -> db().table(tableName()).whereIn(pk(), idList).select("*").getList(clz));
@@ -106,7 +117,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public List<T> selectByMap(Map<String, Object> columnMap) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
                 -> db().table(tableName()).whereMap(columnMap).select("*").getList(clz));
@@ -114,7 +125,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public T selectOne(T entity) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         DataItem data = new DataItem();
         data.setEntityIf(entity,(k,v)-> v!=null );
@@ -125,7 +136,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public T selectOne(Act1<WhereQ> condition) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
@@ -160,7 +171,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public List<T> selectList(Act1<WhereQ> condition) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
@@ -185,7 +196,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public List<T> selectPage(int start, int end, Act1<WhereQ> condition) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
+        Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
@@ -198,8 +209,6 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public List<Map<String, Object>> selectMapsPage(int start, int end, Act1<WhereQ> condition) {
-        Class<T> clz = (Class<T>) new TypeRef<T>() {}.getType();
-
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
