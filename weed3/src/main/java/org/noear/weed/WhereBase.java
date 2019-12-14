@@ -81,6 +81,11 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(filed)).append(" = ? ",val);
         return (T)this;
     }
+    public T whereNeq(String filed, Object val){
+        _builder.append(" WHERE ").append(formatField(filed)).append(" != ? ",val);
+        return (T)this;
+    }
+
     /** 添加SQL where < 语句 */
     public T whereLt(String filed, Object val){
         _builder.append(" WHERE ").append(formatField(filed)).append(" < ? ",val);
@@ -150,6 +155,10 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(filed)).append(" = ? ",val);
         return (T)this;
     }
+    public T andNeq(String filed, Object val){
+        _builder.append(" AND ").append(formatField(filed)).append(" != ? ",val);
+        return (T)this;
+    }
     /** 添加SQL and < 语句 */
     public T andLt(String filed, Object val){
         _builder.append(" AND ").append(formatField(filed)).append(" < ? ",val);
@@ -217,6 +226,10 @@ public abstract class WhereBase<T extends WhereBase> {
     /** 添加SQL or = 语句 */
     public T orEq(String filed, Object val){
         _builder.append(" OR ").append(formatField(filed)).append(" = ? ",val);
+        return (T)this;
+    }
+    public T orNeq(String filed, Object val){
+        _builder.append(" OR ").append(formatField(filed)).append(" != ? ",val);
         return (T)this;
     }
 
