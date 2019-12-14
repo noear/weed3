@@ -84,23 +84,28 @@ public class TestAndDemo {
         assert m8 > 20;
 
 
+        //selectList
         List<AppxModel> m9 = mapper.selectList(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m9: " + m9);
         assert m9.size() > 20;
 
+        //selectMaps
         List<Map<String, Object>> m10 = mapper.selectMaps(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m10: " + m10);
         assert m9.size() > 20;
 
+        //selectObjs
         List<Object> m11 = mapper.selectObjs("app_key", m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m11: " + m11);
         assert m11.size() > 20;
 
 
+        //selectPage
         List<AppxModel> m12 = mapper.selectPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m12: " + m12);
         assert m12.size() == 10;
 
+        //selectMapsPage
         List<Map<String, Object>> m13 = mapper.selectMapsPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
         assert m13.size() == 10;
