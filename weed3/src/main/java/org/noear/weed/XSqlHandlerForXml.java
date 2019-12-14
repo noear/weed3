@@ -13,10 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 class XSqlHandlerForXml {
-    public static Object forXml(Object proxy, Class<?> mapperClz, Method method, Object[] vals) throws Throwable {
+    public static Object forXml(DbContext db, Object proxy, Class<?> mapperClz, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
-        DbContext db = WeedConfig.libOfDb.get(mapperClz);
-
         Namespace c_meta = mapperClz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
 
@@ -54,7 +52,8 @@ class XSqlHandlerForXml {
         if (block == null) {
             if (BaseMapper.class.isAssignableFrom(mapperClz)) {
                 Object tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
-                return method.invoke(tmp, _map.values());
+                Method method2 = BaseMapperWrap.class.getMethod(method.getName(),method.getParameterTypes());
+                return method2.invoke(tmp, vals);
             } else {
                 throw new RuntimeException("Xmlsql does not exist:" + sqlid);
             }

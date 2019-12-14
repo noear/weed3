@@ -63,7 +63,7 @@ public class TestController {
 
         Object tmp2 = mapper.selectOne(m -> m.where("app_id=?", 12));
 
-        Object tmp3 = mapper.selectOne(m -> m.whereEq("app_id", 12));
+        Object tmp3 = mapper.selectOne(m -> m.whereEq("app_id", 21));
 
         if (sql == null) {
             return tmp;
@@ -77,9 +77,9 @@ public class TestController {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
         Object tmp = mapper.selectById(48);
 
-        mapper.selectOne(m -> m.where("id=?", 12).and("b=12"));
+        Object tmp2 = mapper.selectOne(m -> m.where("app_id=?", 12));
 
-        mapper.selectOne(m -> m.whereEq("id", 12).and("b=12"));
+        Object tmp3 = mapper.selectOne(m -> m.whereEq("app_id", 21));
 
         if (sql == null) {
             return tmp;

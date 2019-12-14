@@ -6,9 +6,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.*;
 
 class XSqlMapperHandler implements InvocationHandler {
-    public static final XSqlMapperHandler g = new XSqlMapperHandler();
 
     protected MethodHandles.Lookup lookup;
+    protected DbContext db;
+    protected XSqlMapperHandler(DbContext db){
+        this.db = db;
+    }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -26,9 +29,9 @@ class XSqlMapperHandler implements InvocationHandler {
             Sql ann = method.getAnnotation(Sql.class);
 
             if (ann == null) {
-                return XSqlHandlerForXml.forXml(proxy, mapperClz, method, args);
+                return XSqlHandlerForXml.forXml(db, proxy, mapperClz, method, args);
             } else {
-                return XSqlHandlerForAnn.forAnn(proxy, mapperClz, method, args, ann);
+                return XSqlHandlerForAnn.forAnn(db, proxy, mapperClz, method, args, ann);
             }
         }
     }

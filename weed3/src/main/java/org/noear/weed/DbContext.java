@@ -256,7 +256,7 @@ public class DbContext {
             WeedConfig.libOfDb.put(clz, this);
         }
 
-        return XSqlMapper.get(clz);
+        return XSqlMapper.get(clz, this);
     }
 
     /**

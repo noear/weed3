@@ -10,9 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class XSqlHandlerForAnn {
-    public static Object forAnn(Object proxy, Class<?> mapperClz, Method method, Object[] vals, Sql ann) throws Throwable {
-        DbContext db = WeedConfig.libOfDb.get(mapperClz);
-
+    public static Object forAnn(DbContext db, Object proxy, Class<?> mapperClz, Method method, Object[] vals, Sql ann) throws Throwable {
         String _caching = ann.caching();
         String _cacheClear = ann.cacheClear();
 
