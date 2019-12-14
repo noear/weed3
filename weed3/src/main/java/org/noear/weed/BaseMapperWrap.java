@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.RunUtils;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +11,21 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
     private BaseTableEntity _table;
 
-    public BaseMapperWrap(DbContext db){
-        _db = db;
-        _table = new BaseTableEntity(this);
+    private Type _entityClz;
+    protected Type entityType() {
+        return _entityClz;
     }
 
-    public BaseMapperWrap(DbContext db, BaseMapper<T> baseMapper){
+    public BaseMapperWrap(DbContext db, Class<?> entityClz) {
         _db = db;
-        _table = new BaseTableEntity(baseMapper);
+        _entityClz = entityClz;
+        _table = BaseTableEntity.get(this);
     }
 
+    public BaseMapperWrap(DbContext db, BaseMapper<T> baseMapper) {
+        _db = db;
+        _table = BaseTableEntity.get(baseMapper);
+    }
 
     private DbContext db(){
         return _db;
@@ -34,7 +40,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     private Class<?> entityClz(){
-        return _table.entityType;
+        return _table.entityClz;
     }
 
 

@@ -13,17 +13,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 class XSqlHandlerForXml {
-    public static Object forXml(Object proxy, Method method, Object[] vals) throws Throwable {
+    public static Object forXml(Object proxy, Class<?> mapperClz, Method method, Object[] vals) throws Throwable {
         //1.构建xml namme
-        Class<?> clazz = method.getDeclaringClass();
-        DbContext db = WeedConfig.libOfDb.get(clazz);
+        DbContext db = WeedConfig.libOfDb.get(mapperClz);
 
-        Namespace c_meta = clazz.getAnnotation(Namespace.class);
+        Namespace c_meta = mapperClz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
 
         String xml_name = null;
         if (c_meta == null) {
-            xml_name = clazz.getPackage().getName() + "." + fun_name;
+            xml_name = mapperClz.getPackage().getName() + "." + fun_name;
         } else {
             xml_name = c_meta.value() + "." + fun_name;
         }
@@ -53,7 +52,7 @@ class XSqlHandlerForXml {
         //3.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(xml_name);
         if (block == null) {
-            if (BaseMapper.class.isAssignableFrom(clazz)) {
+            if (BaseMapper.class.isAssignableFrom(mapperClz)) {
                 Object tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
                 return method.invoke(tmp, _map.values());
             } else {

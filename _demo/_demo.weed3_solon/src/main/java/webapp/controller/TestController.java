@@ -6,7 +6,9 @@ import org.noear.solon.annotation.XSingleton;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.BaseMapperWrap;
 import org.noear.weed.DbContext;
+import org.noear.weed.utils.TypeRef;
 import webapp.dso.DbConfig;
+import webapp.dso.SqlMapper;
 import webapp.model.AppxModel;
 
 @XMapping("/test")
@@ -56,9 +58,23 @@ public class TestController {
 
     @XMapping("demo3")
     public Object test3(String sql) throws Exception {
+        BaseMapper<AppxModel> mapper = db2.mapper(new TypeRef<AppxModel>(){});
+        Object tmp = mapper.selectById(48);
 
+        Object tmp2 = mapper.selectOne(m -> m.where("app_id=?", 12));
 
-        BaseMapper<AppxModel> mapper = db2.mapper();
+        Object tmp3 = mapper.selectOne(m -> m.whereEq("app_id", 12));
+
+        if (sql == null) {
+            return tmp;
+        } else {
+            return db2.lastCommand.text;
+        }
+    }
+
+    @XMapping("demo4")
+    public Object test4(String sql) throws Exception {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
         Object tmp = mapper.selectById(48);
 
         mapper.selectOne(m -> m.where("id=?", 12).and("b=12"));

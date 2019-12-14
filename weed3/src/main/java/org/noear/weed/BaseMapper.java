@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface BaseMapper<T> {
-    default Type entityType() {
-        return (new TypeRef<T>() {}).getType();
-    }
-
     Long insert(T entity);
 
     Integer deleteById(Object id);

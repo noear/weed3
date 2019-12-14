@@ -1,6 +1,9 @@
 package org.noear.weed;
 
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext _context;

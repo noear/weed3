@@ -4,6 +4,7 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
 import org.noear.weed.ext.Get1;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.utils.TypeRef;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
@@ -243,8 +244,8 @@ public class DbContext {
     }
 
 
-    public <T> BaseMapper<T> mapper(){
-        return new BaseMapperWrap<>(this);
+    public <T> BaseMapper<T> mapper(TypeRef<T> clz) {
+        return new BaseMapperWrap<T>(this, (Class<?>) clz.getType());
     }
 
     /**
