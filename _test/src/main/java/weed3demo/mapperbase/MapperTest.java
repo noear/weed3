@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestAndDemo {
+public class MapperTest {
     DbContext db2 = DbUtil.db;
 
     @Test
@@ -26,6 +26,15 @@ public class TestAndDemo {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
         tast_select(mapper);
     }
+
+
+    @Test
+    public void test3() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        mapper.appx_get_error();
+    }
+
 
     private void tast_select(BaseMapper<AppxModel> mapper) {
         List<Object> ary = new ArrayList<>();

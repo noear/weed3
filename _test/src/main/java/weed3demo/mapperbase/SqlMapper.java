@@ -19,4 +19,6 @@ public interface SqlMapper extends BaseMapper<AppxModel> {
     List<AppxModel> appx_getlist(int app_id) throws Exception;
 
     List<Integer> appx_getids() throws Exception;
+
+    int appx_get_error();
 }
