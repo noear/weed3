@@ -2,6 +2,7 @@ package weed3demo.mapperbase;
 
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
+import org.noear.weed.BaseMapperWrap;
 import org.noear.weed.DbContext;
 import org.noear.weed.utils.TypeRef;
 import weed3demo.DbUtil;
@@ -16,7 +17,7 @@ public class MapperTest {
 
     @Test
     public void test1() {
-        BaseMapper<AppxModel> mapper = db2.mapper(new TypeRef<AppxModel>(){});
+        BaseMapper<AppxModel> mapper = db2.mapper(AppxModel.class);
         tast_select(mapper);
     }
 
@@ -35,7 +36,6 @@ public class MapperTest {
 
         assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
     }
-
 
     @Test
     public void testx() {

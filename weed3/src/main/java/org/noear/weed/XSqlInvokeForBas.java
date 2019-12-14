@@ -11,11 +11,11 @@ class XSqlInvokeForBas implements IMapperInvoke {
     static Map<Object, BaseMapperWrap> _lib = new ConcurrentHashMap<>();
 
     static BaseMapperWrap getWrap(Object proxy, DbContext db) {
-        BaseMapperWrap tmp = _lib.get(proxy);
+        BaseMapperWrap tmp = _lib.get(proxy.getClass());
 
         if (tmp == null) {
             tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
-            _lib.putIfAbsent(proxy, tmp);
+            _lib.putIfAbsent(proxy.getClass(), tmp);
         }
 
         return tmp;
