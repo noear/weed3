@@ -6,7 +6,6 @@ import org.noear.weed.DbContext;
 import org.noear.weed.utils.TypeRef;
 import weed3demo.DbUtil;
 
-import javax.xml.ws.handler.Handler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
