@@ -52,8 +52,8 @@ class XSqlHandlerForXml {
         if (block == null) {
             if (BaseMapper.class.isAssignableFrom(mapperClz)) {
                 Object tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
-                Method method2 = BaseMapperWrap.class.getMethod(method.getName(),method.getParameterTypes());
-                return method2.invoke(tmp, vals);
+                //Method method2 = BaseMapperWrap.class.getMethod(method.getName(),method.getParameterTypes());
+                return method.invoke(tmp, vals);
             } else {
                 throw new RuntimeException("Xmlsql does not exist:" + sqlid);
             }
