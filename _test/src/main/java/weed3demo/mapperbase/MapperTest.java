@@ -26,9 +26,19 @@ public class MapperTest {
         tast_select(mapper);
     }
 
-
     @Test
     public void test3() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        String akey = mapper.appx_get_key(48);
+        System.out.println(akey);
+
+        assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+    }
+
+
+    @Test
+    public void testx() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 
         mapper.appx_get_error();

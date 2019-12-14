@@ -1,6 +1,7 @@
 package weed3demo.mapperbase;
 
 import org.noear.weed.BaseMapper;
+import org.noear.weed.annotation.Sql;
 import org.noear.weed.xml.Namespace;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface SqlMapper extends BaseMapper<AppxModel> {
     List<Integer> appx_getids() throws Exception;
 
     int appx_get_error();
+
+    @Sql("select akey from appx where app_id=@app_id")
+    String appx_get_key(int app_id);
 }
