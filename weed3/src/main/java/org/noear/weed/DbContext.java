@@ -252,10 +252,6 @@ public class DbContext {
      * 印映一个接口代理
      * */
     public <T> T mapper(Class<T> clz){
-        if(WeedConfig.libOfDb.containsKey(clz) == false) {
-            WeedConfig.libOfDb.put(clz, this);
-        }
-
         return XSqlMapper.get(clz, this);
     }
 

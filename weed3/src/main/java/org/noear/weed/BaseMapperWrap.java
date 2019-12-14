@@ -58,6 +58,12 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public Integer deleteByIds(Iterable<Object> idList) {
+        return RunUtils.call(()
+                -> db().table(tableName()).whereIn(pk(), idList ).delete());
+    }
+
+    @Override
     public Integer deleteByMap(Map<String, Object> columnMap) {
         return RunUtils.call(()
                 -> db().table(tableName()).whereMap(columnMap).delete());
@@ -72,12 +78,6 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
             return qr.delete();
         });
-    }
-
-    @Override
-    public Integer deleteBatchIds(Iterable<Object> idList) {
-        return RunUtils.call(()
-                -> db().table(tableName()).whereIn(pk(), idList ).delete());
     }
 
     @Override
@@ -114,7 +114,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<T> selectBatchIds(Iterable<Object> idList) {
+    public List<T> selectByIds(Iterable<Object> idList) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()

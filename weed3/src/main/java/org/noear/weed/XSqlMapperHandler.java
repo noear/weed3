@@ -21,7 +21,7 @@ class XSqlMapperHandler implements InvocationHandler {
             if (this.lookup == null) {
                 Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class, Integer.TYPE);
                 constructor.setAccessible(true);
-                this.lookup = (MethodHandles.Lookup) constructor.newInstance(mapperClz, 2);
+                this.lookup = constructor.newInstance(mapperClz, 2);
             }
 
             return this.lookup.unreflectSpecial(method, mapperClz).bindTo(proxy).invokeWithArguments(args);

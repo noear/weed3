@@ -17,18 +17,12 @@
             <if test="m.mobile??">
                 mobile,
             </if>
-            <if test="m.icon?!">
-                icon,
-            </if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" trimEnd=",">
             @{m.user_id},${sex},
             <if test="m.mobile != null">
                 @{m.mobile},
-            </if>
-            <if test="m.sex gte 12">
-                @{m.icon},
             </if>
         </trim>
     </sql>

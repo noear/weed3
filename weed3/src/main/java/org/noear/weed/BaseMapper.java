@@ -12,15 +12,15 @@ public interface BaseMapper<T> {
     Long insert(T entity);
 
     Integer deleteById(Object id);
+    Integer deleteByIds(Iterable<Object> idList);
     Integer deleteByMap(Map<String, Object> columnMap);
     Integer delete(Act1<WhereQ> condition);
-    Integer deleteBatchIds(Iterable<Object> idList);
 
     Integer updateById(T entity);
     Integer update(T entity, Act1<WhereQ> condition);
 
     T selectById(Object id);
-    List<T> selectBatchIds(Iterable<Object> idList);
+    List<T> selectByIds(Iterable<Object> idList);
     List<T> selectByMap(Map<String, Object> columnMap);
 
     T selectOne(T entity);
