@@ -9,7 +9,8 @@ class XSqlMapperHandler implements InvocationHandler {
 
     protected MethodHandles.Lookup lookup;
     protected DbContext db;
-    protected XSqlMapperHandler(DbContext db){
+
+    protected XSqlMapperHandler(DbContext db) {
         this.db = db;
     }
 
@@ -33,13 +34,13 @@ class XSqlMapperHandler implements InvocationHandler {
         } else {
             String sqlid = getSqlid(mapperClz, method);
 
-            Object tmp = annInvoke.call(db, proxy, sqlid, mapperClz, method, args);
+            Object tmp = annInvoke.call(proxy, db, sqlid, mapperClz, method, args);
 
             if (UOE.equals(tmp)) {
-                tmp = xmlInvoke.call(db, proxy, sqlid, mapperClz, method, args);
+                tmp = xmlInvoke.call(proxy, db, sqlid, mapperClz, method, args);
 
                 if (UOE.equals(tmp)) {
-                    tmp = basInvoke.call(db, proxy, sqlid, mapperClz, method, args);
+                    tmp = basInvoke.call(proxy, db, sqlid, mapperClz, method, args);
 
                     if (UOE.equals(tmp)) {
                         throw new RuntimeException("Xmlsql does not exist:" + sqlid);
@@ -51,7 +52,7 @@ class XSqlMapperHandler implements InvocationHandler {
         }
     }
 
-    public static String getSqlid(Class<?> mapperClz, Method method){
+    public static String getSqlid(Class<?> mapperClz, Method method) {
         Namespace c_meta = mapperClz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
 

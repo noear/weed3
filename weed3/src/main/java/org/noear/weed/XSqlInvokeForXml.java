@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 class XSqlInvokeForXml implements IMapperInvoke {
-    public Object call(DbContext db, Object proxy, String sqlid, Class<?> mapperClz, Method method, Object[] vals) throws Throwable {
+    public Object call(Object proxy, DbContext db, String sqlid, Class<?> mapperClz, Method method, Object[] vals) throws Throwable {
         //1.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(sqlid);
         if (block == null) {
