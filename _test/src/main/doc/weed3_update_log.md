@@ -1,3 +1,5 @@
+3.2.3.10
+1.添加BaseMapper
 
 3.2.3.7
 1.添加setIf(..),whereIf(..),andIf(..),orIf(..)
