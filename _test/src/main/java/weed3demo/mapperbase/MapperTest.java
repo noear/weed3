@@ -16,8 +16,7 @@ public class MapperTest {
 
     @Test
     public void test1() {
-        BaseMapper<AppxModel> mapper = db2.mapper(new TypeRef<AppxModel>() {
-        });
+        BaseMapper<AppxModel> mapper = db2.mapper(new TypeRef<AppxModel>(){});
         tast_select(mapper);
     }
 
