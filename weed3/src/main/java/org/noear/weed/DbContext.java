@@ -244,19 +244,15 @@ public class DbContext {
     }
 
 
-//    public <T> BaseMapper<T> mapper(TypeRef<T> clz) {
-//        return new BaseMapperWrap<T>(this, (Class<?>) clz.getType());
-//    }
+    public <T> BaseMapper<T> mapperBase(Class<T> clz) {
+        return new BaseMapperWrap<T>(this, clz);
+    }
 
     /**
      * 印映一个接口代理
      * */
-    public <T> T mapper(Class<?> clz){
-        if(clz.isInterface()) {
-            return XSqlMapper.get(clz, this);
-        }else{
-            return (T)new BaseMapperWrap(this, clz);
-        }
+    public <T> T mapper(Class<T> clz) {
+        return XSqlMapper.get(clz, this);
     }
 
     /**

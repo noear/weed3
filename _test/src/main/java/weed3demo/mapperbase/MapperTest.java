@@ -17,7 +17,7 @@ public class MapperTest {
 
     @Test
     public void test1() {
-        BaseMapper<AppxModel> mapper = db2.mapper(AppxModel.class);
+        BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
         tast_select(mapper);
     }
 

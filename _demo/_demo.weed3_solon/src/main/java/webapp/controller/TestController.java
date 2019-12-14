@@ -57,7 +57,7 @@ public class TestController {
 
     @XMapping("demo3")
     public Object test3(String sql) throws Exception {
-        BaseMapper<AppxModel> mapper = db2.mapper(new TypeRef<AppxModel>() {});
+        BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
         Object tmp = mapper.selectById(48);
 
         Object tmp2 = mapper.selectOne(m -> m.where("app_id=?", 12));

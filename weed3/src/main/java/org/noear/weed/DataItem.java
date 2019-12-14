@@ -149,121 +149,58 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
 
-
-    public String toJson(){
-        _JsonWriter jw = new _JsonWriter();
-
-        buildJson(jw);
-
-        return jw.toJson();
-    }
-
-
-    protected void buildJson(_JsonWriter jw){
-        jw.WriteObjectStart();
-        for(String key : keys()){
-            Object val = get(key);
-
-            jw.WritePropertyName(key);
-
-            if(val == null) {
-                jw.WriteNull();
-                continue;
-            }
-
-            if(val instanceof String) {
-                jw.WriteValue((String) val);
-                continue;
-            }
-
-            if(val instanceof Date) {
-                jw.WriteValue((Date) val);
-                continue;
-            }
-
-            if(val instanceof Boolean) {
-                jw.WriteValue((Boolean) val);
-                continue;
-            }
-
-            if(val instanceof Integer) {
-                jw.WriteValue((Integer) val);
-                continue;
-            }
-
-            if(val instanceof Long) {
-                jw.WriteValue((Long) val);
-                continue;
-            }
-
-            double val2 = new Variate(null, val).doubleValue(0);
-            jw.WriteValue(val2);
-
-        }
-        jw.WriteObjectEnd();
-    }
-
-//    private static final String TEMP_ENCODING = "ISO-8859-1";
-//    private static final String DEFAULT_ENCODING = "UTF-8";
-
-//    public String serialize() throws Exception {
-//        String data = null;
-//        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-//        try {
-//            ObjectOutputStream out = new ObjectOutputStream(byteStream);
-//            try {
-//                out.writeObject(this);
-//                data = byteStream.toString(TEMP_ENCODING);//必须是ISO-8859-1
-//                data = java.net.URLEncoder.encode(data, DEFAULT_ENCODING);
 //
-//            } finally {
-//                out.close();
+//    public String toJson(){
+//        _JsonWriter jw = new _JsonWriter();
+//
+//        buildJson(jw);
+//
+//        return jw.toJson();
+//    }
+//
+//
+//    protected void buildJson(_JsonWriter jw){
+//        jw.WriteObjectStart();
+//        for(String key : keys()){
+//            Object val = get(key);
+//
+//            jw.WritePropertyName(key);
+//
+//            if(val == null) {
+//                jw.WriteNull();
+//                continue;
 //            }
-//        }finally {
-//            byteStream.close();
-//        }
 //
-//        return data;
-//    }
-//
-//    public String trySerialize(){
-//        try{
-//            return serialize();
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//            return null;
-//        }
-//    }
-
-//    public static DataItem unserialize(String data) throws Exception{
-//        if(data == null){
-//            return null;
-//        }
-//
-//        DataItem item = null;
-//        data = java.net.URLDecoder.decode(data, DEFAULT_ENCODING);
-//        ByteArrayInputStream byteStream = new ByteArrayInputStream(data.getBytes(TEMP_ENCODING));
-//        try {
-//            ObjectInputStream inp = new ObjectInputStream(byteStream);
-//            try {
-//                item = (DataItem) inp.readObject();
-//            } finally {
-//                byteStream.close();
+//            if(val instanceof String) {
+//                jw.WriteValue((String) val);
+//                continue;
 //            }
-//        }finally {
-//            byteStream.close();
-//        }
 //
-//        return item;
-//    }
-
-//    public static DataItem tryUnserialize(String data){
-//        try{
-//            return unserialize(data);
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//            return null;
+//            if(val instanceof Date) {
+//                jw.WriteValue((Date) val);
+//                continue;
+//            }
+//
+//            if(val instanceof Boolean) {
+//                jw.WriteValue((Boolean) val);
+//                continue;
+//            }
+//
+//            if(val instanceof Integer) {
+//                jw.WriteValue((Integer) val);
+//                continue;
+//            }
+//
+//            if(val instanceof Long) {
+//                jw.WriteValue((Long) val);
+//                continue;
+//            }
+//
+//            double val2 = new Variate(null, val).doubleValue(0);
+//            jw.WriteValue(val2);
+//
 //        }
+//        jw.WriteObjectEnd();
 //    }
 
     @Override

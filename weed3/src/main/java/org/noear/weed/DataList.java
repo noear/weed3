@@ -156,19 +156,19 @@ public class DataList implements Serializable,Iterable<DataItem> {
     }
 
     /** 转为json字符串 */
-    public String toJson(){
-        _JsonWriter jw = new _JsonWriter();
-
-        jw.WriteArrayStart();
-
-        for(DataItem r: rows){
-            r.buildJson(jw);
-        }
-
-        jw.WriteArrayEnd();
-
-        return jw.toJson();
-    }
+//    public String toJson(){
+//        _JsonWriter jw = new _JsonWriter();
+//
+//        jw.WriteArrayStart();
+//
+//        for(DataItem r: rows){
+//            r.buildJson(jw);
+//        }
+//
+//        jw.WriteArrayEnd();
+//
+//        return jw.toJson();
+//    }
 
     @Override
     public Iterator<DataItem> iterator() {
