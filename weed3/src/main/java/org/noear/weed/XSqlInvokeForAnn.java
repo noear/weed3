@@ -9,8 +9,14 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class XSqlHandlerForAnn {
-    public static Object forAnn(DbContext db, Object proxy, Class<?> mapperClz, Method method, Object[] vals, Sql ann) throws Throwable {
+class XSqlInvokeForAnn implements IMapperInvoke {
+    public Object call(DbContext db, Object proxy, String sqlid, Class<?> mapperClz, Method method, Object[] args) throws Throwable {
+        Sql ann = method.getAnnotation(Sql.class);
+
+        if(ann == null){
+            return XSqlMapperHandler.UOE;
+        }
+
         String _caching = ann.caching();
         String _cacheClear = ann.cacheClear();
 
@@ -32,9 +38,9 @@ class XSqlHandlerForAnn {
         Map<String, Object> _map = new HashMap<>();
         Parameter[] names = method.getParameters();
         for (int i = 0, len = names.length; i < len; i++) {
-            if (vals[i] != null) {
+            if (args[i] != null) {
                 String key = names[i].getName();
-                Object val = vals[i];
+                Object val = args[i];
 
                 //如果是_map参数，则做特殊处理
                 if ("_map".equals(key) && val instanceof Map) {
@@ -80,7 +86,7 @@ class XSqlHandlerForAnn {
         return null;
     }
 
-    private static Object forSelect(DbProcedure sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
+    private  Object forSelect(DbProcedure sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
         String _cacheTag = ann.cacheTag();
         int    _usingCache = ann.usingCache();
 
@@ -183,7 +189,7 @@ class XSqlHandlerForAnn {
         return val.getValue();
     }
 
-    private static String formatTag(String tags, Map map) {
+    private String formatTag(String tags, Map map) {
         String tags2 = tags;
 
         Pattern pattern = Pattern.compile("\\$\\{(\\w+)\\}");
