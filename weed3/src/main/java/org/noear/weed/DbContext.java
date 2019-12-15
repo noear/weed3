@@ -256,9 +256,11 @@ public class DbContext {
 
     /**
      * 印映一份数据
+     *
+     * @param xsqlid @{namespace}.{id}
      * */
-    public <T> T mapper(String sqlid, Map<String,Object> paramS) throws Exception {
-        return (T) MapperUtil.exec(this, sqlid, paramS, null, null);
+    public <T> T mapper(String xsqlid, Map<String,Object> paramS) throws Exception {
+        return (T) MapperUtil.exec(this, xsqlid, paramS, null, null);
     }
 
 
@@ -272,6 +274,8 @@ public class DbContext {
 
     /**
      * 输入process name，获取process执行对象
+     *
+     * @param process process name,process code,xsqlid
      */
     public DbProcedure call(String process) {
         if (process.startsWith("@")) {

@@ -54,22 +54,22 @@ public class MapperUtil {
     ///////////////////////////////
 
     /**
-     * @param sqlid =@{namespace}.{id}
+     * @param xsqlid =@{namespace}.{id}
      */
-    public static Object exec(DbContext db, String sqlid, Map<String, Object> paramS, Class<?> rClz, Type rType) throws Exception {
+    public static Object exec(DbContext db, String xsqlid, Map<String, Object> paramS, Class<?> rClz, Type rType) throws Exception {
         //3.获取代码块，并检测有效性
-        XmlSqlBlock block = XmlSqlFactory.get(sqlid.substring(1));
+        XmlSqlBlock block = XmlSqlFactory.get(xsqlid.substring(1));
         if (block == null) {
-            throw new RuntimeException("Xmlsql does not exist:" + sqlid);
+            throw new RuntimeException("Xmlsql does not exist:" + xsqlid);
         }
 
-        return exec(db, block, sqlid, paramS, rClz, rType);
+        return exec(db, block, xsqlid, paramS, rClz, rType);
     }
 
-    protected static Object exec(DbContext db, XmlSqlBlock block, String sqlid, Map<String, Object> paramS, Class<?> rClz, Type rType) throws Exception {
+    protected static Object exec(DbContext db, XmlSqlBlock block, String xsqlid, Map<String, Object> paramS, Class<?> rClz, Type rType) throws Exception {
 
         //4.生成命令
-        DbProcedure sp = db.call(sqlid);
+        DbProcedure sp = db.call(xsqlid);
         if(paramS!=null) {
             sp.setMap(paramS);
         }
