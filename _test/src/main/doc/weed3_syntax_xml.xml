@@ -18,12 +18,12 @@ weed3 xml sql更新记录
 -->
 <!--
 sql 代码块定义指令
+  id
   :require（属性：导入包或类）
   :param?（属性：外部输入变量申明；默认会自动生成::新增***）
   :declare（属性：内部变量类型预申明）
   :return（属性：返回类型）
 
-  :db （属性：数据库上下文name）
   :note（属性：描述、说明、注解）
 
   :caching（属性：缓存服务name） //是对 ICacheController 接口的映射
