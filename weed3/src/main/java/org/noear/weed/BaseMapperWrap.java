@@ -47,9 +47,17 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
 
     @Override
-    public Long insert(T entity)  {
+    public Long insert(T entity, boolean excludeNull)  {
+        DataItem data = new DataItem();
+
+        if(excludeNull) {
+            data.setEntityIf(entity, (k,v)-> v!=null);
+        }else{
+            data.setEntity(entity);
+        }
+
         return RunUtils.call(()
-                -> db().table(tableName()).setEntity(entity).insert());
+                -> db().table(tableName()).insert(data));
     }
 
     @Override
