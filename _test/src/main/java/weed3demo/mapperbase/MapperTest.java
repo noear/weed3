@@ -46,6 +46,13 @@ public class MapperTest {
     }
 
     @Test
+    public void test5() throws Exception{
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
     public void testx() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 

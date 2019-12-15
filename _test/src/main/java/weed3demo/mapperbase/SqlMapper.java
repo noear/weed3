@@ -3,7 +3,9 @@ package weed3demo.mapperbase;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.xml.Namespace;
+import weed3demo.DbUtil;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +28,8 @@ public interface SqlMapper extends BaseMapper<AppxModel> {
 
     @Sql("select akey from appx where app_id=@app_id")
     String appx_get_key(int app_id);
+
+    default String test() throws SQLException {
+        return DbUtil.db.table("appx").where("app_id=2").select("akey").getValue("");
+    }
 }
