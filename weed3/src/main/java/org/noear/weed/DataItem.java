@@ -278,7 +278,6 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
     /** 转为Entity */
     public  <T> T toEntity(Class<T> cls) {
-        Field[] fields = cls.getDeclaredFields();
-        return EntityUtils.toEntity(cls,fields,this);
+        return EntityUtils.toEntity(cls,this);
     }
 }
