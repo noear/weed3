@@ -13,14 +13,14 @@ class XSqlMapper {
     /**
      * 获取Mapper
      */
-    public static <T> T get(Class<?> clz, DbContext db) {
-        Object tmp = _cache.get(clz);
+    public static <T> T get(Class<?> mapperInf, DbContext db) {
+        Object tmp = _cache.get(mapperInf);
         if (tmp == null) {
             synchronized (_lock) {
-                tmp = _cache.get(clz);
+                tmp = _cache.get(mapperInf);
                 if (tmp == null) {
-                    tmp = do_get(clz, db);
-                    _cache.put(clz, tmp);
+                    tmp = do_get(mapperInf, db);
+                    _cache.put(mapperInf, tmp);
                 }
             }
         }
@@ -31,12 +31,12 @@ class XSqlMapper {
     /**
      * 获取代理实例
      */
-    private static <T> T do_get(Class<?> clz, DbContext db) {
+    private static <T> T do_get(Class<?> mapperInf, DbContext db) {
         XmlSqlLoader.tryLoad();
 
         return (T) Proxy.newProxyInstance(
-                clz.getClassLoader(),
-                new Class[]{clz},
-                new XSqlMapperHandler(db));
+                mapperInf.getClassLoader(),
+                new Class[]{mapperInf},
+                new XSqlMapperHandler(db, mapperInf));
     }
 }

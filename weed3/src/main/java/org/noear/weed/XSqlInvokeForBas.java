@@ -2,7 +2,6 @@ package org.noear.weed;
 
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,8 +20,8 @@ class XSqlInvokeForBas implements IMapperInvoke {
         return tmp;
     }
 
-    public Object call(Object proxy, DbContext db, String sqlid, Class<?> mapperClz, Method method, Object[] args) throws Throwable {
-        if (BaseMapper.class == mapperClz) {
+    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] args) throws Throwable {
+        if (BaseMapper.class == caller) {
             Object tmp = getWrap(proxy, db);
 
             return method.invoke(tmp, args);
