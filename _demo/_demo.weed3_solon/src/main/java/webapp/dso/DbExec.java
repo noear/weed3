@@ -20,7 +20,7 @@ public class DbExec {
     /**
      * 执行：insert,update,delete
      *
-     * @param sqlid =@{包名}.id
+     * @param xsqlid =@{包名}.id
      * @return 自增ID或影响行数
      *
      * 示例1：//将userModel做为m变量在xmlsql里用
@@ -33,11 +33,11 @@ public class DbExec {
      * long id = DbExec.execute("@xxx.user_add",new DbMap(userModel));
      *
      * */
-    public static long execute(String sqlid, DbMap paramS) throws Exception{
+    public static long execute(String xsqlid, DbMap paramS) throws Exception{
         //
         //@开头，是为了在感观上和其它字符串有区别
         //
-        String name = sqlid.substring(1);
+        String name = xsqlid.substring(1);
 
         XmlSqlBlock block = XmlSqlFactory.get(name);
         if(block == null){

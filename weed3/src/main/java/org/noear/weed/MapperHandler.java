@@ -73,13 +73,10 @@ class MapperHandler implements InvocationHandler {
         Namespace c_meta = mapperClz.getAnnotation(Namespace.class);
         String fun_name = method.getName();
 
-        String sqlid = null;
         if (c_meta == null) {
-            sqlid = mapperClz.getPackage().getName() + "." + fun_name;
+            return mapperClz.getPackage().getName() + "." + fun_name;
         } else {
-            sqlid = c_meta.value() + "." + fun_name;
+            return c_meta.value() + "." + fun_name;
         }
-
-        return sqlid;
     }
 }
