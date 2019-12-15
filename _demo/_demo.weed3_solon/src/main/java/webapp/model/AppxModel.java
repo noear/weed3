@@ -1,13 +1,12 @@
 package webapp.model;
 
 import lombok.Data;
-import lombok.Getter;
-import org.noear.weed.annotation.Alias;
+import org.noear.weed.annotation.Name;
 import org.noear.weed.annotation.PrimaryKey;
 
 //和表名不相同，须注解表名
 @Data
-@Alias("appx")
+@Name("appx")
 public class AppxModel {
     @PrimaryKey
     public int app_id;

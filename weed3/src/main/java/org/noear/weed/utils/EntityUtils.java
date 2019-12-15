@@ -1,7 +1,7 @@
 package org.noear.weed.utils;
 
 import org.noear.weed.DataItem;
-import org.noear.weed.annotation.Alias;
+import org.noear.weed.annotation.Name;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.ext.Act2;
 
@@ -27,7 +27,7 @@ public class EntityUtils {
     private static void fromEntity_do(Object obj, Act2<String,Object> setter) throws ReflectiveOperationException{
         Class<?> cls = obj.getClass();
         Field[] fields = obj.getClass().getDeclaredFields();
-        Alias fas;
+        Name fas;
         Exclude fex;
         Object val;
 
@@ -35,7 +35,7 @@ public class EntityUtils {
             if (f.getAnnotation(Exclude.class) == null) {
                 val = EntityUtils.getFieldValue(cls, obj, f);
 
-                fas = f.getAnnotation(Alias.class);
+                fas = f.getAnnotation(Name.class);
                 if(fas == null){
                     setter.run(f.getName(), val);
                 }else{
