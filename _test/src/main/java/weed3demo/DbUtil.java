@@ -24,5 +24,5 @@ public class DbUtil {
     }
 
     public static DbContext db = getDb();
-    public static ICacheService cache = new LocalCache();
+    public static ICacheService cache = new LocalCache().nameSet("test");
 }

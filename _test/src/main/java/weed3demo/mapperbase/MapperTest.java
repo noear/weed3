@@ -5,6 +5,7 @@ import org.noear.weed.BaseMapper;
 import org.noear.weed.BaseMapperWrap;
 import org.noear.weed.DbContext;
 import org.noear.weed.utils.TypeRef;
+import org.noear.weed.xml.Namespace;
 import weed3demo.DbUtil;
 
 import java.util.ArrayList;
@@ -22,9 +23,11 @@ public class MapperTest {
     }
 
     @Test
-    public void test2() {
+    public void test2() throws Exception{
         SqlMapper mapper = db2.mapper(SqlMapper.class);
         tast_select(mapper);
+
+        assert  mapper.appx_get2(22).app_id == 22;
     }
 
     @Test

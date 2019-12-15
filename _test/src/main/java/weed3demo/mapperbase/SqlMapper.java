@@ -7,6 +7,7 @@ import org.noear.weed.xml.Namespace;
 import java.util.List;
 import java.util.Map;
 
+@Namespace("webapp.dso")
 public interface SqlMapper extends BaseMapper<AppxModel> {
     //随便取条数据的ID
     int appx_get() throws Exception;
