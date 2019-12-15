@@ -242,18 +242,20 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     /** 从Entity 加载数据 */
-    public void setEntity(Object obj)  {
+    public DataItem setEntity(Object obj)  {
         EntityUtils.fromEntity(obj,(k, v)->{
             set(k, v);
         });
+        return this;
     }
 
-    public void setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
+    public DataItem setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
         EntityUtils.fromEntity(obj, (k, v) -> {
             if (condition.run(k, v)) {
                 set(k, v);
             }
         });
+        return this;
     }
 
     /** 获取map */

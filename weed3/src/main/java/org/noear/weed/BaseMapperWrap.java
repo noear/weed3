@@ -4,6 +4,7 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.RunUtils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,23 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public Long insert(DataItem data) {
+        return RunUtils.call(()
+                -> db().table(tableName()).insert(data));
+    }
+
+    @Override
+    public void insertBatch(List<T> list) {
+        List<DataItem> list2 = new ArrayList<>();
+        for(T d : list){
+            list2.add(new DataItem().setEntity(d));
+        }
+
+        RunUtils.call(()
+                -> db().table(tableName()).insertList(list2));
+    }
+
+    @Override
     public Integer deleteById(Object id) {
         return RunUtils.call(()
                 -> db().table(tableName()).whereEq(pk(),id ).delete());
@@ -81,9 +99,14 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public Integer updateById(T entity) {
+    public Integer updateById(T entity, boolean excludeNull) {
         DataItem data = new DataItem();
-        data.setEntity(entity);
+
+        if(excludeNull) {
+            data.setEntityIf(entity, (k,v)-> v!=null);
+        }else{
+            data.setEntity(entity);
+        }
 
         Object id = data.get(pk());
 
@@ -92,11 +115,16 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public Integer update(T entity, Act1<WhereQ> condition) {
+    public Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition) {
         DataItem data = new DataItem();
-        data.setEntity(entity);
 
-        return RunUtils.call(()-> {
+        if(excludeNull) {
+            data.setEntityIf(entity, (k,v)-> v!=null);
+        }else{
+            data.setEntity(entity);
+        }
+
+        return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
             condition.run(new WhereQ(qr));
