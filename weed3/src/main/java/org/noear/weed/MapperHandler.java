@@ -9,11 +9,11 @@ class MapperHandler implements InvocationHandler {
 
     protected MethodHandles.Lookup lookup;
     protected DbContext db;
-    protected Class<?> mapperInf;
+    protected Class<?> mapperClz;
 
-    protected MapperHandler(DbContext db, Class<?> mapperInf) {
+    protected MapperHandler(DbContext db, Class<?> mapperClz) {
         this.db = db;
-        this.mapperInf = mapperInf;
+        this.mapperClz = mapperClz;
     }
 
     private static IMapperInvoke annInvoke = new MapperInvokeForAnn();
@@ -52,10 +52,13 @@ class MapperHandler implements InvocationHandler {
                         //4.尝试Object的
                         if (Object.class == caller) {
                             String name = method.getName();
-                            switch (name){
-                                case "toString": return "Weed mapper "+mapperInf;
-                                case "hashCode": return System.identityHashCode(proxy);
-                                case "equals": return false;
+                            switch (name) {
+                                case "toString":
+                                    return "Weed mapper " + mapperClz;
+                                case "hashCode":
+                                    return System.identityHashCode(proxy);
+                                case "equals":
+                                    return false;
                             }
                         }
 
