@@ -1,12 +1,12 @@
 package weed3demo.mapperbase;
 
 import lombok.Data;
-import org.noear.weed.annotation.Name;
+import org.noear.weed.annotation.Table;
 import org.noear.weed.annotation.PrimaryKey;
 
 //和表名不相同，须注解表名
 @Data
-@Name("appx")
+@Table("appx")
 public class AppxModel {
     @PrimaryKey
     public Integer app_id;

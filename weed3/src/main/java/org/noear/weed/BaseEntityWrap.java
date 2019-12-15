@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.annotation.Name;
+import org.noear.weed.annotation.Table;
 import org.noear.weed.annotation.PrimaryKey;
 
 import java.lang.reflect.Field;
@@ -45,7 +45,7 @@ class BaseEntityWrap {
             throw new RuntimeException("请为BaseMapper申明实体类型");
         }
 
-        Name ann = entityClz.getAnnotation(Name.class);
+        Table ann = entityClz.getAnnotation(Table.class);
         if (ann != null) {
             tableName = ann.value();
         }

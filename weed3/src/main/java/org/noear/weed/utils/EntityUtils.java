@@ -2,6 +2,7 @@ package org.noear.weed.utils;
 
 import org.noear.weed.DataItem;
 import org.noear.weed.annotation.Name;
+import org.noear.weed.annotation.Table;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.ext.Act2;
 
