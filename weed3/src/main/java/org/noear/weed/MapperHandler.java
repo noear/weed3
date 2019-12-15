@@ -55,6 +55,7 @@ class MapperHandler implements InvocationHandler {
                             switch (name){
                                 case "toString": return "Weed mapper "+mapperInf;
                                 case "hashCode": return System.identityHashCode(proxy);
+                                case "equals": return false;
                             }
                         }
 
