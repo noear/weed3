@@ -22,13 +22,13 @@ public class MapperUtil {
     /**
      * 获取Mapper
      */
-    public static <T> T getMapper(Class<T> mapperInf, DbContext db) {
+    protected static <T> T getProxy(Class<T> mapperInf, DbContext db) {
         Object tmp = _proxy_cache.get(mapperInf);
         if (tmp == null) {
             synchronized (_proxy_lock) {
                 tmp = _proxy_cache.get(mapperInf);
                 if (tmp == null) {
-                    tmp = proxyBuild(mapperInf, db);
+                    tmp = buildProxy(mapperInf, db);
                     _proxy_cache.put(mapperInf, tmp);
                 }
             }
@@ -40,7 +40,7 @@ public class MapperUtil {
     /**
      * 获取代理实例
      */
-    private static <T> T proxyBuild(Class<?> mapperInf, DbContext db) {
+    private static <T> T buildProxy(Class<?> mapperInf, DbContext db) {
         XmlSqlLoader.tryLoad();
 
         return (T) Proxy.newProxyInstance(
