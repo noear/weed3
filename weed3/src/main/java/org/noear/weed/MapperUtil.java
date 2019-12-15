@@ -22,7 +22,7 @@ public class MapperUtil {
     /**
      * 获取Mapper
      */
-    protected static <T> T getProxy(Class<T> mapperInf, DbContext db) {
+    protected static <T> T proxy(Class<T> mapperInf, DbContext db) {
         Object tmp = _proxy_cache.get(mapperInf);
         if (tmp == null) {
             synchronized (_proxy_lock) {
