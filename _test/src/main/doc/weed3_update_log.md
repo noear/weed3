@@ -4,6 +4,10 @@
 3.ICacheServiceEx 添加 getBy(int,string,()->)
 *.DataItem取消toJson()，取消java序列化；交给专业框架处理
 
+3.2.3.8
+1.添加setIf(c,k,v)
+2.添加setMapIf(m,(k,v)->bool),setEntityIf(m,(k,v)->bool);
+
 3.2.3.7
 1.添加setIf(..),whereIf(..),andIf(..),orIf(..)
 
