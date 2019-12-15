@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
-class FieldWrap {
+public class FieldWrap {
     //为设置和获取的函数进行缓存
     private Field field;
     private String name;
