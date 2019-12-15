@@ -1,9 +1,9 @@
 package org.noear.weed;
 
-import org.noear.weed.utils.EntityUtils;
+
+import org.noear.weed.utils.ClassWrap;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
@@ -87,11 +87,13 @@ public class DataList implements Serializable,Iterable<DataItem> {
     }
 
     /** 将所有列转为类做为数组的数据 */
-    public <T>  List<T> toEntityList(Class<T> cls)  {
+    public <T>  List<T> toEntityList(Class<T> clz)  {
         List<T> list = new ArrayList<T>(getRowCount());
 
+        ClassWrap clzWrap = ClassWrap.get(clz);
+
         for (DataItem r : rows) {
-            T item = EntityUtils.toEntity(cls,r);
+            T item = clzWrap.toEntity(r);
             list.add((T)item);
         }
         return list;

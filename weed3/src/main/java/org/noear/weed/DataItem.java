@@ -1,12 +1,9 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act2;
-import org.noear.weed.ext.Fun1;
 import org.noear.weed.ext.Fun2;
 import org.noear.weed.utils.EntityUtils;
 
-import java.io.*;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Consumer;
 

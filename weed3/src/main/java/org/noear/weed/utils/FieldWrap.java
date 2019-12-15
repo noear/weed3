@@ -1,39 +1,39 @@
 package org.noear.weed.utils;
 
+import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Name;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
+/**
+ * Field wrap
+ * */
 public class FieldWrap {
-    //为设置和获取的函数进行缓存
-    private Field field;
-    private String name;
+    public final Field field;
+    public final String name;
+    public final boolean exclude;
+
     private Method _getter;
     private Method _setter;
 
-    public FieldWrap(Class<?> clz, Field f1) {
+    protected FieldWrap(Class<?> clz, Field f1) {
         field = f1;
+        exclude = (f1.getAnnotation(Exclude.class) != null);
+
+        String nameTmp = null;
         Name fn = f1.getAnnotation(Name.class);
         if (fn != null) {
-            name = fn.value();
+            nameTmp = fn.value();
+        }else{
+            nameTmp = f1.getName();
         }
 
-        if (StringUtils.isEmpty(name)) {
-            name = f1.getName();
-        }
+        name = nameTmp;
 
         _getter = findGetter(clz, f1);
         _setter = findSetter(clz, f1);
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Object getValue(Object tObj) throws ReflectiveOperationException{
