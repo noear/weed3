@@ -9,22 +9,22 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-class BaseTableEntity {
+class BaseEntityWrap {
     public Class<?> entityClz;
     public String tableName;
     public String pkName;
 
     private static final String lock ="";
-    private static Map<Class<?>,BaseTableEntity> _lib = new HashMap<>();
-    public static BaseTableEntity get(BaseMapper baseMapper) {
+    private static Map<Class<?>, BaseEntityWrap> _lib = new HashMap<>();
+    public static BaseEntityWrap get(BaseMapper baseMapper) {
         Class<?> clz = baseMapper.getClass();
 
-        BaseTableEntity tmp = _lib.get(clz);
+        BaseEntityWrap tmp = _lib.get(clz);
         if (tmp == null) {
             synchronized (lock) {
                 tmp = _lib.get(clz);
                 if (tmp == null) {
-                    tmp = new BaseTableEntity(baseMapper);
+                    tmp = new BaseEntityWrap(baseMapper);
                     _lib.put(clz, tmp);
                 }
             }
@@ -33,7 +33,7 @@ class BaseTableEntity {
         return tmp;
     }
 
-    private BaseTableEntity(BaseMapper baseMapper) {
+    private BaseEntityWrap(BaseMapper baseMapper) {
         if(baseMapper instanceof BaseMapperWrap){
             entityClz = (Class<?>) ((BaseMapperWrap)baseMapper).entityType();
         }else{

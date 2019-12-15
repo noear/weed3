@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
-    private BaseTableEntity _table;
+    private BaseEntityWrap _table;
 
     private Type _entityClz;
     protected Type entityType() {
@@ -19,12 +19,12 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     public BaseMapperWrap(DbContext db, Class<?> entityClz) {
         _db = db;
         _entityClz = entityClz;
-        _table = BaseTableEntity.get(this);
+        _table = BaseEntityWrap.get(this);
     }
 
     public BaseMapperWrap(DbContext db, BaseMapper<T> baseMapper) {
         _db = db;
-        _table = BaseTableEntity.get(baseMapper);
+        _table = BaseEntityWrap.get(baseMapper);
     }
 
     private DbContext db(){
