@@ -25,9 +25,9 @@ public interface BaseMapper<T> {
 
     T selectOne(T entity);
     T selectOne(Act1<WhereQ> condition);
-    Object selectObj(String column, Act1<WhereQ> condition);
-
     Map<String, Object> selectMap(Act1<WhereQ> condition);
+
+    Object selectObj(String column, Act1<WhereQ> condition);
 
     Long selectCount(Act1<WhereQ> condition);
 
