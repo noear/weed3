@@ -2,6 +2,7 @@
 1.添加BaseMapper
 2.添加FieldWrap,ClassWrap, 重写EntityUtils
 3.ICacheServiceEx 添加 getBy(int,string,()->)
+*.DataItem取消toJson()，取消java序列化
 
 3.2.3.7
 1.添加setIf(..),whereIf(..),andIf(..),orIf(..)
