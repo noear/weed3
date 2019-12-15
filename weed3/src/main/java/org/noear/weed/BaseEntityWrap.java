@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.annotation.DbTable;
+import org.noear.weed.annotation.Alias;
 import org.noear.weed.annotation.PrimaryKey;
 
 import java.lang.reflect.Field;
@@ -45,7 +45,7 @@ class BaseEntityWrap {
             throw new RuntimeException("请为BaseMapper申明实体类型");
         }
 
-        DbTable ann = entityClz.getAnnotation(DbTable.class);
+        Alias ann = entityClz.getAnnotation(Alias.class);
         if (ann != null) {
             tableName = ann.value();
         }
