@@ -251,7 +251,7 @@ public class DbContext {
      * 印映一个接口代理
      * */
     public <T> T mapper(Class<T> clz) {
-        return MapperUtil.getMapper(clz, this);
+        return MapperUtil.getProxy(clz, this);
     }
 
     /**
