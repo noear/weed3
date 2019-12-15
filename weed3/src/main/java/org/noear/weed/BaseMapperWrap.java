@@ -53,12 +53,6 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public Long insert(DataItem data) {
-        return RunUtils.call(()
-                -> db().table(tableName()).insert(data));
-    }
-
-    @Override
     public void insertBatch(List<T> list) {
         List<DataItem> list2 = new ArrayList<>();
         for(T d : list){
