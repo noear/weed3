@@ -1,10 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
-import org.noear.weed.utils.TypeRef;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -23,18 +20,18 @@ public interface BaseMapper<T> {
     List<T> selectByIds(Iterable<Object> idList);
     List<T> selectByMap(Map<String, Object> columnMap);
 
-    T selectOne(T entity);
-    T selectOne(Act1<WhereQ> condition);
+    T selectItem(T entity);
+    T selectItem(Act1<WhereQ> condition);
     Map<String, Object> selectMap(Act1<WhereQ> condition);
 
-    Object selectObj(String column, Act1<WhereQ> condition);
+    Object selectValue(String column, Act1<WhereQ> condition);
 
     Long selectCount(Act1<WhereQ> condition);
 
     List<T> selectList(Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMaps(Act1<WhereQ> condition);
-    List<Object> selectObjs(String column, Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);
+    List<Object> selectArray(String column, Act1<WhereQ> condition);
 
     List<T> selectPage(int start, int end, Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMapsPage(int start, int end, Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition);
 }

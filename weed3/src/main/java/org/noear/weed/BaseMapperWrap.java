@@ -130,7 +130,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public T selectOne(T entity) {
+    public T selectItem(T entity) {
         Class<T> clz = (Class<T>) entityClz();
 
         DataItem data = new DataItem();
@@ -141,7 +141,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public T selectOne(Act1<WhereQ> condition) {
+    public T selectItem(Act1<WhereQ> condition) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
@@ -154,7 +154,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public Object selectObj(String column, Act1<WhereQ> condition) {
+    public Object selectValue(String column, Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
@@ -200,7 +200,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<Map<String, Object>> selectMaps(Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMapList(Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
@@ -211,7 +211,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<Object> selectObjs(String column, Act1<WhereQ> condition) {
+    public List<Object> selectArray(String column, Act1<WhereQ> condition) {
         return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
@@ -236,7 +236,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<Map<String, Object>> selectMapsPage(int start, int end, Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 

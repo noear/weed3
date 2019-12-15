@@ -2,10 +2,7 @@ package weed3demo.mapperbase;
 
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
-import org.noear.weed.BaseMapperWrap;
 import org.noear.weed.DbContext;
-import org.noear.weed.utils.TypeRef;
-import org.noear.weed.xml.Namespace;
 import weed3demo.DbUtil;
 
 import java.util.ArrayList;
@@ -89,17 +86,17 @@ public class MapperTest {
 
 
         //selectOne
-        AppxModel m4 = mapper.selectOne(ent2);
+        AppxModel m4 = mapper.selectItem(ent2);
         System.out.println("m4: " + m4);
         assert m4.agroup_id == ent2.agroup_id;
 
         //selectOne
-        AppxModel m5 = mapper.selectOne(m -> m.where("app_id=21"));
+        AppxModel m5 = mapper.selectItem(m -> m.where("app_id=21"));
         System.out.println("m5: " + m5);
         assert m5.app_id == 21;
 
         //selectObj
-        Object m6 = mapper.selectObj("app_id", m -> m.where("app_id=21"));
+        Object m6 = mapper.selectValue("app_id", m -> m.where("app_id=21"));
         System.out.println("m6: " + m6);
         assert m6.equals(21);
 
@@ -119,12 +116,12 @@ public class MapperTest {
         assert m9.size() > 20;
 
         //selectMaps
-        List<Map<String, Object>> m10 = mapper.selectMaps(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        List<Map<String, Object>> m10 = mapper.selectMapList(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m10: " + m10);
         assert m9.size() > 20;
 
         //selectObjs
-        List<Object> m11 = mapper.selectObjs("app_key", m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        List<Object> m11 = mapper.selectArray("app_key", m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m11: " + m11);
         assert m11.size() > 20;
 
@@ -135,7 +132,7 @@ public class MapperTest {
         assert m12.size() == 10;
 
         //selectMapsPage
-        List<Map<String, Object>> m13 = mapper.selectMapsPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        List<Map<String, Object>> m13 = mapper.selectMapPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
         assert m13.size() == 10;
     }
