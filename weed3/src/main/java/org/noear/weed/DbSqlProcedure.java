@@ -15,17 +15,17 @@ import java.util.Map;
  * SQL过程访问类
  */
 public class DbSqlProcedure extends DbProcedure {
-    private String _sqlName;
+    private String _sqlid;
     private Map<String,Object> _map = new HashMap<>(); //不能用:Variate, IXmlSqlBuilder 不支持
 
     public DbSqlProcedure(DbContext context){
         super(context);
     }
 
-    protected DbSqlProcedure sql(String sqlName) {
-        _sqlName = sqlName;
+    protected DbSqlProcedure sql(String sqlid) {
+        _sqlid = sqlid;
 
-        this.commandText = sqlName;
+        this.commandText = sqlid;
         this.paramS.clear();
         this._weedKey = null;
 
@@ -106,9 +106,9 @@ public class DbSqlProcedure extends DbProcedure {
         cmd.key      = getCommandID();
 
 
-        XmlSqlBlock block = XmlSqlFactory.get(_sqlName);
+        XmlSqlBlock block = XmlSqlFactory.get(_sqlid);
         if(block == null || block.builder==null) {
-            throw new RuntimeException("Xml sql @" + _sqlName + " does not exist");
+            throw new RuntimeException("Xml sql @" + _sqlid + " does not exist");
         }
 
         SQLBuilder sqlBuilder = null;
