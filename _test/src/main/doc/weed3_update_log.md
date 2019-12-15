@@ -1,5 +1,6 @@
 3.2.3.10
 1.添加BaseMapper
+2.添加FieldWrap,ClassWrap, 重写EntityUtils
 
 3.2.3.7
 1.添加setIf(..),whereIf(..),andIf(..),orIf(..)
