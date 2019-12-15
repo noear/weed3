@@ -3,6 +3,7 @@ package weed3demo.mapperbase;
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
+import org.noear.weed.cache.CacheUsing;
 import weed3demo.DbUtil;
 
 import java.util.ArrayList;
@@ -48,6 +49,15 @@ public class MapperTest {
     @Test
     public void test5() throws Exception{
         SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
+    public void test6() throws Exception {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        DbUtil.cache.getBy(12, "test", () -> mapper.test());
 
         System.out.println(mapper.test());
     }

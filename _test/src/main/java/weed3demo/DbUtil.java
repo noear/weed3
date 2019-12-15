@@ -2,6 +2,7 @@ package weed3demo;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheService;
+import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
 import java.util.HashMap;
@@ -24,5 +25,5 @@ public class DbUtil {
     }
 
     public static DbContext db = getDb();
-    public static ICacheService cache = new LocalCache().nameSet("test");
+    public static ICacheServiceEx cache = new LocalCache().nameSet("test");
 }
