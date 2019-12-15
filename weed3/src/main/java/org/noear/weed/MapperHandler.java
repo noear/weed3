@@ -5,20 +5,20 @@ import org.noear.weed.xml.Namespace;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.*;
 
-class XSqlMapperHandler implements InvocationHandler {
+class MapperHandler implements InvocationHandler {
 
     protected MethodHandles.Lookup lookup;
     protected DbContext db;
     protected Class<?> mapperInf;
 
-    protected XSqlMapperHandler(DbContext db, Class<?> mapperInf) {
+    protected MapperHandler(DbContext db, Class<?> mapperInf) {
         this.db = db;
         this.mapperInf = mapperInf;
     }
 
-    private static IMapperInvoke annInvoke = new XSqlInvokeForAnn();
-    private static IMapperInvoke xmlInvoke = new XSqlInvokeForXml();
-    private static IMapperInvoke basInvoke = new XSqlInvokeForBas();
+    private static IMapperInvoke annInvoke = new MapperInvokeForAnn();
+    private static IMapperInvoke xmlInvoke = new MapperInvokeForXml();
+    private static IMapperInvoke basInvoke = new MapperInvokeForBas();
 
     protected static UnsupportedOperationException UOE = new UnsupportedOperationException();
 

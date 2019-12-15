@@ -3,13 +3,55 @@ package org.noear.weed;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
+import org.noear.weed.xml.XmlSqlLoader;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XSqlUtil {
+public class MapperUtil {
+    ///////////////////////////////
+    // 代理
+    ///////////////////////////////
+
+    private static String _proxy_lock = "";
+    private static Map<Class<?>, Object> _proxy_cache = new HashMap<>();
+
+    /**
+     * 获取Mapper
+     */
+    public static <T> T getMapper(Class<T> mapperInf, DbContext db) {
+        Object tmp = _proxy_cache.get(mapperInf);
+        if (tmp == null) {
+            synchronized (_proxy_lock) {
+                tmp = _proxy_cache.get(mapperInf);
+                if (tmp == null) {
+                    tmp = proxyBuild(mapperInf, db);
+                    _proxy_cache.put(mapperInf, tmp);
+                }
+            }
+        }
+
+        return (T) tmp;
+    }
+
+    /**
+     * 获取代理实例
+     */
+    private static <T> T proxyBuild(Class<?> mapperInf, DbContext db) {
+        XmlSqlLoader.tryLoad();
+
+        return (T) Proxy.newProxyInstance(
+                mapperInf.getClassLoader(),
+                new Class[]{mapperInf},
+                new MapperHandler(db, mapperInf));
+    }
+
+    ///////////////////////////////
+    // 自动执行
+    ///////////////////////////////
 
     /**
      * @param sqlid =@{namespace}.{id}

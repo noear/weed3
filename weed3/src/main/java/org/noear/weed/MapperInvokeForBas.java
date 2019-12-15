@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-class XSqlInvokeForBas implements IMapperInvoke {
+class MapperInvokeForBas implements IMapperInvoke {
 
     static Map<Object, BaseMapperWrap> _lib = new ConcurrentHashMap<>();
 
@@ -27,6 +27,6 @@ class XSqlInvokeForBas implements IMapperInvoke {
             return method.invoke(tmp, args);
         }
 
-        return XSqlMapperHandler.UOE;
+        return MapperHandler.UOE;
     }
 }

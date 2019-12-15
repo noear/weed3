@@ -38,6 +38,14 @@ public class MapperTest {
     }
 
     @Test
+    public void test4() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        System.out.println(mapper.toString());
+        System.out.println(mapper.hashCode());
+    }
+
+    @Test
     public void testx() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 

@@ -4,7 +4,6 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act1Ex;
 import org.noear.weed.ext.Get1;
 import org.noear.weed.utils.StringUtils;
-import org.noear.weed.utils.TypeRef;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
@@ -252,14 +251,14 @@ public class DbContext {
      * 印映一个接口代理
      * */
     public <T> T mapper(Class<T> clz) {
-        return XSqlMapper.get(clz, this);
+        return MapperUtil.getMapper(clz, this);
     }
 
     /**
      * 印映一份数据
      * */
     public <T> T mapper(String sqlid, Map<String,Object> paramS) throws Exception {
-        return (T) XSqlUtil.exec(this, sqlid, paramS, null, null);
+        return (T) MapperUtil.exec(this, sqlid, paramS, null, null);
     }
 
 

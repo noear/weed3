@@ -9,12 +9,12 @@ import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class XSqlInvokeForXml implements IMapperInvoke {
+class MapperInvokeForXml implements IMapperInvoke {
     public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] vals) throws Throwable {
         //1.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(sqlid);
         if (block == null) {
-            return XSqlMapperHandler.UOE;
+            return MapperHandler.UOE;
         }
 
         //2.构建参数
@@ -38,6 +38,6 @@ class XSqlInvokeForXml implements IMapperInvoke {
         Class<?> type1 = method.getReturnType();
         Type type2 = method.getGenericReturnType();
 
-        return XSqlUtil.exec(db, block, "@" + sqlid, _map, type1, type2);
+        return MapperUtil.exec(db, block, "@" + sqlid, _map, type1, type2);
     }
 }
