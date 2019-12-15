@@ -134,6 +134,23 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public boolean existsById(Object id) {
+        return RunUtils.call(()
+                -> db().table(tableName()).whereEq(pk(), id ).exists());
+    }
+
+    @Override
+    public boolean exists(Act1<WhereQ> condition) {
+        return RunUtils.call(() -> {
+            DbTableQuery qr = db().table(tableName());
+
+            condition.run(new WhereQ(qr));
+
+            return qr.exists();
+        });
+    }
+
+    @Override
     public T selectById(Object id) {
         Class<T> clz = (Class<T>) entityClz();
 

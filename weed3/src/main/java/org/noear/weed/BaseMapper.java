@@ -18,6 +18,9 @@ public interface BaseMapper<T> {
     Integer updateById(T entity, boolean excludeNull);
     Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);
 
+    boolean existsById(Object id);
+    boolean exists(Act1<WhereQ> condition);
+
     T selectById(Object id);
     List<T> selectByIds(Iterable<Object> idList);
     List<T> selectByMap(Map<String, Object> columnMap);
