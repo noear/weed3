@@ -21,6 +21,7 @@ public final class WeedConfig {
     public static boolean isUsingValueNull=false;
     public static boolean isUsingTableSpace=false;
     public static boolean isUpdateMustConditional=true;
+    public static boolean isDeleteMustConditional=true;
 
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
     public static Map<Class, DbContext> libOfDb = new ConcurrentHashMap<>();

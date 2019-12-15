@@ -379,6 +379,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.insert(StringUtils.releaseBuilder(sb));
 
+        if(WeedConfig.isDeleteMustConditional && _builder.indexOf(" WHERE ")<0){
+            throw new RuntimeException("Lack of delete condition!!!");
+        }
+
         return compile().execute();
     }
 
