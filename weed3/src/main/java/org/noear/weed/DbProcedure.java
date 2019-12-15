@@ -4,7 +4,6 @@ import org.noear.weed.cache.CacheState;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.ext.Fun2;
-import org.noear.weed.utils.ClassWrap;
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 
