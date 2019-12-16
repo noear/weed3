@@ -25,7 +25,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.3.10</version>
+    <version>3.2.3.11</version>
 </dependency>
 
 <!-- 这个是顺带的，数据库连接器总要有一个 -->
@@ -710,7 +710,7 @@ meven插件引用（用于生成mapper类）
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.3.10</version>
+    <version>3.2.3.11</version>
 </plugin>
 ```
 ###### Xml文件位置约定
