@@ -1,26 +1,84 @@
 # Weed3 for java 新的微型ORM框架
 
-微型ORM（支持：java sql，xml sql，annotation sql；事务；缓存；监听；等...）
+微型ORM（支持：java sql，xml sql，annotation sql；存储过程；事务；缓存；监听；等...）
 
-##### 理念：
-高性能、跨平台、轻量、有个性；不喜欢反射、不喜欢配置...
+05年时开发了第一代；08年时开发了第二代；14年时开发了第三代。因为不喜欢反射，不喜欢有很多配置，所以一直在执着的没放弃。
 
-##### 特点：
-1.一个上下文和四个接口适用各种场景
-2.可以零反射可以零注解
-3.纯代码无多余配置
-4.缓存控制支持
-5.跨库事务支持
+前两代，都是在.net开发的；第三代，重点放在了java上。这应该算是个微型的ORM框架，因为只有0.1mb嘛。对外的接口上也不多，由DbContext上的四个接口发起所有的操作。
 
-### (一) 一个上下文 DbContext
-* 所有weed3的操作，都是基于DbContext上的操控
-1. 需要有配置，可以在`application.properties`获取，可以通过配置服务获取，可以临时手写一下。。
+
+
+因为一些执念本人写的东西都算是微型的：
+
+* Snack3（Json框架 70kb，有序列化，有Jsonpath，有格式转换机制）
+* Solon（Web框架 70kb）
+* 一个浏览器（0.1mb，可是有完整功能哦）
+
+
+
+#### Weed3 特点和理念：
+高性能：前年有个同事测过四个ORM框架，它是性能最好的。
+
+跨平台：可以嵌入到JVM脚本；有.net版本，php版本（有些时间没维护了）。
+
+很小巧：只有0.1Mb嘛
+
+有个性：不喜欢反射、不喜欢配置...（除了连接，不需要任何配置）
+
+其它的：支持缓存控制和跨数据库事务。
+
+
+
+#### Weed3 组件： 
+| 组件 | 说明 |
+| --- | --- |
+| org.noear:weed3-parent | 框架版本管理 |
+| org.noear:weed3 | 主框架（没有任何依赖） |
+| org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
+| | |
+| org.noear:weed3.cache.memcached| 基于 Memcached 封装的扩展缓存服务 |
+| org.noear:weed3.cache.redis| 基于 Redis 封装的扩展缓存服务 |
+| org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
+| org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
+
+
+
+#### Weed3 meven配置： 
+
+```xml 
+<dependency>
+    <groupId>org.noear</groupId>
+    <artifactId>weed3</artifactId>
+    <version>3.2.3.11</version>
+</dependency>
+```
+
+
+
+### 一、 上下文对象 DbContext
+
+##### 所有weed3的操作，都是基于DbContext上的接口。实例化DbContext，很简单：
+
+* 1.使用`application.yml`配置（或别的格式配置，或配置服务），格式示例：
+
+```ini
+demodb:
+    schema: demo
+    url: jdbc:mysql://localdb:3306/demo?...
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: demo
+    password: UL0hHlg0Ybq60xyb
+```
+
+
+* 2.有配置之后开始实列化DbContext：
+
 > 如果是 Spring 框架，可以通过注解获取配置
-如果是 solon 框架，可以通过注解 或 Aop.prop().get("xxx")获取配置
+如果是 solon 框架，可以通过注解 或 XApp.cfg().getProp("demodb")获取配置
 
-2.有配置之后开始实列化DbContext。这里临时手写一下。
 ```java
 //使用Properties配置的示例
+Properties properties = XApp.cfg().getProp("demodb"); //这是solon框架的接口
 DbContext db  = new DbContext(properties); 
 
 //使用Map配置的示例
@@ -39,8 +97,8 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 /* 我平时都用配置服务，所以直接由配置提供数据库上下文对象。 */
 ```
 
-### (二) 四大接口 mapper(),table(),call(),sql()
-##### db.mapper()，提供mapper操作支持
+### 二、四大接口 db.mapper(), db.table(), db.call(), db.sql()
+##### （一）db.mapper()，提供mapper操作支持
 * 1.db.mapperBase(clz) 获取BaseMapper实例
 ```java
 BaseMapper<User> userDao= db.mapperBase(User.class);
@@ -68,7 +126,7 @@ args.put("id",22);
 User user = db.mapper("@demo.dso.db.getUserById",args);
 ```
 
-##### db.table()，提供纯java链式操作
+##### （二）db.table()，提供纯java链式操作
 * 增
 ```java
 User user = new User();
@@ -110,7 +168,7 @@ db.table("user u")
 
 ```
 
-##### db.call()，提供call操作
+##### （三）db.call()，提供call操作
 * call数据库存储过程
 ```java
 //数据库存储过程使用
@@ -129,7 +187,7 @@ User user = db.call("select * from user where id=@{id}").set("id",1).getItem(Use
 User user = db.call("@demo.dso.db.getUser").set("id",1).getItem(User.class);
 ```
 
-##### db.sql()，提供手写sql操作
+##### （四）db.sql()，提供手写sql操作
 ```java
 User user = db.sql("select * from user where id=?",12).getItem(User.class);
 
@@ -141,7 +199,7 @@ db.exe("delete from user where id=12");
 db.exe("update user sex=1 where id=12");
 ```
 
-### (三) Xml sql 语法
+### 三、Xml sql 语法
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -213,7 +271,7 @@ ${name:type} = 变量替换
 //单值
 :return="String" => String （任何单职类型）
 ```
-### (四) 缓存和事务
+### 四、 缓存和事务
 * 缓存
 ```java
 ICacheServiceEx cache = new LocalCache().nameSet("test")
@@ -226,14 +284,17 @@ User user = db.table("user")
 
 * 缓存控制
 ```java
+
 ```
 
 * 事务
 ```java
+
 ```
 
 * 跨库事务
 ```java
+
 ```
 
 ### (五) 监听
