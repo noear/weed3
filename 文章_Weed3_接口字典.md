@@ -20,15 +20,15 @@
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -whereIf(condition:boolean, code:String, args:Object...) -> self
 -where() -> self //添加SQL where 关键字
--whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
--whereNeq(filed:String,val:Object) -> self              //添加SQL where != 语句
--whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
--whereLte(filed:String,val:Object) -> self              //添加SQL where <= 语句
--whereGt(filed:String,val:Object) -> self               //添加SQL where > 语句
--whereGte(filed:String,val:Object) -> self              //添加SQL where >= 语句
--whereLk(filed:String,val:String) -> self               //添加SQL where like 语句
--whereIn(filed:String,ary:Iterable<Object>) -> self     //添加SQL where in 语句
--whereNin(filed:String,ary:Iterable<Object>) -> self    //添加SQL where not in 语句
+-whereEq(column:String,val:Object) -> self               //添加SQL where = 语句
+-whereNeq(column:String,val:Object) -> self              //添加SQL where != 语句
+-whereLt(column:String,val:Object) -> self               //添加SQL where < 语句
+-whereLte(column:String,val:Object) -> self              //添加SQL where <= 语句
+-whereGt(column:String,val:Object) -> self               //添加SQL where > 语句
+-whereGte(column:String,val:Object) -> self              //添加SQL where >= 语句
+-whereLk(column:String,val:String) -> self               //添加SQL where like 语句
+-whereIn(column:String,ary:Iterable<Object>) -> self     //添加SQL where in 语句
+-whereNin(column:String,ary:Iterable<Object>) -> self    //添加SQL where not in 语句
 
 
 //例1：.and("name=?","x")
@@ -36,15 +36,15 @@
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -andIf(condition:boolean, code:String, Object...)		//条件版的and()
 -and() -> self 	//添加SQL and 关键字
--andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
--andNeq(filed:String,val:Object) -> self            //添加SQL and != 语句
--andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
--andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
--andGt(filed:String,val:Object) -> self             //添加SQL and > 语句
--andGte(filed:String,val:Object) -> self            //添加SQL and >= 语句
--andLk(filed:String,val:String) -> self             //添加SQL and like 语句
--andIn(filed:String,ary:Iterable<Object>) -> self   //添加SQL where in 语句
--andNin(filed:String,ary:Iterable<Object>) -> self  //添加SQL where not in 语句
+-andEq(column:String,val:Object) -> self             //添加SQL and = 语句
+-andNeq(column:String,val:Object) -> self            //添加SQL and != 语句
+-andLt(column:String,val:Object) -> self             //添加SQL and < 语句
+-andLte(column:String,val:Object) -> self            //添加SQL and <= 语句
+-andGt(column:String,val:Object) -> self             //添加SQL and > 语句
+-andGte(column:String,val:Object) -> self            //添加SQL and >= 语句
+-andLk(column:String,val:String) -> self             //添加SQL and like 语句
+-andIn(column:String,ary:Iterable<Object>) -> self   //添加SQL where in 语句
+-andNin(column:String,ary:Iterable<Object>) -> self  //添加SQL where not in 语句
 
 
 //例1：.or("name=?","x"); 
@@ -52,15 +52,15 @@
 -or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -orIf(condition:boolean, code:String, Object...)		//条件版的or()
 -or() -> self		//添加SQL or 关键字
--orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
--orNeq(filed:String,val:Object) -> self             //添加SQL or != 语句
--orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
--orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
--orGt(filed:String,val:Object) -> self              //添加SQL or > 语句
--orGte(filed:String,val:Object) -> self             //添加SQL or >= 语句
--orLk(filed:String,val:String) -> self              //添加SQL or like 语句
--orIn(filed:String,ary:Iterable<Object>) -> self    //添加SQL or in 语句
--orNin(filed:String,ary:Iterable<Object>) -> self   //添加SQL or not in 语句
+-orEq(column:String,val:Object) -> self              //添加SQL or = 语句
+-orNeq(column:String,val:Object) -> self             //添加SQL or != 语句
+-orLt(column:String,val:Object) -> self              //添加SQL or < 语句
+-orLte(column:String,val:Object) -> self             //添加SQL or <= 语句
+-orGt(column:String,val:Object) -> self              //添加SQL or > 语句
+-orGte(column:String,val:Object) -> self             //添加SQL or >= 语句
+-orLk(column:String,val:String) -> self              //添加SQL or like 语句
+-orIn(column:String,ary:Iterable<Object>) -> self    //添加SQL or in 语句
+-orNin(column:String,ary:Iterable<Object>) -> self   //添加SQL or not in 语句
 
 
 -begin() -> self //添加左括号
