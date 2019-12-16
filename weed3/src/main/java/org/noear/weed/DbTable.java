@@ -4,6 +4,10 @@ import org.noear.weed.ext.Fun0;
 
 import java.sql.SQLException;
 
+/**
+ * 下个大版本，将不再支持
+ * */
+@Deprecated
 public class DbTable extends DbTableQueryBase<DbTable> {
     protected DataItemEx _item = new DataItemEx(); //会排除null数据
 
