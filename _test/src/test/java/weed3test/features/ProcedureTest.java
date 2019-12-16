@@ -3,6 +3,7 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
+import weed3test.dso.rocedure.appx_dels;
 import weed3test.dso.rocedure.appx_get;
 import weed3test.dso.rocedure.appx_get_byid;
 import weed3test.model.AppxModel;
@@ -22,6 +23,16 @@ public class ProcedureTest {
         sp.app_id = 48;
         AppxModel m = sp.getItem(AppxModel.class);
         assert m.app_id == 48;
+    }
+
+    @Test
+    public void test13() throws Exception {
+        appx_dels sp = new appx_dels(db2);
+        sp.app_id1 = 1;
+        sp.app_id2 = 2;
+        sp.app_id3 = 3;
+
+        sp.execute();
     }
 
     @Test
