@@ -51,7 +51,7 @@ class MapperInvokeForAnn implements IMapperInvoke {
         }
 
         DbAccess sp = null;
-        if(sqlUp.indexOf("@{") > 0) {
+        if(sqlUp.indexOf("@") > 0) {
             sp = db.call(ann.value()).setMap(_map);
         }else{
             sp = db.sql(ann.value(),args);

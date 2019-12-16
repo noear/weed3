@@ -37,6 +37,12 @@ public class MapperTest {
         System.out.println(akey);
 
         assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+
+
+        akey = mapper.appx_get_key2(48);
+        System.out.println(akey);
+
+        assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
     }
 
     @Test
