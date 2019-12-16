@@ -148,6 +148,37 @@ public abstract class WhereBase<T extends WhereBase> {
         return whereLk(getName(property), val);
     }
 
+    /** 添加SQL where not like 语句 */
+    public T whereNlk(String column, String val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" NOT LIKE ? ",val);
+        return (T)this;
+    }
+    public <C> T whereNlk(Property<C, ?> property, String val){
+        return whereNlk(getName(property), val);
+    }
+
+    /** 添加SQL where between 语句 */
+    public T whereBtw(String column, Object start, Object end) {
+        _builder.append(" WHERE ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T whereBtw(Property<C, ?> property, Object start, Object end) {
+        return whereBtw(getName(property), start, end);
+    }
+
+    /** 添加SQL where note between 语句 */
+    public T whereNbtw(String column, Object start, Object end) {
+        _builder.append(" WHERE ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T whereNbtw(Property<C, ?> property, Object start, Object end) {
+        return whereNbtw(getName(property), start, end);
+    }
+
+
+
     /** 添加SQL where in(?...) 语句 */
     public T whereIn(String column, Iterable<Object> ary){
         _builder.append(" WHERE ").append(formatField(column)).append(" IN (?...) ",ary);
@@ -253,6 +284,35 @@ public abstract class WhereBase<T extends WhereBase> {
     }
     public <C> T andLk(Property<C, ?> property, String val){
         return andLk(getName(property), val);
+    }
+
+    /** 添加SQL and not like 语句 */
+    public T andNlk(String column, String val){
+        _builder.append(" AND ").append(formatField(column)).append(" NOT LIKE ? ",val);
+        return (T)this;
+    }
+    public <C> T andNlk(Property<C, ?> property, String val){
+        return andNlk(getName(property), val);
+    }
+
+    /** 添加SQL where between 语句 */
+    public T andBtw(String column, Object start, Object end) {
+        _builder.append(" AND ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T andBtw(Property<C, ?> property, Object start, Object end) {
+        return andBtw(getName(property), start, end);
+    }
+
+    /** 添加SQL where note between 语句 */
+    public T andNbtw(String column, Object start, Object end) {
+        _builder.append(" AND ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T andNbtw(Property<C, ?> property, Object start, Object end) {
+        return andNbtw(getName(property), start, end);
     }
 
     /** 添加SQL and in(?...) 语句 */
@@ -361,6 +421,38 @@ public abstract class WhereBase<T extends WhereBase> {
     public <C> T orLk(Property<C, ?> property, String val){
         return orLk(getName(property), val);
     }
+
+
+    /** 添加SQL or not like 语句 */
+    public T orNlk(String column, String val){
+        _builder.append(" OR ").append(formatField(column)).append(" NOT LIKE ? ",val);
+        return (T)this;
+    }
+    public <C> T orNlk(Property<C, ?> property, String val){
+        return orNlk(getName(property), val);
+    }
+
+
+    /** 添加SQL where between 语句 */
+    public T orBtw(String column, Object start, Object end) {
+        _builder.append(" OR ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T orBtw(Property<C, ?> property, Object start, Object end) {
+        return orBtw(getName(property), start, end);
+    }
+
+    /** 添加SQL where note between 语句 */
+    public T orNbtw(String column, Object start, Object end) {
+        _builder.append(" OR ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+    public <C> T orNbtw(Property<C, ?> property, Object start, Object end) {
+        return orNbtw(getName(property), start, end);
+    }
+
 
     /** 添加SQL or in(?...) 语句 */
     public T orIn(String column, Iterable<Object> ary){
