@@ -9,6 +9,7 @@
     <version>3.2.3.11</version>
     <packaging>pom</packaging>
 
+
     <name>${project.artifactId}</name>
     <description>Java project for weed3</description>
     <url>https://github.com/noear/weed3</url>
