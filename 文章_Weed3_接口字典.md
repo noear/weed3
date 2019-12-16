@@ -1,11 +1,14 @@
 # Weed3接口字典
 
 
-#### db.mapper(Class<?>) -> SqlMapper? proxy
+#### db.mapper(clz) -> SqlMapper? proxy
+* db.mapper(mapperClz) -> Mapper
+* db.mapperBase(entityClz) -> BaseMapper<T>
+* db.mapper(xsqlid, args) -> Object
 ``` java
 //xml sql 和 annotation sql 参考另外的资料
 
-//例：UserDbApi udb = db.mapper(UserDbApi.class);
+//例：UserMapper udb = db.mapper(UserMapper.class);
 //  UserModel um = m.getUser(12);
 ```
 
