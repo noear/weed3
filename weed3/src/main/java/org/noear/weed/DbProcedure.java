@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.cache.CacheState;
+import org.noear.weed.ext.Act0;
 import org.noear.weed.ext.Fun0;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.ext.Fun2;
@@ -21,7 +22,6 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
     }
 
     abstract public DbProcedure set(String param, Object value);
-    abstract public DbProcedure set(String param, Fun0<Object> valueGetter);
     abstract public DbProcedure setMap(Map<String, Object> map);
     abstract public DbProcedure setEntity(Object obj);
 
@@ -48,6 +48,26 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
             }
         });
         return this;
+    }
+
+    /** 延后初始化接口 */
+    protected Act0 _lazyload;
+    /** 是否已尝试延后加载 */
+    protected boolean _is_lazyload;
+
+    protected void lazyload(Act0 action){
+        _lazyload = action;
+        _is_lazyload = false;
+    }
+
+    protected void tryLazyload() {
+        if (_is_lazyload == false) {
+            _is_lazyload = true;
+
+            if (_lazyload != null) {
+                _lazyload.run();
+            }
+        }
     }
 
     //=================================

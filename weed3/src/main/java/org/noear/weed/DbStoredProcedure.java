@@ -1,8 +1,8 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.StringUtils;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 /**
@@ -30,12 +30,6 @@ public class DbStoredProcedure extends DbProcedure {
     }
 
     @Override
-    public DbProcedure set(String param, Fun0<Object> valueGetter) {
-        doSet(param, valueGetter);
-        return this;
-    }
-
-    @Override
     public DbProcedure setMap(Map<String, Object> map) {
         throw new RuntimeException("DbStoredProcedure not support setMap");
     }
@@ -47,11 +41,15 @@ public class DbStoredProcedure extends DbProcedure {
 
     @Override
     protected String getCommandID() {
+        tryLazyload();
+
         return this.commandText;
     }
 
     @Override
     protected Command getCommand(){
+        tryLazyload();
+
         Command cmd = new Command(this.context,_tran);
 
         cmd.key      = getCommandID();
@@ -81,5 +79,11 @@ public class DbStoredProcedure extends DbProcedure {
         runCommandBuiltEvent(cmd);
 
         return cmd;
+    }
+
+    @Override
+    public int execute() throws SQLException {
+        tryLazyload();
+        return super.execute();
     }
 }

@@ -40,11 +40,6 @@ public class DbSqlProcedure extends DbProcedure {
     }
 
     @Override
-    public DbProcedure set(String param, Fun0<Object> valueGetter) {
-        throw new RuntimeException("DbSqlProcedure not support set(name,valueGetter)");
-    }
-
-    @Override
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {
             map.forEach((k, v) -> {

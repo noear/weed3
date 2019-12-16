@@ -1,7 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Act0;
-import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 
@@ -23,25 +21,6 @@ public class DbQueryProcedure extends DbProcedure {
         super(context);
     }
 
-    /** 延后初始化接口 */
-    private Act0 _lazyload;
-    /** 是否已尝试延后加载 */
-    private boolean _is_lazyload;
-
-    protected void lazyload(Act0 action){
-        _lazyload = action;
-        _is_lazyload = false;
-    }
-
-    protected void tryLazyload() {
-        if (_is_lazyload == false) {
-            _is_lazyload = true;
-
-            if (_lazyload != null) {
-                _lazyload.run();
-            }
-        }
-    }
 
     //---------
 
@@ -79,16 +58,6 @@ public class DbQueryProcedure extends DbProcedure {
         return this;
     }
 
-    @Override
-    public DbProcedure set(String param, Fun0<Object> valueGetter) {
-        if(param.startsWith("@")){
-            _paramS2.put(param.substring(1), new VariateEx(param, valueGetter));
-        }else{
-            _paramS2.put(param, new VariateEx(param, valueGetter));
-        }
-
-        return this;
-    }
     @Override
     public DbProcedure setMap(Map<String, Object> map) {
         if (map != null) {

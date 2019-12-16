@@ -103,14 +103,6 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         paramS.add(new Variate(param, value));
     }
 
-    protected  void doSet(String param, Fun0<Object> valueGetter) {
-        paramS.add(new VariateEx(param, valueGetter));
-    }
-
-    protected  void doSet(String param, Fun0<Object> valueGetter, Act1<Object> valueSetter) {
-        paramS.add(new VariateEx(param, valueGetter, valueSetter));
-    }
-
     protected void doSet(Variate value){
         paramS.add(value);
     }
