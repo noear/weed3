@@ -17,9 +17,9 @@ import static org.noear.weed.WeedConfig.isUsingTableSpace;
 /**
  * Created by noear on 14/11/12.
  *
- * #        //不加表空间（table(xxx) : 默认加表空间）
  * $.       //当前表空间
  * $NOW()   //说明这里是一个sql 函数
+ * ?
  * ?...     //说明这里是一个数组或查询结果
  */
 public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> implements ICacheController<DbTableQueryBase> {

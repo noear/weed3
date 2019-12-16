@@ -1,8 +1,5 @@
 package org.noear.weed;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 /**
  * Created by noear on 14-9-5.
  *

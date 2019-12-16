@@ -5,12 +5,14 @@ import org.noear.weed.ext.Fun2;
 import java.sql.SQLException;
 import java.util.Map;
 
+
 /**
  * Created by noear on 14/11/12.
  *
- * $fcn     //SQL函数占位符
- * ?        //参数占位符
- * ?...     //数组型参数占位符
+ * $.       //当前表空间
+ * $NOW()   //说明这里是一个sql 函数
+ * ?
+ * ?...     //说明这里是一个数组或查询结果
  */
 public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     protected DataItem _item = null; //会排除null数据
@@ -116,9 +118,4 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
             return 0;
         }
     }
-
-
-//    public <T extends GetHandler> boolean insertList(List<T> valuesList) throws SQLException {
-//        return insertList(_item, valuesList);
-//    }
 }
