@@ -2,16 +2,23 @@
 
 微型ORM（支持：java sql，xml sql，annotation sql；存储过程；事务；缓存；监听；等...）
 
-05年时开发了第一代；08年时开发了第二代；14年时开发了第三代。因为不喜欢反射，不喜欢有很多配置，所以一直在执着的没放弃。
 
-前两代，都是在.net开发的；第三代，重点放在了java上。这应该算是个微型的ORM框架，因为只有0.1mb嘛。对外的接口上也不多，由DbContext上的四个接口发起所有的操作。
+05年时开发了第一代；
+
+08年时开发了第二代；
+
+14年时开发了第三代。因为不喜欢滥用反射，不喜欢有很多配置，所以一直在执着的没放弃。
+
+
+
+前两代，都是在.net开发的；第三代，重点放在了java上。这应该算是个微型的ORM框架，因为只有0.1mb且无其它认赖。对外的接口上也不多，由DbContext上的四个接口发起所有的操作。
 
 
 
 因为一些执念本人写的东西都算是微型的：
 
 * Snack3（Json框架 70kb，有序列化，有Jsonpath，有格式转换机制）
-* Solon（Web框架 70kb）
+* Solon（Web框架 80kb）
 * 一个浏览器（0.1mb，可是有完整功能哦）
 
 
@@ -57,7 +64,7 @@
 
 ### 一、 上下文对象 DbContext
 
-##### 所有weed3的操作，都是基于DbContext上的接口。实例化DbContext，很简单：
+##### 所有weed3的操作，都是基于DbContext上的接口。实例化DbContext是使用的第一步，很简单：
 
 * 1.使用`application.yml`配置（或别的格式配置，或配置服务），格式示例：
 
@@ -73,8 +80,8 @@ demodb:
 
 * 2.有配置之后开始实列化DbContext：
 
-> 如果是 Spring 框架，可以通过注解获取配置
-如果是 solon 框架，可以通过注解 或 XApp.cfg().getProp("demodb")获取配置
+  > 如果是 Spring 框架，可以通过注解获取配置
+如果是 solon 框架，可以通过注解 或 接口获取配置
 
 ```java
 //使用Properties配置的示例
@@ -84,31 +91,41 @@ DbContext db  = new DbContext(properties);
 //使用Map配置的示例
 DbContext db  = new DbContext(map); 
 
-//使用proxool线程池配置的示例（好像现在不流行了）
+//使用proxool线程池配置的示例（好像现在不流行了）//proxool通过xml配置
 DbContext db  = new DbContext("user","proxool.xxx_db"); 
 
 //使用DataSource配置的示例（一般使用连接池框架时用；推荐 Hikari 连接池）
 //下行demo里用的正是 Hikari 连接池
-DbContext db  = new DbContext("user",new HikariDataSource(...)); 
+DataSource dataSource = new HikariDataSource(...);
+DbContext db  = new DbContext("user", dataSource); 
 
 //还有就是用url,username,password
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 
 /* 我平时都用配置服务，所以直接由配置提供数据库上下文对象。 */
+//使用配置服务直接拿到DbContext
+DbContext db = WaterClient.Config.get("demodb").getDb();
 ```
 
 ### 二、四大接口 db.mapper(), db.table(), db.call(), db.sql()
+
+> 四大接口，即是DbContext在不同场景上的应用
+
 ##### （一）db.mapper()，提供mapper操作支持
 * 1.db.mapperBase(clz) 获取BaseMapper实例
+
+  > 自xxx-plus之后，要是个没有BaseMapper，似乎都不好意思说自己是个ORM框架了。
 ```java
+//直接使用BaseMapper
 BaseMapper<User> userDao= db.mapperBase(User.class);
+
 User user = userDao.selectById(12);
 userDao.insert(user,false);
 ```
 * 2.db.mapper(clz)，获取Mapper实例
 ```java
 @Namespace("demo.dso.db")
-public interface UserDao{ //此接口，可以扩展自 BaseMapper<T>
+public interface UserDao { //此接口，可以扩展自 BaseMapper<T>
     @sql("select * from `user` where id=@{id}")
     User getUserById(int id);
   
@@ -116,41 +133,53 @@ public interface UserDao{ //此接口，可以扩展自 BaseMapper<T>
 }
 
 UserDao userDao = db.mapper(UserDao.class);
+
 User user = userDao.getUserById(12);
 userDao.addUser(user);
 ```
-* 3.db.mapper(xsqlid,args)，获取Xml sql mapper结果
+* 3.db.mapper(xsqlid, args)，获取Xml sql mapper结果
 ```java
 Map<String,Object> args = new HashMap<>();
 args.put("id",22);
+
 User user = db.mapper("@demo.dso.db.getUserById",args);
 ```
 
 ##### （二）db.table()，提供纯java链式操作
-* 增
+* 增,INSEERT
 ```java
 User user = new User();
 ..
 //单条插入
+db.table("user").set("name","xxx").insert();
 db.table("user").setEntity(user).insert();
+db.table("user").setEntityIf(user, (k,v)->v!=null).insert();
 
 //批量插入
 db.table("user").insertList(list);
 ```
 
-* 删
+* 删,DELETE
 ```java
 //删掉id<12的记录
 db.table("user").whereLt("id",12).delete();
+
+//删掉id=12的记录 //算另一种风格
+db.table("user").whereEq(User::getId,12).delete(); 
 ```
 
-* 改
+* 改,UPDATE
 ```java
 //改掉id=23的sex字段
 db.table("user").set("sex",1).whereEq("id",23).update();
+
+//根据手机号，新增或更新
+public void saveUser(UserModel m){
+  db.talbe("user").setEntityIf(m, (k,v)->v!=null).upsert("mobile");
+}
 ```
 
-* 查
+* 查,SELECT
 ```java
 //统计id<10的记录数
 db.table("user").where("id<?", 10).count();
@@ -199,7 +228,73 @@ db.exe("delete from user where id=12");
 db.exe("update user sex=1 where id=12");
 ```
 
-### 三、Xml sql 语法
+### 三、Mapper 语法
+
+##### （一）BaseMapper 接口
+```java
+public interface BaseMapper<T> {
+    Long insert(T entity, boolean excludeNull);
+    void insertList(List<T> list);
+
+    Integer deleteById(Object id);
+    Integer deleteByIds(Iterable<Object> idList);
+    Integer deleteByMap(Map<String, Object> columnMap);
+    Integer delete(Act1<WhereQ> condition);
+
+    Integer updateById(T entity, boolean excludeNull);
+    Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);
+
+    Long upsert(T entity, boolean excludeNull);
+    Long upsertBy(T entity, boolean excludeNull, String conditionFields);
+
+    boolean existsById(Object id);
+    boolean exists(Act1<WhereQ> condition);
+
+    T selectById(Object id);
+    List<T> selectByIds(Iterable<Object> idList);
+    List<T> selectByMap(Map<String, Object> columnMap);
+
+    T selectItem(T entity);
+    T selectItem(Act1<WhereQ> condition);
+    Map<String, Object> selectMap(Act1<WhereQ> condition);
+
+    Object selectValue(String column, Act1<WhereQ> condition);
+
+    Long selectCount(Act1<WhereQ> condition);
+
+    List<T> selectList(Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);
+    List<Object> selectArray(String column, Act1<WhereQ> condition);
+
+    List<T> selectPage(int start, int end, Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition);
+}
+```
+
+##### （二）annotation sql
+* 示例
+```java
+ICacheServiceEx cache = new LocalCache().nameSet("cache");
+
+//顺带加了缓存
+@Sql(value="select * from user where id=@{id}", caching="cache")
+public UserModel getUser(int id);
+```
+
+* Sql 注解说明
+```java
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Sql {
+    String value() default "";      //代码
+    String caching() default "";    //缓存服务名称
+    String cacheClear() default ""; //缓存清除标签
+    String cacheTag() default "";   //缓存标签
+    int usingCache() default 0;     //缓存时间
+}
+```
+##### （三）Xml sql
+
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -274,7 +369,7 @@ ${name:type} = 变量替换
 ### 四、 缓存和事务
 * 缓存
 ```java
-ICacheServiceEx cache = new LocalCache().nameSet("test")
+ICacheServiceEx cache = new LocalCache().nameSet("cache");
 
 User user = db.table("user")
               .where("id=?",12)

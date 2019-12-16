@@ -33,25 +33,29 @@ class MapperInvokeForAnn implements IMapperInvoke {
 
 
         String sqlUp = "# " + ann.value().toUpperCase();
-        DbProcedure sp = db.call(ann.value());
 
         Map<String, Object> _map = new HashMap<>();
-        Parameter[] names = method.getParameters();
-        for (int i = 0, len = names.length; i < len; i++) {
-            if (args[i] != null) {
-                String key = names[i].getName();
-                Object val = args[i];
+        DbAccess sp = null;
+        if(sqlUp.indexOf("@{") > 0) {
+            Parameter[] names = method.getParameters();
+            for (int i = 0, len = names.length; i < len; i++) {
+                if (args[i] != null) {
+                    String key = names[i].getName();
+                    Object val = args[i];
 
-                //如果是_map参数，则做特殊处理
-                if ("_map".equals(key) && val instanceof Map) {
-                    _map.putAll((Map<String, Object>) val);
-                } else {
-                    _map.put(key, val);
+                    //如果是_map参数，则做特殊处理
+                    if ("_map".equals(key) && val instanceof Map) {
+                        _map.putAll((Map<String, Object>) val);
+                    } else {
+                        _map.put(key, val);
+                    }
                 }
             }
-        }
 
-        sp.setMap(_map);
+            sp = db.call(ann.value()).setMap(_map);
+        }else{
+            sp = db.sql(ann.value(),args);
+        }
 
         if (sqlUp.indexOf(" DELETE ") > 0 || sqlUp.indexOf(" UPDATE ") > 0) {
             int rst = sp.execute();
@@ -86,7 +90,7 @@ class MapperInvokeForAnn implements IMapperInvoke {
         return null;
     }
 
-    private  Object forSelect(DbProcedure sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
+    private  Object forSelect(DbAccess sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
         String _cacheTag = ann.cacheTag();
         int    _usingCache = ann.usingCache();
 

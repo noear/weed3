@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Sql {
-    String value() default ""; //别名
-    String caching() default "";
-    String cacheClear() default "";
-    String cacheTag() default "";
-    int usingCache() default 0;
+    String value() default "";      //代码
+    String caching() default "";    //缓存服务
+    String cacheClear() default ""; //清除缓存
+    String cacheTag() default "";   //缓存标签
+    int usingCache() default 0;     //缓存时间
 }
