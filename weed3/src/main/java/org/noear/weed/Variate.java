@@ -150,19 +150,4 @@ public class Variate implements Serializable {
             return _value.toString();
         }
     }
-
-
-//    private Object getDefault(DbType type)
-//    {
-//        if(type == DbType.String || type == type.DateTime)
-//            return null;
-//        else if(type == DbType.Int64)
-//            return 0L;
-//        else if(type == DbType.Double || type == DbType.Single)
-//            return 0.0;
-//        else if(type == DbType.Boolean)
-//            return false;
-//        else
-//            return 0;
-//    }
 }
