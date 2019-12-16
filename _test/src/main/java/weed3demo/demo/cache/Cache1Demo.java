@@ -76,6 +76,6 @@ public class Cache1Demo {
 
         sp.caching(cache).usingCache(60 * 100);//与上面分开写（不然,返回类型需要转换）
 
-        sp.getListBySplit(new UserInfoModel(), "user_ids", t -> t.user_id+"");
+        sp.getDataList();
     }
 }

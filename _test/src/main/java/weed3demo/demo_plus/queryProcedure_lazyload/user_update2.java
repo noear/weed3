@@ -15,11 +15,11 @@ public class user_update2 extends DbQueryProcedure {
     public user_update2() {
         super(DbConfig.test);
 
-        lazyload(()->{
+        lazyload(() -> {
             sql("update user set city=@city,vipTime=@vipTime where userID=@userID");
-            set("@userID", () -> userID);
-            set("@city", () -> city);
-            set("@vipTime", () -> vipTime);
+            set("userID", userID);
+            set("city", city);
+            set("vipTime", vipTime);
         });
     }
 

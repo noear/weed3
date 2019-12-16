@@ -15,8 +15,8 @@ public class user_get_list2 extends DbQueryProcedure {
 
         lazyload(()->{
             sql("select * from user where userID=@userID and sex=@sex");
-            set("@userID", () -> userID);
-            set("@sex",() -> sex);
+            set("userID",  userID);
+            set("sex", sex);
         });
     }
 

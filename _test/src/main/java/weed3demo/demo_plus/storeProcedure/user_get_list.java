@@ -10,9 +10,11 @@ public class user_get_list extends DbStoredProcedure {
     public user_get_list() {
         super(DbConfig.test);
 
-        call("$.user_get_list");
-        set("_userID", () -> userID);
-        set("_sex",() -> sex);
+        lazyload(()->{
+            call("$.user_get_list");
+            set("_userID",  userID);
+            set("_sex", sex);
+        });
     }
 
     public long userID;

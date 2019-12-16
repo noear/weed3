@@ -10,8 +10,9 @@ public class user_get extends DbStoredProcedure {
     public user_get() {
         super(DbConfig.test);
 
+
         call("user_get");
-        set("_userID", () -> userID);
+        set("_userID", userID);
     }
 
     public long userID;

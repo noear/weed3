@@ -14,8 +14,10 @@ public class user_get2 extends DbQueryProcedure {
     public user_get2() {
         super(DbConfig.test);
 
-        sql("select * from user where userID=@userID");
-        set("@userID", () -> userID);
+        lazyload(()->{
+            sql("select * from user where userID=@userID");
+            set("userID",  userID);
+        });
     }
 
     public long userID;
