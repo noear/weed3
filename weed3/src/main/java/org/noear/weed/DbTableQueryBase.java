@@ -5,6 +5,7 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.ext.Property;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -446,8 +447,18 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    public <C> T orderByAsc(Property<C,?> property) {
+        _builder.append(" ORDER BY ").append(formatColumns(WhereBase.getName(property))).append(" ASC ");
+        return (T)this;
+    }
+
     public T orderByDesc(String fileds) {
         _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
+        return (T)this;
+    }
+
+    public <C> T orderByDesc(Property<C,?> property) {
+        _builder.append(" ORDER BY ").append(formatColumns(WhereBase.getName(property))).append(" DESC ");
         return (T)this;
     }
 

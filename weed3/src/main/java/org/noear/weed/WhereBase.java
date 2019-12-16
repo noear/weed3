@@ -406,7 +406,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     private static Map<Property,String> _cache = new ConcurrentHashMap<>();
-    private static  <C> String getName(Property<C, ?> property){
+    protected static  <C> String getName(Property<C, ?> property){
         String tmp = _cache.get(property);
         if(tmp == null){
             tmp = getNameDo(property);
