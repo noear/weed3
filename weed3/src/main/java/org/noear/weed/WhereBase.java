@@ -1,10 +1,11 @@
 package org.noear.weed;
 
-import java.io.Serializable;
+import org.noear.weed.ext.Property;
+
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext _context;
@@ -401,7 +402,18 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
 
-    private <C> String getName(Property<C, ?> property) {
+    private static Map<Property,String> _cache = new ConcurrentHashMap<>();
+    private static  <C> String getName(Property<C, ?> property){
+        String tmp = _cache.get(property);
+        if(tmp == null){
+            tmp = getNameDo(property);
+            _cache.putIfAbsent(property,tmp);
+        }
+
+        return tmp;
+    }
+
+    private static  <C> String getNameDo(Property<C, ?> property) {
         try {
             Method declaredMethod = property.getClass().getDeclaredMethod("writeReplace");
             declaredMethod.setAccessible(Boolean.TRUE);
@@ -411,14 +423,11 @@ public abstract class WhereBase<T extends WhereBase> {
             if (method.startsWith("get")) {
                 attr = method.substring(3);
             } else {
-                attr = method.substring(2);
+                attr = method.substring(2);//is
             }
             return attr;
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public interface Property<T, R> extends Function<T, R>, Serializable {
     }
 }

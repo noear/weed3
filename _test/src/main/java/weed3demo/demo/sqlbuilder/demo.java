@@ -4,7 +4,6 @@ import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 import weed3demo.config.DbConfig;
 import weed3demo.demo.model.UserInfoModel;
-import weed3demo.demo_plus.table.UserInfoM;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
