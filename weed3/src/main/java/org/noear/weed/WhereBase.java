@@ -1,6 +1,10 @@
 package org.noear.weed;
 
+import java.io.Serializable;
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext _context;
@@ -83,9 +87,16 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
+    public <C> T whereEq(Property<C, ?> property, Object val){
+        return whereEq(getName(property),val);
+    }
+
     public T whereNeq(String column, Object val){
         _builder.append(" WHERE ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
+    }
+    public <C> T whereNeq(Property<C, ?> property, Object val){
+        return whereNeq(getName(property),val);
     }
 
     /** 添加SQL where < 语句 */
@@ -93,25 +104,44 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
+    public <C> T whereLt(Property<C, ?> property, Object val){
+        return whereLt(getName(property),val);
+    }
+
     /** 添加SQL where <= 语句 */
     public T whereLte(String column, Object val){
         _builder.append(" WHERE ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
+    public <C> T whereLte(Property<C, ?> property, Object val){
+        return whereLte(getName(property),val);
+    }
+
     /** 添加SQL where > 语句 */
     public T whereGt(String column, Object val){
         _builder.append(" WHERE ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
+    public <C> T whereGt(Property<C, ?> property, Object val){
+        return whereGt(getName(property),val);
+    }
+
     /** 添加SQL where >= 语句 */
     public T whereGte(String column, Object val){
         _builder.append(" WHERE ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
+    public <C> T whereGte(Property<C, ?> property, Object val){
+        return whereGte(getName(property),val);
+    }
+
     /** 添加SQL where like 语句 */
     public T whereLk(String column, String val){
         _builder.append(" WHERE ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
+    }
+    public <C> T whereLk(Property<C, ?> property, String val){
+        return whereLk(getName(property), val);
     }
 
     /** 添加SQL where in(?...) 语句 */
@@ -119,12 +149,19 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
+    public <C> T whereIn(Property<C, ?> property, Iterable<Object> ary){
+        return whereIn(getName(property), ary);
+    }
 
     /** 添加SQL where not in(?...) 语句 */
     public T whereNin(String column, Iterable<Object> ary){
         _builder.append(" WHERE ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
+    public <C> T whereNin(Property<C, ?> property, Iterable<Object> ary){
+        return whereNin(getName(property), ary);
+    }
+
 
 
 
@@ -157,34 +194,61 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
+    public <C> T andEq(Property<C, ?> property, Object val){
+        return andEq(getName(property),val);
+    }
+
     public T andNeq(String column, Object val){
         _builder.append(" AND ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
+    public <C> T andNeq(Property<C, ?> property, Object val){
+        return andNeq(getName(property),val);
+    }
+
     /** 添加SQL and < 语句 */
     public T andLt(String column, Object val){
         _builder.append(" AND ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
+    public <C> T andLt(Property<C, ?> property, Object val){
+        return andLt(getName(property),val);
+    }
+
     /** 添加SQL and <= 语句 */
     public T andLte(String column, Object val){
         _builder.append(" AND ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
+    public <C> T andLte(Property<C, ?> property, Object val){
+        return andLte(getName(property),val);
+    }
+
     /** 添加SQL and > 语句 */
     public T andGt(String column, Object val){
         _builder.append(" AND ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
+    public <C> T andGt(Property<C, ?> property, Object val){
+        return andGt(getName(property),val);
+    }
+
     /** 添加SQL and >= 语句 */
     public T andGte(String column, Object val){
         _builder.append(" AND ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
+    public <C> T andGte(Property<C, ?> property, Object val){
+        return andGte(getName(property),val);
+    }
+
     /** 添加SQL and like 语句 */
     public T andLk(String column, String val){
         _builder.append(" AND ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
+    }
+    public <C> T andLk(Property<C, ?> property, String val){
+        return andLk(getName(property), val);
     }
 
     /** 添加SQL and in(?...) 语句 */
@@ -192,12 +256,19 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
+    public <C> T andIn(Property<C, ?> property, Iterable<Object> ary){
+        return andIn(getName(property), ary);
+    }
 
     /** 添加SQL and not in(?...) 语句 */
     public T andNin(String column, Iterable<Object> ary){
         _builder.append(" AND ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
+    public <C> T andNin(Property<C, ?> property, Iterable<Object> ary){
+        return andNin(getName(property), ary);
+    }
+
 
 
 
@@ -230,9 +301,16 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
+    public <C> T orEq(Property<C, ?> property, Object val){
+        return orEq(getName(property),val);
+    }
+
     public T orNeq(String column, Object val){
         _builder.append(" OR ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
+    }
+    public <C> T orNeq(Property<C, ?> property, Object val){
+        return orNeq(getName(property),val);
     }
 
     /** 添加SQL or < 语句 */
@@ -240,11 +318,17 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
+    public <C> T orLt(Property<C, ?> property, Object val){
+        return orLt(getName(property),val);
+    }
 
     /** 添加SQL or <= 语句 */
     public T orLte(String column, Object val){
         _builder.append(" OR ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
+    }
+    public <C> T orLte(Property<C, ?> property, Object val){
+        return orLte(getName(property),val);
     }
 
     /** 添加SQL or > 语句 */
@@ -252,11 +336,17 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
+    public <C> T orGt(Property<C, ?> property, Object val){
+        return orGt(getName(property),val);
+    }
 
     /** 添加SQL or >= 语句 */
     public T orGte(String column, Object val){
         _builder.append(" OR ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
+    }
+    public <C> T orGte(Property<C, ?> property, Object val){
+        return orGte(getName(property),val);
     }
 
     /** 添加SQL or like 语句 */
@@ -264,11 +354,17 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
+    public <C> T orLk(Property<C, ?> property, String val){
+        return orLk(getName(property), val);
+    }
 
     /** 添加SQL or in(?...) 语句 */
     public T orIn(String column, Iterable<Object> ary){
         _builder.append(" OR ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
+    }
+    public <C> T orIn(Property<C, ?> property, Iterable<Object> ary){
+        return orIn(getName(property), ary);
     }
 
     /** 添加SQL or not in(?...) 语句 */
@@ -276,6 +372,11 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
+    public <C> T orNin(Property<C, ?> property, Iterable<Object> ary){
+        return orNin(getName(property), ary);
+    }
+
+
 
 
 
@@ -298,5 +399,26 @@ public abstract class WhereBase<T extends WhereBase> {
     public T end() {
         _builder.append(" ) ");
         return (T)this;
+    }
+
+    private <C> String getName(Property<C, ?> property) {
+        try {
+            Method declaredMethod = property.getClass().getDeclaredMethod("writeReplace");
+            declaredMethod.setAccessible(Boolean.TRUE);
+            SerializedLambda serializedLambda = (SerializedLambda) declaredMethod.invoke(property);
+            String method = serializedLambda.getImplMethodName();
+            String attr = null;
+            if (method.startsWith("get")) {
+                attr = method.substring(3);
+            } else {
+                attr = method.substring(2);
+            }
+            return attr;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public interface Property<T, R> extends Function<T, R>, Serializable {
     }
 }

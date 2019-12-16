@@ -3,6 +3,7 @@ package weed3demo.mapperbase;
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
+import org.noear.weed.WhereBase;
 import org.noear.weed.cache.CacheUsing;
 import weed3demo.DbUtil;
 
@@ -63,11 +64,20 @@ public class MapperTest {
     }
 
     @Test
+    public void test7() throws Exception {
+        Object temp = db2.table("appx").whereEq(AppxModel::getApp_id,48).select("*").getMap();
+
+        assert temp instanceof Map;
+    }
+
+    @Test
     public void testx() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 
         mapper.appx_get_error();
     }
+
+
 
 
     private void tast_select(BaseMapper<AppxModel> mapper) {
