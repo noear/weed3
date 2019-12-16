@@ -51,9 +51,9 @@ public abstract class DbProcedure extends DbAccess<DbProcedure> {
     }
 
     /** 延后初始化接口 */
-    protected Act0 _lazyload;
+    private Act0 _lazyload;
     /** 是否已尝试延后加载 */
-    protected boolean _is_lazyload;
+    private boolean _is_lazyload;
 
     protected void lazyload(Act0 action){
         _lazyload = action;

@@ -1,6 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Act0;
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 
@@ -16,7 +15,7 @@ import java.util.regex.Pattern;
  */
 public class DbQueryProcedure extends DbProcedure {
 
-    private Map<String,Variate> _paramS2 = new HashMap<>();
+    private Map<String,Variate> _paramS2 = new HashMap<>(); //中间变量，不要清掉
 
     public DbQueryProcedure(DbContext context){
         super(context);
@@ -29,10 +28,6 @@ public class DbQueryProcedure extends DbProcedure {
         this.commandText = sqlCode;
         this.paramS.clear();
         this._weedKey = null;
-
-        if(_lazyload == null) { //如果是后续加载的话，不能清掉这些参数
-            this._paramS2.clear();
-        }
 
         return this;
     }
