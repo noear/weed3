@@ -18,8 +18,10 @@
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-whereIf(condition:boolean, code:String, args:Object...) -> self
 -where() -> self //添加SQL where 关键字
 -whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
+-whereNeq(filed:String,val:Object) -> self              //添加SQL where != 语句
 -whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
 -whereLte(filed:String,val:Object) -> self              //添加SQL where <= 语句
 -whereGt(filed:String,val:Object) -> self               //添加SQL where > 语句
@@ -35,6 +37,7 @@
 -andIf(condition:boolean, code:String, Object...)		//条件版的and()
 -and() -> self 	//添加SQL and 关键字
 -andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
+-andNeq(filed:String,val:Object) -> self            //添加SQL and != 语句
 -andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
 -andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
 -andGt(filed:String,val:Object) -> self             //添加SQL and > 语句
@@ -50,6 +53,7 @@
 -orIf(condition:boolean, code:String, Object...)		//条件版的or()
 -or() -> self		//添加SQL or 关键字
 -orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
+-orNeq(filed:String,val:Object) -> self             //添加SQL or != 语句
 -orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
 -orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
 -orGt(filed:String,val:Object) -> self              //添加SQL or > 语句
