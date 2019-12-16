@@ -5,6 +5,9 @@ import org.noear.weed.ext.Act1;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Created by noear on 19-12-11.
+ */
 public interface BaseMapper<T> {
     Long insert(T entity, boolean excludeNull);
     void insertList(List<T> list);

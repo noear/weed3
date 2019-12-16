@@ -9,6 +9,9 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by noear on 19-12-11.
+ */
 class BaseEntityWrap {
     public Class<?> entityClz;
     public String tableName;

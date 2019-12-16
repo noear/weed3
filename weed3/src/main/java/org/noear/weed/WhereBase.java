@@ -7,6 +7,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Created by noear on 19-12-11.
+ */
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext _context;
     protected SQLBuilder _builder;

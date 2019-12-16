@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Created by noear on 19-12-11.
+ */
 public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
     private BaseEntityWrap _table;
