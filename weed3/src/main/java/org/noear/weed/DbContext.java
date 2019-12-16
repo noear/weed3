@@ -259,8 +259,8 @@ public class DbContext {
      *
      * @param xsqlid @{namespace}.{id}
      * */
-    public <T> T mapper(String xsqlid, Map<String,Object> paramS) throws Exception {
-        return (T) MapperUtil.exec(this, xsqlid, paramS, null, null);
+    public <T> T mapper(String xsqlid, Map<String,Object> args) throws Exception {
+        return (T) MapperUtil.exec(this, xsqlid, args, null, null);
     }
 
 
