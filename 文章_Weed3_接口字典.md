@@ -2,8 +2,8 @@
 
 
 #### db.mapper(clz) -> SqlMapper? proxy
-* db.mapper(mapperClz) -> Mapper
-* db.mapperBase(entityClz) -> BaseMapper<T>
+* db.mapper(mapper.class) -> Mapper
+* db.mapperBase(entity.class) -> BaseMapper<T>
 * db.mapper(xsqlid, args) -> Object
 ``` java
 //xml sql 和 annotation sql 参考另外的资料
