@@ -64,10 +64,10 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
 
-    public T whereMap(Map<String,Object> map) {
-        if (map != null && map.size() > 0) {
+    public T whereMap(Map<String,Object> columnMap) {
+        if (columnMap != null && columnMap.size() > 0) {
             where("1=1");
-            map.forEach((k, v) -> {
+            columnMap.forEach((k, v) -> {
                 andEq(k, v);
             });
         }
@@ -79,50 +79,50 @@ public abstract class WhereBase<T extends WhereBase> {
      *
      * 例：.whereEq("name","x");
      * */
-    public T whereEq(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" = ? ",val);
+    public T whereEq(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public T whereNeq(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" != ? ",val);
+    public T whereNeq(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
 
     /** 添加SQL where < 语句 */
-    public T whereLt(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" < ? ",val);
+    public T whereLt(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
     /** 添加SQL where <= 语句 */
-    public T whereLte(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" <= ? ",val);
+    public T whereLte(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
     /** 添加SQL where > 语句 */
-    public T whereGt(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" > ? ",val);
+    public T whereGt(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
     /** 添加SQL where >= 语句 */
-    public T whereGte(String filed, Object val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" >= ? ",val);
+    public T whereGte(String column, Object val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
     /** 添加SQL where like 语句 */
-    public T whereLk(String filed, String val){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" LIKE ? ",val);
+    public T whereLk(String column, String val){
+        _builder.append(" WHERE ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
 
     /** 添加SQL where in(?...) 语句 */
-    public T whereIn(String filed, Iterable<Object> ary){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" IN (?...) ",ary);
+    public T whereIn(String column, Iterable<Object> ary){
+        _builder.append(" WHERE ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL where not in(?...) 语句 */
-    public T whereNin(String filed, Iterable<Object> ary){
-        _builder.append(" WHERE ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
+    public T whereNin(String column, Iterable<Object> ary){
+        _builder.append(" WHERE ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
 
@@ -153,49 +153,49 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     /** 添加SQL and = 语句 */
-    public T andEq(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" = ? ",val);
+    public T andEq(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public T andNeq(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" != ? ",val);
+    public T andNeq(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
     /** 添加SQL and < 语句 */
-    public T andLt(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" < ? ",val);
+    public T andLt(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
     /** 添加SQL and <= 语句 */
-    public T andLte(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" <= ? ",val);
+    public T andLte(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
     /** 添加SQL and > 语句 */
-    public T andGt(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" > ? ",val);
+    public T andGt(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
     /** 添加SQL and >= 语句 */
-    public T andGte(String filed, Object val){
-        _builder.append(" AND ").append(formatField(filed)).append(" >= ? ",val);
+    public T andGte(String column, Object val){
+        _builder.append(" AND ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
     /** 添加SQL and like 语句 */
-    public T andLk(String filed, String val){
-        _builder.append(" AND ").append(formatField(filed)).append(" LIKE ? ",val);
+    public T andLk(String column, String val){
+        _builder.append(" AND ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
 
     /** 添加SQL and in(?...) 语句 */
-    public T andIn(String filed, Iterable<Object> ary){
-        _builder.append(" AND ").append(formatField(filed)).append(" IN (?...) ",ary);
+    public T andIn(String column, Iterable<Object> ary){
+        _builder.append(" AND ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL and not in(?...) 语句 */
-    public T andNin(String filed, Iterable<Object> ary){
-        _builder.append(" AND ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
+    public T andNin(String column, Iterable<Object> ary){
+        _builder.append(" AND ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
 
@@ -226,54 +226,54 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     /** 添加SQL or = 语句 */
-    public T orEq(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" = ? ",val);
+    public T orEq(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public T orNeq(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" != ? ",val);
+    public T orNeq(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or < 语句 */
-    public T orLt(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" < ? ",val);
+    public T orLt(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or <= 语句 */
-    public T orLte(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" <= ? ",val);
+    public T orLte(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or > 语句 */
-    public T orGt(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" > ? ",val);
+    public T orGt(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or >= 语句 */
-    public T orGte(String filed, Object val){
-        _builder.append(" OR ").append(formatField(filed)).append(" >= ? ",val);
+    public T orGte(String column, Object val){
+        _builder.append(" OR ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or like 语句 */
-    public T orLk(String filed, String val){
-        _builder.append(" OR ").append(formatField(filed)).append(" LIKE ? ",val);
+    public T orLk(String column, String val){
+        _builder.append(" OR ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
 
     /** 添加SQL or in(?...) 语句 */
-    public T orIn(String filed, Iterable<Object> ary){
-        _builder.append(" OR ").append(formatField(filed)).append(" IN (?...) ",ary);
+    public T orIn(String column, Iterable<Object> ary){
+        _builder.append(" OR ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
 
     /** 添加SQL or not in(?...) 语句 */
-    public T orNin(String filed, Iterable<Object> ary){
-        _builder.append(" OR ").append(formatField(filed)).append(" NOT IN (?...) ",ary);
+    public T orNin(String column, Iterable<Object> ary){
+        _builder.append(" OR ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
 
