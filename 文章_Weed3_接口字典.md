@@ -13,6 +13,8 @@
 
 //例：BaseMapper<User> dao = db.mapperBase(User.class);
 //   UserModel um = dao.selectById(12);
+
+//例：UserModel um = db.mapper("@demo.dao.db.user_get",{app_id:12});
 ```
 
 #### db.table("table") -> new:DbTableQuery
