@@ -1,11 +1,11 @@
-package weed3demo.mapperbase;
+package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.ext.Property;
+import weed3test.model.AppxModel;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

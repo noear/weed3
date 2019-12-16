@@ -1,4 +1,4 @@
-package weed3demo.mapperbase;
+package weed3test.model;
 
 import lombok.Data;
 import org.noear.weed.annotation.Table;

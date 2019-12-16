@@ -2,12 +2,11 @@ package weed3demo.demo2;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
-import weed3demo.DbUtil;
 
 import java.util.Map;
 
 public class Demo2 {
-    DbContext db = DbUtil.db;
+    DbContext db = new DbContext();
 
     public Object searchBy(Integer id, String name, Integer type) throws Exception {
         DbTableQuery qr = db.table("user").where("1=1");

@@ -1,4 +1,4 @@
-package weed3demo;
+package weed3test;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheService;

@@ -1,11 +1,11 @@
-package weed3demo.mapperbase;
+package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
-import org.noear.weed.WhereBase;
-import org.noear.weed.cache.CacheUsing;
-import weed3demo.DbUtil;
+import weed3test.DbUtil;
+import weed3test.dso.SqlMapper;
+import weed3test.model.AppxModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +74,11 @@ public class MapperTest {
     public void testx() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 
-        mapper.appx_get_error();
+        try {
+            mapper.appx_get_error();
+        }catch (Exception ex){
+           assert ex instanceof RuntimeException;
+        }
     }
 
 

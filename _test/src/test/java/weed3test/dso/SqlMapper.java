@@ -1,9 +1,10 @@
-package weed3demo.mapperbase;
+package weed3test.dso;
 
 import org.noear.weed.BaseMapper;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.xml.Namespace;
-import weed3demo.DbUtil;
+import weed3test.DbUtil;
+import weed3test.model.AppxModel;
 
 import java.sql.SQLException;
 import java.util.List;
