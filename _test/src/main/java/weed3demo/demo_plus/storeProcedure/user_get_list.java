@@ -11,7 +11,6 @@ public class user_get_list extends DbStoredProcedure {
         super(DbConfig.test);
 
         lazyload(()->{
-            call("$.user_get_list");
             set("_userID",  userID);
             set("_sex", sex);
         });
