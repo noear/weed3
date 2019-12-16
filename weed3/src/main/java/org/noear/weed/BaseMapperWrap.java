@@ -61,7 +61,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public void insertBatch(List<T> list) {
+    public void insertList(List<T> list) {
         List<DataItem> list2 = new ArrayList<>();
         for(T d : list){
             list2.add(new DataItem().setEntity(d));

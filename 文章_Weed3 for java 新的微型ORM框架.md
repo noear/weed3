@@ -12,7 +12,7 @@
 4.缓存控制支持
 5.跨库事务支持
 
-### （一）一个上下文 DbContext
+### (一) 一个上下文 DbContext
 * 所有weed3的操作，都是基于DbContext上的操控
 1. 需要有配置，可以在`application.properties`获取，可以通过配置服务获取，可以临时手写一下。。
 > 如果是 Spring 框架，可以通过注解获取配置
@@ -39,7 +39,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 /* 我平时都用配置服务，所以直接由配置提供数据库上下文对象。 */
 ```
 
-### （二）四大接口 mapper(),table(),call(),sql()
+### (二) 四大接口 mapper(),table(),call(),sql()
 ##### db.mapper()，提供mapper操作支持
 * 1.db.mapperBase(clz) 获取BaseMapper实例
 ```java
@@ -141,7 +141,7 @@ db.exe("delete from user where id=12");
 db.exe("update user sex=1 where id=12");
 ```
 
-### （三）Xml sql 语法
+### (三) Xml sql 语法
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -213,7 +213,7 @@ ${name:type} = 变量替换
 //单值
 :return="String" => String （任何单职类型）
 ```
-### （四）缓存和事务
+### (四) 缓存和事务
 * 缓存
 ```java
 ICacheServiceEx cache = new LocalCache().nameSet("test")
@@ -236,4 +236,4 @@ User user = db.table("user")
 ```java
 ```
 
-### （五）监听
+### (五) 监听

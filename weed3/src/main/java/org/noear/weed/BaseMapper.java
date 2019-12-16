@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface BaseMapper<T> {
     Long insert(T entity, boolean excludeNull);
-    void insertBatch(List<T> list);
+    void insertList(List<T> list);
 
     Integer deleteById(Object id);
     Integer deleteByIds(Iterable<Object> idList);
