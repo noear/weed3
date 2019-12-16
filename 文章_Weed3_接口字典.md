@@ -8,8 +8,11 @@
 ``` java
 //xml sql 和 annotation sql 参考另外的资料
 
-//例：UserMapper udb = db.mapper(UserMapper.class);
-//  UserModel um = m.getUser(12);
+//例：UserMapper dao = db.mapper(UserMapper.class);
+//   UserModel um = dao.getUser(12);
+
+//例：BaseMapper<User> dao = db.mapperBase(User.class);
+//   UserModel um = dao.selectById(12);
 ```
 
 #### db.table("table") -> new:DbTableQuery
