@@ -19,8 +19,6 @@ public class DbDataSource implements DataSource {
         this.url = url;
     }
 
-    //基于线程池配置（如："proxool."）
-    //fieldFormat："`%`"
     public DbDataSource(String url, String username,String password) {
         this.logWriter = new PrintWriter(System.out);
         this.url = url;
