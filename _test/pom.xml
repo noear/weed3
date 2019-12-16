@@ -10,6 +10,7 @@
 
     <name>${project.artifactId}</name>
 
+
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
