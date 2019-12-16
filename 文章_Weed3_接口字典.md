@@ -1,5 +1,14 @@
 # Weed3接口字典
 
+
+#### db.mapper(Class<?>) -> SqlMapper? proxy
+``` java
+//xml sql 和 annotation sql 参考另外的资料
+
+//例：UserDbApi udb = db.mapper(UserDbApi.class);
+//  UserModel um = m.getUser(12);
+```
+
 #### db.table("table") -> new:DbTableQuery
 ```swift
 //
@@ -230,13 +239,6 @@
 -cacheTag(tag:String) -> self //为缓存添加标签
 ```
 
-#### db.mapper(Class<?>) -> SqlMapper? proxy
-``` java
-//xml sql 和 annotation sql 参考另外的资料
-
-//例：UserDbApi udb = db.mapper(UserDbApi.class);
-//  UserModel um = m.getUser(12);
-```
 #### 附：IQuery 接口
 ```java
 
