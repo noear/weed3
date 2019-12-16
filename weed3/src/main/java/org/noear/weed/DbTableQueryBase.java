@@ -432,6 +432,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    public <C> T groupBy(Property<C,?> property) {
+        return groupBy(WhereBase.getName(property));
+    }
+
     public T having(String code){
         _builder.append(" HAVING ").append(code);
         return (T)this;
@@ -448,8 +452,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public <C> T orderByAsc(Property<C,?> property) {
-        _builder.append(" ORDER BY ").append(formatColumns(WhereBase.getName(property))).append(" ASC ");
-        return (T)this;
+        return orderByAsc(WhereBase.getName(property));
     }
 
     public T orderByDesc(String fileds) {
@@ -458,8 +461,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public <C> T orderByDesc(Property<C,?> property) {
-        _builder.append(" ORDER BY ").append(formatColumns(WhereBase.getName(property))).append(" DESC ");
-        return (T)this;
+        return orderByDesc(WhereBase.getName(property));
     }
 
     /** 添加SQL limit语句 */
