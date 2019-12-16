@@ -122,12 +122,12 @@ public class MapperTest {
         assert m4.agroup_id == ent2.agroup_id;
 
         //selectOne
-        AppxModel m5 = mapper.selectItem(m -> m.where("app_id=21"));
+        AppxModel m5 = mapper.selectItem(m -> m.whereEq(AppxModel::getApp_id,21));
         System.out.println("m5: " + m5);
         assert m5.app_id == 21;
 
         //selectObj
-        Object m6 = mapper.selectValue("app_id", m -> m.where("app_id=21"));
+        Object m6 = mapper.selectValue("app_id", m-> m.whereEq(AppxModel::getApp_id,21));
         System.out.println("m6: " + m6);
         assert m6.equals(21);
 

@@ -1,5 +1,6 @@
 package weed3test;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -9,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DbUtil {
-    public static DbContext getDb() {
+
+    private final static HikariDataSource dataSource(){
         Map<String, String> map = new HashMap<>();
 
         map.put("schema", "rock");
@@ -18,8 +20,17 @@ public class DbUtil {
         map.put("username", "demo");
         map.put("password", "UL0hHlg0Ybq60xyb");
 
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(map.get("url"));
+        dataSource.setUsername(map.get("username"));
+        dataSource.setPassword(map.get("password"));
+        dataSource.setDriverClassName(map.get("driverClassName"));
 
-        DbContext db = new DbContext(map);
+        return dataSource;
+    }
+
+    public static DbContext getDb() {
+        DbContext db = new DbContext("rock", dataSource());
 
         return db;
     }
