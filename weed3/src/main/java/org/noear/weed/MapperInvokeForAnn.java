@@ -35,23 +35,23 @@ class MapperInvokeForAnn implements IMapperInvoke {
         String sqlUp = "# " + ann.value().toUpperCase();
 
         Map<String, Object> _map = new HashMap<>();
-        DbAccess sp = null;
-        if(sqlUp.indexOf("@{") > 0) {
-            Parameter[] names = method.getParameters();
-            for (int i = 0, len = names.length; i < len; i++) {
-                if (args[i] != null) {
-                    String key = names[i].getName();
-                    Object val = args[i];
+        Parameter[] names = method.getParameters();
+        for (int i = 0, len = names.length; i < len; i++) {
+            if (args[i] != null) {
+                String key = names[i].getName();
+                Object val = args[i];
 
-                    //如果是_map参数，则做特殊处理
-                    if ("_map".equals(key) && val instanceof Map) {
-                        _map.putAll((Map<String, Object>) val);
-                    } else {
-                        _map.put(key, val);
-                    }
+                //如果是_map参数，则做特殊处理
+                if ("_map".equals(key) && val instanceof Map) {
+                    _map.putAll((Map<String, Object>) val);
+                } else {
+                    _map.put(key, val);
                 }
             }
+        }
 
+        DbAccess sp = null;
+        if(sqlUp.indexOf("@{") > 0) {
             sp = db.call(ann.value()).setMap(_map);
         }else{
             sp = db.sql(ann.value(),args);
