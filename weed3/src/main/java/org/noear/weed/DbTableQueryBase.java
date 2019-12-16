@@ -281,11 +281,22 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-    /** 使用data的数据,根据约束字段自动插入或更新 */
-    public void updateExt(IDataItem data, String constraints) throws SQLException {
-        String[] ff = constraints.split(",");
+    /** 使用data的数据,根据约束字段自动插入或更新
+     *
+     * 请改用 upsert
+     * */
+    @Deprecated
+    public void updateExt(IDataItem data, String conditionFields) throws SQLException {
+        upsert(data, conditionFields);
+    }
 
-        if(ff.length==0){
+    /**
+     * 使用data的数据,根据约束字段自动插入或更新
+     * */
+    public long upsert(IDataItem data, String conditionFields) throws SQLException {
+        String[] ff = conditionFields.split(",");
+
+        if (ff.length == 0) {
             throw new RuntimeException("Please enter constraints");
         }
 
@@ -296,12 +307,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         if (this.exists()) {
             for (String f : ff) {
-               data.remove(f);
+                data.remove(f);
             }
 
-            this.update(data);
+            return this.update(data);
         } else {
-            this.insert(data);
+            return this.insert(data);
         }
     }
 

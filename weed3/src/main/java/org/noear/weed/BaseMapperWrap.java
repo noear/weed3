@@ -136,6 +136,38 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public Long upsert(T entity, boolean excludeNull) {
+        DataItem data = new DataItem();
+
+        if (excludeNull) {
+            data.setEntityIf(entity, (k, v) -> v != null);
+        } else {
+            data.setEntity(entity);
+        }
+
+        Object id = data.get(pk());
+
+        if (id == null) {
+            return RunUtils.call(() -> db().table(tableName()).insert(data));
+        } else {
+            return RunUtils.call(() -> db().table(tableName()).upsert(data, pk()));
+        }
+    }
+
+    @Override
+    public Long upsertBy(T entity, boolean excludeNull, String conditionFields) {
+        DataItem data = new DataItem();
+
+        if (excludeNull) {
+            data.setEntityIf(entity, (k, v) -> v != null);
+        } else {
+            data.setEntity(entity);
+        }
+
+        return RunUtils.call(() -> db().table(tableName()).upsert(data, conditionFields));
+    }
+
+    @Override
     public boolean existsById(Object id) {
         return RunUtils.call(()
                 -> db().table(tableName()).whereEq(pk(), id ).exists());

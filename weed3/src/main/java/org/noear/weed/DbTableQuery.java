@@ -99,10 +99,21 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     /**
      * 使用set接口的数据,根据约束字段自动插入或更新
      * （默认，只会更新不是null的数据）
+     *
+     * 请改用 upsert
      * */
-    public void updateExt(String constraints)throws SQLException {
+    @Deprecated
+    public void updateExt(String conditionFields)throws SQLException {
         if (_item != null) {
-            updateExt(_item, constraints);
+            upsert(_item, conditionFields);
+        }
+    }
+
+    public long upsert(String conditionFields)throws SQLException {
+        if (_item != null) {
+            return upsert(_item, conditionFields);
+        }else{
+            return 0;
         }
     }
 
