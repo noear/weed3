@@ -9,7 +9,7 @@ import java.util.Map;
 public class Demo2 {
     DbContext db = DbUtil.db;
 
-    public Object searchBy(Integer id, String name, String type) throws Exception {
+    public Object searchBy(Integer id, String name, Integer type) throws Exception {
         DbTableQuery qr = db.table("user").where("1=1");
         if (id != null) {
             qr.andEq("id", id);
@@ -19,19 +19,19 @@ public class Demo2 {
             qr.andEq("name", name);
         }
 
-        if (type != null) {
+        if (type != null && type > 2) {
             qr.andEq("type", type);
         }
 
         return qr.limit(50).select("*").getMapList();
     }
 
-    public Object searchBy2(Integer id, String name, String type) throws Exception {
+    public Object searchBy2(Integer id, String name, Integer type) throws Exception {
         return db.table("user")
                 .where("1=1")
                 .andIf(id != null, "id=?", id)
                 .andIf(name != null, "name=?", name)
-                .andIf(type != null, "type=?", type)
+                .andIf(type != null && type > 2, "type=?", type)
                 .limit(50)
                 .select("*").getMapList();
     }
