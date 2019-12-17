@@ -5,10 +5,7 @@ import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClassWrap {
@@ -28,6 +25,7 @@ public class ClassWrap {
     public final Class<?> clazz;
     public final List<FieldWrap> fieldWraps;
     public final String tableName;
+    private final Map<String,FieldWrap> _fieldWrapMap = new HashMap<>();
 
     protected ClassWrap(Class<?> clz) {
         clazz = clz;
@@ -35,7 +33,9 @@ public class ClassWrap {
 
         Field[] fAry = clz.getDeclaredFields();
         for (Field f1 : fAry) {
-            fieldWraps.add(new FieldWrap(clz, f1));
+            FieldWrap fw = new FieldWrap(clz, f1);
+            fieldWraps.add(fw);
+            _fieldWrapMap.put(f1.getName().toLowerCase(), fw);
         }
 
         Table ann = clz.getAnnotation(Table.class);
@@ -45,6 +45,11 @@ public class ClassWrap {
             tableName = clz.getSimpleName();
         }
     }
+
+    public FieldWrap getFieldWrap(String name){
+        return _fieldWrapMap.get(name.toLowerCase());
+    }
+
 
     @Override
     public boolean equals(Object o) {

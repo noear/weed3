@@ -45,7 +45,8 @@ public class PropertyWrap implements Serializable {
     public PropertyWrap(Property p, String implClz, String name) {
         this.property = p;
         this.clzWrap = ClassWrap.get(getClz(implClz));
-        this.name = name;
+
+        this.name = clzWrap.getFieldWrap(name).name;
     }
 
     public String getColumnName(List<ClassWrap> cl) {
