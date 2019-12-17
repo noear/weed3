@@ -99,6 +99,11 @@ public class DbContext {
     public String name(){
         return _name;
     }
+    public DbContext nameSet(String name) {
+        _name = name;
+        WeedConfig.libOfDb.put(name, this);
+        return this;
+    }
 
     //
     // 构建函数 end
