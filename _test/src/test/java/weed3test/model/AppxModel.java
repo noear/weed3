@@ -1,6 +1,7 @@
 package weed3test.model;
 
 import lombok.Data;
+import org.noear.weed.annotation.Column;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Table;
 import org.noear.weed.annotation.PrimaryKey;
@@ -10,6 +11,7 @@ import org.noear.weed.annotation.PrimaryKey;
 @Table("appx")
 public class AppxModel {
     @PrimaryKey
+    @Column("app_id")
     public Integer app_id;
     public Integer agroup_id;
     public String note;
