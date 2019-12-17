@@ -457,8 +457,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     /** 添加SQL limit语句 */
-    public T limit(int start, int end) {
-        _builder.append(" LIMIT " + start + "," + end + " ");
+    public T limit(int start, int rows) {
+        _builder.append(" LIMIT " + start + "," + rows + " ");
         return (T)this;
     }
 
