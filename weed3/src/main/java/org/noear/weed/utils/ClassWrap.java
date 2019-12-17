@@ -8,6 +8,9 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Class 包装，方便缓存和列操作
+ * */
 public class ClassWrap {
     private static Map<Class<?>, ClassWrap> _cache = new ConcurrentHashMap<>();
 
