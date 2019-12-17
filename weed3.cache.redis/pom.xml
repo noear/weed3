@@ -10,7 +10,6 @@
         <version>3.2.4</version>
     </parent>
 
-
     <artifactId>weed3.cache.redis</artifactId>
     <packaging>jar</packaging>
 

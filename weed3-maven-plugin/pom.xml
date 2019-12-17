@@ -13,8 +13,6 @@
     <artifactId>weed3-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
-
-
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
