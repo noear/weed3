@@ -1,8 +1,9 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Fun2;
-import org.noear.weed.utils.Prop;
+import org.noear.weed.utils.Property;
 import org.noear.weed.utils.ClassWrap;
+import org.noear.weed.utils.PropertyWrap;
 import org.noear.weed.utils.StringUtils;
 
 import java.io.Serializable;
@@ -45,19 +46,19 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return rightJoin(getTableName(tableClz));
     }
 
-    public <C,D> DbTableQuery onEq(Prop<C,?> property1, Prop<D,?> property2) {
+    public <C,D> DbTableQuery onEq(Property<C,?> property1, Property<D,?> property2) {
         return onEq(getColumnName(property1), getColumnName(property2));
     }
 
-    public <C> DbTableQuery groupBy(Prop<C,?> property) {
+    public <C> DbTableQuery groupBy(Property<C,?> property) {
         return groupBy(getColumnName(property));
     }
 
-    public <C> DbTableQuery orderByAsc(Prop<C,?> property) {
+    public <C> DbTableQuery orderByAsc(Property<C,?> property) {
         return orderByAsc(getColumnName(property));
     }
 
-    public <C> DbTableQuery orderByDesc(Prop<C,?> property) {
+    public <C> DbTableQuery orderByDesc(Property<C,?> property) {
         return orderByDesc(getColumnName(property));
     }
 
@@ -66,8 +67,9 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         for (Serializable s : sels) {
             if (s instanceof String) {
                 sb.append((String) s).append(",");
-            } else if (s instanceof Prop) {
-                sb.append(getColumnName((Prop) s)).append(",");
+            } else if (s instanceof PropertyWrap) {
+                PropertyWrap pw = (PropertyWrap) s;
+                sb.append(pw.getSelectName(_clzArray)).append(",");
             } else if (s instanceof Class<?>) {
                 int idx = addClass(ClassWrap.get((Class<?>) s));
                 sb.append("t").append(idx).append(".*").append(",");
