@@ -16,6 +16,10 @@ public class IOUtils {
         }
     }
 
+    public static void demo(){
+
+    }
+
     //res::获取资源的RUL
     public static URL getResource(String name) {
         URL url = IOUtils.class.getResource(name);
