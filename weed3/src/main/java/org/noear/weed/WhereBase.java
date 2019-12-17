@@ -501,8 +501,12 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
 
-    private List<ClassWrap> _clzArray = new ArrayList<>();
+    private List<ClassWrap> _clzArray;
     protected int addClass(ClassWrap clzWrap){
+        if(_clzArray == null){
+            _clzArray = new ArrayList<>();
+        }
+
         int idx = _clzArray.indexOf(clzWrap);
         if(idx<0) {
             idx = _clzArray.size();
@@ -523,12 +527,15 @@ public abstract class WhereBase<T extends WhereBase> {
             tmp = getNameDo(property);
             _popCache.putIfAbsent(property, tmp);
         }
-
-        int idx = _clzArray.indexOf(tmp.clzWrap);
-        if (idx < 0) {
+        if (_clzArray == null) {
             return tmp.name;
         } else {
-            return "t" + idx + tmp.name;
+            int idx = _clzArray.indexOf(tmp.clzWrap);
+            if (idx < 0) {
+                return tmp.name;
+            } else {
+                return "t" + idx + tmp.name;
+            }
         }
     }
 
