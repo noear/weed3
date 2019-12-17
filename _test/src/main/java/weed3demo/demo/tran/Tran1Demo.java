@@ -41,6 +41,7 @@ public class Tran1Demo {
         DbContext db = DbConfig.pc_user;
         DbContext db2 = DbConfig.pc_base;
 
+
         //1.建立主事务，并执于
         DbTranQueue queue = new DbTranQueue();
 
