@@ -1,4 +1,4 @@
-package weed3test.features;
+package weed3test.speed;
 
 import org.junit.Test;
 import org.noear.weed.ext.Property;

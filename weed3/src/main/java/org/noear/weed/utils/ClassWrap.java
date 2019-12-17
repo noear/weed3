@@ -1,12 +1,14 @@
 package org.noear.weed.utils;
 
 import org.noear.weed.DataItem;
+import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClassWrap {
@@ -25,6 +27,7 @@ public class ClassWrap {
 
     public final Class<?> clazz;
     public final List<FieldWrap> fieldWraps;
+    public final String tableName;
 
     protected ClassWrap(Class<?> clz) {
         clazz = clz;
@@ -34,6 +37,26 @@ public class ClassWrap {
         for (Field f1 : fAry) {
             fieldWraps.add(new FieldWrap(clz, f1));
         }
+
+        Table ann = clz.getAnnotation(Table.class);
+        if (ann != null) {
+            tableName = ann.value();
+        }else {
+            tableName = clz.getSimpleName();
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassWrap classWrap = (ClassWrap) o;
+        return Objects.equals(clazz, classWrap.clazz);
+    }
+
+    @Override
+    public int hashCode() {
+        return clazz.hashCode();
     }
 
     //将 data 转为 entity

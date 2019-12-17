@@ -185,7 +185,7 @@ public void saveUser(UserModel m){
 db.table("user").where("id<?", 10).count();
 
 //检查是否存在id<10的记录
-db.table("user").where("user_id<?", 10).exists();
+db.table("user").whereLt(User::getId, 10).exists();
 
 //关联查询并输出一个实体
 db.table("user u")

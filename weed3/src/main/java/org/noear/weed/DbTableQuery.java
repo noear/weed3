@@ -1,6 +1,8 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Fun2;
+import org.noear.weed.ext.Property;
+import org.noear.weed.utils.ClassWrap;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -20,6 +22,45 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     public DbTableQuery(DbContext context) {
         super(context);
     }
+
+
+    public DbTableQuery table(Class<?> tableClz) {
+        return table(getTableName(tableClz));
+    }
+
+    /** 添加SQL 内关联语句 */
+    public DbTableQuery innerJoin(Class<?> tableClz) {
+        return innerJoin(getTableName(tableClz));
+    }
+
+    /** 添加SQL 左关联语句 */
+    public DbTableQuery leftJoin(Class<?> tableClz) {
+        return leftJoin(getTableName(tableClz));
+    }
+
+    /** 添加SQL 右关联语句 */
+    public DbTableQuery rightJoin(Class<?> tableClz) {
+        return rightJoin(getTableName(tableClz));
+    }
+
+    public <C,D> DbTableQuery onEq(Property<C,?> property1, Property<D,?> property2) {
+        return onEq(getColumnName(property1), getColumnName(property2));
+    }
+
+    public <C> DbTableQuery groupBy(Property<C,?> property) {
+        return groupBy(getColumnName(property));
+    }
+
+    public <C> DbTableQuery orderByAsc(Property<C,?> property) {
+        return orderByAsc(getColumnName(property));
+    }
+
+    public <C> DbTableQuery orderByDesc(Property<C,?> property) {
+        return orderByDesc(getColumnName(property));
+    }
+
+
+
 
     private void item_init(){
         if (_item == null) {

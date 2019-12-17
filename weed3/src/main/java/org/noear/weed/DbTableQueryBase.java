@@ -6,6 +6,7 @@ import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Property;
+import org.noear.weed.utils.ClassWrap;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -427,13 +428,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    public T onEq(String column1, String column2) {
+        _builder.append(" ON ").append(column2).append("=").append(column2);
+        return (T) this;
+    }
+
     public T groupBy(String code) {
         _builder.append(" GROUP BY ").append(formatColumns(code));
         return (T)this;
-    }
-
-    public <C> T groupBy(Property<C,?> property) {
-        return groupBy(getColumnName(property));
     }
 
     public T having(String code){
@@ -451,17 +453,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
-    public <C> T orderByAsc(Property<C,?> property) {
-        return orderByAsc(getColumnName(property));
-    }
-
     public T orderByDesc(String fileds) {
         _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
         return (T)this;
-    }
-
-    public <C> T orderByDesc(Property<C,?> property) {
-        return orderByDesc(getColumnName(property));
     }
 
     /** 添加SQL limit语句 */

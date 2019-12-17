@@ -1,9 +1,13 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Property;
+import org.noear.weed.utils.ClassWrap;
+import org.noear.weed.utils.PropertyWrap;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -497,18 +501,38 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
 
-    private static Map<Property,String> _cache = new ConcurrentHashMap<>();
-    protected static  <C> String getColumnName(Property<C, ?> property){
-        String tmp = _cache.get(property);
-        if(tmp == null){
-            tmp = getNameDo(property);
-            _cache.putIfAbsent(property,tmp);
+    private List<ClassWrap> _clzArray = new ArrayList<>();
+    protected int addClass(ClassWrap clzWrap){
+        int idx = _clzArray.indexOf(clzWrap);
+        if(idx<0) {
+            idx = _clzArray.size();
+            _clzArray.add(clzWrap);
         }
-
-        return tmp;
+        return idx;
+    }
+    protected String getTableName(Class<?> tableClz){
+        ClassWrap cw = ClassWrap.get(tableClz);
+        int idx = addClass(cw);
+        return cw.tableName + " t" + idx;
     }
 
-    private static  <C> String getNameDo(Property<C, ?> property) {
+    private static Map<Property, PropertyWrap> _popCache = new ConcurrentHashMap<>();
+    protected  <C> String getColumnName(Property<C, ?> property) {
+        PropertyWrap tmp = _popCache.get(property);
+        if (tmp == null) {
+            tmp = getNameDo(property);
+            _popCache.putIfAbsent(property, tmp);
+        }
+
+        int idx = _clzArray.indexOf(tmp.clzWrap);
+        if (idx < 0) {
+            return tmp.name;
+        } else {
+            return "t" + idx + tmp.name;
+        }
+    }
+
+    private   <C> PropertyWrap getNameDo(Property<C, ?> property) {
         try {
             Method declaredMethod = property.getClass().getDeclaredMethod("writeReplace");
             declaredMethod.setAccessible(Boolean.TRUE);
@@ -520,7 +544,7 @@ public abstract class WhereBase<T extends WhereBase> {
             } else {
                 attr = method.substring(2);//is
             }
-            return attr;
+            return new PropertyWrap(null, attr);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
