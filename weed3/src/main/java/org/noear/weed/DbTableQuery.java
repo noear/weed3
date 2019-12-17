@@ -3,7 +3,9 @@ package org.noear.weed;
 import org.noear.weed.ext.Fun2;
 import org.noear.weed.ext.Property;
 import org.noear.weed.utils.ClassWrap;
+import org.noear.weed.utils.StringUtils;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -59,7 +61,24 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return orderByDesc(getColumnName(property));
     }
 
+    public IQuery select(Serializable... sels) {
+        StringBuilder sb = StringUtils.borrowBuilder();
+        for (Serializable s : sels) {
+            if (s instanceof String) {
+                sb.append((String) s).append(",");
+            } else if (s instanceof Property) {
+                sb.append(getColumnName((Property) s)).append(",");
+            } else if (s instanceof Class<?>) {
+                int idx = addClass(ClassWrap.get((Class<?>) s));
+                sb.append("t").append(idx).append(".*").append(",");
+            }
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1);
+        }
 
+        return super.select(StringUtils.releaseBuilder(sb));
+    }
 
 
     private void item_init(){

@@ -1,5 +1,7 @@
 package org.noear.weed.utils;
 
+import org.noear.weed.ext.Property;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,5 +27,9 @@ public class PropertyWrap {
     public PropertyWrap(String implClz, String name){
         this.clzWrap = ClassWrap.get(getClz(implClz));
         this.name = name;
+    }
+
+    public static <C> Property p(Property<C,?> prop){
+        return prop;
     }
 }

@@ -523,7 +523,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public IQuery select(String columns) {
-
         select_do(columns);
 
         DbQuery rst = compile();
