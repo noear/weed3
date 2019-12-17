@@ -4,12 +4,12 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
+import org.noear.weed.annotation.Db;
 import org.noear.weed.ext.Act0;
 import org.noear.weed.xml.XmlSqlLoader;
-import webapp.dso.DbConfig;
 import webapp.model.AppxModel;
+
+import java.lang.annotation.Annotation;
 
 public class App {
     public static void main(String[] args){
@@ -17,12 +17,39 @@ public class App {
 
         XmlSqlLoader.tryLoad();
 
-        Aop.factory().beanLoaderAdd(org.noear.weed.annotation.DbContext.class, (clz, bw, anno) -> {
+        Aop.factory().beanLoaderAdd(Db.class, (clz, bw, anno) -> {
             if(clz.isInterface()){
-                org.noear.weed.DbContext db = WeedConfig.libOfDb.get(anno.value());
+                DbContext db = WeedConfig.libOfDb.get(anno.value());
                 Object raw = db.mapper(clz);
                 Aop.put(clz, raw);
             }
+        });
+
+        Aop.factory().beanBuilderadd((clz, annoS)->{
+            if(clz.isInterface()) {
+                Db dbAnno = clz.getAnnotation(Db.class);
+                if (dbAnno == null) {
+                    if (annoS != null) {
+                        for (Annotation a1 : annoS) {
+                            if (a1.annotationType() == Db.class) {
+                                dbAnno = (Db) a1;
+                            }
+                        }
+                    }
+
+                    if(dbAnno!=null){
+                        DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
+                        Object raw = db.mapper(clz);
+                        return raw;
+                    }
+                }else{
+                    DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
+                    Object raw = db.mapper(clz);
+                    Aop.put(clz, raw);
+                    return raw;
+                }
+            }
+            return null;
         });
 
         XApp app = XApp.start(App.class,args);
