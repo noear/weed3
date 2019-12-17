@@ -85,17 +85,17 @@ public class PropertyWrap implements Serializable {
     /** 将 Property 转为 PropertyWrap  */
     private static <C> PropertyWrap wrap(Property<C, ?> p) {
         try {
-            Method declaredMethod = p.getClass().getDeclaredMethod("writeReplace");
-            declaredMethod.setAccessible(Boolean.TRUE);
-            SerializedLambda serializedLambda = (SerializedLambda) declaredMethod.invoke(p);
-            String method = serializedLambda.getImplMethodName();
+            Method fun = p.getClass().getDeclaredMethod("writeReplace");
+            fun.setAccessible(Boolean.TRUE);
+            SerializedLambda slambda = (SerializedLambda) fun.invoke(p);
+            String method = slambda.getImplMethodName();
             String attr = null;
             if (method.startsWith("get")) {
                 attr = method.substring(3);
             } else {
                 attr = method.substring(2);//is
             }
-            return new PropertyWrap(p, serializedLambda.getImplClass(), attr);
+            return new PropertyWrap(p, slambda.getImplClass(), attr);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
