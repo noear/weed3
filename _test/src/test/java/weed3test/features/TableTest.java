@@ -15,13 +15,17 @@ public class TableTest {
                 .whereEq("app_id", 22)
                 .select("*")
                 .getItem(AppxModel.class).app_id == 22;
+
+        System.out.println(db.lastCommand.text);
     }
 
     @Test
     public void test2() throws Exception {
-        assert db.table("appx")
+        assert db.table(AppxModel.class)
                 .whereEq(AppxModel::getApp_id, 21)
                 .select("*")
                 .getItem(AppxModel.class).app_id == 21;
+
+        System.out.println(db.lastCommand.text);
     }
 }

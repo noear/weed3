@@ -271,6 +271,10 @@ public class DbContext {
         return new DbTableQuery(this).table(table);
     }
 
+    public DbTableQuery table(Class<?> tableClz) {
+        return new DbTableQuery(this).table(tableClz);
+    }
+
 
     /**
      * 输入process name，获取process执行对象

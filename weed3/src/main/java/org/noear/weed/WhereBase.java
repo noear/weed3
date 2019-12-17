@@ -534,7 +534,7 @@ public abstract class WhereBase<T extends WhereBase> {
             if (idx < 0) {
                 return tmp.name;
             } else {
-                return "t" + idx + tmp.name;
+                return "t" + idx + "." + tmp.name;
             }
         }
     }
@@ -551,7 +551,7 @@ public abstract class WhereBase<T extends WhereBase> {
             } else {
                 attr = method.substring(2);//is
             }
-            return new PropertyWrap(null, attr);
+            return new PropertyWrap(serializedLambda.getImplClass(), attr);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
