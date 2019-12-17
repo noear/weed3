@@ -2,6 +2,7 @@ package webapp;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
+import org.noear.solon.core.XPlugin;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Db;
@@ -25,34 +26,40 @@ public class App {
             }
         });
 
-        Aop.factory().beanBuilderadd((clz, annoS)->{
-            if(clz.isInterface()) {
-                Db dbAnno = clz.getAnnotation(Db.class);
-                if (dbAnno == null) {
-                    if (annoS != null) {
-                        for (Annotation a1 : annoS) {
-                            if (a1.annotationType() == Db.class) {
-                                dbAnno = (Db) a1;
+        XPlugin plugin = (app)->{
+            Aop.factory().beanBuilderadd((clz, annoS)->{
+                if(clz.isInterface()) {
+                    Db dbAnno = clz.getAnnotation(Db.class);
+                    if (dbAnno == null) {
+                        if (annoS != null) {
+                            for (Annotation a1 : annoS) {
+                                if (a1.annotationType() == Db.class) {
+                                    dbAnno = (Db) a1;
+                                }
                             }
                         }
-                    }
 
-                    if(dbAnno!=null){
+                        if(dbAnno!=null){
+                            DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
+                            Object raw = db.mapper(clz);
+                            return raw;
+                        }
+                    }else{
                         DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
                         Object raw = db.mapper(clz);
+                        Aop.put(clz, raw);
                         return raw;
                     }
-                }else{
-                    DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
-                    Object raw = db.mapper(clz);
-                    Aop.put(clz, raw);
-                    return raw;
                 }
-            }
-            return null;
-        });
+                return null;
+            });
+        };
 
-        XApp app = XApp.start(App.class,args);
+
+
+        XApp app = XApp.start(App.class,args ,(x)->{
+            x.plug(plugin);
+        });
 
         app.get("/",(c)->{
             c.render("nav.htm", null);
