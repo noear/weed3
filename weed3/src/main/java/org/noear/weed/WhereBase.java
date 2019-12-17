@@ -1,8 +1,8 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Property;
+import org.noear.weed.utils.Prop;
 import org.noear.weed.utils.ClassWrap;
-import org.noear.weed.utils.PropertyWrap;
+import org.noear.weed.utils.PropWrap;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
@@ -95,7 +95,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public <C> T whereEq(Property<C, ?> property, Object val){
+    public <C> T whereEq(Prop<C, ?> property, Object val){
         return whereEq(getColumnName(property),val);
     }
 
@@ -103,7 +103,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
-    public <C> T whereNeq(Property<C, ?> property, Object val){
+    public <C> T whereNeq(Prop<C, ?> property, Object val){
         return whereNeq(getColumnName(property),val);
     }
 
@@ -112,7 +112,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
-    public <C> T whereLt(Property<C, ?> property, Object val){
+    public <C> T whereLt(Prop<C, ?> property, Object val){
         return whereLt(getColumnName(property),val);
     }
 
@@ -121,7 +121,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
-    public <C> T whereLte(Property<C, ?> property, Object val){
+    public <C> T whereLte(Prop<C, ?> property, Object val){
         return whereLte(getColumnName(property),val);
     }
 
@@ -130,7 +130,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
-    public <C> T whereGt(Property<C, ?> property, Object val){
+    public <C> T whereGt(Prop<C, ?> property, Object val){
         return whereGt(getColumnName(property),val);
     }
 
@@ -139,7 +139,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
-    public <C> T whereGte(Property<C, ?> property, Object val){
+    public <C> T whereGte(Prop<C, ?> property, Object val){
         return whereGte(getColumnName(property),val);
     }
 
@@ -148,7 +148,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
-    public <C> T whereLk(Property<C, ?> property, String val){
+    public <C> T whereLk(Prop<C, ?> property, String val){
         return whereLk(getColumnName(property), val);
     }
 
@@ -157,7 +157,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" NOT LIKE ? ",val);
         return (T)this;
     }
-    public <C> T whereNlk(Property<C, ?> property, String val){
+    public <C> T whereNlk(Prop<C, ?> property, String val){
         return whereNlk(getColumnName(property), val);
     }
 
@@ -167,7 +167,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T whereBtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T whereBtw(Prop<C, ?> property, Object start, Object end) {
         return whereBtw(getColumnName(property), start, end);
     }
 
@@ -177,7 +177,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T whereNbtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T whereNbtw(Prop<C, ?> property, Object start, Object end) {
         return whereNbtw(getColumnName(property), start, end);
     }
 
@@ -188,7 +188,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T whereIn(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T whereIn(Prop<C, ?> property, Iterable<Object> ary){
         return whereIn(getColumnName(property), ary);
     }
 
@@ -197,7 +197,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" WHERE ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T whereNin(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T whereNin(Prop<C, ?> property, Iterable<Object> ary){
         return whereNin(getColumnName(property), ary);
     }
 
@@ -233,7 +233,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public <C> T andEq(Property<C, ?> property, Object val){
+    public <C> T andEq(Prop<C, ?> property, Object val){
         return andEq(getColumnName(property),val);
     }
 
@@ -241,7 +241,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
-    public <C> T andNeq(Property<C, ?> property, Object val){
+    public <C> T andNeq(Prop<C, ?> property, Object val){
         return andNeq(getColumnName(property),val);
     }
 
@@ -250,7 +250,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
-    public <C> T andLt(Property<C, ?> property, Object val){
+    public <C> T andLt(Prop<C, ?> property, Object val){
         return andLt(getColumnName(property),val);
     }
 
@@ -259,7 +259,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
-    public <C> T andLte(Property<C, ?> property, Object val){
+    public <C> T andLte(Prop<C, ?> property, Object val){
         return andLte(getColumnName(property),val);
     }
 
@@ -268,7 +268,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
-    public <C> T andGt(Property<C, ?> property, Object val){
+    public <C> T andGt(Prop<C, ?> property, Object val){
         return andGt(getColumnName(property),val);
     }
 
@@ -277,7 +277,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
-    public <C> T andGte(Property<C, ?> property, Object val){
+    public <C> T andGte(Prop<C, ?> property, Object val){
         return andGte(getColumnName(property),val);
     }
 
@@ -286,7 +286,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
-    public <C> T andLk(Property<C, ?> property, String val){
+    public <C> T andLk(Prop<C, ?> property, String val){
         return andLk(getColumnName(property), val);
     }
 
@@ -295,7 +295,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" NOT LIKE ? ",val);
         return (T)this;
     }
-    public <C> T andNlk(Property<C, ?> property, String val){
+    public <C> T andNlk(Prop<C, ?> property, String val){
         return andNlk(getColumnName(property), val);
     }
 
@@ -305,7 +305,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T andBtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T andBtw(Prop<C, ?> property, Object start, Object end) {
         return andBtw(getColumnName(property), start, end);
     }
 
@@ -315,7 +315,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T andNbtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T andNbtw(Prop<C, ?> property, Object start, Object end) {
         return andNbtw(getColumnName(property), start, end);
     }
 
@@ -324,7 +324,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T andIn(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T andIn(Prop<C, ?> property, Iterable<Object> ary){
         return andIn(getColumnName(property), ary);
     }
 
@@ -333,7 +333,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" AND ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T andNin(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T andNin(Prop<C, ?> property, Iterable<Object> ary){
         return andNin(getColumnName(property), ary);
     }
 
@@ -369,7 +369,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" = ? ",val);
         return (T)this;
     }
-    public <C> T orEq(Property<C, ?> property, Object val){
+    public <C> T orEq(Prop<C, ?> property, Object val){
         return orEq(getColumnName(property),val);
     }
 
@@ -377,7 +377,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" != ? ",val);
         return (T)this;
     }
-    public <C> T orNeq(Property<C, ?> property, Object val){
+    public <C> T orNeq(Prop<C, ?> property, Object val){
         return orNeq(getColumnName(property),val);
     }
 
@@ -386,7 +386,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" < ? ",val);
         return (T)this;
     }
-    public <C> T orLt(Property<C, ?> property, Object val){
+    public <C> T orLt(Prop<C, ?> property, Object val){
         return orLt(getColumnName(property),val);
     }
 
@@ -395,7 +395,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" <= ? ",val);
         return (T)this;
     }
-    public <C> T orLte(Property<C, ?> property, Object val){
+    public <C> T orLte(Prop<C, ?> property, Object val){
         return orLte(getColumnName(property),val);
     }
 
@@ -404,7 +404,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" > ? ",val);
         return (T)this;
     }
-    public <C> T orGt(Property<C, ?> property, Object val){
+    public <C> T orGt(Prop<C, ?> property, Object val){
         return orGt(getColumnName(property),val);
     }
 
@@ -413,7 +413,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" >= ? ",val);
         return (T)this;
     }
-    public <C> T orGte(Property<C, ?> property, Object val){
+    public <C> T orGte(Prop<C, ?> property, Object val){
         return orGte(getColumnName(property),val);
     }
 
@@ -422,7 +422,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" LIKE ? ",val);
         return (T)this;
     }
-    public <C> T orLk(Property<C, ?> property, String val){
+    public <C> T orLk(Prop<C, ?> property, String val){
         return orLk(getColumnName(property), val);
     }
 
@@ -432,7 +432,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" NOT LIKE ? ",val);
         return (T)this;
     }
-    public <C> T orNlk(Property<C, ?> property, String val){
+    public <C> T orNlk(Prop<C, ?> property, String val){
         return orNlk(getColumnName(property), val);
     }
 
@@ -443,7 +443,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T orBtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T orBtw(Prop<C, ?> property, Object start, Object end) {
         return orBtw(getColumnName(property), start, end);
     }
 
@@ -453,7 +453,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public <C> T orNbtw(Property<C, ?> property, Object start, Object end) {
+    public <C> T orNbtw(Prop<C, ?> property, Object start, Object end) {
         return orNbtw(getColumnName(property), start, end);
     }
 
@@ -463,7 +463,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T orIn(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T orIn(Prop<C, ?> property, Iterable<Object> ary){
         return orIn(getColumnName(property), ary);
     }
 
@@ -472,7 +472,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" OR ").append(formatField(column)).append(" NOT IN (?...) ",ary);
         return (T)this;
     }
-    public <C> T orNin(Property<C, ?> property, Iterable<Object> ary){
+    public <C> T orNin(Prop<C, ?> property, Iterable<Object> ary){
         return orNin(getColumnName(property), ary);
     }
 
@@ -520,9 +520,9 @@ public abstract class WhereBase<T extends WhereBase> {
         return cw.tableName + " t" + idx;
     }
 
-    private static Map<Property, PropertyWrap> _popCache = new ConcurrentHashMap<>();
-    protected  <C> String getColumnName(Property<C, ?> property) {
-        PropertyWrap tmp = _popCache.get(property);
+    private static Map<Prop, PropWrap> _popCache = new ConcurrentHashMap<>();
+    protected  <C> String getColumnName(Prop<C, ?> property) {
+        PropWrap tmp = _popCache.get(property);
         if (tmp == null) {
             tmp = getNameDo(property);
             _popCache.putIfAbsent(property, tmp);
@@ -539,7 +539,7 @@ public abstract class WhereBase<T extends WhereBase> {
         }
     }
 
-    private   <C> PropertyWrap getNameDo(Property<C, ?> property) {
+    private   <C> PropWrap getNameDo(Prop<C, ?> property) {
         try {
             Method declaredMethod = property.getClass().getDeclaredMethod("writeReplace");
             declaredMethod.setAccessible(Boolean.TRUE);
@@ -551,7 +551,7 @@ public abstract class WhereBase<T extends WhereBase> {
             } else {
                 attr = method.substring(2);//is
             }
-            return new PropertyWrap(serializedLambda.getImplClass(), attr);
+            return new PropWrap(serializedLambda.getImplClass(), attr);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }

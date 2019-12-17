@@ -5,8 +5,6 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
-import org.noear.weed.ext.Property;
-import org.noear.weed.utils.ClassWrap;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;

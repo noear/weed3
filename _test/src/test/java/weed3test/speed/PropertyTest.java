@@ -1,7 +1,7 @@
 package weed3test.speed;
 
 import org.junit.Test;
-import org.noear.weed.ext.Property;
+import org.noear.weed.utils.Prop;
 import weed3test.model.AppxModel;
 
 import java.lang.invoke.SerializedLambda;
@@ -13,9 +13,9 @@ public class PropertyTest {
 
     @Test
     public void test1() {
-        Property<AppxModel, ?> p1 = AppxModel::getApp_id;
-        Property<AppxModel, ?> p2 = AppxModel::getAgroup_id;
-        Property<AppxModel, ?> p3 = AppxModel::getApp_key;
+        Prop<AppxModel, ?> p1 = AppxModel::getApp_id;
+        Prop<AppxModel, ?> p2 = AppxModel::getAgroup_id;
+        Prop<AppxModel, ?> p3 = AppxModel::getApp_key;
 
         System.out.println(getName(p1));
         System.out.println(getName(p2));
@@ -34,9 +34,9 @@ public class PropertyTest {
 
     @Test
     public void test2() {
-        Property<AppxModel, ?> p1 = AppxModel::getApp_id;
-        Property<AppxModel, ?> p2 = AppxModel::getAgroup_id;
-        Property<AppxModel, ?> p3 = AppxModel::getApp_key;
+        Prop<AppxModel, ?> p1 = AppxModel::getApp_id;
+        Prop<AppxModel, ?> p2 = AppxModel::getAgroup_id;
+        Prop<AppxModel, ?> p3 = AppxModel::getApp_key;
 
         System.out.println(getName2(p1));
         System.out.println(getName2(p2));
@@ -53,9 +53,9 @@ public class PropertyTest {
         System.out.println("用时："+times);
     }
 
-    private static Map<Property,String> _cache = new ConcurrentHashMap<>();
+    private static Map<Prop,String> _cache = new ConcurrentHashMap<>();
 
-    private static  <C> String getName2(Property<C, ?> property){
+    private static  <C> String getName2(Prop<C, ?> property){
         String tmp = _cache.get(property);
         if(tmp == null){
             tmp = getName(property);
@@ -65,7 +65,7 @@ public class PropertyTest {
         return tmp;
     }
 
-    private static  <C> String getName(Property<C, ?> property) {
+    private static  <C> String getName(Prop<C, ?> property) {
         try {
             Method declaredMethod = property.getClass().getDeclaredMethod("writeReplace");
             declaredMethod.setAccessible(Boolean.TRUE);
