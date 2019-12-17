@@ -51,7 +51,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.4-SNAPSHOT</version>
+    <version>3.2.4</version>
 </dependency>
 ```
 
