@@ -45,8 +45,7 @@ public class DbTranQueue {
 
             try {
                 tran.rollback(true);
-            } catch (Exception ex) {
-            }
+            } catch (Throwable ex) {}
         }
     }
 
@@ -60,6 +59,10 @@ public class DbTranQueue {
                 WeedConfig.runExceptionEvent(null, ex);
             }
         }
+    }
+
+    public static DbTranQueue run(Act1Ex<DbTranQueue,Exception> handler) throws Exception{
+        return new DbTranQueue().execute(handler);
     }
 
     //执行并结束事务

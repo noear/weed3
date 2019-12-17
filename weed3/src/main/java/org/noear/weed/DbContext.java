@@ -354,6 +354,10 @@ public class DbContext {
         return new DbTran(this);
     }
 
+    /**
+     * 由Db发起，语义不合理；改用 DbTranQueue.run()
+     * */
+    @Deprecated
     public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Exception> handler) throws Exception {
         return new DbTranQueue().execute(handler);
     }
