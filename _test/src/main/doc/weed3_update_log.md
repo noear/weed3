@@ -1,3 +1,6 @@
+3.2.3.16
+1.添加更多反射功能
+
 3.2.3.10
 1.添加BaseMapper
 2.添加FieldWrap,ClassWrap, 重写EntityUtils
