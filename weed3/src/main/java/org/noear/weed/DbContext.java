@@ -345,6 +345,11 @@ public class DbContext {
         return new DbTran(this).execute(handler);
     }
 
+
+    public DbTran tran(DbTranQueue tq, Act1Ex<DbTran, Exception> handler) throws Exception {
+        return new DbTran(this).join(tq).execute(handler);
+    }
+
     public DbTran tran() {
         return new DbTran(this);
     }

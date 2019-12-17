@@ -12,7 +12,7 @@ public class TranDemo {
         DbTranQueue queue = new DbTranQueue();
 
         queue.execute((tq) -> {
-            db1.tran().join(tq).execute((t)->{
+            db1.tran(tq, (t)->{
                db1.sql("").execute();
             });
         });
