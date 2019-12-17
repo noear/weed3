@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 
 public class XmlSqlBlock {
     private static final String _lock ="";
+
     public String _namespace;
     public String _classname;
     public StringBuilder _classcode;
