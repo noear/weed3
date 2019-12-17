@@ -1,7 +1,7 @@
 package org.noear.weed.utils;
 
 import org.noear.weed.annotation.Exclude;
-import org.noear.weed.annotation.Name;
+import org.noear.weed.annotation.Column;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -23,7 +23,7 @@ public class FieldWrap {
         exclude = (f1.getAnnotation(Exclude.class) != null);
 
         String nameTmp = null;
-        Name fn = f1.getAnnotation(Name.class);
+        Column fn = f1.getAnnotation(Column.class);
         if (fn != null) {
             nameTmp = fn.value();
         }else{
