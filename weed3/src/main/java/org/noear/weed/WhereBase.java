@@ -92,7 +92,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereEq(Property<C, ?> property, Object val){
-        return whereEq(getName(property),val);
+        return whereEq(getColumnName(property),val);
     }
 
     public T whereNeq(String column, Object val){
@@ -100,7 +100,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereNeq(Property<C, ?> property, Object val){
-        return whereNeq(getName(property),val);
+        return whereNeq(getColumnName(property),val);
     }
 
     /** 添加SQL where < 语句 */
@@ -109,7 +109,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereLt(Property<C, ?> property, Object val){
-        return whereLt(getName(property),val);
+        return whereLt(getColumnName(property),val);
     }
 
     /** 添加SQL where <= 语句 */
@@ -118,7 +118,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereLte(Property<C, ?> property, Object val){
-        return whereLte(getName(property),val);
+        return whereLte(getColumnName(property),val);
     }
 
     /** 添加SQL where > 语句 */
@@ -127,7 +127,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereGt(Property<C, ?> property, Object val){
-        return whereGt(getName(property),val);
+        return whereGt(getColumnName(property),val);
     }
 
     /** 添加SQL where >= 语句 */
@@ -136,7 +136,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereGte(Property<C, ?> property, Object val){
-        return whereGte(getName(property),val);
+        return whereGte(getColumnName(property),val);
     }
 
     /** 添加SQL where like 语句 */
@@ -145,7 +145,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereLk(Property<C, ?> property, String val){
-        return whereLk(getName(property), val);
+        return whereLk(getColumnName(property), val);
     }
 
     /** 添加SQL where not like 语句 */
@@ -154,7 +154,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereNlk(Property<C, ?> property, String val){
-        return whereNlk(getName(property), val);
+        return whereNlk(getColumnName(property), val);
     }
 
     /** 添加SQL where between 语句 */
@@ -164,7 +164,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T whereBtw(Property<C, ?> property, Object start, Object end) {
-        return whereBtw(getName(property), start, end);
+        return whereBtw(getColumnName(property), start, end);
     }
 
     /** 添加SQL where note between 语句 */
@@ -174,7 +174,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T whereNbtw(Property<C, ?> property, Object start, Object end) {
-        return whereNbtw(getName(property), start, end);
+        return whereNbtw(getColumnName(property), start, end);
     }
 
 
@@ -185,7 +185,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereIn(Property<C, ?> property, Iterable<Object> ary){
-        return whereIn(getName(property), ary);
+        return whereIn(getColumnName(property), ary);
     }
 
     /** 添加SQL where not in(?...) 语句 */
@@ -194,7 +194,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T whereNin(Property<C, ?> property, Iterable<Object> ary){
-        return whereNin(getName(property), ary);
+        return whereNin(getColumnName(property), ary);
     }
 
 
@@ -230,7 +230,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andEq(Property<C, ?> property, Object val){
-        return andEq(getName(property),val);
+        return andEq(getColumnName(property),val);
     }
 
     public T andNeq(String column, Object val){
@@ -238,7 +238,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andNeq(Property<C, ?> property, Object val){
-        return andNeq(getName(property),val);
+        return andNeq(getColumnName(property),val);
     }
 
     /** 添加SQL and < 语句 */
@@ -247,7 +247,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andLt(Property<C, ?> property, Object val){
-        return andLt(getName(property),val);
+        return andLt(getColumnName(property),val);
     }
 
     /** 添加SQL and <= 语句 */
@@ -256,7 +256,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andLte(Property<C, ?> property, Object val){
-        return andLte(getName(property),val);
+        return andLte(getColumnName(property),val);
     }
 
     /** 添加SQL and > 语句 */
@@ -265,7 +265,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andGt(Property<C, ?> property, Object val){
-        return andGt(getName(property),val);
+        return andGt(getColumnName(property),val);
     }
 
     /** 添加SQL and >= 语句 */
@@ -274,7 +274,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andGte(Property<C, ?> property, Object val){
-        return andGte(getName(property),val);
+        return andGte(getColumnName(property),val);
     }
 
     /** 添加SQL and like 语句 */
@@ -283,7 +283,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andLk(Property<C, ?> property, String val){
-        return andLk(getName(property), val);
+        return andLk(getColumnName(property), val);
     }
 
     /** 添加SQL and not like 语句 */
@@ -292,7 +292,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andNlk(Property<C, ?> property, String val){
-        return andNlk(getName(property), val);
+        return andNlk(getColumnName(property), val);
     }
 
     /** 添加SQL where between 语句 */
@@ -302,7 +302,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T andBtw(Property<C, ?> property, Object start, Object end) {
-        return andBtw(getName(property), start, end);
+        return andBtw(getColumnName(property), start, end);
     }
 
     /** 添加SQL where note between 语句 */
@@ -312,7 +312,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T andNbtw(Property<C, ?> property, Object start, Object end) {
-        return andNbtw(getName(property), start, end);
+        return andNbtw(getColumnName(property), start, end);
     }
 
     /** 添加SQL and in(?...) 语句 */
@@ -321,7 +321,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andIn(Property<C, ?> property, Iterable<Object> ary){
-        return andIn(getName(property), ary);
+        return andIn(getColumnName(property), ary);
     }
 
     /** 添加SQL and not in(?...) 语句 */
@@ -330,7 +330,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T andNin(Property<C, ?> property, Iterable<Object> ary){
-        return andNin(getName(property), ary);
+        return andNin(getColumnName(property), ary);
     }
 
 
@@ -366,7 +366,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orEq(Property<C, ?> property, Object val){
-        return orEq(getName(property),val);
+        return orEq(getColumnName(property),val);
     }
 
     public T orNeq(String column, Object val){
@@ -374,7 +374,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orNeq(Property<C, ?> property, Object val){
-        return orNeq(getName(property),val);
+        return orNeq(getColumnName(property),val);
     }
 
     /** 添加SQL or < 语句 */
@@ -383,7 +383,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orLt(Property<C, ?> property, Object val){
-        return orLt(getName(property),val);
+        return orLt(getColumnName(property),val);
     }
 
     /** 添加SQL or <= 语句 */
@@ -392,7 +392,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orLte(Property<C, ?> property, Object val){
-        return orLte(getName(property),val);
+        return orLte(getColumnName(property),val);
     }
 
     /** 添加SQL or > 语句 */
@@ -401,7 +401,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orGt(Property<C, ?> property, Object val){
-        return orGt(getName(property),val);
+        return orGt(getColumnName(property),val);
     }
 
     /** 添加SQL or >= 语句 */
@@ -410,7 +410,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orGte(Property<C, ?> property, Object val){
-        return orGte(getName(property),val);
+        return orGte(getColumnName(property),val);
     }
 
     /** 添加SQL or like 语句 */
@@ -419,7 +419,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orLk(Property<C, ?> property, String val){
-        return orLk(getName(property), val);
+        return orLk(getColumnName(property), val);
     }
 
 
@@ -429,7 +429,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orNlk(Property<C, ?> property, String val){
-        return orNlk(getName(property), val);
+        return orNlk(getColumnName(property), val);
     }
 
 
@@ -440,7 +440,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T orBtw(Property<C, ?> property, Object start, Object end) {
-        return orBtw(getName(property), start, end);
+        return orBtw(getColumnName(property), start, end);
     }
 
     /** 添加SQL where note between 语句 */
@@ -450,7 +450,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public <C> T orNbtw(Property<C, ?> property, Object start, Object end) {
-        return orNbtw(getName(property), start, end);
+        return orNbtw(getColumnName(property), start, end);
     }
 
 
@@ -460,7 +460,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orIn(Property<C, ?> property, Iterable<Object> ary){
-        return orIn(getName(property), ary);
+        return orIn(getColumnName(property), ary);
     }
 
     /** 添加SQL or not in(?...) 语句 */
@@ -469,7 +469,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T)this;
     }
     public <C> T orNin(Property<C, ?> property, Iterable<Object> ary){
-        return orNin(getName(property), ary);
+        return orNin(getColumnName(property), ary);
     }
 
 
@@ -498,7 +498,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     private static Map<Property,String> _cache = new ConcurrentHashMap<>();
-    protected static  <C> String getName(Property<C, ?> property){
+    protected static  <C> String getColumnName(Property<C, ?> property){
         String tmp = _cache.get(property);
         if(tmp == null){
             tmp = getNameDo(property);

@@ -433,7 +433,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public <C> T groupBy(Property<C,?> property) {
-        return groupBy(WhereBase.getName(property));
+        return groupBy(getColumnName(property));
     }
 
     public T having(String code){
@@ -452,7 +452,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public <C> T orderByAsc(Property<C,?> property) {
-        return orderByAsc(WhereBase.getName(property));
+        return orderByAsc(getColumnName(property));
     }
 
     public T orderByDesc(String fileds) {
@@ -461,7 +461,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public <C> T orderByDesc(Property<C,?> property) {
-        return orderByDesc(WhereBase.getName(property));
+        return orderByDesc(getColumnName(property));
     }
 
     /** 添加SQL limit语句 */
