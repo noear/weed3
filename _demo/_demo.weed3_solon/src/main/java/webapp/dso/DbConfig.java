@@ -23,7 +23,8 @@ public class DbConfig {
     //
     public final static DbContext db1 = new DbContext(Aop.prop().getProp("test.db1"))
             .objectFormatSet("`%`")
-            .fieldFormatSet("`%`");
+            .fieldFormatSet("`%`")
+            .nameSet("db1");
 
 
     //
@@ -42,5 +43,6 @@ public class DbConfig {
     public final static DbContext db2 = new DbContext()
             .dataSourceSet(dataSource())
             .objectFormatSet("`%`")
-            .fieldFormatSet("`%`");
+            .fieldFormatSet("`%`")
+            .nameSet("db2");
 }

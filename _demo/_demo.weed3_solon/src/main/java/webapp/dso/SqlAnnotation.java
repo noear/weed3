@@ -1,6 +1,7 @@
 package webapp.dso;
 
 import org.noear.weed.BaseMapper;
+import org.noear.weed.annotation.DbContext;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.xml.Namespace;
 import webapp.model.AppxModel;
@@ -11,6 +12,7 @@ import java.util.Map;
 //
 // 注解 sql
 //
+@DbContext("db2")
 public interface SqlAnnotation extends BaseMapper<AppxModel> {
     @Sql("select app_id from appx limit 1")
     int appx_get() throws Exception;

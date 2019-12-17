@@ -15,13 +15,12 @@ public class SQLBuilder {
     StringBuilder b_builder = new StringBuilder();
     List<Object> b_paramS = new ArrayList<>();
 
-    public int indexOf(String str){
+    public int indexOf(String str) {
         return builder.indexOf(str);
     }
 
-    public void clear()
-    {
-        builder.delete(0,builder.length());
+    public void clear() {
+        builder.delete(0, builder.length());
         paramS.clear();
     }
 
@@ -30,6 +29,7 @@ public class SQLBuilder {
         b_builder.append(builder.toString());
         b_paramS.addAll(paramS);
     }
+
     //还原状态
     protected void restore() {
         clear();
@@ -37,7 +37,7 @@ public class SQLBuilder {
         paramS.addAll(b_paramS);
     }
 
-    public SQLBuilder insert(String code,  Object... args) {
+    public SQLBuilder insert(String code, Object... args) {
         SQLPartBuilder pb = new SQLPartBuilder(code, args);
 
         builder.insert(0, pb.code);
@@ -51,7 +51,7 @@ public class SQLBuilder {
         return this;
     }
 
-    public SQLBuilder append(String code,  Object... args) {
+    public SQLBuilder append(String code, Object... args) {
         SQLPartBuilder pb = new SQLPartBuilder(code, args);
 
         builder.append(pb.code);
@@ -66,18 +66,18 @@ public class SQLBuilder {
     }
 
     public SQLBuilder remove(int start, int length) {
-        builder.delete(start, start+ length);
+        builder.delete(start, start + length);
         return this;
     }
 
-    public SQLBuilder removeLast(){
+    public SQLBuilder removeLast() {
         builder.setLength(builder.length() - 1);
         return this;
     }
 
     public SQLBuilder trimEnd(String str) {
         int len = str.length();
-        if(len>0) {
+        if (len > 0) {
             String tmp = builder.toString().trim();
 
             while (true) {
@@ -96,10 +96,9 @@ public class SQLBuilder {
     }
 
 
-
     public SQLBuilder trimStart(String str) {
         int len = str.length();
-        if(len>0) {
+        if (len > 0) {
             String tmp = builder.toString().trim();
 
             while (true) {
@@ -117,13 +116,13 @@ public class SQLBuilder {
     }
 
     //添加前缀
-    public SQLBuilder addPrefix(String str){
-        builder.insert(0,str);
+    public SQLBuilder addPrefix(String str) {
+        builder.insert(0, str);
         return this;
     }
 
     //添加后缀
-    public SQLBuilder addSuffix(String str){
+    public SQLBuilder addSuffix(String str) {
         builder.append(str);
         return this;
     }
@@ -142,11 +141,11 @@ public class SQLBuilder {
         public String code;
         public List<Object> paramS;
 
-        public SQLPartBuilder(String code,  Object[] args) {
+        public SQLPartBuilder(String code, Object[] args) {
 
             paramS = new ArrayList<>();
 
-            if (args.length > 0) {
+            if (args != null && args.length > 0) {
                 StringBuilder builder = StringUtils.borrowBuilder();
                 builder.append(code);
                 for (Object p1 : args) {
@@ -171,10 +170,9 @@ public class SQLBuilder {
                         } else {
                             builder.replace(idx, idx + 4, tmp);
                         }
-                    }
-                    else if (p1 instanceof DbQuery) {
+                    } else if (p1 instanceof DbQuery) {
 
-                        DbQuery s1 = (DbQuery)p1;
+                        DbQuery s1 = (DbQuery) p1;
 
                         for (Variate p2 : s1.paramS) {
                             paramS.add(p2.getValue());
@@ -185,15 +183,13 @@ public class SQLBuilder {
                             builder.replace(idx, idx + 4, s1.commandText);
                         else
                             builder.replace(idx, idx + 4, s1.commandText);
-                    }
-                    else {
+                    } else {
                         paramS.add(p1);
                     }
                 }
 
                 this.code = StringUtils.releaseBuilder(builder);
-            }
-            else {
+            } else {
                 this.code = code;
             }
         }

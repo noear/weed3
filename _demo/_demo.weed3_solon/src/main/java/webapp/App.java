@@ -1,7 +1,9 @@
 package webapp;
 
 import org.noear.solon.XApp;
+import org.noear.solon.core.Aop;
 import org.noear.weed.DbContext;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.ext.Act0;
@@ -14,6 +16,14 @@ public class App {
         Act0 tmp2 = AppxModel::new;
 
         XmlSqlLoader.tryLoad();
+
+        Aop.factory().beanLoaderAdd(org.noear.weed.annotation.DbContext.class, (clz, bw, anno) -> {
+            if(clz.isInterface()){
+                org.noear.weed.DbContext db = WeedConfig.libOfDb.get(anno.value());
+                Object raw = db.mapper(clz);
+                Aop.put(clz, raw);
+            }
+        });
 
         XApp app = XApp.start(App.class,args);
 

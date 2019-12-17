@@ -1,6 +1,7 @@
 package webapp.controller;
 
 import org.noear.solon.annotation.XController;
+import org.noear.solon.annotation.XInject;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.solon.core.ModelAndView;
@@ -15,6 +16,9 @@ import webapp.dso.SqlAnnotation;
 public class AnnotController {
     DbContext db2 = DbConfig.db2;
 
+    @XInject
+    SqlAnnotation mapper;
+
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("view.ftl");
@@ -27,12 +31,12 @@ public class AnnotController {
 
     @XMapping("demo1/json")
     public Object demo1() throws Exception {
-        return db2.mapper(SqlAnnotation.class).appx_get();
+        return mapper.appx_get();
     }
 
     @XMapping("demo2/json")
     public Object demo2() throws Exception {
-        return db2.mapper(SqlAnnotation.class).appx_get2(48);
+        return mapper.appx_get2(48);
     }
 
     @XMapping("demo3/json")
