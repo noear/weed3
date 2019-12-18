@@ -17,7 +17,7 @@
 #### 相关文章：
 * [一个新的微型ORM框架](https://my.oschina.net/noear/blog/3144349)
 
- 
+
 #### 组件： 
 | 组件 | 说明 |
 | --- | --- |
@@ -30,39 +30,32 @@
 | org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
 
+#### 核心功能
+* 上下文：DbContext db
+* 四个接口：db.mapper(), db.table(), db.call(), db.sql()
 
-#### 缓存服务支持： 
-###### 1.内置缓存服务
-* org.noear.weed.cache.EmptyCache // 空缓存
-* org.noear.weed.cache.LocalCache // 轻量级本地缓存（基于Map+超时实现）
-* org.noear.weed.cache.SecondCache // 二级缓存（组装两个 ICacheServiceEx 实现；也可以多级拼装）
-###### 2.扩展缓存服务
-* org.noear.weed.cache.memcached.MemCache // 基于memcached封装
-* org.noear.weed.cache.redis.RedisCache // 基于redis封装
-* org.noear.weed.cache.ehcache.EhCache // 基于ehcache封装
-* org.noear.weed.cache.j2cache.J2Cache // 基于国人开发的J2Cache封装
-
-
-* 也可以自己封装个 ICacheServiceEx ...
 
 #### Meven配置：
+
 ```xml
+<!-- 框架包 -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
     <version>3.2.4.1</version>
 </dependency>
+
+<!-- maven 插件，用于生成Xml sql mapper接口 -->
+<plugin>
+    <groupId>org.noear</groupId>
+    <artifactId>weed3-maven-plugin</artifactId>
+    <version>3.2.4.1</version>
+</plugin>
 ```
 
-#### 占位符说明：
 
-` $fun  //SQL函数占位符`     
-` ?     //参数占位符`        
-` ?...  //数组型参数占位符`     
-` @{.}  //参数变量占位符`    
-` ${.}  //替换变量占位符`
 
-#### 实例化数据库上下文：（一切都在上面操作）
+#### 实例化数据库上下文
 ```java
 //DbContext db  = new DbContext(properties); //使用Properties配置的示例
 //DbContext db  = new DbContext(map); //使用Map配置的示例
@@ -71,7 +64,7 @@
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
 
-### 一、纯java用法
+### 一、Table用法
 示例1.1.1::入门级
 ```java
 //快速.执行示例
@@ -85,7 +78,7 @@ db.table("user_info").where("user_id<?", 10).exists();
 db.table("user_info") 
   .where("user_id<?", 10)
   .select("user_id,name,sex")
-  .getMapList(); //.getDataList() //.getList(new UserInfoModel()) //.getList(UserInfoModel.class)
+  .getMapList(); //.getDataList() //.getList(new UserModel()) //.getList(UserModel.class)
 
 //简易.关联查询示例
 db.table("user_info u")
@@ -93,7 +86,7 @@ db.table("user_info u")
   .where("u.user_id<?", 10)
   .limit(1)
   .select("u.user_id,u.name,u.sex")
-  .getMap(); //.getDataItem() //.getItem(new UserInfoModel()) //.getItem(UserInfoModel.class)
+  .getMap(); //.getDataItem() //.getItem(new UserModel()) //.getItem(UserModel.class)
                 
 //简易.插入示例
 db.table("$.test")
@@ -124,14 +117,14 @@ db.table("test")
 //简易.存储过程调用示例，及使用使用示例
 db.call("user_get")
   .set("xxx", 1)  //保持与存储过程参数的序顺一致
-  .getItem(UserInfoModel.class);  //基于反射
+  .getItem(UserModel.class);  //基于反射
 
 //简易.查询过程调用示例，及使用使用示例
 db.call("select * from user where user_id=@{userID}") //@{userID},为变量占位符
   .set("userID", 1) 
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
-  .getItem(new UserInfoModel());  //要求：UserInfoModel 为 IBinder
+  .getItem(new UserModel());  //要求：UserModel 为 IBinder
 
 //简易.存储过程调用示例，及使用事务示例
 db.tran(tran->{
@@ -174,7 +167,7 @@ db.call("select * from user where user_id=@{userID}")
   .setMap(map) //或 .setEntity(obj)
   .caching(cache)//使用缓存
   .usingCache(60 * 100) //缓存时间
-  .getItem(UserInfoModel.class);  //.getMap()
+  .getItem(UserModel.class);  //.getMap()
 ```
 
 示例1.2::缓存控制<br/>
@@ -189,13 +182,13 @@ ICacheServiceEx cache = new EmptyCache();//
 db.call("user_get").set("xxx", 1)
     .caching(cache)
     .usingCache(60 * 1000)
-    .getItem(new UserInfoModel()); //.getMap()
+    .getItem(new UserModel()); //.getMap()
     
 //根据查询结果控制缓存
 db.call("user_get").set("xxx",1)
     .caching(cache)
     .usingCache(60 * 100)
-    .getItem(new UserInfoModel(), (cu, t) => { 
+    .getItem(new UserModel(), (cu, t) => { 
         if (t.user_id == 0)
             cu.usingCache(false);
 });
@@ -206,13 +199,13 @@ db.call("user_get").set("xxx", 1)
     .caching(cache)
     .cacheTag("user_"+ 1)
     .usingCache(60 * 1000)
-    .getItem(new UserInfoModel()); //.getMap()
+    .getItem(new UserModel()); //.getMap()
 
 //2.1.可根据标签清除缓存
 cache.clear("user_" + 1);
 
 //2.2.可根据标签更新缓存
-cache.update<UserInfoModel>("user_" + 1, (m)=>{
+cache.update<UserModel>("user_" + 1, (m)=>{
     m.name = "xxx";
     return m;
 });
@@ -220,34 +213,8 @@ cache.update<UserInfoModel>("user_" + 1, (m)=>{
 
 示例2::数据模型类（或叫实体类等）<br/>
 ```java
-//方案1：基于IBinder接口，精细控制
-public class UserInfoModel implements IBinder {
-    public long user_id;
-    public int role;
-    public String mobile;
-    public String udid;
-    public int city_id;
-    public String name;
-    public String icon;
-
-
-    public void bind(GetHandlerEx s) {
-        user_id = s.get("user_id").value(0l); //.value(x) 直接强类型转换，提供更高的性能
-        role    = s.get("role").value(0);
-        mobile  = s.get("mobile").value("");
-        udid    = s.get("udid").value("");
-        city_id = s.get("city_id").intValue(0);//.xxxValue(x) 根据类型判断后再转换，兼容性更好（特殊情况下用）
-        name    = s.get("name").value("");
-        icon    = s.get("icon").value("");
-
-    }
-
-    public IBinder clone() {
-        return new UserInfoModel();
-    }
-}
-//方案2：最简化
-public class UserInfoModel {
+@Table("user")
+public class UserModel {
     public long user_id;
     public int role;
     public String mobile;
@@ -258,109 +225,29 @@ public class UserInfoModel {
 }
 ```
 
-示例3.1::[存储过程]映射类（存储过程实体化）<br/>
+### 二、Mapper用法
+#### （一）BaseMapper
 ```java
-public class user_get_by_id extends DbStoredProcedure
-{
-    public user_get_by_id()
-    {
-        super(Config.user);
-        call("user_get_by_id");
+BaseMapper<UserModel> userDao = db.mapperBase(UserModel.class);
 
-        //set("{colname}", ()->{popname});
-        //
-        set("_user_id", ()->user_id);
-    }
-
-    public long user_id;
-}
-
-//使用示例
-user_get_by_id sp = new user_get_by_id();
-sp.user_id = 1;
-sp.caching(cache)
-  .getItem(new UserInfoModel()); //.getMap()
+UserModel user = userDao.selectById(12);
 ```
-
-示例3.2::[查询过程]映身类（查询过程实体化）<br/>
+#### （二）注解
 ```java
-public class user_get_by_id extends DbQueryProcedure
-{
-    public user_get_by_id()
-    {
-        super(Config.user);
-        sql("SELECT * FROM `user` where user_id = @{user_id} and type in (@{types});");
-
-        //set("{colname}", ()->{popname});
-        //
-        set("user_id", ()->user_id);
-        set("types",()->types);
-    }
-
-    public long user_id;
-    public List<Integer> types;
-}
-
-//使用示例
-user_get_by_id sp = new user_get_by_id();
-sp.user_id = 1;
-sp.caching(cache)
-  .getItem(new UserInfoModel()); 
-```
-
-示例3.3::[数据表]映射类<br/>
-```java
-public class UserM extends DbTable {
-    public UserM() {
-        super(DbConfig.test);
-
-        table("users u");
-        set("UserID", () -> UserID);
-        set("Nickname", () -> Nickname);
-        set("Sex", () -> Sex);
-        set("Icon", () -> Icon);
-        set("City", () -> City);
-    }
-
-    public Long UserID;
-    public String Nickname;
-    public Integer Sex;
-    public String Icon;
-    public String City;
-}
-
-//使用示例1
-UserM m = new UserM();
-m.UserID=1;
-m.Icon="http:///xxxx";
-m.insert();
-
-//使用示例2
-UserM m = new UserM();
-m.icon="http:///xxxx";
-m.where("UserID=?",1).update();
-
-//使用示例3
-UserM m = new UserM();
-m.where("sex=?",1)
- .select("*")
- .getList(new UserInfoModel()); 
-
-```
-
-### 二、sql 注解用法
-```java
-public interface DbAppApi {
-    @Sql("select app_id from appx limit 1")
-    int appx_get() throws Exception;
+public interface UserDao {
+    @Sql("select * from user where id=@{id} limit 1")
+    UserModel appx_get(int id) throws Exception;
+  
+    @Sql("select * from user where id=? limit 1")
+    UserModel appx_get(int id) throws Exception;  
 }
 
 //使用
-var DbAppApi api = db.mapper(DbAppApi.class);
+var UserDao api = db.mapper(UserDao.class);
 int app_id = api.appx_get();
 ```
 
-### 三、xml mapper用法
+#### （三）Xml sql
 示例::xml配置（~/resources/weed3/DbUserMapper.xml）<br/>
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -387,348 +274,6 @@ public interface DbUserMapper{
 DbUserMapper um = db.mapper(DbUserMapper.class); //获取个单例
 um.user_add(12);
 
-```
-
-### 四、事务控制
-
-```java
-//demo1:: //事务组
-DbUserMapper um = db.mapper(DbUserMapper.class);
-
-db.tran((t) => {
-    //以下操作，会在 t 事务内执行（下面的操作，汇集了weed3所有的接口模式）
-    db.table("test").set("txt", "cc").insert();
-    db.sql("update test set txt='1' where id=1").execute();
-    db.call("user_add_sp").set("_txt","bb").insert();
-    um.user_add(12);
-});
-
-//demo2:: //事务队列
-DbTranQueue queue = new DbTranQueue();
-
-db.tran().join(queue).execute((t) => {
-    //以下操作，会在 t 事务内执行
-    db.sql("insert into test(txt) values(?)", "cc").execute();
-    db.sql("insert into test(txt) values(?)", "dd").execute();
-    db.sql("insert into test(txt) values(?)", "ee").execute();
-});
-
-db2.tran().join(queue).execute((t2) => {
-    //以下操作，会在 t2 事务内执行
-    db2.sql("insert into test(txt) values(?)", "gg").execute();
-});
-
-//统一提交执行（失败，则统一回滚）
-queue.complete();
-
-//demo2.1:: //事务队列简化写法
-new DbTranQueue().execute(qt->{
-     for (order_add_sync_stone sp : processList) {
-         sp.tran(qt).execute();
-     }
- });
- ```
-
-### 五、全局控制和执行监听
-```java
-//开始debug模式，会有更多类型检查
-WeedConfig.isDebug = true; 
-
-//执行前检查代码 //不充许select 代码没有 limit 限制
-WeedConfig.onExecuteBef((cmd)->{
-    String sqltmp = cmd.text.toLowerCase();
-    if(sqltmp.indexOf("select ")>=0 && sqltmp.indexOf(" limit ")< 0 && sqltmp.indexOf("count")<0) {
-        return false;
-    }else{
-        return true;
-    }
-});
-
-//执行后打印代码
-WeedConfig.onExecuteAft((cmd) -> {
-    System.out.println(cmd.text); //执行后打印日志
-});
-
-//对执行进行日志处理
-WeedConfig.onLog((cmd) -> {
-    //....
-});
-db.table("user").set("sex",1).log(true).update(); //.log(true) 执行后进行onLog日志处理
-```
-
-更多高级示例请参考Weed3Demo
-
-
-# Weed3接口字典
-
-#### db.table("table") -> new:DbTableQuery
-```swift
-//
-// 构建相关
-//
-
--build(builder:(q)->{}) -> self //通过表达式构建自己
-
-//例: db.table("user u")
-//      .with("a","select type num from group by type")
-//      .where("u.type in(select a.type) and u.type2 in (select a.type)")
-//      .select("u.*")
-//      .getMapList();
--with(name:String,code:String,args:Object...) -> self   //添加SQL with 语句
-
-//例1: .where("name=?","x")
-//例2: .where("((name=? or id=?) and sex=0)","x",1)
--where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--where() -> self //添加SQL where 关键字
--whereEq(filed:String,val:Object) -> self               //添加SQL where = 语句
--whereLt(filed:String,val:Object) -> self               //添加SQL where < 语句
--whereLte(filed:String,val:Object) -> self              //添加SQL where <= 语句
--whereGt(filed:String,val:Object) -> self               //添加SQL where > 语句
--whereGte(filed:String,val:Object) -> self              //添加SQL where >= 语句
--whereLk(filed:String,val:String) -> self               //添加SQL where like 语句
--whereIn(filed:String,ary:Iterable<Object>) -> self     //添加SQL where in 语句
--whereNin(filed:String,ary:Iterable<Object>) -> self    //添加SQL where not in 语句
-
-
-//例1：.and("name=?","x")
-//例2: .and("(name=? or id=?)","x",1)
--and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--andIf(condition:boolean, code:String, Object...)		//条件版的and()
--and() -> self 	//添加SQL and 关键字
--andEq(filed:String,val:Object) -> self             //添加SQL and = 语句
--andLt(filed:String,val:Object) -> self             //添加SQL and < 语句
--andLte(filed:String,val:Object) -> self            //添加SQL and <= 语句
--andGt(filed:String,val:Object) -> self             //添加SQL and > 语句
--andGte(filed:String,val:Object) -> self            //添加SQL and >= 语句
--andLk(filed:String,val:String) -> self             //添加SQL and like 语句
--andIn(filed:String,ary:Iterable<Object>) -> self   //添加SQL where in 语句
--andNin(filed:String,ary:Iterable<Object>) -> self  //添加SQL where not in 语句
-
-
-//例1：.or("name=?","x"); 
-//例2: .or("(name=? or id=?)","x",1)
--or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
--orIf(condition:boolean, code:String, Object...)		//条件版的or()
--or() -> self		//添加SQL or 关键字
--orEq(filed:String,val:Object) -> self              //添加SQL or = 语句
--orLt(filed:String,val:Object) -> self              //添加SQL or < 语句
--orLte(filed:String,val:Object) -> self             //添加SQL or <= 语句
--orGt(filed:String,val:Object) -> self              //添加SQL or > 语句
--orGte(filed:String,val:Object) -> self             //添加SQL or >= 语句
--orLk(filed:String,val:String) -> self              //添加SQL or like 语句
--orIn(filed:String,ary:Iterable<Object>) -> self    //添加SQL or in 语句
--orNin(filed:String,ary:Iterable<Object>) -> self   //添加SQL or not in 语句
-
-
--begin() -> self //添加左括号
--begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）
--end() -> self //添加右括号
-
--set(name:String, value:Object) -> self
--setIf(condition:boolean, name:String, value:Object) -> self	//条件版的set()
--setMap(data:Map<String,Object>) -> self
--setMapIf(data:Map<String,Object>, condition:(k,v)->boolean) -> self	//条件版的setMapIf()
--setEntity(data:Object) -> self
--setEntityIf(data:Object, condition:(k,v)->boolean) -> self		//条件版的setEntityIf()
-
-
-
--innerJoin(table:String) -> self //添加SQL inner join语句
--leftJoin(table:String) -> self //添加SQL left join语句
--rightJoin(table:String) -> self //添加SQL right join语句
--on(code:String) -> self //添加SQL on语句
-
--groupBy(code:String) -> self //添加SQL group by语句
--having(code:String) -> self //添加SQL having语句
--having(code:String) -> self //添加SQL having语句
-
--orderBy(code:String) -> self //添加SQL order by语句
-
--limit(rows:int) -> self //添加SQL limit语句
--limit(start:int, rows:int) -> self //添加SQL limit语句
-
--top(rows:int) -> self //添加SQL top 语句
-
--append(code:String,args:Object...) ->self //添加无限制代码 //可使用?,?...占位符（ ?... 表示数组占位符）
-
-//
-// 执行相关
-//
--insert() -> long //执行插入并返回自增值，使用set接口的数据
--insert(data:IDataItem) -> long //执行插入并返回自增值，使用data数据
--insert(dataBuilder:(d:DataItem)->{}) -> long //执行插入并返回自增值，使用dataBuilder构建的数据
--insertList(valuesList:List<DataItem>) -> void //执行批量合并插入，使用集合数据
--insertList(valuesList:Collection<T>,dataBuilder:(t,d:DataItem)->{}) -> void //执行批量合并插入，使用集合数据（由dataBuilder构建数据）
-
--update() ->int //执行更新并返回影响行数，使用set接口的数据
--update(data:IDataItem) ->int //执行更新并返回影响行数，使用set接口的数据
--update(dataBuilder:(d:DataItem)->{}) ->int //执行更新并返回影响行数，使用dataBuilder构建的数据
-
--updateExt(constraints:String)//使用set接口的数据,根据约束字段自动插入或更新
--updateExt(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入或更新
-
--delete() -> int //执行删除，并返回影响行数
-
--select(columns:String) -> IQuery //执行查询，并返回查询接口（有非富的数据获取方式）
-
--exists() -> boolean //执行查询，并返回存在情况
--count() -> long //执行查询，并返回COUNT(*)值
--count(code:String) -> long //执行查询，并返回COUNT(..) //count code 要自己手写
-
-//
-// 控制相关
-//
--log(isLog:boolean) -> self //标记是否记录日志
--usingNull(isUsing:boolean) -> self //充许使用null插入或更新
--usingExpr(isUsing:boolean) -> self //充许使用$表达式做为set值
-
-
-//
-// 事务相关
-//
--tran(transaction:DbTran) -> self //使用外部事务
--tran() -> self //使用事务
-
-
-//
-// 缓存控制相关
-//
--caching(service:ICacheService) -> self //使用一个缓存服务
--usingCache(isCache:boolean) -> self //是否使用缓存
--usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
--cacheTag(tag:String) -> self //为缓存添加标签
-```
-#### db.call("process") -> new:DbProcedure
-```swift
-//
-// 注：DbProcedure implements IQuery
-//
-
-//例1: 调用数据库存储过程
-//db.call("user_get").set("_user_id",1).getMap();
-
-//例2: 调用xml sql
-//db.call("@webapp.demo.dso.db.user_get").set("user_id",1).getMap();
-
-//例3: 调用有变量的 sql
-//db.call("select * from user where user_id=@{user_id}").set("user_id",1).getMap();
-
-//
-// 变量设置相关
-//
--set(param:String,value:Object) -> self //设置变量
--setIf(condition:boolean, param:String,value:Object) -> self //条件版的set()
--set(param:String,valueGetter:()->Object) -> self //设置变量
--setMap(map:Map<String,Object>) -> self //设置变量(将map输入)
--setMapIf(map:Map<String,Object>, condition:(k,v)->boolean) -> self //条件版的setMap()
--setEntity(obj:Object) -> self //设置变量(将实体输入)
--setEntityIf(obj:Object, condition:(k,v)->boolean) -> self //条件版的setEntity()
-
-//
-// 执行相关
-// 
--insert() -> long //执行插入（返回自增ID）
--update() -> int //执行更新（返回受影响数）
--delete() -> int //执行删除（返回受影响数）
--execute() -> int //执行命令（返回受影响数）
-
-* 执行查询见 IQuery 接口
-
-
-//
-// 事务相关
-//
--tran(transaction:DbTran) -> self //使用外部事务
--tran() -> self //使用事务
-
-
-//
-// 缓存控制相关
-//
--caching(service:ICacheService) -> self //使用一个缓存服务
--usingCache(isCache:boolean) -> self //是否使用缓存
--usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
--cacheTag(tag:String) -> self //为缓存添加标签
-
-```
-
-#### db.sql("code") -> new:DbQuery
-``` swift
-//
-// 注：DbQuery implements IQuery
-//
-
-//例：db.sql("select * from user_id=?",12).getMap();
-
-//
-// 执行相关
-// 
--insert() -> long //执行插入（返回自增ID）
--update() -> int //执行更新（返回受影响数）
--delete() -> int //执行删除（返回受影响数）
--execute() -> int //执行命令（返回受影响数）
-
-* 执行查询见 IQuery 接口
-
-
-//
-// 事务相关
-//
--tran(transaction:DbTran) -> self //使用外部事务
--tran() -> self //使用事务
-
-
-//
-// 缓存控制相关
-//
--caching(service:ICacheService) -> self //使用一个缓存服务
--usingCache(isCache:boolean) -> self //是否使用缓存
--usingCache(seconds:int) -> self //使用缓存时间（单位：秒）
--cacheTag(tag:String) -> self //为缓存添加标签
-```
-
-#### db.mapper(Class<?>) -> SqlMapper? proxy
-``` java
-//xml sql 和 annotation sql 参考另外的资料
-
-//例：UserDbApi udb = db.mapper(UserDbApi.class);
-//  UserModel um = m.getUser(12);
-```
-#### 附：IQuery 接口
-```java
-
-public interface IQuery extends ICacheController<IQuery> {
-     long getCount() throws SQLException;
-     Object getValue() throws SQLException;
-     <T> T getValue(T def) throws SQLException;
-
-     Variate getVariate() throws SQLException;
-     Variate getVariate(Act2<CacheUsing,Variate> cacheCondition) throws SQLException;
-
-     <T extends IBinder> T getItem(T model) throws SQLException;
-     <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException;
-
-
-     <T extends IBinder> List<T> getList(T model) throws SQLException;
-     <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
-
-     <T> T getItem(Class<T> cls) throws SQLException;
-     <T> T getItem(Class<T> cls,Act2<CacheUsing, T> cacheCondition) throws SQLException;
-
-     <T> List<T> getList(Class<T> cls) throws SQLException;
-     <T> List<T> getList(Class<T> cls,Act2<CacheUsing, List<T>> cacheCondition) throws SQLException;
-
-     DataList getDataList() throws SQLException;
-     DataList getDataList(Act2<CacheUsing, DataList> cacheCondition) throws SQLException;
-     DataItem getDataItem() throws SQLException;
-     DataItem getDataItem(Act2<CacheUsing, DataItem> cacheCondition) throws SQLException;
-
-     List<Map<String,Object>> getMapList() throws SQLException;
-     Map<String,Object> getMap() throws SQLException;
-
-     <T> List<T> getArray(String column) throws SQLException;
-     <T> List<T> getArray(int columnIndex) throws SQLException;
-}
 ```
 
 
