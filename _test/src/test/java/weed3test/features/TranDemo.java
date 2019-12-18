@@ -9,12 +9,12 @@ public class TranDemo {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
-        DbTranQueue.run((tq) -> {
-            db1.tran(tq, (t)->{
-               db1.sql("").insert();
+        new DbTranQueue().execute((tq) -> {
+            db1.tran().join(tq).execute(t -> {
+                db1.sql("").insert();
             });
 
-            db2.tran(tq,(t)->{
+            db2.tran().join(tq).execute(t -> {
                 db2.sql("").update();
             });
         });
