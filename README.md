@@ -14,11 +14,15 @@
 其它的：支持缓存控制和跨数据库事务（算是分布式事务的一种吧）。
 
 
+
 #### 相关文章：
+
 * [一个新的微型ORM框架](https://my.oschina.net/noear/blog/3144349)
 
 
+
 #### 组件： 
+
 | 组件 | 说明 |
 | --- | --- |
 | org.noear:weed3-parent | 框架版本管理 |
@@ -30,9 +34,13 @@
 | org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
 
-#### 核心功能
+
+
+#### 核心对象和功能：
+
 * 上下文：DbContext db
 * 四个接口：db.mapper(), db.table(), db.call(), db.sql()
+
 
 
 #### Meven配置：
@@ -55,229 +63,172 @@
 
 
 
-#### 实例化数据库上下文
+#### 示例：
 ```java
+/** 1.实例化上下文 */
 //DbContext db  = new DbContext(properties); //使用Properties配置的示例
 //DbContext db  = new DbContext(map); //使用Map配置的示例
 //DbContext db  = new DbContext("user","proxool.xxx_db"); //使用proxool线程池配置的示例
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
-```
 
-### 一、Table用法
-示例1.1.1::入门级
-```java
-//快速.执行示例
-db.exec("DELETE FROM user_info WHERE user_id<?",10);
-
-//简易.查询示例
-db.table("user_info").where("user_id<?", 10).count();
-
-db.table("user_info").where("user_id<?", 10).exists();
-  
-db.table("user_info") 
-  .where("user_id<?", 10)
-  .select("user_id,name,sex")
-  .getMapList(); //.getDataList() //.getList(new UserModel()) //.getList(UserModel.class)
-
-//简易.关联查询示例
-db.table("user_info u")
-  .innerJoin("user_ex e").on("u.useer_id = e.user_id")
-  .where("u.user_id<?", 10)
-  .limit(1)
-  .select("u.user_id,u.name,u.sex")
-  .getMap(); //.getDataItem() //.getItem(new UserModel()) //.getItem(UserModel.class)
-                
-//简易.插入示例
-db.table("$.test")
-  .set("log_time", "$DATE(NOW())")
-  .insert();
-
-//简易.批量插入示例
-db.table("test")
-  .insertList(list,(d,m)->{
-      m.set("log_time", "$DATE(NOW())");
-      m.set("name",d.name);
-  });
-
-//简易.更新示例
-db.table("test")
-  .set("txt", "NOW()xx")
-  .set("num", 44)
-  .where("id IN (?...)", new int[] { 15,14,16}) //数组参数
-  .update();
-  
-//简易.更新插入一体
-db.table("test")
-  .set("obj_id", 1)
-  .set("meta_key", "name")
-  .set("meta_val", 44)
-  .updateExt("obj_id,meta_key"); //如果存在则更新；否则插入
-
-//简易.存储过程调用示例，及使用使用示例
-db.call("user_get")
-  .set("xxx", 1)  //保持与存储过程参数的序顺一致
-  .getItem(UserModel.class);  //基于反射
-
-//简易.查询过程调用示例，及使用使用示例
-db.call("select * from user where user_id=@{userID}") //@{userID},为变量占位符
-  .set("userID", 1) 
-  .caching(cache)//使用缓存
-  .usingCache(60 * 100) //缓存时间
-  .getItem(new UserModel());  //要求：UserModel 为 IBinder
-
-//简易.存储过程调用示例，及使用事务示例
-db.tran(tran->{
-    db.call("user_set").set("xxx", 1) 
-      .execute(); //将在事务内执行
-});
-```
-
-示例1.1.2::不确定因素的连式处理支持<br/>
-```java
-//连式处理::对不确定的条件拼装
-db.table("test")
-  .where("1=1")
-  .andIf(1 == 2, "mobile=?", "xxxx")
-  .andIf(1 != 2, "icon=?", "xxxx")
-  .select("*");
-  
-//连式处理::对不确定字段的插入
-db.table("test")
-  .set("name", "xxx")
-  .setIf(1==2,"mobile", "xxxx")
-  .setIf(1!=2,"icon", "xxxx")
-  .insert(); 
-```
-示例1.1.3::基于反射功能（应用户要求...）<br/>
-```java
-//简易.插入示例2 //::3.0.4.106起支持
-db.table("$.test")
-  .setMap(map) //或 .setEntity(obj)
-  .insert();
-
-//简易.更新示例2
-db.table("test")
-  .setMap(map) //或 .setEntity(obj)
-  .where("id IN (?...)", new int[] { 15,14,16}) //数据参数
-  .update();
-  
-//简易.查询过程调用示例，及使用使用示例
-db.call("select * from user where user_id=@{userID}")
-  .setMap(map) //或 .setEntity(obj)
-  .caching(cache)//使用缓存
-  .usingCache(60 * 100) //缓存时间
-  .getItem(UserModel.class);  //.getMap()
-```
-
-示例1.2::缓存控制<br/>
-```java
-/*
- * 内置了 EmptyCache（空缓存）、LocalCache（本地缓存）、SecondCache（二级缓存） 
- * 可以自己对memcached，redis 等进行包装后使用
- */
-ICacheServiceEx cache = new EmptyCache();// 
-
-//最简单的缓存控制
-db.call("user_get").set("xxx", 1)
-    .caching(cache)
-    .usingCache(60 * 1000)
-    .getItem(new UserModel()); //.getMap()
-    
-//根据查询结果控制缓存
-db.call("user_get").set("xxx",1)
-    .caching(cache)
-    .usingCache(60 * 100)
-    .getItem(new UserModel(), (cu, t) => { 
-        if (t.user_id == 0)
-            cu.usingCache(false);
-});
-
-//通过tag维护缓存
-//1.缓存并添加简易标签
-db.call("user_get").set("xxx", 1)
-    .caching(cache)
-    .cacheTag("user_"+ 1)
-    .usingCache(60 * 1000)
-    .getItem(new UserModel()); //.getMap()
-
-//2.1.可根据标签清除缓存
-cache.clear("user_" + 1);
-
-//2.2.可根据标签更新缓存
-cache.update<UserModel>("user_" + 1, (m)=>{
-    m.name = "xxx";
-    return m;
-});
-```
-
-示例2::数据模型类（或叫实体类等）<br/>
-```java
-@Table("user")
-public class UserModel {
-    public long user_id;
-    public int role;
-    public String mobile;
-    public String udid;
-    public int city_id;
-    public String name;
-    public String icon;
-}
-```
-
-### 二、Mapper用法
-#### （一）BaseMapper
-```java
-BaseMapper<UserModel> userDao = db.mapperBase(UserModel.class);
-
-UserModel user = userDao.selectById(12);
-```
-#### （二）注解
-```java
-public interface UserDao {
+/** 2.Mapper用法 */
+@Namespace("demo.dso.db")
+public interface UserDao extends BaseMapper<UserModel>{
     @Sql("select * from user where id=@{id} limit 1")
-    UserModel appx_get(int id) throws Exception;
+    UserModel getUser(int id);
   
     @Sql("select * from user where id=? limit 1")
-    UserModel appx_get(int id) throws Exception;  
+    UserModel getUser2(int id);
+
+    void addUser(UserModel user); //没注解，需要配xml
 }
 
-//使用
-var UserDao api = db.mapper(UserDao.class);
-int app_id = api.appx_get();
+UserDao userDao = db.mapper(UserDao.class);
+userDao.selectById(12); //调用 BaseMapper 方法
+UserModel user = userDao.getUser(2); //调用 @Sql 方法
+userDao.addUser(user); //调用 xml sql
+
+
+/** 3.Table用法 */
+//增::
+db.table("user").setEntity(user).insert();
+//删::
+db.table("user").where("id=?",2).delete();
+//改::
+db.table("user").set("sex",1).where("id=?",2).delete();
+//查::
+db.table("user").where("id=?",1).select("*").getItem(User.class);
 ```
 
-#### （三）Xml sql
-示例::xml配置（~/resources/weed3/DbUserMapper.xml）<br/>
+
+
+#### 语法参考：
+
+##### （一）Xml sql 语法
+* 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="sql.weed.test" :db="userdb">
-    <sql id="user_add" :return="long">
-        INSERT user(user_id) VALUES(@{user_id:int})
-    </sql> 
+<mapper namespace="weed3demo.xmlsql2">
+    <sql id="getUser" :return="demo.model.UserModel" :note="获取用户信息">
+        SELECT * FROM user WHERE id = @{id:int}
+    </sql>
 </mapper>
 ```
-示例::java调用（直接调用即可，其它不用干）<br/>
-```java
-//使用方案1（已支持）
-db.call("@sql.weed.test.user_add").set("user_id",12).insert();
 
-//使用方案2
-// DbUserMapper.java 生成代码（类的名字与xml文件名一致） //文件可以移到别处去
-package sql.weed.test;
+* 配置说明
+```
+mapper 开始标签
+  namespace （属性：命名空间，{namespace}.{id} = sqlid）
+    
+sql 代码块定义指令
+  id （属性：id）
+  :require（属性：导入包或类）
+  :param?（属性：外部输入变量申明；默认会自动生成::新增***）
+  :declare（属性：内部变量类型预申明）
+  :return（属性：返回类型）
 
-@Namespace("sql.weed.test")
-public interface DbUserMapper{
-    long user_add(int user_id);
-}
+  :note（属性：描述、说明、注解）
 
-DbUserMapper um = db.mapper(DbUserMapper.class); //获取个单例
-um.user_add(12);
+  :caching（属性：缓存服务name） //是对 ICacheController 接口的映射
+  :cacheClear?（属性：清除缓存）
+  :cacheTag?（属性：缓存标签，支持在入参或结果里取值替换）
+  :usingCache?（属性：缓存时间,int）
 
+if 判断控制指令（没有else）
+  test （属性：判断检测代码）
+     //xml避免语法增强:
+     //lt(<) lte(<=) gt(>) gte(>=) and(&&) or(||)
+        //例：m.sex gt 12 :: m.sex >=12
+     //简化语法增强:
+     //??(非null,var!=null) ?!(非空字符串,StringUtils.isEmpty(var)==false)
+        //例：m.icon??  ::m.icon!=null
+        //例：m.icon?!  ::StringUtils.isEmpty(m.icon)==false
+
+for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::新增***）
+  var （属性：循环变量申明）
+  items （属性：集合变量名称）
+  sep? （属性：分隔符::新增***）
+
+trim 修剪指令
+  trimStart（属性：开始位去除）
+  trimEnd（属性：结尾位去除）
+  prefix（属性：添加前缀）
+  suffix（属性：添加后缀）
+
+ref 引用代码块指令
+  sql （属性：代码块id）
+
+name:type    = 变量申明（可用于属性：:param, :declare，var，或宏定义 @{..},${..}）
+@{name:type} = 变量注入
+${name:type} = 变量替换
+
+//列表([]替代<>)
+:return="List[weed3demo.mapper.UserModel]" => List<UserModel>
+:return="List[String]" => List<String> （Date,Long,...大写开头的单值类型）
+:return="MapList" => List<Map<String,Object>>
+:return="DataList" => DataList
+
+//一行
+:return="weed3demo.mapper.UserModel" => UserModel
+:return="Map" => Map<String,Object>
+:return="DataItem" => DataItem
+
+//单值
+:return="String" => String （任何单职类型）
 ```
 
+##### （二）Table 语法
+
+1. 条件操作（与Mapper共享）
+
+| 方法 | 效果说明 |
+| --- | --- |
+| where, whereIf |  |
+| whereEq, whereNeq | ==, != |
+| whereLt, whereLte | \<, \<= |
+| whereGt, whereGte | \>, \>= |
+| whereLk, whereNlk | LIKE, NOT LIKE |
+| whereIn, whereNin | IN(..), NOT IN(..) |
+| whereBtw, whereNbtw | BETWEEN, NOT BETWEEN |
+| and系统方法 | 同where |
+| or系统方法 | 同where |
+| begin | \( |
+| end | \) |
+
+2. 表操作（Table独占）
+| 方法 | 效果说明 |
+| --- | --- |
+| set, setIf | 设置值 |
+| setMap, setMapIf | 设置值 |
+| setEntity, setEntityIf | 设置值 |
+| table | 主表 |
+| innerJoin, leftJoin, rightJoin | 关联表 |
+| on, onEq | 关联条件 |
+| orderBy, orderByAsc, orderByDesc | 排序 |
+| groupBy | 组 |
+| having | 组条件 |
+| limit | 限制范围 |
+| select | 查询（返回IQuery） |
+| count | 查询快捷版，统计数量 |
+| exists | 查询快捷版，是否存在 |
+| update | 更新 |
+| insert | 插入 |
+| delete | 删除 |
+
+3. IQuery接口
+* `long getCount() throws SQLException;`
+* `Object getValue() throws SQLException;`
+* `<T> T getValue(T def) throws SQLException;`
+* `Variate getVariate() throws SQLException;`
+* `<T> T getItem(Class<T> cls) throws SQLException;`
+* `<T> List<T> getList(Class<T> cls) throws SQLException;`
+* `DataList getDataList() throws SQLException;`
+* `DataItem getDataItem() throws SQLException;`
+* `List<Map<String,Object>> getMapList() throws SQLException;`
+* `Map<String,Object> getMap() throws SQLException;`
+* `<T> List<T> getArray(String column) throws SQLException;`
+* `<T> List<T> getArray(int columnIndex) throws SQLException;`
+* 等...
 
 
-
-
-by noear
