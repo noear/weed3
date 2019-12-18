@@ -18,7 +18,7 @@
 #### 相关文章：
 
 * [Weed3 for java 新的微型ORM框架](https://my.oschina.net/noear/blog/3144349) （推荐一看）
-* [Weed3 ORM框架专题文章](https://www.jianshu.com/nb/40211584?order_by=seq)
+* [Weed3 ORM框架专题系列文章](https://www.jianshu.com/nb/40211584?order_by=seq)
 
 
 
