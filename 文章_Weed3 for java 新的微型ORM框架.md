@@ -1,12 +1,10 @@
 # Weed3 for java 新的微型ORM框架
 
-微型ORM（支持：java sql，xml sql，annotation sql；存储过程；事务；缓存；监听；等...）
+Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储过程；事务；缓存；监听；等...）
 
 
 05年时开发了第一代；
-
 08年时开发了第二代，那时候进入互联网公司，对性能有了全新的认识；
-
 14年时开发了第三代。因为不喜欢滥用反射，不喜欢有很多配置，所以一直在执着的没放弃。
 
 
@@ -321,40 +319,29 @@ db.exe("update user sex=1 where id=12");
 ### 三、Mapper 语法
 
 ##### （一）BaseMapper 接口
-
 * `Long insert(T entity, boolean excludeNull);`
 * `void insertList(List<T> list);`
-
 * `Integer deleteById(Object id);`
 * `Integer deleteByIds(Iterable<Object> idList);`
 * `Integer deleteByMap(Map<String, Object> columnMap);`
 * `Integer delete(Act1<WhereQ> condition);`
-
 * `Integer updateById(T entity, boolean excludeNull);`
 * `Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);`
-
 * `Long upsert(T entity, boolean excludeNull);`
 * `Long upsertBy(T entity, boolean excludeNull, String conditionFields);`
-
 * `boolean existsById(Object id);`
 * `boolean exists(Act1<WhereQ> condition);`
-
 * `T selectById(Object id);`
 * `List<T> selectByIds(Iterable<Object> idList);`
 * `List<T> selectByMap(Map<String, Object> columnMap);`
-
 * `T selectItem(T entity);`
 * `T selectItem(Act1<WhereQ> condition);`
 * `Map<String, Object> selectMap(Act1<WhereQ> condition);`
-
 * `Object selectValue(String column, Act1<WhereQ> condition);`
-
 * `Long selectCount(Act1<WhereQ> condition);`
-
 * `List<T> selectList(Act1<WhereQ> condition);`
 * `List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);`
 * `List<Object> selectArray(String column, Act1<WhereQ> condition);`
-
 * `List<T> selectPage(int start, int end, Act1<WhereQ> condition);`
 * `List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition);`
 
