@@ -71,6 +71,7 @@ public class TableTest {
 
         assert  db.table(TestModel.class).count() == 3;
 
+
         //改
         long id = db.table(TestModel.class).set(TestModel::getV1,1).insert();
         assert  db.table(TestModel.class).set(TestModel::getV1,10).whereEq(TestModel::getId,id).update() == 1;

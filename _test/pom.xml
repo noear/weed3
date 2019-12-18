@@ -70,20 +70,20 @@
     <build>
         <finalName>admin-rock</finalName>
         <plugins>
-<plugin>
-    <groupId>org.noear</groupId>
-    <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.2.2</version>
-    <executions>
-        <execution>
-            <id>weed3</id>
-            <phase>compile</phase>
-            <goals>
-                <goal>generator</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+            <plugin>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3-maven-plugin</artifactId>
+                <version>3.2.4.1</version>
+                <executions>
+                    <execution>
+                        <id>weed3</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generator</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
