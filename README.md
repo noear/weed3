@@ -26,7 +26,6 @@
 
 | 组件 | 说明 |
 | --- | --- |
-| org.noear:weed3-parent | 框架版本管理 |
 | org.noear:weed3 | 主框架 |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
 | | |
