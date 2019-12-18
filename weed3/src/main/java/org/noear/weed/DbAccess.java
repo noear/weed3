@@ -4,7 +4,6 @@ import org.noear.weed.cache.CacheUsing;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
-import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.StringUtils;
 
 import java.io.Serializable;
@@ -200,14 +199,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         getDataItem((cu, di) -> {
             try {
-                _tmp._value = di.toItem(model);
-                cacheCondition.run(cu, (T) _tmp._value);
+                _tmp.value = di.toItem(model);
+                cacheCondition.run(cu, (T) _tmp.value);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
         //为了减少转换次数
-        return (T) _tmp._value;
+        return (T) _tmp.value;
     }
     /*执行命令（返回一个列表）*/
     @Override
@@ -226,14 +225,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         getDataList((cu,dl)->{
             try {
-                _tmp._value = dl.toList(model);
-                cacheCondition.run(cu, (List<T>)_tmp._value);
+                _tmp.value = dl.toList(model);
+                cacheCondition.run(cu, (List<T>)_tmp.value);
             }catch (Exception ex){
                 throw new RuntimeException(ex);
             }
         });
 
-        return (List<T>)_tmp._value;
+        return (List<T>)_tmp.value;
     }
 
     @Override
@@ -264,14 +263,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         getDataList((cu,dl)->{
             try {
-                _tmp._value = dl.toEntityList(cls);
-                cacheCondition.run(cu, (List<T>)_tmp._value);
+                _tmp.value = dl.toEntityList(cls);
+                cacheCondition.run(cu, (List<T>)_tmp.value);
             }catch (Exception ex){
                 throw new RuntimeException(ex);
             }
         });
 
-        return (List<T>)_tmp._value;
+        return (List<T>)_tmp.value;
     }
 
     @Override
@@ -289,14 +288,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         getDataItem((cu, di) -> {
             try {
-                _tmp._value = di.toEntity(cls);
-                cacheCondition.run(cu, (T) _tmp._value);
+                _tmp.value = di.toEntity(cls);
+                cacheCondition.run(cu, (T) _tmp.value);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
 
-        return (T) _tmp._value;
+        return (T) _tmp.value;
     }
     // <--
 
