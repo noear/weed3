@@ -5,7 +5,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 
 05年时开发了第一代；
 08年时开发了第二代，那时候进入互联网公司，对性能有了全新的认识；
-14年时开发了第三代。因为不喜欢滥用反射，不喜欢有很多配置，所以一直在执着的没放弃。
+14年时开发了第三代，因为不喜欢滥用反射，不喜欢有很多配置，所以一直在执着的没放弃。
 
 
 
@@ -33,7 +33,6 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 #### Weed3 组件： 
 | 组件 | 说明 |
 | --- | --- |
-| org.noear:weed3-parent | 框架版本管理 |
 | org.noear:weed3 | 主框架（没有任何依赖） |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
 | | |
