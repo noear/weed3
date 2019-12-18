@@ -35,3 +35,5 @@ DbContext db  = new DbContext("user",ds);
 //参数一个个写
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 ```
+
+## 草案（末写完...）
