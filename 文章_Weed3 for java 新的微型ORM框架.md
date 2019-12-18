@@ -549,7 +549,7 @@ new DbTranQueue().execute((tq) -> {
     });
   
     //扩播消息//为后续横向扩展业务
-    MsgUtil.sendMessage("user.registered",tmp.value);
+    MsgUtil.sendMessage("user.registered",user.value);
 });
 ```
 
@@ -624,4 +624,4 @@ _eng.put("db", db);
 
 
 
-> 有机会，将对一些细节再做说明...
+> 有机会，将对一些细节再做介绍...
