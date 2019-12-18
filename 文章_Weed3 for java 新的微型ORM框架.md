@@ -595,7 +595,7 @@ WeedConfig.onExecuteBef((cmd)->{
     return true;
 });
 ```
-### (七) 嵌入到脚本
+### (七) 嵌入到JVM脚本
 * 嵌入到javascript引擎（nashorn）
 ```java
 ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
