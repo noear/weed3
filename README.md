@@ -103,7 +103,7 @@ db.table("user").where("id=?",1).select("*").getItem(User.class);
 
 
 
-#### 语法参考：
+#### 附：语法参考：
 
 ##### （一）Xml sql 语法
 * 示例
