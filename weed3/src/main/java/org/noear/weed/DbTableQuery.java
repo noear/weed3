@@ -96,6 +96,10 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
+    public <C> DbTableQuery set(Property<C,?> prop, Object value) {
+        return set(PropertyWrap.get(prop).name, value);
+    }
+
     public DbTableQuery setIf(boolean condition, String name, Object value){
         if(condition){
             set(name,value);

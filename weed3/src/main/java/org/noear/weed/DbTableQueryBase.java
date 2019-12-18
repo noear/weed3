@@ -136,6 +136,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return 0;
         }
 
+        if(_table.indexOf(" ")>0) {
+            _table = _table.split(" ")[0];
+        }
+
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
@@ -222,6 +226,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         if (cols == null || cols.count() == 0) {
             return false;
+        }
+
+        if(_table.indexOf(" ")>0) {
+            _table = _table.split(" ")[0];
         }
 
         List<Object> args = new ArrayList<Object>();
