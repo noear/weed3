@@ -197,6 +197,7 @@ ${name:type} = 变量替换
 | end | \) |
 
 2. 表操作（Table独占）
+
 | 方法 | 效果说明 |
 | --- | --- |
 | set, setIf | 设置值 |
@@ -217,6 +218,7 @@ ${name:type} = 变量替换
 | delete | 删除 |
 
 3. IQuery接口
+
 * `long getCount() throws SQLException;`
 * `Object getValue() throws SQLException;`
 * `<T> T getValue(T def) throws SQLException;`
