@@ -17,7 +17,7 @@
 * 6.接口少而简单
 
 #### 相关文章：
-* [一个新的微型ORM开源框架](https://www.jianshu.com/p/0311afb5cd60)
+* [一个新的微型ORM框架](https://my.oschina.net/noear/blog/3144349)
  
 #### 组件： 
 | 组件 | 说明 |
