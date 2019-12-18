@@ -346,8 +346,8 @@ public class DbContext {
     }
 
 
-    public DbTran tran(DbTranQueue tq, Act1Ex<DbTran, Exception> handler) throws Exception {
-        return new DbTran(this).join(tq).execute(handler);
+    public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Exception> handler) throws Exception {
+        return new DbTran(this).join(queue).execute(handler);
     }
 
     public DbTran tran() {
@@ -355,7 +355,7 @@ public class DbContext {
     }
 
     /**
-     * 由Db发起，语义不合理；改用 DbTranQueue.run()
+     * 由Db发起，语义不合理；改用 new DbTranQueue()
      * */
     @Deprecated
     public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Exception> handler) throws Exception {

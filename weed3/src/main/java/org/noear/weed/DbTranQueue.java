@@ -61,10 +61,6 @@ public class DbTranQueue {
         }
     }
 
-    public static DbTranQueue run(Act1Ex<DbTranQueue,Exception> handler) throws Exception{
-        return new DbTranQueue().execute(handler);
-    }
-
     //执行并结束事务
     public DbTranQueue execute(Act1Ex<DbTranQueue,Exception> handler) throws Exception {
         try {
