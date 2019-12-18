@@ -477,13 +477,66 @@ db.tran(t->{
 });
 ```
 
-* 跨库数据库事务
+* 跨库数据库事务（不知道算不算是分布式事务的一种）
 ```java
-DbTranQueue.run(qt->{
-  //订单库，添加记录
-  db1.tran(qt, t-> orderDao.addOrder(order));
+new DbTranQueue().execute((tq) -> {
+    //用户系统，添加用户关金币
+    db1.tran().join(tq).execute(t -> {
+        user.id = userDao.addUser(user); //id自增
+    });
+
+    //银行系统
+    db2.tran().join(tq).execute(t -> {
+        bankDao.addAccount(user.id); //新建账号
+        bankDao.addAccountGold(user.id, 10); //添加账号叫金币
+        bankDao.addJournal(user.id,10); //添加日记账
+    });
+  
+    //扩播消息//为后续横向扩展业务
+    MsgUtil.sendMessage("user.registered",tmp.value);
 });
 ```
 
-### (六) 监听
+### (六) 监听与记录
+
+* 监听异常
+
+```java
+WeedConfig.onException((cmd,ex)->{
+  //可以做个记录
+	ex.printStackTrace();
+});
+```
+
+* 观察性能
+
+```java
+WeedConfig.onExecuteAft((cmd)->{
+  //cmd.timespan()  //获取执行时长（毫秒）
+});
+```
+
+* 记录行为
+
+```java
+WeedConfig.onLog((cmd) -> {
+    if (cmd.isLog >= 0) { //isLog: -1,不需要记录；0,默认；1,需要记录
+        //cmd.text;         //执行代码
+        //cmd.paramS;   	  //执行参数
+        //cmd.paramMap();   //执行参数Map化
+    }
+});
+```
+
+* 代码过滤
+
+```java
+//例：禁止DELETE操作
+WeedConfig.onExecuteBef((cmd)->{
+    if(cmd.text.indexOf("DELETE ") >=0){
+        return false;
+    }
+    return true;
+});
+```
 
