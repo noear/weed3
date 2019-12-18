@@ -342,12 +342,12 @@ public class DbContext {
 
 
     public DbTran tran(Act1Ex<DbTran, Exception> handler) throws Exception {
-        return new DbTran(this).execute(handler);
+        return tran().execute(handler);
     }
 
 
     public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Exception> handler) throws Exception {
-        return new DbTran(this).join(queue).execute(handler);
+        return tran().join(queue).execute(handler);
     }
 
     public DbTran tran() {
