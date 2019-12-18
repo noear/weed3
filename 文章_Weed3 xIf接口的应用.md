@@ -42,7 +42,7 @@ public Object searchBy(Integer id, String name,Integer type) throws Exception {
 * 旧风格代码：
 ```java
 public void insertUser(Map<String, Object> map) throws Exception {
-    DbTableQuery qr = db.table("user").setEntityIf()
+    DbTableQuery qr = db.table("user");
     map.forEach((k, v) -> {
         if (v != null) {
             qr.set(k, v);
