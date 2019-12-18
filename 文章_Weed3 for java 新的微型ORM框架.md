@@ -5,34 +5,34 @@
 
 05年时开发了第一代；
 
-08年时开发了第二代；
+08年时开发了第二代，那时候进入互联网公司，对性能有了全新的认识；
 
 14年时开发了第三代。因为不喜欢滥用反射，不喜欢有很多配置，所以一直在执着的没放弃。
 
 
 
-前两代，都是在.net开发的；第三代，重点放在了java上。这应该算是个微型的ORM框架，因为只有0.1mb且无其它依赖。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
+前两代，都是在.net开发的；第三代，重点放在了java上。应该算是个功能全面且最小的ORM框架，无其它依赖，仅0.1mb。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
 
 
 
-因为一些执念本人写的东西都算是微型的：
+因为一些执念写的东西都算是比较微型的：
 
-* Snack3（Json框架 70kb，有序列化，有Jsonpath，有格式转换机制）
+* Snack3（Json框架 70kb，有序列化，有Jsonpath，有格式转换机制；强调构建能力）
 * Solon（Web框架 80kb）
-* 一个浏览器（0.1mb，可是有完整功能哦）
+* 一个手机浏览器（0.1mb，可是有完整功能哦；算是一个创意作品）
 
 
 
 #### Weed3 特点和理念：
 高性能：两年前有个同事测过四个ORM框架，它是性能最好的（不知道现在是不是）。
 
-跨平台：可以嵌入到JVM脚本；有.net版本，php版本（有些时间没维护了）。
+跨平台：可以嵌入到JVM脚本引擎（js, groovy, lua, python, ruby）；有.net，php版本（久没维护了）。
 
-很小巧：只有0.1Mb嘛
+很小巧：只有0.1Mb嘛（且是功能完整，方案丰富；可极大简化数据库开发）。
 
-有个性：不喜欢反射、不喜欢配置...（除了连接，不需要任何配置）
+有个性：不喜欢反射、不喜欢配置...（除了连接，不需要任何配置）。
 
-其它的：支持缓存控制和跨数据库事务。
+其它的：支持缓存控制和跨数据库事务（算是分布式事务的一种吧）。
 
 
 
@@ -53,12 +53,25 @@
 #### Weed3 meven配置： 
 
 ```xml 
+<!-- 框架包 -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
     <version>3.2.4.1</version>
 </dependency>
+
+<!-- maven 插件，用于生成Xml sql mapper接口 -->
+<plugin>
+    <groupId>org.noear</groupId>
+    <artifactId>weed3-maven-plugin</artifactId>
+    <version>3.2.4.1</version>
+</plugin>
 ```
+
+#### Weed3 入手流程：
+* 配置DataSource信息
+* 实始化DbContext
+* 调用DbContext上的接口（需要大至了解一下语法...）
 
 
 
@@ -82,7 +95,7 @@ demodb:
 
   > 如果是 Spring 框架，可以通过注解获取配置
 如果是 solon 框架，可以通过注解 或 接口获取配置
-
+  
 ```java
 //使用Properties配置的示例
 Properties properties = XApp.cfg().getProp("demodb"); //这是solon框架的接口
@@ -109,41 +122,49 @@ DbContext db = WaterClient.Config.get("demodb").getDb();
 
 ### 二、四大接口 db.mapper(), db.table(), db.call(), db.sql()
 
-> 四大接口，也即是DbContext在不同场景上的应用方式
+> 四大接口，也是DbContext在不同场景上的四种应用方案
 >
-> 核心接口：db.mapper(), db.table()；代表两种完全不同的风格和口味。
+> 核心接口：db.mapper(), db.table()。代表两种完全不同的风格和口味。
 >
-> 补充接口：db.call(), db.sql()。
+> 补充接口：db.call(), db.sql()。应对特殊的应用场景。
+
+###### 其中db.table(), db.call(), db.sql() 可以友好的嵌入到`JVM脚本引擎`（js, groovy, lua, python, ruby）和部分`GraalVM`语言使用。
+
+###### 因为作者还有个嵌入式FaaS引擎。统一的执行发起对象、无注入无配置、且弱类型的接口作用重大；可以便利的嵌入各种语言中，并提供统一的ORM体验。
 
 ##### （一）db.mapper()，提供mapper操作支持
 
  > mapper风格，是现在极为流行的一种。大多人都在用。
+ >
+ > 此接口提供了BaseMapper模式，@Sql注入模式，Xml sql配置模式。其中，Xml sql 的内部处理会在启动时预编译为Java class；性能应该是靠谱的（好像有点儿jsp的预编译味道）。
 
 * 1.db.mapperBase(clz) 获取BaseMapper实例
 
   > 自Xxx-plus之后，要是个没有BaseMapper，好像都不好意思说自己是个ORM框架了。
   >
   > 这个接口确实带来了极大的方法，简单的CRUD完全省掉了。
+  
 ```java
 //直接使用BaseMapper
 BaseMapper<User> userDao= db.mapperBase(User.class);
 
 //增
-userDao.insert(user,false);
+userDao.insert(user,false); //false:表示排除null值
 
 //删
-userDao.deleteById(12);
+userDao.deleteById(12); 
 
 //改：通过ID改
-userDao.updateById(user,false);
+userDao.updateById(user,false); //false:表示排除null值
 //改：通过条件改
 userDao.update(user,false,m->m.whereEq(User::getType,12).andEq(User::getSex,1));
 
 //查.通过ID查
 User user = userDao.selectById(12);
-//查.通过条件查
+//查.通过条件查（条件，可以是字符串风格；可以是lambda风格）
 User user = userDao.selectItem(m -> m.whereEq(User::getId,12));
-```
+````
+
 * 2.db.mapper(clz)，获取Mapper实例
 ```java
 @Namespace("demo.dso.db")
@@ -151,10 +172,10 @@ public interface UserDao { //此接口，可以扩展自 BaseMapper<T>
     @sql("select * from `user` where id=@{id}") //变量风格
     User getUserById(int id);
   
-  	@sql("select * from `user` where id=?") //占位符风格
+    @sql("select * from `user` where id=?") //占位符风格
     User getUserById2(int id);
   
-    long addUser(User m); //没有注解，需编写xml sql
+    long addUser(User m); //没有注解，需编写xml sql配置
 }
 
 UserDao userDao = db.mapper(UserDao.class);
@@ -162,7 +183,10 @@ UserDao userDao = db.mapper(UserDao.class);
 User user = userDao.getUserById(12);
 userDao.addUser(user);
 ```
+
 * 3.db.mapper(xsqlid, args)，获取Xml sql mapper结果
+
+  > 此接口的好处是，可以把DAO做成一个中台：把xml sql 放在数据库里，统一管理；并通过开发一个DAO网关，以RPC或REST API方式提供服务。
 ```java
 Map<String,Object> args = new HashMap<>();
 args.put("id",22);
@@ -173,22 +197,25 @@ User user = db.mapper("@demo.dso.db.getUserById",args);
 
 ##### （二）db.table()，提供纯java链式操作
 
-  > 这是Weed3最初的样子，这也是我最喜难的方法。
+  > 这是Weed3最初的样子，这也是我最喜欢的方法。也是具体跨平台嵌入的关键能力。
   >
   > BaseMapper内部也是由db.table()实现的，简单几行代就OK了。
   >
   > 灵活，有弹性，直接，可以实现任何SQL代码效果。开发管理后台，很爽（因为查询条件又杂又乱）。
   >
-  > 不过有不少人认为这不是ORM。大家口味不同：）
 
-  `db.table() 支持 字符串风格 和 lambda 风格。`
+###### db.table() 支持 两种风格：
+
+###### 1.字符串风格：弹性大、自由方便、可嵌入，语法便于跨平台；但改字段名字时麻烦；
+
+###### 2.lambda风格：约束性强、便于管理（改字段名时极方便）；但写起来麻烦；语法不好跨平台性。
 
 * 增,INSEERT
 ```java
 User user = new User();
 ..
 //单条插入
-db.table("user").set("name","xxx").insert();
+db.table("user").set("name","noear").insert();
 db.table("user").setEntity(user).insert();
 db.table("user").setEntityIf(user, (k,v)->v!=null).insert(); //过滤null
 
@@ -218,11 +245,11 @@ public void saveUser(UserModel m){
 
 * 查,SELECT
 ```java
-//统计id<10的记录数
-db.table("user").where("id<?", 10).count();
+//统计id<100, 名字长度>10的记录数（可以自由的使用SQL函数）
+db.table("user").where("id<?", 100).and("LENGTH(name)>?",10).count();
 
-//检查是否存在id<10的记录
-db.table("user").whereLt("id", 10).exists();
+//查询20条，id>10的记录
+db.table("user").whereGte("id", 10).limit(20).select("*").getMapList();
 
 //关联查询并输出一个实体(lamdba风格) //还是字符串风格更有弹性和简洁
 db.table(User.class)
@@ -234,7 +261,28 @@ db.table(User.class)
 
 ```
 
+* 具有过滤能力的接口：whereIf, andIf, orIf, setIf, setMapIf, setEntityIf
+
+```java
+//如果有名字，加名字条件；（管理后台的查询，很实用的; 省了很多if）
+db.talbe("user").whereIf(name!=null, "name=?", name).limit(10).select("");
+
+//插入，过滤null
+db.table("user").setMapIf(map,(k,v)->v!=null).insert(); //过滤null
+
+//更新
+db.table("user")
+.setIf(name!=null, "name",name)
+.setIf(sex>0, "sex", sex)
+.setIf(mobile!=null && mobile.length() =11,"mobile",mobile)
+.where("id=?",id)
+.update();
+```
+
+  
+
 ##### （三）db.call()，提供call操作
+
 * call数据库存储过程
 ```java
 //数据库存储过程使用
@@ -244,15 +292,14 @@ User user = db.call("user_get").set("id",1).getItem(User.class);
 
 * call查询过程
 ```java
-//查询储过程使用 
-//@sql 和 Xml sql的内部由db.call()实现
+//查询储过程使用 （@sql内部由此实现）
 //
 User user = db.call("select * from user where id=@{id}").set("id",1).getItem(User.class);
 ```
 
 * call Xmlsql
 ```java
-//Xml sql的另一种使用方式 //需@开始
+//Xml sql的弱类型使用方式 //需@开始
 //
 User user = db.call("@demo.dso.db.getUser").set("id",1).getItem(User.class);
 ```
@@ -275,41 +322,41 @@ db.exe("update user sex=1 where id=12");
 
 ##### （一）BaseMapper 接口
 
-* Long insert(T entity, boolean excludeNull);
-* void insertList(List<T> list);
+* `Long insert(T entity, boolean excludeNull);`
+* `void insertList(List<T> list);`
 
-* Integer deleteById(Object id);
-* Integer deleteByIds(Iterable<Object> idList);
-* Integer deleteByMap(Map<String, Object> columnMap);
-* Integer delete(Act1<WhereQ> condition);
+* `Integer deleteById(Object id);`
+* `Integer deleteByIds(Iterable<Object> idList);`
+* `Integer deleteByMap(Map<String, Object> columnMap);`
+* `Integer delete(Act1<WhereQ> condition);`
 
-* Integer updateById(T entity, boolean excludeNull);
-* Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);
+* `Integer updateById(T entity, boolean excludeNull);`
+* `Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);`
 
-* Long upsert(T entity, boolean excludeNull);
-* Long upsertBy(T entity, boolean excludeNull, String conditionFields);
+* `Long upsert(T entity, boolean excludeNull);`
+* `Long upsertBy(T entity, boolean excludeNull, String conditionFields);`
 
-* boolean existsById(Object id);
-* boolean exists(Act1<WhereQ> condition);
+* `boolean existsById(Object id);`
+* `boolean exists(Act1<WhereQ> condition);`
 
-* T selectById(Object id);
-* List<T> selectByIds(Iterable<Object> idList);
-* List<T> selectByMap(Map<String, Object> columnMap);
+* `T selectById(Object id);`
+* `List<T> selectByIds(Iterable<Object> idList);`
+* `List<T> selectByMap(Map<String, Object> columnMap);`
 
-* T selectItem(T entity);
-* T selectItem(Act1<WhereQ> condition);
-* Map<String, Object> selectMap(Act1<WhereQ> condition);
+* `T selectItem(T entity);`
+* `T selectItem(Act1<WhereQ> condition);`
+* `Map<String, Object> selectMap(Act1<WhereQ> condition);`
 
-* Object selectValue(String column, Act1<WhereQ> condition);
+* `Object selectValue(String column, Act1<WhereQ> condition);`
 
-* Long selectCount(Act1<WhereQ> condition);
+* `Long selectCount(Act1<WhereQ> condition);`
 
-* List<T> selectList(Act1<WhereQ> condition);
-* List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);
-* List<Object> selectArray(String column, Act1<WhereQ> condition);
+* `List<T> selectList(Act1<WhereQ> condition);`
+* `List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);`
+* `List<Object> selectArray(String column, Act1<WhereQ> condition);`
 
-* List<T> selectPage(int start, int end, Act1<WhereQ> condition);
-* List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition);
+* `List<T> selectPage(int start, int end, Act1<WhereQ> condition);`
+* `List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition);`
 
 
 ##### （二）annotation sql
@@ -410,17 +457,17 @@ ${name:type} = 变量替换
 
 ### 四、Table 语法
 
-##### （一）条件操作（与Mapper共用）
+##### （一）条件操作（与Mapper共享）
 
 | 方法 | 效果说明 |
 | --- | --- |
-| where,whereIf |  |
-| whereEq,whereNeq | ==, != |
-| whereLt,whereLte | \<, \<= |
-| whereGt,whereGte | \>, \>= |
-| whereLk,whereNlk | LIKE, NOT LIKE |
-| whereIn,whereNin | IN(..), NOT IN(..) |
-| whereBtw,whereNbtw | BETWEEN, NOT BETWEEN |
+| where, whereIf |  |
+| whereEq, whereNeq | ==, != |
+| whereLt, whereLte | \<, \<= |
+| whereGt, whereGte | \>, \>= |
+| whereLk, whereNlk | LIKE, NOT LIKE |
+| whereIn, whereNin | IN(..), NOT IN(..) |
+| whereBtw, whereNbtw | BETWEEN, NOT BETWEEN |
 | and系统方法 | 同where |
 | or系统方法 | 同where |
 | begin | \( |
@@ -429,36 +476,58 @@ ${name:type} = 变量替换
 ##### （二）表操作（Table独占）
 | 方法 | 效果说明 |
 | --- | --- |
+| set, setIf | 设置值 |
+| setMap, setMapIf | 设置值 |
+| setEntity, setEntityIf | 设置值 |
 | table | 主表 |
-| innerJoin,leftJoin,rightJoin | 关联表 |
-| on,onEq | 关联条件 |
-| orderBy,orderByAsc,orderByDesc | 排序 |
+| innerJoin, leftJoin, rightJoin | 关联表 |
+| on, onEq | 关联条件 |
+| orderBy, orderByAsc, orderByDesc | 排序 |
 | groupBy | 组 |
 | having | 组条件 |
 | limit | 限制范围 |
 | select | 查询（返回IQuery） |
+| count | 查询快捷版，统计数量 |
+| exists | 查询快捷版，是否存在 |
 | update | 更新 |
 | insert | 插入 |
 | delete | 删除 |
 
+##### （三）IQuery接口
+* `long getCount() throws SQLException;`
+* `Object getValue() throws SQLException;`
+* `<T> T getValue(T def) throws SQLException;`
+* `Variate getVariate() throws SQLException;`
+* `<T> T getItem(Class<T> cls) throws SQLException;`
+* `<T> List<T> getList(Class<T> cls) throws SQLException;`
+* `DataList getDataList() throws SQLException;`
+* `DataItem getDataItem() throws SQLException;`
+* `List<Map<String,Object>> getMapList() throws SQLException;`
+* `Map<String,Object> getMap() throws SQLException;`
+* `<T> List<T> getArray(String column) throws SQLException;`
+* `<T> List<T> getArray(int columnIndex) throws SQLException;`
+* 等...
+
 ### 五、 缓存和事务
-* 缓存
+* 缓存（不需要的可以跳过）
 ```java
 ICacheServiceEx cache = new LocalCache().nameSet("cache");
 
 User user = db.table("user")
               .where("id=?",12)
-              .caching(cache)
+              .caching(cache)  //加缓存，时间为cache的默认时间
               .select("*").getItem(User.class);
 ```
 
-* 缓存控制
+* 缓存控制（不需要的可以跳过）
 ```java
 //查询时，缓存
 User user = db.table("user")
               .where("id>?",12)
-              .limit(100,20)
-              .caching(cache).usingCache(60*5).cacheTag("user_all") //缓存5分钟，加标签user_
+              .limit(100,20) //分页查询
+              .caching(cache)
+              .usingCache(60*5)     //缓存5分钟
+              .cacheTag("user_all") //加缓存标签user_all
               .select("*").getList(User.class);
 
 //更新时，清除缓存 //下次查询时，又可拿到最新数据
@@ -539,4 +608,33 @@ WeedConfig.onExecuteBef((cmd)->{
     return true;
 });
 ```
+### (七) 嵌入到脚本
+* 嵌入到javascript引擎（nashorn）
+```java
+ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+ScriptEngine _eng = scriptEngineManager.getEngineByName("nashorn");
+Invocable _eng_call = (Invocable)_eng;
+_eng.put("db", db);
 
+/*
+ * var map = db.table("user").where('id=?',1).getMap();
+ * var user_id = map.id;
+ */
+```
+
+* 嵌入到groovy引擎
+```java
+ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+ScriptEngine _eng = scriptEngineManager.getEngineByName("groovy");
+Invocable _eng_call = (Invocable)_eng;
+_eng.put("db", db);
+
+/*
+ * def map = db.table("user").where('id=?',1).getMap();
+ * def user_id = map.id;
+ */
+```
+
+
+
+> 有机会，将对一些细节再做说明...
