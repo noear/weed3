@@ -3,7 +3,6 @@ package weed3test;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
-import org.noear.weed.cache.ICacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
@@ -36,6 +35,18 @@ public class DbUtil {
         return map;
     }
 
+    private final static Map<String, String> dbOracleCfg(){
+        Map<String, String> map = new HashMap<>();
+
+        map.put("schema", "demo");
+        map.put("url", "jdbc:oracle:thin:@//192.168.8.118:1521/demo ");
+        map.put("driverClassName", "oracle.jdbc.OracleDriver");
+        map.put("username", "demo");
+        map.put("password", "demo");
+
+        return map;
+    }
+
     private final static Map<String, String> dbPgsqlCfg(){
         Map<String, String> map = new HashMap<>();
 
@@ -59,10 +70,10 @@ public class DbUtil {
     }
 
     public static DbContext getDb() {
-        Map<String, String> map = dbMssqlCfg();// dbPgsqlCfg(); //dbMysqlCfg(); //
+        Map<String, String> map = dbMssqlCfg();//dbMysqlCfg(); //dbOracleCfg(); //dbPgsqlCfg(); //
 
-        DbContext db = new DbContext(map.get("schema"), dataSource(map));
-        WeedConfig.isUsingTableSpace=true;
+        DbContext db = new DbContext(map.get("schema"), dataSource(map)).nameSet("rock");
+        WeedConfig.isUsingSchemaPrefix =true;
         return db;
     }
 

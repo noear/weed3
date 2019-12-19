@@ -16,6 +16,7 @@ public class SqlTest {
         assert db.sql("select * from $.appx where app_id=?", 32)
                 .getItem(AppxModel.class)
                 .app_id == 32;
+        
     }
 
     public void test2() throws Exception {

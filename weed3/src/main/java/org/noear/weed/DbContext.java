@@ -131,7 +131,7 @@ public class DbContext {
         return this;
     }
 
-    private DatabaseType _databaseType = DatabaseType.Unknown;
+    protected DatabaseType _databaseType = DatabaseType.Unknown;
     public DatabaseType databaseType(){
         return _databaseType;
     }
@@ -139,37 +139,7 @@ public class DbContext {
     /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
         __dataSource = dataSource;
-
-        String tmp = getMetaData(md-> md.getDriverName());
-        if (tmp != null) {
-            String pn = tmp.toLowerCase().replace(" ", "");
-
-            if (pn.indexOf("mysql") >= 0) {
-                _databaseType = DatabaseType.MySQL;
-            } else if (pn.indexOf("mariadb") >= 0) {
-                _databaseType = DatabaseType.MariaDB;
-            } else if (pn.indexOf("sqlserver") >= 0) {
-                _databaseType = DatabaseType.SQLServer;
-            } else if (pn.indexOf("oracle") >= 0) {
-                _databaseType = DatabaseType.Oracle;
-            } else if (pn.indexOf("postgresql") >= 0) {
-                _databaseType = DatabaseType.PostgreSQL;
-            } else if (pn.indexOf("db2") >= 0) {
-                _databaseType = DatabaseType.DB2;
-            }else if (pn.indexOf("sqlite") >= 0) {
-                _databaseType = DatabaseType.SQLite;
-            }
-
-            if (_databaseType == DatabaseType.MySQL || _databaseType == DatabaseType.MariaDB) {
-                formater().fieldFormatSet("`%`");
-                formater().objectFormatSet("`%`");
-            } else {
-                //SQLServer, PostgreSQL, DB2
-                formater().fieldFormatSet("\"%\"");
-                formater().objectFormatSet("\"%\"");
-            }
-        }
-
+        DbContextBuilder.initMetaData(this);
         return this;
     }
 
@@ -234,25 +204,6 @@ public class DbContext {
         return _paging;
     }
 
-
-    protected  <T> T getMetaData(Fun1Ex<T,DatabaseMetaData,SQLException> getter) {
-        Connection conn = null;
-        try {
-            conn = getConnection();
-            return getter.run(conn.getMetaData());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-    }
 
 
     //
