@@ -489,40 +489,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
     public boolean exists() throws SQLException {
-
-        StringBuilder sb = StringUtils.borrowBuilder();
-
-        sb.append("SELECT 1 FROM ").append(_table);
-
-        _builder.backup();
-
-        _builder.insert(StringUtils.releaseBuilder(sb));
-
-        switch (_context.databaseType()){
-            case SQLServer:
-                _builder.append(" TOP 1");
-                break;
-
-            default:
-                _builder.append(" LIMIT 1");
-                break;
-        }
-
-
-        //1.构建sql
-        if(_hint!=null) {
-            _builder.insert(_hint);
-            _hint = null;
-        }
+        limit(1);
+        select_do(" 1 ", false);
+        limit(0);
 
         DbQuery rst = compile();
 
-        if(_cache != null){
+        if (_cache != null) {
             rst.cache(_cache);
         }
 
         _builder.restore();
-
 
         return rst.getValue() != null;
     }
@@ -542,7 +519,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public IQuery select(String columns) {
-        select_do(columns);
+        select_do(columns, true);
 
         DbQuery rst = compile();
 
@@ -556,13 +533,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public SelectQ selectQ(String columns) {
-
-        select_do(columns);
+        select_do(columns, true);
 
         return new SelectQ(_builder);
     }
 
-    private void select_do(String columns) {
+    private void select_do(String columns, boolean doFormat) {
         StringBuilder sb = StringUtils.borrowBuilder();
 
         //1.构建sql
@@ -575,7 +551,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _context.paging().preProcessing(this, sb);
 
-        sb.append(formatColumns(columns)).append(" FROM ").append(_table);
+        if(doFormat) {
+            sb.append(formatColumns(columns)).append(" FROM ").append(_table);
+        }else{
+            sb.append(columns).append(" FROM ").append(_table);
+        }
 
         _builder.backup();
 
