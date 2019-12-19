@@ -36,7 +36,7 @@ public class DbContext {
 
     //数据集名称
     protected String _schema;
-    protected IDbFormater _formater = new DbFormater();
+    protected DbFormater _formater = new DbFormater();
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源
@@ -222,11 +222,11 @@ public class DbContext {
         return this;
     }
 
-    public DbContext formaterSet(IDbFormater formater){
+    public DbContext formaterSet(DbFormater formater){
         _formater = formater;
         return this;
     }
-    public IDbFormater formater(){
+    public DbFormater formater(){
         return _formater;
     }
 
