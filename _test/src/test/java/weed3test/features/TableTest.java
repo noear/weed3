@@ -66,25 +66,25 @@ public class TableTest {
         db.table(TestModel.class).where("1=1").delete();
 
         //增
-        db.table(TestModel.class).set(TestModel::getV1,1).set(TestModel::getId,1).insert();
-        db.table(TestModel.class).set(TestModel::getV1,2).set(TestModel::getId,2).insert();
-        db.table(TestModel.class).set(TestModel::getV1,3).set(TestModel::getId,3).insert();
+        db.table(TestModel.class).set(TestModel::getV1, 1).set(TestModel::getId, 1).insert();
+        db.table(TestModel.class).set(TestModel::getV1, 2).set(TestModel::getId, 2).insert();
+        db.table(TestModel.class).set(TestModel::getV1, 3).set(TestModel::getId, 3).insert();
 
-        assert  db.table(TestModel.class).count() == 3;
+        assert db.table(TestModel.class).count() == 3;
 
 
         //改
         long id = 10;
-         db.table(TestModel.class).set(TestModel::getV1,1).set(TestModel::getId,10).insert();
-        assert  db.table(TestModel.class)
-                  .set(TestModel::getV1,10)
-                  .whereEq(TestModel::getId,id)
-                  .update() == 1;
+        db.table(TestModel.class).set(TestModel::getV1, 1).set(TestModel::getId, 10).insert();
+        assert db.table(TestModel.class)
+                .set(TestModel::getV1, 10)
+                .whereEq(TestModel::getId, id)
+                .update() == 1;
 
         //查
-        assert  db.table(TestModel.class)
-                  .whereEq(TestModel::getId,id)
-                  .select($(TestModel::getV1))
-                  .getValue(0) == 10;
+        assert db.table(TestModel.class)
+                .whereEq(TestModel::getId, id)
+                .select($(TestModel::getV1))
+                .getValue(0) == 10;
     }
 }

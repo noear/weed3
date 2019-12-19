@@ -19,17 +19,21 @@ public class MapperTest {
     public void test1() {
         BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
         tast_select(mapper);
+        test_select_list(mapper);
+        test_select_page(mapper);
     }
 
     @Test
     public void test2() throws Exception{
         SqlMapper mapper = db2.mapper(SqlMapper.class);
         tast_select(mapper);
+        test_select_list(mapper);
+        test_select_page(mapper);
 
-        assert  mapper.appx_get2(22).app_id == 22;
+        //assert  mapper.appx_get2(22).app_id == 22;
     }
 
-    @Test
+
     public void test3() {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 
@@ -145,8 +149,10 @@ public class MapperTest {
         Long m8 = mapper.selectCount(m -> m.where("agroup_id=1"));
         System.out.println("m8: " + m8);
         assert m8 > 20;
+    }
 
 
+    public void test_select_list(BaseMapper<AppxModel> mapper){
         //selectList
         List<AppxModel> m9 = mapper.selectList(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m9: " + m9);
@@ -161,8 +167,10 @@ public class MapperTest {
         List<Object> m11 = mapper.selectArray("app_key", m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m11: " + m11);
         assert m11.size() > 20;
+    }
 
 
+    public void  test_select_page(BaseMapper<AppxModel> mapper){
         //selectPage
         List<AppxModel> m12 = mapper.selectPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40).orderByAsc("app_id"));
         System.out.println("m12: " + m12);

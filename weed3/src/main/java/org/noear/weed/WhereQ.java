@@ -2,6 +2,8 @@ package org.noear.weed;
 
 /**
  * Created by noear on 19-12-11.
+ *
+ * 仅用于BaseMapper，即用于单表操作
  */
 public class WhereQ extends WhereBase<WhereQ> {
 
