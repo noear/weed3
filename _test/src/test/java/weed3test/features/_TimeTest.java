@@ -33,9 +33,10 @@ public class _TimeTest {
                 .select("*")
                 .getMap();
 
-        map.remove("app_id");
+        map.put("app_id",1001);
 
-        db.table(AppxCopyModel.class).setMap(map).insert();
+        db.table(AppxCopyModel.class).setMap(map).upsert("app_id");
+        System.out.println(db.lastCommand.text);
     }
 
     @Test
@@ -50,6 +51,7 @@ public class _TimeTest {
         db.table(AppxCopyModel.class)
                 .setEntityIf(map, (k, v) -> v != null)
                 .upsert("app_id");
+        System.out.println(db.lastCommand.text);
     }
 
     @Test
