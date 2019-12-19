@@ -35,6 +35,25 @@ public class DbFormater implements IDbFormater{
         }
     }
 
+    @Override
+    public void formatSetBy(DbContext db) {
+        switch (db.databaseType()){
+            case MySQL:
+                fieldFormatSet("`%`");
+                objectFormatSet("`%`");
+                break;
+            case PostgreSQL:
+                fieldFormatSet("\"%\"");
+                objectFormatSet("\"%\"");
+                break;
+            case SQLServer:
+                fieldFormatSet("\"%\"");
+                objectFormatSet("\"%\"");
+                break;
+            case DB2:
+        }
+    }
+
 
     /**
      * 格式化字段（用于：set(..,v)）

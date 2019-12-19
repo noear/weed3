@@ -5,6 +5,7 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.ext.DatabaseType;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -464,24 +465,24 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    private int limit_start, limit_rows;
+
     /** 添加SQL limit语句 */
     public T limit(int start, int rows) {
-        _builder.append(" LIMIT " + start + "," + rows + " ");
+        limit_start = start;
+        limit_rows = rows;
+        //_builder.append(" LIMIT " + start + "," + rows + " ");
         return (T)this;
     }
 
+    private int limit_top = 0;
     /** 添加SQL limit语句 */
     public T limit(int rows) {
-        _builder.append(" LIMIT " + rows + " ");
+        limit_top = rows;
+        //_builder.append(" LIMIT " + rows + " ");
         return (T)this;
     }
 
-    private int _top = 0;
-    public T top(int rows) {
-        _top = rows;
-        //_builder.append(" TOP " + num + " ");
-        return (T)this;
-    }
 
 
 
@@ -494,7 +495,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.backup();
 
         _builder.insert(StringUtils.releaseBuilder(sb));
-        _builder.append(" LIMIT 1");
+
+        switch (_context.databaseType()){
+            case SQLServer:
+                _builder.append(" TOP 1");
+                break;
+
+            default:
+                _builder.append(" LIMIT 1");
+                break;
+        }
+
 
         //1.构建sql
         if(_hint!=null) {
@@ -549,19 +560,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return new SelectQ(_builder);
     }
 
-    private void select_do(String columns){
+    private void select_do(String columns) {
         StringBuilder sb = StringUtils.borrowBuilder();
 
         //1.构建sql
-        if(_hint!=null) {
+        if (_hint != null) {
             sb.append(_hint);
             _hint = null;
         }
 
         sb.append("SELECT ");
 
-        if(_top>0){
-            sb.append(" TOP ").append(_top).append(" ");
+        if (limit_top > 0) {
+            if (_context.databaseType() == DatabaseType.SQLServer) {
+                sb.append(" TOP ").append(limit_top).append(" ");
+            }
         }
 
         sb.append(formatColumns(columns)).append(" FROM ").append(_table);
@@ -570,7 +583,29 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.insert(StringUtils.releaseBuilder(sb));
 
-        if(_builder_bef.length()>0){
+        if (limit_top > 0) {
+            if (_context.databaseType() != DatabaseType.SQLServer) {
+                _builder.append(" LIMIT ").append(limit_top).append(" ");
+            }
+        }
+
+        if (limit_rows > 0) {
+            switch (_context.databaseType()) {
+                case SQLServer:
+                    _builder.append(" LIMIT ").append(limit_start).append(",").append(limit_rows);
+                    break;
+
+                case PostgreSQL:
+                    _builder.append(" LIMIT ").append(limit_rows).append(" OFFSET ").append(limit_start);
+                    break;
+
+                default:
+                    _builder.append(" LIMIT ").append(limit_start).append(",").append(limit_rows);
+                    break;
+            }
+        }
+
+        if (_builder_bef.length() > 0) {
             _builder.insert(_builder_bef);
         }
     }

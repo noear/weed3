@@ -1,14 +1,13 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Act1;
-import org.noear.weed.ext.Act1Ex;
-import org.noear.weed.ext.Get1;
+import org.noear.weed.ext.*;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
 import java.net.URI;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class DbContext {
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源
-    protected DataSource _dataSource;
+    private DataSource __dataSource; //通过dataSourceSet写入
     //代码注解
     protected String _codeHint = null;
     protected String _name;
@@ -87,9 +86,9 @@ public class DbContext {
         }
 
         if(StringUtils.isEmpty(username)){
-            _dataSource = new DbDataSource(url);
+            dataSourceSet(new DbDataSource(url));
         }else{
-            _dataSource = new DbDataSource(url, username, password);
+            dataSourceSet(new DbDataSource(url, username, password));
         }
 
         return this;
@@ -131,15 +130,40 @@ public class DbContext {
         return this;
     }
 
+    private DatabaseType _databaseType = DatabaseType.Unknown;
+    public DatabaseType databaseType(){
+        return _databaseType;
+    }
+
     /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
-        _dataSource = dataSource;
+        __dataSource = dataSource;
+
+        String tmp = getMetaData(md-> md.getDriverName());
+        if (tmp != null) {
+            String pn = tmp.toLowerCase().replace(" ", "");
+
+            if (pn.indexOf("mysql") >= 0) {
+                _databaseType = DatabaseType.MySQL;
+            } else if (pn.indexOf("SqlServer") >= 0) {
+                _databaseType = DatabaseType.SQLServer;
+            } else if (pn.indexOf("oracle") >= 0) {
+                _databaseType = DatabaseType.Oracle;
+            } else if (pn.indexOf("postgresql") >= 0) {
+                _databaseType = DatabaseType.PostgreSQL;
+            } else if (pn.indexOf("db2") >= 0) {
+                _databaseType = DatabaseType.DB2;
+            }
+
+            _formater.formatSetBy(this);
+        }
+
         return this;
     }
 
     /** 获取数据源 */
     public DataSource dataSource() {
-        return _dataSource;
+        return __dataSource;
     }
 
 
@@ -199,9 +223,24 @@ public class DbContext {
         return _formater;
     }
 
-
-
-
+    protected  <T> T getMetaData(Fun1Ex<T,DatabaseMetaData,SQLException> getter) {
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            return getter.run(conn.getMetaData());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 
 
     //
@@ -222,18 +261,18 @@ public class DbContext {
     //fieldFormat："`%`"
     public DbContext(String schema, String url) {
         _schema = schema;
-        _dataSource = new DbDataSource(url);
+        dataSourceSet(new DbDataSource(url));
     }
 
     //基于手动配置（无线程池）
     public DbContext(String schema, String url, String username, String password) {
         _schema = schema;
-        _dataSource = new DbDataSource(url, username, password);
+        dataSourceSet(new DbDataSource(url, username, password));
     }
 
     public DbContext(String schema, DataSource dataSource) {
         _schema = schema;
-        _dataSource = dataSource;
+        dataSourceSet(dataSource);
     }
 
     //
@@ -244,7 +283,7 @@ public class DbContext {
      * 获取连接
      */
     public Connection getConnection() throws SQLException {
-        return _dataSource.getConnection();
+        return dataSource().getConnection();
     }
 
 

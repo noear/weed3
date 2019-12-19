@@ -25,11 +25,11 @@ public class ConfigDemo {
             //cmd.timespan()
         });
 
-WeedConfig.onExecuteBef((cmd)->{
-    if(cmd.text.indexOf("DELETE ") >=0){
-        return false;
-    }
-    return true;
-});
+        WeedConfig.onExecuteBef((cmd) -> {
+            if (cmd.text.indexOf("DELETE ") >= 0) {
+                return false;
+            }
+            return true;
+        });
     }
 }

@@ -2,6 +2,7 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import org.noear.weed.ext.DatabaseType;
 import weed3test.DbUtil;
 import weed3test.model.AppxModel;
 
@@ -18,8 +19,10 @@ public class CallTest {
 
     @Test
     public void test21() throws Exception {
-        assert db2.call("appx_get_byid").set("_app_id", 22)
-                .getItem(AppxModel.class).app_id == 22;
+        if(db2.databaseType() == DatabaseType.MySQL) {
+            assert db2.call("appx_get_byid").set("_app_id", 22)
+                    .getItem(AppxModel.class).app_id == 22;
+        }
     }
 
 }

@@ -59,6 +59,11 @@ public class SQLBuilder {
         return this;
     }
 
+    public SQLBuilder append(Object val) {
+        builder.append(val);
+        return this;
+    }
+
     public SQLBuilder append(SQLBuilder part) {
         builder.append(part.builder);
         paramS.addAll(part.paramS);

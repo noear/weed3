@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class DbUtil {
 
-    private final static HikariDataSource dataSource(){
+    private final static Map<String, String> dbMysqlCfg(){
         Map<String, String> map = new HashMap<>();
 
         map.put("schema", "rock");
@@ -19,6 +19,24 @@ public class DbUtil {
         map.put("driverClassName", "com.mysql.cj.jdbc.Driver");
         map.put("username", "demo");
         map.put("password", "UL0hHlg0Ybq60xyb");
+
+        return map;
+    }
+
+    private final static Map<String, String> dbPgsqlCfg(){
+        Map<String, String> map = new HashMap<>();
+
+        map.put("schema", "rock");
+        map.put("url", "jdbc:postgresql://localdb:5432/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        map.put("driverClassName", "org.postgresql.Driver");
+        map.put("username", "postgres");
+        map.put("password", "postgres");
+
+        return map;
+    }
+
+    private final static HikariDataSource dataSource(){
+        Map<String, String> map = dbPgsqlCfg(); //dbMysqlCfg();
 
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(map.get("url"));

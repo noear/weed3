@@ -6,6 +6,8 @@ public interface IDbFormater {
     /** 对象格式符设置 */
     void objectFormatSet(String format);
 
+    void formatSetBy(DbContext db);
+
     /** 格式化字段（用于：set(..,v)） */
     String formatField(String name);
     /** 格式化多列（用于：select(..) orderBy(..) groupBy(..)） */
