@@ -37,7 +37,7 @@ public class DbContext {
     //数据集名称
     protected String _schema;
     protected DbFormater _formater = new DbFormater();
-    protected DbPaging _paging = new DbPaging();
+    protected DbPaging _paging = DbPaging.def;
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源

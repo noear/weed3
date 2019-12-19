@@ -561,7 +561,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         sb.append("SELECT ");
 
-        DbPaging.def.preProcessing(this, sb);
+        _context.paging().preProcessing(this, sb);
 
         sb.append(formatColumns(columns)).append(" FROM ").append(_table);
 
@@ -570,7 +570,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.insert(StringUtils.releaseBuilder(sb));
 
 
-        _builder = DbPaging.def.postProcessing(this,_builder);
+        _builder = _context.paging().postProcessing(this,_builder);
 
         if (_builder_bef.length() > 0) {
             _builder.insert(_builder_bef);
