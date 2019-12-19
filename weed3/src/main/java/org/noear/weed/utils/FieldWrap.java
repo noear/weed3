@@ -6,6 +6,12 @@ import org.noear.weed.annotation.Column;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Field wrap
@@ -103,6 +109,24 @@ public class FieldWrap {
 
             if(Double.class == type || Double.TYPE == type){
                 return ((BigDecimal)val).doubleValue();
+            }
+        }
+
+        if(val instanceof java.sql.Timestamp){
+            if(type == LocalDateTime.class){
+                return ((Timestamp)val).toLocalDateTime();
+            }
+        }
+
+        if(val instanceof java.sql.Date){
+            if(type == LocalDate.class){
+                return ((Date)val).toLocalDate();
+            }
+        }
+
+        if(val instanceof java.sql.Time){
+            if(type == LocalTime.class){
+                return ((Time)val).toLocalTime();
             }
         }
 

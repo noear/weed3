@@ -1,6 +1,7 @@
 package webapp.controller;
 
 import org.noear.solon.annotation.XController;
+import org.noear.solon.annotation.XInject;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 
@@ -17,7 +18,8 @@ import java.util.Map;
 @XController
 public class XmlController {
 
-    DbContext db1 = DbConfig.db1;
+    @XInject("db1")
+    DbContext db1;
     DbContext db2 = DbConfig.db2;
 
 

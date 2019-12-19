@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
 import weed3test.model.AgroupModel;
+import weed3test.model.AppxCopyModel;
 import weed3test.model.AppxModel;
 import weed3test.model.TestModel;
 
