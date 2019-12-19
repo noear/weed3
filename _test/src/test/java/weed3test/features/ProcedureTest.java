@@ -29,7 +29,6 @@ public class ProcedureTest {
         sp.execute();
     }
 
-    @Test
     public void test22() throws Exception {
         appx_get_byid sp = new appx_get_byid(db2);
         sp.app_id = 22;

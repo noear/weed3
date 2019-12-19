@@ -7,7 +7,7 @@ public class appx_get extends DbQueryProcedure {
     public appx_get(DbContext context) {
         super(context);
         lazyload(()->{
-            sql("select * from appx where app_id=@{id}");
+            sql("select * from $.appx where app_id=@{id}");
             set("id",app_id);
         });
     }
