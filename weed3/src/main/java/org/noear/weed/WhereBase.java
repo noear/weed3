@@ -666,7 +666,12 @@ public abstract class WhereBase<T extends WhereBase> {
     protected String getTableName(Class<?> tableClz) {
         ClassWrap cw = ClassWrap.get(tableClz);
         int idx = addClass(cw);
-        return cw.tableName + " t" + idx;
+
+        if (_isSingleTable) {
+            return cw.tableName;
+        } else {
+            return cw.tableName + " t" + idx;
+        }
     }
 
     protected <C> String getColumnName(Property<C, ?> p) {
