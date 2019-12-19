@@ -21,7 +21,7 @@ public class _PageTest {
 
     @Test
     public void test_page() throws Exception{
-        List<AppxModel> list =  mapper.selectPage(1,10, q->q.where("1=1"));
+        List<AppxModel> list =  mapper.selectPage(0,10, q->q.where("1=1"));
         assert  list.size() == 10;
         assert list.get(0).app_id == 1;
 
