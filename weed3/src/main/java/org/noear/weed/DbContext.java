@@ -155,7 +155,14 @@ public class DbContext {
                 _databaseType = DatabaseType.DB2;
             }
 
-            _formater.formatSetBy(this);
+            if(_databaseType == DatabaseType.MySQL){
+                fieldFormatSet("`%`");
+                objectFormatSet("`%`");
+            }else{
+                //SQLServer, PostgreSQL, DB2
+                fieldFormatSet("\"%\"");
+                objectFormatSet("\"%\"");
+            }
         }
 
         return this;
