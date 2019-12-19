@@ -483,6 +483,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    public T top(int rows) {
+        limit_top = rows;
+        //_builder.append(" LIMIT " + rows + " ");
+        return (T)this;
+    }
+
 
 
 
