@@ -62,7 +62,11 @@ public class DbPaging {
                 }
                 break;
 
-                default:
+                case PostgreSQL:
+                case MariaDB:
+                case MySQL:
+                case SQLite:
+                default://MariaDB, MySQL,SQLite,PostgreSQL
                     sqlB.append(" LIMIT ").append(q.limit_top).append(" ");
                     break;
             }
@@ -84,6 +88,7 @@ public class DbPaging {
 
                     break;
 
+                case SQLite:
                 case PostgreSQL:
                     sqlB.append(" LIMIT ")
                             .append(q.limit_rows)
@@ -91,7 +96,9 @@ public class DbPaging {
                             .append(q.limit_start);
                     break;
 
-                default:
+                case MySQL:
+                case MariaDB:
+                default: //MariaDB, MySQL
                     sqlB.append(" LIMIT ")
                             .append(q.limit_start)
                             .append(",")

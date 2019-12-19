@@ -7,6 +7,7 @@ public enum DatabaseType {
     Unknown,
 
     MySQL,
+    MariaDB,
     SQLServer,
     PostgreSQL,
     Oracle,

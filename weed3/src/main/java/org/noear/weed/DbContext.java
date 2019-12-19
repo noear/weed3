@@ -37,6 +37,7 @@ public class DbContext {
     //数据集名称
     protected String _schema;
     protected DbFormater _formater = new DbFormater();
+    protected DbPaging _paging = new DbPaging();
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源
@@ -145,6 +146,8 @@ public class DbContext {
 
             if (pn.indexOf("mysql") >= 0) {
                 _databaseType = DatabaseType.MySQL;
+            } else if (pn.indexOf("mariadb") >= 0) {
+                _databaseType = DatabaseType.MariaDB;
             } else if (pn.indexOf("SqlServer") >= 0) {
                 _databaseType = DatabaseType.SQLServer;
             } else if (pn.indexOf("oracle") >= 0) {
@@ -155,13 +158,13 @@ public class DbContext {
                 _databaseType = DatabaseType.DB2;
             }
 
-            if(_databaseType == DatabaseType.MySQL){
-                fieldFormatSet("`%`");
-                objectFormatSet("`%`");
-            }else{
+            if (_databaseType == DatabaseType.MySQL || _databaseType == DatabaseType.MariaDB) {
+                formater().fieldFormatSet("`%`");
+                formater().objectFormatSet("`%`");
+            } else {
                 //SQLServer, PostgreSQL, DB2
-                fieldFormatSet("\"%\"");
-                objectFormatSet("\"%\"");
+                formater().fieldFormatSet("\"%\"");
+                formater().objectFormatSet("\"%\"");
             }
         }
 
@@ -205,23 +208,6 @@ public class DbContext {
     //
     // 格式化处理
     //
-
-    /**
-     * 字段格式符设置
-     */
-    public DbContext fieldFormatSet(String format) {
-        _formater.fieldFormatSet(format);
-        return this;
-    }
-
-    /**
-     * 对象格式符设置
-     */
-    public DbContext objectFormatSet(String format) {
-        _formater.objectFormatSet(format);
-        return this;
-    }
-
     public DbContext formaterSet(DbFormater formater){
         _formater = formater;
         return this;
@@ -229,6 +215,19 @@ public class DbContext {
     public DbFormater formater(){
         return _formater;
     }
+
+    //
+    // 分页处理
+    //
+    public DbContext pagingSet(DbPaging paging){
+        _paging = paging;
+        return this;
+    }
+
+    public DbPaging paging(){
+        return _paging;
+    }
+
 
     protected  <T> T getMetaData(Fun1Ex<T,DatabaseMetaData,SQLException> getter) {
         Connection conn = null;
