@@ -145,61 +145,6 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return item;
     }
 
-
-//
-//    public String toJson(){
-//        _JsonWriter jw = new _JsonWriter();
-//
-//        buildJson(jw);
-//
-//        return jw.toJson();
-//    }
-//
-//
-//    protected void buildJson(_JsonWriter jw){
-//        jw.WriteObjectStart();
-//        for(String key : keys()){
-//            Object val = get(key);
-//
-//            jw.WritePropertyName(key);
-//
-//            if(val == null) {
-//                jw.WriteNull();
-//                continue;
-//            }
-//
-//            if(val instanceof String) {
-//                jw.WriteValue((String) val);
-//                continue;
-//            }
-//
-//            if(val instanceof Date) {
-//                jw.WriteValue((Date) val);
-//                continue;
-//            }
-//
-//            if(val instanceof Boolean) {
-//                jw.WriteValue((Boolean) val);
-//                continue;
-//            }
-//
-//            if(val instanceof Integer) {
-//                jw.WriteValue((Integer) val);
-//                continue;
-//            }
-//
-//            if(val instanceof Long) {
-//                jw.WriteValue((Long) val);
-//                continue;
-//            }
-//
-//            double val2 = new Variate(null, val).doubleValue(0);
-//            jw.WriteValue(val2);
-//
-//        }
-//        jw.WriteObjectEnd();
-//    }
-
     @Override
     public Iterator<Map.Entry<String, Object>> iterator() {
         return _data.entrySet().iterator();
