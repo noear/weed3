@@ -13,7 +13,15 @@ import java.sql.SQLException;
             conn = db.getConnection();
             DatabaseMetaData md = conn.getMetaData();
 
-            initDatabaseType(db, md.getDriverName());
+            //1.
+            setDatabaseType(db, md.getDriverName());
+
+            //2.
+            if(db._schema == null) {
+                setSchema(db, conn);
+            }
+
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -28,7 +36,33 @@ import java.sql.SQLException;
         }
     }
 
-    private static void initDatabaseType(DbContext db, String driverName){
+     private static void setSchema(DbContext db, Connection conn) throws SQLException{
+         try {
+             db._catalog = conn.getCatalog();
+         }catch(Throwable e) {
+            e.printStackTrace();
+         }
+
+         try{
+             db._schema =  conn.getSchema();
+         }catch(Throwable e){
+             switch (db._databaseType){
+                 case PostgreSQL:
+                     db._schema  = "public";
+                     break;
+                 case SQLServer:
+                     db._schema ="dbo";
+                 case Oracle:
+                     db._schema  = conn.getMetaData().getUserName();
+                     break;
+                 default:
+                     db._schema  = null;
+                     break;
+             }
+         }
+     }
+
+    private static void setDatabaseType(DbContext db, String driverName){
         if (driverName != null) {
             String pn = driverName.toLowerCase().replace(" ", "");
 

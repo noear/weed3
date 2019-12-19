@@ -36,6 +36,7 @@ public class DbContext {
 
     //数据集名称
     protected String _schema;
+    protected String _catalog;
     protected DbFormater _formater = new DbFormater();
     protected DbPaging _paging = new DbPaging();
     //特性支持
