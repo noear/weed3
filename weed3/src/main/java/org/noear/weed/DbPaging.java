@@ -6,8 +6,6 @@ import org.noear.weed.ext.DatabaseType;
  * 分页组件（可以替换 def 进行更新）
  * */
 public class DbPaging {
-    public static DbPaging def = new DbPaging();
-
     /**
      * 前缀处理
      */

@@ -28,8 +28,6 @@ public class DbConfig {
     @XBean("db1")
     public final  DbContext db1(){
         return new DbContext(XApp.cfg().getProp("test.db1"))
-                .objectFormatSet("`%`")
-                .fieldFormatSet("`%`")
                 .nameSet("db1");
     }
 
@@ -49,7 +47,5 @@ public class DbConfig {
     }
     public final static DbContext db2 = new DbContext()
             .dataSourceSet(dataSource())
-            .objectFormatSet("`%`")
-            .fieldFormatSet("`%`")
             .nameSet("db2");
 }
