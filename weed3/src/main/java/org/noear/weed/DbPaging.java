@@ -17,7 +17,7 @@ public class DbPaging {
             return;
         }
 
-        if (q.limit_rows > 0) {
+        if (q.limit_size > 0) {
             switch (q.databaseType()) {
                 case SQLServer: {
                     if (q._orderBy == null) {
@@ -78,7 +78,7 @@ public class DbPaging {
             return sqlB;
         }
 
-        if (q.limit_rows > 0) {
+        if (q.limit_size > 0) {
             switch (q.databaseType()) {
                 case SQLServer:
                 case Oracle:
@@ -96,7 +96,7 @@ public class DbPaging {
                     sb2.append("SELECT _x.* FROM (").append( sqlB.builder).append(") _x ");
                     sb2.append(" WHERE _x._ROW_NUM BETWEEN ")
                             .append(q.limit_start + 1).append(" AND ")
-                            .append(q.limit_start + q.limit_rows);
+                            .append(q.limit_start + q.limit_size);
 
                     sqlB.builder = sb2;
 
@@ -105,7 +105,7 @@ public class DbPaging {
                 case SQLite:
                 case PostgreSQL:
                     sqlB.append(" LIMIT ")
-                            .append(q.limit_rows)
+                            .append(q.limit_size)
                             .append(" OFFSET ")
                             .append(q.limit_start);
                     break;
@@ -116,7 +116,7 @@ public class DbPaging {
                     sqlB.append(" LIMIT ")
                             .append(q.limit_start)
                             .append(",")
-                            .append(q.limit_rows);
+                            .append(q.limit_size);
                     break;
             }
 

@@ -479,34 +479,35 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
 
-    protected int limit_start, limit_rows;
+    protected int limit_start, limit_size;
 
     /** 添加SQL paging语句 */
-    public T limit(int start, int rows) {
+    public T limit(int start, int size) {
         limit_start = start;
-        limit_rows = rows;
+        limit_size = size;
         //_builder.append(" LIMIT " + start + "," + rows + " ");
         return (T)this;
     }
 
     /** 添加SQL paging语句 */
-    public T page(int start, int rows) {
+    public T paging(int start, int size) {
         limit_start = start;
-        limit_rows = rows;
+        limit_size = size;
         //_builder.append(" LIMIT " + start + "," + rows + " ");
         return (T)this;
     }
 
     protected int limit_top = 0;
     /** 添加SQL top语句 */
-    public T limit(int rows) {
-        limit_top = rows;
+    public T limit(int size) {
+        limit_top = size;
         //_builder.append(" LIMIT " + rows + " ");
         return (T)this;
     }
+
     /** 添加SQL top语句 */
-    public T top(int rows) {
-        limit_top = rows;
+    public T top(int size) {
+        limit_top = size;
         //_builder.append(" LIMIT " + rows + " ");
         return (T)this;
     }
