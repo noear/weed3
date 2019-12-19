@@ -1,4 +1,4 @@
-package org.noear.weed.utils;
+package org.noear.weed.wrap;
 
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Column;

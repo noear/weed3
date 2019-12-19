@@ -22,7 +22,7 @@ public class _PageTest {
     @Test
     public void test_page() throws Exception {
 
-        List<AppxModel> list = mapper.selectPage(0, 10, q -> q.where("1=1").orderByAsc(AppxModel::getApp_id));
+        List<AppxModel> list = mapper.selectPage(0, 10, null);
         assert list.size() == 10;
         assert list.get(0).app_id == 1;
 
@@ -31,7 +31,7 @@ public class _PageTest {
 
     @Test
     public void test_page2() throws Exception{
-        List<AppxModel> list =  mapper.selectPage(1,10, q->q.where("1=1").orderBy("app_id asc"));
+        List<AppxModel> list =  mapper.selectPage(1,10,null);
         assert  list.size() == 10;
         assert list.get(0).app_id == 2;
 

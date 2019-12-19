@@ -1,4 +1,6 @@
-package org.noear.weed.utils;
+package org.noear.weed.wrap;
+
+import org.noear.weed.utils.Property;
 
 import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;

@@ -2,6 +2,7 @@ package org.noear.weed.utils;
 
 import org.noear.weed.DataItem;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.wrap.ClassWrap;
 
 public class EntityUtils {
     public static void fromEntity(Object obj, Act2<String, Object> setter) {

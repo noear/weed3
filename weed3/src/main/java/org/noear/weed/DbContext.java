@@ -7,7 +7,6 @@ import org.noear.weed.xml.XmlSqlLoader;
 import javax.sql.DataSource;
 import java.net.URI;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Properties;
  * Created by noear on 14-6-12.
  * 数据库上下文
  */
-public class DbContext {
+public class DbContext extends DbContextMetaData {
 
     /**
      * 最后次执行命令
@@ -35,8 +34,6 @@ public class DbContext {
 
 
     //数据集名称
-    protected String _schema;
-    protected String _catalog;
     protected DbFormater _formater = new DbFormater();
     protected DbPaging _paging = new DbPaging();
     //特性支持
@@ -140,7 +137,7 @@ public class DbContext {
     /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
         __dataSource = dataSource;
-        DbContextBuilder.initMetaData(this);
+        initMetaData(this);
         return this;
     }
 

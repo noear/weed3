@@ -97,7 +97,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.delete();
         });
@@ -132,7 +134,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.update();
         });
@@ -181,7 +185,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.exists();
         });
@@ -229,7 +235,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select("*").getItem(clz);
         });
@@ -240,7 +248,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select(column).getValue();
         });
@@ -251,7 +261,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select("*").getMap();
         });
@@ -262,7 +274,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.count();
         });
@@ -275,7 +289,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select("*").getList(clz);
         });
@@ -286,7 +302,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select("*").getMapList();
         });
@@ -297,7 +315,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(() -> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.select(column).getArray(column);
         });
@@ -311,7 +331,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.limit(start, rows).select("*").getList(clz);
         });
@@ -322,7 +344,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
-            condition.run(new WhereQ(qr));
+            if(condition != null) {
+                condition.run(new WhereQ(qr));
+            }
 
             return qr.limit(start, rows).select("*").getMapList();
         });

@@ -1,7 +1,7 @@
 package org.noear.weed;
 
 
-import org.noear.weed.utils.ClassWrap;
+import org.noear.weed.wrap.ClassWrap;
 
 import java.io.Serializable;
 import java.sql.SQLException;

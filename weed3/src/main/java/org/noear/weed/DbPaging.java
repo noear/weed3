@@ -21,7 +21,14 @@ public class DbPaging {
             switch (q.databaseType()) {
                 case SQLServer: {
                     if (q._orderBy == null) {
-                        throw new RuntimeException("Please add orderBy");
+                        String tb = q._table.split(" ")[0].replace("$.","").trim();
+                        String pk = q._context.getTablePk1(tb);
+
+                        if(pk == null){
+                            throw new RuntimeException("Please add orderBy");
+                        }
+
+                        sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(pk).append(") AS _ROW_NUM, ");
                     }else{
                         sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(q._orderBy).append(") AS _ROW_NUM, ");
                     }
