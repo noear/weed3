@@ -1,7 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.DatabaseType;
-import org.noear.weed.utils.Property;
+import org.noear.weed.wrap.Property;
 import org.noear.weed.wrap.ClassWrap;
 import org.noear.weed.wrap.PropertyWrap;
 

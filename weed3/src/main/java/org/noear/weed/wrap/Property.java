@@ -1,4 +1,4 @@
-package org.noear.weed.utils;
+package org.noear.weed.wrap;
 
 import java.io.Serializable;
 import java.util.function.Function;
