@@ -10,7 +10,7 @@ public class DbPaging {
 
     /**
      * 前缀处理
-     * */
+     */
     public void preProcessing(DbTableQueryBase q, StringBuilder sb) {
         if (q.limit_top > 0) {
             if (q.databaseType() == DatabaseType.SQLServer) {
@@ -30,14 +30,14 @@ public class DbPaging {
                 }
                 break;
 
-                case Oracle:{
+                case Oracle: {
                     if (q._orderBy == null) {
                         sb.append(" ROWNUM _ROW_NUM, ");
-                    }else{
+                    } else {
                         sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(q._orderBy).append(") AS _ROW_NUM, ");
                     }
                 }
-                    break;
+                break;
             }
             return;
         }
@@ -45,20 +45,22 @@ public class DbPaging {
 
     /**
      * 后缀处理
-     * */
-    public SQLBuilder postProcessing(DbTableQueryBase q, SQLBuilder sqlB){
+     */
+    public SQLBuilder postProcessing(DbTableQueryBase q, SQLBuilder sqlB) {
         if (q.limit_top > 0) {
-            switch (q.databaseType()){
+            switch (q.databaseType()) {
                 case SQLServer:
                     break;
 
-                case Oracle: {
+                case Oracle:
+                case DB2: {
                     StringBuilder sb2 = new StringBuilder();
                     sb2.append("SELECT _x.* (").append(sqlB.builder).append(") _x ");
-                    sb2.append(" WHERE _x._ROW_NUM<=").append(q.limit_top);
+                    sb2.append(" WHERE _x._ROW_NUM <= ").append(q.limit_top);
 
                     sqlB.builder = sb2;
-                } break;
+                }
+                break;
 
                 default:
                     sqlB.append(" LIMIT ").append(q.limit_top).append(" ");
@@ -76,7 +78,7 @@ public class DbPaging {
                     sb2.append("SELECT _x.* (").append(sqlB.builder).append(") _x ");
                     sb2.append(" WHERE _x._ROW_NUM BETWEEN ")
                             .append(q.limit_start).append(" AND ")
-                            .append( q.limit_start + q.limit_rows);
+                            .append(q.limit_start + q.limit_rows);
 
                     sqlB.builder = sb2;
 
