@@ -443,7 +443,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     protected int limit_start, limit_rows;
 
-    /** 添加SQL limit语句 */
+    /** 添加SQL paging语句 */
     public T limit(int start, int rows) {
         limit_start = start;
         limit_rows = rows;
@@ -451,14 +451,22 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
+    /** 添加SQL paging语句 */
+    public T page(int start, int rows) {
+        limit_start = start;
+        limit_rows = rows;
+        //_builder.append(" LIMIT " + start + "," + rows + " ");
+        return (T)this;
+    }
+
     protected int limit_top = 0;
-    /** 添加SQL limit语句 */
+    /** 添加SQL top语句 */
     public T limit(int rows) {
         limit_top = rows;
         //_builder.append(" LIMIT " + rows + " ");
         return (T)this;
     }
-
+    /** 添加SQL top语句 */
     public T top(int rows) {
         limit_top = rows;
         //_builder.append(" LIMIT " + rows + " ");
