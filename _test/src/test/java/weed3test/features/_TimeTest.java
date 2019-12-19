@@ -3,8 +3,11 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
+import weed3test.model.AppxCopy2Model;
 import weed3test.model.AppxCopyModel;
 import weed3test.util.Datetime;
+
+import java.util.Map;
 
 public class _TimeTest {
     DbContext db = DbUtil.db;
@@ -21,6 +24,32 @@ public class _TimeTest {
         }
 
         return _model;
+    }
+
+    @Test
+    public void test_insert() throws Exception {
+        Map<String,Object> map = db.table("appx_copy")
+                .whereEq("app_id", 22)
+                .select("*")
+                .getMap();
+
+        map.remove("app_id");
+
+        db.table(AppxCopyModel.class).setMap(map).insert();
+    }
+
+    @Test
+    public void test_insert2() throws Exception {
+        AppxCopy2Model map = db.table("appx_copy")
+                .whereEq("app_id", 22)
+                .select("*")
+                .getItem(AppxCopy2Model.class);
+
+        map.app_id = 1000;
+
+        db.table(AppxCopyModel.class)
+                .setEntityIf(map, (k, v) -> v != null)
+                .upsert("app_id");
     }
 
     @Test
