@@ -69,7 +69,7 @@ public class _TimeTest {
         Datetime log_fulltime = new Datetime(m.log_fulltime);
 
         assert m.app_id == 22;
-        assert log_fulltime.getDays() == m.date1.getDayOfMonth();
+        assert log_fulltime.getMonth() + 1 == m.date1.getMonth().getValue();
     }
 
     @Test
