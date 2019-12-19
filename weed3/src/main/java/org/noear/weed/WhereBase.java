@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext  _context;
     protected SQLBuilder _builder;
+    protected boolean _isSingleTable;
 
     protected WhereBase() {
 
@@ -669,6 +670,10 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     protected <C> String getColumnName(Property<C, ?> p) {
-        return PropertyWrap.get(p).getColumnName(_clzArray);
+        if(_isSingleTable){
+            return PropertyWrap.get(p).name;
+        }else {
+            return PropertyWrap.get(p).getColumnName(_clzArray);
+        }
     }
 }

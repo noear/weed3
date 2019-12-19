@@ -12,6 +12,7 @@ public class WhereQ extends WhereBase<WhereQ> {
     protected WhereQ(DbTableQuery query) {
         super();
 
+        _isSingleTable = true;
         _query = query;
         _context = _query._context;
         _builder = _query._builder;

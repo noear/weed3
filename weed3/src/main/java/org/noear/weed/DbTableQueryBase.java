@@ -333,6 +333,16 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return update(item);
     }
 
+    private void removeTablePrefix(){
+        if(_clzArray.size()<2){
+            if(_builder.indexOf("t0.")>0){
+                String tmp = _builder.toString().replace("t0.","");
+                _builder.builder.setLength(0);
+                _builder.append(tmp);
+            }
+        }
+    }
+
     /** 执行更新并返回影响行数，使用set接口的数据 */
     public int update(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0) {
@@ -379,13 +389,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.backup();
         _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
 
-        if(_clzArray.size()<2){
-            if(_builder.indexOf("t0.")>0){
-                String tmp = _builder.toString().replace("t0.","");
-                _builder.builder.setLength(0);
-                _builder.append(tmp);
-            }
-        }
+        removeTablePrefix();
 
         if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of update condition!!!");
@@ -417,6 +421,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         }
 
         _builder.insert(StringUtils.releaseBuilder(sb));
+
+        removeTablePrefix();
 
         if(WeedConfig.isDeleteMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of delete condition!!!");
