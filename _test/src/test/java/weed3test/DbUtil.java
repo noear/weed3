@@ -36,7 +36,7 @@ public class DbUtil {
     }
 
     private final static HikariDataSource dataSource(){
-        Map<String, String> map = dbPgsqlCfg(); //dbMysqlCfg();
+        Map<String, String> map = dbMysqlCfg(); //dbPgsqlCfg(); //
 
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(map.get("url"));

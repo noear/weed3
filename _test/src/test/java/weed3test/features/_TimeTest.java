@@ -12,13 +12,13 @@ import java.util.Map;
 public class _TimeTest {
     DbContext db = DbUtil.db;
 
-    private AppxCopyModel _model;
-    private AppxCopyModel model() throws Exception{
+    private AppxCopy2Model _model;
+    private AppxCopy2Model model() throws Exception{
         if(_model == null) {
             _model = db.table("appx_copy")
                     .whereEq("app_id", 22)
                     .select("*")
-                    .getItem(AppxCopyModel.class);
+                    .getItem(AppxCopy2Model.class);
 
             System.out.println(db.lastCommand.text);
         }
@@ -56,7 +56,7 @@ public class _TimeTest {
 
     @Test
     public void test_datetime1() throws Exception {
-        AppxCopyModel m = model();
+        AppxCopy2Model m = model();
         Datetime log_fulltime = new Datetime(m.log_fulltime);
 
         assert m.app_id == 22;
@@ -65,7 +65,7 @@ public class _TimeTest {
 
     @Test
     public void test_date1() throws Exception {
-        AppxCopyModel m = model();
+        AppxCopy2Model m = model();
         Datetime log_fulltime = new Datetime(m.log_fulltime);
 
         assert m.app_id == 22;
@@ -74,7 +74,7 @@ public class _TimeTest {
 
     @Test
     public void test_time1() throws Exception {
-        AppxCopyModel m = model();
+        AppxCopy2Model m = model();
         Datetime log_fulltime = new Datetime(m.log_fulltime);
 
         assert m.app_id == 22;
