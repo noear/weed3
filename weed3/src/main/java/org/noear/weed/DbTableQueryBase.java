@@ -379,6 +379,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.backup();
         _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
 
+        if(_clzArray.size()<2){
+            if(_builder.indexOf("t0.")>0){
+                String tmp = _builder.toString().replace("t0.","");
+                _builder.builder.setLength(0);
+                _builder.append(tmp);
+            }
+        }
+
         if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of update condition!!!");
         }
