@@ -339,6 +339,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return 0;
         }
 
+        if(_clzArray.size()<2){
+            if(_table.indexOf(" ")>0) {
+                _table = _table.split(" ")[0];
+            }
+        }
+
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
@@ -387,6 +393,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     /** 执行删除，并返回影响行数 */
     public int delete() throws SQLException {
         StringBuilder sb  = StringUtils.borrowBuilder();
+
+        if(_clzArray.size()<2){
+            if(_table.indexOf(" ")>0) {
+                _table = _table.split(" ")[0];
+            }
+        }
 
         sb.append("DELETE ");
 
