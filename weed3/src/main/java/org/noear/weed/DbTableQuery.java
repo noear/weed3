@@ -50,18 +50,6 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return onEq(getColumnName(property1), getColumnName(property2));
     }
 
-    public <C> DbTableQuery groupBy(Property<C,?> property) {
-        return groupBy(getColumnName(property));
-    }
-
-    public <C> DbTableQuery orderByAsc(Property<C,?> property) {
-        return orderByAsc(getColumnName(property));
-    }
-
-    public <C> DbTableQuery orderByDesc(Property<C,?> property) {
-        return orderByDesc(getColumnName(property));
-    }
-
     public IQuery select(Serializable... sels) {
         StringBuilder sb = StringUtils.borrowBuilder();
         for (Serializable s : sels) {

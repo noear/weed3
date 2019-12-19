@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.DatabaseType;
 import org.noear.weed.utils.Property;
 import org.noear.weed.utils.ClassWrap;
 import org.noear.weed.utils.PropertyWrap;
@@ -22,6 +23,10 @@ public abstract class WhereBase<T extends WhereBase> {
     public WhereBase(DbContext context) {
         _context = context;
         _builder = new SQLBuilder();
+    }
+
+    protected DatabaseType databaseType(){
+        return _context.databaseType();
     }
 
     protected String formatObject(String name) {
@@ -593,6 +598,55 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" ) ");
         return (T) this;
     }
+
+
+
+    protected String _orderBy;
+    public T orderBy(String code) {
+        _orderBy = formatColumns(code);
+        _builder.append(" ORDER BY ").append(_orderBy);
+        return (T)this;
+    }
+
+    public T orderByAsc(String fileds) {
+        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" ASC ");
+        return (T)this;
+    }
+    public <C> T orderByAsc(Property<C,?> property) {
+        return orderByAsc(getColumnName(property));
+    }
+
+
+    public T orderByDesc(String fileds) {
+        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
+        return (T)this;
+    }
+    public <C> T orderByDesc(Property<C,?> property) {
+        return orderByDesc(getColumnName(property));
+    }
+
+
+
+    public T groupBy(String code) {
+        _builder.append(" GROUP BY ").append(formatColumns(code));
+        return (T)this;
+    }
+
+    public <C> T groupBy(Property<C,?> property) {
+        return groupBy(getColumnName(property));
+    }
+
+    public T having(String code){
+        _builder.append(" HAVING ").append(code);
+        return (T)this;
+    }
+
+
+
+
+
+
+
 
     protected List<ClassWrap> _clzArray;
     protected int addClass(ClassWrap clzWrap) {

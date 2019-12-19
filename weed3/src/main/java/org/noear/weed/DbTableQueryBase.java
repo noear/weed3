@@ -5,7 +5,6 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
-import org.noear.weed.ext.DatabaseType;
 import org.noear.weed.utils.StringUtils;
 
 import java.sql.SQLException;
@@ -440,32 +439,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T) this;
     }
 
-    public T groupBy(String code) {
-        _builder.append(" GROUP BY ").append(formatColumns(code));
-        return (T)this;
-    }
 
-    public T having(String code){
-        _builder.append(" HAVING ").append(code);
-        return (T)this;
-    }
 
-    public T orderBy(String code) {
-        _builder.append(" ORDER BY ").append(formatColumns(code));
-        return (T)this;
-    }
-
-    public T orderByAsc(String fileds) {
-        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" ASC ");
-        return (T)this;
-    }
-
-    public T orderByDesc(String fileds) {
-        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
-        return (T)this;
-    }
-
-    private int limit_start, limit_rows;
+    protected int limit_start, limit_rows;
 
     /** 添加SQL limit语句 */
     public T limit(int start, int rows) {
@@ -475,7 +451,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T)this;
     }
 
-    private int limit_top = 0;
+    protected int limit_top = 0;
     /** 添加SQL limit语句 */
     public T limit(int rows) {
         limit_top = rows;
@@ -577,11 +553,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         sb.append("SELECT ");
 
-        if (limit_top > 0) {
-            if (_context.databaseType() == DatabaseType.SQLServer) {
-                sb.append(" TOP ").append(limit_top).append(" ");
-            }
-        }
+        DbPaging.def.preProcessing(this, sb);
 
         sb.append(formatColumns(columns)).append(" FROM ").append(_table);
 
@@ -589,27 +561,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.insert(StringUtils.releaseBuilder(sb));
 
-        if (limit_top > 0) {
-            if (_context.databaseType() != DatabaseType.SQLServer) {
-                _builder.append(" LIMIT ").append(limit_top).append(" ");
-            }
-        }
 
-        if (limit_rows > 0) {
-            switch (_context.databaseType()) {
-                case SQLServer:
-                    _builder.append(" LIMIT ").append(limit_start).append(",").append(limit_rows);
-                    break;
-
-                case PostgreSQL:
-                    _builder.append(" LIMIT ").append(limit_rows).append(" OFFSET ").append(limit_start);
-                    break;
-
-                default:
-                    _builder.append(" LIMIT ").append(limit_start).append(",").append(limit_rows);
-                    break;
-            }
-        }
+        _builder = DbPaging.def.postProcessing(this,_builder);
 
         if (_builder_bef.length() > 0) {
             _builder.insert(_builder_bef);

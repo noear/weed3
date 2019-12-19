@@ -12,8 +12,8 @@ public class SQLBuilder {
     protected StringBuilder builder = new StringBuilder();
     public List<Object> paramS = new ArrayList<Object>();
 
-    StringBuilder b_builder = new StringBuilder();
-    List<Object> b_paramS = new ArrayList<>();
+    private StringBuilder b_builder = new StringBuilder();
+    private List<Object> b_paramS = new ArrayList<>();
 
     public int indexOf(String str) {
         return builder.indexOf(str);
