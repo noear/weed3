@@ -47,4 +47,7 @@ public interface BaseMapper<T> {
      * */
     List<T> selectPage(int start, int rows, Act1<WhereQ> condition);
     List<Map<String, Object>> selectMapPage(int start, int rows, Act1<WhereQ> condition);
+
+    List<T> selectTop(int top, Act1<WhereQ> condition);
+    List<Map<String, Object>> selectMapTop(int top, Act1<WhereQ> condition);
 }

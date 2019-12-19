@@ -60,7 +60,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         }
 
         return RunUtils.call(()
-                -> db().table(tableName()).insert(data));
+                -> getQr().insert(data));
     }
 
     @Override
@@ -71,37 +71,31 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         }
 
         RunUtils.call(()
-                -> db().table(tableName()).insertList(list2));
+                -> getQr().insertList(list2));
     }
 
     @Override
     public Integer deleteById(Object id) {
         return RunUtils.call(()
-                -> db().table(tableName()).whereEq(pk(),id ).delete());
+                -> getQr().whereEq(pk(),id ).delete());
     }
 
     @Override
     public Integer deleteByIds(Iterable<Object> idList) {
         return RunUtils.call(()
-                -> db().table(tableName()).whereIn(pk(), idList ).delete());
+                -> getQr().whereIn(pk(), idList ).delete());
     }
 
     @Override
     public Integer deleteByMap(Map<String, Object> columnMap) {
         return RunUtils.call(()
-                -> db().table(tableName()).whereMap(columnMap).delete());
+                -> getQr().whereMap(columnMap).delete());
     }
 
     @Override
-    public Integer delete(Act1<WhereQ> condition) {
+    public Integer delete(Act1<WhereQ> c) {
         return RunUtils.call(() -> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.delete();
+            return getQr(c).delete();
         });
     }
 
@@ -118,11 +112,11 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         Object id = data.get(pk());
 
         return RunUtils.call(()
-                -> db().table(tableName()).whereEq(pk(), id ).update(data));
+                -> getQr().whereEq(pk(), id ).update(data));
     }
 
     @Override
-    public Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition) {
+    public Integer update(T entity, boolean excludeNull, Act1<WhereQ> c) {
         DataItem data = new DataItem();
 
         if(excludeNull) {
@@ -132,13 +126,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         }
 
         return RunUtils.call(() -> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.update();
+            return getQr(c).update();
         });
     }
 
@@ -155,9 +143,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         Object id = data.get(pk());
 
         if (id == null) {
-            return RunUtils.call(() -> db().table(tableName()).insert(data));
+            return RunUtils.call(() -> getQr().insert(data));
         } else {
-            return RunUtils.call(() -> db().table(tableName()).upsert(data, pk()));
+            return RunUtils.call(() -> getQr().upsert(data, pk()));
         }
     }
 
@@ -171,25 +159,19 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
             data.setEntity(entity);
         }
 
-        return RunUtils.call(() -> db().table(tableName()).upsert(data, conditionFields));
+        return RunUtils.call(() -> getQr().upsert(data, conditionFields));
     }
 
     @Override
     public boolean existsById(Object id) {
         return RunUtils.call(()
-                -> db().table(tableName()).whereEq(pk(), id ).exists());
+                -> getQr().whereEq(pk(), id ).exists());
     }
 
     @Override
-    public boolean exists(Act1<WhereQ> condition) {
+    public boolean exists(Act1<WhereQ> c) {
         return RunUtils.call(() -> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.exists();
+            return getQr(c).exists();
         });
     }
 
@@ -198,7 +180,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
-                -> db().table(tableName()).whereEq(pk(), id).limit(1).select("*").getItem(clz));
+                -> getQr().whereEq(pk(), id).limit(1).select("*").getItem(clz));
     }
 
     @Override
@@ -206,7 +188,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
-                -> db().table(tableName()).whereIn(pk(), idList).select("*").getList(clz));
+                -> getQr().whereIn(pk(), idList).select("*").getList(clz));
     }
 
     @Override
@@ -214,7 +196,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()
-                -> db().table(tableName()).whereMap(columnMap).select("*").getList(clz));
+                -> getQr().whereMap(columnMap).select("*").getList(clz));
     }
 
     @Override
@@ -225,130 +207,106 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         data.setEntityIf(entity,(k,v)-> v!=null );
 
         return RunUtils.call(()
-                -> db().table(tableName()).whereMap(data.getMap()).limit(1).select("*").getItem(clz));
+                -> getQr().whereMap(data.getMap()).limit(1).select("*").getItem(clz));
     }
 
     @Override
-    public T selectItem(Act1<WhereQ> condition) {
+    public T selectItem(Act1<WhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select("*").getItem(clz);
+            return getQr(c).select("*").getItem(clz);
         });
     }
 
     @Override
-    public Object selectValue(String column, Act1<WhereQ> condition) {
+    public Object selectValue(String column, Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select(column).getValue();
+            return getQr(c).select(column).getValue();
         });
     }
 
     @Override
-    public Map<String, Object> selectMap(Act1<WhereQ> condition) {
+    public Map<String, Object> selectMap(Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select("*").getMap();
+            return getQr(c).select("*").getMap();
         });
     }
 
     @Override
-    public Long selectCount(Act1<WhereQ> condition) {
+    public Long selectCount(Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.count();
+            return getQr(c).count();
         });
     }
 
     @Override
-    public List<T> selectList(Act1<WhereQ> condition) {
+    public List<T> selectList(Act1<WhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select("*").getList(clz);
+            return getQr(c).select("*").getList(clz);
         });
     }
 
     @Override
-    public List<Map<String, Object>> selectMapList(Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMapList(Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select("*").getMapList();
+            return getQr(c).select("*").getMapList();
         });
     }
 
     @Override
-    public List<Object> selectArray(String column, Act1<WhereQ> condition) {
+    public List<Object> selectArray(String column, Act1<WhereQ> c) {
         return RunUtils.call(() -> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.select(column).getArray(column);
+            return getQr(c).select(column).getArray(column);
         });
     }
 
 
     @Override
-    public List<T> selectPage(int start, int rows, Act1<WhereQ> condition) {
+    public List<T> selectPage(int start, int rows, Act1<WhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.limit(start, rows).select("*").getList(clz);
+            return getQr(c).limit(start, rows).select("*").getList(clz);
         });
     }
 
     @Override
-    public List<Map<String, Object>> selectMapPage(int start, int rows, Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMapPage(int start, int rows, Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            DbTableQuery qr = db().table(tableName());
-
-            if(condition != null) {
-                condition.run(new WhereQ(qr));
-            }
-
-            return qr.limit(start, rows).select("*").getMapList();
+            return getQr(c).limit(start, rows).select("*").getMapList();
         });
+    }
+
+    @Override
+    public List<T> selectTop(int top, Act1<WhereQ> c) {
+        Class<T> clz = (Class<T>) entityClz();
+
+        return RunUtils.call(()-> {
+            return getQr(c).top(top).select("*").getList(clz);
+        });
+    }
+
+    @Override
+    public List<Map<String, Object>> selectMapTop(int top, Act1<WhereQ> c) {
+        return RunUtils.call(()-> {
+            return getQr(c).top(top).select("*").getMapList();
+        });
+    }
+
+    private DbTableQuery getQr(){
+        return db().table(tableName());
+    }
+
+    private DbTableQuery getQr(Act1<WhereQ> c){
+        DbTableQuery qr = db().table(tableName());
+
+        if(c != null) {
+            c.run(new WhereQ(qr));
+        }
+
+        return qr;
     }
 }

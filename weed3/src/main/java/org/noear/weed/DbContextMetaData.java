@@ -72,10 +72,15 @@ class DbContextMetaData {
                 db._databaseType = DatabaseType.SQLite;
             }
 
-            if (db._databaseType == DatabaseType.MySQL || db._databaseType == DatabaseType.MariaDB) {
+            if (db._databaseType == DatabaseType.MySQL ||
+                    db._databaseType == DatabaseType.MariaDB ||
+                        db._databaseType == DatabaseType.SQLite) {
                 db.formater().fieldFormatSet("`%`");
                 db.formater().objectFormatSet("`%`");
-            } else {
+            } else if(db._databaseType == DatabaseType.SQLServer){
+                db.formater().fieldFormatSet("[%]");
+                db.formater().objectFormatSet("[%]");
+            }  else {
                 //SQLServer, PostgreSQL, DB2
                 db.formater().fieldFormatSet("\"%\"");
                 db.formater().objectFormatSet("\"%\"");
