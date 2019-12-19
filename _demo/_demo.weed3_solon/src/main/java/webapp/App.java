@@ -18,6 +18,7 @@ public class App {
 
         XmlSqlLoader.tryLoad();
 
+        //测试
         Aop.factory().beanLoaderAdd(Db.class, (clz, bw, anno) -> {
             if(clz.isInterface()){
                 DbContext db = WeedConfig.libOfDb.get(anno.value());
@@ -26,6 +27,7 @@ public class App {
             }
         });
 
+        //测试
         XPlugin plugin = (app)->{
             Aop.factory().beanBuilderadd((clz, annoS)->{
                 if(clz.isInterface()) {
