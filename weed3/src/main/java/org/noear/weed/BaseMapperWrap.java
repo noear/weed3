@@ -305,7 +305,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
 
     @Override
-    public List<T> selectPage(int start, int end, Act1<WhereQ> condition) {
+    public List<T> selectPage(int start, int rows, Act1<WhereQ> condition) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
@@ -313,18 +313,18 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
             condition.run(new WhereQ(qr));
 
-            return qr.limit(start, end).select("*").getList(clz);
+            return qr.limit(start, rows).select("*").getList(clz);
         });
     }
 
     @Override
-    public List<Map<String, Object>> selectMapPage(int start, int end, Act1<WhereQ> condition) {
+    public List<Map<String, Object>> selectMapPage(int start, int rows, Act1<WhereQ> condition) {
         return RunUtils.call(()-> {
             DbTableQuery qr = db().table(tableName());
 
             condition.run(new WhereQ(qr));
 
-            return qr.limit(start, end).select("*").getMapList();
+            return qr.limit(start, rows).select("*").getMapList();
         });
     }
 }
