@@ -1,7 +1,7 @@
 package weed3test.speed;
 
 import org.junit.Test;
-import org.noear.weed.utils.Property;
+import org.noear.weed.wrap.Property;
 import weed3test.model.AppxModel;
 
 import java.lang.invoke.SerializedLambda;
