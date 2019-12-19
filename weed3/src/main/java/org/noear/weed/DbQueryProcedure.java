@@ -159,7 +159,7 @@ public class DbQueryProcedure extends DbProcedure {
         }
 
         if(context.schemaHas()){
-            sqlTxt.replace("$",context.schema());
+            sqlTxt = sqlTxt.replace("$",context.schema());
         }
 
         cmd.paramS = this.paramS;

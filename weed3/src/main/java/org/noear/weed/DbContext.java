@@ -148,7 +148,7 @@ public class DbContext {
                 _databaseType = DatabaseType.MySQL;
             } else if (pn.indexOf("mariadb") >= 0) {
                 _databaseType = DatabaseType.MariaDB;
-            } else if (pn.indexOf("SqlServer") >= 0) {
+            } else if (pn.indexOf("sqlserver") >= 0) {
                 _databaseType = DatabaseType.SQLServer;
             } else if (pn.indexOf("oracle") >= 0) {
                 _databaseType = DatabaseType.Oracle;

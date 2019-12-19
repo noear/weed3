@@ -20,9 +20,10 @@ public class _PageTest {
     }
 
     @Test
-    public void test_page() throws Exception{
-        List<AppxModel> list =  mapper.selectPage(0,10, q->q.where("1=1"));
-        assert  list.size() == 10;
+    public void test_page() throws Exception {
+
+        List<AppxModel> list = mapper.selectPage(0, 10, q -> q.where("1=1").orderByAsc(AppxModel::getApp_id));
+        assert list.size() == 10;
         assert list.get(0).app_id == 1;
 
         System.out.println(db2.lastCommand.text);
@@ -30,7 +31,7 @@ public class _PageTest {
 
     @Test
     public void test_page2() throws Exception{
-        List<AppxModel> list =  mapper.selectPage(1,10, q->q.where("1=1"));
+        List<AppxModel> list =  mapper.selectPage(1,10, q->q.where("1=1").orderBy("app_id asc"));
         assert  list.size() == 10;
         assert list.get(0).app_id == 2;
 

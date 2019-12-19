@@ -2,6 +2,7 @@ package weed3test;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.weed.DbContext;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -23,10 +24,22 @@ public class DbUtil {
         return map;
     }
 
-    private final static Map<String, String> dbPgsqlCfg(){
+    private final static Map<String, String> dbMssqlCfg(){
         Map<String, String> map = new HashMap<>();
 
         map.put("schema", "rock");
+        map.put("url", "jdbc:sqlserver://localdb:1433;DatabaseName=rock");
+        map.put("driverClassName", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        map.put("username", "sa");
+        map.put("password", "sqlsev@2019");
+
+        return map;
+    }
+
+    private final static Map<String, String> dbPgsqlCfg(){
+        Map<String, String> map = new HashMap<>();
+
+        map.put("schema", "public");
         map.put("url", "jdbc:postgresql://localdb:5432/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
         map.put("driverClassName", "org.postgresql.Driver");
         map.put("username", "postgres");
@@ -35,9 +48,7 @@ public class DbUtil {
         return map;
     }
 
-    private final static HikariDataSource dataSource(){
-        Map<String, String> map = dbPgsqlCfg(); //dbMysqlCfg(); //
-
+    private final static HikariDataSource dataSource(Map<String, String> map){
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(map.get("url"));
         dataSource.setUsername(map.get("username"));
@@ -48,8 +59,10 @@ public class DbUtil {
     }
 
     public static DbContext getDb() {
-        DbContext db = new DbContext("rock", dataSource());
+        Map<String, String> map = dbMssqlCfg();// dbPgsqlCfg(); //dbMysqlCfg(); //
 
+        DbContext db = new DbContext(map.get("schema"), dataSource(map));
+        WeedConfig.isUsingTableSpace=true;
         return db;
     }
 

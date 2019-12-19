@@ -407,19 +407,31 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 添加SQL 内关联语句 */
     public T innerJoin(String table) {
-        _builder.append(" INNER JOIN ").append(formatObject(table));
+        if(isUsingTableSpace) {
+            _builder.append(" INNER JOIN $.").append(table);
+        }else{
+            _builder.append(" INNER JOIN ").append(formatObject(table));
+        }
         return (T)this;
     }
 
     /** 添加SQL 左关联语句 */
     public T leftJoin(String table) {
-        _builder.append(" LEFT JOIN ").append(formatObject(table));
+        if(isUsingTableSpace) {
+            _builder.append(" LEFT JOIN $.").append(table);
+        }else{
+            _builder.append(" LEFT JOIN ").append(formatObject(table));
+        }
         return (T)this;
     }
 
     /** 添加SQL 右关联语句 */
     public T rightJoin(String table) {
-        _builder.append(" RIGHT JOIN ").append(formatObject(table));
+        if(isUsingTableSpace) {
+            _builder.append(" RIGHT JOIN $.").append(table);
+        }else{
+            _builder.append(" RIGHT JOIN ").append(formatObject(table));
+        }
         return (T)this;
     }
 

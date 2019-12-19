@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by noear on 19-12-11.
  */
 public abstract class WhereBase<T extends WhereBase> {
-    protected DbContext _context;
+    protected DbContext  _context;
     protected SQLBuilder _builder;
 
     protected WhereBase() {
@@ -605,12 +605,12 @@ public abstract class WhereBase<T extends WhereBase> {
     public T orderBy(String code) {
         _orderBy = formatColumns(code);
         _builder.append(" ORDER BY ").append(_orderBy);
-        return (T)this;
+        return (T) this;
     }
 
     public T orderByAsc(String fileds) {
-        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" ASC ");
-        return (T)this;
+        orderBy(formatColumns(fileds) + " ASC ");
+        return (T) this;
     }
     public <C> T orderByAsc(Property<C,?> property) {
         return orderByAsc(getColumnName(property));
@@ -618,7 +618,7 @@ public abstract class WhereBase<T extends WhereBase> {
 
 
     public T orderByDesc(String fileds) {
-        _builder.append(" ORDER BY ").append(formatColumns(fileds)).append(" DESC ");
+        orderBy(formatColumns(fileds) + " DESC ");
         return (T)this;
     }
     public <C> T orderByDesc(Property<C,?> property) {
