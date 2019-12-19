@@ -160,6 +160,8 @@ public class DbQueryProcedure extends DbProcedure {
 
         if(context.schemaHas()){
             sqlTxt = sqlTxt.replace("$",context.schema());
+        }else{
+            sqlTxt = sqlTxt.replace("$.","");
         }
 
         cmd.paramS = this.paramS;

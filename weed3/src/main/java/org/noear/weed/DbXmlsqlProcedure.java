@@ -1,6 +1,5 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.Fun0;
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.xml.XmlSqlBlock;
@@ -12,17 +11,17 @@ import java.util.Map;
 
 /**
  * Created by noear on 19-10-14.
- * SQL过程访问类
+ * Xmlsql过程访问类
  */
-public class DbSqlProcedure extends DbProcedure {
+public class DbXmlsqlProcedure extends DbProcedure {
     private String _sqlid;
     private Map<String,Object> _map = new HashMap<>(); //不能用:Variate, IXmlSqlBuilder 不支持
 
-    public DbSqlProcedure(DbContext context){
+    public DbXmlsqlProcedure(DbContext context){
         super(context);
     }
 
-    protected DbSqlProcedure sql(String sqlid) {
+    protected DbXmlsqlProcedure sql(String sqlid) {
         _sqlid = sqlid;
 
         this.commandText = sqlid;

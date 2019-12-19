@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.noear.weed.WeedConfig.isUsingTableSpace;
+import static org.noear.weed.WeedConfig.isUsingSchemaPrefix;
 
 /**
  * Created by noear on 14/11/12.
@@ -63,7 +63,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
                 _table = table;
             }
             else {
-                if(isUsingTableSpace){
+                if(isUsingSchemaPrefix){
                     _table = "$." + table;
                 }else{
                     _table = formatObject(table); //"$." + table;
@@ -407,7 +407,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 添加SQL 内关联语句 */
     public T innerJoin(String table) {
-        if(isUsingTableSpace) {
+        if(isUsingSchemaPrefix) {
             _builder.append(" INNER JOIN $.").append(table);
         }else{
             _builder.append(" INNER JOIN ").append(formatObject(table));
@@ -417,7 +417,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 添加SQL 左关联语句 */
     public T leftJoin(String table) {
-        if(isUsingTableSpace) {
+        if(isUsingSchemaPrefix) {
             _builder.append(" LEFT JOIN $.").append(table);
         }else{
             _builder.append(" LEFT JOIN ").append(formatObject(table));
@@ -427,7 +427,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 添加SQL 右关联语句 */
     public T rightJoin(String table) {
-        if(isUsingTableSpace) {
+        if(isUsingSchemaPrefix) {
             _builder.append(" RIGHT JOIN $.").append(table);
         }else{
             _builder.append(" RIGHT JOIN ").append(formatObject(table));

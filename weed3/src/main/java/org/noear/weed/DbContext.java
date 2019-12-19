@@ -156,6 +156,8 @@ public class DbContext {
                 _databaseType = DatabaseType.PostgreSQL;
             } else if (pn.indexOf("db2") >= 0) {
                 _databaseType = DatabaseType.DB2;
+            }else if (pn.indexOf("sqlite") >= 0) {
+                _databaseType = DatabaseType.SQLite;
             }
 
             if (_databaseType == DatabaseType.MySQL || _databaseType == DatabaseType.MariaDB) {
@@ -180,6 +182,10 @@ public class DbContext {
     /** 数据集合名称设置 */
     public DbContext schemaSet(String schema) {
         _schema = schema;
+        if(_name == null){
+            _name = schema;
+        }
+
         return this;
     }
 
@@ -266,18 +272,18 @@ public class DbContext {
     //基于线程池配置（如："proxool."）
     //fieldFormat："`%`"
     public DbContext(String schema, String url) {
-        _schema = schema;
+        schemaSet(schema);
         dataSourceSet(new DbDataSource(url));
     }
 
     //基于手动配置（无线程池）
     public DbContext(String schema, String url, String username, String password) {
-        _schema = schema;
+        schemaSet(schema);
         dataSourceSet(new DbDataSource(url, username, password));
     }
 
     public DbContext(String schema, DataSource dataSource) {
-        _schema = schema;
+        schemaSet(schema);
         dataSourceSet(dataSource);
     }
 
@@ -334,7 +340,7 @@ public class DbContext {
     public DbProcedure call(String process) {
         if (process.startsWith("@")) {
             XmlSqlLoader.tryLoad();
-            return new DbSqlProcedure(this).sql(process.substring(1));
+            return new DbXmlsqlProcedure(this).sql(process.substring(1));
         }
 
         if (process.indexOf(" ") > 0) {

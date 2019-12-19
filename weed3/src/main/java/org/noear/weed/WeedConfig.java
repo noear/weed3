@@ -19,7 +19,7 @@ public final class WeedConfig {
     public static boolean isDebug = false;
     public static boolean isUsingValueExpression=true;
     public static boolean isUsingValueNull=false;
-    public static boolean isUsingTableSpace=false;
+    public static boolean isUsingSchemaPrefix =false;
     public static boolean isUpdateMustConditional=true;
     public static boolean isDeleteMustConditional=true;
 
