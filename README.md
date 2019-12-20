@@ -33,6 +33,8 @@
 | org.noear:weed3.cache.redis| 基于 Redis 封装的扩展缓存服务 |
 | org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
+| | |
+| org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 
 
 
