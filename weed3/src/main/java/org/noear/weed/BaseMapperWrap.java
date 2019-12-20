@@ -265,34 +265,34 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
 
     @Override
-    public List<T> selectPage(int start, int rows, Act1<WhereQ> c) {
+    public List<T> selectPage(int start, int size, Act1<WhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
-            return getQr(c).limit(start, rows).select("*").getList(clz);
+            return getQr(c).limit(start, size).select("*").getList(clz);
         });
     }
 
     @Override
-    public List<Map<String, Object>> selectMapPage(int start, int rows, Act1<WhereQ> c) {
+    public List<Map<String, Object>> selectMapPage(int start, int size, Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            return getQr(c).limit(start, rows).select("*").getMapList();
+            return getQr(c).limit(start, size).select("*").getMapList();
         });
     }
 
     @Override
-    public List<T> selectTop(int top, Act1<WhereQ> c) {
+    public List<T> selectTop(int size, Act1<WhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()-> {
-            return getQr(c).top(top).select("*").getList(clz);
+            return getQr(c).top(size).select("*").getList(clz);
         });
     }
 
     @Override
-    public List<Map<String, Object>> selectMapTop(int top, Act1<WhereQ> c) {
+    public List<Map<String, Object>> selectMapTop(int size, Act1<WhereQ> c) {
         return RunUtils.call(()-> {
-            return getQr(c).top(top).select("*").getMapList();
+            return getQr(c).top(size).select("*").getMapList();
         });
     }
 
