@@ -32,15 +32,15 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     protected String formatObject(String name) {
-        return _context.formater().formatObject(name);
+        return _context.formater().formatTable(name);
     }
 
     protected String formatField(String name) {
-        return _context.formater().formatField(name);
+        return _context.formater().formatColumn(name);
     }
 
     protected String formatColumns(String columns) {
-        return _context.formater().formatColumns(columns);
+        return _context.formater().formatMultipleColumns(columns);
     }
 
     protected String formatCondition(String condition) {

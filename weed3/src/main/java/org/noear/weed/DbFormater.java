@@ -1,65 +1,35 @@
 package org.noear.weed;
 
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.wrap.DbAdapter;
 
 /** 提供格式处理 */
 public class DbFormater{
-    //字段格式符
-    protected String _fieldFormat;
-    protected String _fieldFormat_start;
-    //对象格式符
-    protected String _objectFormat;
-    protected String _objectFormat_start;
-
-    /**
-     * 字段格式符设置
-     */
-    public void fieldFormatSet(String format) {
-        _fieldFormat = format;
-        if (format != null && format.length() > 1) {
-            _fieldFormat_start = format.substring(0, 1);
-        } else {
-            _fieldFormat_start = "";
-        }
+    protected DbContext ctx;
+    public DbFormater(DbContext ctx){
+        this.ctx = ctx;
     }
 
-    /**
-     * 对象格式符设置
-     */
-    public void objectFormatSet(String format) {
-        _objectFormat = format;
-        if (format != null && format.length() > 1) {
-            _objectFormat_start = format.substring(0, 1);
-        } else {
-            _objectFormat_start = "";
-        }
+    public DbAdapter dba(){
+        return ctx.dbAdapter();
     }
-
 
     /**
      * 格式化字段（用于：set(..,v)）
      */
-    public String formatField(String name) {
-        if (StringUtils.isEmpty(_fieldFormat)) {
+    public String formatColumn(String name) {
+        if (dba().excludeFormat(name) || name.indexOf(".") > 0 || name.indexOf(")")>0) {
             return name;
         }
 
-        if (name.startsWith(_fieldFormat_start) || name.indexOf(".") > 0 || name.indexOf(")")>0) {
-            return name;
-        }
-
-        return _fieldFormat.replace("%", name);
+        return dba().columnFormat(name);
     }
 
 
     /**
      * 格式化多列（用于：select(..) orderBy(..) groupBy(..)）
      */
-    public String formatColumns(String columns) {
-        if (StringUtils.isEmpty(_fieldFormat)) {
-            return columns;
-        }
-
+    public String formatMultipleColumns(String columns) {
         if(columns.indexOf(")")>0){
             return columns;
         }
@@ -102,11 +72,11 @@ public class DbFormater{
 
 
     private String format_column_do(String name){
-        if (name.startsWith(_fieldFormat_start) || name.equals("*") || name.indexOf(".") > 0 || name.indexOf(")") > 0) {
+        if (dba().excludeFormat(name) || name.equals("*") || name.indexOf(".") > 0 || name.indexOf(")") > 0) {
             return name;
         }
 
-        return _fieldFormat.replace("%", name);
+        return dba().columnFormat(name);
     }
 
     //格式化条件（用于：where() and() or()） //暂时不实现
@@ -117,26 +87,18 @@ public class DbFormater{
     /**
      * 格式化对象（用于：from(..), join(..)）
      */
-    public String formatObject(String name) {
-        if (StringUtils.isEmpty(_objectFormat)) {
-            return name;
-        }
-
-        if (name.startsWith(_objectFormat_start) || name.indexOf(".") > 0 || name.indexOf("(") > 0) {
+    public String formatTable(String name) {
+        if (dba().excludeFormat(name) || name.indexOf(".") > 0 || name.indexOf("(") > 0) {
             return name;
         }
 
         if (name.indexOf(" ") < 0) {
-            return _objectFormat.replace("%", name);
+            return dba().tableFormat(name);
         }
-
-        StringBuilder sb = StringUtils.borrowBuilder();
 
         int idx = name.indexOf(" ");
         //类假：xxx_name name;xxx_name as name; name ASC;
-        sb.append(_objectFormat.replace("%", name.substring(0,idx)))
-                .append(name.substring(idx));
-
-        return StringUtils.releaseBuilder(sb);
+        return dba().tableFormat(name.substring(0, idx))
+                + name.substring(idx);
     }
 }

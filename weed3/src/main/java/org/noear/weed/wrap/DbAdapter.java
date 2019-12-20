@@ -4,9 +4,17 @@ import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
 public interface DbAdapter {
-    String tableFormat(String tb);
 
-    String columnFormat(String col);
+    default boolean excludeFormat(String str) {
+        return str.startsWith("`");
+    }
+
+    default String tableFormat(String tb){
+        return "`" + tb + "`";
+    }
+    default String columnFormat(String col){
+        return "`" + col + "`";
+    }
 
     default void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size){
         sqlB.insert(0,"SELECT ");

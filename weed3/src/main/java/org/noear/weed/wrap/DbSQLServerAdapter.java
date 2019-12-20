@@ -7,6 +7,10 @@ import org.noear.weed.SQLBuilder;
  * BETWEEN AND :: >= + <=
  * */
 public class DbSQLServerAdapter implements DbAdapter {
+    @Override
+    public boolean excludeFormat(String str) {
+        return str.startsWith("\"") || str.startsWith("[");
+    }
 
     @Override
     public String tableFormat(String tb) {

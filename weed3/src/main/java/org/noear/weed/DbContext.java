@@ -34,7 +34,8 @@ public class DbContext extends DbContextMetaData {
 
 
     //数据集名称
-    protected DbFormater _formater = new DbFormater();
+    protected DbFormater _formater = new DbFormater(this);
+
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源

@@ -17,6 +17,8 @@ class DbContextMetaData {
     private DbType _dbType = DbType.Unknown;
     private DbAdapter _dbAdapter;
 
+    //数据集名称
+
     public DbType dbType(){
         return _dbType;
     }
@@ -90,20 +92,6 @@ class DbContextMetaData {
                 //做为默认
                 _dbAdapter = new DbMySQLAdapter();
             }
-
-//            if (_dbType == DbType.MySQL ||
-//                    _dbType == DbType.MariaDB ||
-//                        _dbType == DbType.SQLite) {
-//                db.formater().fieldFormatSet("`%`");
-//                db.formater().objectFormatSet("`%`");
-//            } else if(_dbType == DbType.SQLServer){
-//                db.formater().fieldFormatSet("[%]");
-//                db.formater().objectFormatSet("[%]");
-//            }  else {
-//                //, PostgreSQL, DB2
-//                db.formater().fieldFormatSet("\"%\"");
-//                db.formater().objectFormatSet("\"%\"");
-//            }
         }
     }
 
