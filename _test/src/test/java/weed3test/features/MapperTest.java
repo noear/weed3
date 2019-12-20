@@ -21,6 +21,7 @@ public class MapperTest {
         tast_select(mapper);
         test_select_list(mapper);
         test_select_page(mapper);
+        test_select_top(mapper);
     }
 
     @Test
@@ -29,6 +30,7 @@ public class MapperTest {
         tast_select(mapper);
         test_select_list(mapper);
         test_select_page(mapper);
+        test_select_top(mapper);
 
         //assert  mapper.appx_get2(22).app_id == 22;
     }
@@ -178,6 +180,18 @@ public class MapperTest {
 
         //selectMapsPage
         List<Map<String, Object>> m13 = mapper.selectMapPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m13: " + m13);
+        assert m13.size() == 10;
+    }
+
+    public void  test_select_top(BaseMapper<AppxModel> mapper){
+        //selectPage
+        List<AppxModel> m12 = mapper.selectTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m12: " + m12);
+        assert m12.size() == 10;
+
+        //selectMapsPage
+        List<Map<String, Object>> m13 = mapper.selectMapTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
         assert m13.size() == 10;
     }
