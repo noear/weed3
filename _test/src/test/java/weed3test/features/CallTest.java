@@ -11,7 +11,7 @@ public class CallTest {
 
     @Test
     public void test11() throws Exception {
-        AppxModel m = db2.call("select * from $.appx where app_id=@{id}")
+        AppxModel m = db2.call("select * from $.APPX where app_id=@{id}")
                 .set("id", 48)
                 .getItem(AppxModel.class);
         assert m.app_id == 48;
