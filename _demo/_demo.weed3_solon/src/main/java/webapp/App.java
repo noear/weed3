@@ -14,54 +14,7 @@ import java.lang.annotation.Annotation;
 
 public class App {
     public static void main(String[] args){
-        Act0 tmp2 = AppxModel::new;
-
-        XmlSqlLoader.tryLoad();
-
-        //测试
-        Aop.factory().beanLoaderAdd(Db.class, (clz, bw, anno) -> {
-            if(clz.isInterface()){
-                DbContext db = WeedConfig.libOfDb.get(anno.value());
-                Object raw = db.mapper(clz);
-                Aop.put(clz, raw);
-            }
-        });
-
-        //测试
-        XPlugin plugin = (app)->{
-            Aop.factory().beanBuilderadd((clz, annoS)->{
-                if(clz.isInterface()) {
-                    Db dbAnno = clz.getAnnotation(Db.class);
-                    if (dbAnno == null) {
-                        if (annoS != null) {
-                            for (Annotation a1 : annoS) {
-                                if (a1.annotationType() == Db.class) {
-                                    dbAnno = (Db) a1;
-                                }
-                            }
-                        }
-
-                        if(dbAnno!=null){
-                            DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
-                            Object raw = db.mapper(clz);
-                            return raw;
-                        }
-                    }else{
-                        DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
-                        Object raw = db.mapper(clz);
-                        Aop.put(clz, raw);
-                        return raw;
-                    }
-                }
-                return null;
-            });
-        };
-
-
-
-        XApp app = XApp.start(App.class,args ,(x)->{
-            x.plug(plugin);
-        });
+        XApp app = XApp.start(App.class,args);
 
         app.get("/",(c)->{
             c.render("nav.htm", null);
