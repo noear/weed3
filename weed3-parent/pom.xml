@@ -192,6 +192,7 @@
         </plugins>
     </build>
     <modules>
+
         <module>../weed3</module>
         <module>../weed3-maven-plugin</module>
         <module>../weed3-solon-plugin</module>
