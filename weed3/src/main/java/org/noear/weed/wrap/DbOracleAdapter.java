@@ -3,6 +3,9 @@ package org.noear.weed.wrap;
 import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
+/**
+ * BETWEEN AND :: >= + <=
+ * */
 public class DbOracleAdapter implements DbAdapter{
 
     @Override
@@ -26,6 +29,9 @@ public class DbOracleAdapter implements DbAdapter{
 
         sqlB.insert(0, sb);
 
+        //
+        //_ROW_NUM,是从1开始的
+        //
         StringBuilder sb2 = new StringBuilder();
         sb2.append("SELECT _x.* FROM (").append(sqlB.builder).append(") _x ");
         sb2.append(" WHERE _x._ROW_NUM BETWEEN ")
