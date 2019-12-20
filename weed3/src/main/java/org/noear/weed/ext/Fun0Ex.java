@@ -1,7 +1,5 @@
 package org.noear.weed.ext;
 
-import java.sql.SQLException;
-
 /**
  * Created by noear on 14-9-12.
  */
