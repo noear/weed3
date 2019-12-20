@@ -18,7 +18,7 @@ public class DbFormater{
      * 格式化字段（用于：set(..,v)）
      */
     public String formatColumn(String name) {
-        if (dba().excludeFormat(name) || name.indexOf(".") > 0 || name.indexOf(")")>0) {
+        if (dba().excludeFormat(name) || name.indexOf(")")>0) {
             return name;
         }
 
@@ -72,7 +72,7 @@ public class DbFormater{
 
 
     private String format_column_do(String name){
-        if (dba().excludeFormat(name) || name.equals("*") || name.indexOf(".") > 0 || name.indexOf(")") > 0) {
+        if (dba().excludeFormat(name) || name.equals("*") || name.indexOf(")") > 0) {
             return name;
         }
 
@@ -88,17 +88,17 @@ public class DbFormater{
      * 格式化对象（用于：from(..), join(..)）
      */
     public String formatTable(String name) {
-        if (dba().excludeFormat(name) || name.indexOf(".") > 0 || name.indexOf("(") > 0) {
+        if (dba().excludeFormat(name) || name.indexOf("(") > 0) {
             return name;
         }
 
         if (name.indexOf(" ") < 0) {
             return dba().tableFormat(name);
-        }
+        } else {
+            //类似：xxx_name name;xxx_name as name; name ASC;
 
-        int idx = name.indexOf(" ");
-        //类假：xxx_name name;xxx_name as name; name ASC;
-        return dba().tableFormat(name.substring(0, idx))
-                + name.substring(idx);
+            int idx = name.indexOf(" ");
+            return dba().tableFormat(name.substring(0, idx)) + " " + dba().tableFormat(name.substring(idx + 1));
+        }
     }
 }

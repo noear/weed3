@@ -6,7 +6,7 @@ import org.noear.weed.SQLBuilder;
 public interface DbAdapter {
 
     default boolean excludeFormat(String str) {
-        return str.startsWith("`");
+        return str.startsWith("`") || str.indexOf(".") > 0;
     }
 
     default String tableFormat(String tb){

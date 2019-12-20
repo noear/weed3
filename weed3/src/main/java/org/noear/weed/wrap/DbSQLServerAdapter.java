@@ -9,7 +9,7 @@ import org.noear.weed.SQLBuilder;
 public class DbSQLServerAdapter implements DbAdapter {
     @Override
     public boolean excludeFormat(String str) {
-        return str.startsWith("\"") || str.startsWith("[");
+        return str.startsWith("\"") || str.startsWith("[") || str.indexOf(".") > 0;
     }
 
     @Override

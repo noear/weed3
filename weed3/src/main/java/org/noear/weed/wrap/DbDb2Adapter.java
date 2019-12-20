@@ -10,7 +10,7 @@ public class DbDb2Adapter implements DbAdapter{
 
     @Override
     public boolean excludeFormat(String str) {
-        return str.startsWith("\"");
+        return str.startsWith("\"") || str.indexOf(".") > 0;
     }
 
     @Override
