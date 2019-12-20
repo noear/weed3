@@ -23,7 +23,7 @@ public class DbOracleAdapter implements DbAdapter{
         String[] ss = tb.toUpperCase().split("\\.");
 
         if(ss.length > 1){
-            return "\"" + ss[0] + "\".\"" + ss[0] + "\"";
+            return "\"" + ss[0] + "\".\"" + ss[1] + "\"";
         }else{
             return "\"" + ss[0] + "\"";
         }
