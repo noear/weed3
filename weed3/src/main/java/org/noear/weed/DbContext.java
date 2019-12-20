@@ -200,7 +200,6 @@ public class DbContext extends DbContextMetaData {
     }
 
     //基于线程池配置（如："proxool."）
-    //fieldFormat："`%`"
     public DbContext(String schema, String url) {
         schemaSet(schema);
         dataSourceSet(new DbDataSource(url));
