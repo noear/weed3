@@ -471,7 +471,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public T onEq(String column1, String column2) {
-        _builder.append(" ON ").append(column2).append("=").append(column2);
+        _builder.append(" ON ").append(column1).append("=").append(column2);
         return (T) this;
     }
 
