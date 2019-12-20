@@ -20,12 +20,12 @@ public class DbOracleAdapter implements DbAdapter{
 
     @Override
     public String tableFormat(String tb) {
-        String[] ss = tb.toUpperCase().split("\\.");
+        String[] ss = tb.split("\\.");
 
         if(ss.length > 1){
-            return "\"" + ss[0] + "\".\"" + ss[1] + "\"";
+            return "\"" + ss[0] + "\".\"" + ss[1].toUpperCase() + "\"";
         }else{
-            return "\"" + ss[0] + "\"";
+            return "\"" + ss[0].toUpperCase() + "\"";
         }
     }
 
