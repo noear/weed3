@@ -14,6 +14,11 @@ public class DbFormater{
         return ctx.dbAdapter();
     }
 
+
+    public String formatSchema(String name){
+        return dba().schemaFormat(name);
+    }
+
     /**
      * 格式化字段（用于：set(..,v)）
      */

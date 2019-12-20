@@ -88,12 +88,12 @@ public class DbQueryProcedure extends DbProcedure {
     }
 
     @Override
-    protected Command getCommand() throws SQLException{
+    protected Command getCommand() throws SQLException {
         tryLazyload();
 
         Command cmd = new Command(this.context, _tran);
 
-        cmd.key      = getCommandID();
+        cmd.key = getCommandID();
 
         String sqlTxt = this.commandText;
 
@@ -104,7 +104,7 @@ public class DbQueryProcedure extends DbProcedure {
             while (m.find()) {
                 String mark = m.group(0);
                 String name = m.group(1);
-                if(StringUtils.isEmpty(name)){
+                if (StringUtils.isEmpty(name)) {
                     name = m.group(2);
                 }
 
@@ -131,10 +131,10 @@ public class DbQueryProcedure extends DbProcedure {
 
                     tmpList.put(mark, StringUtils.releaseBuilder(sb));
                 } else {
-                    if(mark.startsWith("@")){
+                    if (mark.startsWith("@")) {
                         doSet(val); //对this.paramS进行设值
                         tmpList.put(mark, "?");
-                    }else{
+                    } else {
                         tmpList.put(mark, val.stringValue(""));
                     }
                 }
@@ -158,15 +158,18 @@ public class DbQueryProcedure extends DbProcedure {
             }
         }
 
-        if(context.schemaHas()){
-            sqlTxt = sqlTxt.replace("$",context.schema());
-        }else{
-            sqlTxt = sqlTxt.replace("$.","");
+        if(sqlTxt.indexOf("$") >=0){
+            if (context.schemaHas()) {
+                sqlTxt = sqlTxt.replace("$", context.schema());
+            } else {
+                sqlTxt = sqlTxt.replace("$.", "");
+            }
         }
 
+
         cmd.paramS = this.paramS;
-        
-        cmd.text    = sqlTxt;
+
+        cmd.text = sqlTxt;
 
         runCommandBuiltEvent(cmd);
 

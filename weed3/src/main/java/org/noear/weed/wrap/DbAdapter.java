@@ -9,6 +9,7 @@ public interface DbAdapter {
         return str.startsWith("`") || str.indexOf(".") > 0;
     }
 
+    default String schemaFormat(String sc){ return sc;}
     default String tableFormat(String tb){
         return "`" + tb + "`";
     }

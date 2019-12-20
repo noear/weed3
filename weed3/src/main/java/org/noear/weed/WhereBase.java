@@ -31,19 +31,22 @@ public abstract class WhereBase<T extends WhereBase> {
         return _context.dbType();
     }
 
-    protected String formatObject(String name) {
+    protected String fmtSchema(String name){
+        return _context.formater().formatSchema(name);
+    }
+    protected String fmtObject(String name) {
         return _context.formater().formatTable(name);
     }
 
-    protected String formatField(String name) {
+    protected String fmtColumn(String name) {
         return _context.formater().formatColumn(name);
     }
 
-    protected String formatColumns(String columns) {
+    protected String fmtMutColumns(String columns) {
         return _context.formater().formatMultipleColumns(columns);
     }
 
-    protected String formatCondition(String condition) {
+    protected String fmtCondition(String condition) {
         return _context.formater().formatCondition(condition);
     }
 
@@ -57,7 +60,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 例3: .where("id IN (?...)",new int[]{1,12,3,6})
      */
     public T where(String code, Object... args) {
-        _builder.append(" WHERE ").append(formatCondition(code), args);
+        _builder.append(" WHERE ").append(fmtCondition(code), args);
         return (T) this;
     }
 
@@ -99,7 +102,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 例：.whereEq("name","x");
      */
     public T whereEq(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" = ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" = ? ", val);
         return (T) this;
     }
 
@@ -108,7 +111,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public T whereNeq(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" != ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" != ? ", val);
         return (T) this;
     }
 
@@ -120,7 +123,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where < 语句
      */
     public T whereLt(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" < ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" < ? ", val);
         return (T) this;
     }
 
@@ -132,7 +135,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where <= 语句
      */
     public T whereLte(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" <= ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" <= ? ", val);
         return (T) this;
     }
 
@@ -144,7 +147,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where > 语句
      */
     public T whereGt(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" > ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" > ? ", val);
         return (T) this;
     }
 
@@ -156,7 +159,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where >= 语句
      */
     public T whereGte(String column, Object val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" >= ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" >= ? ", val);
         return (T) this;
     }
 
@@ -168,7 +171,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where like 语句
      */
     public T whereLk(String column, String val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" LIKE ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" LIKE ? ", val);
         return (T) this;
     }
 
@@ -180,7 +183,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where not like 语句
      */
     public T whereNlk(String column, String val) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" NOT LIKE ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" NOT LIKE ? ", val);
         return (T) this;
     }
 
@@ -192,7 +195,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where between 语句
      */
     public T whereBtw(String column, Object start, Object end) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -204,7 +207,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where note between 语句
      */
     public T whereNbtw(String column, Object start, Object end) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" NOT BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -217,7 +220,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where in(?...) 语句
      */
     public T whereIn(String column, Iterable<Object> ary) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" IN (?...) ", ary);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
 
@@ -229,7 +232,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where not in(?...) 语句
      */
     public T whereNin(String column, Iterable<Object> ary) {
-        _builder.append(" WHERE ").append(formatField(column)).append(" NOT IN (?...) ", ary);
+        _builder.append(" WHERE ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }
 
@@ -245,7 +248,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 例2: .and("(name=? or id=?)","x",1)
      */
     public T and(String code, Object... args) {
-        _builder.append(" AND ").append(formatCondition(code), args);
+        _builder.append(" AND ").append(fmtCondition(code), args);
         return (T) this;
     }
 
@@ -268,7 +271,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and = 语句
      */
     public T andEq(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" = ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" = ? ", val);
         return (T) this;
     }
 
@@ -277,7 +280,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public T andNeq(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" != ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" != ? ", val);
         return (T) this;
     }
 
@@ -289,7 +292,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and < 语句
      */
     public T andLt(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" < ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" < ? ", val);
         return (T) this;
     }
 
@@ -301,7 +304,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and <= 语句
      */
     public T andLte(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" <= ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" <= ? ", val);
         return (T) this;
     }
 
@@ -313,7 +316,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and > 语句
      */
     public T andGt(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" > ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" > ? ", val);
         return (T) this;
     }
 
@@ -325,7 +328,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and >= 语句
      */
     public T andGte(String column, Object val) {
-        _builder.append(" AND ").append(formatField(column)).append(" >= ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" >= ? ", val);
         return (T) this;
     }
 
@@ -337,7 +340,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and like 语句
      */
     public T andLk(String column, String val) {
-        _builder.append(" AND ").append(formatField(column)).append(" LIKE ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" LIKE ? ", val);
         return (T) this;
     }
 
@@ -349,7 +352,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and not like 语句
      */
     public T andNlk(String column, String val) {
-        _builder.append(" AND ").append(formatField(column)).append(" NOT LIKE ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" NOT LIKE ? ", val);
         return (T) this;
     }
 
@@ -361,7 +364,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where between 语句
      */
     public T andBtw(String column, Object start, Object end) {
-        _builder.append(" AND ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -373,7 +376,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where note between 语句
      */
     public T andNbtw(String column, Object start, Object end) {
-        _builder.append(" AND ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" NOT BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -385,7 +388,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and in(?...) 语句
      */
     public T andIn(String column, Iterable<Object> ary) {
-        _builder.append(" AND ").append(formatField(column)).append(" IN (?...) ", ary);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
 
@@ -397,7 +400,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and not in(?...) 语句
      */
     public T andNin(String column, Iterable<Object> ary) {
-        _builder.append(" AND ").append(formatField(column)).append(" NOT IN (?...) ", ary);
+        _builder.append(" AND ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }
 
@@ -412,7 +415,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 例2: .or("(name=? or id=?)","x",1)
      */
     public T or(String code, Object... args) {
-        _builder.append(" OR ").append(formatCondition(code), args);
+        _builder.append(" OR ").append(fmtCondition(code), args);
         return (T) this;
     }
 
@@ -435,7 +438,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or = 语句
      */
     public T orEq(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" = ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" = ? ", val);
         return (T) this;
     }
 
@@ -444,7 +447,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public T orNeq(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" != ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" != ? ", val);
         return (T) this;
     }
 
@@ -456,7 +459,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or < 语句
      */
     public T orLt(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" < ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" < ? ", val);
         return (T) this;
     }
 
@@ -468,7 +471,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or <= 语句
      */
     public T orLte(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" <= ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" <= ? ", val);
         return (T) this;
     }
 
@@ -480,7 +483,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or > 语句
      */
     public T orGt(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" > ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" > ? ", val);
         return (T) this;
     }
 
@@ -492,7 +495,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or >= 语句
      */
     public T orGte(String column, Object val) {
-        _builder.append(" OR ").append(formatField(column)).append(" >= ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" >= ? ", val);
         return (T) this;
     }
 
@@ -504,7 +507,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or like 语句
      */
     public T orLk(String column, String val) {
-        _builder.append(" OR ").append(formatField(column)).append(" LIKE ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" LIKE ? ", val);
         return (T) this;
     }
 
@@ -517,7 +520,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or not like 语句
      */
     public T orNlk(String column, String val) {
-        _builder.append(" OR ").append(formatField(column)).append(" NOT LIKE ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" NOT LIKE ? ", val);
         return (T) this;
     }
 
@@ -530,7 +533,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where between 语句
      */
     public T orBtw(String column, Object start, Object end) {
-        _builder.append(" OR ").append(formatField(column)).append(" BETWEEN ? AND ? ", start, end);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -542,7 +545,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL where note between 语句
      */
     public T orNbtw(String column, Object start, Object end) {
-        _builder.append(" OR ").append(formatField(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" NOT BETWEEN ? AND ? ", start, end);
         return (T) this;
     }
 
@@ -555,7 +558,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or in(?...) 语句
      */
     public T orIn(String column, Iterable<Object> ary) {
-        _builder.append(" OR ").append(formatField(column)).append(" IN (?...) ", ary);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
 
@@ -567,7 +570,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or not in(?...) 语句
      */
     public T orNin(String column, Iterable<Object> ary) {
-        _builder.append(" OR ").append(formatField(column)).append(" NOT IN (?...) ", ary);
+        _builder.append(" OR ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }
 
@@ -589,7 +592,7 @@ public abstract class WhereBase<T extends WhereBase> {
      * 可使用?,?...占位符（ ?... 表示数组占位符）
      */
     public T begin(String code, Object... args) {
-        _builder.append(" ( ").append(formatCondition(code), args);
+        _builder.append(" ( ").append(fmtCondition(code), args);
         return (T) this;
     }
 
@@ -610,13 +613,13 @@ public abstract class WhereBase<T extends WhereBase> {
             _orderBy.append(", ");
         }
 
-        _orderBy.append(formatColumns(code));
+        _orderBy.append(fmtMutColumns(code));
 
         return (T) this;
     }
 
     public T orderByAsc(String fileds) {
-        orderBy(formatColumns(fileds) + " ASC ");
+        orderBy(fmtMutColumns(fileds) + " ASC ");
         return (T) this;
     }
     public <C> T orderByAsc(Property<C,?> property) {
@@ -625,7 +628,7 @@ public abstract class WhereBase<T extends WhereBase> {
 
 
     public T orderByDesc(String fileds) {
-        orderBy(formatColumns(fileds) + " DESC ");
+        orderBy(fmtMutColumns(fileds) + " DESC ");
         return (T)this;
     }
     public <C> T orderByDesc(Property<C,?> property) {
@@ -635,7 +638,7 @@ public abstract class WhereBase<T extends WhereBase> {
 
 
     public T groupBy(String code) {
-        _builder.append(" GROUP BY ").append(formatColumns(code));
+        _builder.append(" GROUP BY ").append(fmtMutColumns(code));
         return (T)this;
     }
 

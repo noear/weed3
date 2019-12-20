@@ -10,17 +10,34 @@ public class DbOracleAdapter implements DbAdapter{
 
     @Override
     public boolean excludeFormat(String str) {
-        return str.startsWith("\"") || str.indexOf(".") > 0;
+        return str.startsWith("\"");
+    }
+
+    @Override
+    public String schemaFormat(String sc) {
+        return "\"" + sc + "\"";
     }
 
     @Override
     public String tableFormat(String tb) {
-        return "\"" + tb + "\"";
+        String[] ss = tb.toUpperCase().split("\\.");
+
+        if(ss.length > 1){
+            return "\"" + ss[0] + "\".\"" + ss[0] + "\"";
+        }else{
+            return "\"" + ss[0] + "\"";
+        }
     }
 
     @Override
     public String columnFormat(String col) {
-        return "\"" + col + "\"";
+        String[] ss = col.split("\\.");
+
+        if(ss.length > 1){
+            return "\"" + ss[0] + "\".\"" + ss[0] + "\"";
+        }else{
+            return "\"" + ss[0] + "\"";
+        }
     }
 
     @Override

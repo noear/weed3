@@ -24,7 +24,9 @@ import static org.noear.weed.WeedConfig.isUsingSchemaPrefix;
  */
 public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> implements ICacheController<DbTableQueryBase> {
 
-    String _table;
+    String _table_raw;
+    String _table; //表名
+
     SQLBuilder _builder_bef;
     int _isLog=0;
 
@@ -56,17 +58,20 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     protected T table(String table) { //相当于 from
-        if(table.startsWith("#")){
+        if (table.startsWith("#")) {
             _table = table.substring(1);
-        }else {
+
+            _table_raw = _table;
+        } else {
+            _table_raw = _table;
+
             if (table.indexOf('.') > 0) {
                 _table = table;
-            }
-            else {
-                if(isUsingSchemaPrefix){
-                    _table = "$." + table;
-                }else{
-                    _table = formatObject(table); //"$." + table;
+            } else {
+                if (isUsingSchemaPrefix) {
+                    _table = fmtSchema(_context.schema()) + "." + fmtObject(table);
+                } else {
+                    _table = fmtObject(table); //"$." + table;
                 }
             }
         }
@@ -89,7 +94,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             _builder_bef.append("," );
         }
 
-        _builder_bef.append(formatField(name))
+        _builder_bef.append(fmtColumn(name))
                 .append(" AS (")
                 .append(code, args)
                 .append(") ");
@@ -104,7 +109,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             _builder_bef.append("," );
         }
 
-        _builder_bef.append(formatField(name))
+        _builder_bef.append(fmtColumn(name))
                 .append(" AS (")
                 .append(select)
                 .append(") ");
@@ -116,9 +121,57 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 添加 FROM 语句 */
     public T from(String table){
-        _builder.append(" FROM ").append(table);
+        _builder.append(" FROM ").append(fmtObject(table));
         return (T)this;
     }
+
+
+    private T join(String style, String table){
+        if(table.startsWith("#")){
+            _builder.append(style).append(table.substring(1));
+        }else {
+            if (isUsingSchemaPrefix) {
+                _builder.append(style).append(fmtSchema(table)).append(".").append(fmtObject(table));
+            } else {
+                _builder.append(style).append(fmtObject(table));
+            }
+        }
+        return (T)this;
+    }
+
+    /** 添加SQL 内关联语句 */
+    public T innerJoin(String table) {
+        return join(" INNER JOIN ",table);
+    }
+
+    /** 添加SQL 左关联语句 */
+    public T leftJoin(String table) {
+        return join(" LEFT JOIN ",table);
+    }
+
+    /** 添加SQL 右关联语句 */
+    public T rightJoin(String table) {
+        return join(" RIGHT JOIN ",table);
+    }
+
+    /** 添加无限制代码 */
+    public T append(String code,  Object... args){
+        _builder.append(code, args);
+        return (T)this;
+    }
+
+    public T on(String code) {
+        _builder.append(" ON ").append(code);
+        return (T)this;
+    }
+
+    public T onEq(String column1, String column2) {
+        _builder.append(" ON ").append(column1).append("=").append(column2);
+        return (T) this;
+    }
+
+
+
 
 
     /** 执行插入并返回自增值，使用dataBuilder构建的数据 */
@@ -151,7 +204,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
                 }
             }
 
-            sb.append(formatField(key)).append(",");
+            sb.append(fmtColumn(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);
@@ -237,7 +290,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         sb.append(" INSERT INTO ").append(_table).append(" (");
         for (String key : cols.keys()) {
-            sb.append(formatField(key)).append(",");
+            sb.append(fmtColumn(key)).append(",");
         }
         sb.deleteCharAt(sb.length() - 1);
 
@@ -363,7 +416,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         data.forEach((key,value)->{
             if(value==null) {
                 if (_usingNull) {
-                    sb.append(formatField(key)).append("=null,");
+                    sb.append(fmtColumn(key)).append("=null,");
                 }
                 return;
             }
@@ -371,15 +424,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             if (value instanceof String) {
                 String val2 = (String)value;
                 if (isSqlExpr(val2)) {
-                    sb.append(formatField(key)).append("=").append(val2.substring(1)).append(",");
+                    sb.append(fmtColumn(key)).append("=").append(val2.substring(1)).append(",");
                 }
                 else {
-                    sb.append(formatField(key)).append("=?,");
+                    sb.append(fmtColumn(key)).append("=?,");
                     args.add(value);
                 }
             }
             else {
-                sb.append(formatField(key)).append("=?,");
+                sb.append(fmtColumn(key)).append("=?,");
                 args.add(value);
             }
         });
@@ -431,49 +484,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return compile().execute();
     }
 
-    private T join(String style, String table){
-        if(table.startsWith("#")){
-            _builder.append(style).append(table.substring(1));
-        }else {
-            if (isUsingSchemaPrefix) {
-                _builder.append(style).append("$.").append(table);
-            } else {
-                _builder.append(style).append(formatObject(table));
-            }
-        }
-        return (T)this;
-    }
-
-    /** 添加SQL 内关联语句 */
-    public T innerJoin(String table) {
-        return join(" INNER JOIN ",table);
-    }
-
-    /** 添加SQL 左关联语句 */
-    public T leftJoin(String table) {
-        return join(" LEFT JOIN ",table);
-    }
-
-    /** 添加SQL 右关联语句 */
-    public T rightJoin(String table) {
-        return join(" RIGHT JOIN ",table);
-    }
-
-    /** 添加无限制代码 */
-    public T append(String code,  Object... args){
-        _builder.append(code, args);
-        return (T)this;
-    }
-
-    public T on(String code) {
-        _builder.append(" ON ").append(code);
-        return (T)this;
-    }
-
-    public T onEq(String column1, String column2) {
-        _builder.append(" ON ").append(column1).append("=").append(column2);
-        return (T) this;
-    }
 
 
 
@@ -571,7 +581,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         StringBuilder sb = new StringBuilder(_builder.builder.length() + 100);
         sb.append(" ");//不能去掉
         if (doFormat) {
-            sb.append(formatColumns(columns)).append(" FROM ").append(_table);
+            sb.append(fmtMutColumns(columns)).append(" FROM ").append(_table);
         } else {
             sb.append(columns).append(" FROM ").append(_table);
         }
@@ -581,9 +591,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         //2.尝试构建分页
         if (limit_top > 0) {
-            _context.dbAdapter().selectTop(_context, _table, _builder, _orderBy, limit_top);
+            _context.dbAdapter().selectTop(_context, _table_raw, _builder, _orderBy, limit_top);
         } else if (limit_size > 0) {
-            _context.dbAdapter().selectPage(_context, _table, _builder, _orderBy, limit_start, limit_size);
+            _context.dbAdapter().selectPage(_context, _table_raw, _builder, _orderBy, limit_start, limit_size);
         } else {
             _builder.insert(0, "SELECT ");
             if (_orderBy != null) {
