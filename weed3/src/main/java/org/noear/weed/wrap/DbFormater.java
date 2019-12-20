@@ -1,7 +1,7 @@
-package org.noear.weed;
+package org.noear.weed.wrap;
 
+import org.noear.weed.DbContext;
 import org.noear.weed.utils.StringUtils;
-import org.noear.weed.wrap.DbAdapter;
 
 /** 提供格式处理 */
 public class DbFormater{

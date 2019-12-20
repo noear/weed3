@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.*;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.wrap.DbFormater;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
