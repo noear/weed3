@@ -1,8 +1,6 @@
 package weed3test.features;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
 import weed3test.dso.SqlMapper;
@@ -13,29 +11,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapperTest {
+public class MapperTest2 {
     DbContext db2 = DbUtil.db;
-    BaseMapper<AppxModel> mapper;
+    SqlMapper mapper = db2.mapper(SqlMapper.class);
 
-    @Before
-    public void test_bef(){
-        mapper = db2.mapperBase(AppxModel.class);
-    }
 
     @Test
-    public void test1() {
+    public void testX1() {
 
         System.out.println(mapper.toString());
         System.out.println(mapper.hashCode());
     }
 
     @Test
-    public void test2() throws Exception {
+    public void testX2() throws Exception {
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
+    public void testX3() throws Exception {
+
+        DbUtil.cache.getBy(12, "test", () -> mapper.test());
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
+    public void testX4() throws Exception {
         Object temp = db2.table("appx").whereEq(AppxModel::getApp_id, 48).select("*").getMap();
 
         assert temp instanceof Map;
     }
 
+    @Test
+    public void testX5() {
+
+        try {
+            mapper.appx_get_error();
+        } catch (Exception ex) {
+            assert ex instanceof RuntimeException;
+        }
+    }
 
 
     @Test

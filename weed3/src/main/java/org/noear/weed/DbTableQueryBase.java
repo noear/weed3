@@ -63,13 +63,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
             _table_raw = _table;
         } else {
-            _table_raw = _table;
+            _table_raw = table;
 
             if (table.indexOf('.') > 0) {
                 _table = table;
             } else {
                 if (isUsingSchemaPrefix) {
-                    _table = fmtSchema(_context.schema()) + "." + fmtObject(table);
+                    _table = fmtObject(_context.schema() + "." + table);
                 } else {
                     _table = fmtObject(table); //"$." + table;
                 }
@@ -126,17 +126,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-    private T join(String style, String table){
-        if(table.startsWith("#")){
+    private T join(String style, String table) {
+        if (table.startsWith("#")) {
             _builder.append(style).append(table.substring(1));
-        }else {
+        } else {
             if (isUsingSchemaPrefix) {
-                _builder.append(style).append(fmtSchema(table)).append(".").append(fmtObject(table));
+                _builder.append(style).append(fmtObject(_context.schema() + "." + table));
             } else {
                 _builder.append(style).append(fmtObject(table));
             }
         }
-        return (T)this;
+        return (T) this;
     }
 
     /** 添加SQL 内关联语句 */

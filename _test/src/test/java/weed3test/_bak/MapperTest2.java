@@ -1,6 +1,5 @@
-package weed3test.features;
+package weed3test._bak;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
@@ -13,33 +12,92 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapperTest {
+public class MapperTest2 {
     DbContext db2 = DbUtil.db;
-    BaseMapper<AppxModel> mapper;
-
-    @Before
-    public void test_bef(){
-        mapper = db2.mapperBase(AppxModel.class);
-    }
+    BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
 
     @Test
     public void test1() {
+        BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
+        tast_select(mapper);
+        test_select_list(mapper);
+        test_select_page(mapper);
+        test_select_top(mapper);
+    }
+
+    @Test
+    public void test2() throws Exception{
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+        tast_select(mapper);
+        test_select_list(mapper);
+        test_select_page(mapper);
+        test_select_top(mapper);
+
+        //assert  mapper.appx_get2(22).app_id == 22;
+    }
+
+
+    public void test3() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        String akey = mapper.appx_get_key(48);
+        System.out.println(akey);
+
+        assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+
+
+        akey = mapper.appx_get_key2(48);
+        System.out.println(akey);
+
+        assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+    }
+
+    @Test
+    public void test4() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
 
         System.out.println(mapper.toString());
         System.out.println(mapper.hashCode());
     }
 
     @Test
-    public void test2() throws Exception {
-        Object temp = db2.table("appx").whereEq(AppxModel::getApp_id, 48).select("*").getMap();
+    public void test5() throws Exception{
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
+    public void test6() throws Exception {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        DbUtil.cache.getBy(12, "test", () -> mapper.test());
+
+        System.out.println(mapper.test());
+    }
+
+    @Test
+    public void test7() throws Exception {
+        Object temp = db2.table("appx").whereEq(AppxModel::getApp_id,48).select("*").getMap();
 
         assert temp instanceof Map;
     }
 
-
-
     @Test
-    public void tast_select_m1() {
+    public void testx() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+
+        try {
+            mapper.appx_get_error();
+        }catch (Exception ex){
+           assert ex instanceof RuntimeException;
+        }
+    }
+
+
+
+
+    private void tast_select(BaseMapper<AppxModel> mapper) {
         List<Object> ary = new ArrayList<>();
         ary.add(12);
         ary.add(21);
@@ -70,12 +128,6 @@ public class MapperTest {
         System.out.println("m3: " + m3);
         assert m3.size() == 6;
 
-    }
-
-    @Test
-    public void test_select_m4(){
-        AppxModel ent2 = new AppxModel();
-        ent2.agroup_id = 1;
 
         //selectOne
         AppxModel m4 = mapper.selectItem(ent2);
@@ -83,18 +135,15 @@ public class MapperTest {
         assert m4.agroup_id == ent2.agroup_id;
 
         //selectOne
-        AppxModel m5 = mapper.selectItem(m -> m.whereEq(AppxModel::getApp_id, 21));
+        AppxModel m5 = mapper.selectItem(m -> m.whereEq(AppxModel::getApp_id,21));
         System.out.println("m5: " + m5);
         assert m5.app_id == 21;
 
         //selectObj
-        Object m6 = mapper.selectValue("app_id", m -> m.whereEq(AppxModel::getApp_id, 21));
+        Object m6 = mapper.selectValue("app_id", m-> m.whereEq(AppxModel::getApp_id,21));
         System.out.println("m6: " + m6);
         assert m6.equals(21);
-    }
 
-    @Test
-    public void test_select_m7(){
         //selectMap
         Map m7 = mapper.selectMap(m -> m.where("app_id=21"));
         System.out.println("m7: " + m7);
@@ -105,8 +154,8 @@ public class MapperTest {
         assert m8 > 20;
     }
 
-    @Test
-    public void test_select_list_m9() {
+
+    public void test_select_list(BaseMapper<AppxModel> mapper){
         //selectList
         List<AppxModel> m9 = mapper.selectList(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m9: " + m9);
@@ -116,45 +165,35 @@ public class MapperTest {
         List<Map<String, Object>> m10 = mapper.selectMapList(m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m10: " + m10);
         assert m9.size() > 20;
-    }
 
-    @Test
-    public void test_select_list_m11() {
         //selectObjs
         List<Object> m11 = mapper.selectArray("app_key", m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m11: " + m11);
         assert m11.size() > 20;
     }
 
-    @Test
-    public void test_select_page_m12() {
+
+    public void  test_select_page(BaseMapper<AppxModel> mapper){
         //selectPage
         List<AppxModel> m12 = mapper.selectPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m12: " + m12);
         assert m12.size() == 10;
-    }
 
-    @Test
-    public void test_select_page_m13() {
         //selectMapsPage
         List<Map<String, Object>> m13 = mapper.selectMapPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
         assert m13.size() == 10;
     }
 
-    @Test
-    public void test_select_top_m14() {
+    public void  test_select_top(BaseMapper<AppxModel> mapper){
         //selectPage
-        List<AppxModel> m14 = mapper.selectTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
-        System.out.println("m14: " + m14);
-        assert m14.size() == 5;
-    }
+        List<AppxModel> m12 = mapper.selectTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m12: " + m12);
+        assert m12.size() == 5;
 
-    @Test
-    public void test_select_top_m15() {
         //selectMapsPage
-        List<Map<String, Object>> m15 = mapper.selectMapTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
-        System.out.println("m15: " + m15);
-        assert m15.size() == 5;
+        List<Map<String, Object>> m13 = mapper.selectMapTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m13: " + m13);
+        assert m13.size() == 5;
     }
 }

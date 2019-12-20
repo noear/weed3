@@ -44,7 +44,14 @@ public class DbOracleAdapter implements DbAdapter{
     public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
         StringBuilder sb = new StringBuilder();
         if (orderBy == null) {
-            sb.append("SELECT ROWNUM _ROW_NUM, ");
+            String tb = table1.split(" ")[0].replace("$.","").trim();
+            String pk = ctx.getTablePk1(tb);
+
+            if(pk == null){
+                throw new RuntimeException("Please add orderBy");
+            }
+
+            sb.append("SELECT ROW_NUMBER() OVER(ORDER BY ").append(columnFormat(pk)).append(") AS _ROW_NUM, ");
         } else {
             sb.append("SELECT ROW_NUMBER() OVER(").append(orderBy).append(") AS _ROW_NUM, ");
         }

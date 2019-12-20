@@ -34,6 +34,6 @@ public interface SqlMapper extends BaseMapper<AppxModel> {
     String appx_get_key2(int app_id);
 
     default String test() throws SQLException {
-        return DbUtil.db.table("appx").where("app_id=2").select("akey").getValue("");
+        return DbUtil.db.table("appx").whereEq("app_id",2).select("akey").getValue("");
     }
 }

@@ -13,9 +13,13 @@ public class SqlTest {
 
     @Test
     public void test1() throws Exception {
-        assert db.sql("select * from $.appx where app_id=?", 32)
-                .getItem(AppxModel.class)
-                .app_id == 32;
+        try {
+            assert db.sql("select * from $.appx where app_id=?", 32)
+                    .getItem(AppxModel.class)
+                    .app_id == 32;
+        }finally {
+            System.out.println(db.lastCommand.text);
+        }
         
     }
 

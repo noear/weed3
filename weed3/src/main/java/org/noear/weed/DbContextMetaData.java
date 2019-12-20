@@ -25,10 +25,16 @@ class DbContextMetaData {
     public DbAdapter dbAdapter(){ return _dbAdapter;}
 
     public TableWrap getTableWrap(String name){
-        return _tables.get(name);
+        for(Map.Entry<String,TableWrap> kv : _tables.entrySet()){
+            if(name.equalsIgnoreCase(kv.getKey())){
+                return kv.getValue();
+            }
+        }
+
+        return null;
     }
     public String getTablePk1(String name) {
-        TableWrap tw = _tables.get(name);
+        TableWrap tw = getTableWrap(name);
         return tw == null ? null : tw.getPk1();
     }
 

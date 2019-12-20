@@ -51,7 +51,7 @@ public class DbUtil {
         Map<String, String> map = new HashMap<>();
 
         map.put("schema", "demo");
-        map.put("url", "jdbc:oracle:thin:@//192.168.8.118:1521/demo ");
+        map.put("url", "jdbc:oracle:thin:@//192.168.8.118:1521/helowinXDB");
         map.put("driverClassName", "oracle.jdbc.OracleDriver");
         map.put("username", "demo");
         map.put("password", "demo");
@@ -82,9 +82,17 @@ public class DbUtil {
     }
 
     public static DbContext getDb() {
-        //dbOracleCfg(); //
+        //
 
-        Map<String, String> map =  dbPgsqlCfg(); //dbMssqlCfg();//dbMysqlCfg(); //
+        WeedConfig.onException((cmd,ex)->{
+            System.out.println(cmd.text);
+        });
+
+        WeedConfig.onExecuteAft((cmd)->{
+            System.out.println(":::"+cmd.text);
+        });
+
+        Map<String, String> map =  dbOracleCfg(); // dbPgsqlCfg(); //dbMssqlCfg();//dbMysqlCfg(); //
 
         DbContext db = new DbContext(map.get("schema"), dataSource(map)).nameSet("rock");
         WeedConfig.isUsingSchemaPrefix =true;
