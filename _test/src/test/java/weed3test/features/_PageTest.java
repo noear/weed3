@@ -37,4 +37,18 @@ public class _PageTest {
 
         System.out.println(db2.lastCommand.text);
     }
+
+    @Test
+    public void test_page3() throws Exception {
+        List<AppxModel> list = db2.table("appx a")
+                .innerJoin("appx_agroup b").onEq("a.agroup_id", "b.agroup_id")
+                .limit(1, 10)
+                .select("a.*,b.name agroup_name")
+                .getList(AppxModel.class);
+
+        assert list.size() == 10;
+        //assert list.get(0).app_id == 3;
+
+        System.out.println(db2.lastCommand.text);
+    }
 }
