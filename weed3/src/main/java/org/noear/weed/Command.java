@@ -42,8 +42,8 @@ public class Command {
             _paramMap = new LinkedHashMap<>();
 
             int idx = 0;
-            for (Object v : paramS) {
-                _paramMap.put("v" + idx, v);
+            for (Variate v : paramS) {
+                _paramMap.put("v" + idx, v.getValue());
                 idx++;
             }
         }

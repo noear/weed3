@@ -660,7 +660,7 @@ public abstract class WhereBase<T extends WhereBase> {
 
     protected List<ClassWrap> _clzArray;
     protected int addClass(ClassWrap clzWrap) {
-        if (_clzArray == null) {
+        if(_clzArray == null){
             _clzArray = new ArrayList<>();
         }
 
@@ -684,9 +684,9 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     protected <C> String getColumnName(Property<C, ?> p) {
-        if(_isSingleTable){
+        if (_isSingleTable || _clzArray == null) {
             return PropertyWrap.get(p).name;
-        }else {
+        } else {
             return PropertyWrap.get(p).getColumnName(_clzArray);
         }
     }

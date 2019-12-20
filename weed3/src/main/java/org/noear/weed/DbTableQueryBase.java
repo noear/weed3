@@ -386,10 +386,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return update(item);
     }
 
-    private void removeTablePrefix(){
-        if(_clzArray.size()<2){
-            if(_builder.indexOf("t0.")>0){
-                String tmp = _builder.toString().replace("t0.","");
+    private void removeTablePrefix() {
+        if (_clzArray != null && _clzArray.size() < 2) {
+            if (_builder.indexOf("t0.") > 0) {
+                String tmp = _builder.toString().replace("t0.", "");
                 _builder.builder.setLength(0);
                 _builder.append(tmp);
             }
@@ -402,10 +402,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return 0;
         }
 
-        if(_clzArray.size()<2){
-            if(_table.indexOf(" ")>0) {
-                _table = _table.split(" ")[0];
-            }
+        if(_table.indexOf(" ")>0) {
+            _table = _table.split(" ")[0];
         }
 
         List<Object> args = new ArrayList<Object>();
@@ -459,10 +457,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     public int delete() throws SQLException {
         StringBuilder sb  = StringUtils.borrowBuilder();
 
-        if(_clzArray.size()<2){
-            if(_table.indexOf(" ")>0) {
-                _table = _table.split(" ")[0];
-            }
+        if(_table.indexOf(" ")>0) {
+            _table = _table.split(" ")[0];
         }
 
         sb.append("DELETE ");
