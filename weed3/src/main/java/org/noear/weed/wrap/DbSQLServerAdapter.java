@@ -1,7 +1,6 @@
 package org.noear.weed.wrap;
 
 import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQueryBase;
 import org.noear.weed.SQLBuilder;
 
 /**

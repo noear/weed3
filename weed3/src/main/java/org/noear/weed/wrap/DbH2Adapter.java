@@ -1,8 +1,5 @@
 package org.noear.weed.wrap;
 
-import org.noear.weed.DbTableQueryBase;
-import org.noear.weed.SQLBuilder;
-
 public class DbH2Adapter implements DbAdapter{
 
     @Override

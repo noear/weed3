@@ -23,6 +23,18 @@ public class DbUtil {
         return map;
     }
 
+    private final static Map<String, String> dbDb2Cfg(){
+        Map<String, String> map = new HashMap<>();
+
+        map.put("schema", "rock");
+        map.put("url", "jdbc:db2://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        map.put("driverClassName", "com.mysql.cj.jdbc.Driver");
+        map.put("username", "demo");
+        map.put("password", "UL0hHlg0Ybq60xyb");
+
+        return map;
+    }
+
     private final static Map<String, String> dbMssqlCfg(){
         Map<String, String> map = new HashMap<>();
 
