@@ -57,7 +57,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     protected T table(String table) { //相当于 from
         if(table.startsWith("#")){
-            _table = table.replace("#","");
+            _table = table.substring(1);
         }else {
             if (table.indexOf('.') > 0) {
                 _table = table;
@@ -431,34 +431,32 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return compile().execute();
     }
 
-    /** 添加SQL 内关联语句 */
-    public T innerJoin(String table) {
-        if(isUsingSchemaPrefix) {
-            _builder.append(" INNER JOIN $.").append(table);
-        }else{
-            _builder.append(" INNER JOIN ").append(formatObject(table));
+    private T join(String style, String table){
+        if(table.startsWith("#")){
+            _builder.append(style).append(table.substring(1));
+        }else {
+            if (isUsingSchemaPrefix) {
+                _builder.append(style).append("$.").append(table);
+            } else {
+                _builder.append(style).append(formatObject(table));
+            }
         }
         return (T)this;
+    }
+
+    /** 添加SQL 内关联语句 */
+    public T innerJoin(String table) {
+        return join(" INNER JOIN ",table);
     }
 
     /** 添加SQL 左关联语句 */
     public T leftJoin(String table) {
-        if(isUsingSchemaPrefix) {
-            _builder.append(" LEFT JOIN $.").append(table);
-        }else{
-            _builder.append(" LEFT JOIN ").append(formatObject(table));
-        }
-        return (T)this;
+        return join(" LEFT JOIN ",table);
     }
 
     /** 添加SQL 右关联语句 */
     public T rightJoin(String table) {
-        if(isUsingSchemaPrefix) {
-            _builder.append(" RIGHT JOIN $.").append(table);
-        }else{
-            _builder.append(" RIGHT JOIN ").append(formatObject(table));
-        }
-        return (T)this;
+        return join(" RIGHT JOIN ",table);
     }
 
     /** 添加无限制代码 */
@@ -574,6 +572,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             sb.append(_hint);
             _hint = null;
         }
+
 
         sb.append("SELECT ");
 

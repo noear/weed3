@@ -129,11 +129,6 @@ public class DbContext extends DbContextMetaData {
         return this;
     }
 
-    protected DatabaseType _databaseType = DatabaseType.Unknown;
-    public DatabaseType databaseType(){
-        return _databaseType;
-    }
-
     /** 数据源设置 */
     public DbContext dataSourceSet(DataSource dataSource) {
         __dataSource = dataSource;

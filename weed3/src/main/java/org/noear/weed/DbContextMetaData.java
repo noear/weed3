@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.DatabaseType;
+import org.noear.weed.wrap.DbType;
 import org.noear.weed.wrap.ColumnWrap;
 import org.noear.weed.wrap.TableWrap;
 
@@ -15,6 +15,11 @@ class DbContextMetaData {
     protected String _schema;
     protected String _catalog;
     protected Map<String, TableWrap> _tables = new HashMap<>();
+    protected DbType _dbType = DbType.Unknown;
+
+    public DbType dbType(){
+        return _dbType;
+    }
 
     public TableWrap getTableWrap(String name){
         return _tables.get(name);
@@ -31,7 +36,7 @@ class DbContextMetaData {
             DatabaseMetaData md = conn.getMetaData();
 
             //1.
-            setDatabaseType(db, md.getDriverName());
+            setDatabaseType(db, md.getDatabaseProductName());
 
             //2.
             setSchema(db, conn);
@@ -57,27 +62,29 @@ class DbContextMetaData {
             String pn = driverName.toLowerCase().replace(" ", "");
 
             if (pn.indexOf("mysql") >= 0) {
-                db._databaseType = DatabaseType.MySQL;
+                db._dbType = DbType.MySQL;
             } else if (pn.indexOf("mariadb") >= 0) {
-                db._databaseType = DatabaseType.MariaDB;
+                db._dbType = DbType.MariaDB;
             } else if (pn.indexOf("sqlserver") >= 0) {
-                db._databaseType = DatabaseType.SQLServer;
+                db._dbType = DbType.SQLServer;
             } else if (pn.indexOf("oracle") >= 0) {
-                db._databaseType = DatabaseType.Oracle;
+                db._dbType = DbType.Oracle;
             } else if (pn.indexOf("postgresql") >= 0) {
-                db._databaseType = DatabaseType.PostgreSQL;
+                db._dbType = DbType.PostgreSQL;
             } else if (pn.indexOf("db2") >= 0) {
-                db._databaseType = DatabaseType.DB2;
+                db._dbType = DbType.DB2;
             } else if (pn.indexOf("sqlite") >= 0) {
-                db._databaseType = DatabaseType.SQLite;
+                db._dbType = DbType.SQLite;
+            }else if (pn.indexOf("h2") >= 0) {
+                db._dbType = DbType.H2;
             }
 
-            if (db._databaseType == DatabaseType.MySQL ||
-                    db._databaseType == DatabaseType.MariaDB ||
-                        db._databaseType == DatabaseType.SQLite) {
+            if (db._dbType == DbType.MySQL ||
+                    db._dbType == DbType.MariaDB ||
+                        db._dbType == DbType.SQLite) {
                 db.formater().fieldFormatSet("`%`");
                 db.formater().objectFormatSet("`%`");
-            } else if(db._databaseType == DatabaseType.SQLServer){
+            } else if(db._dbType == DbType.SQLServer){
                 db.formater().fieldFormatSet("[%]");
                 db.formater().objectFormatSet("[%]");
             }  else {
@@ -102,7 +109,7 @@ class DbContextMetaData {
         try {
             db._schema = conn.getSchema();
         } catch (Throwable e) {
-            switch (db._databaseType) {
+            switch (db._dbType) {
                 case PostgreSQL:
                     db._schema = "public";
                     break;
@@ -110,9 +117,6 @@ class DbContextMetaData {
                     db._schema = "dbo";
                 case Oracle:
                     db._schema = conn.getMetaData().getUserName();
-                    break;
-                default:
-                    db._schema = null;
                     break;
             }
         }

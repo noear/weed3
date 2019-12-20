@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.DbType;
+import org.noear.weed.wrap.DbVarType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -41,8 +41,8 @@ public class Variate implements Serializable {
     }
 
 
-    DbType _type = DbType.Object;
-    public  DbType getType() {
+    DbVarType _type = DbVarType.Object;
+    public DbVarType getType() {
         return _type;
     }
 

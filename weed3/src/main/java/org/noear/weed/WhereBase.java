@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.DatabaseType;
+import org.noear.weed.wrap.DbType;
 import org.noear.weed.wrap.Property;
 import org.noear.weed.wrap.ClassWrap;
 import org.noear.weed.wrap.PropertyWrap;
@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class WhereBase<T extends WhereBase> {
     protected DbContext  _context;
     protected SQLBuilder _builder;
+    protected StringBuilder _orderBy;
     protected boolean _isSingleTable;
 
     protected WhereBase() {
@@ -26,8 +27,8 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder = new SQLBuilder();
     }
 
-    protected DatabaseType databaseType(){
-        return _context.databaseType();
+    protected DbType databaseType(){
+        return _context.dbType();
     }
 
     protected String formatObject(String name) {
@@ -602,10 +603,15 @@ public abstract class WhereBase<T extends WhereBase> {
 
 
 
-    protected String _orderBy;
     public T orderBy(String code) {
-        _orderBy = formatColumns(code);
-        _builder.append(" ORDER BY ").append(_orderBy);
+        if(_orderBy == null){
+            _orderBy = new StringBuilder(" ORDER BY ");
+        }else{
+            _orderBy.append(", ");
+        }
+
+        _orderBy.append(formatColumns(code));
+
         return (T) this;
     }
 

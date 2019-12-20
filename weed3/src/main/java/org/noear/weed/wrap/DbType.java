@@ -1,6 +1,6 @@
-package org.noear.weed.ext;
+package org.noear.weed.wrap;
 
-public enum DatabaseType {
+public enum DbType {
     //
     // 摘要:
     //     未知或未定义。
@@ -13,6 +13,7 @@ public enum DatabaseType {
     Oracle,
     DB2,
     SQLite,
+    H2,
 
     /*
     Unknown(DatabaseType.Unknown, "Unknown", "Unknown", 0),

@@ -1,6 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.ext.DatabaseType;
+import org.noear.weed.wrap.DbType;
 
 /**
  * 分页组件（可以替换 def 进行更新）
@@ -11,7 +11,7 @@ public class DbPaging {
      */
     public void preProcessing(DbTableQueryBase q, StringBuilder sb) {
         if (q.limit_top > 0) {
-            if (q.databaseType() == DatabaseType.SQLServer) {
+            if (q.databaseType() == DbType.SQLServer) {
                 sb.append(" TOP ").append(q.limit_top).append(" ");
             }
             return;
@@ -30,7 +30,7 @@ public class DbPaging {
 
                         sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(pk).append(") AS _ROW_NUM, ");
                     }else{
-                        sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(q._orderBy).append(") AS _ROW_NUM, ");
+                        sb.append(" ROW_NUMBER() OVER(").append(q._orderBy).append(") AS _ROW_NUM, ");
                     }
                 }
                 break;
@@ -39,7 +39,7 @@ public class DbPaging {
                     if (q._orderBy == null) {
                         sb.append(" ROWNUM _ROW_NUM, ");
                     } else {
-                        sb.append(" ROW_NUMBER() OVER(ORDER BY ").append(q._orderBy).append(") AS _ROW_NUM, ");
+                        sb.append(" ROW_NUMBER() OVER(").append(q._orderBy).append(") AS _ROW_NUM, ");
                     }
                 }
                 break;
@@ -67,6 +67,7 @@ public class DbPaging {
                 }
                 break;
 
+                case H2:
                 case PostgreSQL:
                 case MariaDB:
                 case MySQL:
@@ -83,15 +84,6 @@ public class DbPaging {
                 case SQLServer:
                 case Oracle:
                 case DB2:
-
-                    if(q._orderBy != null) {
-                        String tmp = "ORDER BY " + q._orderBy.trim();
-                        int idx = sqlB.builder.lastIndexOf(tmp);
-                        if (idx > 0) {
-                            sqlB.builder.replace(idx, idx + tmp.length(), "");
-                        }
-                    }
-
                     StringBuilder sb2 = new StringBuilder();
                     sb2.append("SELECT _x.* FROM (").append( sqlB.builder).append(") _x ");
                     sb2.append(" WHERE _x._ROW_NUM BETWEEN ")
@@ -110,6 +102,7 @@ public class DbPaging {
                             .append(q.limit_start);
                     break;
 
+                case H2:
                 case MySQL:
                 case MariaDB:
                 default: //MariaDB, MySQL
@@ -121,6 +114,10 @@ public class DbPaging {
             }
 
             return sqlB;
+        }
+
+        if(q._orderBy != null){
+            sqlB.append(q._orderBy);
         }
 
         return sqlB;

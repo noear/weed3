@@ -1,10 +1,10 @@
-package org.noear.weed.ext;
+package org.noear.weed.wrap;
 
 /**
  * Created by noear on 14-6-12.
- * 数据类型
+ * 数据变量类型
  */
-public enum DbType {
+public enum DbVarType {
     //
     // 摘要:
     //     未知或未定义。
