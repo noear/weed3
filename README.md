@@ -72,6 +72,7 @@
 //DbContext db  = new DbContext("user",new HikariDataSource(...)); //使用DataSource配置的示例
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 
+
 /** 2.Mapper用法 */
 @Namespace("demo.dso.db")
 public interface UserDao extends BaseMapper<UserModel>{
@@ -86,6 +87,7 @@ public interface UserDao extends BaseMapper<UserModel>{
 
 UserDao userDao = db.mapper(UserDao.class);
 userDao.selectById(12); //调用 BaseMapper 方法
+
 UserModel user = userDao.getUser(2); //调用 @Sql 方法
 userDao.addUser(user); //调用 xml sql
 
