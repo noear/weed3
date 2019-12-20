@@ -37,6 +37,8 @@ public class DbOracleAdapter implements DbAdapter{
 
     @Override
     public void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
+        sqlB.insert(0,"SELECT ");
+
         if(sqlB.indexOf(" WHERE ") > 0){
             sqlB.append(" AND");
         }else{

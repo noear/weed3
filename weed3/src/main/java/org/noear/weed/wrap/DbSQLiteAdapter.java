@@ -17,6 +17,8 @@ public class DbSQLiteAdapter implements DbAdapter{
 
     @Override
     public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+        sqlB.insert(0,"SELECT ");
+
         if(orderBy!=null){
             sqlB.append(orderBy);
         }
