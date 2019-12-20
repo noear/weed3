@@ -7,11 +7,27 @@ import weed3test.model.AgroupModel;
 import weed3test.model.AppxModel;
 import weed3test.model.TestModel;
 
+import java.util.Map;
+
 import static org.noear.weed.wrap.PropertyWrap.$;
 
 
 public class TableTest {
     DbContext db = DbUtil.db;
+
+    @Test
+    public void test0() throws Exception {
+        Map<String, Object> map = db.table("appx").where("app_id=?", 1).select("*").getMap();
+
+        map.remove("app_id");
+
+        assert db.table("appx_copy")
+                .setMap(map)
+                .where("app_id=?",101)
+                .update() > 0;
+
+        System.out.println(db.lastCommand.text);
+    }
 
     @Test
     public void test1() throws Exception {
