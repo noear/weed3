@@ -9,9 +9,11 @@ import java.util.List;
  * Created by noear on 15/3/5.
  */
 public class SQLBuilder {
-    protected StringBuilder builder = new StringBuilder();
+    //当前数据
+    public StringBuilder builder = new StringBuilder(200);
     public List<Object> paramS = new ArrayList<Object>();
 
+    //备份数据
     private StringBuilder b_builder = new StringBuilder();
     private List<Object> b_paramS = new ArrayList<>();
 
@@ -48,6 +50,11 @@ public class SQLBuilder {
     public SQLBuilder insert(SQLBuilder part) {
         builder.insert(0, part.builder);
         paramS.addAll(0, part.paramS);
+        return this;
+    }
+
+    public SQLBuilder insert(int offset,  Object val){
+        builder.insert(offset,val);
         return this;
     }
 

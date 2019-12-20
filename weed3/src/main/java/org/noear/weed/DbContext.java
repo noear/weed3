@@ -35,7 +35,6 @@ public class DbContext extends DbContextMetaData {
 
     //数据集名称
     protected DbFormater _formater = new DbFormater();
-    protected DbPaging _paging = new DbPaging();
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
     //数据源
@@ -184,20 +183,6 @@ public class DbContext extends DbContextMetaData {
     public DbFormater formater(){
         return _formater;
     }
-
-    //
-    // 分页处理
-    //
-    public DbContext pagingSet(DbPaging paging){
-        _paging = paging;
-        return this;
-    }
-
-    public DbPaging paging(){
-        return _paging;
-    }
-
-
 
     //
     // 构建函数 start

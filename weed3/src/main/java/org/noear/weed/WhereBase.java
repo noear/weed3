@@ -27,7 +27,7 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder = new SQLBuilder();
     }
 
-    protected DbType databaseType(){
+    protected DbType dbType(){
         return _context.dbType();
     }
 

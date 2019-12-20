@@ -565,32 +565,39 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     private void select_do(String columns, boolean doFormat) {
-        StringBuilder sb = StringUtils.borrowBuilder();
-
-        //1.构建sql
-        if (_hint != null) {
-            sb.append(_hint);
-            _hint = null;
-        }
-
-
-        sb.append("SELECT ");
-
-        _context.paging().preProcessing(this, sb);
-
-        if(doFormat) {
-            sb.append(formatColumns(columns)).append(" FROM ").append(_table);
-        }else{
-            sb.append(columns).append(" FROM ").append(_table);
-        }
-
         _builder.backup();
 
-        _builder.insert(StringUtils.releaseBuilder(sb));
+        //1.构建 xxx... FROM table
+        StringBuilder sb = new StringBuilder(_builder.builder.length() + 100);
+        sb.append(" ");//不能去掉
+        if (doFormat) {
+            sb.append(formatColumns(columns)).append(" FROM ").append(_table);
+        } else {
+            sb.append(columns).append(" FROM ").append(_table);
+        }
+        sb.append(_builder.builder);
 
+        _builder.builder = sb;
 
-        _builder = _context.paging().postProcessing(this,_builder);
+        //2.尝试构建分页
+        if (limit_top > 0) {
+            _context.dbAdapter().selectTop(_context, _table, _builder, _orderBy, limit_top);
+        } else if (limit_size > 0) {
+            _context.dbAdapter().selectPage(_context, _table, _builder, _orderBy, limit_start, limit_size);
+        } else {
+            _builder.insert(0, "SELECT ");
+            if (_orderBy != null) {
+                _builder.append(_orderBy);
+            }
+        }
 
+        //3.构建hint
+        if (_hint != null) {
+            sb.append(_hint);
+            _builder.insert(0, _hint);
+        }
+
+        //4.构建whith
         if (_builder_bef.length() > 0) {
             _builder.insert(_builder_bef);
         }

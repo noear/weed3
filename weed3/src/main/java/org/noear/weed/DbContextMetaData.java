@@ -1,8 +1,6 @@
 package org.noear.weed;
 
-import org.noear.weed.wrap.DbType;
-import org.noear.weed.wrap.ColumnWrap;
-import org.noear.weed.wrap.TableWrap;
+import org.noear.weed.wrap.*;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -14,12 +12,15 @@ import java.util.Map;
 class DbContextMetaData {
     protected String _schema;
     protected String _catalog;
-    protected Map<String, TableWrap> _tables = new HashMap<>();
-    protected DbType _dbType = DbType.Unknown;
+
+    private Map<String, TableWrap> _tables = new HashMap<>();
+    private DbType _dbType = DbType.Unknown;
+    private DbAdapter _dbAdapter;
 
     public DbType dbType(){
         return _dbType;
     }
+    public DbAdapter dbAdapter(){ return _dbAdapter;}
 
     public TableWrap getTableWrap(String name){
         return _tables.get(name);
@@ -36,10 +37,10 @@ class DbContextMetaData {
             DatabaseMetaData md = conn.getMetaData();
 
             //1.
-            setDatabaseType(db, md.getDatabaseProductName());
+            setDatabaseType(md.getDatabaseProductName());
 
             //2.
-            setSchema(db, conn);
+            setSchema(conn);
 
             //3.
             setTables(md);
@@ -57,66 +58,77 @@ class DbContextMetaData {
         }
     }
 
-    private void setDatabaseType(DbContext db, String driverName) {
+    private void setDatabaseType(String driverName) {
         if (driverName != null) {
             String pn = driverName.toLowerCase().replace(" ", "");
 
             if (pn.indexOf("mysql") >= 0) {
-                db._dbType = DbType.MySQL;
+                _dbType = DbType.MySQL;
+                _dbAdapter = new DbMySQLAdapter();
             } else if (pn.indexOf("mariadb") >= 0) {
-                db._dbType = DbType.MariaDB;
+                _dbType = DbType.MariaDB;
+                _dbAdapter = new DbMySQLAdapter();
             } else if (pn.indexOf("sqlserver") >= 0) {
-                db._dbType = DbType.SQLServer;
+                _dbType = DbType.SQLServer;
+                _dbAdapter = new DbSQLServerAdapter();
             } else if (pn.indexOf("oracle") >= 0) {
-                db._dbType = DbType.Oracle;
+                _dbType = DbType.Oracle;
+                _dbAdapter = new DbOracleAdapter();
             } else if (pn.indexOf("postgresql") >= 0) {
-                db._dbType = DbType.PostgreSQL;
+                _dbType = DbType.PostgreSQL;
+                _dbAdapter = new DbPostgreSQLAdapter();
             } else if (pn.indexOf("db2") >= 0) {
-                db._dbType = DbType.DB2;
+                _dbType = DbType.DB2;
+                _dbAdapter = new DbDb2Adapter();
             } else if (pn.indexOf("sqlite") >= 0) {
-                db._dbType = DbType.SQLite;
+                _dbType = DbType.SQLite;
+                _dbAdapter = new DbSQLiteAdapter();
             }else if (pn.indexOf("h2") >= 0) {
-                db._dbType = DbType.H2;
+                _dbType = DbType.H2;
+                _dbAdapter = new DbSQLiteAdapter();
+            } else{
+                //做为默认
+                _dbAdapter = new DbMySQLAdapter();
             }
 
-            if (db._dbType == DbType.MySQL ||
-                    db._dbType == DbType.MariaDB ||
-                        db._dbType == DbType.SQLite) {
-                db.formater().fieldFormatSet("`%`");
-                db.formater().objectFormatSet("`%`");
-            } else if(db._dbType == DbType.SQLServer){
-                db.formater().fieldFormatSet("[%]");
-                db.formater().objectFormatSet("[%]");
-            }  else {
-                //SQLServer, PostgreSQL, DB2
-                db.formater().fieldFormatSet("\"%\"");
-                db.formater().objectFormatSet("\"%\"");
-            }
+//            if (_dbType == DbType.MySQL ||
+//                    _dbType == DbType.MariaDB ||
+//                        _dbType == DbType.SQLite) {
+//                db.formater().fieldFormatSet("`%`");
+//                db.formater().objectFormatSet("`%`");
+//            } else if(_dbType == DbType.SQLServer){
+//                db.formater().fieldFormatSet("[%]");
+//                db.formater().objectFormatSet("[%]");
+//            }  else {
+//                //, PostgreSQL, DB2
+//                db.formater().fieldFormatSet("\"%\"");
+//                db.formater().objectFormatSet("\"%\"");
+//            }
         }
     }
 
-    private void setSchema(DbContext db, Connection conn) throws SQLException {
+    private void setSchema(Connection conn) throws SQLException {
         try {
-            db._catalog = conn.getCatalog();
+            _catalog = conn.getCatalog();
         } catch (Throwable e) {
             e.printStackTrace();
         }
 
-        if (db._schema != null) {
+        if (_schema != null) {
             return;
         }
 
         try {
-            db._schema = conn.getSchema();
+            _schema = conn.getSchema();
         } catch (Throwable e) {
-            switch (db._dbType) {
+            switch (_dbType) {
                 case PostgreSQL:
-                    db._schema = "public";
+                    _schema = "public";
                     break;
                 case SQLServer:
-                    db._schema = "dbo";
+                    _schema = "dbo";
                 case Oracle:
-                    db._schema = conn.getMetaData().getUserName();
+                    _schema = conn.getMetaData().getUserName();
                     break;
             }
         }

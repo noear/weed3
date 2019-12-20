@@ -8,6 +8,7 @@ public enum DbType {
 
     MySQL,
     MariaDB,
+
     SQLServer,
     PostgreSQL,
     Oracle,
