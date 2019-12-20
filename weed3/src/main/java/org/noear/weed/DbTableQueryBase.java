@@ -363,7 +363,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         this.where("1=1");
         for (String f : ff) {
-            this.and(f + "=?", data.get(f));
+            this.andEq(f, data.get(f));
         }
 
         if (this.exists()) {

@@ -112,21 +112,37 @@ public class FieldWrap {
             }
         }
 
-        if(val instanceof java.sql.Timestamp){
-            if(type == LocalDateTime.class){
-                return ((Timestamp)val).toLocalDateTime();
+        if(type == LocalDateTime.class){
+            if(val instanceof java.sql.Timestamp) {
+                return ((Timestamp) val).toLocalDateTime();
+            }
+
+            if(val instanceof String){
+                return LocalDateTime.parse((String)val);
             }
         }
 
-        if(val instanceof java.sql.Date){
-            if(type == LocalDate.class){
-                return ((Date)val).toLocalDate();
+        if(type == LocalDate.class){
+            if(val instanceof java.sql.Date) {
+                return ((Date) val).toLocalDate();
+            }
+
+            if(val instanceof java.sql.Timestamp) {
+                return ((Timestamp) val).toLocalDateTime().toLocalDate();
+            }
+
+            if(val instanceof String) {
+                return LocalDate.parse((String) val);
             }
         }
 
-        if(val instanceof java.sql.Time){
-            if(type == LocalTime.class){
-                return ((Time)val).toLocalTime();
+        if(type == LocalTime.class) {
+            if (val instanceof java.sql.Time) {
+                return ((Time) val).toLocalTime();
+            }
+
+            if(val instanceof String) {
+                return LocalTime.parse((String) val);
             }
         }
 

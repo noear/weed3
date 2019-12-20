@@ -42,6 +42,8 @@ public class AppxCopy2Model {
 
     public LocalDateTime datetime1;
     public LocalDate date1;
+
+    @Exclude
     public LocalTime time1;
 
     @Exclude

@@ -25,6 +25,10 @@ public class _TimeTest {
 
         return _model;
     }
+    @Test
+    public void test0() throws Exception{
+        model();
+    }
 
     @Test
     public void test_insert() throws Exception {

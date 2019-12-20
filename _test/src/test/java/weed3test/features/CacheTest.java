@@ -15,7 +15,7 @@ public class CacheTest {
     @Test
     public void test1() throws Exception {
         AppxModel tmp = db2.table("appx")
-                .where("app_id=?", 23)
+                .whereEq("app_id", 23)
                 .caching(cache)
                 .select("*")
                 .cacheTag("app_23")
