@@ -188,11 +188,11 @@ public class MapperTest {
         //selectPage
         List<AppxModel> m12 = mapper.selectTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m12: " + m12);
-        assert m12.size() == 10;
+        assert m12.size() == 5;
 
         //selectMapsPage
         List<Map<String, Object>> m13 = mapper.selectMapTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
-        assert m13.size() == 10;
+        assert m13.size() == 5;
     }
 }
