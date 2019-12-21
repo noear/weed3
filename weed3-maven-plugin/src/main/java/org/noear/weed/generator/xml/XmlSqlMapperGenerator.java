@@ -73,7 +73,9 @@ public class XmlSqlMapperGenerator {
         Node nm = doc.getDocumentElement();
 
         Set<String> importSet = new HashSet<>();
+
         String namespace = attr(nm, "namespace");
+        String _import = attr(nm, "import");
 
         String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
 
@@ -87,7 +89,16 @@ public class XmlSqlMapperGenerator {
 
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
-        sb.append("import org.noear.weed.xml.Namespace;\n\n");
+        sb.append("import org.noear.weed.xml.XmlSqlFactory;\n");
+        if(StringUtils.isEmpty(_import) == false) {
+            String[] ss = _import.split(";");
+            for (String s : ss) {
+                if (s.length() > 2) {
+                    sb.append("import ").append(s).append(";\n");
+                }
+            }
+        }
+        sb.append("\n");
 
         StringBuilder sb2 = new StringBuilder();
 

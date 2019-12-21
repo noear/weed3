@@ -32,6 +32,7 @@ public class XmlSqlCompiler {
         String filename = filepath.substring(filename_idx);
 
         String namespace = attr(nm, "namespace");
+        String _import = attr(nm, "import");
 
         String classname = filename.replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
@@ -43,7 +44,16 @@ public class XmlSqlCompiler {
         sb.append("import java.util.*;\n");
         sb.append("import org.noear.weed.utils.*;\n");
         sb.append("import org.noear.weed.SQLBuilder;\n");
-        sb.append("import org.noear.weed.xml.XmlSqlFactory;\n\n");
+        sb.append("import org.noear.weed.xml.XmlSqlFactory;\n");
+        if(StringUtils.isEmpty(_import) == false) {
+            String[] ss = _import.split(";");
+            for (String s : ss) {
+                if (s.length() > 2) {
+                    sb.append("import ").append(s).append(";\n");
+                }
+            }
+        }
+        sb.append("\n");
 
         Map<String,Node> node_map = new HashMap<>();
         NodeList sql_list = doc.getElementsByTagName("sql");
