@@ -45,15 +45,6 @@ public class DbOracleAdapter implements DbAdapter{
     }
 
     @Override
-    public void removeTablePrefix(SQLBuilder sqlB) {
-        if (sqlB.indexOf("\"t0\".") > 0) {
-            String tmp = sqlB.toString().replace("\"t0\".", "");
-            sqlB.builder.setLength(0);
-            sqlB.append(tmp);
-        }
-    }
-
-    @Override
     public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
 
         sqlB.insert(0, "SELECT t.* FROM (SELECT ROWNUM WD3_ROW_NUM,x.* FROM (SELECT ");

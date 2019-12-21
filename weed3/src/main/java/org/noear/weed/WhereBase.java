@@ -1,12 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.wrap.DbType;
-import org.noear.weed.wrap.Property;
-import org.noear.weed.wrap.ClassWrap;
-import org.noear.weed.wrap.PropertyWrap;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +11,6 @@ public abstract class WhereBase<T extends WhereBase> {
     protected DbContext  _context;
     protected SQLBuilder _builder;
     protected StringBuilder _orderBy;
-    protected boolean _isSingleTable;
 
     protected WhereBase() {
 
@@ -81,7 +75,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-    public T where(WhereQ whereQ) {
+    public T where(MapperWhereQ whereQ) {
         _builder.append(whereQ._builder);
         return (T) this;
     }
@@ -502,45 +496,5 @@ public abstract class WhereBase<T extends WhereBase> {
     public T having(String code){
         _builder.append(" HAVING ").append(code);
         return (T)this;
-    }
-
-
-
-
-
-
-
-
-    protected List<ClassWrap> _clzArray;
-    protected int addClass(ClassWrap clzWrap) {
-        if(_clzArray == null){
-            _clzArray = new ArrayList<>();
-        }
-
-        int idx = _clzArray.indexOf(clzWrap);
-        if (idx < 0) {
-            idx = _clzArray.size();
-            _clzArray.add(clzWrap);
-        }
-        return idx;
-    }
-
-    protected String getTableName(Class<?> tableClz) {
-        ClassWrap cw = ClassWrap.get(tableClz);
-        int idx = addClass(cw);
-
-        if (_isSingleTable) {
-            return cw.tableName;
-        } else {
-            return cw.tableName + " t" + idx;
-        }
-    }
-
-    protected <C> String getColumnName(Property<C, ?> p) {
-        if (_isSingleTable || _clzArray == null) {
-            return PropertyWrap.get(p).name;
-        } else {
-            return PropertyWrap.get(p).getColumnName(_clzArray);
-        }
     }
 }

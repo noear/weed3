@@ -189,10 +189,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return 0;
         }
 
-        if(_table.indexOf(" ")>0) {
-            _table = _table.split(" ")[0];
-        }
-
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
@@ -281,9 +277,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return false;
         }
 
-        if(_table.indexOf(" ")>0) {
-            _table = _table.split(" ")[0];
-        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
@@ -386,21 +379,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return update(item);
     }
 
-    private void removeTablePrefix() {
-        if (_clzArray != null && _clzArray.size() < 2) {
-            _context.dbAdapter().removeTablePrefix(_builder);
-        }
-    }
-
     /** 执行更新并返回影响行数，使用set接口的数据 */
     public int update(IDataItem data) throws SQLException{
         if (data == null || data.count() == 0) {
             return 0;
         }
 
-        if(_table.indexOf(" ")>0) {
-            _table = _table.split(" ")[0];
-        }
 
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
@@ -436,8 +420,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.backup();
         _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
 
-        removeTablePrefix();
-
         if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of update condition!!!");
         }
@@ -453,10 +435,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     public int delete() throws SQLException {
         StringBuilder sb  = StringUtils.borrowBuilder();
 
-        if(_table.indexOf(" ")>0) {
-            _table = _table.split(" ")[0];
-        }
-
         sb.append("DELETE ");
 
         if(_builder.indexOf(" FROM ")<0){
@@ -467,7 +445,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.insert(StringUtils.releaseBuilder(sb));
 
-        removeTablePrefix();
 
         if(WeedConfig.isDeleteMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of delete condition!!!");

@@ -15,39 +15,39 @@ public interface BaseMapper<T> {
     Integer deleteById(Object id);
     Integer deleteByIds(Iterable<Object> idList);
     Integer deleteByMap(Map<String, Object> columnMap);
-    Integer delete(Act1<WhereQ> condition);
+    Integer delete(Act1<MapperWhereQ> condition);
 
     Integer updateById(T entity, boolean excludeNull);
-    Integer update(T entity, boolean excludeNull, Act1<WhereQ> condition);
+    Integer update(T entity, boolean excludeNull, Act1<MapperWhereQ> condition);
 
     Long upsert(T entity, boolean excludeNull);
     Long upsertBy(T entity, boolean excludeNull, String conditionFields);
 
     boolean existsById(Object id);
-    boolean exists(Act1<WhereQ> condition);
+    boolean exists(Act1<MapperWhereQ> condition);
 
     T selectById(Object id);
     List<T> selectByIds(Iterable<Object> idList);
     List<T> selectByMap(Map<String, Object> columnMap);
 
     T selectItem(T entity);
-    T selectItem(Act1<WhereQ> condition);
-    Map<String, Object> selectMap(Act1<WhereQ> condition);
+    T selectItem(Act1<MapperWhereQ> condition);
+    Map<String, Object> selectMap(Act1<MapperWhereQ> condition);
 
-    Object selectValue(String column, Act1<WhereQ> condition);
+    Object selectValue(String column, Act1<MapperWhereQ> condition);
 
-    Long selectCount(Act1<WhereQ> condition);
+    Long selectCount(Act1<MapperWhereQ> condition);
 
-    List<T> selectList(Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMapList(Act1<WhereQ> condition);
-    List<Object> selectArray(String column, Act1<WhereQ> condition);
+    List<T> selectList(Act1<MapperWhereQ> condition);
+    List<Map<String, Object>> selectMapList(Act1<MapperWhereQ> condition);
+    List<Object> selectArray(String column, Act1<MapperWhereQ> condition);
 
     /**
      * @param start 从0开始
      * */
-    List<T> selectPage(int start, int size, Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMapPage(int start, int size, Act1<WhereQ> condition);
+    List<T> selectPage(int start, int size, Act1<MapperWhereQ> condition);
+    List<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> condition);
 
-    List<T> selectTop(int size, Act1<WhereQ> condition);
-    List<Map<String, Object>> selectMapTop(int size, Act1<WhereQ> condition);
+    List<T> selectTop(int size, Act1<MapperWhereQ> condition);
+    List<Map<String, Object>> selectMapTop(int size, Act1<MapperWhereQ> condition);
 }
