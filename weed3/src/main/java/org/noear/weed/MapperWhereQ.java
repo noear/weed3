@@ -190,21 +190,6 @@ public class MapperWhereQ extends WhereBase<MapperWhereQ> {
         return groupBy(getColumnName(property));
     }
 
-
-    protected List<ClassWrap> _clzArray;
-    protected int addClass(ClassWrap clzWrap) {
-        if(_clzArray == null){
-            _clzArray = new ArrayList<>();
-        }
-
-        int idx = _clzArray.indexOf(clzWrap);
-        if (idx < 0) {
-            idx = _clzArray.size();
-            _clzArray.add(clzWrap);
-        }
-        return idx;
-    }
-
     protected <C> String getColumnName(Property<C, ?> p) {
         return PropertyWrap.get(p).name;
     }
