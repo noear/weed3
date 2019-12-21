@@ -3,6 +3,7 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
+import org.noear.weed.wrap.DbType;
 import weed3test.DbUtil;
 import weed3test.model.AppxModel;
 
@@ -14,13 +15,17 @@ public class WithTest {
 
     @Test
     public void test() throws Exception {
+        if(db.dbType() == DbType.Oracle){
+            return;
+        }
+
         //
         // mysql 8.0 才支持
         //
-        List<AppxModel> list  = db.table("#ag").innerJoin("#ax").on("ag.agroup_id = ax.agroup_id")
+        List<AppxModel> list  = db.table("#ag").innerJoin("#ax").onEq("ag.agroup_id","ax.agroup_id")
                 .limit(10)
                 .with("ax", db.table("appx").selectQ("*"))
-                .with("ag", db.table("appx_agroup").where("agroup_id < 10").selectQ("*"))
+                .with("ag", db.table("appx_agroup").whereLt("agroup_id",10).selectQ("*"))
                 .with("ah", "select * from $.appx_agroup where agroup_id<?", 10)
                 .select("ax.*")
                 .getList(AppxModel.class);
@@ -30,6 +35,10 @@ public class WithTest {
 
     @Test
     public void test2() throws Exception {
+        if(db.dbType() == DbType.Oracle){
+            return;
+        }
+
         //
         // mysql 8.0 才支持
         //
