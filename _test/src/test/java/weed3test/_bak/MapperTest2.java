@@ -78,7 +78,7 @@ public class MapperTest2 {
 
     @Test
     public void test7() throws Exception {
-        Object temp = db2.table("appx").whereEq(AppxModel::getApp_id,48).select("*").getMap();
+        Object temp = db2.table("appx").whereEq("app_id",48).select("*").getMap();
 
         assert temp instanceof Map;
     }

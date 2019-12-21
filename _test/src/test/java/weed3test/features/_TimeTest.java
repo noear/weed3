@@ -39,7 +39,7 @@ public class _TimeTest {
 
         map.put("app_id",1001);
 
-        db.table(AppxCopyModel.class).setMap(map).upsert("app_id");
+        db.table("appx_copy").setMap(map).upsert("app_id");
         System.out.println(db.lastCommand.text);
     }
 
@@ -52,7 +52,7 @@ public class _TimeTest {
 
         map.app_id = 1000;
 
-        db.table(AppxCopyModel.class)
+        db.table("appx_copy")
                 .setEntityIf(map, (k, v) -> v != null)
                 .upsert("app_id");
         System.out.println(db.lastCommand.text);

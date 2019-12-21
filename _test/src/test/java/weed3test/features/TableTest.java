@@ -3,14 +3,9 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
-import weed3test.model.AgroupModel;
 import weed3test.model.AppxModel;
-import weed3test.model.TestModel;
 
 import java.util.Map;
-
-import static org.noear.weed.wrap.PropertyWrap.$;
-
 
 public class TableTest {
     DbContext db = DbUtil.db;
@@ -40,50 +35,39 @@ public class TableTest {
     }
 
 
-
     @Test
-    public void test11() throws Exception {
-        assert db.table(AppxModel.class)
-                .whereEq(AppxModel::getApp_id, 21)
-                .select("*")
-                .getItem(AppxModel.class).app_id == 21;
-
-        System.out.println(db.lastCommand.text);
-    }
-
-    @Test
-    public void test21() throws Exception {
+    public void test2() throws Exception {
         //删
-        db.table(TestModel.class).where("1=1").delete();
+        db.table("test").where("1=1").delete();
 
         //增
-        db.table(TestModel.class).set(TestModel::getV1, 1).set(TestModel::getId, 1).insert();
-        db.table(TestModel.class).set(TestModel::getV1, 2).set(TestModel::getId, 2).insert();
-        db.table(TestModel.class).set(TestModel::getV1, 3).set(TestModel::getId, 3).insert();
+        db.table("test").set("v1", 1).set("id", 1).insert();
+        db.table("test").set("v1", 2).set("id", 2).insert();
+        db.table("test").set("v1", 3).set("id", 3).insert();
 
-        assert db.table(TestModel.class).count() == 3;
+        assert db.table("test").count() == 3;
 
 
         //改
         long id = 10;
-        db.table(TestModel.class).set(TestModel::getV1, 1).set(TestModel::getId, 10).insert();
-        assert db.table(TestModel.class)
-                .set(TestModel::getV1, 10)
-                .whereEq(TestModel::getId, id)
+        db.table("test").set("v1", 1).set("id", 10).insert();
+        assert db.table("test")
+                .set("v1", 10)
+                .whereEq("id", id)
                 .update() == 1;
 
         //查
-        assert db.table(TestModel.class)
-                .whereEq(TestModel::getId, id)
-                .select($(TestModel::getV1))
+        assert db.table("test")
+                .whereEq("id", id)
+                .select("v1")
                 .getVariate().longValue(0l)== 10;
     }
 
     @Test
-    public void test22() throws Exception{
-        assert db.table(TestModel.class)
-                .set(TestModel::getV1, 10)
-                .whereEq(TestModel::getId, 10)
+    public void test3() throws Exception{
+        assert db.table("test")
+                .set("v1", 10)
+                .whereEq("id", 10)
                 .update() == 1;
     }
 }

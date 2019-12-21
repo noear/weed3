@@ -6,7 +6,6 @@ import weed3test.DbUtil;
 import weed3test.model.AgroupModel;
 import weed3test.model.AppxModel;
 
-import static org.noear.weed.wrap.PropertyWrap.$;
 
 public class TableJoinTest {
     DbContext db = DbUtil.db;
@@ -24,17 +23,4 @@ public class TableJoinTest {
         System.out.println(db.lastCommand.text);
     }
 
-
-    @Test
-    public void join_select2() throws Exception {
-        AppxModel m = db.table(AppxModel.class)
-                .innerJoin(AgroupModel.class).onEq(AppxModel::getAgroup_id, AgroupModel::getAgroup_id)
-                .whereEq(AppxModel::getApp_id, 22)
-                .select(AppxModel.class, $(AgroupModel::getName).alias("agroup_name"))
-                .getItem(AppxModel.class);
-
-        assert m.app_id == 22;
-
-        System.out.println(db.lastCommand.text);
-    }
 }

@@ -14,14 +14,14 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
     private BaseEntityWrap _table;
 
-    private Class<?> _entityClz;
+    private Class<?> _entityType;
     protected Class<?> entityType() {
-        return _entityClz;
+        return _entityType;
     }
 
-    public BaseMapperWrap(DbContext db, Class<?> entityClz) {
+    public BaseMapperWrap(DbContext db, Class<?> entityType) {
         _db = db;
-        _entityClz = entityClz;
+        _entityType = entityType;
         _table = BaseEntityWrap.get(this);
     }
 
