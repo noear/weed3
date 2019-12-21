@@ -101,9 +101,4 @@ public class PropertyWrap implements Serializable {
             throw new RuntimeException(e);
         }
     }
-
-
-    public static <C> PropertyWrap $(Property<C, ?> p) {
-        return new PropertyWrap(get(p));
-    }
 }

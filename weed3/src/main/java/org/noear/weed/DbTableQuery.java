@@ -26,51 +26,6 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         super(context);
     }
 
-
-    public DbTableQuery table(Class<?> tableClz) {
-        return table(getTableName(tableClz));
-    }
-
-    /** 添加SQL 内关联语句 */
-    public DbTableQuery innerJoin(Class<?> tableClz) {
-        return innerJoin(getTableName(tableClz));
-    }
-
-    /** 添加SQL 左关联语句 */
-    public DbTableQuery leftJoin(Class<?> tableClz) {
-        return leftJoin(getTableName(tableClz));
-    }
-
-    /** 添加SQL 右关联语句 */
-    public DbTableQuery rightJoin(Class<?> tableClz) {
-        return rightJoin(getTableName(tableClz));
-    }
-
-    public <C,D> DbTableQuery onEq(Property<C,?> property1, Property<D,?> property2) {
-        return onEq(getColumnName(property1), getColumnName(property2));
-    }
-
-    public IQuery select(Serializable... sels) {
-        StringBuilder sb = StringUtils.borrowBuilder();
-        for (Serializable s : sels) {
-            if (s instanceof String) {
-                sb.append((String) s).append(",");
-            } else if (s instanceof PropertyWrap) {
-                PropertyWrap pw = (PropertyWrap) s;
-                sb.append(pw.getSelectName(_clzArray)).append(",");
-            } else if (s instanceof Class<?>) {
-                int idx = addClass(ClassWrap.get((Class<?>) s));
-                sb.append("t").append(idx).append(".*").append(",");
-            }
-        }
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 1);
-        }
-
-        return super.select(StringUtils.releaseBuilder(sb));
-    }
-
-
     private void item_init(){
         if (_item == null) {
             _item = new DataItem();
@@ -82,10 +37,6 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         _item.set(name, value);
 
         return this;
-    }
-
-    public <C> DbTableQuery set(Property<C,?> prop, Object value) {
-        return set(PropertyWrap.get(prop).name, value);
     }
 
     public DbTableQuery setIf(boolean condition, String name, Object value){
