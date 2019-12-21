@@ -14,9 +14,6 @@
 * 其它的：支持缓存控制和跨数据库事务（算是分布式事务的一种吧）。
 
 
-#### 兼容数据库
-MySQL, SQLserver, PostgreSQL （更多正在适配中..）
-
 #### 相关文章：
 
 * [Weed3 for java 新的微型ORM框架](https://my.oschina.net/noear/blog/3144349) （推荐一看）
