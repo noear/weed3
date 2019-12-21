@@ -57,7 +57,7 @@ class BaseEntityWrap {
             tableName = entityClz.getSimpleName();
         }
 
-        for (Field f1 : entityClz.getFields()) {
+        for (Field f1 : entityClz.getDeclaredFields()) {
             if (f1.getAnnotation(PrimaryKey.class) != null) {
                 pkName = f1.getName();
                 break;

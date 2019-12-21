@@ -38,6 +38,8 @@ public class FieldWrap {
 
         name = nameTmp;
 
+        //field.setAccessible(true);
+
         _getter = findGetter(clz, f1);
         _setter = findSetter(clz, f1);
     }
