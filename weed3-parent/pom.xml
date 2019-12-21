@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>weed3-parent</artifactId>
-    <version>3.2.4.5</version>
+    <version>3.2.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -41,7 +41,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <weed3.ver>3.2.4.5</weed3.ver>
+        <weed3.ver>3.2.5-SNAPSHOT</weed3.ver>
         <snack3.ver>3.1.5.15</snack3.ver>
     </properties>
 
@@ -194,14 +194,6 @@
     <modules>
 
 
-        <module>../weed3</module>
-        <module>../weed3-maven-plugin</module>
-        <module>../weed3-solon-plugin</module>
-
-        <module>../weed3.cache.memcached</module>
-        <module>../weed3.cache.redis</module>
-        <module>../weed3.cache.ehcache</module>
-        <module>../weed3.cache.j2cache</module>
     </modules>
 
 </project>

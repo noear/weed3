@@ -55,6 +55,7 @@ public class _TimeTest {
 
         if(db.dbType() == DbType.Oracle){
             map.time1 = null;
+            map.date1 = null;
         }
 
         db.table("appx_copy")
