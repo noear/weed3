@@ -52,15 +52,4 @@ public class WithTest {
         System.out.println(db.lastCommand.text);
     }
 
-    @Test
-    public void test3() throws Exception {
-        BaseMapper<AppxModel> mapper = db.mapperBase(AppxModel.class);
-        Object tmp = mapper.selectById(48);
-
-        AppxModel tmp2 = mapper.selectItem(m -> m.where("app_id=?", 12));
-
-        AppxModel tmp3 = mapper.selectItem(m -> m.whereEq("app_id", 12));
-
-        assert  tmp2.app_id == tmp3.app_id;
-    }
 }
