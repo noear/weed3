@@ -16,7 +16,7 @@ public class TableJoinTest {
         AppxModel m = db.table("appx a")
                 .innerJoin("appx_agroup g").onEq("a.agroup_id", "g.agroup_id")
                 .whereEq("a.app_id", 22)
-                .select("*,g.name agroup_name")
+                .select("a.*,g.name agroup_name")
                 .getItem(AppxModel.class);
 
         assert m.app_id == 22;

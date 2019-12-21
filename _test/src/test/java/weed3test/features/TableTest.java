@@ -78,4 +78,12 @@ public class TableTest {
                 .select($(TestModel::getV1))
                 .getValue(0) == 10;
     }
+
+    @Test
+    public void test22() throws Exception{
+        assert db.table(TestModel.class)
+                .set(TestModel::getV1, 10)
+                .whereEq(TestModel::getId, 10)
+                .update() == 1;
+    }
 }
