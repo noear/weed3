@@ -8,6 +8,7 @@ import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Db;
 
 import java.lang.annotation.Annotation;
+import java.util.Properties;
 
 public class XPluginImp implements XPlugin {
     @Override
@@ -15,9 +16,10 @@ public class XPluginImp implements XPlugin {
         //测试
         Aop.factory().beanLoaderAdd(Db.class, (clz, bw, anno) -> {
             if (clz.isInterface()) {
-                DbContext db = WeedConfig.libOfDb.get(anno.value());
-                Object raw = db.mapper(clz);
-                Aop.put(clz, raw);
+                Object raw = getMapper(clz, anno.value());
+                if (raw != null) {
+                    Aop.put(clz, raw);
+                }
             }
         });
 
@@ -35,18 +37,34 @@ public class XPluginImp implements XPlugin {
                     }
 
                     if (dbAnno != null) {
-                        DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
-                        Object raw = db.mapper(clz);
-                        return raw;
+                        return getMapper(clz, dbAnno.value());
                     }
                 } else {
-                    DbContext db = WeedConfig.libOfDb.get(dbAnno.value());
-                    Object raw = db.mapper(clz);
-                    Aop.put(clz, raw);
+                    Object raw = getMapper(clz, dbAnno.value());
+                    if (raw != null) {
+                        Aop.put(clz, raw);
+                    }
                     return raw;
                 }
             }
             return null;
         });
+    }
+
+    public Object getMapper(Class<?> clz, String name) {
+        DbContext db = WeedConfig.libOfDb.get(name);
+
+        if (db == null) {
+            Properties tmp = XApp.cfg().getProp(name);
+            if (tmp != null && tmp.size() > 4) {
+                db = new DbContext(tmp);
+            }
+        }
+
+        if (db != null) {
+            return db.mapper(clz);
+        } else {
+            return null;
+        }
     }
 }
