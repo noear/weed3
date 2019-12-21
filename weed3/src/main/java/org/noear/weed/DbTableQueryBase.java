@@ -166,7 +166,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     public T onEq(String column1, String column2) {
-        _builder.append(" ON ").append(column1).append("=").append(column2);
+        _builder.append(" ON ").append(fmtColumn(column1)).append("=").append(fmtColumn(column2));
         return (T) this;
     }
 
@@ -234,7 +234,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             }
         });
         sb.deleteCharAt(sb.length() - 1);
-        sb.append(");");
+        sb.append(")");
 
         _builder.clear();
         _builder.append(StringUtils.releaseBuilder(sb), args.toArray());
@@ -334,7 +334,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         }
 
         sb.deleteCharAt(sb.length() - 1);
-        sb.append(";");
+        //sb.append("");
 
         _builder.append(StringUtils.releaseBuilder(sb), args.toArray());
 
@@ -388,11 +388,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     private void removeTablePrefix() {
         if (_clzArray != null && _clzArray.size() < 2) {
-            if (_builder.indexOf("t0.") > 0) {
-                String tmp = _builder.toString().replace("t0.", "");
-                _builder.builder.setLength(0);
-                _builder.append(tmp);
-            }
+            _context.dbAdapter().removeTablePrefix(_builder);
         }
     }
 

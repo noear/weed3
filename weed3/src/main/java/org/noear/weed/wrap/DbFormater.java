@@ -103,7 +103,8 @@ public class DbFormater{
             //类似：xxx_name name;xxx_name as name; name ASC;
 
             int idx = name.indexOf(" ");
-            return dba().tableFormat(name.substring(0, idx)) + " " + dba().tableFormat(name.substring(idx + 1));
+            //schemaFormat,会保持原大小
+            return dba().tableFormat(name.substring(0, idx)) + " " + dba().schemaFormat(name.substring(idx + 1));
         }
     }
 }

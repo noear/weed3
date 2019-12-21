@@ -9,12 +9,19 @@ public interface DbAdapter {
         return str.startsWith("`") || str.indexOf(".") > 0;
     }
 
-    default String schemaFormat(String sc){ return sc;}
-    default String tableFormat(String tb){
-        return "`" + tb + "`";
+    default String schemaFormat(String name){ return name;}
+    default String tableFormat(String name){
+        return "`" + name + "`";
     }
-    default String columnFormat(String col){
-        return "`" + col + "`";
+    default String columnFormat(String name){
+        return "`" + name + "`";
+    }
+    default void removeTablePrefix(SQLBuilder sqlB) {
+        if (sqlB.indexOf("t0.") > 0) {
+            String tmp = sqlB.toString().replace("t0.", "");
+            sqlB.builder.setLength(0);
+            sqlB.append(tmp);
+        }
     }
 
     default void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size){

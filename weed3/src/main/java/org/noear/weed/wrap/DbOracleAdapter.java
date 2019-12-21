@@ -34,9 +34,22 @@ public class DbOracleAdapter implements DbAdapter{
         String[] ss = col.split("\\.");
 
         if(ss.length > 1){
-            return "\"" + ss[0] + "\".\"" + ss[0] + "\"";
+            if("*".equals(ss[1])){
+                return "\"" + ss[0] + "\".*";
+            }else {
+                return "\"" + ss[0] + "\".\"" + ss[1] + "\"";
+            }
         }else{
             return "\"" + ss[0] + "\"";
+        }
+    }
+
+    @Override
+    public void removeTablePrefix(SQLBuilder sqlB) {
+        if (sqlB.indexOf("\"t0\".") > 0) {
+            String tmp = sqlB.toString().replace("\"t0\".", "");
+            sqlB.builder.setLength(0);
+            sqlB.append(tmp);
         }
     }
 

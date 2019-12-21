@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.wrap.DbType;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -228,7 +230,7 @@ class SQLer {
 
             try {
                 rset = stmt.getGeneratedKeys(); //乎略错误
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
@@ -236,13 +238,14 @@ class SQLer {
             WeedConfig.runExecuteAftEvent(cmd);
 
             //这里，是与.execute()区别的地方
-            if (rset!= null && rset.next()) {
-                return rset.getLong(1);//从1开始
-            }
-            else {
-                return 0l;
+            if (rset != null && rset.next()) {
+                Object tmp = rset.getObject(1);
+                if (tmp instanceof Number) {
+                    return ((Number) tmp).longValue();
+                }
             }
 
+            return 0l;
         } catch (SQLException ex) {
             WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
