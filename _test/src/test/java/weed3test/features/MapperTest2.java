@@ -55,6 +55,9 @@ public class MapperTest2 {
     }
 
 
+
+
+
     @Test
     public void tast_select_m1() {
         List<Object> ary = new ArrayList<>();
@@ -104,20 +107,24 @@ public class MapperTest2 {
         System.out.println("m5: " + m5);
         assert m5.app_id == 21;
 
+    }
+
+    @Test
+    public void test_select_m6(){
         //selectObj
         Object m6 = mapper.selectValue("app_id", m -> m.whereEq(AppxModel::getApp_id, 21));
         System.out.println("m6: " + m6);
-        assert m6.equals(21);
+        assert ((Number)m6).longValue() == (21);
     }
 
     @Test
     public void test_select_m7(){
         //selectMap
-        Map m7 = mapper.selectMap(m -> m.where("app_id=21"));
+        Map m7 = mapper.selectMap(m -> m.whereEq("app_id",21));
         System.out.println("m7: " + m7);
         assert m7.size() > 10;
 
-        Long m8 = mapper.selectCount(m -> m.where("agroup_id=1"));
+        Long m8 = mapper.selectCount(m -> m.whereEq("agroup_id",1));
         System.out.println("m8: " + m8);
         assert m8 > 20;
     }
