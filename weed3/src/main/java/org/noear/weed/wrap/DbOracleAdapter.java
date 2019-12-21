@@ -42,32 +42,15 @@ public class DbOracleAdapter implements DbAdapter{
 
     @Override
     public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
-        StringBuilder sb = new StringBuilder();
-        if (orderBy == null) {
-            String tb = table1.split(" ")[0].replace("$.","").trim();
-            String pk = ctx.getTablePk1(tb);
 
-            if(pk == null){
-                throw new RuntimeException("Please add orderBy");
-            }
+        sqlB.insert(0, "SELECT t.* FROM (SELECT ROWNUM WD3_ROW_NUM,x.* FROM (SELECT ");
 
-            sb.append("SELECT ROW_NUMBER() OVER(ORDER BY ").append(columnFormat(pk)).append(") AS _ROW_NUM, ");
-        } else {
-            sb.append("SELECT ROW_NUMBER() OVER(").append(orderBy).append(") AS _ROW_NUM, ");
+        if(orderBy != null){
+            sqlB.append(orderBy);
         }
 
-        sqlB.insert(0, sb);
-
-        //
-        //_ROW_NUM,是从1开始的
-        //
-        StringBuilder sb2 = new StringBuilder();
-        sb2.append("SELECT _x.* FROM (").append(sqlB.builder).append(") _x ");
-        sb2.append(" WHERE _x._ROW_NUM BETWEEN ")
-                .append(start + 1).append(" AND ")
-                .append(start + size);
-
-        sqlB.builder = sb2;
+        sqlB.append(") x  WHERE ROWNUM<=").append(start + size);
+        sqlB.append(") t WHERE t.WD3_ROW_NUM >").append(start);
     }
 
     @Override

@@ -15,8 +15,8 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
     private BaseEntityWrap _table;
 
-    private Type _entityClz;
-    protected Type entityType() {
+    private Class<?> _entityClz;
+    protected Class<?> entityType() {
         return _entityClz;
     }
 
