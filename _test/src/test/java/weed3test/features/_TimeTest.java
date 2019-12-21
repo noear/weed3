@@ -2,6 +2,7 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import org.noear.weed.wrap.DbType;
 import weed3test.DbUtil;
 import weed3test.model.AppxCopy2Model;
 import weed3test.model.AppxCopyModel;
@@ -51,6 +52,10 @@ public class _TimeTest {
                 .getItem(AppxCopy2Model.class);
 
         map.app_id = 1000;
+
+        if(db.dbType() == DbType.Oracle){
+            map.time1 = null;
+        }
 
         db.table("appx_copy")
                 .setEntityIf(map, (k, v) -> v != null)

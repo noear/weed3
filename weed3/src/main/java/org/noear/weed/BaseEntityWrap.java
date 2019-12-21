@@ -18,17 +18,15 @@ class BaseEntityWrap {
     public String pkName;
 
     private static final String lock ="";
-    private static Map<Class<?>, BaseEntityWrap> _lib = new HashMap<>();
-    public static BaseEntityWrap get(BaseMapper baseMapper) {
-        Class<?> clz = baseMapper.getClass();
-
-        BaseEntityWrap tmp = _lib.get(clz);
+    private static Map<BaseMapper, BaseEntityWrap> _lib = new HashMap<>();
+    public static BaseEntityWrap get(BaseMapper bm) {
+        BaseEntityWrap tmp = _lib.get(bm);
         if (tmp == null) {
             synchronized (lock) {
-                tmp = _lib.get(clz);
+                tmp = _lib.get(bm);
                 if (tmp == null) {
-                    tmp = new BaseEntityWrap(baseMapper);
-                    _lib.put(clz, tmp);
+                    tmp = new BaseEntityWrap(bm);
+                    _lib.put(bm, tmp);
                 }
             }
         }
