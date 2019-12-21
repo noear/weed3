@@ -52,13 +52,22 @@ public class FieldWrap {
         }
     }
 
-    public void setValue(Object tObj, Object val) throws ReflectiveOperationException{
-        val = typeChange(val,field.getType());
+    public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
+        val = typeChange(val, field.getType());
 
-        if(_setter == null){
-            field.set(tObj,val);
-        }else{
-            _setter.invoke(tObj, new Object[]{val});
+        try {
+            if (_setter == null) {
+                field.set(tObj, val);
+            } else {
+                _setter.invoke(tObj, new Object[]{val});
+            }
+        } catch (IllegalArgumentException ex) {
+            if (val == null) {
+                throw new IllegalArgumentException(name + "(" + field.getType().getSimpleName() + ")类型接收失败!", ex);
+            }
+            throw new IllegalArgumentException(
+                    name + "(" + field.getType().getSimpleName() +
+                            ")类型接收失败：val(" + val.getClass().getSimpleName() + ")", ex);
         }
     }
 
