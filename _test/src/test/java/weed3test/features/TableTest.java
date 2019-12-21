@@ -17,13 +17,13 @@ public class TableTest {
 
     @Test
     public void test0() throws Exception {
-        Map<String, Object> map = db.table("appx").where("app_id=?", 1).select("*").getMap();
+        Map<String, Object> map = db.table("appx").whereEq("app_id", 1).select("*").getMap();
 
         map.remove("app_id");
 
         assert db.table("appx_copy")
                 .setMap(map)
-                .where("app_id=?",101)
+                .whereEq("app_id",101)
                 .update() > 0;
 
         System.out.println(db.lastCommand.text);
@@ -76,7 +76,7 @@ public class TableTest {
         assert db.table(TestModel.class)
                 .whereEq(TestModel::getId, id)
                 .select($(TestModel::getV1))
-                .getValue(0) == 10;
+                .getVariate().longValue(0l)== 10;
     }
 
     @Test
