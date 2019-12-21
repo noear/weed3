@@ -39,18 +39,7 @@ public class TableTest {
         System.out.println(db.lastCommand.text);
     }
 
-    @Test
-    public void test2() throws Exception {
-        AppxModel m = db.table("appx a")
-                .innerJoin("appx_agroup g").onEq("a.agroup_id", "g.agroup_id")
-                .whereEq("a.app_id", 22)
-                .select("*,g.name agroup_name")
-                .getItem(AppxModel.class);
 
-        assert m.app_id == 22;
-
-        System.out.println(db.lastCommand.text);
-    }
 
     @Test
     public void test11() throws Exception {
@@ -58,19 +47,6 @@ public class TableTest {
                 .whereEq(AppxModel::getApp_id, 21)
                 .select("*")
                 .getItem(AppxModel.class).app_id == 21;
-
-        System.out.println(db.lastCommand.text);
-    }
-
-    @Test
-    public void test12() throws Exception {
-        AppxModel m = db.table(AppxModel.class)
-                .innerJoin(AgroupModel.class).onEq(AppxModel::getAgroup_id, AgroupModel::getAgroup_id)
-                .whereEq(AppxModel::getApp_id, 22)
-                .select(AppxModel.class, $(AgroupModel::getName).alias("agroup_name"))
-                .getItem(AppxModel.class);
-
-        assert m.app_id == 22;
 
         System.out.println(db.lastCommand.text);
     }

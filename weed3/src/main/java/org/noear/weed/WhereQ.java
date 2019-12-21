@@ -14,6 +14,7 @@ public class WhereQ extends WhereBase<WhereQ> {
 
         _query = query;
 
+        //为了不自动创建别名（insert,update,delete；不需要别名）
         _isSingleTable = true;
         _context = _query._context;
         _builder = _query._builder;
