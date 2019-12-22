@@ -76,6 +76,8 @@ class DbContextMetaData {
             return;
         }
 
+        System.out.println("Weed3::Init metadata");
+
         Connection conn = null;
         try {
             System.out.println("Weed3::Start testing database connectivity...");
