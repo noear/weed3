@@ -76,6 +76,7 @@ public class MapperUtil {
 
         //5.构建输出
         if (block.isSelect()) {
+            //带.说明是有包的；一般会是模型
             if (block._return.indexOf(".") > 0) {
                 //实体化处理
                 if (block._return_item != null) {

@@ -1,10 +1,13 @@
 package org.noear.weed.xml;
 
 import org.noear.weed.DataItem;
+import org.noear.weed.utils.EntityUtils;
 import org.w3c.dom.Node;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 
 public class XmlSqlBlock {
     private static final String _lock ="";
@@ -12,6 +15,7 @@ public class XmlSqlBlock {
     public String _classname;
     public StringBuilder _classcode;
     public StringBuilder _classcode2;
+    public List<String> _import = new ArrayList<>();
 
     public String _id;
     public String _param; //（属性：外部输入变量申明；默认会自动生成）
@@ -120,4 +124,40 @@ public class XmlSqlBlock {
     }
 
     public IXmlSqlBuilder builder;
+
+    static final String java_types = ",char,boolean,short,int,long,float,double,Character,Boolean,Short,Integer,Long,Float,Double,Date,LocalDateTime,LocalTime,LocalDate,Object,";
+    static final String weed_types = ",Map,MapList,DateItem,DateList,";
+    public String newType(String type ) {
+        if(_import == null || _import.size() == 0){
+            return type;
+        }
+
+        if (type.indexOf(".") >= 0) {
+            return type;
+        }
+        if (type.indexOf(">") >= 0) {
+            return type;
+        }
+        if (java_types.indexOf("," + type + ",") >= 0) {
+            return type;
+        }
+        if (weed_types.indexOf("," + type + ",") >= 0) {
+            return type;
+        }
+
+        for(String pg : _import) {
+            if (pg.endsWith("*")) {
+                //如果是以 * 结尾的，且能拼出新类型
+                String tm = pg.substring(0, pg.length() - 1) + type;
+                if( EntityUtils.loadClass(tm) != null){
+                    return tm;
+                }
+            }else if(pg.endsWith(type)){
+                //如果是以 xxx 结尾的
+                return pg;
+            }
+        }
+
+        return type;
+    }
 }

@@ -1,16 +1,13 @@
 package org.noear.weed.solon_plugin;
 
 import org.noear.solon.XApp;
-import org.noear.solon.core.Aop;
-import org.noear.solon.core.FieldWrap;
-import org.noear.solon.core.XPlugin;
+import org.noear.solon.core.*;
+import org.noear.solon.ext.Act1;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
-import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Db;
 
 import java.lang.annotation.Annotation;
-import java.util.Properties;
 
 public class XPluginImp implements XPlugin {
     @Override
@@ -18,20 +15,19 @@ public class XPluginImp implements XPlugin {
 
         Aop.factory().beanLoaderAdd(Db.class, (clz, bw, anno) -> {
             if (clz.isInterface()) {
-                Object raw = getMapper(clz, anno, null);
-                if (raw != null) {
+                getMapper(clz, anno, null, (raw)->{
                     Aop.put(clz, raw);
-                }
+                });
             }
         });
 
 
-        Aop.factory().beanBuilderAdd((clz, fw) -> {
+        Aop.factory().beanBuilderAdd((clz, fwT) -> {
             if (clz.isInterface()) {
                 Db dbAnno = clz.getAnnotation(Db.class);
                 if (dbAnno == null) {
-                    if (fw.annoS != null) {
-                        for (Annotation a1 : fw.annoS) {
+                    if (fwT.fw.annoS != null) {
+                        for (Annotation a1 : fwT.fw.annoS) {
                             if (a1.annotationType() == Db.class) {
                                 dbAnno = (Db) a1;
                             }
@@ -39,48 +35,42 @@ public class XPluginImp implements XPlugin {
                     }
 
                     if (dbAnno != null) {
-                        return getMapper(clz, dbAnno, fw);
+                        //不适合长期存在
+                        getMapper(clz, dbAnno, fwT, (raw)->{
+                            fwT.setValue(raw);
+                        });
+                        return true;
                     }
                 } else {
-                    Object raw = getMapper(clz, dbAnno, fw);
-                    if (raw != null) {
+                    //适合长期存在
+                    getMapper(clz, dbAnno, fwT, (raw)->{
+                        fwT.setValue(raw);
                         Aop.put(clz, raw);
-                    }
-                    return raw;
+                    });
+                    return true;
                 }
             }
-            return null;
+
+            return false;
         });
     }
 
-    public Object getMapper(Class<?> clz, Db anno, FieldWrap fw) {
-        //1.先找bean
-        DbContext db = Aop.get(anno.value());
-
-        if (db == null) {
-            //2.再找libOfDb
-            db = WeedConfig.libOfDb.get(anno.value());
-        }
-
-        if (db == null) {
-            //3.再找配置
-            Properties tmp = XApp.cfg().getProp(anno.value());
-            if (tmp != null && tmp.size() > 4) {
-                db = new DbContext(tmp);
-            }
-        }
-
-        if (db != null) {
+    public void getMapper(Class<?> clz, Db anno, FieldWrapTmp fwT, Act1<Object> callback) {
+        Aop.getAsyn(anno.value(), (bw) -> {
+            DbContext db = bw.raw();
+            Object obj = null;
             //生成mapper
-            if (fw.genericType != null) {
+            if (fwT != null && fwT.fw.genericType != null) {
                 if (clz == BaseMapper.class) {
-                    return db.mapperBase((Class<?>) fw.genericType.getActualTypeArguments()[0]);
+                    obj = db.mapperBase((Class<?>) fwT.fw.genericType.getActualTypeArguments()[0]);
                 }
             } else {
-                return db.mapper(clz);
+                obj = db.mapper(clz);
             }
-        }
 
-        return null;
+            if (obj != null) {
+                callback.run(obj);
+            }
+        });
     }
 }

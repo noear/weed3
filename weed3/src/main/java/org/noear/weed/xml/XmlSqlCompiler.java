@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class XmlSqlCompiler {
         //代码码函数
         for (int i = 0, len = sql_list.getLength(); i < len; i++) {
             Node n = sql_list.item(i);
-            parseSqlNode(node_map, sb, n, namespace, classname);
+            parseSqlNode(node_map, sb, n, _import, namespace, classname);
         }
 
         sb.append("}\n");
@@ -110,11 +111,17 @@ public class XmlSqlCompiler {
     }
 
     //xml:解析 sql 指令节点
-    private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String namespace,  String classname) {
+    private static void parseSqlNode(Map<String,Node> nodeMap, StringBuilder sb,Node n, String _import, String namespace,  String classname) {
         int depth = 1;
         XmlSqlBlock dblock = new XmlSqlBlock();
 
         dblock.__nodeMap = nodeMap;
+
+        if (_import != null) {
+            for (String s : _import.split(";")) {
+                dblock._import.add(s.trim());
+            }
+        }
 
         dblock._namespace = namespace;
         dblock._classname = classname;
@@ -151,7 +158,7 @@ public class XmlSqlCompiler {
         StringBuilder sb2 = new StringBuilder();
         {
             newLine(sb2, depth + 1).append("SQLBuilder sb = new SQLBuilder();\n");
-            _parseNodeList(n.getChildNodes(),"sb", sb2, dblock, depth + 1);
+            _parseNodeList(n.getChildNodes(), "sb", sb2, dblock, depth + 1);
         }
 
         //1.打印变量
@@ -173,12 +180,12 @@ public class XmlSqlCompiler {
         sb.append(sb2);
 
         //3.打印预处理变量（cache tag 用到的，带.的变量）
-        if(dblock.tagMap.size()>0){
+        if (dblock.tagMap.size() > 0) {
             sb.append("\n");
         }
-        for(XmlSqlVar dv : dblock.tagMap.values()){
-            if(dv.name.indexOf(".") > 0){
-                newLine(sb,depth+1)
+        for (XmlSqlVar dv : dblock.tagMap.values()) {
+            if (dv.name.indexOf(".") > 0) {
+                newLine(sb, depth + 1)
                         .append("map.put(\"").append(dv.name).append("\", ")
                         .append(dv.name).append(");");
             }
@@ -193,21 +200,21 @@ public class XmlSqlCompiler {
 
         //0.确定动作
         {
-            String txt2 = dblock._texts.insert(0,"# ").toString().trim().toUpperCase();
+            String txt2 = dblock._texts.insert(0, "# ").toString().trim().toUpperCase();
 
-            if(dblock._action==null && txt2.indexOf(" INSERT ")>0){
+            if (dblock._action == null && txt2.indexOf(" INSERT ") > 0) {
                 dblock._action = "INSERT";
             }
 
-            if(dblock._action==null && txt2.indexOf(" DELETE ")>0){
+            if (dblock._action == null && txt2.indexOf(" DELETE ") > 0) {
                 dblock._action = "DELETE";
             }
 
-            if(dblock._action==null && txt2.indexOf(" UPDATE ")>0){
+            if (dblock._action == null && txt2.indexOf(" UPDATE ") > 0) {
                 dblock._action = "UPDATE";
             }
 
-            if(dblock._action==null && txt2.indexOf(" SELECT ")>0){
+            if (dblock._action == null && txt2.indexOf(" SELECT ") > 0) {
                 dblock._action = "SELECT";
             }
 
@@ -215,6 +222,8 @@ public class XmlSqlCompiler {
         }
 
         //注册块
+        dblock._return = dblock.newType(dblock._return);
+        dblock._return_item = dblock.newType(dblock._return_item);
         XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
 

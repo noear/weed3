@@ -12,4 +12,13 @@ public class EntityUtils {
     public static <T> T toEntity(Class<T> clz, DataItem data) {
         return ClassWrap.get(clz).toEntity(data);
     }
+
+    /** 根据字符串加载为一个类*/
+    public static Class<?> loadClass(String className) {
+        try {
+            return Class.forName(className);
+        }catch (Throwable ex) {
+            return null;
+        }
+    }
 }

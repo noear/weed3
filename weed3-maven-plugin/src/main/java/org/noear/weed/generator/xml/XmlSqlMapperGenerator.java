@@ -23,12 +23,12 @@ public class XmlSqlMapperGenerator {
             File dic = new File(path);
 
             do_generate(dic,sourceDir);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
 
-    private static void do_generate(File file, File sourceDir) throws Exception {
+    private static void do_generate(File file, File sourceDir) throws Throwable {
         if (file.isDirectory()) {
             File[] tmps = file.listFiles();
             for (File tmp : tmps) {
@@ -36,13 +36,13 @@ public class XmlSqlMapperGenerator {
             }
         } else {
             if (file.getName().endsWith(".xml")) {
-                generateFile(sourceDir, file);
+                generateJavaFile(sourceDir, file);
             }
         }
     }
 
 
-    public static void generateFile(File sourceDir, File xmlFile) throws Exception {
+    public static void generateJavaFile(File sourceDir, File xmlFile) throws Exception {
         JavaCodeBlock block = parse(xmlFile);
         if (block == null) {
             return;
@@ -76,10 +76,13 @@ public class XmlSqlMapperGenerator {
 
         String namespace = attr(nm, "namespace");
         String _import = attr(nm, "import");
+        String baseMapperOf = attr(nm, ":baseMapper");
+        String dbOf = attr(nm,":db");
 
         String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
+
 
         sb.append("package ").append(namespace).append(";\n\n");
 
@@ -87,8 +90,10 @@ public class XmlSqlMapperGenerator {
         sb.append("import java.time.*;\n");
         sb.append("import java.util.*;\n\n");
 
+        sb.append("import org.noear.weed.BaseMapper;\n");
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
+        sb.append("import org.noear.weed.annotation.Db;\n");
         sb.append("import org.noear.weed.xml.Namespace;\n");
         if(StringUtils.isEmpty(_import) == false) {
             String[] ss = _import.split(";");
@@ -113,8 +118,17 @@ public class XmlSqlMapperGenerator {
             }
         }
 
+        if(StringUtils.isEmpty(dbOf) == false){
+            sb2.append("@Db(\"").append(dbOf).append("\")\n");
+        }
         sb2.append("@Namespace(\"").append(namespace).append("\")\n");
-        sb2.append("public interface ").append(classname).append("{");
+        sb2.append("public interface ").append(classname);
+        if(StringUtils.isEmpty(baseMapperOf) == false) {
+            sb2.append(" extends BaseMapper<")
+                    .append(baseMapperOf)
+                    .append(">");
+        }
+        sb2.append("{");
 
         //构建block
         StringBuilder sb_tmp  =new StringBuilder();
@@ -156,8 +170,8 @@ public class XmlSqlMapperGenerator {
 
     private static void writerBlock(StringBuilder sb, XmlSqlBlock block){
         //写入注释
-        if(block._note != null && block._note.length()>0){
-            newLine(sb,2).append("//").append(block._note);
+        if(block._remarks != null && block._remarks.length()>0){
+            newLine(sb,2).append("//").append(block._remarks);
         }
 
         //写入接口定义
@@ -205,7 +219,10 @@ public class XmlSqlMapperGenerator {
 
         dblock._id = attr(n, "id");
 
-        dblock._note = attr(n, ":note");
+        dblock._remarks = attr(n, ":remarks");
+        if(dblock._remarks == null) {
+            dblock._remarks = attr(n, ":note");
+        }
         dblock._param = attr(n, ":param");
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
