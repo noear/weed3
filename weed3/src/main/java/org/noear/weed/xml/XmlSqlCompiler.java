@@ -226,6 +226,7 @@ public class XmlSqlCompiler {
         dblock._return_item = dblock.newType(dblock._return_item);
         dblock._return = dblock.newType(dblock._return);
         if (tmp != null && tmp.equals(dblock._return_item) == false) {
+            //把List<User> 转为 List<xx.xx.User>
             dblock._return.replace("<" + tmp + ">", "<" + dblock._return_item + ">");
         }
 
