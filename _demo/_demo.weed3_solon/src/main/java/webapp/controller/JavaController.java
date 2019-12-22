@@ -15,7 +15,7 @@ import java.util.Map;
 @XSingleton(true)
 @XController
 public class JavaController {
-    DbContext db2 = DbConfig.db2;
+    DbContext db2 = DbConfig.db2();
 
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {

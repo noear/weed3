@@ -20,7 +20,7 @@ public class XmlController {
 
     @XInject("db1")
     DbContext db1;
-    DbContext db2 = DbConfig.db2;
+    DbContext db2 = DbConfig.db2();
 
 
     @XMapping("demo0/html")

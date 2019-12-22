@@ -13,7 +13,7 @@ import webapp.model.AppxModel;
 @XSingleton(true)
 @XController
 public class TestController {
-    DbContext db2 = DbConfig.db2;
+    DbContext db2 = DbConfig.db2();
 
     @XMapping("demo1")
     public Object test(String sql) throws Exception {

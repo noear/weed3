@@ -5,21 +5,30 @@ import org.noear.solon.annotation.XInject;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.solon.core.ModelAndView;
+import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
 import webapp.dso.DbConfig;
 import webapp.dso.SqlAnnotation;
+import webapp.model.AppxModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @XMapping("/annot")
 @XSingleton(true)
 @XController
 public class AnnotController {
-    DbContext db2 = DbConfig.db2;
+    DbContext db2 = DbConfig.db2();
 
     @Db("db2")
     @XInject
     SqlAnnotation mapper;
+
+    @Db("db2")
+    @XInject
+    BaseMapper<AppxModel> mapper2;
 
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
@@ -33,7 +42,12 @@ public class AnnotController {
 
     @XMapping("demo1/json")
     public Object demo1() throws Exception {
-        return mapper.appx_get();
+        Map<String, Object> tmp = new HashMap<>();
+
+        tmp.put("mapper2", mapper2.selectById(23));
+        tmp.put("mapper", mapper.appx_get());
+
+        return tmp;
     }
 
     @XMapping("demo2/json")

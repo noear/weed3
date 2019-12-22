@@ -41,8 +41,10 @@ class DbContextMetaData {
     protected void initMetaData(DbContext db) {
         Connection conn = null;
         try {
+            System.out.println("Weed3::Start testing database connectivity...");
             conn = db.getConnection();
             DatabaseMetaData md = conn.getMetaData();
+            System.out.println("Weed3::The connection is successful");
 
             //1.
             setDatabaseType(md.getDatabaseProductName());
@@ -53,7 +55,8 @@ class DbContextMetaData {
             //3.
             setTables(md);
 
-        } catch (SQLException ex) {
+        } catch (Throwable ex) {
+            System.out.println("Weed3::The connection error");
             ex.printStackTrace();
         } finally {
             if (conn != null) {
