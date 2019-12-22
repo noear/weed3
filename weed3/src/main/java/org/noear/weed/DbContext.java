@@ -39,8 +39,7 @@ public class DbContext extends DbContextMetaData {
 
     //特性支持
     protected Map<String, String> _attrMap = new HashMap<>();
-    //数据源
-    private DataSource __dataSource; //通过dataSourceSet写入
+
     //代码注解
     protected String _codeHint = null;
     protected String _name;
@@ -131,16 +130,11 @@ public class DbContext extends DbContextMetaData {
     }
 
     /** 数据源设置 */
-    public DbContext dataSourceSet(DataSource dataSource) {
-        __dataSource = dataSource;
-        initMetaData(this);
+    public DbContext dataSourceSet(DataSource ds) {
+        dataSourceDoSet(ds);
         return this;
     }
 
-    /** 获取数据源 */
-    public DataSource dataSource() {
-        return __dataSource;
-    }
 
 
     /** 数据集合名称设置 */
@@ -220,14 +214,6 @@ public class DbContext extends DbContextMetaData {
     //
     // 执行能力支持
     //
-
-    /**
-     * 获取连接
-     */
-    public Connection getConnection() throws SQLException {
-        return dataSource().getConnection();
-    }
-
 
     public <T> BaseMapper<T> mapperBase(Class<T> clz) {
         return new BaseMapperWrap<T>(this, clz);

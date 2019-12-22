@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.wrap.*;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -17,14 +18,39 @@ class DbContextMetaData {
     private DbType _dbType = DbType.Unknown;
     private DbAdapter _dbAdapter;
 
+    //数据源
+    private DataSource __dataSource; //通过dataSourceSet写入
+    /** 获取数据源 */
+    public DataSource dataSource() {
+        return __dataSource;
+    }
+    protected void dataSourceDoSet(DataSource ds){
+        __dataSource = ds;
+    }
+    /**
+     * 获取连接
+     */
+    public Connection getConnection() throws SQLException {
+        return dataSource().getConnection();
+    }
+
     //数据集名称
 
     public DbType dbType(){
+        initMetaData();
+
         return _dbType;
     }
-    public DbAdapter dbAdapter(){ return _dbAdapter;}
+
+    public DbAdapter dbAdapter(){
+        initMetaData();
+
+        return _dbAdapter;
+    }
 
     public TableWrap getTableWrap(String name){
+        initMetaData();
+
         for(Map.Entry<String,TableWrap> kv : _tables.entrySet()){
             if(name.equalsIgnoreCase(kv.getKey())){
                 return kv.getValue();
@@ -38,11 +64,22 @@ class DbContextMetaData {
         return tw == null ? null : tw.getPk1();
     }
 
-    protected void initMetaData(DbContext db) {
+    private void initMetaData(){
+        if(_dbAdapter != null){
+            return;
+        }
+        initMetaDataDo();
+    }
+    private synchronized void initMetaDataDo() {
+        //这段不能去掉
+        if(_dbAdapter != null){
+            return;
+        }
+
         Connection conn = null;
         try {
             System.out.println("Weed3::Start testing database connectivity...");
-            conn = db.getConnection();
+            conn = getConnection();
             DatabaseMetaData md = conn.getMetaData();
             System.out.println("Weed3::The connection is successful");
 
