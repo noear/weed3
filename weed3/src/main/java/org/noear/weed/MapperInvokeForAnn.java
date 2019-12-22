@@ -17,10 +17,12 @@ class MapperInvokeForAnn implements IMapperInvoke {
             return MapperHandler.UOE;
         }
 
+
+        String _sql = ann.value();
         String _caching = ann.caching();
         String _cacheClear = ann.cacheClear();
 
-        //获取缓存服务
+        //1.获取缓存服务
         ICacheServiceEx cache_tmp = null;
         if (StringUtils.isEmpty(_caching) == false) {
             cache_tmp = WeedConfig.libOfCache.get(_caching);
@@ -29,11 +31,8 @@ class MapperInvokeForAnn implements IMapperInvoke {
                 throw new RuntimeException("WeedConfig.libOfCache does not exist:@" + _caching);
             }
         }
-        ICacheServiceEx cache = cache_tmp;
 
-
-        String sqlUp = "# " + ann.value().toUpperCase();
-
+        //2.构建参数
         Map<String, Object> _map = new HashMap<>();
         Parameter[] names = method.getParameters();
         for (int i = 0, len = names.length; i < len; i++) {
@@ -50,12 +49,26 @@ class MapperInvokeForAnn implements IMapperInvoke {
             }
         }
 
+        //3.确定sql
+        if(_sql.startsWith("#")){
+            _sql = SQLRenderManager.global.render(_sql.substring(1), _map);
+        }
+
+        String sqlUp = "# " + _sql.toUpperCase();
+
+        //4.生成访问对象
         DbAccess sp = null;
         if(sqlUp.indexOf("@") > 0) {
-            sp = db.call(ann.value()).setMap(_map);
+            sp = db.call(_sql).setMap(_map);
+        }else if(sqlUp.indexOf("?") > 0){
+            sp = db.sql(_sql,args);
         }else{
-            sp = db.sql(ann.value(),args);
+            sp = db.sql(_sql);
         }
+
+
+        //5.执行
+        ICacheServiceEx cache = cache_tmp;
 
         if (sqlUp.indexOf(" DELETE ") > 0 || sqlUp.indexOf(" UPDATE ") > 0) {
             int rst = sp.execute();
