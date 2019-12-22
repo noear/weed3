@@ -222,8 +222,13 @@ public class XmlSqlCompiler {
         }
 
         //注册块
-        dblock._return = dblock.newType(dblock._return);
+        String tmp = dblock._return_item;
         dblock._return_item = dblock.newType(dblock._return_item);
+        dblock._return = dblock.newType(dblock._return);
+        if (tmp != null && tmp.equals(dblock._return_item) == false) {
+            dblock._return.replace("<" + tmp + ">", "<" + dblock._return_item + ">");
+        }
+
         XmlSqlFactory.register(namespace + "." + dblock._id, dblock);
     }
 

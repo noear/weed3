@@ -128,6 +128,10 @@ public class XmlSqlBlock {
     static final String java_types = ",char,boolean,short,int,long,float,double,Character,Boolean,Short,Integer,Long,Float,Double,Date,LocalDateTime,LocalTime,LocalDate,Object,";
     static final String weed_types = ",Map,MapList,DateItem,DateList,";
     public String newType(String type ) {
+        if(type == null){
+            return null;
+        }
+
         if(_import == null || _import.size() == 0){
             return type;
         }
