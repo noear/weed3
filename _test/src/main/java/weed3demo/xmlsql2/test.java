@@ -7,8 +7,7 @@ import java.util.*;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.xml.Namespace;
-
-import weed3demo.mapper.UserModel;
+import weed3demo.mapper.*;
 
 @Namespace("weed3demo.xmlsql2")
 public interface test{

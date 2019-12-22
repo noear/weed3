@@ -16,7 +16,6 @@ public class XmlSqlBlock {
     public String _id;
     public String _param; //（属性：外部输入变量申明；默认会自动生成）
     public String _declare; //（属性：内部变量类型预申明）
-    public String _require;//（属性：导入包或类）
     public String _return;//（属性：返回类型）
     public String _return_item;
 

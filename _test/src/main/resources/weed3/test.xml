@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="weed3demo.xmlsql2" :db="testdb">
+<mapper namespace="weed3demo.xmlsql2"
+        import="weed3demo.mapper.*">
     <sql id="user_add" :return="List[Long]"
-         :param="m:weed3demo.mapper.UserModel,sex:int"
+         :param="m:UserModel,sex:int"
          :note="添加用户"
          :cacheClear="user_${m.user_id}"><![CDATA[
         INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
     ]]></sql>
 
     <sql id="user_add3" :return="long"
-         :param="m:weed3demo.mapper.UserModel,sex:int"
+         :param="m:UserModel,sex:int"
          :note="添加用户"
          :cacheClear="user_${m.user_id}">
         INSERT user
@@ -29,7 +30,7 @@
 
     <sql id="user_add_for" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
-        <for var="m:weed3demo.mapper.UserModel" sep="#" items="list">
+        <for var="m:UserModel" sep="#" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
@@ -41,9 +42,9 @@
 
     <sql id="user_add_for2" :return="long" :note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
-        <for var="m:weed3demo.mapper.UserModel" items="list">
+        <for var="m:UserModel" items="list">
             <if test="m.users != null">
-                <for var="m2:weed3demo.mapper.UserModel" items="m.users">
+                <for var="m2:UserModel" items="m.users">
                     (@{m2.user_id},@{m2.mobile},@{m2.sex})
                 </for>
             </if>

@@ -89,7 +89,7 @@ public class XmlSqlMapperGenerator {
 
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
-        sb.append("import org.noear.weed.xml.XmlSqlFactory;\n");
+        sb.append("import org.noear.weed.xml.Namespace;\n");
         if(StringUtils.isEmpty(_import) == false) {
             String[] ss = _import.split(";");
             for (String s : ss) {

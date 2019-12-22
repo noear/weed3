@@ -54,9 +54,16 @@ public class XPluginImp implements XPlugin {
     }
 
     public Object getMapper(Class<?> clz, Db anno, FieldWrap fw) {
-        DbContext db = WeedConfig.libOfDb.get(anno.value());
+        //1.先找bean
+        DbContext db = Aop.get(anno.value());
 
         if (db == null) {
+            //2.再找libOfDb
+            db = WeedConfig.libOfDb.get(anno.value());
+        }
+
+        if (db == null) {
+            //3.再找配置
             Properties tmp = XApp.cfg().getProp(anno.value());
             if (tmp != null && tmp.size() > 4) {
                 db = new DbContext(tmp);
@@ -64,6 +71,7 @@ public class XPluginImp implements XPlugin {
         }
 
         if (db != null) {
+            //生成mapper
             if (fw.genericType != null) {
                 if (clz == BaseMapper.class) {
                     return db.mapperBase((Class<?>) fw.genericType.getActualTypeArguments()[0]);
