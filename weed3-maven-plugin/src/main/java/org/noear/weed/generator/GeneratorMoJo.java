@@ -9,8 +9,9 @@ import org.noear.weed.generator.xml.XmlSqlMapperGenerator;
 
 import java.io.File;
 
-@Mojo(name="generateMapper")
-public class GenerateMapper extends AbstractMojo {
+
+@Mojo(name="generator")
+public class GeneratorMoJo extends AbstractMojo {
     @Parameter(defaultValue = "${basedir}")
     private File baseDir;
 
@@ -21,7 +22,7 @@ public class GenerateMapper extends AbstractMojo {
         //getLog().info(baseDir.getAbsolutePath());
         //getLog().info(sourceDir.getAbsolutePath());
 
-        System.out.println("Start building mapper:");
+        System.out.println("Start building files:");
         XmlSqlMapperGenerator.generate(baseDir, sourceDir);
         //getLog().info("Hello MavenPlugin, I'm Weed3.");
     }
