@@ -112,8 +112,9 @@ db.table("user").where("id=?",1).select("*").getItem(User.class);
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="weed3demo.xmlsql2">
-    <sql id="getUser" :return="demo.model.UserModel" :note="获取用户信息">
+<mapper namespace="weed3demo.xmlsql2"
+        import="demo.model.*">
+    <sql id="getUser" :return="UserModel" :remarks="获取用户信息">
         SELECT * FROM user WHERE id = @{id:int}
     </sql>
 </mapper>
@@ -123,6 +124,9 @@ db.table("user").where("id=?",1).select("*").getItem(User.class);
 ```
 mapper 开始标签
   namespace （属性：命名空间，{namespace}.{id} = sqlid）
+  import（属性：导入包或类，多个以;号隔开）
+  :baseMapper（属性：扩展BaseMapper 的模型，效果：BaseMapper<Xxx>）
+  :db（属性：关联 db bean；效果：@Db("xxx")）
     
 sql 代码块定义指令
   id （属性：id）
@@ -131,7 +135,7 @@ sql 代码块定义指令
   :declare（属性：内部变量类型预申明）
   :return（属性：返回类型）
 
-  :note（属性：描述、说明、注解）
+  :remarks（属性：描述、摘要）
 
   :caching（属性：缓存服务name） //是对 ICacheController 接口的映射
   :cacheClear?（属性：清除缓存）
