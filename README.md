@@ -51,14 +51,14 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.5.1</version>
+    <version>3.2.5.2</version>
 </dependency>
 
 <!-- maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.5.1</version>
+    <version>3.2.5.2</version>
 </plugin>
 ```
 
