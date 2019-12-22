@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.utils.IOUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +21,36 @@ public class SQLRenderManager implements IRender {
           System.out.println("Weed3:: sql render: " + suffix + "=" + render.getClass().getSimpleName());
      }
 
+     public SQLRenderManager() {
+          String packname = "org.noear.weed.render";
+          Object tmp = IOUtils.loadClass(packname + ".freemarker.SQLFreemarkerRender");
+          if (tmp != null) {
+               global.mapping(".ftl", (IRender) tmp);
+               return;
+          }
+
+          tmp = IOUtils.loadClass(packname + ".beetl.SQLBeetlRender");
+          if (tmp != null) {
+               global.mapping(".md", (IRender) tmp);
+               return;
+          }
+
+          tmp = IOUtils.loadClass(packname + ".enjoy.SQLEnjoyRender");
+          if (tmp != null) {
+               global.mapping(".txt", (IRender) tmp);
+               return;
+          }
+     }
+
      //不能放上面
      public static SQLRenderManager global = new SQLRenderManager();
 
      @Override
      public String render(String path, Map<String, Object> args) throws Throwable {
+          if(_def == null){
+               throw new RuntimeException("Weed3:Missing sql render");
+          }
+
           //
           //如果有视图
           //

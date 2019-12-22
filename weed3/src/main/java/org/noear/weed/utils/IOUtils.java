@@ -18,6 +18,15 @@ public class IOUtils {
         }
     }
 
+    /** 根据字符串加载为一个类*/
+    public static Class<?> loadClass(String className) {
+        try {
+            return Class.forName(className);
+        }catch (Throwable ex) {
+            return null;
+        }
+    }
+
     //res::获取资源的RUL
     public static URL getResource(String name) {
         URL url = IOUtils.class.getResource(name);

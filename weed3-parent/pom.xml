@@ -91,6 +91,24 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>weed3.render.enjoy</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3.render.beetl</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3.render.freemarker</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>snack3</artifactId>
                 <version>${snack3.ver}</version>
             </dependency>
@@ -201,6 +219,10 @@
         <module>../weed3.cache.redis</module>
         <module>../weed3.cache.ehcache</module>
         <module>../weed3.cache.j2cache</module>
+
+        <module>../weed3.render.beetl</module>
+        <module>../weed3.render.enjoy</module>
+        <module>../weed3.render.freemarker</module>
     </modules>
 
 </project>

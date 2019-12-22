@@ -2,6 +2,7 @@ package org.noear.weed.xml;
 
 import org.noear.weed.DataItem;
 import org.noear.weed.utils.EntityUtils;
+import org.noear.weed.utils.IOUtils;
 import org.w3c.dom.Node;
 
 import java.time.LocalDate;
@@ -153,7 +154,7 @@ public class XmlSqlBlock {
             if (pg.endsWith("*")) {
                 //如果是以 * 结尾的，且能拼出新类型
                 String tm = pg.substring(0, pg.length() - 1) + type;
-                if( EntityUtils.loadClass(tm) != null){
+                if( IOUtils.loadClass(tm) != null){
                     return tm;
                 }
             }else if(pg.endsWith(type)){
