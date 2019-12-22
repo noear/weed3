@@ -92,7 +92,7 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        Map<String, String> map =  dbMysqlCfg(); // dbOracleCfg(); //dbPgsqlCfg(); //dbMssqlCfg();//
+        Map<String, String> map =  dbMysqlCfg(); // dbOracleCfg(); // dbPgsqlCfg(); //dbMssqlCfg();//
 
         DbContext db = new DbContext(map.get("schema"), dataSource(map)).nameSet("rock");
         WeedConfig.isUsingSchemaPrefix =true;
