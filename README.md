@@ -3,7 +3,7 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-微型ORM（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；等...）
+微型ORM（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；监控；等...）
 
 
 
