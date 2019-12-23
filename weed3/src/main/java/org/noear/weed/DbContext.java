@@ -261,6 +261,29 @@ public class DbContext extends DbContextMetaData {
         return new DbStoredProcedure(this).call(process);
     }
 
+    public DbProcedure call(String process, Map<String,Object> args){
+        if (process.startsWith("@")) {
+            XmlSqlLoader.tryLoad();
+            return new DbXmlsqlProcedure(this).sql(process.substring(1));
+        }
+
+
+        if(process.startsWith("#")){
+            try {
+                String _sql = SQLRenderManager.global().render(process.substring(1), args);
+                return new DbQueryProcedure(this).sql(_sql).setMap(args);
+            }catch (Throwable ex){
+                throw new RuntimeException(ex);
+            }
+        }
+
+        if (process.lastIndexOf(" ") > 0) {
+            return new DbQueryProcedure(this).sql(process);
+        }
+
+        return new DbStoredProcedure(this).call(process);
+    }
+
 
     /**
      * 输入SQL，获取查询器
