@@ -33,6 +33,11 @@
 | org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
 | | |
+| org.noear:weed3.render.beetl | 基于 beetl 适配的模板引擎 |
+| org.noear:weed3.render.enjoy | 基于 enjoy 适配的模板引擎 |
+| org.noear:weed3.render.freemarker | 基于 freemarker 适配的模板引擎 |
+| org.noear:weed3.render.velocity | 基于 velocity 适配的模板引擎 |
+| | |
 | org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 
 
