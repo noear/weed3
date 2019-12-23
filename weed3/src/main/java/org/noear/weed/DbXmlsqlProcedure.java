@@ -102,7 +102,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
 
         XmlSqlBlock block = XmlSqlFactory.get(_sqlid);
         if(block == null || block.builder==null) {
-            throw new RuntimeException("Xml sql @" + _sqlid + " does not exist");
+            throw new RuntimeException("Sql @" + _sqlid + " does not exist");
         }
 
         SQLBuilder sqlBuilder = null;

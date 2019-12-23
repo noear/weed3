@@ -40,6 +40,11 @@ public class SQLBeetlRender implements IRender {
             throw new RuntimeException(ex);
         }
 
+        cfg.setStatementStart("@");
+        cfg.setStatementEnd(null);
+        cfg.setPlaceholderStart("${");
+        cfg.setPlaceholderEnd("}");
+
         boolean isDebugMode = "1".equals(System.getProperty("debug"));
 
         if (isDebugMode) {
