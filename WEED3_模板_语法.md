@@ -5,7 +5,7 @@
 
 ### 具体引擎语法例
 
-#### beetl
+#### weed3.render.beetl
 * 参考 beetl 语法
 * 边界符调整（-- 或 #）
 ```sql
@@ -24,7 +24,7 @@
 --}
 ```
 
-#### enjoy
+#### weed3.render.enjoy
 * 参考 enjoy 语法
 ```sql
 #if(agroup_id == 0)
@@ -34,7 +34,7 @@
 #end
 ```
 
-#### freemarker
+#### weed3.render.freemarker
 * 参考 freemarker 语法
 ```sql
 <#if agroup_id == 0>
@@ -45,7 +45,7 @@
 ```
 
 
-#### velocity
+#### weed3.render.velocity
 * 参考 velocity 语法
 ```sql
 #if($agroup_id == 0)
