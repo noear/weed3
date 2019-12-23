@@ -61,18 +61,11 @@ public class SQLRenderManager implements IRender {
                throw new RuntimeException("Weed3:Missing sql render");
           }
 
+          //尝试找渲染器
           //
-          //如果有视图
-          //
-          int suffix_idx = path.lastIndexOf(".");
-          if (suffix_idx > 0) {
-               String suffix = path.substring(suffix_idx);
-               IRender render = _mapping.get(suffix);
-
-               if (render != null) {
-                    //如果找到对应的渲染器
-                    //
-                    return render.render(path, args);
+          for(Map.Entry<String,IRender> kv : _mapping.entrySet()){
+               if(path.endsWith(kv.getKey())){
+                    return kv.getValue().render(path, args);
                }
           }
 

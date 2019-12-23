@@ -6,6 +6,6 @@ import org.noear.weed.SQLRenderManager;
 public class StarterImp implements IStarter {
     @Override
     public void start() {
-        SQLRenderManager.global().mapping(".md", SQLEnjoyRender.global());
+        SQLRenderManager.global().mapping(".enj.sql", SQLEnjoyRender.global());
     }
 }

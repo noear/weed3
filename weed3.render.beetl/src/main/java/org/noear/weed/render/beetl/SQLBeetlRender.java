@@ -40,7 +40,7 @@ public class SQLBeetlRender implements IRender {
             throw new RuntimeException(ex);
         }
 
-        cfg.setStatementStart("@");
+        cfg.setStatementStart("--");
         cfg.setStatementEnd(null);
         cfg.setPlaceholderStart("${");
         cfg.setPlaceholderEnd("}");

@@ -11,12 +11,12 @@ public class Test2App {
 
 
 
-        System.out.println(mapper.appx_get_ftl(1));
+        System.out.println(mapper.appx_get_ftl(5));
 
-        System.out.println(mapper.appx_get_beetl(1));
+        System.out.println(mapper.appx_get_beetl(5));
 
-        System.out.println(mapper.appx_get_enjoy(1));
+        System.out.println(mapper.appx_get_enjoy(5));
 
-        System.out.println(mapper.appx_get_velocity(1));
+        System.out.println(mapper.appx_get_velocity(5));
     }
 }

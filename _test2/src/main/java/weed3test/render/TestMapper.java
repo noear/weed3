@@ -3,10 +3,10 @@ package weed3test.render;
 import org.noear.weed.annotation.Sql;
 
 public interface TestMapper {
-    @Sql("#tml/beetl.sql")
+    @Sql("#tml/beetl.btl.sql")
     AppxModel appx_get_beetl(int id);
 
-    @Sql("#tml/enjoy.md")
+    @Sql("#tml/enjoy.enj.sql")
     AppxModel appx_get_enjoy(int id);
 
     @Sql("#tml/freemarker.ftl")
