@@ -25,11 +25,35 @@ public class TableTest {
     }
 
     @Test
+    public void test02() throws Exception {
+        Map<String, Object> map = db.table("appx").whereEq("app_id", 1).select("*").getMap();
+
+        map.remove("app_id");
+
+        assert db.table("appx_copy")
+                .setMap(map)
+                .whereEq("app_id",101).orEq("agroup_id",null)
+                .update() > 0;
+
+        System.out.println(db.lastCommand.text);
+    }
+
+    @Test
     public void test1() throws Exception {
         assert db.table("appx")
                 .whereEq("app_id", 22)
                 .select("*")
                 .getItem(AppxModel.class).app_id == 22;
+
+        System.out.println(db.lastCommand.text);
+    }
+
+    @Test
+    public void test12() throws Exception {
+        assert db.table("appx")
+                .whereEq("app_id", null)
+                .select("*")
+                .getItem(AppxModel.class).app_id == null;
 
         System.out.println(db.lastCommand.text);
     }
