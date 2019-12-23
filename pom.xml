@@ -18,19 +18,10 @@
 
 
     <modules>
+        <module>weed3-parent</module>
+
         <module>_test</module>
         <module>_demo</module>
-
-        <module>weed3</module>
-
-        <module>weed3.cache.memcached</module>
-        <module>weed3.cache.redis</module>
-        <module>weed3.cache.ehcache</module>
-        <module>weed3.cache.j2cache</module>
-
-        <module>weed3-maven-plugin</module>
-
-        <module>weed3-parent</module>
     </modules>
 
 </project>
