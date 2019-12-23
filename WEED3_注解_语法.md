@@ -18,5 +18,5 @@
 * 应对超复杂统计查询
 
 ```java
-@Sql("#user_stat.sql")
+@Sql("#report/user_stat.sql")
 ```
