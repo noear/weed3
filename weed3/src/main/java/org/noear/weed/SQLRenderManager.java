@@ -23,19 +23,24 @@ public class SQLRenderManager implements IRender {
 
      public SQLRenderManager() {
           String packname = "org.noear.weed.render";
-          Object tmp = IOUtils.loadClass(packname + ".freemarker.StarterImp");
+          IStarter tmp = IOUtils.loadEntity(packname + ".freemarker.StarterImp");
           if (tmp != null) {
-               ((IStarter)tmp).start();
+               tmp.start();
           }
 
-          tmp = IOUtils.loadClass(packname + ".beetl.StarterImp");
+          tmp = IOUtils.loadEntity(packname + ".beetl.StarterImp");
           if (tmp != null) {
-               ((IStarter)tmp).start();
+               tmp.start();
           }
 
-          tmp = IOUtils.loadClass(packname + ".enjoy.StarterImp");
+          tmp = IOUtils.loadEntity(packname + ".enjoy.StarterImp");
           if (tmp != null) {
-               ((IStarter)tmp).start();
+               tmp.start();
+          }
+
+          tmp = IOUtils.loadEntity(packname + ".velocity.StarterImp");
+          if (tmp != null) {
+               tmp.start();
           }
      }
 

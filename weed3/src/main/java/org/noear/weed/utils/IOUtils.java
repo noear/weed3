@@ -27,6 +27,16 @@ public class IOUtils {
         }
     }
 
+    public static <T> T loadEntity(String className) {
+        try {
+            Class<?> clz = Class.forName(className);
+            if (clz != null) {
+                return (T) clz.newInstance();
+            }
+        } catch (Throwable ex) {}
+        return null;
+    }
+
     //res::获取资源的RUL
     public static URL getResource(String name) {
         URL url = IOUtils.class.getResource(name);

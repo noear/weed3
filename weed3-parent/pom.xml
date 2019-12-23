@@ -112,6 +112,12 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>weed3.render.velocity</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>snack3</artifactId>
                 <version>${snack3.ver}</version>
             </dependency>
@@ -226,6 +232,7 @@
         <module>../weed3.render.beetl</module>
         <module>../weed3.render.enjoy</module>
         <module>../weed3.render.freemarker</module>
+        <module>../weed3.render.velocity</module>
     </modules>
 
 </project>
