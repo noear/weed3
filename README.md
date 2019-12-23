@@ -118,10 +118,10 @@ userDao.selectById(12);
 //调用 @Sql 方法
 UserModel user = userDao.getUser(2); 
 
-//调用 xml sql
+//调用 Xml sql
 userDao.addUser(user); 
 
-//调用模板sql
+//调用Template sql
 StatModel stat = userDao.userStat(20201010);
 
 
