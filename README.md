@@ -29,7 +29,7 @@ db.mapperBase(User.class).selectById(1);
 db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
   .whereEq("u.type",11)
-  .limit(101,10)
+  .limit(100,20)
   .select("u.*,e.sex,e.label")
   .getList(User.class);
 ```
