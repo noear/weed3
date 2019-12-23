@@ -219,7 +219,6 @@
         </plugins>
     </build>
     <modules>
-
         <module>../weed3</module>
         <module>../weed3-maven-plugin</module>
         <module>../weed3-solon-plugin</module>
@@ -233,6 +232,7 @@
         <module>../weed3.render.enjoy</module>
         <module>../weed3.render.freemarker</module>
         <module>../weed3.render.velocity</module>
+
     </modules>
 
 </project>
