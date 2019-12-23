@@ -6,6 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SQLRenderManager implements IRender {
+
+     private static SQLRenderManager _global;
+     public static SQLRenderManager global(){
+          if(_global == null){
+               _global = new SQLRenderManager();
+               _global.init();
+          }
+
+          return _global;
+     }
+
      private final Map<String, IRender> _mapping = new HashMap<>();
      private IRender _def;
 
@@ -21,7 +32,7 @@ public class SQLRenderManager implements IRender {
           System.out.println("Weed3:: sql render: " + suffix + "=" + render.getClass().getSimpleName());
      }
 
-     public SQLRenderManager() {
+     public void init() {
           String packname = "org.noear.weed.render";
           IStarter tmp = IOUtils.loadEntity(packname + ".freemarker.StarterImp");
           if (tmp != null) {
@@ -43,9 +54,6 @@ public class SQLRenderManager implements IRender {
                tmp.start();
           }
      }
-
-     //不能放上面
-     public static SQLRenderManager global = new SQLRenderManager();
 
      @Override
      public String render(String path, Map<String, Object> args) throws Throwable {

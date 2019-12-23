@@ -7,6 +7,6 @@ public class StarterImp implements IStarter {
 
     @Override
     public void start() {
-        SQLRenderManager.global.mapping(".vm", SQLVelocityRender.global());
+        SQLRenderManager.global().mapping(".vm", SQLVelocityRender.global());
     }
 }
