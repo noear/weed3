@@ -2,7 +2,7 @@
 <!--
 WEED3 XML SQL更新记录
 2019.12.12:
-1.mapper 添加 import,:baseMapper,:db 属性
+1.mapper 指令添加 import,:baseMapper,:db 属性
 2.:note 属性更名为：:remarks
 
 2019.10.22:
