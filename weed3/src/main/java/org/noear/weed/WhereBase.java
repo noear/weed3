@@ -96,13 +96,25 @@ public abstract class WhereBase<T extends WhereBase> {
      * 例：.whereEq("name","x");
      */
     public T whereEq(String column, Object val) {
-        _builder.append(" WHERE ").append(fmtColumn(column)).append(" = ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NULL ");
+        }else{
+            _builder.append(" = ? ", val);
+        }
+
         return (T) this;
     }
 
 
     public T whereNeq(String column, Object val) {
-        _builder.append(" WHERE ").append(fmtColumn(column)).append(" != ? ", val);
+        _builder.append(" WHERE ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NOT NULL ");
+        }else{
+            _builder.append(" != ? ", val);
+        }
+
         return (T) this;
     }
 
@@ -220,12 +232,25 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL and = 语句
      */
     public T andEq(String column, Object val) {
-        _builder.append(" AND ").append(fmtColumn(column)).append(" = ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NULL ");
+        }else{
+            _builder.append(" = ? ", val);
+        }
+
         return (T) this;
     }
 
+
     public T andNeq(String column, Object val) {
-        _builder.append(" AND ").append(fmtColumn(column)).append(" != ? ", val);
+        _builder.append(" AND ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NOT NULL ");
+        }else{
+            _builder.append(" != ? ", val);
+        }
+
         return (T) this;
     }
 
@@ -341,12 +366,25 @@ public abstract class WhereBase<T extends WhereBase> {
      * 添加SQL or = 语句
      */
     public T orEq(String column, Object val) {
-        _builder.append(" OR ").append(fmtColumn(column)).append(" = ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NULL ");
+        }else{
+            _builder.append(" = ? ", val);
+        }
+
         return (T) this;
     }
 
+
     public T orNeq(String column, Object val) {
-        _builder.append(" OR ").append(fmtColumn(column)).append(" != ? ", val);
+        _builder.append(" OR ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NOT NULL ");
+        }else{
+            _builder.append(" != ? ", val);
+        }
+
         return (T) this;
     }
 
