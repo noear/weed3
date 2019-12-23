@@ -76,7 +76,14 @@ db.table("user u")
     <version>3.2.6</version>
 </dependency>
 
-<!-- maven 插件，用于生成Xml sql mapper接口 -->
+<!-- 可选：render 插件，用于支持模板接口（Xxx 换成具体的名字） -->
+<dependency>
+    <groupId>org.noear</groupId>
+    <artifactId>weed3.render.Xxx</artifactId>
+    <version>3.2.6</version>
+</dependency>
+
+<!-- 可选：maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
