@@ -137,12 +137,12 @@ StatModel stat = userDao.userStat(20201010);
 //增::
 db.table("user").setEntity(user).insert();
 //删::
-db.table("user").where("id=?",2).delete();
+db.table("user").whereEq("id",2).delete();
 //改::
-db.table("user").set("sex",1).where("id=?",2).delete();
+db.table("user").set("sex",1).whereEq("id",2).delete();
 //查::
 db.table("user u")
-  .innerJoin("user_ext e").on("u.id = e.user_id")
+  .innerJoin("user_ext e").onEq("u.id","e.user_id")
   .whereEq("u.id",1001)
   .select("u.*,e.sex,e.label")
   .getItem(User.class);
@@ -180,7 +180,8 @@ db.sql("select * from user id=?",12).getItem(User.class);
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="weed3demo.xmlsql2"
-        import="demo.model.*">
+        import="demo.model.*"
+        :baseMapper="UserModel">
     <sql id="getUser" :return="UserModel" :remarks="获取用户信息">
         SELECT * FROM user WHERE id = @{id:int}
     </sql>
