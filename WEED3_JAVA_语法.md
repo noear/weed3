@@ -17,44 +17,61 @@
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-whereIf(condition:bool, code:String,args:Object...) -> self
 -where() -> self //添加SQL where 关键字
--whereEq(filed:String,val:Object) -> self //添加SQL where = 语句
--whereLt(filed:String,val:Object) -> self //添加SQL where < 语句
--whereLte(filed:String,val:Object) -> self //添加SQL where <= 语句
--whereGt(filed:String,val:Object) -> self //添加SQL where > 语句
--whereGte(filed:String,val:Object) -> self //添加SQL where >= 语句
--whereLk(filed:String,val:String) -> self //添加SQL where like 语句
+-whereEq(col:String,val:Object) -> self //添加SQL where = 语句      //val为null时，转为 IS NULL
+-whereNeq(col:String,val:Object) -> self //添加SQL where != 语句    //val为null时，转为 IS NOT NULL
+-whereLt(col:String,val:Object) -> self //添加SQL where < 语句
+-whereLte(col:String,val:Object) -> self //添加SQL where <= 语句
+-whereGt(col:String,val:Object) -> self //添加SQL where > 语句
+-whereGte(col:String,val:Object) -> self //添加SQL where >= 语句
+-whereLk(col:String,val:String) -> self //添加SQL where like 语句
+-whereNlk(col:String,val:String) -> self //添加SQL where not like 语句
+-whereBtw(col:String, start:Object, end:Object) -> self //添加SQL where BETWEEN .. AND 语句
+-whereNbtw(col:String, start:Object, end:Object) -> self //添加SQL where NOT BETWEEN .. AND 语句
 
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-andIf(condition:bool, code:String,args:Object...) -> self
 -and() -> self //添加SQL where 关键字
--andEq(filed:String,val:Object) -> self //添加SQL and = 语句
--andLt(filed:String,val:Object) -> self //添加SQL and < 语句
--andLte(filed:String,val:Object) -> self //添加SQL and <= 语句
--andGt(filed:String,val:Object) -> self //添加SQL and > 语句
--andGte(filed:String,val:Object) -> self //添加SQL and >= 语句
--andLk(filed:String,val:String) -> self //添加SQL and like 语句
-
+-andEq(col:String,val:Object) -> self //添加SQL and = 语句      //val为null时，转为 IS NULL
+-andNeq(col:String,val:Object) -> self //添加SQL and != 语句    //val为null时，转为 IS NOT NULL
+-andLt(col:String,val:Object) -> self //添加SQL and < 语句
+-andLte(col:String,val:Object) -> self //添加SQL and <= 语句
+-andGt(col:String,val:Object) -> self //添加SQL and > 语句
+-andGte(col:String,val:Object) -> self //添加SQL and >= 语句
+-andLk(col:String,val:String) -> self //添加SQL and like 语句
+-andNlk(col:String,val:String) -> self //添加SQL and not like 语句
+-andBtw(col:String, start:Object, end:Object) -> self //添加SQL and BETWEEN .. AND 语句
+-andNbtw(col:String, start:Object, end:Object) -> self //添加SQL and NOT BETWEEN .. AND 语句
 
 //例1：.or("name=?","x"); 
 //例2: .or("(name=? or id=?)","x",1)
 -or(code:String,args:Object...) -> self //添加SQL or 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
+-orIf(condition:bool, code:String,args:Object...) -> self
 -or() -> self //添加SQL or 关键字
--orEq(filed:String,val:Object) -> self //添加SQL or = 语句
--orLt(filed:String,val:Object) -> self //添加SQL or < 语句
--orLte(filed:String,val:Object) -> self //添加SQL or <= 语句
--orGt(filed:String,val:Object) -> self //添加SQL or > 语句
--orGte(filed:String,val:Object) -> self //添加SQL or >= 语句
--orLk(filed:String,val:String) -> self //添加SQL or like 语句
+-orEq(col:String,val:Object) -> self //添加SQL or = 语句        //val为null时，转为 IS NULL
+-orNeq(col:String,val:Object) -> self //添加SQL or != 语句      //val为null时，转为 IS NOT NULL
+-orLt(col:String,val:Object) -> self //添加SQL or < 语句
+-orLte(col:String,val:Object) -> self //添加SQL or <= 语句
+-orGt(col:String,val:Object) -> self //添加SQL or > 语句
+-orGte(col:String,val:Object) -> self //添加SQL or >= 语句
+-orLk(col:String,val:String) -> self //添加SQL or like 语句
+-orNlk(col:String,val:String) -> self //添加SQL or not like 语句
+-orBtw(col:String, start:Object, end:Object) -> self //添加SQL or BETWEEN .. AND 语句
+-orNbtw(col:String, start:Object, end:Object) -> self //添加SQL or NOT BETWEEN .. AND 语句
 
 -begin() -> self //添加左括号
 -begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）
 -end() -> self //添加右括号
 
--set(name:String,value:Object) -> self
--setMap(data:Map<String,Object>) -> self
--setEntity(data:Object) -> self
+-set(name:String,value:Object) -> self  //设置变量
+-setIf(condition:bool,name:String,value:Object) -> self
+-setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)
+-setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
+-setEntity(data:Object) -> self     //设置变量(将实体输入)
+-setEntityIf(data:Object,(k,v)->bool) -> self
 
 
 
@@ -62,17 +79,20 @@
 -leftJoin(table:String) -> self //添加SQL left join语句
 -rightJoin(table:String) -> self //添加SQL right join语句
 -on(code:String) -> self //添加SQL on语句
+-onEq(col1:String, col2:String) -> self //添加SQL on == 语句
 
 -groupBy(code:String) -> self //添加SQL group by语句
 -having(code:String) -> self //添加SQL having语句
--having(code:String) -> self //添加SQL having语句
 
 -orderBy(code:String) -> self //添加SQL order by语句
+-orderByAsc(col:String) -> self //添加SQL order by .. ASC语句
+-orderByDesc(col:String) -> self //添加SQL order by .. DESC语句
 
--limit(rows:int) -> self //添加SQL limit语句
--limit(start:int, rows:int) -> self //添加SQL limit语句
+-limit(size:int) -> self //添加SQL 分页语句（已兼容不同数据库）
+-limit(start:int, size:int) -> self //添加SQL 分页语句（已兼容不同数据库）
 
--top(rows:int) //添加SQL top 语句
+-paging(start:int, size:int) //与limt一样，提供不同的用语习惯
+-top(size:int) //与limt一样，提供不同的用语习惯
 
 -append(code:String,args:Object...) ->self //添加无限制代码 //可使用?,?...占位符（ ?... 表示数组占位符）
 
@@ -89,8 +109,8 @@
 -update(data:IDataItem) ->int //执行更新并返回影响行数，使用set接口的数据
 -update(dataBuilder:(d:DataItem)->{}) ->int //执行更新并返回影响行数，使用dataBuilder构建的数据
 
--updateExt(constraints:String)//使用set接口的数据,根据约束字段自动插入或更新
--updateExt(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入或更新
+-upsert(constraints:String)//使用set接口的数据,根据约束字段自动插入或更新 // update 和 insert 的结合体
+-upsert(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入或更新 // update 和 insert 的结合体
 
 -delete() -> int //执行删除，并返回影响行数
 
@@ -141,10 +161,12 @@
 //
 // 变量设置相关
 //
--set(param:String,value:Object) -> self //设置变量
--set(param:String,valueGetter:()->Object) -> self //设置变量
--setMap(map:Map<String,Object>) -> self //设置变量(将map输入)
--setEntity(obj:Object) -> self //设置变量(将实体输入)
+-set(name:String,value:Object) -> self  //设置变量
+-setIf(condition:bool,name:String,value:Object) -> self
+-setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)
+-setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
+-setEntity(data:Object) -> self     //设置变量(将实体输入)
+-setEntityIf(data:Object,(k,v)->bool) -> self
 
 //
 // 执行相关
@@ -211,7 +233,7 @@
 
 #### db.mapper(Class<?>) -> SqlMapper? proxy
 ``` java
-//xml sql 和 annotation sql 参考另外的资料
+//xml sql 和 annotation sql 和 template sql 参考另外的资料
 
 //例：UserDbApi udb = db.mapper(UserDbApi.class);
 //  UserModel um = m.getUser(12);
