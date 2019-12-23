@@ -3,7 +3,7 @@
 ` QQ交流群：22200020 `
 
 # Weed for java
-微型ORM（支持：java sql，xml sql，annotation sql；事务；缓存；等...）
+微型ORM（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；等...）
 
 
 #### Weed3 特点和理念：
@@ -88,14 +88,25 @@ public interface UserDao extends BaseMapper<UserModel>{
     @Sql("select * from user where id=? limit 1")
     UserModel getUser2(int id);
 
+    @Sql("#report/user_stat.sql") //#开头表示执行模板SQL（应对超复杂统计查询）
+    StatModel userStat(int date);
+
     void addUser(UserModel user); //没注解，需要配xml
 }
 
 UserDao userDao = db.mapper(UserDao.class);
-userDao.selectById(12); //调用 BaseMapper 方法
+//调用 BaseMapper 方法
+userDao.selectById(12); 
 
-UserModel user = userDao.getUser(2); //调用 @Sql 方法
-userDao.addUser(user); //调用 xml sql
+//调用 @Sql 方法
+UserModel user = userDao.getUser(2); 
+
+//调用 xml sql
+userDao.addUser(user); 
+
+//调用模板sql
+StatModel stat = userDao.userStat(20201010);
+
 
 
 /** 3.Table用法 */
@@ -106,14 +117,21 @@ db.table("user").where("id=?",2).delete();
 //改::
 db.table("user").set("sex",1).where("id=?",2).delete();
 //查::
-db.table("user").where("id=?",1).select("*").getItem(User.class);
+db.table("user u")
+  .innerJoin("user_ext e").on("u.id = e.user_id")
+  .whereEq("u.id",1001)
+  .select("u.*,e.sex,e.label")
+  .getItem(User.class);
 ```
 
 
 
 #### 附：语法参考：
 
-##### （一）Xml sql 语法
+##### （一）Template sql 语法
+* 由具体模板引擎而定（支持四种引擎）
+
+##### （二）Xml sql 语法
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -190,7 +208,7 @@ ${name:type} = 变量替换
 :return="String" => String （任何单职类型）
 ```
 
-##### （二）Table 语法
+##### （三）Table 语法
 
 1. 条件操作（与Mapper共享）
 
