@@ -65,8 +65,8 @@ ref 引用代码块指令
   sql （属性：代码块id）
 
 name:type    = 变量申明（可用于属性：:param, :declare，var，或宏定义 @{..},${..}）
-@{name:type} = 变量注入
-${name:type} = 变量替换
+@{name:type?} = 变量注入
+${name:type?} = 变量替换
 
 //列表([]替代<>)
 :return="List[weed3demo.mapper.UserModel]" => List<UserModel>
