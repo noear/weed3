@@ -27,7 +27,7 @@ public class SQLVelocityRender implements IRender {
     private VelocityEngine velocity = new VelocityEngine();
     private Map<String,Object> _sharedVariable=new HashMap<>();
 
-    private String _baseUri ="/WEB-INF/view/";
+    private String _baseUri ="/weed3/";
 
     //不要要入参，方便后面多视图混用
     //
