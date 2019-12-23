@@ -26,19 +26,16 @@ public class SQLRenderManager implements IRender {
           Object tmp = IOUtils.loadClass(packname + ".freemarker.SQLFreemarkerRender");
           if (tmp != null) {
                global.mapping(".ftl", (IRender) tmp);
-               return;
           }
 
           tmp = IOUtils.loadClass(packname + ".beetl.SQLBeetlRender");
           if (tmp != null) {
                global.mapping(".md", (IRender) tmp);
-               return;
           }
 
           tmp = IOUtils.loadClass(packname + ".enjoy.SQLEnjoyRender");
           if (tmp != null) {
                global.mapping(".txt", (IRender) tmp);
-               return;
           }
      }
 

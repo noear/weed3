@@ -43,6 +43,9 @@
 
         <weed3.ver>3.2.5.3</weed3.ver>
         <snack3.ver>3.1.5.15</snack3.ver>
+
+        <enjoy.ver>4.8</enjoy.ver>
+        <beetl.ver>3.0.15.RELEASE</beetl.ver>
     </properties>
 
     <dependencyManagement>
