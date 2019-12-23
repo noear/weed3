@@ -23,17 +23,17 @@
         </dependency>
 
 
-        <!-- velocity专属后缀名：.vm -->
+       <!-- &lt;!&ndash; velocity专属后缀名：.vm &ndash;&gt;
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.render.velocity</artifactId>
         </dependency>
 
-        <!-- freemarker专属后缀名：.ftl -->
+        &lt;!&ndash; freemarker专属后缀名：.ftl &ndash;&gt;
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.render.freemarker</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- beetl 专属后缀名：.sql -->
         <dependency>
@@ -41,11 +41,11 @@
             <artifactId>weed3.render.beetl</artifactId>
         </dependency>
 
-        <!-- enjoy 专属后缀名：.md -->
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.render.enjoy</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; enjoy 专属后缀名：.md &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>weed3.render.enjoy</artifactId>-->
+<!--        </dependency>-->
 
 
         <dependency>

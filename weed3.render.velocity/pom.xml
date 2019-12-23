@@ -8,6 +8,7 @@
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
         <version>3.2.6</version>
+        <relativePath>../weed3-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>weed3.render.velocity</artifactId>

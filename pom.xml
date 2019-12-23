@@ -21,6 +21,7 @@
         <module>weed3-parent</module>
 
         <module>_test</module>
+        <module>_test2</module>
         <module>_demo</module>
     </modules>
 
