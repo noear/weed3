@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.noear</groupId>
+    <artifactId>_test2</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>weed3-parent</artifactId>
+        <version>3.2.6</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+        </dependency>
+
+
+        <!-- velocity专属后缀名：.vm -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.render.velocity</artifactId>
+        </dependency>
+
+        <!-- freemarker专属后缀名：.ftl -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.render.freemarker</artifactId>
+        </dependency>
+
+        <!-- beetl 专属后缀名：.sql -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.render.beetl</artifactId>
+        </dependency>
+
+        <!-- enjoy 专属后缀名：.md -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.render.enjoy</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.14.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+
+
+    <build>
+        <finalName>admin-rock</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3-maven-plugin</artifactId>
+                <version>3.2.6</version>
+                <executions>
+                    <execution>
+                        <id>weed3</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generator</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

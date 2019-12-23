@@ -1,5 +1,5 @@
---:if(id == 1)
+<#if id == 1>
     select * from appx where app_id =${id}
---:else
+<#else>
     select ${id} as app_id
---:end
+</#if>
