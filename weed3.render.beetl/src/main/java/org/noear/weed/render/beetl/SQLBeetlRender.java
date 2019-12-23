@@ -42,6 +42,8 @@ public class SQLBeetlRender implements IRender {
 
         cfg.setStatementStart("--");
         cfg.setStatementEnd(null);
+        cfg.setStatementStart2("#");
+        cfg.setStatementEnd2(null);
         cfg.setPlaceholderStart("${");
         cfg.setPlaceholderEnd("}");
 

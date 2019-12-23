@@ -254,7 +254,7 @@ public class DbContext extends DbContextMetaData {
             return new DbXmlsqlProcedure(this).sql(process.substring(1));
         }
 
-        if (process.indexOf(" ") > 0) {
+        if (process.lastIndexOf(" ") > 0) {
             return new DbQueryProcedure(this).sql(process);
         }
 
