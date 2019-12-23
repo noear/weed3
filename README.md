@@ -6,12 +6,34 @@
 微型ORM（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；等...）
 
 
+
 #### Weed3 特点和理念：
 * 高性能：两年前有个同事测过四个ORM框架，它是性能最好的（不知道现在是不是）。
 * 跨平台：可以嵌入到JVM脚本引擎（js, groovy, lua, python, ruby）；有.net，php版本（久没维护了）。
 * 很小巧：0.1Mb（且是功能完整，方案丰富；可极大简化数据库开发）。
 * 有个性：不喜欢反射、不喜欢配置...（除了连接，不需要任何配置）。
 * 其它的：支持缓存控制和跨数据库事务（算是分布式事务的一种吧）。
+
+
+
+#### 核心对象和功能：
+
+* 上下文：DbContext db
+* 四个接口：db.mapper(), db.table(), db.call(), db.sql()
+
+```java
+//Mapper接口
+db.mapperBase(User.class).selectById(1);
+
+//Table接口
+db.table("user u")
+  .innerJoin("user_ext e").onEq("u.id","e.user_id")
+  .whereEq("u.type",11)
+  .limit(101,10)
+  .select("u.*,e.sex,e.label")
+  .getList(User.class);
+```
+
 
 
 #### 相关文章：
@@ -21,11 +43,12 @@
 
 
 
-#### 组件： 
+
+#### 组件列表： 
 
 | 组件 | 说明 |
 | --- | --- |
-| org.noear:weed3 | 主框架 |
+| org.noear:weed3 | 主框架（其它都是可选组件） |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
 | | |
 | org.noear:weed3.cache.memcached| 基于 Memcached 适配的扩展缓存服务 |
@@ -40,12 +63,6 @@
 | | |
 | org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 
-
-
-#### 核心对象和功能：
-
-* 上下文：DbContext db
-* 四个接口：db.mapper(), db.table(), db.call(), db.sql()
 
 
 
@@ -69,7 +86,7 @@
 
 
 
-#### 示例：
+#### 入门示例：
 ```java
 /** 1.实例化上下文 */
 //DbContext db  = new DbContext(properties); //使用Properties配置的示例
@@ -79,7 +96,7 @@
 DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234");
 
 
-/** 2.Mapper用法 */
+/** 2.1.Mapper用法 */
 @Namespace("demo.dso.db")
 public interface UserDao extends BaseMapper<UserModel>{
     @Sql("select * from user where id=@{id} limit 1")
@@ -109,7 +126,7 @@ StatModel stat = userDao.userStat(20201010);
 
 
 
-/** 3.Table用法 */
+/** 2.2.Table用法 */
 //增::
 db.table("user").setEntity(user).insert();
 //删::
@@ -122,6 +139,26 @@ db.table("user u")
   .whereEq("u.id",1001)
   .select("u.*,e.sex,e.label")
   .getItem(User.class);
+
+
+
+/** 2.3.Call用法 */
+//调用存储过程
+db.call("user_get_list_by").set("_type",12).getList(User.class);
+
+//调用xml sql
+db.call("@demo.dso.db.user_get").set("id",1001).getItem(User.class);
+
+//调用Template sql
+Map<String,Object> args = new WdMap().set("date",20201010);
+db.call("#tml/user_stat.sql", args).getMapList();
+
+
+
+/** 2.4.Sql用法 */
+//快速执行SQL语句
+db.sql("select * from user id=?",12).getItem(User.class);
+
 ```
 
 
