@@ -22,7 +22,7 @@ WEED3 XML SQL更新记录
 -->
 <!--
 mapper 开始标签
-  namespace （属性：命名空间，{namespace}.{id} = sqlid）
+  namespace （属性：命名空间，{namespace}.{id} = sqlid；不要包括文件名）
   import（属性：导入包或类，多个以;号隔开）
   :baseMapper（属性：扩展BaseMapper 的模型，效果：BaseMapper<Xxx>）
   :db（属性：关联 db bean；效果：@Db("xxx")）
