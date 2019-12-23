@@ -7,6 +7,6 @@ public class StarterImp implements IStarter {
 
     @Override
     public void start() {
-        SQLRenderManager.global().mapping(".md", SQLBeetlRender.global());
+        SQLRenderManager.global().mapping(".jsp", SQLBeetlRender.global());
     }
 }
