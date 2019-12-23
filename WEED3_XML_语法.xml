@@ -82,33 +82,36 @@ ${name:type?} = 变量替换
 //单值
 :return="String" => String （任何单职类型）
 -->
-<mapper namespace="weed3demo.xmlsql2" :db="testdb">
-    <sql id="user_add1" :return="long"
-         :param="m:weed3demo.mapper.UserModel,sex:int"
-         :note="添加用户">
+<mapper namespace="weed3demo.xmlsql2"
+        import="weed3demo.mapper.*"
+        :db="testdb">
+    <sql id="user_add1"
+         :return="long"
+         :param="m:UserModel,sex:int"
+         :remarks="添加用户">
         INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
     </sql>
 
-    <sql id="user_add2" :return="long" :note="添加用户">
+    <sql id="user_add2" :return="long" :remarks="添加用户">
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
 
-    <sql id="user_add_for" :return="long" :note="批量添加用户3">
+    <sql id="user_add_for" :return="long" :remarks="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
-        <for var="m:weed3demo.mapper.UserModel" items="list">
+        <for var="m:UserModel" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
         </for>
     </sql>
 
-    <sql id="user_del" :note="删除一个用户">
-        DELETE FROM user WHERE id=@{m.user_id:long}
+    <sql id="user_del" :remarks="删除一个用户">
+        DELETE FROM user WHERE id=@{user_id:long}
         <if test="sex > 0">
             AND sex=@{sex:int}
         </if>
     </sql>
 
     <sql id="user_set"
-         :note="更新一个用户，并清理相关相存"
+         :remarks="更新一个用户，并清理相关相存"
          :caching="localCache"
          :cacheClear="user_${user_id},user_1">
         UPDATE user SET mobile=@{mobile:String},sex=@{sex:int}
@@ -118,9 +121,9 @@ ${name:type?} = 变量替换
     </sql>
 
     <sql id="user_get_list"
-         :note="获取一批符合条件的用户"
+         :remarks="获取一批符合条件的用户"
          :declare="foList:int,user_id:long"
-         :return="List[weed3demo.mapper.UserModel]"
+         :return="List[UserModel]"
          :caching="localCache"
          :cacheTag="user_${user_id},user_1">
         SELECT id,${cols:String} FROM user
@@ -141,9 +144,9 @@ ${name:type?} = 变量替换
     <sql id="user_cols2">name,title</sql>
 
     <sql id="user_get_list2"
-         :note="获取一批符合条件的用户"
+         :remarks="获取一批符合条件的用户"
          :declare="foList:int,user_id:long"
-         :return="List[weed3demo.mapper.UserModel]"
+         :return="List[UserModel]"
          :caching="localCache"
          :cacheTag="user_${user_id},user_1">
         SELECT id,
