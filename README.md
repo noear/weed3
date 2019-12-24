@@ -73,21 +73,21 @@ db.table("user u")
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.6</version>
+    <version>3.2.6.1</version>
 </dependency>
 
 <!-- 可选：render 插件，用于支持模板接口（Xxx 换成具体的名字） -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3.render.Xxx</artifactId>
-    <version>3.2.6</version>
+    <version>3.2.6.1</version>
 </dependency>
 
 <!-- 可选：maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.6</version>
+    <version>3.2.6.1</version>
 </plugin>
 ```
 
@@ -157,7 +157,7 @@ db.call("user_get_list_by").set("_type",12).getList(User.class);
 db.call("@demo.dso.db.user_get").set("id",1001).getItem(User.class);
 
 //调用Template sql
-Map<String,Object> args = new WdMap().set("date",20201010);
+Map<String,Object> args = new DataItem().set("date",20201010);
 db.call("#tml/user_stat.sql", args).getMapList();
 
 
