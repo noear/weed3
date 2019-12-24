@@ -157,7 +157,7 @@ db.call("user_get_list_by").set("_type",12).getList(User.class);
 db.call("@demo.dso.db.user_get").set("id",1001).getItem(User.class);
 
 //调用Template sql
-Map<String,Object> args = new DataItem().set("date",20201010);
+Map<String,Object> args = new DataItem().set("date",20201010).getMap();
 db.call("#tml/user_stat.sql", args).getMapList();
 
 
