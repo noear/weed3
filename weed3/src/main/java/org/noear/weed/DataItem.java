@@ -38,9 +38,17 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     @Override
-    public IDataItem set(String name,Object value)
+    public DataItem set(String name,Object value)
     {
         _data.put(name, value);
+        return this;
+    }
+
+    @Override
+    public DataItem setIf(boolean condition, String name, Object value) {
+        if (condition) {
+            _data.put(name, value);
+        }
         return this;
     }
 
