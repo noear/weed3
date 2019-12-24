@@ -16,4 +16,6 @@ public class CacheUtil {
 
     //二级缓存
     ICacheServiceEx cachex = new SecondCache(cache1,cache2);
+
+
 }

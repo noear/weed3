@@ -3,6 +3,7 @@ package org.noear.weed.cache;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.ext.Fun0Ex;
 import org.noear.weed.ext.Fun1;
+import org.noear.weed.ext.Fun1Ex;
 
 import java.sql.SQLException;
 
@@ -26,9 +27,9 @@ public interface ICacheServiceEx extends ICacheService {
     }
 
     /** 获取 */
-    default <T> T getBy(int seconds, String key, Fun0Ex<T, Exception> builder) throws Exception{
-        CacheUsing cu  = new CacheUsing(this);
-        return cu.usingCache(12).getEx(key, builder);
+    default <T> T getBy(int seconds, String key, Fun1Ex<T, CacheUsing, Exception> builder) throws Exception {
+        CacheUsing cu = new CacheUsing(this);
+        return cu.usingCache(seconds).getEx(key, () -> builder.run(cu));
     }
 
     /** 名字设置（自动注册到cache库）*/
