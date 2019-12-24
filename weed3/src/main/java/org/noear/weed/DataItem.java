@@ -10,10 +10,7 @@ import java.util.function.BiConsumer;
  * Created by noear on 14-9-10.
  */
 public class DataItem extends LinkedHashMap<String,Object> implements IDataItem {
-    List<String> _keys = new ArrayList<>();
-
-    public DataItem() {
-    }
+    public DataItem() { }
 
     public DataItem(Boolean isUsingDbNull) {
         _isUsingDbNull = isUsingDbNull;
@@ -29,17 +26,19 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
         return containsKey(name);
     }
 
+    private transient List<String> _keys;
     @Override
     public List<String> keys() {
+        if(_keys == null){
+            _keys = new ArrayList<>(keySet());
+        }
+
         return _keys;
     }
 
     @Override
     public DataItem set(String name, Object value) {
         put(name, value);
-        if (_keys.contains(name) == false) {
-            _keys.add(name);
-        }
         return this;
     }
 
@@ -53,7 +52,14 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
 
     @Override
     public Object get(int index) {
-        return get(_keys.get(index));
+        for (String key : keySet()) {
+            if (index == 0) {
+                return get(key);
+            } else {
+                index--;
+            }
+        }
+        return null;
     }
 
     @Override
