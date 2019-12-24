@@ -7,6 +7,8 @@ import java.util.function.BiConsumer;
 
 /**
  * Created by noear on 15/9/2.
+ *
+ * IDataItem 是为跨平台设计的接口，不能去掉
  */
 public interface IDataItem extends GetHandler, Serializable {
     int count();
