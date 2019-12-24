@@ -48,8 +48,13 @@ db.table("user u")
 
 | 组件 | 说明 |
 | --- | --- |
-| org.noear:weed3 | 主框架（其它都是可选组件） |
+| org.noear:weed3 | 主框架（没有任何依赖） |
+
+
+| 可选组件 | 说明 |
+| --- | --- |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
+| org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 | | |
 | org.noear:weed3.cache.memcached| 基于 Memcached 适配的扩展缓存服务 |
 | org.noear:weed3.cache.redis| 基于 Redis 适配的扩展缓存服务 |
@@ -60,8 +65,7 @@ db.table("user u")
 | org.noear:weed3.render.enjoy | 基于 enjoy 适配的扩展模板引擎 |
 | org.noear:weed3.render.freemarker | 基于 freemarker 适配的扩展模板引擎 |
 | org.noear:weed3.render.velocity | 基于 velocity 适配的扩展模板引擎 |
-| | |
-| org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
+
 
 
 
