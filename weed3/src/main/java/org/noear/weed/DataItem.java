@@ -33,8 +33,8 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     @Override
-    public List<String> keys(){
-        return new ArrayList<>(_data.keySet());
+    public Set<String> keys(){
+        return _data.keySet();
     }
 
     @Override

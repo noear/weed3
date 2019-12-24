@@ -5,6 +5,7 @@ import org.noear.weed.ext.Act2;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 /**
@@ -16,7 +17,7 @@ public interface IDataItem extends GetHandler, Serializable {
     int count();
     void clear();
     boolean exists(String name);
-    List<String> keys();
+    Set<String> keys();
 
     void remove(String name);
 

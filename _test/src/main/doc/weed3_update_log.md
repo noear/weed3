@@ -1,7 +1,5 @@
 * 3.2.6.1
 1. 添加 db.call(process, args) 并支持模板SQL
-2. 修改 DataItem 继承自 LinkedHashMap，调整keys的实现方式
-3. 修改 DataList 继承自 DataList
 
 * 3.2.6
 1. 添加模板SQL功能；添加4个引擎支持
