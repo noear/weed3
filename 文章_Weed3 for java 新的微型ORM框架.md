@@ -1,6 +1,6 @@
 # Weed3 for java 新的微型ORM框架
 
-Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储过程；事务；缓存；监听；等...）
+Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；template sql；事务；缓存；监听；等...）
 
 
 05年时开发了第一代；
@@ -9,7 +9,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 
 
 
-前两代，都是在.net开发的；第三代，重点放在了java上。应该算是个功能全面且最小的ORM框架，无其它依赖，仅0.1mb。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
+前两代，都是在.net开发的；第三代，重点放在了java上。应该算是个功能全面且小巧的ORM框架：0.1mb，无其它依赖。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
 
 
 
@@ -23,8 +23,8 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 
 #### Weed3 特点和理念：
 * 高性能：两年前有个同事测过四个ORM框架，它是性能最好的（不知道现在是不是）。
-* 跨平台：可以嵌入到JVM脚本引擎（js, groovy, lua, python, ruby）；有.net，php版本（久没维护了）。
-* 很小巧：只有0.1Mb嘛（且是功能完整，方案丰富；可极大简化数据库开发）。
+* 跨平台：可以嵌入到JVM脚本引擎（js, groovy, lua, python, ruby）；也有.net，php版本。
+* 很小巧：0.1Mb（且是功能完整，方案丰富；可极大简化数据库开发）。
 * 有个性：不喜欢反射、不喜欢配置...（除了连接，不需要任何配置）。
 * 其它的：支持缓存控制和跨数据库事务（算是分布式事务的一种吧）。
 
@@ -34,12 +34,22 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 | 组件 | 说明 |
 | --- | --- |
 | org.noear:weed3 | 主框架（没有任何依赖） |
+
+
+| 可选组件 | 说明 |
+| --- | --- |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
+| org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 | | |
-| org.noear:weed3.cache.memcached| 基于 Memcached 封装的扩展缓存服务 |
-| org.noear:weed3.cache.redis| 基于 Redis 封装的扩展缓存服务 |
-| org.noear:weed3.cache.ehcache| 基于 ehcache 封装的扩展缓存服务 |
-| org.noear:weed3.cache.j2cache| 基于 j2cache 封装的扩展缓存服务 |
+| org.noear:weed3.cache.memcached| 基于 Memcached 适配的扩展缓存服务 |
+| org.noear:weed3.cache.redis| 基于 Redis 适配的扩展缓存服务 |
+| org.noear:weed3.cache.ehcache| 基于 ehcache 适配的扩展缓存服务 |
+| org.noear:weed3.cache.j2cache| 基于 j2cache 适配的扩展缓存服务 |
+| | |
+| org.noear:weed3.render.beetl | 基于 beetl 适配的扩展模板引擎 |
+| org.noear:weed3.render.enjoy | 基于 enjoy 适配的扩展模板引擎 |
+| org.noear:weed3.render.freemarker | 基于 freemarker 适配的扩展模板引擎 |
+| org.noear:weed3.render.velocity | 基于 velocity 适配的扩展模板引擎 |
 
 
 
@@ -61,7 +71,10 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 </plugin>
 ```
 
+
+
 #### Weed3 入手流程：
+
 * 配置DataSource信息
 * 实始化DbContext
 * 调用DbContext上的接口（需要大至了解一下语法...）
@@ -75,6 +88,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；存储�
 * 1.使用`application.yml`配置数据源（或别的格式配置，或配置服务），格式示例：
 
 ```ini
+#这是DbContext原生配置；如果是为连接池，请参考对方的配置；
 demodb:
     schema: demo
     url: jdbc:mysql://localdb:3306/demo?...
@@ -165,7 +179,10 @@ public interface UserDao { //此接口，可以扩展自 BaseMapper<T>
     @sql("select * from `user` where id=@{id}") //变量风格
     User getUserById(int id);
   
-    @sql("select * from `user` where id=?") //占位符风格
+    @sql("select * from `user` where id=?") 		//占位符风格
+    User getUserById2(int id);
+  
+    @sql("#user_stat.sql") 											//SQL模板风格（适用特别复杂的统计查询）
     User getUserById2(int id);
   
     long addUser(User m); //没有注解，需编写xml sql配置
@@ -197,11 +214,9 @@ User user = db.mapper("@demo.dso.db.getUserById",args);
   > 灵活，有弹性，直接，可以实现任何SQL代码效果。开发管理后台，很爽（因为查询条件又杂又乱）。
   >
 
-###### db.table() 支持 两种风格：
+###### db.table() 接口：
 
-###### 1.字符串风格：弹性大、自由方便、可嵌入，语法便于跨平台；但改字段名字时麻烦；
-
-###### 2.lambda风格：约束性强、便于管理（改字段名时极方便）；但写起来麻烦；语法不好跨平台性。
+###### 1.字符串风格：弹性大、自由方便、可嵌入，语法便于跨平台；但改字段名字时会麻烦；
 
 * 增,INSEERT
 ```java
@@ -220,9 +235,6 @@ db.table("user").insertList(list);
 ```java
 //删掉id<12的记录
 db.table("user").whereLt("id",12).delete();
-
-//删掉id=12的记录 (lamdba风格)
-db.table(User.class).whereEq(User::getId,12).delete(); 
 ```
 
 * 改,UPDATE
@@ -244,12 +256,12 @@ db.table("user").where("id<?", 100).and("LENGTH(name)>?",10).count();
 //查询20条，id>10的记录
 db.table("user").whereGte("id", 10).limit(20).select("*").getMapList();
 
-//关联查询并输出一个实体(lamdba风格) //还是字符串风格更有弹性和简洁
-db.table(User.class)
-  .innerJoin(UserEx.class).onEq(User::getId,UserEx::getUserId)
-  .where(User::getId, 10).andEq(UserEx::getSex,1)
+//关联查询并输出一个实体
+db.table("user u")
+  .innerJoin("user_ex e").onEq("u.id","e.user_id")
+  .whereEq("u.id", 10).andEq("e.sex",1)
   .limit(1)
-  .select(User.class,$(UserEx::getSex).alias("user_sex"))
+  .select("u.*,e.sex user_sex")
   .getItem(User.class);
 
 ```
@@ -258,7 +270,7 @@ db.table(User.class)
 
 ```java
 //如果有名字，加名字条件；（管理后台的查询，很实用的; 省了很多if）
-db.talbe("user").whereIf(name!=null, "name=?", name).limit(10).select("");
+db.talbe("user").whereIf(name!=null, "name=?", name).limit(10).select("*");
 
 //插入，过滤null
 db.table("user").setMapIf(map,(k,v)->v!=null).insert(); //过滤null
@@ -276,25 +288,30 @@ db.table("user")
 
 ##### （三）db.call()，提供call操作
 
-* call数据库存储过程
+* call 存储过程
 ```java
-//数据库存储过程使用
-//
 User user = db.call("user_get").set("id",1).getItem(User.class);
 ```
 
-* call查询过程
+* call sql
 ```java
-//查询储过程使用 （@sql内部由此实现）
+//@Sql内部由此实现
 //
 User user = db.call("select * from user where id=@{id}").set("id",1).getItem(User.class);
 ```
 
 * call Xmlsql
 ```java
-//Xml sql的弱类型使用方式 //需@开始
+//需@开头 + sqlid
 //
 User user = db.call("@demo.dso.db.getUser").set("id",1).getItem(User.class);
+```
+
+* call template sql
+```java
+//需#开头 + 模板路径
+Map<String,Object> args = new DataItem().set("date",20201010).getMap();
+db.call("#user_stat.sql", args).getMapList();
 ```
 
 ##### （四）db.sql()，提供手写sql操作
