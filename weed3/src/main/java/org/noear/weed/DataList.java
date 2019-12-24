@@ -1,42 +1,46 @@
 package org.noear.weed;
 
-
-import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.ClassWrap;
 
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Created by noear on 14-9-10.
  *
  * getRow,addRow,getRowCount 是为跨平台设计的接口，不能去掉
+ * 不能转为继承自List
+ * 否则，嵌入别的引擎时，会变转为不可知的ListAdapter，让扩展的方法失效
  */
-public class DataList extends ArrayList<DataItem> implements Serializable {
+public class DataList implements Serializable,Iterable<DataItem> {
+    ArrayList<DataItem> _rows = new ArrayList<>();
+
     public List<DataItem> getRows() {
-        return this;
+        return _rows;
     }
 
     public DataItem getRow(int index) {
-        return get(index);
+        return getRows().get(index);
     }
 
     public void addRow(DataItem row) {
-        add(row);
+
+        _rows.add(row);
     }
 
     public int getRowCount() {
-        return size();
+        return _rows.size();
     }
 
     public void clear() {
-        this.clear();
+        _rows.clear();
     }
 
     public DataItem getLastRow() {
         if (getRowCount() > 0) {
-            return get(getRowCount() - 1);
+            return _rows.get(getRowCount() - 1);
         } else {
             return null;
         }
@@ -46,7 +50,13 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
 
     //转为map数组
     public List<Map<String, Object>> getMapList() {
-        return (List) this;
+        List<Map<String, Object>> list = new ArrayList<>(getRowCount());
+
+        for (DataItem r : _rows) {
+            list.add(r.getMap());
+        }
+
+        return list;
     }
 
     /**
@@ -55,7 +65,7 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
     public <T extends IBinder> List<T> toList(T model) throws SQLException {
         List<T> list = new ArrayList<T>(getRowCount());
 
-        for (DataItem r : this) {
+        for (DataItem r : _rows) {
             T item = (T) model.clone();
 
             if (WeedConfig.isDebug) {
@@ -79,7 +89,7 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
 
         ClassWrap clzWrap = ClassWrap.get(clz);
 
-        for (DataItem r : this) {
+        for (DataItem r : _rows) {
             T item = clzWrap.toEntity(r);
             list.add((T) item);
         }
@@ -99,12 +109,12 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
     public Map<String, Object> toMap(String keyColumn, String valColumn) {
         Map<String, Object> map = new HashMap<>();
 
-        if (StringUtils.isEmpty(valColumn)) {
-            for (DataItem r : this) {
+        if (valColumn == null || valColumn.length() == 0) {
+            for (DataItem r : _rows) {
                 map.put(r.get(keyColumn).toString(), r);
             }
         } else {
-            for (DataItem r : this) {
+            for (DataItem r : _rows) {
                 map.put(r.get(keyColumn).toString(), r.get(valColumn));
             }
         }
@@ -118,7 +128,7 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
     public <T> Set<T> toSet(String column) {
         Set<T> set = new HashSet<>();
 
-        for (DataItem r : this) {
+        for (DataItem r : _rows) {
             set.add((T) r.get(column));
         }
         return set;
@@ -131,7 +141,7 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
     public <T> List<T> toArray(String columnName) {
         List<T> list = new ArrayList<T>();
 
-        for (DataItem r : this) {
+        for (DataItem r : _rows) {
             list.add((T) r.get(columnName));
         }
         return list;
@@ -143,9 +153,24 @@ public class DataList extends ArrayList<DataItem> implements Serializable {
     public <T> List<T> toArray(int columnIndex) {
         List<T> list = new ArrayList<T>();
 
-        for (DataItem r : this) {
+        for (DataItem r : _rows) {
             list.add((T) r.get(columnIndex));
         }
         return list;
+    }
+
+    @Override
+    public Iterator<DataItem> iterator() {
+        return _rows.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super DataItem> action) {
+        _rows.forEach(action);
+    }
+
+    @Override
+    public Spliterator<DataItem> spliterator() {
+        return _rows.spliterator();
     }
 }

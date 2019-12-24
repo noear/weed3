@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.Act2;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -41,5 +43,5 @@ public interface IDataItem extends GetHandler, Serializable {
     boolean getBoolean(String name);
     Date getDateTime(String name);
 
-    void forEach(BiConsumer<? super String, ? super Object> action);
+    void forEach(Act2<String, Object> action);
 }

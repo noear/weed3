@@ -1,58 +1,52 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Fun2;
 import org.noear.weed.utils.EntityUtils;
 
 import java.util.*;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Created by noear on 14-9-10.
+ *
+ * 不能转为继承自Map
+ * 否则，嵌入别的引擎时，会变转为不可知的MapAdapter
  */
-public class DataItem extends LinkedHashMap<String,Object> implements IDataItem {
+public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
+    LinkedHashMap<String,Object> _data = new LinkedHashMap<>();
+
     public DataItem() { }
+    public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
 
-    public DataItem(Boolean isUsingDbNull) {
-        _isUsingDbNull = isUsingDbNull;
+    @Override
+    public int count(){
+        return _data.size();
+    }
+    @Override
+    public void clear(){
+        _data.clear();
+    }
+    @Override
+    public boolean exists(String name){
+        return _data.containsKey(name);
     }
 
     @Override
-    public int count() {
-        return size();
+    public List<String> keys(){
+        return new ArrayList<>(_data.keySet());
     }
 
     @Override
-    public boolean exists(String name) {
-        return containsKey(name);
-    }
-
-    private transient List<String> _keys;
-    @Override
-    public List<String> keys() {
-        if(_keys == null){
-            _keys = new ArrayList<>(keySet());
-        }
-
-        return _keys;
-    }
-
-    @Override
-    public DataItem set(String name, Object value) {
-        put(name, value);
-        return this;
-    }
-
-    @Override
-    public DataItem setIf(boolean condition, String name, Object value) {
-        if (condition) {
-            set(name, value);
-        }
+    public IDataItem set(String name,Object value)
+    {
+        _data.put(name, value);
         return this;
     }
 
     @Override
     public Object get(int index) {
-        for (String key : keySet()) {
+        for (String key : _data.keySet()) {
             if (index == 0) {
                 return get(key);
             } else {
@@ -63,86 +57,88 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
     }
 
     @Override
-    public Object get(String name) {
-        return super.get(name);
+    public Object get(String name){
+        return _data.get(name);
     }
-
     @Override
-    public Variate getVariate(String name) {
-        if (containsKey(name)) {
+    public Variate getVariate(String name)
+    {
+        if (_data.containsKey(name)) {
             return new Variate(name, get(name));
-        } else {
+        }
+        else {
             return new Variate(name, null);
         }
     }
 
     @Override
-    public void remove(String name) {
-        super.remove(name);
-        _keys.remove(name);
+    public void remove(String name){
+        _data.remove(name);
     }
 
     @Override
-    public <T extends IBinder> T toItem(T item) {
+    public <T extends IBinder> T toItem(T item)
+    {
         item.bind((key) -> getVariate(key));
 
         return item;
     }
 
     @Override
-    public short getShort(String name) {
-        return (short) get(name);
+    public short getShort(String name){
+        return (short)get(name);
     }
 
     @Override
-    public int getInt(String name) {
-        return (int) get(name);
+    public int getInt(String name){
+        return (int)get(name);
     }
 
     @Override
-    public long getLong(String name) {
-        return (long) get(name);
+    public long getLong(String name){
+        return (long)get(name);
     }
 
     @Override
-    public double getDouble(String name) {
-        return (double) get(name);
+    public double getDouble(String name){
+        return (double)get(name);
     }
 
     @Override
-    public float getFloat(String name) {
-        return (float) get(name);
+    public float getFloat(String name){
+        return (float)get(name);
     }
 
     @Override
-    public String getString(String name) {
-        return (String) get(name);
+    public String getString(String name){
+        return (String)get(name);
     }
 
     @Override
-    public boolean getBoolean(String name) {
-        return (boolean) get(name);
+    public boolean getBoolean(String name){
+        return (boolean)get(name);
     }
 
     @Override
-    public Date getDateTime(String name) {
-        return (Date) get(name);
+    public Date getDateTime(String name){
+        return (Date)get(name);
     }
 
     @Override
-    public void forEach(BiConsumer<? super String, ? super Object> action) {
-        for (Map.Entry<String, Object> kv : entrySet()) {
+    public void forEach(Act2<String, Object> callback)
+    {
+        for(Map.Entry<String,Object> kv : _data.entrySet()){
             Object val = kv.getValue();
 
-            if (val == null && _isUsingDbNull) {
-                action.accept(kv.getKey(), "$NULL");
-            } else {
-                action.accept(kv.getKey(), val);
+            if(val == null && _isUsingDbNull){
+                callback.run(kv.getKey(), "$NULL");
+            }else {
+                callback.run(kv.getKey(), val);
             }
         }
     }
 
-    private boolean _isUsingDbNull = false;
+    private boolean _isUsingDbNull=false;
 
     //============================
     public static IDataItem create(IDataItem schema, GetHandler source) {
@@ -156,18 +152,35 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
         return item;
     }
 
-    /**
-     * 从map加载数据
-     */
-    public DataItem setMap(Map<String, Object> data) {
-        data.forEach((k, v) -> {
-            set(k, v);
+    @Override
+    public Iterator<Map.Entry<String, Object>> iterator() {
+        return _data.entrySet().iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Map.Entry<String, Object>> action) {
+        Objects.requireNonNull(action);
+        for (Map.Entry<String, Object> entry : _data.entrySet()) {
+            action.accept(entry);
+        }
+    }
+
+    @Override
+    public Spliterator<Map.Entry<String, Object>> spliterator() {
+        return _data.entrySet().spliterator();
+    }
+
+
+    /** 从map加载数据 */
+    public DataItem setMap(Map<String,Object> data){
+        data.forEach((k,v)->{
+            set(k,v);
         });
 
         return this;
     }
 
-    public DataItem setMapIf(Map<String, Object> data, Fun2<Boolean, String, Object> condition) {
+    public DataItem setMapIf(Map<String,Object> data, Fun2<Boolean,String,Object> condition) {
         data.forEach((k, v) -> {
             if (condition.run(k, v)) {
                 set(k, v);
@@ -177,17 +190,15 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
         return this;
     }
 
-    /**
-     * 从Entity 加载数据
-     */
-    public DataItem setEntity(Object obj) {
-        EntityUtils.fromEntity(obj, (k, v) -> {
+    /** 从Entity 加载数据 */
+    public DataItem setEntity(Object obj)  {
+        EntityUtils.fromEntity(obj,(k, v)->{
             set(k, v);
         });
         return this;
     }
 
-    public DataItem setEntityIf(Object obj, Fun2<Boolean, String, Object> condition) {
+    public DataItem setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
         EntityUtils.fromEntity(obj, (k, v) -> {
             if (condition.run(k, v)) {
                 set(k, v);
@@ -196,18 +207,27 @@ public class DataItem extends LinkedHashMap<String,Object> implements IDataItem 
         return this;
     }
 
-    /**
-     * 获取map
-     */
-    public Map<String, Object> getMap() {
-        return this;
+    /** 获取map */
+    public Map<String,Object> getMap(){
+        return _data;
     }
 
 
     /**
-     * 转为Entity
-     */
-    public <T> T toEntity(Class<T> cls) {
-        return EntityUtils.toEntity(cls, this);
+     *  从Entity 加载数据
+     *
+     *  可改用：setEntity
+     *  */
+    @Deprecated
+    public void fromEntity(Object obj)  {
+        EntityUtils.fromEntity(obj,(k, v)->{
+            set(k, v);
+        });
+    }
+
+    /** 转为Entity */
+    public  <T> T toEntity(Class<T> cls) {
+        return EntityUtils.toEntity(cls,this);
     }
 }
+
