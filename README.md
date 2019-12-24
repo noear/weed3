@@ -173,7 +173,8 @@ db.sql("select * from user id=?",12).getItem(User.class);
 #### 附：语法参考：
 
 ##### （一）Template sql 语法
-* 由具体模板引擎而定（支持四种引擎）
+* @{name} ：变量占位符，会由Weed3进一步转化为JDBC变量
+* 其它，由具体模板引擎而定（支持四种引擎）
 
 ##### （二）Xml sql 语法
 * 示例
