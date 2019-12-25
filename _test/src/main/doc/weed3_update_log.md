@@ -1,3 +1,6 @@
+* 3.2.6.3
+1.cmd.paramMap() 添加var name 输出（如果有）
+
 * 3.2.6.1
 1. 添加 db.call(process, args) 并支持模板SQL
 

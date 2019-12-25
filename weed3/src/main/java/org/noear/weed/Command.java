@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Act1;
+import org.noear.weed.utils.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,10 +44,10 @@ public class Command {
 
             int idx = 0;
             for (Variate v : paramS) {
-                if (v.getName() != null) {
-                    _paramMap.put("v" + idx + "-" + v.getName(), v.getValue());
-                } else {
+                if (StringUtils.isEmpty(v._name)) {
                     _paramMap.put("v" + idx, v.getValue());
+                }else{
+                    _paramMap.put("v" + idx + "-" + v._name, v.getValue());
                 }
                 idx++;
             }
