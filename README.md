@@ -40,6 +40,7 @@ db.table("user u")
 
 * [Weed3 for java 新的微型ORM框架](https://my.oschina.net/noear/blog/3144349) （推荐一看）
 * [Weed3 ORM框架专题系列文章](https://www.jianshu.com/nb/40211584?order_by=seq)
+* [Weed3 for solon DEMO](https://gitee.com/noear/solon_weed3_demo)
 
 
 
