@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!--
+# Weed3 Xml sql 语法
+
+### 语法说明
+```
 mapper 开始标签
   namespace （属性：命名空间，{namespace}.{id} = sqlid；不包括文件名）
   import（属性：导入包或类，多个以;号隔开）
@@ -60,7 +62,12 @@ ${name:type?} = 变量替换
 
 //单值
 :return="String" => String （任何单职类型）
--->
+```
+
+### 示例
+```xml
+
+<?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="weed3demo.xmlsql2"
         import="weed3demo.mapper.*"
         :db="testdb">
@@ -139,15 +146,23 @@ ${name:type?} = 变量替换
 
     </sql>
 </mapper>
-        <!--
-        //使用方案1
-        db.call("@userdb.user_set").set("user_id",12).insert()
-        db.call("@userdb.user_add").setMap(map).insert()
 
-        //使用方案2
-        public interface userdb{
-            UserModel user_get(int user_id);
-        }
-        userdb.user_get(12);
+```
 
-        -->
+### 示例应用
+```java
+//使用方案1
+db.call("@userdb.user_set").set("user_id",12).insert()
+db.call("@userdb.user_add").setMap(map).insert()
+
+//使用方案2
+public interface UserDao{
+    UserModel user_get(int user_id);
+}
+
+UserDao userDao = db.mapper(UserDao.class);
+UserModel user = userDao.user_get(12);
+
+//使用方案3
+UserModel user = db.mapper("@userdb.user_add", map);
+```
