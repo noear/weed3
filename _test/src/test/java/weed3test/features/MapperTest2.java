@@ -32,7 +32,7 @@ public class MapperTest2 {
     @Test
     public void testX3() throws Exception {
 
-        DbUtil.cache.getBy(12, "test", () -> mapper.test());
+        DbUtil.cache.getBy(12, "test", (cu) -> mapper.test());
 
         System.out.println(mapper.test());
     }

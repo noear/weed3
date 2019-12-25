@@ -1,7 +1,7 @@
 package org.noear.weed;
 
-import java.lang.reflect.Method;
+import org.noear.weed.wrap.MethodWrap;
 
 public interface IMapperInvoke {
-    Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] args) throws Throwable;
+    Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, MethodWrap mWrap, Object[] args) throws Throwable;
 }

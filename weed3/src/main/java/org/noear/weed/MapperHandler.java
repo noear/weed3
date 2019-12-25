@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.wrap.MethodWrap;
 import org.noear.weed.xml.Namespace;
 
 import java.lang.invoke.MethodHandles;
@@ -36,17 +37,18 @@ class MapperHandler implements InvocationHandler {
             return this.lookup.unreflectSpecial(method, caller).bindTo(proxy).invokeWithArguments(args);
         } else {
             String sqlid = getSqlid(caller, method);
+            MethodWrap mWrap = MethodWrap.get(method);
 
             //1.尝试有@Sql注解的
-            Object tmp = annInvoke.call(proxy, db, sqlid, caller, method, args);
+            Object tmp = annInvoke.call(proxy, db, sqlid, caller, mWrap, args);
 
             if (UOE.equals(tmp)) {
                 //2.尝试有xml的
-                tmp = xmlInvoke.call(proxy, db, sqlid, caller, method, args);
+                tmp = xmlInvoke.call(proxy, db, sqlid, caller, mWrap, args);
 
                 if (UOE.equals(tmp)) {
                     //3.尝试BaseMapper
-                    tmp = basInvoke.call(proxy, db, sqlid, caller, method, args);
+                    tmp = basInvoke.call(proxy, db, sqlid, caller, mWrap, args);
 
                     if (UOE.equals(tmp)) {
                         //4.尝试Object的

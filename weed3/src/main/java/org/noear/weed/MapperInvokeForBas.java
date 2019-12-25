@@ -1,6 +1,8 @@
 package org.noear.weed;
 
 
+import org.noear.weed.wrap.MethodWrap;
+
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,11 +22,11 @@ class MapperInvokeForBas implements IMapperInvoke {
         return tmp;
     }
 
-    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] args) throws Throwable {
+    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, MethodWrap mWrap, Object[] args) throws Throwable {
         if (BaseMapper.class == caller) {
             Object tmp = getWrap(proxy, db);
 
-            return method.invoke(tmp, args);
+            return mWrap.method.invoke(tmp, args);
         }
 
         return MapperHandler.UOE;

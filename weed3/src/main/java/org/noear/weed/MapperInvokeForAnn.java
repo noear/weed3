@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.wrap.MethodWrap;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -10,8 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class MapperInvokeForAnn implements IMapperInvoke {
-    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] args) throws Throwable {
-        Sql ann = method.getAnnotation(Sql.class);
+    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, MethodWrap mWrap, Object[] args) throws Throwable {
+        Sql ann = mWrap.method.getAnnotation(Sql.class);
 
         if(ann == null){
             return MapperHandler.UOE;
@@ -34,7 +35,7 @@ class MapperInvokeForAnn implements IMapperInvoke {
 
         //2.构建参数
         Map<String, Object> _map = new HashMap<>();
-        Parameter[] names = method.getParameters();
+        Parameter[] names = mWrap.parameters;
         for (int i = 0, len = names.length; i < len; i++) {
             if (args[i] != null) {
                 String key = names[i].getName();
@@ -96,14 +97,14 @@ class MapperInvokeForAnn implements IMapperInvoke {
 
         if (sqlUp.indexOf(" SELECT ") > 0) {
             //5.构建输出
-            return forSelect(sp, _map, method, ann, cache);
+            return forSelect(sp, _map, mWrap, ann, cache);
 
         }
 
         return null;
     }
 
-    private  Object forSelect(DbAccess sp, Map<String,Object> map, Method method, Sql ann, ICacheServiceEx cache) throws Throwable {
+    private  Object forSelect(DbAccess sp, Map<String,Object> map, MethodWrap mWrap, Sql ann, ICacheServiceEx cache) throws Throwable {
         String _cacheTag = ann.cacheTag();
         int    _usingCache = ann.usingCache();
 
@@ -139,8 +140,8 @@ class MapperInvokeForAnn implements IMapperInvoke {
         }
 
 
-        Class<?> rst_type = method.getReturnType();
-        Type rst_type2 = method.getGenericReturnType();
+        Class<?> rst_type = mWrap.returnType;
+        Type rst_type2 = mWrap.returnGenericType;
 
         String rst_type_str = rst_type.getName();
         String rst_type2_str = null;

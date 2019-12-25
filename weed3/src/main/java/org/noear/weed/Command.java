@@ -38,12 +38,16 @@ public class Command {
 
     private Map<String,Object> _paramMap;
     public Map<String,Object> paramMap() {
-        if(_paramMap == null) {
+        if (_paramMap == null) {
             _paramMap = new LinkedHashMap<>();
 
             int idx = 0;
             for (Variate v : paramS) {
-                _paramMap.put("v" + idx, v.getValue());
+                if (v.getName() != null) {
+                    _paramMap.put("v" + idx + "-" + v.getName(), v.getValue());
+                } else {
+                    _paramMap.put("v" + idx, v.getValue());
+                }
                 idx++;
             }
         }

@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.wrap.MethodWrap;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
@@ -10,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 class MapperInvokeForXml implements IMapperInvoke {
-    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, Method method, Object[] vals) throws Throwable {
+    public Object call(Object proxy, DbContext db, String sqlid, Class<?> caller, MethodWrap mWrap, Object[] vals) throws Throwable {
         //1.获取代码块，并检测有效性
         XmlSqlBlock block = XmlSqlFactory.get(sqlid);
         if (block == null) {
@@ -19,7 +20,7 @@ class MapperInvokeForXml implements IMapperInvoke {
 
         //2.构建参数
         Map<String, Object> _map = new LinkedHashMap<>();
-        Parameter[] names = method.getParameters();
+        Parameter[] names = mWrap.parameters;
         for (int i = 0, len = names.length; i < len; i++) {
             if (vals[i] != null) {
                 String key = names[i].getName();
@@ -35,9 +36,6 @@ class MapperInvokeForXml implements IMapperInvoke {
         }
 
         //3.确定输出类型
-        Class<?> type1 = method.getReturnType();
-        Type type2 = method.getGenericReturnType();
-
-        return MapperUtil.exec(db, block, "@" + sqlid, _map, type1, type2);
+        return MapperUtil.exec(db, block, "@" + sqlid, _map, mWrap.returnType, mWrap.returnGenericType);
     }
 }
