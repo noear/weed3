@@ -1,6 +1,5 @@
 package org.noear.weed.wrap;
 
-import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.utils.StringUtils;
