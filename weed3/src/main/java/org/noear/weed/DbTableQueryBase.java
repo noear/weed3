@@ -277,59 +277,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return false;
         }
 
-
-        List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = StringUtils.borrowBuilder();
-
-        sb.append(" INSERT INTO ").append(_table).append(" (");
-        for (String key : cols.keys()) {
-            sb.append(fmtColumn(key)).append(",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-
-        sb.append(") ");
-
-        sb.append("VALUES");
-
-        //记录当前长度用于后面比较
-        int sb_len = sb.length();
-
-        for (GetHandler item : valuesList) {
-            sb.append("(");
-
-            for (String key : cols.keys()) {
-                Object val = item.get(key);
-
-                if (val == null) {
-                    sb.append("null,");
-                } else {
-                    if (val instanceof String) {
-                        String val2 = (String) val;
-                        if (isSqlExpr(val2)) { //说明是SQL函数
-                            sb.append(val2.substring(1)).append(",");
-                        } else {
-                            sb.append("?,");
-                            args.add(val);
-                        }
-                    } else {
-                        sb.append("?,");
-                        args.add(val);
-                    }
-                }
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            sb.append("),");
-        }
-
-        //如果长度没有增加，说明没有数据
-        if(sb_len == sb.length()){
-            return false;
-        }
-
-        sb.deleteCharAt(sb.length() - 1);
-        //sb.append("");
-
-        _builder.append(StringUtils.releaseBuilder(sb), args.toArray());
+        _context.dbAdapter()
+                .insertList(_context, _table, _builder, this::isSqlExpr, cols, valuesList);
 
         return compile().execute() > 0;
     }

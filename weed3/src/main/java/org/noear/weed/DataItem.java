@@ -99,22 +99,22 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
     @Override
     public int getInt(String name){
-        return (int)get(name);
+        return ((Number)get(name)).intValue();
     }
 
     @Override
     public long getLong(String name){
-        return (long)get(name);
+        return ((Number)get(name)).longValue();
     }
 
     @Override
     public double getDouble(String name){
-        return (double)get(name);
+        return ((Number)get(name)).doubleValue();
     }
 
     @Override
     public float getFloat(String name){
-        return (float)get(name);
+        return ((Number)get(name)).floatValue();
     }
 
     @Override

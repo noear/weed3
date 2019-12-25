@@ -54,6 +54,7 @@ public class _TimeTest {
         map.app_id = 1000;
 
         if(db.dbType() == DbType.Oracle){
+            map.datetime1 = null;
             map.time1 = null;
             map.date1 = null;
         }

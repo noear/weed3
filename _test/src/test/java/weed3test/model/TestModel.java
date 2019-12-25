@@ -13,4 +13,11 @@ public class TestModel {
     @PrimaryKey
     public Integer id;
     public Integer v1;
+
+    public TestModel(){}
+
+    public TestModel(int id, int v1){
+        this.id = id;
+        this.v1 = v1;
+    }
 }
