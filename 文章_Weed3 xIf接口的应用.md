@@ -32,7 +32,16 @@ public Object searchBy(Integer id, String name,Integer type) throws Exception {
             .andIf(name != null, "name=?", name)
             .andIf(type != null && type > 2, "type=?", type)
             .limit(50)
-            .select("*").getMapList();
+            .select("*").getMapList()
+}
+
+//在Mapper里也适用
+public Object searchBy(Integer id, String name,Integer type) throws Exception {
+    return db.mapperBase(User.class).selectMapTop(50, q->
+            q.where("1=1")
+             .andIf(id != null, "id=?", id)
+             .andIf(name != null, "name=?", name)
+             .andIf(type != null && type > 2, "type=?", type));
 }
 ```
 
