@@ -199,7 +199,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 
 ##### （三）Table 语法
 
-*. 条件操作（与Mapper共享）
+* 条件操作（与Mapper共享）
 
 | 方法 | 效果说明 |
 | --- | --- |
@@ -215,7 +215,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 | begin | \( |
 | end | \) |
 
-*. 表操作（Table独占）
+* 表操作（Table独占）
 
 | 方法 | 效果说明 |
 | --- | --- |
@@ -236,6 +236,6 @@ db.sql("select * from user id=?",12).getItem(User.class);
 | insert | 插入 |
 | delete | 删除 |
 
-*. 更多参考：[《WEED3 JAVA 接口字典》](WEED3_JAVA_接口字典.md)
+* 更多参考：[《WEED3 JAVA 接口字典》](WEED3_JAVA_接口字典.md)
 
 
