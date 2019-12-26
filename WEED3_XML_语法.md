@@ -106,6 +106,10 @@ ${name:type?} = 变量替换
         </if>
     </sql>
 
+    <sql id="user_get" :remarks="获取用户" :return="UserModel">
+        SELECT * FROM user WHERE user_id=@{user_id:long}
+    </sql>
+
     <sql id="user_get_list"
          :remarks="获取一批符合条件的用户"
          :declare="foList:int,user_id:long"
@@ -152,10 +156,11 @@ ${name:type?} = 变量替换
 ### 示例应用
 ```java
 //使用方案1
-db.call("@userdb.user_set").set("user_id",12).insert()
-db.call("@userdb.user_add").setMap(map).insert()
+db.call("@weed3demo.xmlsql2.user_set").set("user_id",12).update()
+db.call("@weed3demo.xmlsql2.user_add").setMap(map).insert()
 
 //使用方案2
+@Namespace("weed3demo.xmlsql2")
 public interface UserDao{
     UserModel user_get(int user_id);
 }
@@ -164,5 +169,5 @@ UserDao userDao = db.mapper(UserDao.class);
 UserModel user = userDao.user_get(12);
 
 //使用方案3
-UserModel user = db.mapper("@userdb.user_add", map);
+UserModel user = db.mapper("@weed3demo.xmlsql2.user_get", map);
 ```
