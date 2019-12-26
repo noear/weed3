@@ -5,9 +5,24 @@
 
 ### 具体引擎语法例
 
-#### weed3.render.beetl
+
+
+#### weed3.render.enjoy（是对enjoy的适配）
+* 参考 enjoy 语法
+* 例：
+```sql
+#if(agroup_id == 0)
+    select * from appx where app_id =#(id)
+#else
+    select * from appx where agroup_id = @{agroup_id} limit 1
+#end
+```
+
+
+#### weed3.render.beetl（是对beetl的适配）
 * 参考 beetl 语法
 * 边界符调整（-- 或 #）
+* 例：
 ```sql
 //例1
 #if(agroup_id == 0){
@@ -24,18 +39,10 @@
 --}
 ```
 
-#### weed3.render.enjoy
-* 参考 enjoy 语法
-```sql
-#if(agroup_id == 0)
-    select * from appx where app_id =#(id)
-#else
-    select * from appx where agroup_id = @{agroup_id} limit 1
-#end
-```
 
-#### weed3.render.freemarker
+#### weed3.render.freemarker（是对freemarker的适配）
 * 参考 freemarker 语法
+* 例：
 ```sql
 <#if agroup_id == 0>
     select * from appx where app_id =${id}
@@ -45,8 +52,9 @@
 ```
 
 
-#### weed3.render.velocity
+#### weed3.render.velocity（是对velocity的适配）
 * 参考 velocity 语法
+* 例：
 ```sql
 #if($agroup_id == 0)
     select * from appx where app_id =${id}
