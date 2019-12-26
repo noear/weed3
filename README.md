@@ -252,6 +252,6 @@ db.sql("select * from user id=?",12).getItem(User.class);
 * `<T> List<T> getArray(int columnIndex) throws SQLException;`
 * 等...
 
-4. 更多参考：[《WEED3 JAVA 用法》](WEED3_JAVA_语法.md)
+4. 更多参考：[《WEED3 接口字典》](WEED3_接口字典.md)
 
 
