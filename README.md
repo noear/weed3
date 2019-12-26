@@ -236,6 +236,6 @@ db.sql("select * from user id=?",12).getItem(User.class);
 | insert | 插入 |
 | delete | 删除 |
 
-3. 更多参考：[《WEED3 接口字典》](WEED3_接口字典.md)
+3. 更多参考：[《WEED3 JAVA 接口字典》](WEED3_JAVA_接口字典.md)
 
 
