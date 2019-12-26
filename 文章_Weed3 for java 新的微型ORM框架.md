@@ -60,14 +60,14 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.6.3</version>
+    <version>3.2.6</version>
 </dependency>
 
 <!-- maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.6.3</version>
+    <version>3.2.6</version>
 </plugin>
 ```
 
@@ -89,7 +89,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 
 ```ini
 #这是DbContext原生配置；如果是为连接池，请参考对方的配置；
-demodb:
+demo.db:
     schema: demo
     url: jdbc:mysql://localdb:3306/demo?...
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -105,7 +105,7 @@ demodb:
   
 ```java
 //使用Properties配置的示例
-Properties properties = XApp.cfg().getProp("demodb"); //这是solon框架的接口
+Properties properties = XApp.cfg().getProp("demo.db"); //这是solon框架的接口
 DbContext db  = new DbContext(properties); 
 
 //使用Map配置的示例
@@ -124,7 +124,7 @@ DbContext db  = new DbContext("user","jdbc:mysql://x.x.x:3306/user","root","1234
 
 /* 我平时都用配置服务，所以直接由配置提供数据库上下文对象。 */
 //使用配置服务直接拿到DbContext
-DbContext db = WaterClient.Config.get("demodb").getDb();
+DbContext db = WaterClient.Config.get("demo.db").getDb();
 ```
 
 ### 二、四大接口 db.mapper(), db.table(), db.call(), db.sql()
@@ -213,10 +213,11 @@ User user = db.mapper("@demo.dso.db.getUserById",args);
   >
   > 灵活，有弹性，直接，可以实现任何SQL代码效果。开发管理后台，很爽（因为查询条件又杂又乱）。
   >
+  > 此接口，可以方便的嵌入到JVM脚本引擎（js, groovy, lua, python, ruby），或GraalVM的语言里。
 
 ###### db.table() 接口：
 
-###### 1.字符串风格：弹性大、自由方便、可嵌入，语法便于跨平台；但改字段名字时会麻烦；
+###### 1.字符串风格：弹性大、自由方便、可嵌入，语法便于跨平台；但改字段名会麻烦些（没事儿也不乱改吧）。
 
 * 增,INSEERT
 ```java
@@ -633,6 +634,11 @@ _eng.put("db", db);
  * def user_id = map.id;
  */
 ```
+
+### (八) 语法说明
+* [《WEED3 XML 语法》](https://gitee.com/noear/weed3/blob/master/WEED3_XML_%E8%AF%AD%E6%B3%95.mdv)
+* [《WEED3 模板语法》](https://gitee.com/noear/weed3/blob/master/WEED3_%E6%A8%A1%E6%9D%BF_%E8%AF%AD%E6%B3%95.md)
+* [《WEED3 JAVA 接口字典》](https://gitee.com/noear/weed3/blob/master/WEED3_JAVA_%E6%8E%A5%E5%8F%A3%E5%AD%97%E5%85%B8.md)
 
 
 
