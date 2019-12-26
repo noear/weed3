@@ -47,7 +47,6 @@ public class DbConfig {
     }
     public final static DbContext db2(){
          return new DbContext()
-                .dataSourceSet(dataSource())
-                .nameSet("db2");
+                .dataSourceSet(dataSource());
     }
 }

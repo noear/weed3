@@ -22,11 +22,11 @@ import java.util.Map;
 public class AnnotController {
     DbContext db2 = DbConfig.db2();
 
-    @Db("db2")
+    @Db("db1")
     @XInject
     SqlAnnotation mapper;
 
-    @Db("db2")
+    @Db("db1")
     @XInject
     BaseMapper<AppxModel> mapper2;
 
