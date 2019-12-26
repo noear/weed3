@@ -194,7 +194,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 </mapper>
 ```
 
-* 语法说明：(WEED3 XML 语法)[/blob/master/WEED3_XML_语法.md]
+* 语法说明：[WEED3 XML 语法](/blob/master/WEED3_XML_语法.md)
 
 ##### （三）Table 语法
 
