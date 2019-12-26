@@ -236,22 +236,6 @@ db.sql("select * from user id=?",12).getItem(User.class);
 | insert | 插入 |
 | delete | 删除 |
 
-3. IQuery接口
-
-* `long getCount() throws SQLException;`
-* `Object getValue() throws SQLException;`
-* `<T> T getValue(T def) throws SQLException;`
-* `Variate getVariate() throws SQLException;`
-* `<T> T getItem(Class<T> cls) throws SQLException;`
-* `<T> List<T> getList(Class<T> cls) throws SQLException;`
-* `DataList getDataList() throws SQLException;`
-* `DataItem getDataItem() throws SQLException;`
-* `List<Map<String,Object>> getMapList() throws SQLException;`
-* `Map<String,Object> getMap() throws SQLException;`
-* `<T> List<T> getArray(String column) throws SQLException;`
-* `<T> List<T> getArray(int columnIndex) throws SQLException;`
-* 等...
-
-4. 更多参考：[《WEED3 接口字典》](WEED3_接口字典.md)
+3. 更多参考：[《WEED3 接口字典》](WEED3_接口字典.md)
 
 
