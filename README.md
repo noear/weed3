@@ -179,7 +179,8 @@ db.sql("select * from user id=?",12).getItem(User.class);
 
 ##### （一）Template sql 语法
 * @{name} ：变量占位符，会由Weed3进一步转化为JDBC变量
-* 其它，由具体模板引擎而定（支持四种引擎）
+* 支持四种引擎
+* 具体参考：[《WEED3 模板语法》](WEED3_模板_语法.md)
 
 ##### （二）Xml sql 语法
 * 示例
@@ -194,7 +195,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 </mapper>
 ```
 
-* 语法说明：[《WEED3 XML 语法》](WEED3_XML_语法.md)
+* 具体参考：[《WEED3 XML 语法》](WEED3_XML_语法.md)
 
 ##### （三）Table 语法
 
@@ -250,5 +251,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 * `<T> List<T> getArray(String column) throws SQLException;`
 * `<T> List<T> getArray(int columnIndex) throws SQLException;`
 * 等...
+
+4. 更多参考：[《WEED3 JAVA 用法》](WEED3_JAVA_语法.md)
 
 
