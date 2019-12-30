@@ -1,5 +1,6 @@
 package org.noear.weed.wrap;
 
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,15 +44,15 @@ class SqlTypeMap {
         mapping.put(Types.SQLXML, "SQLXML");
         mapping.put(Types.STRUCT, UNKNOW);
         mapping.put(Types.TIME, "Date");
-        mapping.put(Types.TIMESTAMP, "Timestamp");
+        mapping.put(Types.TIMESTAMP, "Date");
         mapping.put(Types.TINYINT, "Integer");
         mapping.put(Types.VARBINARY, "byte[]");
         mapping.put(Types.VARCHAR, "String");
 
         // jdk 8 support
         mapping.put(Types.REF_CURSOR, UNKNOW);
-        mapping.put(Types.TIMESTAMP_WITH_TIMEZONE, "Timestamp");
-        mapping.put(Types.TIME_WITH_TIMEZONE, "Timestamp");
+        mapping.put(Types.TIMESTAMP_WITH_TIMEZONE, "Date");
+        mapping.put(Types.TIME_WITH_TIMEZONE, "Date");
     }
 
 
