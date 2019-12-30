@@ -15,17 +15,11 @@ public class _MetaTest {
 
     @Test
     public void test1() {
-        StringBuilder sb = new StringBuilder();
 
         for (TableWrap tw : db.dbTables()) {
-            sb.setLength(0);
-
-            System.out.println(tw.getName());
-            System.out.println("::pk:" + tw.getPk1());
-            for(ColumnWrap cw : tw.getColumns()){
-                System.out.println("::::col:" + cw.getName() + "-" + cw.getTypeName());
-
-            }
+            String code = EntityBuilder.buildByTable(tw);
+            System.out.println(code);
+            //break;
         }
     }
 

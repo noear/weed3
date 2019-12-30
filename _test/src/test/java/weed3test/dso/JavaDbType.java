@@ -1,5 +1,7 @@
 package weed3test.dso;
 
+import org.noear.weed.wrap.ColumnWrap;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -148,6 +150,10 @@ public class JavaDbType {
         } else {
             return false;
         }
+    }
+
+    public static String getType(ColumnWrap cw){
+        return getType(cw.getType(),cw.getSize(),cw.getDigit());
     }
 
     public static String getType(Integer sqlType, Integer size, Integer digit) {
