@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 class DbContextMetaData {
     protected String _schema;
@@ -55,19 +54,19 @@ class DbContextMetaData {
         return _tables.values();
     }
 
-    public TableWrap getTableWrap(String name){
+    public TableWrap dbTable(String tableName){
         initMetaData();
 
         for(Map.Entry<String,TableWrap> kv : _tables.entrySet()){
-            if(name.equalsIgnoreCase(kv.getKey())){
+            if(tableName.equalsIgnoreCase(kv.getKey())){
                 return kv.getValue();
             }
         }
 
         return null;
     }
-    public String getTablePk1(String name) {
-        TableWrap tw = getTableWrap(name);
+    public String dbTablePk1(String tableName) {
+        TableWrap tw = dbTable(tableName);
         return tw == null ? null : tw.getPk1();
     }
 
@@ -77,6 +76,7 @@ class DbContextMetaData {
         }
         initMetaDataDo();
     }
+
     private synchronized void initMetaDataDo() {
         //这段不能去掉
         if(_dbAdapter != null){

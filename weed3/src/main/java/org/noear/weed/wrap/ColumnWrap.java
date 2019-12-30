@@ -15,16 +15,6 @@ public class ColumnWrap {
         this.remarks = remarks;
     }
 
-    @Override
-    public String toString() {
-        return "ColumnWrap{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                ", size=" + size +
-                ", digit=" + digit +
-                ", remarks='" + remarks + '\'' +
-                '}';
-    }
 
     public String getName() {
         return name;
