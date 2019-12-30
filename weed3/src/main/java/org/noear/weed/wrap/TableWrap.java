@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TableWrap {
-    public final String name;
-    public final String remarks;
+    private final String name;
+    private final String remarks;
 
     private String pk1;
     private List<String> pks = new ArrayList<>();
@@ -16,23 +16,29 @@ public class TableWrap {
         this.remarks = remarks;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
     public List<String> getPks() {
         return pks;
     }
-
 
     public String getPk1() {
         if (pk1 != null) {
             return pk1;
         } else {
             if (columns.size() > 0) {
-                return columns.get(0).name;
+                return columns.get(0).getName();
             } else {
                 return null;
             }
         }
     }
-
 
     public List<ColumnWrap> getColumns() {
         return columns;

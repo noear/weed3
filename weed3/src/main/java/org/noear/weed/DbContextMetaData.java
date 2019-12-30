@@ -193,15 +193,19 @@ class DbContextMetaData {
             rs = md.getColumns(_catalog, _schema, key, "%");
 
             while (rs.next()) {
-                ColumnWrap cw = new ColumnWrap();
-                cw.name = rs.getString("COLUMN_NAME");
-                cw.type = rs.getInt("DATA_TYPE");
-                cw.size = rs.getInt("COLUMN_SIZE");
-                cw.remarks = rs.getString("REMARKS");
+                int digit = 0;
                 Object o = rs.getObject("DECIMAL_DIGITS");
                 if (o != null) {
-                    cw.digit = ((Number) o).intValue();
+                    digit = ((Number) o).intValue();
                 }
+
+                ColumnWrap cw = new ColumnWrap(
+                        rs.getString("COLUMN_NAME"),
+                        rs.getInt("DATA_TYPE"),
+                        rs.getInt("COLUMN_SIZE"),
+                        digit,
+                        rs.getString("REMARKS")
+                );
 
                 tWrap.addColumn(cw);
             }
