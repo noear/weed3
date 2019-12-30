@@ -30,7 +30,7 @@ public class _MetaTest {
 
     @Test
     public void test11() throws Exception {
-        EntityGenerator.createByDb("demo.model",db);
-        MapperGenerator.createByDb("demo.model", "demo.dso.mapper",db);
+//        EntityGenerator.createByDb("demo.model",db);
+//        MapperGenerator.createByDb("demo.model", "demo.dso.mapper",db);
     }
 }
