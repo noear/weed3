@@ -12,9 +12,9 @@ public class _MetaTest {
     @Test
     public void test1() {
         for (TableWrap tw : db.dbTables()) {
-            String code = EntityBuilder.buildByTable("demo", tw, null);
+            String code = EntityBuilder.buildByTable("demo", tw, tw.getName());
             System.out.println(code);
-//            break;
+            break;
         }
     }
 

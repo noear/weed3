@@ -25,13 +25,20 @@ public class EntityBuilder {
 
 
         for (TableWrap tw : db.dbTables()) {
-            String code = buildByTable(packName, tw, clzNameTml);
-            String fileFullName = packDir + tw.getName() + ".java";
+            if(clzNameTml == null){
+                clzNameTml="${table}";
+            }
+            String upName = tw.getName().substring(0,1).toUpperCase() + tw.getName().substring(1);
+            String clzName = clzNameTml.replace("${table}", upName);
+
+            String code = buildByTable(packName, tw, clzName);
+            String fileFullName = packDir + clzName + ".java";
 
             File file = new File(fileFullName);
-            if (file.exists() == false) {
-                file.createNewFile();
+            if (file.exists()) {
+                file.delete();
             }
+            file.createNewFile();
 
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(code);
@@ -57,23 +64,13 @@ public class EntityBuilder {
         createByDb(packDir, packName, db);
     }
 
-    public static String buildByTable(String packName, TableWrap tw, String clzNameTml) {
+    public static String buildByTable(String packName, TableWrap tw, String clzName) {
         StringBuilder sb2 = new StringBuilder();
         StringBuilder sb = new StringBuilder();
-
-        if(clzNameTml == null){
-            clzNameTml="${table}";
-        }
-
 
         if (StringUtils.isEmpty(tw.getRemarks()) == false) {
             sb.append("/** ").append(tw.getRemarks()).append(" */\n");
         }
-
-        String upName = tw.getName().substring(0,1).toUpperCase() + tw.getName().substring(1);
-        String clzName = clzNameTml.replace("${table}", upName);
-
-
 
         sb.append("@Data").append("\n");
         sb.append("@Table(\"").append(tw.getName()).append("\")\n");
@@ -102,6 +99,7 @@ public class EntityBuilder {
         if (sb.indexOf(" Date ") > 0) {
             sb2.append("import java.util.Date;").append("\n");
         }
+        sb2.append("import org.noear.weed.annotation.*;").append("\n");
 
         sb2.append("\n");
         sb2.append(sb);
