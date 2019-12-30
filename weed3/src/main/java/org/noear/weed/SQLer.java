@@ -1,10 +1,7 @@
 package org.noear.weed;
 
-import org.noear.weed.wrap.DbType;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
