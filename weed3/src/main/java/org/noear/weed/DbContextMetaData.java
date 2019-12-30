@@ -7,19 +7,21 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 class DbContextMetaData {
     protected String _schema;
     protected String _catalog;
 
-    private Map<String, TableWrap> _tables = new HashMap<>();
-    private DbType _dbType = DbType.Unknown;
-    private DbAdapter _dbAdapter;
+    private transient Map<String, TableWrap> _tables = new HashMap<>();
+    private transient DbType _dbType = DbType.Unknown;
+    private transient DbAdapter _dbAdapter;
 
     //数据源
-    private DataSource __dataSource; //通过dataSourceSet写入
+    private transient DataSource __dataSource; //通过dataSourceSet写入
     /** 获取数据源 */
     public DataSource dataSource() {
         return __dataSource;
@@ -46,6 +48,11 @@ class DbContextMetaData {
         initMetaData();
 
         return _dbAdapter;
+    }
+
+    public Collection<TableWrap> dbTables(){
+        initMetaData();
+        return _tables.values();
     }
 
     public TableWrap getTableWrap(String name){
@@ -191,6 +198,11 @@ class DbContextMetaData {
                 cw.type = rs.getInt("DATA_TYPE");
                 cw.size = rs.getInt("COLUMN_SIZE");
                 cw.remarks = rs.getString("REMARKS");
+                Object o = rs.getObject("DECIMAL_DIGITS");
+                if (o != null) {
+                    cw.digit = ((Number) o).intValue();
+                }
+
                 tWrap.addColumn(cw);
             }
             rs.close();
