@@ -1,7 +1,6 @@
 package org.noear.weed.tool;
 
 import org.noear.weed.DbContext;
-import org.noear.weed.annotation.PrimaryKey;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.ColumnWrap;
 import org.noear.weed.wrap.TableWrap;
@@ -16,20 +15,34 @@ import java.io.IOException;
  * demo:
  * EntityBuilder.createByDb("demo.dso.mapper",db);
  * */
-public class EntityBuilder {
+public class EntityGenerator {
     public static void createByDb(String packDir, String packName, DbContext db, String clzNameTml) throws IOException {
         File dir = new File(packDir);
         if (dir.exists() == false) {
             dir.mkdirs();
         }
 
+        StringBuilder nameSb = new StringBuilder();
 
         for (TableWrap tw : db.dbTables()) {
             if(clzNameTml == null){
                 clzNameTml="${table}";
             }
-            String upName = tw.getName().substring(0,1).toUpperCase() + tw.getName().substring(1);
-            String clzName = clzNameTml.replace("${table}", upName);
+            nameSb.setLength(0);
+            String tmp = clzNameTml.replace("${table}", tw.getName());
+
+            for(String s : tmp.split("_")){
+                if(s.length() > 0){
+                    nameSb.append(s.substring(0,1).toUpperCase());
+                }
+
+                if(s.length() > 1){
+                    nameSb.append(s.substring(1));
+                }
+            }
+
+            String clzName = nameSb.toString();
+
 
             String code = buildByTable(packName, tw, clzName);
             String fileFullName = packDir + clzName + ".java";
@@ -45,6 +58,7 @@ public class EntityBuilder {
             }
         }
     }
+
 
     public static void createByDb(String packDir, String packName, DbContext db) throws IOException {
         createByDb(packDir, packName, db, "${table}");
