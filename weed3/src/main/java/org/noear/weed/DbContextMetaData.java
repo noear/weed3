@@ -21,13 +21,18 @@ class DbContextMetaData {
 
     //数据源
     private transient DataSource __dataSource; //通过dataSourceSet写入
-    /** 获取数据源 */
+
+    /**
+     * 获取数据源
+     */
     public DataSource dataSource() {
         return __dataSource;
     }
-    protected void dataSourceDoSet(DataSource ds){
+
+    protected void dataSourceDoSet(DataSource ds) {
         __dataSource = ds;
     }
+
     /**
      * 获取连接
      */
@@ -37,41 +42,42 @@ class DbContextMetaData {
 
     //数据集名称
 
-    public DbType dbType(){
+    public DbType dbType() {
         initMetaData();
 
         return _dbType;
     }
 
-    public DbAdapter dbAdapter(){
+    public DbAdapter dbAdapter() {
         initMetaData();
 
         return _dbAdapter;
     }
 
-    public Collection<TableWrap> dbTables(){
+    public Collection<TableWrap> dbTables() {
         initMetaData();
         return _tables.values();
     }
 
-    public TableWrap dbTable(String tableName){
+    public TableWrap dbTable(String tableName) {
         initMetaData();
 
-        for(Map.Entry<String,TableWrap> kv : _tables.entrySet()){
-            if(tableName.equalsIgnoreCase(kv.getKey())){
+        for (Map.Entry<String, TableWrap> kv : _tables.entrySet()) {
+            if (tableName.equalsIgnoreCase(kv.getKey())) {
                 return kv.getValue();
             }
         }
 
         return null;
     }
+
     public String dbTablePk1(String tableName) {
         TableWrap tw = dbTable(tableName);
         return tw == null ? null : tw.getPk1();
     }
 
-    private void initMetaData(){
-        if(_dbAdapter != null){
+    private void initMetaData() {
+        if (_dbAdapter != null) {
             return;
         }
         initMetaDataDo();
@@ -79,7 +85,7 @@ class DbContextMetaData {
 
     private synchronized void initMetaDataDo() {
         //这段不能去掉
-        if(_dbAdapter != null){
+        if (_dbAdapter != null) {
             return;
         }
 
@@ -140,10 +146,10 @@ class DbContextMetaData {
             } else if (pn.indexOf("sqlite") >= 0) {
                 _dbType = DbType.SQLite;
                 _dbAdapter = new DbSQLiteAdapter();
-            }else if (pn.indexOf("h2") >= 0) {
+            } else if (pn.indexOf("h2") >= 0) {
                 _dbType = DbType.H2;
                 _dbAdapter = new DbSQLiteAdapter();
-            } else{
+            } else {
                 //做为默认
                 _dbAdapter = new DbMySQLAdapter();
             }
@@ -211,9 +217,9 @@ class DbContextMetaData {
             }
             rs.close();
 
-            rs = md.getPrimaryKeys(_catalog,_schema,key);
+            rs = md.getPrimaryKeys(_catalog, _schema, key);
             while (rs.next()) {
-                String idName=rs.getString("COLUMN_NAME");
+                String idName = rs.getString("COLUMN_NAME");
                 tWrap.addPk(idName);
             }
             rs.close();

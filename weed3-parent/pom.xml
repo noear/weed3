@@ -55,6 +55,13 @@
                 <artifactId>weed3</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3.tool</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
@@ -223,6 +230,7 @@
         <module>../weed3-maven-plugin</module>
         <module>../weed3-solon-plugin</module>
 
+        <module>../weed3.tool</module>
 
         <module>../weed3.cache.memcached</module>
         <module>../weed3.cache.redis</module>

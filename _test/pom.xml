@@ -24,6 +24,11 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>weed3.tool</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>weed3.cache.redis</artifactId>
         </dependency>
 

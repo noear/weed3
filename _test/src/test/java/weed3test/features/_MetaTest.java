@@ -2,8 +2,8 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import org.noear.weed.tool.EntityBuilder;
 import org.noear.weed.wrap.TableWrap;
-import weed3builder.EntityBuilder;
 import weed3test.DbUtil;
 
 public class _MetaTest {
@@ -12,19 +12,14 @@ public class _MetaTest {
     @Test
     public void test1() {
         for (TableWrap tw : db.dbTables()) {
-            String code = EntityBuilder.buildByTable(null, tw);
+            String code = EntityBuilder.buildByTable("demo", tw, null);
             System.out.println(code);
-            //break;
+//            break;
         }
     }
 
     @Test
-    public void test2(){
-        System.out.println(System.getProperty("user.dir"));
-    }
-
-    @Test
-    public void test3() throws Exception{
+    public void test2() throws Exception {
 //       EntityBuilder.createByDb("demo",db);
     }
 }
