@@ -24,10 +24,6 @@ public class ColumnWrap {
         return type;
     }
 
-    public String getTypeName() {
-        return SqlTypeMap.getType(type, size, digit);
-    }
-
     public Integer getSize() {
         return size;
     }
