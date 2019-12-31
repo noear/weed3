@@ -39,6 +39,16 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
+    public DbTableQuery setDf(String name, Object value, Object def) {
+        if (value == null) {
+            set(name, def);
+        } else {
+            set(name, value);
+        }
+
+        return this;
+    }
+
     public DbTableQuery setIf(boolean condition, String name, Object value){
         if(condition){
             set(name,value);
