@@ -22,7 +22,7 @@ public class XPluginImp implements XPlugin {
         });
 
 
-        Aop.factory().beanBuilderAdd((clz, fwT) -> {
+        Aop.factory().beanBuilderAdd(Db.class, (clz, fwT,anno) -> {
             if (clz.isInterface()) {
                 Db dbAnno = clz.getAnnotation(Db.class);
                 if (dbAnno == null) {
@@ -39,7 +39,6 @@ public class XPluginImp implements XPlugin {
                         getMapper(clz, dbAnno, fwT, (raw)->{
                             fwT.setValue(raw);
                         });
-                        return true;
                     }
                 } else {
                     //适合长期存在
@@ -47,11 +46,8 @@ public class XPluginImp implements XPlugin {
                         fwT.setValue(raw);
                         Aop.put(clz, raw);
                     });
-                    return true;
                 }
             }
-
-            return false;
         });
     }
 
