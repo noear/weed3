@@ -21,14 +21,14 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-mvc</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.4.1</version>
             <type>pom</type>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3-solon-plugin</artifactId>
-            <version>3.2.6</version>
+            <version>3.2.6.6</version>
         </dependency>
 
         <dependency>

@@ -22,7 +22,6 @@ import java.util.Map;
 public class AnnotController {
     DbContext db2 = DbConfig.db2();
 
-    @Db("db1")
     @XInject
     SqlAnnotation mapper;
 
