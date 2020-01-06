@@ -10,7 +10,6 @@ import org.noear.weed.annotation.Db;
 public class XPluginImp implements XPlugin {
     @Override
     public void start(XApp app) {
-
         Aop.factory().beanCreatorAdd(Db.class, (clz, bw, anno) -> {
             if (clz.isInterface()) {
                 getMapper(clz, anno, null, (raw) -> {
