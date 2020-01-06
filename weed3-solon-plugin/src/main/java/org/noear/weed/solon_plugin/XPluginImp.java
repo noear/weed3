@@ -18,7 +18,6 @@ public class XPluginImp implements XPlugin {
             }
         });
 
-
         Aop.factory().beanInjectorAdd(Db.class, (fwT, anno) -> {
             if (fwT.getType().isInterface()) {
                 getMapper(fwT.getType(), anno, fwT, (raw) -> {
