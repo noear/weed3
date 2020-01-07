@@ -179,6 +179,9 @@ class DbContextMetaData {
                 case PostgreSQL:
                     _schema = "public";
                     break;
+                case H2:
+                    _schema = "PUBLIC";
+                    break;
                 case SQLServer:
                     _schema = "dbo";
                 case Oracle:
