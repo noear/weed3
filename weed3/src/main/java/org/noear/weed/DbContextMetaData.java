@@ -44,14 +44,17 @@ class DbContextMetaData {
 
     public DbType dbType() {
         initMetaData();
-
         return _dbType;
     }
 
     public DbAdapter dbAdapter() {
         initMetaData();
-
         return _dbAdapter;
+    }
+
+    public void dbAdapterSet(DbAdapter adapter){
+        initMetaData();
+        _dbAdapter = adapter;
     }
 
     public Collection<TableWrap> dbTables() {
