@@ -4,11 +4,14 @@ import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.utils.StringUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public interface DbAdapter {
+
+    default Object preChange(Object val) throws SQLException {return val;}
 
     default boolean excludeFormat(String str) {
         return str.startsWith("`") || str.indexOf(".") > 0;

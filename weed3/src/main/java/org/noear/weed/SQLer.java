@@ -25,21 +25,12 @@ class SQLer {
             WeedConfig.runExceptionEvent(null, ex);};
     }
 
-    private Object getObject(String key) throws SQLException{
-        return preChange(rset.getObject(key));
+    private Object getObject(Command cmd, String key) throws SQLException{
+        return cmd.context.dbAdapter().preChange(rset.getObject(key));
     }
 
-    private Object getObject(int idx) throws SQLException{
-        return preChange(rset.getObject(idx));
-    }
-
-    private Object preChange(Object val) throws SQLException{
-        if(val instanceof  Clob){
-            Clob clob = ((Clob) val);
-            return clob.getSubString(1,(int)clob.length());
-        }else{
-            return val;
-        }
+    private Object getObject(Command cmd, int idx) throws SQLException{
+        return cmd.context.dbAdapter().preChange(rset.getObject(idx));
     }
 
     public Variate getVariate(Command cmd) throws SQLException {
@@ -51,7 +42,7 @@ class SQLer {
             rset = query(cmd);
 
             if (rset != null && rset.next())
-                return new Variate(null, getObject(1));
+                return new Variate(null, getObject(cmd, 1));
             else
                 return null;//new Variate(null,null);
         } catch (SQLException ex) {
@@ -73,7 +64,7 @@ class SQLer {
             if (rset != null && rset.next()) {
                 model.bind((key) -> {
                     try {
-                        return new Variate(key, getObject(key));
+                        return new Variate(key, getObject(cmd, key));
                     } catch (SQLException ex) {
                         WeedConfig.runExceptionEvent(cmd, ex);
                         return new Variate(key, null);
@@ -113,7 +104,7 @@ class SQLer {
 
                 item.bind((key) -> {
                     try {
-                        return new Variate(key, getObject(key));
+                        return new Variate(key, getObject(cmd, key));
                     } catch (SQLException ex) {
                         WeedConfig.runExceptionEvent(cmd, ex);
                         return new Variate(key, null);
@@ -152,7 +143,7 @@ class SQLer {
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnLabel(i), getObject(i));
+                    row.set(meta.getColumnLabel(i), getObject(cmd, i));
                 }
             }
 
@@ -185,7 +176,7 @@ class SQLer {
                 int len = meta.getColumnCount();
 
                 for (int i = 1; i <= len; i++) {
-                    row.set(meta.getColumnLabel(i), getObject(i));
+                    row.set(meta.getColumnLabel(i), getObject(cmd, i));
                 }
 
                 table.addRow(row);
@@ -253,7 +244,7 @@ class SQLer {
 
             //这里，是与.execute()区别的地方
             if (rset != null && rset.next()) {
-                Object tmp = getObject(1);
+                Object tmp = getObject(cmd, 1);
                 if (tmp instanceof Number) {
                     return ((Number) tmp).longValue();
                 }

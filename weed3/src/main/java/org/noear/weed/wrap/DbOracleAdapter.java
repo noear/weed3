@@ -7,6 +7,8 @@ import org.noear.weed.SQLBuilder;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.utils.StringUtils;
 
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +17,16 @@ import java.util.List;
  * BETWEEN AND :: >= + <=
  * */
 public class DbOracleAdapter implements DbAdapter{
+
+    @Override
+    public Object preChange(Object val) throws SQLException {
+        if(val instanceof Clob){
+            Clob clob = ((Clob) val);
+            return clob.getSubString(1,(int)clob.length());
+        } else{
+            return val;
+        }
+    }
 
     @Override
     public boolean excludeFormat(String str) {
