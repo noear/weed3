@@ -148,7 +148,7 @@ class DbContextMetaData {
                 _dbAdapter = new DbSQLiteAdapter();
             } else if (pn.indexOf("h2") >= 0) {
                 _dbType = DbType.H2;
-                _dbAdapter = new DbSQLiteAdapter();
+                _dbAdapter = new DbH2Adapter();
             } else {
                 //做为默认
                 _dbAdapter = new DbMySQLAdapter();
