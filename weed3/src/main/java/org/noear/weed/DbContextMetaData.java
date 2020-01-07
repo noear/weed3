@@ -79,6 +79,10 @@ class DbContextMetaData {
         return tw == null ? null : tw.getPk1();
     }
 
+    public void refreshMeta(){
+        initMetaDataDo();
+    }
+
     private void initMetaData() {
         if (_dbAdapter != null) {
             return;
@@ -88,10 +92,6 @@ class DbContextMetaData {
 
     private synchronized void initMetaDataDo() {
         //这段不能去掉
-        if (_dbAdapter != null) {
-            return;
-        }
-
         System.out.println("Weed3::Init metadata");
 
         Connection conn = null;
@@ -101,11 +101,13 @@ class DbContextMetaData {
             DatabaseMetaData md = conn.getMetaData();
             System.out.println("Weed3::The connection is successful");
 
-            //1.
-            setDatabaseType(md.getDatabaseProductName());
+            if (_dbAdapter == null) {
+                //1.
+                setDatabaseType(md.getDatabaseProductName());
 
-            //2.
-            setSchema(conn);
+                //2.
+                setSchema(conn);
+            }
 
             //3.
             setTables(md);
@@ -188,7 +190,8 @@ class DbContextMetaData {
 
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
-        rs = md.getTables(_catalog, _schema, null, new String[]{"TABLE", "VIEW"});
+
+        rs = dbAdapter().getTables(md,_catalog,_schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");

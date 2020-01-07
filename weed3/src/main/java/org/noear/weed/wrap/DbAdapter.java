@@ -4,6 +4,8 @@ import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.utils.StringUtils;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +15,8 @@ public interface DbAdapter {
 
     default Object preChange(Object val) throws SQLException {return val;}
     default String preReview(String code){return code;}
+
+    default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException{ return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"}); }
 
     default boolean excludeFormat(String str) {
         return str.startsWith("`") || str.indexOf(".") > 0;
