@@ -12,6 +12,7 @@ import java.util.List;
 public interface DbAdapter {
 
     default Object preChange(Object val) throws SQLException {return val;}
+    default String preReview(String code){return code;}
 
     default boolean excludeFormat(String str) {
         return str.startsWith("`") || str.indexOf(".") > 0;

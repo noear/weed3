@@ -74,9 +74,9 @@ public class Command {
 
     public String fullText() {
         if (context.codeHint() == null)
-            return text;
+            return context.dbAdapter().preReview(text);
         else
-            return context.codeHint() + text;
+            return context.codeHint() + context.dbAdapter().preReview(text);
     }
 
     public Act1<Command> onExecuteAft = null;
