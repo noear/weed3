@@ -3,15 +3,15 @@ package org.noear.weed.wrap;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Column;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
 
 /**
  * Field wrap
@@ -108,52 +108,62 @@ public class FieldWrap {
         return null;
     }
 
-    private static Object typeChange(Object val, Class<?> type){
-        if(val instanceof BigDecimal){
-            if(Long.class == type || Long.TYPE == type){
-                return ((BigDecimal)val).longValue();
+    private static Object typeChange(Object val, Class<?> type) {
+        if (val instanceof BigDecimal) {
+            if (Long.class == type || Long.TYPE == type) {
+                return ((BigDecimal) val).longValue();
             }
 
-            if(Integer.class == type || Integer.TYPE == type){
-                return ((BigDecimal)val).intValue();
+            if (Integer.class == type || Integer.TYPE == type) {
+                return ((BigDecimal) val).intValue();
             }
 
-            if(Double.class == type || Double.TYPE == type){
-                return ((BigDecimal)val).doubleValue();
+            if (Double.class == type || Double.TYPE == type) {
+                return ((BigDecimal) val).doubleValue();
             }
         }
 
-        if(type == LocalDateTime.class){
-            if(val instanceof java.sql.Timestamp) {
+        if (type == LocalDateTime.class) {
+            if (val instanceof java.sql.Timestamp) {
                 return ((Timestamp) val).toLocalDateTime();
             }
 
-            if(val instanceof String){
-                return LocalDateTime.parse((String)val);
+            if (val instanceof String) {
+                return LocalDateTime.parse((String) val);
             }
         }
 
-        if(type == LocalDate.class){
-            if(val instanceof java.sql.Date) {
+        if (type == LocalDate.class) {
+            if (val instanceof java.sql.Date) {
                 return ((Date) val).toLocalDate();
             }
 
-            if(val instanceof java.sql.Timestamp) {
+            if (val instanceof java.sql.Timestamp) {
                 return ((Timestamp) val).toLocalDateTime().toLocalDate();
             }
 
-            if(val instanceof String) {
+            if (val instanceof String) {
                 return LocalDate.parse((String) val);
             }
         }
 
-        if(type == LocalTime.class) {
+        if (type == LocalTime.class) {
             if (val instanceof java.sql.Time) {
                 return ((Time) val).toLocalTime();
             }
 
-            if(val instanceof String) {
+            if (val instanceof String) {
                 return LocalTime.parse((String) val);
+            }
+        }
+
+        if (type == Boolean.TYPE) {
+            if (val instanceof Boolean) {
+                return (Boolean) val;
+            }
+
+            if (val instanceof Number) {
+                return ((Number) val).byteValue() > 0;
             }
         }
 
