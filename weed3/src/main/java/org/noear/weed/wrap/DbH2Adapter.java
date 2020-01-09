@@ -24,4 +24,22 @@ public class DbH2Adapter implements DbAdapter {
     public ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
         return md.getTables(null, null, "TABLE%", new String[]{"TABLE"});
     }
+
+    @Override
+    public String preReview(String code) {
+        if (code.indexOf("CREATE TABLE") >= 0) {
+            return code.replace("ENGINE=InnoDB ", "")
+                    .replace("USING BTREE", "")
+                    .replace("USING HASH", "")
+                    .replaceAll("`\\(\\d+\\)\\)", "`)")
+                    .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
+
+        }
+
+        if(code.indexOf("information_schema.")>=0){
+            return  code.toUpperCase();
+        }
+
+        return code;
+    }
 }
