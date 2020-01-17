@@ -10,6 +10,7 @@ import java.net.URI;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -292,6 +293,23 @@ public class DbContext extends DbContextMetaData {
         return sql(new SQLBuilder().append(code, args));
     }
 
+    public Object sqlExe(String code, Object... args) throws SQLException {
+        return sql(code, args).execute();
+    }
+
+    public Object sqlVal(String code, Object... args) throws SQLException {
+        return sql(code, args).getValue();
+    }
+
+    public Map<String, Object> sqlMap(String code, Object... args) throws SQLException {
+        return sql(code, args).getMap();
+    }
+
+    public List<Map<String, Object>> sqlList(String code, Object... args) throws SQLException {
+        return sql(code, args).getMapList();
+    }
+
+
     /**
      * 输入SQL builder，获取查询器
      */
@@ -312,6 +330,7 @@ public class DbContext extends DbContextMetaData {
     /**
      * 执行代码，返回影响行数
      */
+    @Deprecated
     public int exe(String code, Object... args) throws Exception {
         return sql(code, args).execute();
     }
