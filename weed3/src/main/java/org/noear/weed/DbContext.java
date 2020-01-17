@@ -293,6 +293,9 @@ public class DbContext extends DbContextMetaData {
         return sql(new SQLBuilder().append(code, args));
     }
 
+    /**
+     * 为嵌入使用提供便利
+     * */
     public Object sqlExe(String code, Object... args) throws SQLException {
         return sql(code, args).execute();
     }
