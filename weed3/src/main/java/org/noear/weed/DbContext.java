@@ -294,26 +294,6 @@ public class DbContext extends DbContextMetaData {
     }
 
     /**
-     * 为嵌入使用提供便利
-     * */
-    public Object sqlExe(String code, Object... args) throws SQLException {
-        return sql(code, args).execute();
-    }
-
-    public Object sqlVal(String code, Object... args) throws SQLException {
-        return sql(code, args).getValue();
-    }
-
-    public Map<String, Object> sqlMap(String code, Object... args) throws SQLException {
-        return sql(code, args).getMap();
-    }
-
-    public List<Map<String, Object>> sqlList(String code, Object... args) throws SQLException {
-        return sql(code, args).getMapList();
-    }
-
-
-    /**
      * 输入SQL builder，获取查询器
      */
     public DbQuery sql(Act1<SQLBuilder> buildRuner) {
@@ -331,19 +311,41 @@ public class DbContext extends DbContextMetaData {
 
 
     /**
-     * 执行代码，返回影响行数
+     * 执行代码，按需返回
      */
-    @Deprecated
-    public int exe(String code, Object... args) throws Exception {
-        return sql(code, args).execute();
+    public Object exe(String code, Object... args) throws Exception {
+        String cmd = "val";
+        String[] ss = code.split("::");
+        if(ss.length>1){
+            cmd = ss[0];
+            code = ss[1];
+        }
+
+        String codeUp = code.trim().substring(0,10).toUpperCase();
+        if(codeUp.startsWith("SELECT ")){
+            switch (cmd){
+                case "obj":
+                case "map":
+                    return sql(code, args).getMap();
+
+                case "ary":
+                case "list":
+                    return sql(code, args).getMapList();
+
+                default:
+                    return sql(code, args).getValue();
+            }
+        }else{
+            return sql(code, args).execute();
+        }
     }
 
     /**
-     * 请改用 exe()
+     * 执行代码，返回影响行数
      * */
     @Deprecated
     public int exec(String code, Object... args) throws Exception {
-        return exe(code, args);
+        return sql(code, args).execute();
     }
 
 
