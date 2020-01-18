@@ -9,6 +9,6 @@ public class _ExeTest {
 
     @Test
     public void test1() throws Exception{
-        db.exe("val::SELECT COUNT(*) num FROM water_msg_message WHERE log_date=20200101");
+        //db.exe("val::SELECT COUNT(*) num FROM water_msg_message WHERE log_date=20200101");
     }
 }
