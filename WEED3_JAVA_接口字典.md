@@ -125,12 +125,16 @@
 -insertList(valuesList:List<DataItem>) -> void //执行批量合并插入，使用集合数据
 -insertList(valuesList:Collection<T>,dataBuilder:(t,d:DataItem)->{}) -> void //执行批量合并插入，使用集合数据（由dataBuilder构建数据）
 
+-insertBy(constraints:String)//使用set接口的数据,根据约束字段自动插入 // exists + insert 的结合体
+-insertBy(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入 // exists + insert 的结合体
+
+
 -update() ->int //执行更新并返回影响行数，使用set接口的数据
 -update(data:IDataItem) ->int //执行更新并返回影响行数，使用set接口的数据
 -update(dataBuilder:(d:DataItem)->{}) ->int //执行更新并返回影响行数，使用dataBuilder构建的数据
 
--upsert(constraints:String)//使用set接口的数据,根据约束字段自动插入或更新 // update 和 insert 的结合体
--upsert(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入或更新 // update 和 insert 的结合体
+-upsertBy(constraints:String)//使用set接口的数据,根据约束字段自动插入或更新 // exists + update + insert 的结合体
+-upsertBy(data:IDataItem,constraints:String)//使用data的数据,根据约束字段自动插入或更新 // exists + update + insert 的结合体
 
 -delete() -> int //执行删除，并返回影响行数
 
