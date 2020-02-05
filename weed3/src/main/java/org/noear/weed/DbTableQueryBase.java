@@ -238,6 +238,26 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return compile().insert();
     }
 
+    /** 根据约束进行插入 */
+    public long insertBy(IDataItem data, String conditionFields) throws SQLException{
+        String[] ff = conditionFields.split(",");
+
+        if (ff.length == 0) {
+            throw new RuntimeException("Please enter constraints");
+        }
+
+        this.where("1=1");
+        for (String f : ff) {
+            this.andEq(f, data.get(f));
+        }
+
+        if (this.exists()) {
+            return 0;
+        }
+
+        return insert(data);
+    }
+
     /** 执行批量合并插入，使用集合数据 */
     public boolean insertList(List<DataItem> valuesList) throws SQLException {
         if (valuesList == null) {
@@ -286,17 +306,26 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 使用data的数据,根据约束字段自动插入或更新
      *
-     * 请改用 upsert
+     * 请改用 upsertBy
      * */
     @Deprecated
     public void updateExt(IDataItem data, String conditionFields) throws SQLException {
-        upsert(data, conditionFields);
+        upsertBy(data, conditionFields);
+    }
+
+    /** 使用data的数据,根据约束字段自动插入或更新
+     *
+     * 请改用 upsertBy
+     * */
+    @Deprecated
+    public long upsert(IDataItem data, String conditionFields) throws SQLException {
+        return upsertBy(data,conditionFields);
     }
 
     /**
      * 使用data的数据,根据约束字段自动插入或更新
      * */
-    public long upsert(IDataItem data, String conditionFields) throws SQLException {
+    public long upsertBy(IDataItem data, String conditionFields) throws SQLException {
         String[] ff = conditionFields.split(",");
 
         if (ff.length == 0) {

@@ -94,9 +94,16 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
     public long insert() throws SQLException {
         if (_item == null) {
             return 0;
-        }
-        else {
+        } else {
             return insert(_item);
+        }
+    }
+
+    public long insertBy(String conditionFields)throws SQLException {
+        if (_item == null) {
+            return 0;
+        } else {
+            return insertBy(_item, conditionFields);
         }
     }
 
@@ -117,18 +124,27 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
      * 使用set接口的数据,根据约束字段自动插入或更新
      * （默认，只会更新不是null的数据）
      *
-     * 请改用 upsert
+     * 请改用 upsertBy
      * */
     @Deprecated
     public void updateExt(String conditionFields)throws SQLException {
-        if (_item != null) {
-            upsert(_item, conditionFields);
-        }
+        upsertBy(conditionFields);
     }
 
+    /**
+     * 使用set接口的数据,根据约束字段自动插入或更新
+     * （默认，只会更新不是null的数据）
+     *
+     * 请改用 upsertBy
+     * */
+    @Deprecated
     public long upsert(String conditionFields)throws SQLException {
+        return upsertBy(conditionFields);
+    }
+
+    public long upsertBy(String conditionFields)throws SQLException {
         if (_item != null) {
-            return upsert(_item, conditionFields);
+            return upsertBy(_item, conditionFields);
         }else{
             return 0;
         }
