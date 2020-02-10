@@ -197,7 +197,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         VarHolder _tmp = new VarHolder();
 
-        getDataItem((cu, di) -> {
+        DataItem item = getDataItem((cu, di) -> {
             try {
                 _tmp.value = di.toItem(model);
                 cacheCondition.run(cu, (T) _tmp.value);
@@ -205,8 +205,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
                 throw new RuntimeException(ex);
             }
         });
-        //为了减少转换次数
-        return (T) _tmp.value;
+
+        if(_tmp.value == null){
+            //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理
+            return item.toItem(model);
+        }else {
+            //为了减少转换次数
+            return (T) _tmp.value;
+        }
     }
     /*执行命令（返回一个列表）*/
     @Override
@@ -223,7 +229,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         VarHolder _tmp = new VarHolder();
 
-        getDataList((cu,dl)->{
+        DataList list = getDataList((cu,dl)->{
             try {
                 _tmp.value = dl.toList(model);
                 cacheCondition.run(cu, (List<T>)_tmp.value);
@@ -232,7 +238,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             }
         });
 
-        return (List<T>)_tmp.value;
+        if(_tmp == null){
+            //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理
+            return list.toList(model);
+        }else {
+            return (List<T>) _tmp.value;
+        }
     }
 
     @Override
@@ -261,7 +272,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         VarHolder _tmp = new VarHolder();
 
-        getDataList((cu,dl)->{
+        DataList list = getDataList((cu,dl)->{
             try {
                 _tmp.value = dl.toEntityList(cls);
                 cacheCondition.run(cu, (List<T>)_tmp.value);
@@ -270,7 +281,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             }
         });
 
-        return (List<T>)_tmp.value;
+        if(_tmp.value == null){
+            //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理
+            return list.toEntityList(cls);
+        }else {
+            return (List<T>) _tmp.value;
+        }
     }
 
     @Override
@@ -286,7 +302,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
         VarHolder _tmp = new VarHolder();
 
-        getDataItem((cu, di) -> {
+        DataItem item = getDataItem((cu, di) -> {
             try {
                 _tmp.value = di.toEntity(cls);
                 cacheCondition.run(cu, (T) _tmp.value);
@@ -295,7 +311,12 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             }
         });
 
-        return (T) _tmp.value;
+        if(_tmp.value == null){
+            //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理
+            return item.toEntity(cls);
+        }else {
+            return (T) _tmp.value;
+        }
     }
     // <--
 

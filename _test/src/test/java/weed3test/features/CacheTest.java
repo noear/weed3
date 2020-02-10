@@ -67,16 +67,29 @@ public class CacheTest {
         System.out.println("tmp.app_id = " + tmp.app_id);
         assert  tmp.app_id == 23;
 
+
+        tmp = db2.table("appx")
+                .whereEq("app_id", 23)
+                .caching(cache)
+                .select("*")
+                .getItem(new AppxModel2(), (uc, m) -> {
+                    uc.cacheTag("app_" + m.app_id);
+                });
+
+        System.out.println("tmp.app_id = " + tmp.app_id);
+        assert  tmp.app_id == 23;
+
+
         cache.tags().update("app_23", (DataItem di) -> {
             AppxModel2 m = di.toEntity(AppxModel2.class);
-            System.out.println("tmp.app_id = " + tmp.app_id);
+            System.out.println("tmp.app_id = " + m.app_id);
             assert m.app_id == 23;
             return di;
         });
     }
 
     @Test
-    public void test13() throws Exception{
+    public void test31() throws Exception{
         appx_get sp = new appx_get(db2);
         sp.app_id = 23;
 
@@ -88,9 +101,19 @@ public class CacheTest {
         System.out.println("tmp.app_id = " + tmp.app_id);
         assert  tmp.app_id == 23;
 
+
+        tmp =  sp.caching(cache)
+                .getItem(new AppxModel2(), (uc, m) -> {
+                    uc.cacheTag("app_" + m.app_id);
+                });
+
+        System.out.println("tmp.app_id = " + tmp.app_id);
+        assert  tmp.app_id == 23;
+
+
         cache.tags().update("app_23", (DataItem di) -> {
             AppxModel2 m = di.toEntity(AppxModel2.class);
-            System.out.println("tmp.app_id = " + tmp.app_id);
+            System.out.println("tmp.app_id = " + m.app_id);
             assert m.app_id == 23;
             return di;
         });
