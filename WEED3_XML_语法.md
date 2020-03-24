@@ -4,7 +4,7 @@
 ```
 mapper 开始标签
   namespace （属性：命名空间，{namespace}.{id} = sqlid；不包括文件名）
-  import（属性：导入包或类，多个以;号隔开）
+  import（属性：导入包或类，多个以;号隔开。可以简化后面的模型写法）
   :baseMapper（属性：扩展BaseMapper 的模型，效果：BaseMapper<Xxx>）
   :db（属性：关联 db bean；效果：@Db("xxx")）
 
@@ -70,6 +70,7 @@ ${name:type?} = 变量替换
 <?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="weed3demo.xmlsql2"
         import="weed3demo.mapper.*"
+        :baseMapper="UserModel"
         :db="testdb">
     <sql id="user_add1"
          :return="long"
@@ -161,7 +162,7 @@ db.call("@weed3demo.xmlsql2.user_add").setMap(map).insert()
 
 //使用方案2
 @Namespace("weed3demo.xmlsql2")
-public interface UserDao{
+public interface UserDao extends BaseMapper<UserModel> {
     UserModel user_get(int user_id);
 }
 
