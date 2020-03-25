@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<mapper namespace="weed3demo.xmlsql2" :db="db_sword">
+
+    <!-- user_whitelist -->
+    <sql id="user_whitelist_update" :return="int"  :note="更新白名单信息">
+        UPDATE `user_blacklist`
+        SET `update_fulltime` = @{update_fulltime:Date},
+        <if test="user_id > 0">
+            `user_id` = @{user_id:long},
+        </if>
+        <if test="name?!">
+            `name` = @{name:String},
+        </if>
+        <if test="is_reg > 0">
+            `is_reg` = @{is_reg:int},
+        </if>
+
+        <if test="auth_status >= 0">
+            `auth_status` = @{auth_status:int},
+        </if>
+        <if test="order_status >= 0">
+            `order_status` = @{order_status:int},
+        </if>
+        <if test="ava_amt gt 0">
+            `ava_amt` = @{ava_amt:double},
+        </if>
+        <if test="finish_times gt 0">
+            `finish_times` = `finish_times` + 1,
+        </if>
+        `update_date` = @{update_date:int}
+        WHERE `mobile` = @{mobile:String};
+    </sql>
+</mapper>
