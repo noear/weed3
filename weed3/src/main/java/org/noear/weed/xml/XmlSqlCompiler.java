@@ -8,10 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -334,6 +331,16 @@ public class XmlSqlCompiler {
                 return;
             }
 
+            if ("insert".equals(tagName)) {
+                parseInsertNode(sb, sqlBuilderName, dblock, n, depth);
+                return;
+            }
+
+            if ("update".equals(tagName)) {
+                parseUpdateNode(sb, sqlBuilderName, dblock, n, depth);
+                return;
+            }
+
             _parseNodeList(n.getChildNodes(), sqlBuilderName, sb, dblock, depth);
         }
     }
@@ -504,6 +511,42 @@ public class XmlSqlCompiler {
         }
     }
 
+    //未启用..
+    private static void parseInsertNode(StringBuilder sb, String sqlBuilderName,XmlSqlBlock dblock, Node n , int depth){
+        String _table = attr(n,"table");
+        String _data_str = attr(n,"data");
+
+        List<String> tmpList = new ArrayList<>();
+
+        for(String v1 : _data_str.split(",")){
+            if(v1.indexOf(":") > 0){
+                String[] ss = v1.split(";");
+                XmlSqlVar dv = new XmlSqlVar(v1, ss[0],ss[1]);
+                tmpList.add(dv.name);
+                dblock.varPut(dv);
+            }else{
+                tmpList.add(v1);
+            }
+        }
+
+        newLine(sb, depth).append("\"");
+        newLine(sb, depth).append("INSERT ").append(_table).append("(");
+        for(String n1: tmpList){
+            sb.append(n1).append(",");
+        }
+        sb.setLength(sb.length()-1);
+        sb.append(") VALUES(");
+        for(String n1: tmpList){
+            sb.append("map.get(\\\"").append(n1).append("\\\")").append(",");
+        }
+        sb.setLength(sb.length()-1);
+        sb.append(")");
+    }
+
+    //未启用..
+    private static void parseUpdateNode(StringBuilder sb, String sqlBuilderName,XmlSqlBlock dblock, Node n , int depth){
+
+    }
 
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
