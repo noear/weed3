@@ -77,21 +77,21 @@ db.table("user u")
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.7.3</version>
+    <version>3.2.7.4</version>
 </dependency>
 
 <!-- 可选：render 插件，用于支持模板接口（Xxx 换成具体的名字） -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3.render.Xxx</artifactId>
-    <version>3.2.7.3</version>
+    <version>3.2.7.4</version>
 </dependency>
 
 <!-- 可选：maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.7.3</version>
+    <version>3.2.7.4</version>
 </plugin>
 ```
 

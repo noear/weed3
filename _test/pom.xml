@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
-        <version>3.2.7.3</version>
+        <version>3.2.7.4</version>
     </parent>
 
     <dependencies>
@@ -146,7 +146,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.2.7.3</version>
+                <version>3.2.7.4</version>
                 <executions>
                     <execution>
                         <id>weed3</id>
