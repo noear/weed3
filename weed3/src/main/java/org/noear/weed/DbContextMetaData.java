@@ -52,7 +52,7 @@ class DbContextMetaData {
         return _dbAdapter;
     }
 
-    public void dbAdapterSet(DbAdapter adapter){
+    public void dbAdapterSet(DbAdapter adapter) {
         initMetaData();
         _dbAdapter = adapter;
     }
@@ -79,7 +79,7 @@ class DbContextMetaData {
         return tw == null ? null : tw.getPk1();
     }
 
-    public void refreshMeta(){
+    public void refreshMeta() {
         initMetaDataDo();
     }
 
@@ -92,6 +92,9 @@ class DbContextMetaData {
 
     private synchronized void initMetaDataDo() {
         //这段不能去掉
+        if (_schema != null) {
+            System.out.println("Weed3::" + _schema);
+        }
         System.out.println("Weed3::Init metadata");
 
         Connection conn = null;
@@ -158,6 +161,11 @@ class DbContextMetaData {
                 //做为默认
                 _dbAdapter = new DbMySQLAdapter();
             }
+        } else {
+            //默认为mysql
+            //
+            _dbType = DbType.MySQL;
+            _dbAdapter = new DbMySQLAdapter();
         }
     }
 
@@ -194,7 +202,7 @@ class DbContextMetaData {
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
 
-        rs = dbAdapter().getTables(md,_catalog,_schema);
+        rs = dbAdapter().getTables(md, _catalog, _schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");
