@@ -140,6 +140,7 @@ StatModel stat = userDao.userStat(20201010);
 /** 2.2.Table用法 */
 //增::
 db.table("user").setEntity(user).insert();
+db.table("user").setMap(map).insert();
 //删::
 db.table("user").whereEq("id",2).delete();
 //改::
