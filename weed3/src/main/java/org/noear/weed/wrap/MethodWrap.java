@@ -13,7 +13,10 @@ public class MethodWrap {
         MethodWrap mw = _cache.get(method);
         if (mw == null) {
             mw = new MethodWrap(method);
-            _cache.putIfAbsent(method, mw);
+            MethodWrap l = _cache.putIfAbsent(method, mw);
+            if (l != null) {
+                mw = l;
+            }
         }
         return mw;
     }

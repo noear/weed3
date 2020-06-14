@@ -55,11 +55,14 @@ public class PropertyTest {
 
     private static Map<Property,String> _cache = new ConcurrentHashMap<>();
 
-    private static  <C> String getName2(Property<C, ?> property){
+    private static  <C> String getName2(Property<C, ?> property) {
         String tmp = _cache.get(property);
-        if(tmp == null){
+        if (tmp == null) {
             tmp = getName(property);
-            _cache.putIfAbsent(property,tmp);
+            String l = _cache.putIfAbsent(property, tmp);
+            if (l != null) {
+                tmp = l;
+            }
         }
 
         return tmp;

@@ -15,7 +15,10 @@ class MapperInvokeForBas implements IMapperInvoke {
 
         if (tmp == null) {
             tmp = new BaseMapperWrap(db, (BaseMapper) proxy);
-            _lib.putIfAbsent(proxy.getClass(), tmp);
+            BaseMapperWrap l = _lib.putIfAbsent(proxy.getClass(), tmp);
+            if (l != null) {
+                tmp = l;
+            }
         }
 
         return tmp;

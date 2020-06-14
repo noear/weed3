@@ -14,7 +14,10 @@ public class PropertyWrap implements Serializable {
         if (clz == null) {
             try {
                 clz = Class.forName(implClz.replace("/", "."));
-                _clzCache.putIfAbsent(implClz, clz);
+                Class<?> l = _clzCache.putIfAbsent(implClz, clz);
+                if (l != null) {
+                    clz = l;
+                }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -78,7 +81,10 @@ public class PropertyWrap implements Serializable {
         PropertyWrap tmp = _popCache.get(p);
         if (tmp == null) {
             tmp = wrap(p);
-            _popCache.putIfAbsent(p, tmp);
+            PropertyWrap l = _popCache.putIfAbsent(p, tmp);
+            if (l != null) {
+                tmp = l;
+            }
         }
         return tmp;
     }
