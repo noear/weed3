@@ -144,7 +144,7 @@ db.table("user").setMap(map).insert();
 //删::
 db.table("user").whereEq("id",2).delete();
 //改::
-db.table("user").set("sex",1).whereEq("id",2).delete();
+db.table("user").set("sex",1).whereEq("id",2).update();
 //查::
 db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
