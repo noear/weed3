@@ -61,10 +61,10 @@ db.table("user u")
 | org.noear:weed3.cache.ehcache| 基于 ehcache 适配的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 适配的扩展缓存服务 |
 | | |
-| org.noear:weed3.render.beetl | 基于 beetl 适配的扩展模板引擎 |
-| org.noear:weed3.render.enjoy | 基于 enjoy 适配的扩展模板引擎 |
-| org.noear:weed3.render.freemarker | 基于 freemarker 适配的扩展模板引擎 |
-| org.noear:weed3.render.velocity | 基于 velocity 适配的扩展模板引擎 |
+| org.noear:weed3.template.beetl | 基于 beetl 适配的扩展模板引擎 |
+| org.noear:weed3.template.enjoy | 基于 enjoy 适配的扩展模板引擎 |
+| org.noear:weed3.template.freemarker | 基于 freemarker 适配的扩展模板引擎 |
+| org.noear:weed3.template.velocity | 基于 velocity 适配的扩展模板引擎 |
 
 
 

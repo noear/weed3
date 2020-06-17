@@ -14,6 +14,7 @@
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
         <version>3.2.8</version>
+        <relativePath>../weed3-parent/pom.xml</relativePath>
     </parent>
 
     <dependencies>
@@ -40,25 +41,25 @@
         <!-- velocity专属后缀名：.vm -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.render.velocity</artifactId>
+            <artifactId>weed3.template.velocity</artifactId>
         </dependency>
 
         <!-- freemarker专属后缀名：.ftl -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.render.freemarker</artifactId>
+            <artifactId>weed3.template.freemarker</artifactId>
         </dependency>
 
         <!-- beetl 专属后缀名：.sql -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.render.beetl</artifactId>
+            <artifactId>weed3.template.beetl</artifactId>
         </dependency>
 
         <!-- enjoy 专属后缀名：.md -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.render.enjoy</artifactId>
+            <artifactId>weed3.template.enjoy</artifactId>
         </dependency>
 
 

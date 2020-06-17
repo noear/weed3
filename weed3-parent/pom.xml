@@ -101,25 +101,25 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.render.enjoy</artifactId>
+                <artifactId>weed3.template.enjoy</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.render.beetl</artifactId>
+                <artifactId>weed3.template.beetl</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.render.freemarker</artifactId>
+                <artifactId>weed3.template.freemarker</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.render.velocity</artifactId>
+                <artifactId>weed3.template.velocity</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
 
@@ -237,10 +237,10 @@
         <module>../weed3.cache.ehcache</module>
         <module>../weed3.cache.j2cache</module>
 
-        <module>../weed3.render.beetl</module>
-        <module>../weed3.render.enjoy</module>
-        <module>../weed3.render.freemarker</module>
-        <module>../weed3.render.velocity</module>
+        <module>../weed3.template.beetl</module>
+        <module>../weed3.template.enjoy</module>
+        <module>../weed3.template.freemarker</module>
+        <module>../weed3.template.velocity</module>
 
     </modules>
 
