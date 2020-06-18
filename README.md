@@ -1,6 +1,6 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.noear/weed3.svg)](https://mvnrepository.com/search?q=weed3)
 
-` QQ交流群：1047964012 `
+` QQ交流群：22200020 `
 
 # Weed for java
 微型ORM框架（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；监控；等...）
@@ -80,10 +80,10 @@ db.table("user u")
     <version>3.2.8</version>
 </dependency>
 
-<!-- 可选：render 插件，用于支持模板接口（Xxx 换成具体的名字） -->
+<!-- 可选：template 插件，用于支持模板接口（Xxx 换成具体的名字） -->
 <dependency>
     <groupId>org.noear</groupId>
-    <artifactId>weed3.render.Xxx</artifactId>
+    <artifactId>weed3.template.Xxx</artifactId>
     <version>3.2.8</version>
 </dependency>
 
