@@ -1,6 +1,6 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.noear/weed3.svg)](https://mvnrepository.com/search?q=weed3)
 
-` QQ交流群：22200020 `
+` QQ交流群：1047964012 `
 
 # Weed for java
 微型ORM框架（支持：java sql，xml sql，annotation sql，template sql；事务；缓存；监控；等...）
