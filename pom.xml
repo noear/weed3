@@ -22,8 +22,6 @@
 
         <module>_test</module>
         <module>_demo</module>
-
-        <module>weed3-springboot-starter</module>
     </modules>
 
 </project>

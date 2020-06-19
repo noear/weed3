@@ -8,10 +8,10 @@
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
         <version>3.2.8.1</version>
-        <relativePath>../weed3-parent/pom.xml</relativePath>
+        <relativePath>../../weed3-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>weed3.template.beetl</artifactId>
+    <artifactId>weed3.cache.memcached</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -22,9 +22,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
-            <version>${beetl.ver}</version>
+            <groupId>net.spy</groupId>
+            <artifactId>spymemcached</artifactId>
+            <version>2.12.1</version>
         </dependency>
     </dependencies>
 

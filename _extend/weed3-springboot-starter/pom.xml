@@ -8,25 +8,31 @@
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
         <version>3.2.8.1</version>
-        <relativePath>../weed3-parent/pom.xml</relativePath>
+        <relativePath>../../weed3-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>weed3.cache.j2cache</artifactId>
+    <artifactId>weed3-springboot-starter</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.0.4.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>net.oschina.j2cache</groupId>
-            <artifactId>j2cache-core</artifactId>
-            <version>2.7.6-release</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>2.0.4.RELEASE</version>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
-
 </project>

@@ -8,23 +8,24 @@
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
         <version>3.2.8.1</version>
-        <relativePath>../weed3-parent/pom.xml</relativePath>
+        <relativePath>../../weed3-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>weed3-solon-plugin</artifactId>
+    <artifactId>weed3.template.beetl</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon</artifactId>
-            <version>1.0.5.8</version>
+            <artifactId>weed3</artifactId>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>${beetl.ver}</version>
         </dependency>
     </dependencies>
+
 </project>

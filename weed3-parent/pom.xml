@@ -228,19 +228,21 @@
     <modules>
         <module>../weed3</module>
         <module>../weed3-maven-plugin</module>
-        <module>../weed3-solon-plugin</module>
 
-        <module>../weed3.tool</module>
+        <module>../_extend/weed3-solon-plugin</module>
+<!--        <module>../_extend/weed3-springboot-starter</module>-->
 
-        <module>../weed3.cache.memcached</module>
-        <module>../weed3.cache.redis</module>
-        <module>../weed3.cache.ehcache</module>
-        <module>../weed3.cache.j2cache</module>
+        <module>../_extend/weed3.tool</module>
 
-        <module>../weed3.template.beetl</module>
-        <module>../weed3.template.enjoy</module>
-        <module>../weed3.template.freemarker</module>
-        <module>../weed3.template.velocity</module>
+        <module>../_extend/weed3.cache.memcached</module>
+        <module>../_extend/weed3.cache.redis</module>
+        <module>../_extend/weed3.cache.ehcache</module>
+        <module>../_extend/weed3.cache.j2cache</module>
+
+        <module>../_extend/weed3.template.beetl</module>
+        <module>../_extend/weed3.template.enjoy</module>
+        <module>../_extend/weed3.template.freemarker</module>
+        <module>../_extend/weed3.template.velocity</module>
 
     </modules>
 

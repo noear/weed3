@@ -1,6 +1,8 @@
 ##### 3.2.8.1
 1. 添加 whereMapIf(), whereEntity(), whereEntityIf()
 2. 统一 whereMap(),whereEntity(), setMap(), setEntity() 内部逻辑；将null排除
+3. 原weed3.reader包，更名为；weed3.teamplate
+4. 调整项目目录结构，将非核心框架移到 _extend
 
 ##### 3.2.6.3
 1. cmd.paramMap() 添加var name 输出（如果有）
