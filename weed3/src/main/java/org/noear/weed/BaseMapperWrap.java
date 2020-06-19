@@ -202,64 +202,47 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     public T selectItem(T entity) {
         Class<T> clz = (Class<T>) entityClz();
 
-        DataItem data = new DataItem();
-        data.setEntityIf(entity,(k,v)-> v!=null );
-
-        return RunUtils.call(()
-                -> getQr().whereMap(data.getMap()).limit(1).select("*").getItem(clz));
+        return RunUtils.call(() ->
+                getQr().whereEntity(entity).limit(1).select("*").getItem(clz));
     }
 
     @Override
     public T selectItem(Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> {
-            return getQr(c).select("*").getItem(clz);
-        });
+        return RunUtils.call(() -> getQr(c).select("*").getItem(clz));
     }
 
     @Override
     public Object selectValue(String column, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).select(column).getValue();
-        });
+        return RunUtils.call(()-> getQr(c).select(column).getValue());
     }
 
     @Override
     public Map<String, Object> selectMap(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).select("*").getMap();
-        });
+        return RunUtils.call(()-> getQr(c).select("*").getMap());
     }
 
     @Override
     public Long selectCount(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).count();
-        });
+        return RunUtils.call(()-> getQr(c).count());
     }
 
     @Override
     public List<T> selectList(Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> {
-            return getQr(c).select("*").getList(clz);
-        });
+        return RunUtils.call(()-> getQr(c).select("*").getList(clz));
     }
 
     @Override
     public List<Map<String, Object>> selectMapList(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).select("*").getMapList();
-        });
+        return RunUtils.call(()-> getQr(c).select("*").getMapList());
     }
 
     @Override
     public List<Object> selectArray(String column, Act1<MapperWhereQ> c) {
-        return RunUtils.call(() -> {
-            return getQr(c).select(column).getArray(column);
-        });
+        return RunUtils.call(() -> getQr(c).select(column).getArray(column));
     }
 
 
@@ -267,32 +250,24 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     public List<T> selectPage(int start, int size, Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> {
-            return getQr(c).limit(start, size).select("*").getList(clz);
-        });
+        return RunUtils.call(()-> getQr(c).limit(start, size).select("*").getList(clz));
     }
 
     @Override
     public List<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).limit(start, size).select("*").getMapList();
-        });
+        return RunUtils.call(()-> getQr(c).limit(start, size).select("*").getMapList());
     }
 
     @Override
     public List<T> selectTop(int size, Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> {
-            return getQr(c).top(size).select("*").getList(clz);
-        });
+        return RunUtils.call(()-> getQr(c).top(size).select("*").getList(clz));
     }
 
     @Override
     public List<Map<String, Object>> selectMapTop(int size, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> {
-            return getQr(c).top(size).select("*").getMapList();
-        });
+        return RunUtils.call(()-> getQr(c).top(size).select("*").getMapList());
     }
 
     private DbTableQuery getQr(){

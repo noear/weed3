@@ -17,6 +17,9 @@ public interface BaseMapper<T> {
     Integer deleteByMap(Map<String, Object> columnMap);
     Integer delete(Act1<MapperWhereQ> condition);
 
+    /**
+     * @param excludeNull 排除null
+     * */
     Integer updateById(T entity, boolean excludeNull);
     Integer update(T entity, boolean excludeNull, Act1<MapperWhereQ> condition);
 

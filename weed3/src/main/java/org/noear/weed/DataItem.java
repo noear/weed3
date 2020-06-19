@@ -180,12 +180,11 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
 
 
     /** 从map加载数据 */
-    public DataItem setMap(Map<String,Object> data){
-        data.forEach((k,v)->{
-            set(k,v);
-        });
-
-        return this;
+    public DataItem setMap(Map<String,Object> data) {
+        //
+        //保持也where的相同逻辑
+        //
+        return setMapIf(data, (k, v) -> v != null);
     }
 
     public DataItem setMapIf(Map<String,Object> data, Fun2<Boolean,String,Object> condition) {
@@ -199,11 +198,11 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     /** 从Entity 加载数据 */
-    public DataItem setEntity(Object obj)  {
-        EntityUtils.fromEntity(obj,(k, v)->{
-            set(k, v);
-        });
-        return this;
+    public DataItem setEntity(Object obj) {
+        //
+        //保持也where的相同逻辑
+        //
+        return setEntityIf(obj, (k, v) -> v != null);
     }
 
     public DataItem setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {

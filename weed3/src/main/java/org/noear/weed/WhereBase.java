@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.Fun2;
+import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.wrap.DbType;
 
 import java.util.Map;
@@ -67,6 +69,7 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
+
     /**
      * 添加SQL where 关键字
      */
@@ -81,10 +84,32 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public T whereMap(Map<String, Object> columnMap) {
+        return whereEntityIf(columnMap, (k, v) -> v != null);
+    }
+
+    public T whereMapIf(Map<String, Object> columnMap, Fun2<Boolean,String,Object> condition) {
         if (columnMap != null && columnMap.size() > 0) {
             where("1=1");
             columnMap.forEach((k, v) -> {
-                andEq(k, v);
+                if (condition.run(k, v)) {
+                    andEq(k, v);
+                }
+            });
+        }
+        return (T) this;
+    }
+
+    public T whereEntity(Object entity) {
+        return whereEntityIf(entity, (k, v) -> v != null);
+    }
+
+    public T whereEntityIf(Object entity, Fun2<Boolean,String,Object> condition) {
+        if (entity != null) {
+            where("1=1");
+            EntityUtils.fromEntity(entity, (k, v) -> {
+                if (condition.run(k, v)) {
+                    andEq(k, v);
+                }
             });
         }
         return (T) this;
