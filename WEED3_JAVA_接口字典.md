@@ -38,9 +38,9 @@
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -whereIf(condition:bool, code:String,args:Object...) -> self
--whereMap(map:Map<String,Object>) -> self;
--whereMapIf(map:Map<String,Object>, condition:(k,v)->bool) -> self;
--whereEntity(entity:Object) -> self
+-whereMap(map:Map<String,Object>) -> self  //null会默认排除
+-whereMapIf(map:Map<String,Object>, condition:(k,v)->bool) -> self
+-whereEntity(entity:Object) -> self //null会默认排除
 -whereEntityIf(entity:Object, condition:(k,v)->bool) -> self;
 -where() -> self //添加SQL where 关键字
 -whereEq(col:String,val:Object) -> self //添加SQL where = 语句      //val为null时，转为 IS NULL
@@ -98,10 +98,10 @@
 
 -set(name:String,value:Object) -> self  //设置变量
 -setIf(condition:bool,name:String,value:Object) -> self
--setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)，null默认会被排除
+-setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)  //null会默认排除
 -setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
--setEntity(data:Object) -> self     //设置变量(将实体输入)
--setEntityIf(data:Object,(k,v)->bool) -> self，null默认会被排除
+-setEntity(data:Object) -> self     //设置变量(将实体输入) //null会默认排除
+-setEntityIf(data:Object,(k,v)->bool) -> self
 
 
 

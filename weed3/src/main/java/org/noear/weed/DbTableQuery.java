@@ -80,7 +80,6 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
 
     public DbTableQuery setEntityIf(Object data, Fun2<Boolean,String,Object> condition) {
         item_init();
-
         _item.setEntityIf(data, condition);
 
         return this;
@@ -99,6 +98,9 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         }
     }
 
+    /**
+     * 根据字段和数据自动形成插入条件
+     * */
     public long insertBy(String conditionFields)throws SQLException {
         if (_item == null) {
             return 0;
