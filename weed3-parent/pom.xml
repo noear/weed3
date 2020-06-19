@@ -74,6 +74,12 @@
                 <version>${weed3.ver}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3-springboot-starter</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.noear</groupId>
