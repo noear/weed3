@@ -98,10 +98,10 @@
 
 -set(name:String,value:Object) -> self  //设置变量
 -setIf(condition:bool,name:String,value:Object) -> self
--setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)
+-setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)，null默认会被排除
 -setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
 -setEntity(data:Object) -> self     //设置变量(将实体输入)
--setEntityIf(data:Object,(k,v)->bool) -> self
+-setEntityIf(data:Object,(k,v)->bool) -> self，null默认会被排除
 
 
 
