@@ -24,7 +24,6 @@
         <dependency>
             <groupId>net.spy</groupId>
             <artifactId>spymemcached</artifactId>
-            <version>2.12.1</version>
         </dependency>
     </dependencies>
 
