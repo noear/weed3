@@ -22,8 +22,9 @@ import java.util.Properties;
 public class DbContext extends DbContextMetaData {
 
     /**
-     * 最后次执行命令
+     * 最后次执行命令 (线程不安全，仅供调试用)
      */
+    @Deprecated
     public Command lastCommand;
     /**
      * 充许多片段执行
