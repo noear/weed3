@@ -6,6 +6,7 @@ import org.noear.weed.ext.Fun1;
 import org.noear.weed.ext.Fun1Ex;
 
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
 
 /**
  * Created by noear on 14-6-12.
@@ -27,12 +28,12 @@ public interface ICacheServiceEx extends ICacheService {
     }
 
     /** 获取 */
-    default <T> T getBy(String key, Fun1Ex<T, CacheUsing, Exception> builder) throws Exception {
+    default <T,E extends Exception> T getBy(String key, Fun1Ex<T, CacheUsing, E> builder) throws Exception {
         return getBy(getDefalutSeconds(),key,builder);
     }
 
     /** 获取 */
-    default <T> T getBy(int seconds, String key, Fun1Ex<T, CacheUsing, Exception> builder) throws Exception {
+    default <T,E extends Exception> T getBy(int seconds, String key, Fun1Ex<T, CacheUsing, E> builder) throws Exception {
         CacheUsing cu = new CacheUsing(this);
         return cu.usingCache(seconds).getEx(key, () -> builder.run(cu));
     }
