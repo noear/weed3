@@ -42,4 +42,7 @@ public interface IQuery extends ICacheController<IQuery> {
 
      <T> List<T> getArray(String column) throws SQLException;
      <T> List<T> getArray(int columnIndex) throws SQLException;
+     default  <T> List<T> getArray() throws SQLException{
+          return getArray(0);
+     }
 }
