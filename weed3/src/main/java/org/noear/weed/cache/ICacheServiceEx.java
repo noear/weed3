@@ -28,12 +28,12 @@ public interface ICacheServiceEx extends ICacheService {
     }
 
     /** 获取 */
-    default <T,E extends Exception> T getBy(String key, Fun1Ex<T, CacheUsing, E> builder) throws Exception {
+    default <T,E extends Throwable> T getBy(String key, Fun1Ex<T, CacheUsing, E> builder) throws E {
         return getBy(getDefalutSeconds(),key,builder);
     }
 
     /** 获取 */
-    default <T,E extends Exception> T getBy(int seconds, String key, Fun1Ex<T, CacheUsing, E> builder) throws Exception {
+    default <T,E extends Throwable> T getBy(int seconds, String key, Fun1Ex<T, CacheUsing, E> builder) throws E {
         CacheUsing cu = new CacheUsing(this);
         return cu.usingCache(seconds).getEx(key, () -> builder.run(cu));
     }
