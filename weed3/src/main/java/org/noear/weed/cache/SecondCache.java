@@ -20,8 +20,11 @@ public class SecondCache implements ICacheServiceEx {
     @Override
     public Object get(String key) {
         Object temp = cache1.get(key);
-        if(temp == null){
+        if (temp == null) {
             temp = cache2.get(key);
+            if (temp != null) {
+                cache1.store(key, temp, 3);
+            }
         }
         return temp;
     }
