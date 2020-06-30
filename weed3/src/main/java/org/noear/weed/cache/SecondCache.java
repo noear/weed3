@@ -5,16 +5,22 @@ import org.noear.weed.ext.Fun1;
 public class SecondCache implements ICacheServiceEx {
     private ICacheServiceEx cache1;
     private ICacheServiceEx cache2;
+    private int bufferSeconds;
 
-    public SecondCache(ICacheServiceEx cache1, ICacheServiceEx cache2){
+    public SecondCache(ICacheServiceEx cache1, ICacheServiceEx cache2) {
+        this(cache1, cache2, 5);
+    }
+
+    public SecondCache(ICacheServiceEx cache1, ICacheServiceEx cache2, int bufferSeconds) {
         this.cache1 = cache1;
         this.cache2 = cache2;
+        this.bufferSeconds = bufferSeconds;
     }
 
     @Override
     public void store(String key, Object obj, int seconds) {
-        cache1.store(key,obj,seconds);
-        cache2.store(key,obj,seconds);
+        cache1.store(key, obj, seconds);
+        cache2.store(key, obj, seconds);
     }
 
     @Override
@@ -22,8 +28,8 @@ public class SecondCache implements ICacheServiceEx {
         Object temp = cache1.get(key);
         if (temp == null) {
             temp = cache2.get(key);
-            if (temp != null) {
-                cache1.store(key, temp, 3);
+            if (bufferSeconds > 0 && temp != null) {
+                cache1.store(key, temp, bufferSeconds);
             }
         }
         return temp;
@@ -60,7 +66,7 @@ public class SecondCache implements ICacheServiceEx {
 
     @Override
     public <T> void update(String tag, Fun1<T, T> setter) {
-        cache1.update(tag,setter);
-        cache2.update(tag,setter);
+        cache1.update(tag, setter);
+        cache2.update(tag, setter);
     }
 }
