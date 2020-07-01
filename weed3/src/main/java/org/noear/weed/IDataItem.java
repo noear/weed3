@@ -29,6 +29,15 @@ public interface IDataItem extends GetHandler, Serializable {
         return this;
     }
 
+    default IDataItem setDf(String name, Object value, Object def) {
+        if (value == null) {
+            set(name, def);
+        } else {
+            set(name, value);
+        }
+        return this;
+    }
+
     Object get(int index);
     @Override
     Object get(String name);
