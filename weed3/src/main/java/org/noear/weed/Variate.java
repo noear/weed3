@@ -88,6 +88,10 @@ public class Variate implements Serializable {
             return (int)_value;
         }
 
+        if(_value instanceof Boolean) {
+            return ((boolean) _value) ? 1 : 0;
+        }
+
         if(_value instanceof Date){
             return ((Date)_value).getTime();
         }
@@ -112,6 +116,10 @@ public class Variate implements Serializable {
             return ((Number)_value).longValue();
         }
 
+        if(_value instanceof Boolean) {
+            return ((boolean) _value) ? 1 : 0;
+        }
+
         if(_value instanceof Date){
             return ((Date)_value).getTime();
         }
@@ -130,6 +138,10 @@ public class Variate implements Serializable {
 
         if(_value instanceof Long){
             return (int) ((long)_value);
+        }
+
+        if(_value instanceof Boolean) {
+            return ((boolean) _value) ? 1 : 0;
         }
 
         if(_value instanceof Number){
