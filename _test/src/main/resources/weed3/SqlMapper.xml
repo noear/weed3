@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="webapp.dso" :db="db">
+<mapper namespace="weed3demo2.xmlsql2" :db="db">
     <sql id="appx_get" :return="int" :note="随便取条数据的ID">
         select app_id from appx limit 1
     </sql>

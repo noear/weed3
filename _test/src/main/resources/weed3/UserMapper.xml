@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<mapper namespace="weed3demo.xmlsql2" :db="db_sword">
+<mapper namespace="weed3demo2.xmlsql2" :db="db_sword">
 
     <!-- user_whitelist -->
     <sql id="user_whitelist_update" :return="int"  :note="更新白名单信息">

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mapper namespace="weed3demo2.xmlsql2"
+        import="weed3demo.mapper.*">
+    <sql id="get_group_buying_by_ids"
+         :return="List[zm.data.code.pepper.api.models.db.GroupBuyingModel]"
+         :caching="cache_pepper"
+         :cacheTag="group_buying"
+         :note="通过ID获取当前团购">
+        SELECT * FROM `group_buying` WHERE gb_id in (@{gb_ids:Iterable[Long]})
+        ORDER BY FIELD (gb_id,${gb_ids:Iterable[Long]}) desc;
+    </sql>
+</mapper>

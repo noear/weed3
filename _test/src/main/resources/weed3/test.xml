@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mapper namespace="weed3demo.xmlsql2"
+<mapper namespace="weed3demo2.xmlsql2"
         import="weed3demo.mapper.*">
     <sql id="user_add" :return="List[Long]"
          :param="m:UserModel,sex:int"
