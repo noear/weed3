@@ -18,6 +18,7 @@ public class GeneratorMoJo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.sourceDirectory}",required = true,readonly = true)
     private File sourceDir;
 
+    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         //getLog().info(baseDir.getAbsolutePath());
         //getLog().info(sourceDir.getAbsolutePath());
