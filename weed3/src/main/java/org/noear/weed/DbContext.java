@@ -280,10 +280,10 @@ public class DbContext extends DbContextMetaData {
         }
 
         if (process.lastIndexOf(" ") > 0) {
-            return new DbQueryProcedure(this).sql(process);
+            return new DbQueryProcedure(this).sql(process).setMap(args);
         }
 
-        return new DbStoredProcedure(this).call(process);
+        return new DbStoredProcedure(this).call(process).setMap(args);
     }
 
 
