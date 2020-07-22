@@ -12,7 +12,7 @@ Weed3 可以使用简单的 XML 或注解来配置和映射原生类型、接口
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.8.3</version>
+    <version>3.2.8.4</version>
 </dependency>
 ```
 
