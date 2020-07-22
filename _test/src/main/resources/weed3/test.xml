@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mapper namespace="weed3demo2.xmlsql2"
         import="weed3demo.mapper.*">
-    <sql id="user_add" :return="List[Long]"
-         :param="m:UserModel,sex:int"
-         :note="添加用户"
-         :cacheClear="user_${m.user_id}"><![CDATA[
+    <sql id="user_add" return="List[Long]"
+         param="m:UserModel,sex:int"
+         note="添加用户"
+         cacheClear="user_${m.user_id}"><![CDATA[
         INSERT user(user_id,mobile,sex) VALUES(@{m.user_id},@{m.mobile},@{sex})
     ]]></sql>
 
-    <sql id="user_add3" :return="long"
-         :param="m:UserModel,sex:int"
-         :note="添加用户"
-         :cacheClear="user_${m.user_id}">
+    <sql id="user_add3" return="long"
+         param="m:UserModel,sex:int"
+         note="添加用户"
+         cacheClear="user_${m.user_id}">
         INSERT user
         <trim prefix="(" suffix=")" trimEnd=",">
             user_id,sex,
@@ -28,7 +28,7 @@
         </trim>
     </sql>
 
-    <sql id="user_add_for" :return="long" :note="批量添加用户3">
+    <sql id="user_add_for" return="long" note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:UserModel" sep="#" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
@@ -36,11 +36,11 @@
     </sql>
 
 
-    <sql id="user_set" :return="long" :note="更新用户"><![CDATA[
+    <sql id="user_set" return="long" note="更新用户"><![CDATA[
         UPDATE user SET sex=1 WHERE id IN(@{user_list:List[Integer]})
     ]]></sql>
 
-    <sql id="user_add_for2" :return="long" :note="批量添加用户3">
+    <sql id="user_add_for2" return="long" note="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:UserModel" items="list">
             <if test="m.users != null">
