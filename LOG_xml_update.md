@@ -1,4 +1,8 @@
 ##### WEED3 XML SQL更新记录
+
+* 2020.07.22:
+1. 所有:开头的属性，都支持不加:
+
 * 2019.12.12:
 1. mapper 指令添加 import,:baseMapper,:db 属性
 2. :note 属性更名为：:remarks
