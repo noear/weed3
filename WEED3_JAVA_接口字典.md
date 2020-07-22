@@ -1,7 +1,6 @@
 # Weed3 JAVA 接口字典
 
 
-
 #### db.mapper(clz) -> SqlMapper? proxy
 * db.mapper(XxxMapper.class) -> XxxMapper
 * db.mapperBase(XxxEntity.class) -> BaseMapper\<XxxEntity>
