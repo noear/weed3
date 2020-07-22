@@ -638,8 +638,21 @@ public class XmlSqlCompiler {
     }
 
     //xml:读取属性
-    private static String attr(Node n, String name){
+    private static String attr(Node n, String name) {
+        if (name.startsWith(":")) {
+            return attr(n, name, name.substring(1));
+        } else {
+            return attr(n, name, null);
+        }
+    }
+
+    private static String attr(Node n, String name, String name2){
         Node tmp = n.getAttributes().getNamedItem(name);
+
+        if(tmp == null && name2 != null){
+            tmp = n.getAttributes().getNamedItem(name2);
+        }
+
         if(tmp == null){
             return null;
         }else{
