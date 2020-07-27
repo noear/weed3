@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
-            <version>1.0.6.4</version>
+            <version>1.0.6.5</version>
         </dependency>
 
         <dependency>
@@ -151,20 +151,20 @@
     <build>
         <finalName>admin-rock</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.noear</groupId>
-                <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.2.8.4</version>
-                <executions>
-                    <execution>
-                        <id>weed3</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generator</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.noear</groupId>-->
+<!--                <artifactId>weed3-maven-plugin</artifactId>-->
+<!--                <version>3.2.8.4</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>weed3</id>-->
+<!--                        <phase>compile</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>generator</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

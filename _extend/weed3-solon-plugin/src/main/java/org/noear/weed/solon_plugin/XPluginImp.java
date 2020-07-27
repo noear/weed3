@@ -2,10 +2,11 @@ package org.noear.weed.solon_plugin;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
-import org.noear.solon.ext.Act1;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
+
+import java.util.function.Consumer;
 
 public class XPluginImp implements XPlugin {
     @Override
@@ -27,7 +28,7 @@ public class XPluginImp implements XPlugin {
         });
     }
 
-    public void getMapper(Class<?> clz, Db anno, FieldWrapTmp fwT, Act1<Object> callback) {
+    public void getMapper(Class<?> clz, Db anno, FieldWrapTmp fwT, Consumer<Object> callback) {
         Aop.getAsyn(anno.value(), (bw) -> {
             DbContext db = bw.raw();
             Object obj = null;
@@ -41,7 +42,7 @@ public class XPluginImp implements XPlugin {
             }
 
             if (obj != null) {
-                callback.run(obj);
+                callback.accept(obj);
             }
         });
     }
