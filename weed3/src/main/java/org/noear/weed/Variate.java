@@ -54,7 +54,7 @@ public class Variate implements Serializable {
         _value = value;
     }
 
-
+    //--------------------
     public String getString(){
         return (String) _value;
     }
