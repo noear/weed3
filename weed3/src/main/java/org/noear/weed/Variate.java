@@ -50,6 +50,11 @@ public class Variate implements Serializable {
         return _value;
     }
 
+    public void setValue(Object value) {
+        _value = value;
+    }
+
+
     public String getString(){
         return (String) _value;
     }
@@ -62,8 +67,8 @@ public class Variate implements Serializable {
         return (Boolean) _value;
     }
 
-    public void setValue(Object value) {
-        _value = value;
+    public Number getNumber(){
+        return (Number) _value;
     }
 
     //--------------------
