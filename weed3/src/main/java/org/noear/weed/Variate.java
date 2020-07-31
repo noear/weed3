@@ -50,6 +50,18 @@ public class Variate implements Serializable {
         return _value;
     }
 
+    public String getString(){
+        return (String) _value;
+    }
+
+    public Date getDate(){
+        return (Date) _value;
+    }
+
+    public Boolean getBoolean(){
+        return (Boolean) _value;
+    }
+
     public void setValue(Object value) {
         _value = value;
     }

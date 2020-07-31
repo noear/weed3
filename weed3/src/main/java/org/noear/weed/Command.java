@@ -4,6 +4,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.StringUtils;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,30 @@ public class Command {
         }
 
         return _paramMap;
+    }
+
+    public String text2(){
+        StringBuilder sb = new StringBuilder();
+
+        String[] ss = text.split("\\?");
+        for(int i=0,len=ss.length; i<len; i++){
+            sb.append(ss[i]);
+            Variate val = paramS.get(i);
+
+            if(val.isNull()){
+                sb.append("NULL");
+            }else if(val.getValue() instanceof String){
+                sb.append("'").append(val.getString()).append("'");
+            }else if(val.getValue() instanceof Boolean){
+                sb.append(val.getBoolean());
+            }else if(val.getValue() instanceof Date){
+                sb.append("'").append(val.getDate()).append("'");
+            }else{
+                sb.append(val.getValue());
+            }
+        }
+
+        return sb.toString();
     }
 
     //执行时长
