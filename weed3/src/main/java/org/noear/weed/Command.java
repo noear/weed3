@@ -63,18 +63,21 @@ public class Command {
         String[] ss = text.split("\\?");
         for(int i=0,len=ss.length; i<len; i++){
             sb.append(ss[i]);
-            Variate val = paramS.get(i);
 
-            if(val.isNull()){
-                sb.append("NULL");
-            }else if(val.getValue() instanceof String){
-                sb.append("'").append(val.getString()).append("'");
-            }else if(val.getValue() instanceof Boolean){
-                sb.append(val.getBoolean());
-            }else if(val.getValue() instanceof Date){
-                sb.append("'").append(val.getDate()).append("'");
-            }else{
-                sb.append(val.getValue());
+            if(i< len-1) {
+                Variate val = paramS.get(i);
+
+                if (val.isNull()) {
+                    sb.append("NULL");
+                } else if (val.getValue() instanceof String) {
+                    sb.append("'").append(val.getString()).append("'");
+                } else if (val.getValue() instanceof Boolean) {
+                    sb.append(val.getBoolean());
+                } else if (val.getValue() instanceof Date) {
+                    sb.append("'").append(val.getDate()).append("'");
+                } else {
+                    sb.append(val.getValue());
+                }
             }
         }
 
