@@ -2,6 +2,8 @@ package org.noear.weed;
 
 import org.noear.weed.annotation.Table;
 import org.noear.weed.annotation.PrimaryKey;
+import org.noear.weed.wrap.ClassWrap;
+import org.noear.weed.wrap.FieldWrap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -55,9 +57,10 @@ class BaseEntityWrap {
             tableName = entityClz.getSimpleName();
         }
 
-        for (Field f1 : entityClz.getDeclaredFields()) {
-            if (f1.getAnnotation(PrimaryKey.class) != null) {
-                pkName = f1.getName();
+
+        for (FieldWrap f1 : ClassWrap.get(entityClz).fieldWraps) {
+            if (f1.field.getAnnotation(PrimaryKey.class) != null) {
+                pkName = f1.field.getName();
                 break;
             }
         }
