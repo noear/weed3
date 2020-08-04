@@ -50,7 +50,7 @@ public class ClassWrap {
         }
     }
 
-    /** 扫描一个类的所有字段 */
+    /** 扫描一个类的所有字段（不能与Snack3的复用；它需要排除非序列化字段） */
     private static void scanAllFields(Class<?> clz, Predicate<String> checker, BiConsumer<String,FieldWrap> consumer) {
         if (clz == null) {
             return;
@@ -59,7 +59,7 @@ public class ClassWrap {
         for (Field f : clz.getDeclaredFields()) {
             int mod = f.getModifiers();
 
-            if (!Modifier.isTransient(mod) && !Modifier.isStatic(mod)) {
+            if (!Modifier.isStatic(mod)) {
                 f.setAccessible(true);
 
                 if (checker.test(f.getName()) == false) {
