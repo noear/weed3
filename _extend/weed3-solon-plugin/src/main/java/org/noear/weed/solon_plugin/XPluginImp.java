@@ -28,14 +28,14 @@ public class XPluginImp implements XPlugin {
         });
     }
 
-    public void getMapper(Class<?> clz, Db anno, FieldWrapTmp fwT, Consumer<Object> callback) {
+    public void getMapper(Class<?> clz, Db anno, VarHolder varH, Consumer<Object> callback) {
         Aop.getAsyn(anno.value(), (bw) -> {
             DbContext db = bw.raw();
             Object obj = null;
             //生成mapper
-            if (fwT != null && fwT.fw.genericType != null) {
+            if (varH != null && varH.getGenericType() != null) {
                 if (clz == BaseMapper.class) {
-                    obj = db.mapperBase((Class<?>) fwT.fw.genericType.getActualTypeArguments()[0]);
+                    obj = db.mapperBase((Class<?>) varH.getGenericType().getActualTypeArguments()[0]);
                 }
             } else {
                 obj = db.mapper(clz);

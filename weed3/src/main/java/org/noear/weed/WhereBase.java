@@ -84,7 +84,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     public T whereMap(Map<String, Object> columnMap) {
-        return whereEntityIf(columnMap, (k, v) -> v != null);
+        return whereMapIf(columnMap, (k, v) -> v != null);
     }
 
     public T whereMapIf(Map<String, Object> columnMap, Fun2<Boolean,String,Object> condition) {

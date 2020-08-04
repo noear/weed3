@@ -5,8 +5,11 @@ import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 /**
  * Class 包装，方便缓存和列操作
@@ -26,7 +29,7 @@ public class ClassWrap {
 
 
     public final Class<?> clazz;
-    public final List<FieldWrap> fieldWraps;
+    public final List<FieldWrap> fieldWraps; //所有的字段（包括继承的）
     public final String tableName;
     private final Map<String,FieldWrap> _fieldWrapMap = new HashMap<>();
 
@@ -34,18 +37,40 @@ public class ClassWrap {
         clazz = clz;
         fieldWraps = new ArrayList<>();
 
-        Field[] fAry = clz.getDeclaredFields();
-        for (Field f1 : fAry) {
-            FieldWrap fw = new FieldWrap(clz, f1);
+        scanAllFields(clz, _fieldWrapMap::containsKey,(k,fw)->{
             fieldWraps.add(fw);
-            _fieldWrapMap.put(f1.getName().toLowerCase(), fw);
-        }
+            _fieldWrapMap.put(k.toLowerCase(), fw);
+        });
 
         Table ann = clz.getAnnotation(Table.class);
         if (ann != null) {
             tableName = ann.value();
         }else {
             tableName = clz.getSimpleName();
+        }
+    }
+
+    /** 扫描一个类的所有字段 */
+    private static void scanAllFields(Class<?> clz, Predicate<String> checker, BiConsumer<String,FieldWrap> consumer) {
+        if (clz == null) {
+            return;
+        }
+
+        for (Field f : clz.getDeclaredFields()) {
+            int mod = f.getModifiers();
+
+            if (!Modifier.isTransient(mod) && !Modifier.isStatic(mod)) {
+                f.setAccessible(true);
+
+                if (checker.test(f.getName()) == false) {
+                    consumer.accept(f.getName(), new FieldWrap(clz, f));
+                }
+            }
+        }
+
+        Class<?> sup = clz.getSuperclass();
+        if (sup != Object.class) {
+            scanAllFields(sup, checker, consumer);
         }
     }
 
