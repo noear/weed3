@@ -5,6 +5,7 @@ import org.noear.solon.core.*;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
+import org.noear.weed.xml.XmlSqlLoader;
 
 import java.util.function.Consumer;
 
@@ -26,6 +27,9 @@ public class XPluginImp implements XPlugin {
                 });
             }
         });
+
+        //加载xml sql
+        XmlSqlLoader.tryLoad();
     }
 
     public void getMapper(Class<?> clz, Db anno, VarHolder varH, Consumer<Object> callback) {
