@@ -15,7 +15,7 @@ public class XPluginImp implements XPlugin {
         Aop.factory().beanCreatorAdd(Db.class, (clz, bw, anno) -> {
             if (clz.isInterface()) {
                 getMapper(clz, anno, null, (raw) -> {
-                    Aop.put(clz, raw);
+                    Aop.wrapAndPut(clz, raw);
                 });
             }
         });
