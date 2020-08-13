@@ -6,6 +6,14 @@ import org.noear.weed.VarHolder;
 import weed3test.DbUtil;
 
 public class TranDemo {
+    public void test0() throws Exception {
+        DbContext db1 = DbUtil.db;
+
+        db1.tran(t -> {
+            db1.sql("").insert();
+        });
+    }
+
     public void test1() throws Exception {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
@@ -27,6 +35,7 @@ public class TranDemo {
 
         new DbTranQueue().execute((tq) -> {
             VarHolder<Long> tmp = new VarHolder<>();
+
             db1.tran().join(tq).execute(t -> {
                 tmp.value = db1.sql("").insert();
             });
