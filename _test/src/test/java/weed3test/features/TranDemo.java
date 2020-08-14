@@ -6,7 +6,7 @@ import org.noear.weed.VarHolder;
 import weed3test.DbUtil;
 
 public class TranDemo {
-    public void test0() throws Exception {
+    public void test0() throws Throwable {
         DbContext db1 = DbUtil.db;
 
         db1.tran(t -> {
@@ -14,7 +14,7 @@ public class TranDemo {
         });
     }
 
-    public void test1() throws Exception {
+    public void test1() throws Throwable {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
@@ -29,7 +29,7 @@ public class TranDemo {
         });
     }
 
-    public void test2() throws Exception {
+    public void test2() throws Throwable {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
