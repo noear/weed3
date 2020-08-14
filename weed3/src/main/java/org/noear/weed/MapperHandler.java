@@ -5,6 +5,7 @@ import org.noear.weed.xml.Namespace;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.*;
+import java.sql.SQLException;
 
 class MapperHandler implements InvocationHandler {
 
@@ -25,6 +26,18 @@ class MapperHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        try {
+            return invoke0(proxy, method, args);
+        } catch (RuntimeException ex) {
+            throw ex;
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Throwable ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public Object invoke0(Object proxy, Method method, Object[] args) throws Throwable {
         Class caller = method.getDeclaringClass();
 
         if (method.isDefault()) {
