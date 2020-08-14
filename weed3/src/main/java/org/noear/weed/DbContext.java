@@ -351,12 +351,12 @@ public class DbContext extends DbContextMetaData {
 
 
 
-    public DbTran tran(Act1Ex<DbTran, Exception> handler) throws Exception {
+    public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws Throwable {
         return tran().execute(handler);
     }
 
 
-    public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Exception> handler) throws Exception {
+    public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Throwable> handler) throws Throwable {
         return tran().join(queue).execute(handler);
     }
 
@@ -368,7 +368,7 @@ public class DbContext extends DbContextMetaData {
      * 由Db发起，语义不合理；改用 new DbTranQueue()
      * */
     @Deprecated
-    public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Exception> handler) throws Exception {
+    public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Throwable> handler) throws Throwable {
         return new DbTranQueue().execute(handler);
     }
 }

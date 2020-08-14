@@ -53,20 +53,20 @@ public class DbTranQueue {
         for (DbTran tran : queue) { //从头到关闭（关闭时，不能影响其它事务）
             try {
                 tran.close(true);
-            } catch (Exception ex) {
+            } catch (Throwable ex) {
                 WeedConfig.runExceptionEvent(null, ex);
             }
         }
     }
 
     //执行并结束事务
-    public DbTranQueue execute(Act1Ex<DbTranQueue, Exception> handler) throws Exception {
+    public DbTranQueue execute(Act1Ex<DbTranQueue, Throwable> handler) throws Throwable {
         try {
             handler.run(this);
 
             commit();
             _isSucceed = true;
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             _isSucceed = false;
 
             rollback(true);
@@ -84,7 +84,7 @@ public class DbTranQueue {
         try {
             commit();
             _isSucceed = true;
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             _isSucceed = false;
 
             rollback(true);

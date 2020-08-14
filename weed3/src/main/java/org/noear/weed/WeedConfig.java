@@ -26,7 +26,7 @@ public final class WeedConfig {
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
     public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();
 
-    static Set<Act2<Command,Exception>> onException_listener = new LinkedHashSet<>();
+    static Set<Act2<Command,Throwable>> onException_listener = new LinkedHashSet<>();
     static Set<Act1<Command>> onLog_listener = new LinkedHashSet<>();
 
     static Set<Act1<Command>>           onCommandBuilt_listener = new LinkedHashSet();
@@ -47,7 +47,7 @@ public final class WeedConfig {
         }
     }
 
-    protected static void runExceptionEvent(Command cmd, Exception ex) {
+    protected static void runExceptionEvent(Command cmd, Throwable ex) {
         if (onException_listener.size() > 0) {
             cmd.timestop = System.currentTimeMillis();
 
@@ -109,7 +109,7 @@ public final class WeedConfig {
     //
     //
     /** 出现异常时 */
-    public static void onException(Act2<Command,Exception> listener)
+    public static void onException(Act2<Command,Throwable> listener)
     {
         onException_listener.add(listener);
     }
