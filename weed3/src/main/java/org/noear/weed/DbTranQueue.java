@@ -60,7 +60,7 @@ public class DbTranQueue {
     }
 
     //执行并结束事务
-    public DbTranQueue execute(Act1Ex<DbTranQueue, Throwable> handler) throws Throwable {
+    public DbTranQueue execute(Act1Ex<DbTranQueue, Throwable> handler) throws SQLException {
         try {
             handler.run(this);
 
@@ -70,7 +70,14 @@ public class DbTranQueue {
             _isSucceed = false;
 
             rollback(true);
-            throw ex;
+
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else if (ex instanceof SQLException) {
+                throw (SQLException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         } finally {
             close();
         }

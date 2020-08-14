@@ -57,9 +57,9 @@ public class DbTran {
     }
 
     /*执行事务过程 = action(...) + excute() */
-    public DbTran execute(Act1Ex<DbTran,Throwable> handler) throws Throwable {
+    public DbTran execute(Act1Ex<DbTran,Throwable> handler) throws SQLException {
         try {
-            if(connection==null) {
+            if (connection == null) {
                 connection = _context.getConnection();
             }
 
@@ -78,7 +78,14 @@ public class DbTran {
                 rollback(false);
             else
                 queue.rollback(false);
-            throw ex;
+
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else if (ex instanceof SQLException) {
+                throw (SQLException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         } finally {
             DbTranUtil.currentRemove();
             close(false);
