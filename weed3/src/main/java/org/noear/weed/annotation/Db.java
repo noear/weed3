@@ -5,5 +5,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE,ElementType.FIELD})
 public @interface Db {
-    String value(); //Db context name
+    String value() default ""; //Db context name
 }
