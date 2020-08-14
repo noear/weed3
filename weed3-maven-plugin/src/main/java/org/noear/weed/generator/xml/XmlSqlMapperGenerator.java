@@ -203,7 +203,7 @@ public class XmlSqlMapperGenerator {
             sb.deleteCharAt(sb.length()-1);
         }
 
-        sb.append(") throws Exception;");
+        sb.append(") throws SQLException;");
     }
 
     //xml:解析 sql 指令节点
