@@ -4,10 +4,7 @@ import org.noear.weed.wrap.MethodWrap;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.lang.reflect.Type;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
