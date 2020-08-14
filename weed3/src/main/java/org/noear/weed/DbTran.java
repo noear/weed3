@@ -63,7 +63,7 @@ public class DbTran {
                 connection = _context.getConnection();
             }
 
-            begin(false);
+            begin();
 
             DbTranUtil.currentSet(this);
             handler.run(this);
@@ -101,7 +101,7 @@ public class DbTran {
 
 
     //isQueue:是否由Queue调用的
-    protected void begin(boolean isQueue)  throws SQLException {
+    protected void begin()  throws SQLException {
         if (connection != null) {
             connection.setAutoCommit(false);
         }
