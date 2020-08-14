@@ -11,7 +11,7 @@ import java.sql.SQLException;
  */
 public class Tran2Demo {
     //不同函数串一起，跨多个数据库（分布式）
-    public static void tast_tran() throws Exception{
+    public static void tast_tran() throws Throwable{
         DbTranQueue queue = new DbTranQueue();//空事务，只提供最后的complete服务；
 
         try {
@@ -28,7 +28,7 @@ public class Tran2Demo {
 
     //------------------
 
-    private static void tast_db1_tran(DbTranQueue queue) throws Exception {
+    private static void tast_db1_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
         DbTran tran = new DbTran(DbConfig.pc_user);
@@ -42,7 +42,7 @@ public class Tran2Demo {
         });
     }
 
-    private static void tast_db2_tran(DbTranQueue queue) throws Exception {
+    private static void tast_db2_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
         DbTran tran = DbConfig.pc_base.tran();
@@ -52,7 +52,7 @@ public class Tran2Demo {
         });
     }
 
-    private static void tast_db3_tran(DbTranQueue queue) throws Exception {
+    private static void tast_db3_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
         DbTran tran = new DbTran(DbConfig.pc_live);
