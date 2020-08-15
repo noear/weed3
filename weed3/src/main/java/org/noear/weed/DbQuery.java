@@ -5,8 +5,8 @@ package org.noear.weed;
  *
  * 查询语句访问类
  *
- * $.tableName  --$ 代表当表db context schema
- * @paramName   --@ 为参数名的开头
+ * \$.tableName  --$ 代表当表db context schema
+ * \@paramName   --@ 为参数名的开头
  */
 public class DbQuery extends DbAccess<DbQuery> {
 
