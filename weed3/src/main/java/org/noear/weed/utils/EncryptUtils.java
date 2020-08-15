@@ -25,7 +25,7 @@ public class EncryptUtils {
 
     public static String md5Bytes(byte[] bytes) {
         try {
-            return do_hashEncode("MD5", bytes);
+            return hashEncode0("MD5", bytes);
         }catch (Exception ex){
             ex.printStackTrace();
             return null;
@@ -36,14 +36,14 @@ public class EncryptUtils {
 
         try {
             byte[] btInput = cleanData.getBytes(chaerset);
-            return do_hashEncode(algorithm,btInput);
+            return hashEncode0(algorithm,btInput);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    private static String do_hashEncode(String algorithm, byte[] btInput) throws Exception{
+    private static String hashEncode0(String algorithm, byte[] btInput) throws Exception{
         MessageDigest mdInst = MessageDigest.getInstance(algorithm);
         mdInst.update(btInput);
         byte[] md = mdInst.digest();
