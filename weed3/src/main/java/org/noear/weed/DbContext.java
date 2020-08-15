@@ -351,12 +351,12 @@ public class DbContext extends DbContextMetaData {
 
 
 
-    public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws Throwable {
+    public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws SQLException {
         return tran().execute(handler);
     }
 
 
-    public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Throwable> handler) throws Throwable {
+    public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Throwable> handler) throws SQLException {
         return tran().join(queue).execute(handler);
     }
 
