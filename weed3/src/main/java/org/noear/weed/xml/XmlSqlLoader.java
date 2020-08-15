@@ -24,7 +24,7 @@ public class XmlSqlLoader {
                 if (_g.is_loaed == false) {
                     _g.is_loaed = true;
 
-                    _g.do_load();
+                    _g.load0();
                 }
             }
         }
@@ -39,7 +39,7 @@ public class XmlSqlLoader {
         }
     }
 
-    private void do_load() throws Exception {
+    private void load0() throws Exception {
         XmlFileScaner.scan("weed3", ".xml")
                 .stream()
                 .map(k -> IOUtils.getResource(k))
