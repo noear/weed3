@@ -18,7 +18,7 @@ class DbContextMetaData {
 
     private transient Map<String, TableWrap> _tables = new HashMap<>();
     private transient DbType _dbType = DbType.Unknown;
-    private transient DbDialect _dbAdapter;
+    private transient DbDialect _dbDialect;
 
     //数据源
     private transient DataSource __dataSource; //通过dataSourceSet写入
@@ -48,14 +48,14 @@ class DbContextMetaData {
         return _dbType;
     }
 
-    public DbDialect dbAdapter() {
+    public DbDialect dbDialect() {
         initMetaData();
-        return _dbAdapter;
+        return _dbDialect;
     }
 
-    public void dbAdapterSet(DbDialect adapter) {
+    public void dbDialectSet(DbDialect adapter) {
         initMetaData();
-        _dbAdapter = adapter;
+        _dbDialect = adapter;
     }
 
     public Collection<TableWrap> dbTables() {
@@ -85,7 +85,7 @@ class DbContextMetaData {
     }
 
     private void initMetaData() {
-        if (_dbAdapter != null) {
+        if (_dbDialect != null) {
             return;
         }
         initMetaDataDo();
@@ -105,7 +105,7 @@ class DbContextMetaData {
             DatabaseMetaData md = conn.getMetaData();
             System.out.println("Weed3::The connection is successful");
 
-            if (_dbAdapter == null) {
+            if (_dbDialect == null) {
                 //1.
                 setDatabaseType(md.getDatabaseProductName());
 
@@ -136,37 +136,37 @@ class DbContextMetaData {
 
             if (pn.indexOf("mysql") >= 0) {
                 _dbType = DbType.MySQL;
-                _dbAdapter = new DbMySQLDialect();
+                _dbDialect = new DbMySQLDialect();
             } else if (pn.indexOf("mariadb") >= 0) {
                 _dbType = DbType.MariaDB;
-                _dbAdapter = new DbMySQLDialect();
+                _dbDialect = new DbMySQLDialect();
             } else if (pn.indexOf("sqlserver") >= 0) {
                 _dbType = DbType.SQLServer;
-                _dbAdapter = new DbSQLServerDialect();
+                _dbDialect = new DbSQLServerDialect();
             } else if (pn.indexOf("oracle") >= 0) {
                 _dbType = DbType.Oracle;
-                _dbAdapter = new DbOracleDialect();
+                _dbDialect = new DbOracleDialect();
             } else if (pn.indexOf("postgresql") >= 0) {
                 _dbType = DbType.PostgreSQL;
-                _dbAdapter = new DbPostgreSQLDialect();
+                _dbDialect = new DbPostgreSQLDialect();
             } else if (pn.indexOf("db2") >= 0) {
                 _dbType = DbType.DB2;
-                _dbAdapter = new DbDb2Dialect();
+                _dbDialect = new DbDb2Dialect();
             } else if (pn.indexOf("sqlite") >= 0) {
                 _dbType = DbType.SQLite;
-                _dbAdapter = new DbSQLiteDialect();
+                _dbDialect = new DbSQLiteDialect();
             } else if (pn.indexOf("h2") >= 0) {
                 _dbType = DbType.H2;
-                _dbAdapter = new DbH2Dialect();
+                _dbDialect = new DbH2Dialect();
             } else {
                 //做为默认
-                _dbAdapter = new DbMySQLDialect();
+                _dbDialect = new DbMySQLDialect();
             }
         } else {
             //默认为mysql
             //
             _dbType = DbType.MySQL;
-            _dbAdapter = new DbMySQLDialect();
+            _dbDialect = new DbMySQLDialect();
         }
     }
 
@@ -203,7 +203,7 @@ class DbContextMetaData {
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
 
-        rs = dbAdapter().getTables(md, _catalog, _schema);
+        rs = dbDialect().getTables(md, _catalog, _schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");

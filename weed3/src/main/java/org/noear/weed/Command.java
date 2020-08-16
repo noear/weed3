@@ -102,9 +102,9 @@ public class Command {
 
     public String fullText() {
         if (context.codeHint() == null)
-            return context.dbAdapter().preReview(text);
+            return context.dbDialect().preReview(text);
         else
-            return context.codeHint() + context.dbAdapter().preReview(text);
+            return context.codeHint() + context.dbDialect().preReview(text);
     }
 
     public Act1<Command> onExecuteAft = null;

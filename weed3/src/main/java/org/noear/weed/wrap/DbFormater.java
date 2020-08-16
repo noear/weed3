@@ -12,7 +12,7 @@ public class DbFormater{
     }
 
     public DbDialect dba(){
-        return ctx.dbAdapter();
+        return ctx.dbDialect();
     }
 
 

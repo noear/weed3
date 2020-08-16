@@ -26,11 +26,11 @@ class SQLer {
     }
 
     private Object getObject(Command cmd, String key) throws SQLException{
-        return cmd.context.dbAdapter().preChange(rset.getObject(key));
+        return cmd.context.dbDialect().preChange(rset.getObject(key));
     }
 
     private Object getObject(Command cmd, int idx) throws SQLException{
-        return cmd.context.dbAdapter().preChange(rset.getObject(idx));
+        return cmd.context.dbDialect().preChange(rset.getObject(idx));
     }
 
     public Variate getVariate(Command cmd) throws SQLException {
