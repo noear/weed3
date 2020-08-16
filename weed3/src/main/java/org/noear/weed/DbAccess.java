@@ -83,9 +83,8 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     /*获取参数*/
     protected Variate doGet(String paramName) {
-        int hash = paramName.hashCode();
         for (Variate p1 : paramS) {
-            if (hash == p1._hash) {
+            if (paramName.equals(p1._name)) {
                 return p1;
             }
         }

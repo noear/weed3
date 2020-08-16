@@ -12,20 +12,20 @@ import java.util.Date;
 public class Variate implements Serializable {
     protected String _name;
     protected Object _value;
-    public final   int   _hash;
+    //public final   int   _hash;
 
     protected  Variate(){
-        _hash=0;
+        //_hash=0;
     }
 
     public Variate(String name, Object value) {
         this._name = name;
         this._value = value;
 
-        if (name != null)
-            this._hash = name.hashCode();
-        else
-            this._hash = 0;
+//        if (name != null)
+//            this._hash = name.hashCode();
+//        else
+//            this._hash = 0;
     }
 
     public boolean isNull(){
