@@ -10,7 +10,7 @@ public class DbFormater{
         this.ctx = ctx;
     }
 
-    public DbAdapter dba(){
+    public DbDialect dba(){
         return ctx.dbAdapter();
     }
 

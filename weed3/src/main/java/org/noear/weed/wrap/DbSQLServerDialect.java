@@ -6,7 +6,7 @@ import org.noear.weed.SQLBuilder;
 /**
  * BETWEEN AND :: >= + <=
  * */
-public class DbSQLServerAdapter implements DbAdapter {
+public class DbSQLServerDialect implements DbDialect {
     @Override
     public boolean excludeFormat(String str) {
         return str.startsWith("\"") || str.startsWith("[") || str.indexOf(".") > 0;

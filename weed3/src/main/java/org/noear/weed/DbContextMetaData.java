@@ -17,7 +17,7 @@ class DbContextMetaData {
 
     private transient Map<String, TableWrap> _tables = new HashMap<>();
     private transient DbType _dbType = DbType.Unknown;
-    private transient DbAdapter _dbAdapter;
+    private transient DbDialect _dbAdapter;
 
     //数据源
     private transient DataSource __dataSource; //通过dataSourceSet写入
@@ -47,12 +47,12 @@ class DbContextMetaData {
         return _dbType;
     }
 
-    public DbAdapter dbAdapter() {
+    public DbDialect dbAdapter() {
         initMetaData();
         return _dbAdapter;
     }
 
-    public void dbAdapterSet(DbAdapter adapter) {
+    public void dbAdapterSet(DbDialect adapter) {
         initMetaData();
         _dbAdapter = adapter;
     }
@@ -135,37 +135,37 @@ class DbContextMetaData {
 
             if (pn.indexOf("mysql") >= 0) {
                 _dbType = DbType.MySQL;
-                _dbAdapter = new DbMySQLAdapter();
+                _dbAdapter = new DbMySQLDialect();
             } else if (pn.indexOf("mariadb") >= 0) {
                 _dbType = DbType.MariaDB;
-                _dbAdapter = new DbMySQLAdapter();
+                _dbAdapter = new DbMySQLDialect();
             } else if (pn.indexOf("sqlserver") >= 0) {
                 _dbType = DbType.SQLServer;
-                _dbAdapter = new DbSQLServerAdapter();
+                _dbAdapter = new DbSQLServerDialect();
             } else if (pn.indexOf("oracle") >= 0) {
                 _dbType = DbType.Oracle;
-                _dbAdapter = new DbOracleAdapter();
+                _dbAdapter = new DbOracleDialect();
             } else if (pn.indexOf("postgresql") >= 0) {
                 _dbType = DbType.PostgreSQL;
-                _dbAdapter = new DbPostgreSQLAdapter();
+                _dbAdapter = new DbPostgreSQLDialect();
             } else if (pn.indexOf("db2") >= 0) {
                 _dbType = DbType.DB2;
-                _dbAdapter = new DbDb2Adapter();
+                _dbAdapter = new DbDb2Dialect();
             } else if (pn.indexOf("sqlite") >= 0) {
                 _dbType = DbType.SQLite;
-                _dbAdapter = new DbSQLiteAdapter();
+                _dbAdapter = new DbSQLiteDialect();
             } else if (pn.indexOf("h2") >= 0) {
                 _dbType = DbType.H2;
-                _dbAdapter = new DbH2Adapter();
+                _dbAdapter = new DbH2Dialect();
             } else {
                 //做为默认
-                _dbAdapter = new DbMySQLAdapter();
+                _dbAdapter = new DbMySQLDialect();
             }
         } else {
             //默认为mysql
             //
             _dbType = DbType.MySQL;
-            _dbAdapter = new DbMySQLAdapter();
+            _dbAdapter = new DbMySQLDialect();
         }
     }
 

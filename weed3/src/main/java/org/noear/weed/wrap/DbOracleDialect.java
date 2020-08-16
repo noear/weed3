@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * BETWEEN AND :: >= + <=
  * */
-public class DbOracleAdapter implements DbAdapter{
+public class DbOracleDialect implements DbDialect {
 
     @Override
     public Object preChange(Object val) throws SQLException {

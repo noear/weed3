@@ -3,7 +3,7 @@ package org.noear.weed.wrap;
 import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
-public class DbPostgreSQLAdapter implements DbAdapter {
+public class DbPostgreSQLDialect implements DbDialect {
     @Override
     public boolean excludeFormat(String str) {
         return str.startsWith("\"") || str.indexOf(".") > 0;

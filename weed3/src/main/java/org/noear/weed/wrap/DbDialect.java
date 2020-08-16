@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public interface DbAdapter {
+public interface DbDialect {
 
     default Object preChange(Object val) throws SQLException {return val;}
     default String preReview(String code){return code;}

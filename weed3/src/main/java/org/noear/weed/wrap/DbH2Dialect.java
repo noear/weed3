@@ -5,7 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DbH2Adapter implements DbAdapter {
+public class DbH2Dialect implements DbDialect {
     //top,page 和mysql一样
 
     @Override
