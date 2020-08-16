@@ -1,4 +1,4 @@
-package org.noear.weed.solon.plugin;
+package org.noear.weed.solon.plugin.tran;
 
 import org.noear.solon.core.Tran;
 import org.noear.solon.ext.RunnableEx;
@@ -18,7 +18,7 @@ public class TranQueueImp extends DbTranQueue implements Tran {
     @Override
     public void add(Tran node) {
         if (node instanceof DbTran) {
-            super.add((DbTran) node);
+            ((DbTran) node).join(this);
         }
     }
 
