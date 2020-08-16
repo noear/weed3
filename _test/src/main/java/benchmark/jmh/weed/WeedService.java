@@ -35,13 +35,18 @@ public class WeedService implements BaseService {
         sqlSysUser.setId(idGen.getAndIncrement());
         sqlSysUser.setCode("abc");
 
-        userMapper.insert(sqlSysUser, false);
+       Long tmp =  userMapper.insert(sqlSysUser, false);
+
+        System.out.println(tmp);
     }
 
 
     @Override
     public Object getEntity() {
-        return userMapper.selectById(1);
+        Object tmp=  userMapper.selectById(1);
+
+        System.out.println(tmp);
+        return tmp;
     }
 
 
@@ -64,6 +69,7 @@ public class WeedService implements BaseService {
     @Override
     public void sqlFile() {
         WeedSQLSysUser user = userMapper.userSelect(1);
+        System.out.println(user);
     }
 
     @Override
@@ -76,6 +82,7 @@ public class WeedService implements BaseService {
     public void pageQuery() {
         List<WeedSQLSysUser> list = userMapper.queryPage("用户一", 1, 5);
         long count = userMapper.selectCount(wq->wq.whereEq("code","用户一"));
+        System.out.println(list);
     }
 
     @Override

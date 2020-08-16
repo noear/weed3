@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <mapper namespace="benchmark.jmh.weed.mapper"
-        import="benchmark.jmh.weed.model.*">
+        import="benchmark.jmh.weed.model.*"
+        baseMapper="WeedSQLSysUser">
 
     <sql id="userSelect"  return="WeedSQLSysUser">
         select * from sys_user where 1=1

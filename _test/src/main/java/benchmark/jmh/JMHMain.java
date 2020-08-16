@@ -38,20 +38,20 @@ public class JMHMain {
 
 
     /*   JDBC,基准，有些方法性能飞快    */
-    @Benchmark
-    public void jdbcInsert() {
-        jdbcService.addEntity();
-    }
-
-    @Benchmark
-    public void jdbcSelectById() {
-        jdbcService.getEntity();
-    }
-
-    @Benchmark
-    public void jdbcExecuteJdbc() {
-        jdbcService.executeJdbcSql();
-    }
+//    @Benchmark
+//    public void jdbcInsert() {
+//        jdbcService.addEntity();
+//    }
+//
+//    @Benchmark
+//    public void jdbcSelectById() {
+//        jdbcService.getEntity();
+//    }
+//
+//    @Benchmark
+//    public void jdbcExecuteJdbc() {
+//        jdbcService.executeJdbcSql();
+//    }
 
 
     /*   Weed3    */
@@ -118,7 +118,6 @@ public class JMHMain {
                     method.invoke(jmhMain, new Object[0]);
 
                 } catch (Exception ex) {
-                    ex.printStackTrace();
                     throw new IllegalStateException(" method " + method.getName(), ex);
                 }
 
