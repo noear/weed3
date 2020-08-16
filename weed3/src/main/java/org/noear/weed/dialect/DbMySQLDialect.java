@@ -1,4 +1,4 @@
-package org.noear.weed.wrap;
+package org.noear.weed.dialect;
 
 public class DbMySQLDialect implements DbDialect {
     @Override

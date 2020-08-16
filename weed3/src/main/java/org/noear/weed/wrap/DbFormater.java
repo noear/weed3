@@ -1,6 +1,7 @@
 package org.noear.weed.wrap;
 
 import org.noear.weed.DbContext;
+import org.noear.weed.dialect.DbDialect;
 import org.noear.weed.utils.StringUtils;
 
 /** 提供格式处理 */

@@ -1,4 +1,4 @@
-package org.noear.weed.wrap;
+package org.noear.weed.dialect;
 
 import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;

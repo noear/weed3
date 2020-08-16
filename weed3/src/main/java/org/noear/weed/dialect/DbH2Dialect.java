@@ -1,4 +1,4 @@
-package org.noear.weed.wrap;
+package org.noear.weed.dialect;
 
 import java.sql.Clob;
 import java.sql.DatabaseMetaData;

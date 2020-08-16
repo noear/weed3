@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.dialect.*;
 import org.noear.weed.wrap.*;
 
 import javax.sql.DataSource;
