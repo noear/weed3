@@ -44,6 +44,7 @@ public interface DbAdapter {
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
+
         if(supportsVariablePaging()){
             sqlB.append(" LIMIT ?,?");
             sqlB.paramS.add(start);
@@ -59,6 +60,7 @@ public interface DbAdapter {
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
+
         if(supportsVariablePaging()){
             sqlB.append(" LIMIT ?");
             sqlB.paramS.add(size);

@@ -42,4 +42,9 @@ public class DbH2Adapter implements DbAdapter {
 
         return code;
     }
+
+    @Override
+    public boolean supportsVariablePaging() {
+        return true;
+    }
 }

@@ -65,16 +65,28 @@ public class DbOracleAdapter implements DbAdapter{
     }
 
     @Override
+    public boolean supportsVariablePaging() {
+        return true;
+    }
+
+    @Override
     public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
 
         sqlB.insert(0, "SELECT t.* FROM (SELECT ROWNUM WD3_ROW_NUM,x.* FROM (SELECT ");
 
-        if(orderBy != null){
+        if (orderBy != null) {
             sqlB.append(orderBy);
         }
 
-        sqlB.append(") x  WHERE ROWNUM<=").append(start + size);
-        sqlB.append(") t WHERE t.WD3_ROW_NUM >").append(start);
+        if (supportsVariablePaging()) {
+            sqlB.append(") x  WHERE ROWNUM<=?");
+            sqlB.append(") t WHERE t.WD3_ROW_NUM >?");
+            sqlB.paramS.add(start + size);
+            sqlB.paramS.add(start);
+        } else {
+            sqlB.append(") x  WHERE ROWNUM<=").append(start + size);
+            sqlB.append(") t WHERE t.WD3_ROW_NUM >").append(start);
+        }
     }
 
     @Override
@@ -87,8 +99,12 @@ public class DbOracleAdapter implements DbAdapter{
             sqlB.append(" WHERE");
         }
 
-        sqlB.append(" ROWNUM <= ")
-                .append(size);
+        if(supportsVariablePaging()) {
+            sqlB.append(" ROWNUM <= ?");
+            sqlB.paramS.add(size);
+        }else{
+            sqlB.append(" ROWNUM <= ").append(size);
+        }
 
         if(orderBy!=null){
             sqlB.append(orderBy);
