@@ -3,7 +3,7 @@ package org.noear.weed.wrap;
 import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
-public class DbPostgreSQLAdapter implements DbAdapter{
+public class DbPostgreSQLAdapter implements DbAdapter {
     @Override
     public boolean excludeFormat(String str) {
         return str.startsWith("\"") || str.indexOf(".") > 0;
@@ -20,17 +20,28 @@ public class DbPostgreSQLAdapter implements DbAdapter{
     }
 
     @Override
-    public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
-        sqlB.insert(0,"SELECT ");
+    public boolean supportsVariablePaging() {
+        return true;
+    }
 
-        if(orderBy!=null){
+    @Override
+    public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+        sqlB.insert(0, "SELECT ");
+
+        if (orderBy != null) {
             sqlB.append(orderBy);
         }
 
-        sqlB.append(" LIMIT ")
-                .append(size)
-                .append(" OFFSET ")
-                .append(start);
+        if (supportsVariablePaging()) {
+            sqlB.append(" LIMIT ? OFFSET ?");
+            sqlB.paramS.add(size);
+            sqlB.paramS.add(start);
+        } else {
+            sqlB.append(" LIMIT ")
+                    .append(size)
+                    .append(" OFFSET ")
+                    .append(start);
+        }
     }
 
     //top 和mysql一样

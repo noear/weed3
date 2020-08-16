@@ -18,6 +18,13 @@ public interface DbAdapter {
 
     default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException{ return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"}); }
 
+    /**
+     * 是否支持变量分页
+     * */
+    default boolean supportsVariablePaging(){return false;}
+    /**
+     * 排除格式化
+     * */
     default boolean excludeFormat(String str) {
         return str.startsWith("`") || str.indexOf(".") > 0;
     }
@@ -37,7 +44,13 @@ public interface DbAdapter {
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
-        sqlB.append(" LIMIT ").append(start).append(",").append(size);
+        if(supportsVariablePaging()){
+            sqlB.append(" LIMIT ?,?");
+            sqlB.paramS.add(start);
+            sqlB.paramS.add(size);
+        }else {
+            sqlB.append(" LIMIT ").append(start).append(",").append(size);
+        }
     }
 
     default void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size){
@@ -46,7 +59,12 @@ public interface DbAdapter {
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
-        sqlB.append(" LIMIT ").append(size);
+        if(supportsVariablePaging()){
+            sqlB.append(" LIMIT ?");
+            sqlB.paramS.add(size);
+        }else {
+            sqlB.append(" LIMIT ").append(size);
+        }
     }
 
     default <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean,String> isSqlExpr, IDataItem cols, Collection<T> valuesList){
