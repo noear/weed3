@@ -87,6 +87,7 @@ public class DbQueryProcedure extends DbProcedure {
         return this.commandText;
     }
 
+
     @Override
     protected Command getCommand() throws SQLException {
         tryLazyload();
@@ -99,27 +100,20 @@ public class DbQueryProcedure extends DbProcedure {
 
         {
             Map<String, String> tmpList = new HashMap<>();
-            Pattern pattern = Pattern.compile("@(\\w+)|[@\\$]{1}\\{(\\w+)\\}");
-            Matcher m = pattern.matcher(sqlTxt);
-            while (m.find()) {
-                String mark = m.group(0);
-                String name = m.group(1);
-                if (StringUtils.isEmpty(name)) {
-                    name = m.group(2);
-                }
-
+            List<TmlMark> marks = TmlAnalyzer.get(sqlTxt);
+            for(TmlMark tm : marks){
                 if (WeedConfig.isDebug) {
-                    if (_paramS2.containsKey(name) == false) {
-                        throw new SQLException("Lack of parameter:" + name);
+                    if (_paramS2.containsKey(tm.name) == false) {
+                        throw new SQLException("Lack of parameter:" + tm.name);
                     }
                 }
 
-                Variate val = _paramS2.get(name);
+                Variate val = _paramS2.get(tm.name);
                 Object tmp = val.getValue();
                 if (tmp instanceof Iterable) { //支持数组型参数
                     StringBuilder sb = StringUtils.borrowBuilder();
                     for (Object p2 : (Iterable) tmp) {
-                        doSet(new Variate(name, p2));//对this.paramS进行设值
+                        doSet(new Variate(tm.name, p2));//对this.paramS进行设值
 
                         sb.append("?").append(",");
                     }
@@ -129,13 +123,13 @@ public class DbQueryProcedure extends DbProcedure {
                         sb.deleteCharAt(len - 1);
                     }
 
-                    tmpList.put(mark, StringUtils.releaseBuilder(sb));
+                    tmpList.put(tm.mark, StringUtils.releaseBuilder(sb));
                 } else {
-                    if (mark.startsWith("@")) {
+                    if (tm.mark.startsWith("@")) {
                         doSet(val); //对this.paramS进行设值
-                        tmpList.put(mark, "?");
+                        tmpList.put(tm.mark, "?");
                     } else {
-                        tmpList.put(mark, val.stringValue(""));
+                        tmpList.put(tm.mark, val.stringValue(""));
                     }
                 }
             }
