@@ -26,7 +26,6 @@ public class AnnotController {
     SqlAnnotation mapper;
 
     @Db("db1")
-    @XInject
     BaseMapper<AppxModel> mapper2;
 
     @XMapping("demo0/html")
