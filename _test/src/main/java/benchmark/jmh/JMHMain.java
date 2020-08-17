@@ -93,12 +93,12 @@ public class JMHMain {
 
     public static void main(String[] args) throws RunnerException {
 
-          test();
-//        Options opt = new
-//                OptionsBuilder()
-//                .include(JMHMain.class.getSimpleName())
-//                .build();
-//        new Runner(opt).run();
+//          test();
+        Options opt = new
+                OptionsBuilder()
+                .include(JMHMain.class.getSimpleName())
+                .build();
+        new Runner(opt).run();
     }
 
     /**

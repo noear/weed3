@@ -37,7 +37,7 @@ public class WeedService implements BaseService {
 
        Long tmp =  userMapper.insert(sqlSysUser, false);
 
-        System.out.println(tmp);
+        //System.out.println(tmp);
     }
 
 
@@ -45,7 +45,7 @@ public class WeedService implements BaseService {
     public Object getEntity() {
         Object tmp=  userMapper.selectById(1);
 
-        System.out.println(tmp);
+        //System.out.println(tmp);
         return tmp;
     }
 
@@ -69,7 +69,7 @@ public class WeedService implements BaseService {
     @Override
     public void sqlFile() {
         WeedSQLSysUser user = userMapper.userSelect(1);
-        System.out.println(user);
+        //System.out.println(user);
     }
 
     @Override
@@ -82,36 +82,11 @@ public class WeedService implements BaseService {
     public void pageQuery() {
         List<WeedSQLSysUser> list = userMapper.queryPage("用户一", 1, 5);
         long count = userMapper.selectCount(wq->wq.whereEq("code","用户一"));
-        System.out.println(list);
+        //System.out.println(list);
     }
 
     @Override
     public void complexMapping() {
 
-    }
-
-    //
-    //模式2
-    //
-    public void addEntity2() throws SQLException{
-        WeedSQLSysUser sqlSysUser = new WeedSQLSysUser();
-        sqlSysUser.setId(idGen.getAndIncrement());
-        sqlSysUser.setCode("abc");
-
-        db.table("sys_user").setEntity(sqlSysUser).insert();
-    }
-
-    public Object getEntity2() throws SQLException{
-        return db.table("sys_user")
-                .whereEq("id",1)
-                .select("*")
-                .getList(WeedSQLSysUser.class);
-    }
-
-    public void pageQuery2() throws SQLException {
-        List<WeedSQLSysUser> list = db.table("sys_user")
-                .whereEq("code", "用户一")
-                .limit(1, 5)
-                .select("*").getList(WeedSQLSysUser.class);
     }
 }
