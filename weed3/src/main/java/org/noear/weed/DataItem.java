@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Fun2;
+import org.noear.weed.ext.LinkedCaseInsensitiveMap;
 import org.noear.weed.utils.EntityUtils;
 
 import java.util.*;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  * 否则，嵌入别的引擎时，会变转为不可知的MapAdapter
  */
 public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
-    LinkedHashMap<String,Object> _data = new LinkedHashMap<>();
+    Map<String,Object> _data = new LinkedCaseInsensitiveMap<>();
 
     public DataItem() { }
     public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
