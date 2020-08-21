@@ -5,13 +5,13 @@ import org.noear.solon.ext.RunnableEx;
 import org.noear.weed.DbTran;
 import org.noear.weed.DbTranQueue;
 
-public class TranQueueImp extends DbTranQueue implements Tran {
-    protected TranQueueImp() {
+public class TranGroupImp extends DbTranQueue implements Tran {
+    protected TranGroupImp() {
 
     }
 
     @Override
-    public boolean isQueue() {
+    public boolean isGroup() {
         return true;
     }
 
@@ -23,7 +23,7 @@ public class TranQueueImp extends DbTranQueue implements Tran {
     }
 
     @Override
-    public void execute(RunnableEx runnable) throws Throwable {
+    public void apply(RunnableEx runnable) throws Throwable {
         super.execute((tq) -> {
             runnable.run();
         });
