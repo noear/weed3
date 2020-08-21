@@ -1,13 +1,13 @@
 package weed3test;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.solon.XUtil;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
 
 public class DbUtil {
 
@@ -26,13 +26,65 @@ public class DbUtil {
     private final static HikariDataSource dbH2Cfg(){
         HikariDataSource ds = new HikariDataSource();
 
-        ds.setSchema("rock");
+        //ds.setSchema("PUBLIC");
         ds.setJdbcUrl("jdbc:h2:mem:rock;DB_CLOSE_ON_EXIT=FALSE");
         ds.setUsername("sa");
         ds.setPassword("");
         ds.setDriverClassName("org.h2.Driver");
 
+        //初始化表构建和和数据
+        String[] sqlAry = getSqlFromFile("/db/rock_h2.sql");
+        DbContext db = new DbContext("rock",ds);
+        try {
+            for (String s1 : sqlAry) {
+                if(s1.length() > 10) {
+                    db.exe(s1);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
         return ds;
+    }
+
+    private final static HikariDataSource dbSqliteCfg(){
+        HikariDataSource ds = new HikariDataSource();
+
+        //ds.setSchema("PUBLIC");
+        ds.setJdbcUrl("jdbc:sqlite::memory:");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        ds.setDriverClassName("org.sqlite.JDBC");
+
+        //初始化表构建和和数据
+        String[] sqlAry = getSqlFromFile("/db/rock_sqlite.sql");
+        DbContext db = new DbContext("rock",ds);
+        try {
+            for (String s1 : sqlAry) {
+                if(s1.length() > 10) {
+                    db.exe(s1);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return ds;
+    }
+
+    private static String[] getSqlFromFile(String uri){
+        try{
+            InputStream ins = XUtil.getResource(uri).openStream();
+            int len = ins.available();
+            byte[] bs = new byte[len];
+            ins.read(bs);
+            String str = new String(bs,"UTF-8");
+            String[] sql = str.split(";");
+            return sql;
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     private final static HikariDataSource dbDb2Cfg(){
@@ -95,10 +147,10 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        HikariDataSource source = dbMysqlCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
+        HikariDataSource source = dbSqliteCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
 
         DbContext db = new DbContext(source.getSchema(), source).nameSet("rock");
-        WeedConfig.isUsingSchemaPrefix =true;
+        //WeedConfig.isUsingSchemaPrefix =true;
         return db;
     }
 

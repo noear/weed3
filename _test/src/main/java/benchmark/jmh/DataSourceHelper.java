@@ -58,7 +58,6 @@ public class DataSourceHelper {
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
-
     }
 
     private static void runSql(Connection conn,String sql) throws SQLException {

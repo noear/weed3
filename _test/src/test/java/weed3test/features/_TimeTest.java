@@ -40,7 +40,7 @@ public class _TimeTest {
 
         map.put("app_id",1001);
 
-        db.table("appx_copy").setMap(map).upsert("app_id");
+        db.table("appx_copy").setMap(map).upsertBy("app_id");
         System.out.println(db.lastCommand.text);
     }
 
