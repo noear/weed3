@@ -35,7 +35,7 @@ public class DbUtil {
         return map;
     }
 
-    private final static Map<String, String> dbMssqlCfg(){
+    private final static Map<String, String> dbSqlserverCfg(){
         Map<String, String> map = new HashMap<>();
 
         map.put("schema", "rock");
