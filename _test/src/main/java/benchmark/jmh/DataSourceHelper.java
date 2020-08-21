@@ -15,7 +15,7 @@ public class DataSourceHelper {
     }
 
 
-    private static   DataSource datasource() {
+    private static  DataSource datasource() {
         HikariDataSource ds = new HikariDataSource();
         ds.setJdbcUrl("jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE");
         ds.setUsername("sa");

@@ -11,75 +11,78 @@ import java.util.Map;
 
 public class DbUtil {
 
-    private final static Map<String, String> dbMysqlCfg(){
-        Map<String, String> map = new HashMap<>();
+    private final static HikariDataSource dbMysqlCfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        map.put("schema", "rock");
-        map.put("url", "jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-        map.put("driverClassName", "com.mysql.cj.jdbc.Driver");
-        map.put("username", "demo");
-        map.put("password", "UL0hHlg0Ybq60xyb");
+        ds.setSchema("rock");
+        ds.setJdbcUrl("jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        ds.setUsername("demo");
+        ds.setPassword("UL0hHlg0Ybq60xyb");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        return map;
+        return ds;
     }
 
-    private final static Map<String, String> dbDb2Cfg(){
-        Map<String, String> map = new HashMap<>();
+    private final static HikariDataSource dbH2Cfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        map.put("schema", "rock");
-        map.put("url", "jdbc:db2://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-        map.put("driverClassName", "com.mysql.cj.jdbc.Driver");
-        map.put("username", "demo");
-        map.put("password", "UL0hHlg0Ybq60xyb");
+        ds.setSchema("rock");
+        ds.setJdbcUrl("jdbc:h2:mem:rock;DB_CLOSE_ON_EXIT=FALSE");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        ds.setDriverClassName("org.h2.Driver");
 
-        return map;
+        return ds;
     }
 
-    private final static Map<String, String> dbSqlserverCfg(){
-        Map<String, String> map = new HashMap<>();
+    private final static HikariDataSource dbDb2Cfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        map.put("schema", "rock");
-        map.put("url", "jdbc:sqlserver://localdb:1433;DatabaseName=rock");
-        map.put("driverClassName", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        map.put("username", "sa");
-        map.put("password", "sqlsev@2019");
+        ds.setSchema("rock");
+        ds.setJdbcUrl("jdbc:db2://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        ds.setUsername("demo");
+        ds.setPassword("UL0hHlg0Ybq60xyb");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        return map;
+        return ds;
     }
 
-    private final static Map<String, String> dbOracleCfg(){
-        Map<String, String> map = new HashMap<>();
+    private final static HikariDataSource dbSqlserverCfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        map.put("schema", "demo");
-        map.put("url", "jdbc:oracle:thin:@//192.168.8.118:1521/helowinXDB");
-        map.put("driverClassName", "oracle.jdbc.OracleDriver");
-        map.put("username", "demo");
-        map.put("password", "demo");
+        ds.setSchema("rock");
+        ds.setJdbcUrl("jdbc:sqlserver://localdb:1433;DatabaseName=rock");
+        ds.setUsername("sa");
+        ds.setPassword("sqlsev@2019");
+        ds.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-        return map;
+        return ds;
     }
 
-    private final static Map<String, String> dbPgsqlCfg(){
-        Map<String, String> map = new HashMap<>();
+    private final static HikariDataSource dbOracleCfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        map.put("schema", "public");
-        map.put("url", "jdbc:postgresql://localdb:5432/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-        map.put("driverClassName", "org.postgresql.Driver");
-        map.put("username", "postgres");
-        map.put("password", "postgres");
+        ds.setSchema("demo");
+        ds.setJdbcUrl("jdbc:oracle:thin:@//192.168.8.118:1521/helowinXDB");
+        ds.setUsername("demo");
+        ds.setPassword("demo");
+        ds.setDriverClassName("oracle.jdbc.OracleDriver");
 
-        return map;
+        return ds;
     }
 
-    private final static HikariDataSource dataSource(Map<String, String> map){
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(map.get("url"));
-        dataSource.setUsername(map.get("username"));
-        dataSource.setPassword(map.get("password"));
-        dataSource.setDriverClassName(map.get("driverClassName"));
+    private final static HikariDataSource dbPgsqlCfg(){
+        HikariDataSource ds = new HikariDataSource();
 
-        return dataSource;
+        ds.setSchema("public");
+        ds.setJdbcUrl("jdbc:postgresql://localdb:5432/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        ds.setUsername("postgres");
+        ds.setPassword("postgres");
+        ds.setDriverClassName("org.postgresql.Driver");
+
+        return ds;
     }
+
 
     public static DbContext getDb() {
         //
@@ -92,9 +95,9 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        Map<String, String> map = dbMysqlCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
+        HikariDataSource source = dbMysqlCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
 
-        DbContext db = new DbContext(map.get("schema"), dataSource(map)).nameSet("rock");
+        DbContext db = new DbContext(source.getSchema(), source).nameSet("rock");
         WeedConfig.isUsingSchemaPrefix =true;
         return db;
     }
