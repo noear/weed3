@@ -26,7 +26,7 @@ public class AppxModel {
     public Integer ar_is_examine;
     public Integer ar_examine_ver;
     /**  */
-    //public Date log_fulltime;
+    public Date log_fulltime;
 
     @Exclude
     public String agroup_name;
