@@ -134,7 +134,7 @@ public class DbQueryProcedure extends DbProcedure {
                 }
             }
 
-            //按长倒排KEY
+            //按长度倒排KEY
             List<String> keyList = new ArrayList<>(tmpList.keySet());
             Collections.sort(keyList, (o1, o2) -> {
                 int len = o2.length() - o1.length();
