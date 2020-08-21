@@ -68,11 +68,16 @@ public final class WeedConfig {
     protected static boolean runExecuteBefEvent(Command cmd) {
         cmd.timestart = System.currentTimeMillis();
 
+        VarHolder<Boolean> rst = new VarHolder<>();
+        rst.value = true;
+
         if (onExecuteBef_listener.size()>0) {
-            onExecuteBef_listener.forEach(fun->fun.run(cmd));
+            onExecuteBef_listener.forEach(fun->{
+                rst.value = rst.value && fun.run(cmd);
+            });
         }
 
-        return true;
+        return rst.value;
     }
 
     protected static void runExecuteStmEvent(Command cmd, Statement stm) {
