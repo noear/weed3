@@ -38,7 +38,21 @@ public class Command {
     public long timestart = 0;
     public long timestop = 0;
 
+    public Command(DbContext context, DbTran tran) {
+        this.context = context;
+        this.context.lastCommand = this;
+        this.tran = tran;
+
+        if(tran == null){
+            this.tran = DbTranUtil.current();
+        }
+    }
+
     private Map<String,Object> _paramMap;
+
+    /**
+     * 参数字典
+     * */
     public Map<String,Object> paramMap() {
         if (_paramMap == null) {
             _paramMap = new LinkedHashMap<>();
@@ -57,7 +71,15 @@ public class Command {
         return _paramMap;
     }
 
+    @Deprecated
     public String text2(){
+        return format();
+    }
+
+    /**
+     * 转为字符串
+     * */
+    public String format(){
         StringBuilder sb = new StringBuilder();
 
         String[] ss = text.split("\\?");
@@ -84,22 +106,16 @@ public class Command {
         return sb.toString();
     }
 
-    //执行时长
+    /**
+     * 执行时长
+     * */
     public long timespan(){
         return timestop  -timestart;
     }
 
-
-    public Command(DbContext context, DbTran tran) {
-        this.context = context;
-        this.context.lastCommand = this;
-        this.tran = tran;
-
-        if(tran == null){
-            this.tran = DbTranUtil.current();
-        }
-    }
-
+    /**
+     * 完整的命令文本
+     * */
     public String fullText() {
         if (context.codeHint() == null)
             return context.dbDialect().preReview(text);
