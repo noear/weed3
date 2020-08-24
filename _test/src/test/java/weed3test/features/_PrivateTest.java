@@ -17,6 +17,7 @@ public class _PrivateTest {
         Appx2Model tmp =  db.table("appx").whereEq("app_id",1).select("*").getItem(Appx2Model.class);
 
         assert tmp.getAppId() == 1;
+        assert tmp.getAppKey() != null;
     }
 
     @Test
