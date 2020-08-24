@@ -77,7 +77,7 @@ public class Command {
     }
 
     /**
-     * 转为字符串
+     * 格式化为字符串
      * */
     public String format(){
         StringBuilder sb = new StringBuilder();
