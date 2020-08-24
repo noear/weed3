@@ -147,7 +147,7 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        HikariDataSource source = dbMysqlCfg(); //dbSqliteCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
+        HikariDataSource source = dbMysqlCfg(); //dbH2Cfg(); //dbSqliteCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
 
         DbContext db = new DbContext(source.getSchema(), source).nameSet("rock");
         //WeedConfig.isUsingSchemaPrefix =true;

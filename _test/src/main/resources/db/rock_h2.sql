@@ -10,8 +10,7 @@ CREATE TABLE `appx` (
   `ar_is_examine` int NOT NULL DEFAULT '0' ,
   `ar_examine_ver` int NOT NULL DEFAULT '0' ,
   `log_fulltime` datetime DEFAULT NULL,
-  PRIMARY KEY (`app_id`),
-  UNIQUE KEY `IX_akey` (`akey`) USING BTREE
+  PRIMARY KEY (`app_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `appx_copy` (
