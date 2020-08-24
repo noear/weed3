@@ -472,9 +472,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
     public boolean exists() throws SQLException {
+        int bak = limit_top;
         limit(1);
         select_do(" 1 ", false);
-        limit(0);
+        limit(bak);
 
         DbQuery rst = compile();
 
