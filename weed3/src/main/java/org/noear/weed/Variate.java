@@ -4,6 +4,7 @@ import org.noear.weed.wrap.DbVarType;
 
 import java.io.Serializable;
 import java.lang.annotation.Inherited;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ public class Variate implements Serializable {
     protected String _name;
     protected Object _value;
 
-    protected  Variate(){
+    protected Variate() {
     }
 
     public Variate(String name, Object value) {
@@ -22,7 +23,7 @@ public class Variate implements Serializable {
         this._value = value;
     }
 
-    public boolean isNull(){
+    public boolean isNull() {
         return _value == null;
     }
 
@@ -36,6 +37,7 @@ public class Variate implements Serializable {
 
 
     DbVarType _type = DbVarType.Object;
+
     public DbVarType getType() {
         return _type;
     }
@@ -49,19 +51,19 @@ public class Variate implements Serializable {
     }
 
     //--------------------
-    public String getString(){
+    public String getString() {
         return (String) _value;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return (Date) _value;
     }
 
-    public Boolean getBoolean(){
+    public Boolean getBoolean() {
         return (Boolean) _value;
     }
 
-    public Number getNumber(){
+    public Number getNumber() {
         return (Number) _value;
     }
 
@@ -74,60 +76,60 @@ public class Variate implements Serializable {
         }
     }
 
-    public Object value(){
+    public Object value() {
         return _value;
     }
 
-    public double doubleValue(double def){
-        if(_value == null){
+    public double doubleValue(double def) {
+        if (_value == null) {
             return def;
         }
 
-        if(_value instanceof Number){
-            return ((Number)_value).doubleValue();
+        if (_value instanceof Number) {
+            return ((Number) _value).doubleValue();
         }
 
-        if(_value instanceof String){
+        if (_value instanceof String) {
             return Double.parseDouble((String) _value);
         }
 
         return def;
     }
 
-    public float floatValue(float def){
-        if(_value == null){
+    public float floatValue(float def) {
+        if (_value == null) {
             return def;
         }
 
-        if(_value instanceof Number){
-            return ((Number)_value).floatValue();
+        if (_value instanceof Number) {
+            return ((Number) _value).floatValue();
         }
 
-        if(_value instanceof String){
+        if (_value instanceof String) {
             return Float.parseFloat((String) _value);
         }
 
         return def;
     }
 
-    public long longValue(long def){
-        if(_value == null){
+    public long longValue(long def) {
+        if (_value == null) {
             return def;
         }
 
-        if(_value instanceof Number){
-            return ((Number)_value).longValue();
+        if (_value instanceof Number) {
+            return ((Number) _value).longValue();
         }
 
-        if(_value instanceof Boolean) {
+        if (_value instanceof Boolean) {
             return ((boolean) _value) ? 1 : 0;
         }
 
-        if(_value instanceof Date){
-            return ((Date)_value).getTime();
+        if (_value instanceof Date) {
+            return ((Date) _value).getTime();
         }
 
-        if(_value instanceof String){
+        if (_value instanceof String) {
             return Long.parseLong((String) _value);
         }
 
@@ -135,35 +137,49 @@ public class Variate implements Serializable {
     }
 
 
-    public int intValue(int def){
-        if(_value == null){
+    public int intValue(int def) {
+        if (_value == null) {
             return def;
         }
 
-        if(_value instanceof Number){
-            return ((Number)_value).intValue();
+        if (_value instanceof Number) {
+            return ((Number) _value).intValue();
         }
 
-        if(_value instanceof Boolean) {
+        if (_value instanceof Boolean) {
             return ((boolean) _value) ? 1 : 0;
         }
 
-        if(_value instanceof String){
+        if (_value instanceof String) {
             return Integer.parseInt((String) _value);
         }
 
         return def;
     }
 
-    public String stringValue(String def){
-        if(_value == null){
+    public String stringValue(String def) {
+        if (_value == null) {
             return def;
         }
 
-        if(_value instanceof String){
-            return (String)_value;
-        }else{
+        if (_value instanceof String) {
+            return (String) _value;
+        } else {
             return _value.toString();
+        }
+    }
+
+    public Date dateValue(Date def) {
+        if (_value == null) {
+            return def;
+        }
+
+        if (_value instanceof String) {
+            return Timestamp.valueOf((String) _value);
+        } else if (_value instanceof Long) {
+            return new Date((Long) _value);
+        } else {
+            return (Date) _value;
         }
     }
 }
