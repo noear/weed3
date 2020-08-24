@@ -46,7 +46,11 @@ public class DbQuery extends DbAccess<DbQuery> {
         while (true) {
             idx = sb.indexOf("$",idx);
             if(idx>0) {
-                sb.replace(idx, idx + 1, context.schema());
+                if(context.schema() == null){
+                    sb.replace(idx, idx + 2, ""); //去掉$.
+                }else {
+                    sb.replace(idx, idx + 1, context.schema());
+                }
                 idx++;
             }
             else {
