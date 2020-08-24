@@ -1,8 +1,10 @@
 package org.noear.weed.wrap;
 
 import org.noear.weed.DataItem;
+import org.noear.weed.annotation.Column;
 import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.utils.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -60,10 +62,17 @@ public class ClassWrap {
             int mod = f.getModifiers();
 
             if (!Modifier.isStatic(mod)) {
-                f.setAccessible(true);
+                String name = f.getName();
+                Column anno = f.getAnnotation(Column.class);
+                if (anno != null) {
+                    if (StringUtils.isEmpty(anno.value()) == false) {
+                        name = anno.value();
+                    }
+                }
 
-                if (checker.test(f.getName()) == false) {
-                    consumer.accept(f.getName(), new FieldWrap(clz, f));
+                if (checker.test(name) == false) {
+                    f.setAccessible(true);
+                    consumer.accept(name, new FieldWrap(clz, f));
                 }
             }
         }
