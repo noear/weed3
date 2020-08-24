@@ -48,9 +48,11 @@ public class FieldWrap {
     }
 
     public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
-        val = WeedConfig.typeConverter.convert(val, field.getType());
+
 
         try {
+            val = WeedConfig.typeConverter.convert(val, field.getType());
+
             if (_setter == null) {
                 field.set(tObj, val);
             } else {
