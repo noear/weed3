@@ -60,7 +60,7 @@ class BaseEntityWrap {
 
         for (FieldWrap f1 : ClassWrap.get(entityClz).fieldWraps) {
             if (f1.field.getAnnotation(PrimaryKey.class) != null) {
-                pkName = f1.field.getName();
+                pkName = f1.name;
                 break;
             }
         }

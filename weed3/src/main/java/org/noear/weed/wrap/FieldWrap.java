@@ -2,6 +2,7 @@ package org.noear.weed.wrap;
 
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Column;
+import org.noear.weed.utils.NameUtils;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class FieldWrap {
     public final Field field;
     public final String name;
+    public final String name2;
     public final boolean exclude;
 
     private Method _getter;
@@ -28,15 +30,14 @@ public class FieldWrap {
         field = f1;
         exclude = (f1.getAnnotation(Exclude.class) != null);
 
-        String nameTmp = null;
         Column fn = f1.getAnnotation(Column.class);
         if (fn != null) {
-            nameTmp = fn.value();
+            name = fn.value();
+            name2 = null;
         }else{
-            nameTmp = f1.getName();
+            name = f1.getName();
+            name2 = NameUtils.toUnderlineString(name);
         }
-
-        name = nameTmp;
 
         field.setAccessible(true);
 

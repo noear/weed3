@@ -102,6 +102,8 @@ public class ClassWrap {
                 //转入时，不排除; 交dataItem检查
                 if (data.exists(fw.name)) {
                     fw.setValue(item, data.get(fw.name));
+                } else if (data.exists(fw.name2)) {
+                    fw.setValue(item, data.get(fw.name2));
                 }
             }
 

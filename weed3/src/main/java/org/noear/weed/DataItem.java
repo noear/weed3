@@ -29,8 +29,12 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         _data.clear();
     }
     @Override
-    public boolean exists(String name){
-        return _data.containsKey(name);
+    public boolean exists(String name) {
+        if (name == null) {
+            return false;
+        } else {
+            return _data.containsKey(name);
+        }
     }
 
     @Override

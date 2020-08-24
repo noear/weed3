@@ -16,7 +16,7 @@ public class _PrivateTest {
     public void test1() throws Exception{
         Appx2Model tmp =  db.table("appx").whereEq("app_id",1).select("*").getItem(Appx2Model.class);
 
-        assert tmp.getApp_id() == 1;
+        assert tmp.getAppId() == 1;
     }
 
     @Test
@@ -25,7 +25,7 @@ public class _PrivateTest {
 
         Appx2Model tmp =  mapper.selectById(1);
 
-        assert tmp.getApp_id() == 1;
+        assert tmp.getAppId() == 1;
     }
 
     @Test
