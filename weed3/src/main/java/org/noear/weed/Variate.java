@@ -3,6 +3,7 @@ package org.noear.weed;
 import org.noear.weed.wrap.DbVarType;
 
 import java.io.Serializable;
+import java.lang.annotation.Inherited;
 import java.util.Date;
 
 /**
@@ -12,20 +13,13 @@ import java.util.Date;
 public class Variate implements Serializable {
     protected String _name;
     protected Object _value;
-    //public final   int   _hash;
 
     protected  Variate(){
-        //_hash=0;
     }
 
     public Variate(String name, Object value) {
         this._name = name;
         this._value = value;
-
-//        if (name != null)
-//            this._hash = name.hashCode();
-//        else
-//            this._hash = 0;
     }
 
     public boolean isNull(){
@@ -80,37 +74,37 @@ public class Variate implements Serializable {
         }
     }
 
+    public Object value(){
+        return _value;
+    }
+
     public double doubleValue(double def){
         if(_value == null){
             return def;
-        }
-
-        if(_value instanceof Double){
-            return (double)_value;
-        }
-
-        if(_value instanceof Float){
-            return (double)((float)_value);
         }
 
         if(_value instanceof Number){
             return ((Number)_value).doubleValue();
         }
 
-        if(_value instanceof Long){
-            return (long)_value;
+        if(_value instanceof String){
+            return Double.parseDouble((String) _value);
         }
 
-        if(_value instanceof Integer){
-            return (int)_value;
+        return def;
+    }
+
+    public float floatValue(float def){
+        if(_value == null){
+            return def;
         }
 
-        if(_value instanceof Boolean) {
-            return ((boolean) _value) ? 1 : 0;
+        if(_value instanceof Number){
+            return ((Number)_value).floatValue();
         }
 
-        if(_value instanceof Date){
-            return ((Date)_value).getTime();
+        if(_value instanceof String){
+            return Float.parseFloat((String) _value);
         }
 
         return def;
@@ -119,14 +113,6 @@ public class Variate implements Serializable {
     public long longValue(long def){
         if(_value == null){
             return def;
-        }
-
-        if(_value instanceof Long){
-            return (long)_value;
-        }
-
-        if(_value instanceof Integer){
-            return (int)_value;
         }
 
         if(_value instanceof Number){
@@ -141,28 +127,29 @@ public class Variate implements Serializable {
             return ((Date)_value).getTime();
         }
 
+        if(_value instanceof String){
+            return Long.parseLong((String) _value);
+        }
+
         return def;
     }
+
 
     public int intValue(int def){
         if(_value == null){
             return def;
         }
 
-        if(_value instanceof Integer){
-            return (int)_value;
-        }
-
-        if(_value instanceof Long){
-            return (int) ((long)_value);
+        if(_value instanceof Number){
+            return ((Number)_value).intValue();
         }
 
         if(_value instanceof Boolean) {
             return ((boolean) _value) ? 1 : 0;
         }
 
-        if(_value instanceof Number){
-            return ((Number)_value).intValue();
+        if(_value instanceof String){
+            return Integer.parseInt((String) _value);
         }
 
         return def;

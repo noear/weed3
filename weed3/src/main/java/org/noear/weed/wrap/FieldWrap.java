@@ -109,17 +109,41 @@ public class FieldWrap {
     }
 
     private static Object typeChange(Object val, Class<?> type) {
-        if (val instanceof BigDecimal) {
+        if (val instanceof Number) {
+            Number number = (Number) val;
+
             if (Long.class == type || Long.TYPE == type) {
-                return ((BigDecimal) val).longValue();
+                return number.longValue();
             }
 
             if (Integer.class == type || Integer.TYPE == type) {
-                return ((BigDecimal) val).intValue();
+                return number.intValue();
+            }
+
+            if (Short.class == type || Short.TYPE == type) {
+                return number.shortValue();
             }
 
             if (Double.class == type || Double.TYPE == type) {
-                return ((BigDecimal) val).doubleValue();
+                return number.doubleValue();
+            }
+
+            if (Float.class == type || Float.TYPE == type) {
+                return number.floatValue();
+            }
+
+            if (Boolean.class == type || Boolean.TYPE == type) {
+                return number.intValue() > 0;
+            }
+
+            if(Date.class == type){
+                return new Date(number.longValue());
+            }
+        }
+
+        if(type == Date.class) {
+            if (val instanceof String) {
+                return Date.valueOf((String) val);
             }
         }
 
@@ -159,7 +183,7 @@ public class FieldWrap {
 
         if (type == Boolean.TYPE) {
             if (val instanceof Boolean) {
-                return (Boolean) val;
+                return val;
             }
 
             if (val instanceof Number) {
