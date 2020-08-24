@@ -62,17 +62,9 @@ public class ClassWrap {
             int mod = f.getModifiers();
 
             if (!Modifier.isStatic(mod)) {
-                String name = f.getName();
-                Column anno = f.getAnnotation(Column.class);
-                if (anno != null) {
-                    if (StringUtils.isEmpty(anno.value()) == false) {
-                        name = anno.value();
-                    }
-                }
-
-                if (checker.test(name) == false) {
+                if (checker.test(f.getName()) == false) {
                     f.setAccessible(true);
-                    consumer.accept(name, new FieldWrap(clz, f));
+                    consumer.accept(f.getName(), new FieldWrap(clz, f));
                 }
             }
         }
