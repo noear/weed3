@@ -169,6 +169,18 @@ public class Variate implements Serializable {
         }
     }
 
+    public Boolean boolValue(Boolean def) {
+        if (_value == null) {
+            return def;
+        }
+
+        if (_value instanceof Number) {
+            return ((Number) _value).intValue() > 0;
+        } else {
+            return (Boolean) _value;
+        }
+    }
+
     public Date dateValue(Date def) {
         if (_value == null) {
             return def;
