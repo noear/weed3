@@ -141,9 +141,9 @@ public class FieldWrap {
             }
         }
 
-        if(type == Date.class) {
+        if(type == java.util.Date.class) {
             if (val instanceof String) {
-                return Date.valueOf((String) val);
+                return Timestamp.valueOf((String) val);
             }
         }
 
