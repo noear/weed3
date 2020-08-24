@@ -6,7 +6,7 @@ import org.noear.weed.utils.NameUtils;
 
 import java.lang.reflect.Field;
 
-public class NameStrategy {
+public class NamingStrategy {
     public String classToTableName(Class<?> clz) {
         return clz.getSimpleName();
     }

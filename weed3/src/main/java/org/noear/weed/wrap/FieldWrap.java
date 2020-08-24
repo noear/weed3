@@ -3,17 +3,13 @@ package org.noear.weed.wrap;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Column;
-import org.noear.weed.utils.NameUtils;
 
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.UUID;
 
 /**
  * Field wrap
@@ -34,7 +30,7 @@ public class FieldWrap {
         if (fn != null) {
             name = fn.value();
         } else {
-            name = WeedConfig.nameStrategy.fieldToColumnName(clz, f1);
+            name = WeedConfig.namingStrategy.fieldToColumnName(clz, f1);
         }
 
         field.setAccessible(true);
