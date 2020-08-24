@@ -1,5 +1,6 @@
 package org.noear.weed.wrap;
 
+import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.Column;
 import org.noear.weed.utils.NameUtils;
@@ -20,7 +21,6 @@ import java.util.UUID;
 public class FieldWrap {
     public final Field field;
     public final String name;
-    public final String name2;
     public final boolean exclude;
 
     private Method _getter;
@@ -33,10 +33,12 @@ public class FieldWrap {
         Column fn = f1.getAnnotation(Column.class);
         if (fn != null) {
             name = fn.value();
-            name2 = null;
-        }else{
-            name = f1.getName();
-            name2 = NameUtils.toUnderlineString(name);
+        }else {
+            if (WeedConfig.getColumnName == null) {
+                name = f1.getName();
+            } else {
+                name = WeedConfig.getColumnName.apply(clz,f1);
+            }
         }
 
         field.setAccessible(true);

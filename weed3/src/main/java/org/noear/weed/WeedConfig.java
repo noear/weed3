@@ -5,12 +5,16 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Act3;
 import org.noear.weed.ext.Fun1;
+import org.noear.weed.utils.NameUtils;
 
+import java.lang.reflect.Field;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Created by noear on 14/11/20.
@@ -22,6 +26,18 @@ public final class WeedConfig {
     public static boolean isUsingSchemaPrefix =false;
     public static boolean isUpdateMustConditional=true;
     public static boolean isDeleteMustConditional=true;
+    public static boolean isUsingUnderlineColumnName=false;
+
+    /**
+     * 非注解的列名获取
+     * */
+    public static BiFunction<Class<?>, Field, String> getColumnName = (clz,f)->{
+        if(isUsingUnderlineColumnName){
+            return NameUtils.toUnderlineString(f.getName());
+        }else{
+            return f.getName();
+        }
+    };
 
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
     public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();
