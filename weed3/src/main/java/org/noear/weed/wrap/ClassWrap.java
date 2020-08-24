@@ -1,6 +1,7 @@
 package org.noear.weed.wrap;
 
 import org.noear.weed.DataItem;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Column;
 import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
@@ -48,7 +49,7 @@ public class ClassWrap {
         if (ann != null) {
             tableName = ann.value();
         }else {
-            tableName = clz.getSimpleName();
+            tableName = WeedConfig.nameStrategy.classToTableName(clz);
         }
     }
 

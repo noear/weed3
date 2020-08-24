@@ -33,12 +33,8 @@ public class FieldWrap {
         Column fn = f1.getAnnotation(Column.class);
         if (fn != null) {
             name = fn.value();
-        }else {
-            if (WeedConfig.getColumnName == null) {
-                name = f1.getName();
-            } else {
-                name = WeedConfig.getColumnName.apply(clz,f1);
-            }
+        } else {
+            name = WeedConfig.nameStrategy.fieldToColumnName(clz, f1);
         }
 
         field.setAccessible(true);
