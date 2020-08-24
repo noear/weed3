@@ -5,6 +5,7 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.wrap.NamingStrategy;
+import org.noear.weed.wrap.TypeConverter;
 
 import java.sql.Statement;
 import java.util.LinkedHashSet;
@@ -28,6 +29,11 @@ public final class WeedConfig {
      * 非注解的命名策略
      * */
     public static NamingStrategy namingStrategy = new NamingStrategy();
+
+    /**
+     * 字段类型转换器
+     * */
+    public static TypeConverter typeConverter  = new TypeConverter();
 
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
     public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();

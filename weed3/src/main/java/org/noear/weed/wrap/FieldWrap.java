@@ -39,16 +39,16 @@ public class FieldWrap {
         _setter = findSetter(clz, f1);
     }
 
-    public Object getValue(Object tObj) throws ReflectiveOperationException{
-        if(_getter == null){
+    public Object getValue(Object tObj) throws ReflectiveOperationException {
+        if (_getter == null) {
             return field.get(tObj);
-        }else{
+        } else {
             return _getter.invoke(tObj);
         }
     }
 
     public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
-        val = typeChange(val, field.getType());
+        val = WeedConfig.typeConverter.convert(val, field.getType());
 
         try {
             if (_setter == null) {
@@ -66,7 +66,7 @@ public class FieldWrap {
         }
     }
 
-    private static Method findGetter(Class<?> tCls,Field field) {
+    private static Method findGetter(Class<?> tCls, Field field) {
         String fieldName = field.getName();
         String firstLetter = fieldName.substring(0, 1).toUpperCase();
         String setMethodName = "get" + firstLetter + fieldName.substring(1);
@@ -101,91 +101,5 @@ public class FieldWrap {
             ex.printStackTrace();
         }
         return null;
-    }
-
-    private static Object typeChange(Object val, Class<?> type) {
-        if (val instanceof Number) {
-            Number number = (Number) val;
-
-            if (Long.class == type || Long.TYPE == type) {
-                return number.longValue();
-            }
-
-            if (Integer.class == type || Integer.TYPE == type) {
-                return number.intValue();
-            }
-
-            if (Short.class == type || Short.TYPE == type) {
-                return number.shortValue();
-            }
-
-            if (Double.class == type || Double.TYPE == type) {
-                return number.doubleValue();
-            }
-
-            if (Float.class == type || Float.TYPE == type) {
-                return number.floatValue();
-            }
-
-            if (Boolean.class == type || Boolean.TYPE == type) {
-                return number.intValue() > 0;
-            }
-
-            if(Date.class == type){
-                return new Date(number.longValue());
-            }
-        }
-
-        if(type == java.util.Date.class) {
-            if (val instanceof String) {
-                return Timestamp.valueOf((String) val);
-            }
-        }
-
-        if (type == LocalDateTime.class) {
-            if (val instanceof java.sql.Timestamp) {
-                return ((Timestamp) val).toLocalDateTime();
-            }
-
-            if (val instanceof String) {
-                return LocalDateTime.parse((String) val);
-            }
-        }
-
-        if (type == LocalDate.class) {
-            if (val instanceof java.sql.Date) {
-                return ((Date) val).toLocalDate();
-            }
-
-            if (val instanceof java.sql.Timestamp) {
-                return ((Timestamp) val).toLocalDateTime().toLocalDate();
-            }
-
-            if (val instanceof String) {
-                return LocalDate.parse((String) val);
-            }
-        }
-
-        if (type == LocalTime.class) {
-            if (val instanceof java.sql.Time) {
-                return ((Time) val).toLocalTime();
-            }
-
-            if (val instanceof String) {
-                return LocalTime.parse((String) val);
-            }
-        }
-
-        if (type == Boolean.TYPE) {
-            if (val instanceof Boolean) {
-                return val;
-            }
-
-            if (val instanceof Number) {
-                return ((Number) val).byteValue() > 0;
-            }
-        }
-
-        return val;
     }
 }

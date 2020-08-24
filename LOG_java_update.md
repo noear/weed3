@@ -1,4 +1,11 @@
 ##### 3.2.13
+* WeedConfig 增加命名策略配置支持
+* WeedConfig 增加字段类型转换器配置支持
+    * 增加数字类型的自由转换；
+    * 增加字符串转Date的自动转换;
+* Command::test2() 更名为 Command::toSqlString();
+
+
 
 ##### 3.2.12
 1. 优化 call("select * from a where id=@{a}") 性能
