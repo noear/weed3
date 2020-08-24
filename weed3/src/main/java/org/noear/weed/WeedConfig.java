@@ -22,7 +22,7 @@ public final class WeedConfig {
     public static boolean isUsingSchemaPrefix =false;
     public static boolean isUpdateMustConditional=true;
     public static boolean isDeleteMustConditional=true;
-    public static boolean isUsingUnderlineColumnName=false;
+    public static boolean isUsingUnderlineColumnName=true;
 
     /**
      * 非注解的命名策略

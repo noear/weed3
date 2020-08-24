@@ -2,7 +2,7 @@ package org.noear.weed.utils;
 
 import java.util.regex.Pattern;
 
-public class NameUtils {
+public class NamingUtils {
     private static Pattern LOWER_CASE = Pattern.compile("[a-z]");
 
     /**
@@ -130,10 +130,10 @@ public class NameUtils {
      *
      *
      * <pre>
-     * StringTools.capitalize(null)  = null
-     * StringTools.capitalize("")    = ""
-     * StringTools.capitalize("cat") = "Cat"
-     * StringTools.capitalize("cAt") = "CAt"
+     * NamingUtils.capitalize(null)  = null
+     * NamingUtils.capitalize("")    = ""
+     * NamingUtils.capitalize("cat") = "Cat"
+     * NamingUtils.capitalize("cAt") = "CAt"
      * </pre>
      *
      * @param str the String to capitalize, may be null
