@@ -73,13 +73,13 @@ public class Command {
 
     @Deprecated
     public String text2(){
-        return format();
+        return toSqlString();
     }
 
     /**
-     * 格式化为字符串
+     * 转为SQL字符串
      * */
-    public String format(){
+    public String toSqlString(){
         StringBuilder sb = new StringBuilder();
 
         String[] ss = text.split("\\?");
