@@ -98,43 +98,57 @@ public class DbQueryProcedure extends DbProcedure {
 
         String sqlTxt = this.commandText;
 
-        {
-            Map<String, String> tmpList = new HashMap<>();
-            List<TmlMark> marks = TmlAnalyzer.get(sqlTxt);
-            for(TmlMark tm : marks){
-                if (WeedConfig.isDebug) {
-                    if (_paramS2.containsKey(tm.name) == false) {
-                        throw new SQLException("Lack of parameter:" + tm.name);
-                    }
-                }
+        build(cmd, sqlTxt);
 
-                Variate val = _paramS2.get(tm.name);
-                Object tmp = val.getValue();
-                if (tmp instanceof Iterable) { //支持数组型参数
-                    StringBuilder sb = StringUtils.borrowBuilder();
-                    for (Object p2 : (Iterable) tmp) {
-                        doSet(new Variate(tm.name, p2));//对this.paramS进行设值
+        runCommandBuiltEvent(cmd);
 
-                        sb.append("?").append(",");
-                    }
+        return cmd;
+    }
 
-                    int len = sb.length();
-                    if (len > 0) {
-                        sb.deleteCharAt(len - 1);
-                    }
+    protected void build(Command cmd, String tml) {
+        Map<String, String> tmpList = new HashMap<>();
+        TmlBlock block = TmlAnalyzer.get(tml, _paramS2);
 
-                    tmpList.put(tm.mark, StringUtils.releaseBuilder(sb));
-                } else {
-                    if (tm.mark.startsWith("@")) {
-                        doSet(val); //对this.paramS进行设值
-                        tmpList.put(tm.mark, "?");
-                    } else {
-                        tmpList.put(tm.mark, val.stringValue(""));
-                    }
+        tml = block.sql2;
+
+        //1.构建参数
+        for (TmlMark tm : block.marks) {
+
+            Variate val = _paramS2.get(tm.name);
+
+            if (WeedConfig.isDebug) {
+                if (val == null) {
+                    throw new RuntimeException("Lack of parameter:" + tm.name);
                 }
             }
 
+            Object tmp = val.getValue();
+            if (tmp instanceof Iterable) { //支持数组型参数
+                StringBuilder sb = StringUtils.borrowBuilder();
+                for (Object p2 : (Iterable) tmp) {
+                    doSet(new Variate(tm.name, p2));//对this.paramS进行设值
+
+                    sb.append("?").append(",");
+                }
+
+                int len = sb.length();
+                if (len > 0) {
+                    sb.deleteCharAt(len - 1);
+                }
+
+                tmpList.put(tm.mark, StringUtils.releaseBuilder(sb));
+            } else {
+                if (tm.mark.startsWith("@")) {
+                    doSet(val);
+                }
+            }
+        }
+
+        //2.替换部分未编译的参数
+        //
+        if (tmpList.size() > 0) {
             //按长度倒排KEY
+            //
             List<String> keyList = new ArrayList<>(tmpList.keySet());
             Collections.sort(keyList, (o1, o2) -> {
                 int len = o2.length() - o1.length();
@@ -148,26 +162,23 @@ public class DbQueryProcedure extends DbProcedure {
             });
 
             for (String key : keyList) {
-                sqlTxt = sqlTxt.replace(key, tmpList.get(key));
+                tml = tml.replace(key, tmpList.get(key));
             }
         }
 
-        if(sqlTxt.indexOf("$") >=0){
+
+        //3.替换schema
+        if (tml.indexOf("$") >= 0) {
             if (context.schemaHas()) {
-                sqlTxt = sqlTxt.replace("$", context.schema());
+                tml = tml.replace("$", context.schema());
             } else {
-                sqlTxt = sqlTxt.replace("$.", "");
+                tml = tml.replace("$.", "");
             }
         }
 
-
+        //4.为命令赋值
         cmd.paramS = this.paramS;
-
-        cmd.text = sqlTxt;
-
-        runCommandBuiltEvent(cmd);
-
-        return cmd;
+        cmd.text = tml;
     }
 
     @Override
