@@ -503,6 +503,7 @@ public class XmlSqlCompiler {
 
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
+        //临时变量列表
         List<XmlSqlVar> tmpList = new ArrayList<>();
 
         String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
