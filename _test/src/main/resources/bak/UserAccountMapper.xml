@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<mapper namespace="zm.data.code.pepper.api.dso.db.mapper"
+        import="zm.data.code.pepper.api.models.db.*"
+        :db="db_pepper">
+
+    <!-- user_account -->
+
+    <sql id="un_freeze_user_account"
+         :caching="cache_pepper"
+         :cacheClear="user_account_user_id_${user_id}"
+         :remarks="账户余额解冻">
+        update user_account set balance = balance + @{transaction:String} ,freeze_balance - @{transaction:String}  where `user_id` =
+        @{user_id:long} AND `type` = @{type:int} and freeze_balance >= @{transaction:String};
+    </sql>
+</mapper>

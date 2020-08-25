@@ -331,16 +331,6 @@ public class XmlSqlCompiler {
                 return;
             }
 
-            if ("insert".equals(tagName)) {
-                parseInsertNode(sb, sqlBuilderName, dblock, n, depth);
-                return;
-            }
-
-            if ("update".equals(tagName)) {
-                parseUpdateNode(sb, sqlBuilderName, dblock, n, depth);
-                return;
-            }
-
             _parseNodeList(n.getChildNodes(), sqlBuilderName, sb, dblock, depth);
         }
     }
@@ -511,46 +501,9 @@ public class XmlSqlCompiler {
         }
     }
 
-    //未启用..
-    private static void parseInsertNode(StringBuilder sb, String sqlBuilderName,XmlSqlBlock dblock, Node n , int depth){
-        String _table = attr(n,"table");
-        String _data_str = attr(n,"data");
-
-        List<String> tmpList = new ArrayList<>();
-
-        for(String v1 : _data_str.split(",")){
-            if(v1.indexOf(":") > 0){
-                String[] ss = v1.split(";");
-                XmlSqlVar dv = new XmlSqlVar(v1, ss[0],ss[1]);
-                tmpList.add(dv.name);
-                dblock.varPut(dv);
-            }else{
-                tmpList.add(v1);
-            }
-        }
-
-        newLine(sb, depth).append("\"");
-        newLine(sb, depth).append("INSERT ").append(_table).append("(");
-        for(String n1: tmpList){
-            sb.append(n1).append(",");
-        }
-        sb.setLength(sb.length()-1);
-        sb.append(") VALUES(");
-        for(String n1: tmpList){
-            sb.append("map.get(\\\"").append(n1).append("\\\")").append(",");
-        }
-        sb.setLength(sb.length()-1);
-        sb.append(")");
-    }
-
-    //未启用..
-    private static void parseUpdateNode(StringBuilder sb, String sqlBuilderName,XmlSqlBlock dblock, Node n , int depth){
-
-    }
-
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
-        Map<String, XmlSqlVar> tmpList = new LinkedHashMap<>();
+        List<XmlSqlVar> tmpList = new ArrayList<>();
 
         String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
         dblock._texts.append(txt2);
@@ -564,11 +517,11 @@ public class XmlSqlCompiler {
             while (m.find()) {
                 XmlSqlVar dv = parseTxtVar(m);
 
-                tmpList.put(dv.name, dv);
+                tmpList.add(dv);
                 dblock.varPut(dv);
             }
 
-            for (XmlSqlVar dv : tmpList.values()) {
+            for (XmlSqlVar dv : tmpList) {
                 //如果没有type 申明，采用 map.get()
                 if(StringUtils.isEmpty(dv.type)){
                     txt2 = txt2.replace(dv.mark, "\"+ map.get(\"" + dv.name + "\") +\"");
@@ -587,11 +540,11 @@ public class XmlSqlCompiler {
             while (m.find()) {
                 XmlSqlVar dv = parseTxtVar(m);
 
-                tmpList.put(dv.name, dv);
+                tmpList.add(dv);
                 dblock.varPut(dv);
             }
 
-            for (XmlSqlVar dv : tmpList.values()) {
+            for (XmlSqlVar dv : tmpList) {
                 if(dv.type != null && dv.type.indexOf(">")>0){
                     txt2 = txt2.replace(dv.mark, "?...");
                 }else{
@@ -600,7 +553,7 @@ public class XmlSqlCompiler {
             }
 
             sb.append("\"").append(txt2).append(" \"");
-            tmpList.forEach((k, v) -> {
+            tmpList.forEach(v -> {
                 //如果没有type 申明，采用 map.get()
                 if(StringUtils.isEmpty(v.type)){
                     sb.append(",map.get(\"").append(v.name).append("\")");

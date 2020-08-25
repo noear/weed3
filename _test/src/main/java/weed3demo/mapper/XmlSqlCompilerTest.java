@@ -24,7 +24,7 @@ public class XmlSqlCompilerTest {
 
     @Test
     public  void test11() throws Exception {
-        URL url = getResource("/bak/UserMapper.xml");
+        URL url = getResource("/bak/UserAccountMapper.xml");
 
         String code = XmlSqlCompiler.parse( url);
 
