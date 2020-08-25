@@ -70,9 +70,9 @@ public class XmlSqlBlock {
     /** 变量标签集合 */
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
     public void varPut(XmlSqlVar dv) {
-        if (dv.type == null || dv.type.length() == 0) {
-            return;
-        }
+//        if (dv.type == null || dv.type.length() == 0) {
+//            return;
+//        }
 
         varMap.put(dv.name, dv);
     }

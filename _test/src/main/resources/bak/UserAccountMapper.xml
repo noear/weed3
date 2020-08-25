@@ -10,7 +10,7 @@
          :caching="cache_pepper"
          :cacheClear="user_account_user_id_${user_id}"
          :remarks="账户余额解冻">
-        update user_account set balance = balance + @{transaction:String} ,freeze_balance - @{transaction:String}  where `user_id` =
-        @{user_id:long} AND `type` = @{type:int} and freeze_balance >= @{transaction:String};
+        update user_account set balance = balance + @{transaction} ,freeze_balance - @{transaction}  where `user_id` =
+        @{user_id:long} AND `type` = @{type:int} and freeze_balance >= @{transaction};
     </sql>
 </mapper>

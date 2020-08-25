@@ -161,11 +161,18 @@ public class XmlSqlCompiler {
         //1.打印变量
         int var_num = 0;
         for (XmlSqlVar dv : dblock.varMap.values()) {
+
+            var_num++;
             if (dv.type != null && dv.type.length() > 0) {
-                var_num++;
+                //有强类型
                 newLine(sb, depth + 1)
                         .append(dv.type).append(" ").append(dv.name).append(" = ")
                         .append("(").append(dv.type).append(")map.get(\"").append(dv.name).append("\");");
+            } else {
+                //没类型
+                newLine(sb, depth + 1)
+                        .append("Object ").append(dv.name).append(" = ")
+                        .append("map.get(\"").append(dv.name).append("\");");
             }
         }
 
@@ -524,11 +531,11 @@ public class XmlSqlCompiler {
 
             for (XmlSqlVar dv : tmpList) {
                 //如果没有type 申明，采用 map.get()
-                if(StringUtils.isEmpty(dv.type)){
-                    txt2 = txt2.replace(dv.mark, "\"+ map.get(\"" + dv.name + "\") +\"");
-                }else{
+//                if(StringUtils.isEmpty(dv.type)){
+//                    txt2 = txt2.replace(dv.mark, "\"+ map.get(\"" + dv.name + "\") +\"");
+//                }else{
                     txt2 = txt2.replace(dv.mark, "\"+ " + dv.name + " +\"");
-                }
+//                }
 
             }
         }
@@ -556,11 +563,11 @@ public class XmlSqlCompiler {
             sb.append("\"").append(txt2).append(" \"");
             tmpList.forEach(v -> {
                 //如果没有type 申明，采用 map.get()
-                if(StringUtils.isEmpty(v.type)){
-                    sb.append(",map.get(\"").append(v.name).append("\")");
-                }else{
+//                if(StringUtils.isEmpty(v.type)){
+//                    sb.append(",map.get(\"").append(v.name).append("\")");
+//                }else{
                     sb.append(",").append(v.name);
-                }
+//                }
             });
         }
     }
