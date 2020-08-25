@@ -45,11 +45,34 @@ public class MapperTest2 {
 
         assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
 
-
         akey = mapper.appx_get_key2(48);
         System.out.println(akey);
 
         assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+
+
+        akey = mapper.appx_get_key3(48);
+        System.out.println(akey);
+
+        assert "67adce3315124d6e93605d00ff0f11ee".equals(akey);
+    }
+
+    @Test
+    public void test32() {
+        SqlMapper mapper = db2.mapper(SqlMapper.class);
+        int agroup_id =1;
+
+        List<Integer> ids = new ArrayList<>();
+        ids.add(12);
+        ids.add(48);
+
+        List<String> akeyAry = mapper.appx_get_key_list(agroup_id, ids);
+
+        assert akeyAry.size()==2;
+
+        akeyAry = mapper.appx_get_key_list2(agroup_id, ids);
+
+        assert akeyAry.size()==2;
     }
 
     @Test
