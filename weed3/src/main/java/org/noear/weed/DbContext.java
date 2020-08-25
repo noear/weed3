@@ -352,7 +352,23 @@ public class DbContext extends DbContextMetaData {
 
 
     public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws SQLException {
-        return tran().execute(handler);
+        DbTran tran = DbTranUtil.current();
+
+        if (tran == null) {
+            return tran().execute(handler);
+        } else {
+            try {
+                handler.run(tran);
+            } catch (RuntimeException ex) {
+                throw ex;
+            } catch (SQLException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RuntimeException(ex);
+            }
+
+            return tran;
+        }
     }
 
 
