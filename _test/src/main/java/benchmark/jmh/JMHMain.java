@@ -9,6 +9,7 @@ import benchmark.jmh.jdbc.JdbcService;
 import benchmark.jmh.weed.WeedService;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,20 +39,20 @@ public class JMHMain {
 
 
     /*   JDBC,基准，有些方法性能飞快    */
-//    @Benchmark
-//    public void jdbcInsert() {
-//        jdbcService.addEntity();
-//    }
-//
-//    @Benchmark
-//    public void jdbcSelectById() {
-//        jdbcService.getEntity();
-//    }
-//
-//    @Benchmark
-//    public void jdbcExecuteJdbc() {
-//        jdbcService.executeJdbcSql();
-//    }
+    @Benchmark
+    public void jdbcInsert() {
+        jdbcService.addEntity();
+    }
+
+    @Benchmark
+    public void jdbcSelectById() {
+        jdbcService.getEntity();
+    }
+
+    @Benchmark
+    public void jdbcExecuteJdbc() {
+        jdbcService.executeJdbcSql();
+    }
 
 
     /*   Weed3    */
@@ -76,8 +77,18 @@ public class JMHMain {
     }
 
     @Benchmark
+    public void weedExecuteJdbc2() throws SQLException {
+        weedService.executeJdbcSql2();
+    }
+
+    @Benchmark
     public void weedExecuteTemplate() {
         weedService.executeTemplateSql();
+    }
+
+    @Benchmark
+    public void weedExecuteTemplate2() throws SQLException{
+        weedService.executeTemplateSql2();
     }
 
     @Benchmark

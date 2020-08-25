@@ -5,6 +5,7 @@ import benchmark.jmh.DataSourceHelper;
 import benchmark.jmh.weed.mapper.WeedSQLUserMapper;
 import benchmark.jmh.weed.model.WeedSQLSysUser;
 import benchmark.jmh.weed.model.WeedSysCustomer;
+import com.ibm.db2.jcc.am.SqlClientInfoException;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 
@@ -61,9 +62,19 @@ public class WeedService implements BaseService {
         WeedSQLSysUser user = userMapper.selectById(1);
     }
 
+    public void executeJdbcSql2() throws SQLException{
+        WeedSQLSysUser user = db.sql("select * from sys_user where id = ?",1)
+                .getItem(WeedSQLSysUser.class);
+    }
+
     @Override
     public void executeTemplateSql() {
         WeedSQLSysUser user = userMapper.selectTemplateById(1);
+    }
+
+    public void executeTemplateSql2() throws SQLException {
+        WeedSQLSysUser user = db.call("select * from sys_user where id = @{id}")
+                .set("id",1).getItem(WeedSQLSysUser.class);
     }
 
     @Override
