@@ -58,6 +58,8 @@ public class DbTran {
 
     /*执行事务过程 = action(...) + excute() */
     public DbTran execute(Act1Ex<DbTran,Throwable> handler) throws SQLException {
+        DbTran savepoint = DbTranUtil.current();
+
         try {
             if (connection == null) {
                 connection = _context.getConnection();
@@ -89,6 +91,10 @@ public class DbTran {
         } finally {
             DbTranUtil.currentRemove();
             close(false);
+
+            if (savepoint != null) {
+                DbTranUtil.currentSet(savepoint);
+            }
         }
 
         return this;
