@@ -8,7 +8,11 @@ import java.lang.reflect.Field;
 
 public class NamingStrategy {
     public String classToTableName(Class<?> clz) {
-        return clz.getSimpleName();
+        if (WeedConfig.isUsingUnderlineColumnName) {
+            return NamingUtils.toUnderlineString(clz.getSimpleName());
+        } else {
+            return clz.getSimpleName();
+        }
     }
 
     public String fieldToColumnName(Class<?> clz, Field f) {
