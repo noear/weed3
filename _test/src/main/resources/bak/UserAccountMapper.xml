@@ -6,11 +6,132 @@
 
     <!-- user_account -->
 
+    <sql id="add_user_account"
+         :return="long"
+         :caching="cache_pepper"
+         :cacheClear="user_account_user_id_${user_id}"
+         :remarks="新增用户账户">
+        INSERT INTO `user_account` (`account_id`, `user_id`, `mobile`, `agroup_id`, `ugroup_id`, `app_id`, `type`,
+        `balance`, `accumulation`, `create_date`, `create_fulltime`, `update_date`, `update_fulltime`)
+        VALUES (@{account_id:long}, @{user_id:long}, @{mobile:String}, @{agroup_id:int}, @{ugroup_id:int},
+        @{app_id:int}, @{type:int}, @{balance:String}, @{accumulation:String}, @{create_date:int},
+        @{create_fulltime:Date}, @{update_date:int}, @{update_fulltime:Date})
+    </sql>
+
+    <sql id="user_account_plus_balance"
+         :caching="cache_pepper"
+         :cacheClear="user_account_user_id_${user_id}"
+         :remarks="账户余额修改"
+         :declare="trans_type:int">
+        UPDATE `user_account` SET `balance` = `balance` + @{transaction:String},
+        <if test="transaction?!">
+            <if test="trans_type != 5">
+                `accumulation` = `accumulation` + @{transaction:String},
+            </if>
+        </if>
+        `update_date` = @{update_date:int}, `update_fulltime` = @{update_fulltime:Date} WHERE `user_id` =
+        @{user_id:long} AND `type` = @{type:int}
+    </sql>
+
+    <sql id="get_user_account_by_user_id_and_type"
+         :return="UserAccountModel"
+         :caching="cache_pepper"
+         :cacheTag="user_account_user_id_${user_id}"
+         :remarks="获取账户">
+        SELECT * FROM `user_account` WHERE `user_id` = @{user_id:long} AND `type` = @{type:int} LIMIT 1;
+    </sql>
+
+    <!-- user_account_journal -->
+
+    <sql id="add_user_account_journal"
+         :return="long"
+         :caching="cache_pepper"
+         :cacheClear="user_account_user_id_${user_id}"
+         :remarks="新增用户账户流水">
+        INSERT INTO `user_account_journal` (`journal_id`, `user_id`, `agroup_id`, `ugroup_id`, `app_id`, `mobile`,
+        `type`, `status`, `trans_type`, `trans_id`, `extra`, `transaction`, `balance`, `create_date`, `create_fulltime`,
+        `update_date`, `update_fulltime`)
+        VALUES (@{journal_id:long}, @{user_id:long}, @{agroup_id:int}, @{ugroup_id:int}, @{app_id:int},
+        @{mobile:String}, @{type:int}, @{status:int}, @{trans_type:int}, @{trans_id:long}, @{extra:String},
+        @{transaction:String}, @{balance:String}, @{create_date:int}, @{create_fulltime:Date}, @{update_date:int},
+        @{update_fulltime:Date})
+    </sql>
+
+    <sql id="get_user_account_journal_by_trans_type_paginated"
+         :return="List[UserAccountJournalModel]"
+         :caching="cache_pepper"
+         :cacheTag="user_account_user_id_${user_id}"
+         :remarks="分页获取账户流水">
+        SELECT * FROM `user_account_journal` WHERE `user_id` = @{user_id:long} AND `type` = @{type:int}
+        <if test="journal_id > 0">
+            <![CDATA[
+                AND `journal_id` < @{journal_id:long}
+            ]]>
+        </if>
+        AND `trans_type` = @{trans_type:int} ORDER BY `journal_id` DESC LIMIT @{limit:int}
+    </sql>
+
+
+    <sql id="get_user_account_journal_by_trans_type_paginated2"
+         :return="List[UserAccountJournalModel]"
+         :caching="cache_pepper"
+         :cacheTag="user_account_user_id_${user_id}"
+         :remarks="分页获取账户流水">
+        SELECT * FROM `user_account_journal` WHERE `user_id` = @{user_id:long} AND `type` = @{type:int}
+        <if test="journal_id > 0">
+            <![CDATA[
+                AND `journal_id` < @{journal_id:long}
+            ]]>
+        </if>
+        AND `trans_type` IN (@{trans_types:Iterable[Integer]}) ORDER BY `journal_id` DESC LIMIT @{limit:int}
+    </sql>
+
+    <sql id="update_user_account_journal"
+         :declare="user_id:long"
+         :caching="cache_pepper"
+         :cacheClear="user_account_journal_${journal_id}"
+         :remarks="更新用户账户流水状态">
+        UPDATE `user_account_journal` SET `status` = @{status:int},`extra` = @{extra:String}, `update_date` =
+        @{update_date:int},
+        `update_fulltime` = @{update_fulltime:Date} WHERE journal_id = @{journal_id:long};
+    </sql>
+
+    <sql id="get_user_account_journal_by_id"
+         :return = "UserAccountJournalModel"
+         :caching="cache_pepper"
+         :cacheTag="user_account_journal_${journal_id}"
+         :remarks="分页获取账户流水">
+        SELECT * FROM `user_account_journal` WHERE journal_id =  @{journal_id:long} limit 1;
+    </sql>
+
+
+
+    <sql id="get_account_journal_by_time"
+         :return="List[UserAccountJournalModel]">
+        select * from user_account_journal where create_date = @{create_date:Integer}
+        <![CDATA[
+         and create_fulltime < @{create_fullTime:Date}
+         ]]>
+        and status = 1
+        and trans_type in (3,6,7,8,9,10,13)
+        order by journal_id asc
+    </sql>
+
+
+    <sql id="freeze_user_account"
+         :caching="cache_pepper"
+         :cacheClear="user_account_user_id_${user_id}"
+         :remarks="账户余额冻结">
+        update user_account set balance = balance - @{transaction:String},freeze_balance = freeze_balance +
+        @{transaction:String} where `user_id` =
+        @{user_id:long} AND `type` = @{type:int} and balance >= @{transaction:String};
+    </sql>
+
     <sql id="un_freeze_user_account"
          :caching="cache_pepper"
          :cacheClear="user_account_user_id_${user_id}"
          :remarks="账户余额解冻">
-        update user_account set balance = balance + @{transaction} ,freeze_balance - @{transaction}  where `user_id` =
-        @{user_id:long} AND `type` = @{type:int} and freeze_balance >= @{transaction};
+        update user_account set balance = balance + @{transaction:String} ,freeze_balance - @{transaction:String}  where `user_id` =
+        @{user_id:long} AND `type` = @{type:int} and freeze_balance >= @{transaction:String};
     </sql>
 </mapper>
