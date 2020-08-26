@@ -169,10 +169,10 @@ public class DbQueryProcedure extends DbProcedure {
 
         //3.替换schema
         if (tml.indexOf("$") >= 0) {
-            if (context.schemaHas()) {
-                tml = tml.replace("$", context.schema());
-            } else {
+            if (context.schema() == null) {
                 tml = tml.replace("$.", "");
+            }else{
+                tml = tml.replace("$", context.schema());
             }
         }
 
