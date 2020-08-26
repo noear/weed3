@@ -162,6 +162,7 @@ public class DbContext extends DbContextMetaData {
 
 
     /** 是否配置了schema */
+    @Deprecated
     public boolean schemaHas() {
         return _schema != null;
     }
