@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.noear.weed.WeedConfig.isUsingSchemaPrefix;
 
 /**
  * Created by noear on 14/11/12.
@@ -68,7 +67,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             if (table.indexOf('.') > 0) {
                 _table = table;
             } else {
-                if (isUsingSchemaPrefix) {
+                if (WeedConfig.isUsingSchemaPrefix && _context.schema() != null) {
                     _table = fmtObject(_context.schema() + "." + table);
                 } else {
                     _table = fmtObject(table); //"$." + table;
@@ -130,7 +129,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         if (table.startsWith("#")) {
             _builder.append(style).append(table.substring(1));
         } else {
-            if (isUsingSchemaPrefix) {
+            if (WeedConfig.isUsingSchemaPrefix && _context.schema() != null) {
                 _builder.append(style).append(fmtObject(_context.schema() + "." + table));
             } else {
                 _builder.append(style).append(fmtObject(table));
