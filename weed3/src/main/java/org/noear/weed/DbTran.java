@@ -44,13 +44,9 @@ public class DbTran {
     }
 
     /*开始连接（用于单连接操作）*/
-    public DbTran connect(){
-        try {
-            if(connection == null) {
-                connection = _context.getConnection();
-            }
-        }catch (Throwable ex){
-            ex.printStackTrace();
+    public DbTran connect() throws SQLException{
+        if (connection == null) {
+            connection = _context.getConnection();
         }
 
         return this;
@@ -61,10 +57,10 @@ public class DbTran {
         DbTran savepoint = DbTranUtil.current();
 
         try {
-            if (connection == null) {
-                connection = _context.getConnection();
-            }
+            //连接
+            connect();
 
+            //开始事务
             begin();
 
             DbTranUtil.currentSet(this);
