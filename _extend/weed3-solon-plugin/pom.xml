@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.data</artifactId>
+            <artifactId>solon</artifactId>
             <version>1.0.20</version>
             <scope>provided</scope>
         </dependency>

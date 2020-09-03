@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class DbDataSource implements DataSource {
@@ -96,5 +97,20 @@ public class DbDataSource implements DataSource {
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
         throw new SQLFeatureNotSupportedException();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbDataSource that = (DbDataSource) o;
+        return Objects.equals(url, that.url) &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url, username, password);
     }
 }
