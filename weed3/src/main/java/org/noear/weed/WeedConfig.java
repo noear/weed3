@@ -35,6 +35,11 @@ public final class WeedConfig {
      * */
     public static TypeConverter typeConverter  = new TypeConverter();
 
+    /**
+     * 链接工厂
+     * */
+    public static DbConnectionFactory connectionFactory = new DbConnectionFactory();
+
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap<>();
     public static Map<String, DbContext> libOfDb = new ConcurrentHashMap<>();
 

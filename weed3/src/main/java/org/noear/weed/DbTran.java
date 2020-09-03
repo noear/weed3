@@ -2,14 +2,17 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1Ex;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by noear on 14-9-16.
  */
 public class DbTran {
-    protected Connection connection;
+    private final Map<DataSource, Connection> conMap = new HashMap<>();
     private DbTranQueue queue;
 
     private Act1Ex<DbTran,Throwable> _handler = null;
@@ -28,6 +31,22 @@ public class DbTran {
         return _context;
     }
 
+    public Connection getConnection(DbContext db) throws SQLException {
+        return getConnection(db.dataSource());
+    }
+
+    public Connection getConnection(DataSource ds) throws SQLException {
+        if (conMap.containsKey(ds)) {
+            return conMap.get(ds);
+        } else {
+            Connection con = ds.getConnection();
+            con.setAutoCommit(false);
+
+            conMap.putIfAbsent(ds, con);
+            return con;
+        }
+    }
+
 
     /*加盟（到某一个事务当中）*/
     public DbTran join(DbTranQueue queue) {
@@ -43,26 +62,12 @@ public class DbTran {
         _context = context;
     }
 
-    /*开始连接（用于单连接操作）*/
-    public DbTran connect() throws SQLException{
-        if (connection == null) {
-            connection = _context.getConnection();
-        }
-
-        return this;
-    }
-
     /*执行事务过程 = action(...) + excute() */
     public DbTran execute(Act1Ex<DbTran,Throwable> handler) throws SQLException {
-        DbTran savepoint = DbTranUtil.current();
+        DbTran tranTmp = DbTranUtil.current();
 
         try {
-            //连接
-            connect();
-
             //开始事务
-            begin(-1);
-
             DbTranUtil.currentSet(this);
             handler.run(this);
 
@@ -88,8 +93,8 @@ public class DbTran {
             DbTranUtil.currentRemove();
             close(false);
 
-            if (savepoint != null) {
-                DbTranUtil.currentSet(savepoint);
+            if (tranTmp != null) {
+                DbTranUtil.currentSet(tranTmp);
             }
         }
 
@@ -107,24 +112,11 @@ public class DbTran {
         return this;
     }
 
-
-
-    //isQueue:是否由Queue调用的
-    protected void begin(int isolationLevel)  throws SQLException {
-        if (connection != null) {
-            connection.setAutoCommit(false);
-
-            if (isolationLevel > 0) {
-                connection.setTransactionIsolation(isolationLevel);
-            }
-        }
-    }
-
     //isQueue:是否由Queue调用的
     protected void rollback(boolean isQueue) throws SQLException {
         if(queue == null || isQueue) {
-            if (connection != null) {
-                connection.rollback();
+            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
+                kv.getValue().rollback();
             }
         }
     }
@@ -132,8 +124,8 @@ public class DbTran {
     //isQueue:是否由Queue调用的
     protected void commit(boolean isQueue) throws SQLException {
         if(queue == null || isQueue) {
-            if (connection != null) {
-                connection.commit();
+            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
+                kv.getValue().commit();
             }
         }
     }
@@ -141,10 +133,9 @@ public class DbTran {
     //isQueue:是否由Queue调用的
     protected void close(boolean isQueue) throws SQLException {
         if(queue == null || isQueue) {
-            if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
-                connection = null;
+            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
+                kv.getValue().setAutoCommit(true);
+                kv.getValue().close();
             }
         }
     }

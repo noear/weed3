@@ -38,7 +38,7 @@ class DbContextMetaData {
      * 获取连接
      */
     public Connection getConnection() throws SQLException {
-        return dataSource().getConnection();
+        return WeedConfig.connectionFactory.getConnection(dataSource());
     }
 
     //数据集名称

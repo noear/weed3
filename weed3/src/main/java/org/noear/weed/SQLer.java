@@ -15,14 +15,35 @@ class SQLer {
     private PreparedStatement stmt;
     private Connection conn;
 
-    private  void tryClose()
-    {
-        try { if (rset != null){ rset.close(); rset=null;}} catch (Exception ex) {
-            WeedConfig.runExceptionEvent(null, ex);};
-        try { if (stmt != null){ stmt.close(); stmt=null;}} catch (Exception ex) {
-            WeedConfig.runExceptionEvent(null, ex);};
-        try { if (conn != null){ conn.close(); conn=null;}} catch (Exception ex) {
-            WeedConfig.runExceptionEvent(null, ex);};
+    private  void tryClose() {
+        try {
+            if (rset != null) {
+                rset.close();
+                rset = null;
+            }
+        } catch (Exception ex) {
+            WeedConfig.runExceptionEvent(null, ex);
+        }
+
+        try {
+            if (stmt != null) {
+                stmt.close();
+                stmt = null;
+            }
+        } catch (Exception ex) {
+            WeedConfig.runExceptionEvent(null, ex);
+        }
+
+        try {
+            if (conn != null) {
+                if (conn.getAutoCommit()) {
+                    conn.close();
+                }
+                conn = null;
+            }
+        } catch (Exception ex) {
+            WeedConfig.runExceptionEvent(null, ex);
+        }
     }
 
     private Object getObject(Command cmd, String key) throws SQLException{
@@ -281,20 +302,19 @@ class SQLer {
         }
 
         //1.构建连接和命令(外部的c不能给conn)
-        Connection c = null;
         if(cmd.tran == null){
-            c = conn = cmd.context.getConnection();
+            conn = cmd.context.getConnection();
         }else{
-            c = cmd.tran.connection; //事务时，conn 须为 null
+            conn = cmd.tran.getConnection(cmd.context); //事务时，conn 须为 null
         }
 
         if (cmd.text.indexOf("{call") >= 0)
-            stmt = c.prepareCall(cmd.fullText());
+            stmt = conn.prepareCall(cmd.fullText());
         else {
             if (isInsert)
-                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
+                stmt = conn.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
             else
-                stmt = c.prepareStatement(cmd.fullText());
+                stmt = conn.prepareStatement(cmd.fullText());
         }
 
         WeedConfig.runExecuteStmEvent(cmd,stmt);
