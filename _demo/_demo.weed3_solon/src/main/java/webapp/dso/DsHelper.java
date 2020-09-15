@@ -1,14 +1,12 @@
 package webapp.dso;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DataSourceHelper {
+public class DsHelper {
     private static  boolean inited = false;
     public static void initData(DataSource ds)  {
         if(inited){
@@ -39,7 +37,7 @@ public class DataSourceHelper {
 
     private static String[] getSqlFromFile(){
         try{
-            InputStream ins = DataSourceHelper.class.getResourceAsStream("/db/schema.sql");
+            InputStream ins = DsHelper.class.getResourceAsStream("/db/schema.sql");
             int len = ins.available();
             byte[] bs = new byte[len];
             ins.read(bs);

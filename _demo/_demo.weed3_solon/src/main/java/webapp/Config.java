@@ -8,10 +8,7 @@ import org.noear.solon.annotation.XInject;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
-import webapp.dso.DataSourceHelper;
-
-import javax.sql.DataSource;
-import java.util.Properties;
+import webapp.dso.DsHelper;
 
 @XConfiguration
 public class Config {
@@ -26,7 +23,7 @@ public class Config {
     //
     @XBean(value = "db1" ,typed = true)
     public DbContext db1(@XInject("${test.db1}") HikariDataSource dataSource) {
-        DataSourceHelper.initData(dataSource);
+        DsHelper.initData(dataSource);
         return new DbContext(dataSource);
     }
 }
