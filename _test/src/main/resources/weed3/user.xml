@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//noear.org//DTD Mapper 3.0//EN" "http://noear.org/dtd/weed3-mapper.dtd">
 <mapper namespace="benchmark.jmh.weed.mapper"
         import="benchmark.jmh.weed.model.*"
         baseMapper="WeedSQLSysUser">
 
-    <sql id="userSelect"  return="WeedSQLSysUser">
+    <sql id="userSelect" return="WeedSQLSysUser">
         select * from sys_user where 1=1
         <if test="id??">
             and id = @{id:Integer}
         </if>
     </sql>
 
-    <sql id="queryPage"  return="List[WeedSQLSysUser]">
+    <sql id="queryPage" return="List[WeedSQLSysUser]">
         select * from sys_user where code=@{code:String} limit @{start:int},@{end:int}
     </sql>
 
