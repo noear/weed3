@@ -107,30 +107,6 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.template.enjoy</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>weed3.template.beetl</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>weed3.template.freemarker</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>weed3.template.velocity</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
                 <artifactId>snack3</artifactId>
                 <version>${snack3.ver}</version>
             </dependency>

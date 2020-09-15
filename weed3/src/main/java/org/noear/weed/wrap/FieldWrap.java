@@ -49,8 +49,11 @@ public class FieldWrap {
 
     public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
 
-
         try {
+            if(val == null && field.getType().isPrimitive()){
+                return;
+            }
+
             val = WeedConfig.typeConverter.convert(val, field.getType());
 
             if (_setter == null) {

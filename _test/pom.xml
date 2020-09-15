@@ -73,30 +73,6 @@
             <artifactId>weed3.cache.memcached</artifactId>
         </dependency>
 
-        <!-- velocity专属后缀名：.vm -->
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.template.velocity</artifactId>
-        </dependency>
-
-        <!-- freemarker专属后缀名：.ftl -->
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.template.freemarker</artifactId>
-        </dependency>
-
-        <!-- beetl 专属后缀名：.sql -->
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.template.beetl</artifactId>
-        </dependency>
-
-        <!-- enjoy 专属后缀名：.md -->
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.template.enjoy</artifactId>
-        </dependency>
-
 
         <dependency>
             <groupId>org.noear</groupId>
