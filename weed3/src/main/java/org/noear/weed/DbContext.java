@@ -82,7 +82,7 @@ public class DbContext extends DbContextMetaData {
             _schema = schema;
         }
 
-        if(StringUtils.isEmpty(_schema)) {
+        if(StringUtils.isEmpty(_schema) && url.indexOf("://")>0) {
             _schema = URI.create(url.substring(5)).getPath().substring(1);
         }
 

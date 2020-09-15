@@ -25,7 +25,7 @@ public class Config {
     //直接配置 数据库上下文
     //
     @XBean
-    public final DbContext db1(@XInject("${test.db1}") Properties props) {
+    public DbContext db1(@XInject("${test.db1}") Properties props) {
         DataSource ds = dataSource(props);
 
         DataSourceHelper.initData(ds);
@@ -37,7 +37,7 @@ public class Config {
     //
     //使用连接池 配置 数据库上下文
     //
-    private final static HikariDataSource dataSource(Properties props) {
+    private static HikariDataSource dataSource(Properties props) {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(props.getProperty("url"));
         dataSource.setUsername(props.getProperty("username"));
