@@ -18,7 +18,6 @@ public class JavaController {
     DbContext db2;
 
     @Autowired
-    @Qualifier("cache")
     ICacheServiceEx cache;
 
     //

@@ -24,7 +24,7 @@ public class Config {
     //
     //直接配置 数据库上下文
     //
-    @XBean
+    @XBean(value = "db1" ,typed = true)
     public DbContext db1(@XInject("${test.db1}") Properties props) {
         DataSource ds = dataSource(props);
 
