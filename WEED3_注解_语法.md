@@ -11,12 +11,3 @@
 ```java
 @Sql("select * from where id=?")
 ```
-
-
-### 例3：模板文件模式（\#开头）
-
-> 用于应对超复杂统计查询
-
-```java
-@Sql("#report/user_stat.sql")
-```

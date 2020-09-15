@@ -45,11 +45,6 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 | org.noear:weed3.cache.redis| 基于 Redis 适配的扩展缓存服务 |
 | org.noear:weed3.cache.ehcache| 基于 ehcache 适配的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 适配的扩展缓存服务 |
-| | |
-| org.noear:weed3.render.beetl | 基于 beetl 适配的扩展模板引擎 |
-| org.noear:weed3.render.enjoy | 基于 enjoy 适配的扩展模板引擎 |
-| org.noear:weed3.render.freemarker | 基于 freemarker 适配的扩展模板引擎 |
-| org.noear:weed3.render.velocity | 基于 velocity 适配的扩展模板引擎 |
 
 
 
@@ -60,7 +55,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.6.2</version>
+    <version>3.2.17</version>
 </dependency>
 
 <!-- maven 插件，用于生成Xml sql mapper接口 -->
@@ -180,9 +175,6 @@ public interface UserDao { //此接口，可以扩展自 BaseMapper<T>
     User getUserById(int id);
   
     @sql("select * from `user` where id=?") 		//占位符风格
-    User getUserById2(int id);
-  
-    @sql("#user_stat.sql") 											//SQL模板风格（适用特别复杂的统计查询）
     User getUserById2(int id);
   
     long addUser(User m); //没有注解，需编写xml sql配置
@@ -637,7 +629,6 @@ _eng.put("db", db);
 
 ### (八) 语法说明
 * [《WEED3 XML 语法》](https://gitee.com/noear/weed3/blob/master/WEED3_XML_%E8%AF%AD%E6%B3%95.mdv)
-* [《WEED3 模板语法》](https://gitee.com/noear/weed3/blob/master/WEED3_%E6%A8%A1%E6%9D%BF_%E8%AF%AD%E6%B3%95.md)
 * [《WEED3 JAVA 接口字典》](https://gitee.com/noear/weed3/blob/master/WEED3_JAVA_%E6%8E%A5%E5%8F%A3%E5%AD%97%E5%85%B8.md)
 
 
