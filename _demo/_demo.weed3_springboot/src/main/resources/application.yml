@@ -1,18 +1,7 @@
-spring:
-  mvc:
-    view:
-      prefix: /
-      suffix: .htm
-#  freemarker:
-#    template-loader-path=classpath: /WEB-INF/view/
-#  mvc:
-#    static-path-pattern: /static/**
-
 server.port: 8080
 
-
 test.db1:
-    url: "jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE"
-    driverClassName: "org.h2.Driver"
-    username: "sa"
-    password: ""
+  jdbcUrl: "jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE"
+  driverClassName: "org.h2.Driver"
+  username: "sa"
+  password: ""

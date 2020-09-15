@@ -25,9 +25,10 @@ public class Config {
         return new LocalCache("test",60).nameSet("test");
     }
 
+
     @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "test.db1")
-    public HikariDataSource dataSource() {
+    public DataSource dataSource() {
         return new HikariDataSource();
     }
 
