@@ -24,7 +24,7 @@ public class Config {
         return new LocalCache("test",60).nameSet("test");
     }
 
-    @Bean(name = "dataSource", destroyMethod = "close")
+    @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "test.db1")
     public HikariDataSource dataSource() {
         return new HikariDataSource();
@@ -33,9 +33,8 @@ public class Config {
     @Bean("db1")
     @Primary
     public DbContext db2(@Qualifier("dataSource") DataSource dataSource){
-
         DataSourceHelper.initData(dataSource);
 
-        return new DbContext().dataSourceSet(dataSource);
+        return new DbContext(dataSource);
     }
 }
