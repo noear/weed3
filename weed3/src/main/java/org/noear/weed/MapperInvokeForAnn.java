@@ -51,10 +51,6 @@ class MapperInvokeForAnn implements IMapperInvoke {
         }
 
         //3.确定sql
-        if(_sql.startsWith("#")){
-            _sql = SQLRenderManager.global().render(_sql.substring(1), _map);
-        }
-
         String sqlUp = "# " + _sql.toUpperCase();
 
         //4.生成访问对象

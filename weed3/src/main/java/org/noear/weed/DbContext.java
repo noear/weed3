@@ -270,16 +270,6 @@ public class DbContext extends DbContextMetaData {
             return new DbXmlsqlProcedure(this).sql(process.substring(1));
         }
 
-
-        if(process.startsWith("#")){
-            try {
-                String _sql = SQLRenderManager.global().render(process.substring(1), args);
-                return new DbQueryProcedure(this).sql(_sql).setMap(args);
-            }catch (Throwable ex){
-                throw new RuntimeException(ex);
-            }
-        }
-
         if (process.lastIndexOf(" ") > 0) {
             return new DbQueryProcedure(this).sql(process).setMap(args);
         }
