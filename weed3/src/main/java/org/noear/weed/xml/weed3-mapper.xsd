@@ -41,7 +41,7 @@
                 <xs:element ref="trim"/>
                 <xs:element ref="ref"/>
             </xs:choice>
-            <xs:attribute name="id" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="param"/>
             <xs:attribute name="declare"/>
             <xs:attribute name="return"/>
@@ -99,7 +99,7 @@
 
     <xs:element name="ref">
         <xs:complexType mixed="true">
-            <xs:attribute name="sql" use="required"/>
+            <xs:attribute name="sql" type="xs:IDREF" use="required"/>
         </xs:complexType>
     </xs:element>
 
