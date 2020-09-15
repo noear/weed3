@@ -3,3 +3,14 @@ test.db1:
   driverClassName: "org.h2.Driver"
   username: "sa"
   password: ""
+
+spring.freemarker:
+  template-loader-path: "classpath:/templates"
+  cache: false
+  charset: UTF-8
+  check-template-location: true
+  content-type: text/html
+  expose-request-attributes: false
+  expose-session-attributes: false
+  request-context-attribute: request
+  suffix: .ftl
