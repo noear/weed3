@@ -60,11 +60,6 @@ db.table("user u")
 | org.noear:weed3.cache.redis| 基于 Redis 适配的扩展缓存服务 |
 | org.noear:weed3.cache.ehcache| 基于 ehcache 适配的扩展缓存服务 |
 | org.noear:weed3.cache.j2cache| 基于 j2cache 适配的扩展缓存服务 |
-| | |
-| org.noear:weed3.template.beetl | 基于 beetl 适配的扩展模板引擎 |
-| org.noear:weed3.template.enjoy | 基于 enjoy 适配的扩展模板引擎 |
-| org.noear:weed3.template.freemarker | 基于 freemarker 适配的扩展模板引擎 |
-| org.noear:weed3.template.velocity | 基于 velocity 适配的扩展模板引擎 |
 
 
 
@@ -77,13 +72,6 @@ db.table("user u")
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.17</version>
-</dependency>
-
-<!-- 可选：template 插件，用于支持模板接口（Xxx 换成具体的名字） -->
-<dependency>
-    <groupId>org.noear</groupId>
-    <artifactId>weed3.template.Xxx</artifactId>
     <version>3.2.17</version>
 </dependency>
 
@@ -115,9 +103,6 @@ public interface UserDao extends BaseMapper<UserModel>{
   
     @Sql("select * from user where id=? limit 1")
     UserModel getUser2(int id);
-
-    @Sql("#report/user_stat.sql") //#开头表示执行模板SQL（应对超复杂统计查询）
-    StatModel userStat(int date);
 
     void addUser(UserModel user); //没注解，需要配xml
 }
@@ -161,11 +146,6 @@ db.call("user_get_list_by").set("_type",12).getList(User.class);
 //调用xml sql
 db.call("@demo.dso.db.user_get").set("id",1001).getItem(User.class);
 
-//调用Template sql
-Map<String,Object> args = new DataItem().set("date",20201010).getMap();
-db.call("#tml/user_stat.sql", args).getMapList();
-
-
 
 /** 2.4.Sql用法 */
 //快速执行SQL语句
@@ -177,12 +157,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 
 #### 附：语法参考：
 
-##### （一）Template sql 语法
-* @{name} ：变量占位符，会由Weed3进一步转化为JDBC变量
-* 支持四种引擎
-* 具体参考：[《WEED3 模板语法》](WEED3_模板_语法.md)
-
-##### （二）Xml sql 语法
+##### （一）Xml sql 语法
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -197,7 +172,7 @@ db.sql("select * from user id=?",12).getItem(User.class);
 
 * 具体参考：[《WEED3 XML 语法》](WEED3_XML_语法.md)
 
-##### （三）Table 语法
+##### （二）Table 语法
 
 * 条件操作（与Mapper共享）
 
