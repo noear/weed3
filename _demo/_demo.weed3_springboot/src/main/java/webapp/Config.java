@@ -24,12 +24,8 @@ public class Config {
         return new LocalCache("test",60).nameSet("test");
     }
 
-    //
-    // db2
-    //
     @Bean(name = "dataSource", destroyMethod = "close")
     @ConfigurationProperties(prefix = "test.db1")
-    @Primary
     public HikariDataSource dataSource() {
         return new HikariDataSource();
     }

@@ -25,24 +25,8 @@ public class Config {
     //直接配置 数据库上下文
     //
     @XBean(value = "db1" ,typed = true)
-    public DbContext db1(@XInject("${test.db1}") Properties props) {
-        DataSource ds = dataSource(props);
-
-        DataSourceHelper.initData(ds);
-
-        return new DbContext(props).nameSet("db1");
-    }
-
-
-    //
-    //使用连接池 配置 数据库上下文
-    //
-    private static HikariDataSource dataSource(Properties props) {
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(props.getProperty("url"));
-        dataSource.setUsername(props.getProperty("username"));
-        dataSource.setPassword(props.getProperty("password"));
-
-        return dataSource;
+    public DbContext db1(@XInject("${test.db1}") HikariDataSource dataSource) {
+        DataSourceHelper.initData(dataSource);
+        return new DbContext(dataSource);
     }
 }
