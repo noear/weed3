@@ -189,6 +189,10 @@ public class DbContext extends DbContextMetaData {
     public DbContext() {
     }
 
+    public DbContext(DataSource dataSource) {
+        dataSourceSet(dataSource);
+    }
+
     public DbContext(Properties properties) {
         propSet(properties);
     }

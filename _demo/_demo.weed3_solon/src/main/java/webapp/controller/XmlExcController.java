@@ -6,8 +6,6 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.solon.core.ModelAndView;
 import org.noear.weed.DbContext;
-import webapp.dso.DbConfig;
-import webapp.dso.SqlMapper;
 import webapp.model.AppxModel;
 
 import java.util.HashMap;
@@ -19,9 +17,8 @@ import java.util.Map;
 @XController
 public class XmlExcController {
 
-    @XInject("db1")
-    DbContext db1;
-    DbContext db2 = DbConfig.db2();
+    @XInject("db2")
+    DbContext db2;
 
 
     @XMapping("demo0/html")
@@ -32,9 +29,9 @@ public class XmlExcController {
         // 直接通过 call @{namespace}.{id} 调用
         //
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
-        map.put("tb","appx");
+        map.put("tb", "appx");
 
         Object tmp = db2.mapper("@webapp.dso.appx_get3", map);
         mv.put("map", tmp);
@@ -63,7 +60,7 @@ public class XmlExcController {
     public Object demo3() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
-        map.put("tb","appx");
+        map.put("tb", "appx");
         Map tmp = db2.mapper("@webapp.dso.appx_get3", map);
         return tmp;
     }
