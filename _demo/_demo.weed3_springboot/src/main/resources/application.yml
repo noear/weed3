@@ -1,0 +1,5 @@
+test.db1:
+  jdbcUrl: "jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE"
+  driverClassName: "org.h2.Driver"
+  username: "sa"
+  password: ""
