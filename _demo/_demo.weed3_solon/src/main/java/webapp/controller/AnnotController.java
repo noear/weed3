@@ -8,7 +8,7 @@ import org.noear.solon.core.ModelAndView;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
-import webapp.dso.DbConfig;
+import webapp.Config;
 import webapp.dso.SqlAnnotation;
 import webapp.model.AppxModel;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 @XSingleton(true)
 @XController
 public class AnnotController {
-    DbContext db2 = DbConfig.db2();
+    DbContext db2 = Config.db2();
 
     @XInject
     SqlAnnotation mapper;

@@ -5,7 +5,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
-import webapp.dso.DbConfig;
+import webapp.Config;
 import webapp.dso.SqlMapper;
 import webapp.model.AppxModel;
 
@@ -13,7 +13,7 @@ import webapp.model.AppxModel;
 @XSingleton(true)
 @XController
 public class TestController {
-    DbContext db2 = DbConfig.db2();
+    DbContext db2 = Config.db2();
 
     @XMapping("demo1")
     public Object test(String sql) throws Exception {

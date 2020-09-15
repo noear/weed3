@@ -7,11 +7,8 @@ import org.noear.solon.annotation.XSingleton;
 
 import org.noear.solon.core.ModelAndView;
 import org.noear.weed.DbContext;
+import webapp.Config;
 import webapp.dso.*;
-import webapp.model.AppxModel;
-
-import java.util.List;
-import java.util.Map;
 
 @XMapping("/xml")
 @XSingleton(true)
@@ -20,7 +17,8 @@ public class XmlController {
 
     @XInject("db1")
     DbContext db1;
-    DbContext db2 = DbConfig.db2();
+    
+    DbContext db2 = Config.db2();
 
 
     @XMapping("demo0/html")

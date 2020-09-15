@@ -5,17 +5,15 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.solon.core.ModelAndView;
 import org.noear.weed.DbContext;
-import webapp.dso.DbConfig;
+import webapp.Config;
 import webapp.model.AppxModel;
-
-import java.util.Map;
 
 
 @XMapping("/java")
 @XSingleton(true)
 @XController
 public class JavaController {
-    DbContext db2 = DbConfig.db2();
+    DbContext db2 = Config.db2();
 
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
@@ -49,7 +47,7 @@ public class JavaController {
                 .whereEq("app_id", app_id)
                 .limit(1)
                 .select("*")
-                .caching(DbConfig.cache)
+                .caching(Config.cache)
                 .cacheTag("app_" + app_id)
                 .getItem(AppxModel.class);
     }
@@ -68,7 +66,7 @@ public class JavaController {
                 .select("*")
                 .getMap();
 
-        DbConfig.cache.clear("test");
+        Config.cache.clear("test");
 
         return tmp;
     }
