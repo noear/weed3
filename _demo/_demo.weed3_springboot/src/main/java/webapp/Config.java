@@ -16,7 +16,7 @@ public class Config {
 
     @Bean
     public ICacheServiceEx cache(){
-        return new LocalCache("test",60);
+        return new LocalCache("test",60).nameSet("test");
     }
 
     @Bean
