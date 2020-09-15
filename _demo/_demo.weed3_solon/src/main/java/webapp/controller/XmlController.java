@@ -1,13 +1,12 @@
 package webapp.controller;
 
 import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XInject;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XSingleton;
 
 import org.noear.solon.core.ModelAndView;
 import org.noear.weed.DbContext;
-import webapp.Config;
+import org.noear.weed.annotation.Db;
 import webapp.dso.*;
 
 @XMapping("/xml")
@@ -15,10 +14,8 @@ import webapp.dso.*;
 @XController
 public class XmlController {
 
-    @XInject("db1")
-    DbContext db1;
-    
-    DbContext db2 = Config.db2();
+    @Db
+    DbContext db2;
 
 
     @XMapping("demo0/html")

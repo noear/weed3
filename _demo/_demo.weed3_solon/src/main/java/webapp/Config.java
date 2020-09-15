@@ -2,13 +2,10 @@ package webapp;
 
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.noear.solon.XApp;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.annotation.XConfiguration;
 import org.noear.solon.annotation.XInject;
-import org.noear.solon.core.XMap;
 import org.noear.weed.DbContext;
-import org.noear.weed.DbDataSource;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import webapp.dso.DataSourceHelper;
@@ -27,7 +24,7 @@ public class Config {
     //
     //直接配置 数据库上下文
     //
-    @XBean("db1")
+    @XBean
     public final DbContext db1(@XInject("${test.db1}") Properties props) {
         DataSource ds = dataSource(props);
 
@@ -47,13 +44,5 @@ public class Config {
         dataSource.setPassword(props.getProperty("password"));
 
         return dataSource;
-    }
-
-    public final static DbContext db2() {
-        DataSource ds = dataSource(XApp.cfg().getProp("test.db1"));
-
-        DataSourceHelper.initData(ds);
-
-        return new DbContext().dataSourceSet(ds);
     }
 }

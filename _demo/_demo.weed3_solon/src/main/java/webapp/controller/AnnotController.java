@@ -20,12 +20,13 @@ import java.util.Map;
 @XSingleton(true)
 @XController
 public class AnnotController {
-    DbContext db2 = Config.db2();
+    @Db
+    DbContext db2;
 
     @XInject
     SqlAnnotation mapper;
 
-    @Db("db1")
+    @Db
     BaseMapper<AppxModel> mapper2;
 
     @XMapping("demo0/html")
