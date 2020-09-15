@@ -20,7 +20,6 @@ public class XmlExcController {
     @Db
     DbContext db2;
 
-
     @XMapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("view.ftl");
