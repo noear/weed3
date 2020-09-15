@@ -13,7 +13,6 @@ import webapp.dso.SqlAnnotation;
 public class XmlController {
 
     @Autowired
-    @Qualifier("db2")
     DbContext db2;
 
     //

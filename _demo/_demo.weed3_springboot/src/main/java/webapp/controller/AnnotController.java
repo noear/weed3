@@ -13,7 +13,6 @@ import webapp.dso.SqlAnnotation;
 @RestController
 public class AnnotController {
     @Autowired
-    @Qualifier("db2")
     DbContext db2;
 
     //

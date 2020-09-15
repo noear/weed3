@@ -15,7 +15,6 @@ import webapp.model.AppxModel;
 @RestController
 public class JavaController {
     @Autowired
-    @Qualifier("db2")
     DbContext db2;
 
     @Autowired
