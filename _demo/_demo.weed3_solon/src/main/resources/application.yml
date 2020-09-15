@@ -1,15 +1,8 @@
 test:
   db1:
-    schema: rock
-    url: jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: demo
-    password: UL0hHlg0Ybq60xyb
-  db2:
-    schema: rock
-    url: jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: demo
-    password: UL0hHlg0Ybq60xyb
+    url: "jdbc:h2:mem:dbtest;DB_CLOSE_ON_EXIT=FALSE"
+    driverClassName: "org.h2.Driver"
+    username: "sa"
+    password: ""
 
 solon.output.meta: 1
