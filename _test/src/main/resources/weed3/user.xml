@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//noear.org//DTD Mapper 3.0//EN" "http://noear.org/dtd/weed3-mapper.dtd">
-<mapper namespace="benchmark.jmh.weed.mapper"
+<mapper namespace="benchmark.jmh.weed.mapper.user"
         import="benchmark.jmh.weed.model.*"
         baseMapper="WeedSQLSysUser">
 

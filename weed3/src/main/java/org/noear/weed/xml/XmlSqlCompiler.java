@@ -30,18 +30,20 @@ public class XmlSqlCompiler {
 
         Node nm = doc.getDocumentElement();
 
-        String filepath = xmlFile.getPath();
-        int filename_idx = filepath.lastIndexOf("/")+1;
-        String filename = filepath.substring(filename_idx);
+//        String filepath = xmlFile.getPath();
+//        int filename_idx = filepath.lastIndexOf("/")+1;
+//        String filename = filepath.substring(filename_idx);
 
         String namespace = attr(nm, "namespace");
         String _import = attr(nm, "import");
+        int sepindex = namespace.lastIndexOf('.');
 
-        String classname = filename.replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
+        String packagename = namespace.substring(0,sepindex);
+        String classname = namespace.substring(sepindex+1); //.replace(".","_"); //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("package ").append(namespace).append(";\n\n");
+        sb.append("package ").append(packagename).append(";\n\n");
 
         sb.append("import java.math.*;\n");
         sb.append("import java.util.*;\n");

@@ -79,15 +79,19 @@ public class XmlSqlMapperGenerator {
 
         String namespace = attr(nm, "namespace");
         String _import = attr(nm, "import");
+        int sepindex = namespace.lastIndexOf('.');
+
         String baseMapperOf = attr(nm, ":baseMapper");
         String dbOf = attr(nm,":db");
 
-        String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
+        String packagename = namespace.substring(0,sepindex);
+        String classname = namespace.substring(sepindex+1);
+        //String classname = xmlFile.getName().split("\\.")[0]; //namespace.replace(".","_"); //"weed_xml_sql";
 
         StringBuilder sb = new StringBuilder();
 
 
-        sb.append("package ").append(namespace).append(";\n\n");
+        sb.append("package ").append(packagename).append(";\n\n");
 
         sb.append("import java.math.*;\n");
         sb.append("import java.time.*;\n");
