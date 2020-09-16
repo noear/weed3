@@ -2,10 +2,7 @@ package org.noear.weed.solon.plugin;
 
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
-import org.noear.solon.core.Aop;
-import org.noear.solon.core.BeanWrap;
-import org.noear.solon.core.VarHolder;
-import org.noear.solon.core.XPlugin;
+import org.noear.solon.core.*;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
