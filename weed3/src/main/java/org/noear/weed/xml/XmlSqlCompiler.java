@@ -4,9 +4,14 @@ import org.noear.weed.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -95,16 +100,28 @@ public class XmlSqlCompiler {
         return sb.toString();
     }
 
-    private static DocumentBuilderFactory dbf = null;
-    private static DocumentBuilder db = null;
+    private static DocumentBuilderFactory docBf = null;
+    private static DocumentBuilder docB = null;
     //xml:解析文档
     private static Document parseDoc(URL xmlFile) throws Exception{
-        if(dbf ==null) {
-            dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
+        if(docBf ==null) {
+            docBf = DocumentBuilderFactory.newInstance();
+            docBf.setValidating(false);
+            docB = docBf.newDocumentBuilder();
+
+            docB.setEntityResolver(( publicId,  systemId)->{
+                if (systemId.contains("weed3-mapper.dtd")) {
+                    InputStream dtdStream = XmlSqlBlock.class.getResourceAsStream("/org/noear/weed/xml/weed3-mapper.dtd");
+                    return new InputSource(dtdStream);
+                    //return new InputSource(new StringReader(""));
+                } else {
+                    return null;
+                }
+            });
+
         }
 
-        return db.parse(xmlFile.openStream());
+        return docB.parse(xmlFile.openStream());
     }
 
     //xml:解析 sql 指令节点

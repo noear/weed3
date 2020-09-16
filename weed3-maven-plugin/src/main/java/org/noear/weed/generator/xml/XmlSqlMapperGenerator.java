@@ -5,10 +5,13 @@ import org.noear.weed.generator.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -438,16 +441,27 @@ public class XmlSqlMapperGenerator {
         }
     }
 
-    private static DocumentBuilderFactory dbf = null;
-    private static DocumentBuilder db = null;
+    private static DocumentBuilderFactory docBf = null;
+    private static DocumentBuilder docB = null;
     //xml:解析文档
     private static Document parseDoc(File xmlFile) throws Exception{
-        if(dbf ==null) {
-            dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
+        if(docBf ==null) {
+            docBf = DocumentBuilderFactory.newInstance();
+            docBf.setValidating(false);
+            docB = docBf.newDocumentBuilder();
+
+            docB.setEntityResolver(( publicId,  systemId)->{
+                if (systemId.contains("weed3-mapper.dtd")) {
+//                    InputStream dtdStream = XmlSqlBlock.class.getResourceAsStream("/org/noear/weed/xml/weed3-mapper.dtd");
+//                    return new InputSource(dtdStream);
+                    return new InputSource(new StringReader(""));
+                } else {
+                    return null;
+                }
+            });
         }
 
-        return db.parse(xmlFile);
+        return docB.parse(xmlFile);
     }
 
     //sql::格式化字符串
