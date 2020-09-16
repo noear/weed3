@@ -6,6 +6,7 @@ import weed3test.DbUtil;
 import weed3test.dso.SqlMapper;
 import webapp.model.AppxModel;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,15 @@ public class MapperTest2 {
     }
 
 
+    @Test
+    public void test_get() throws SQLException {
+        assert mapper.appx_get() > 0;
+    }
+
+    @Test
+    public void test_get2() throws SQLException {
+        assert mapper.appx_get2(1).app_id == 1;
+    }
 
 
 
