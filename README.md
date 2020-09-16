@@ -161,10 +161,11 @@ db.sql("select * from user id=?",12).getItem(User.class);
 * 示例
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//noear.org//DTD Mapper 3.0//EN" "http://noear.org/dtd/weed3-mapper.dtd">
 <mapper namespace="weed3demo.xmlsql2"
         import="demo.model.*"
-        :baseMapper="UserModel">
-    <sql id="getUser" :return="UserModel" :remarks="获取用户信息">
+        baseMapper="UserModel">
+    <sql id="getUser" return="UserModel" remarks="获取用户信息">
         SELECT * FROM user WHERE id = @{id:int}
     </sql>
 </mapper>
