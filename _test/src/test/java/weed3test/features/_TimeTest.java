@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.noear.weed.DbContext;
 import org.noear.weed.wrap.DbType;
 import weed3test.DbUtil;
-import weed3test.model.AppxCopy2Model;
-import weed3test.model.AppxCopyModel;
+import webapp.model.AppxCopy2Model;
+import webapp.model.AppxCopyModel;
 import weed3test.util.Datetime;
 
 import java.util.Map;

@@ -2,8 +2,8 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import webapp.model.AppxModel;
 import weed3test.DbUtil;
-import weed3test.model.AppxModel;
 
 public class GetTest {
     DbContext db = DbUtil.db;

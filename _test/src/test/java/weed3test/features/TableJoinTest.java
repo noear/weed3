@@ -3,8 +3,8 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
-import weed3test.model.AgroupModel;
-import weed3test.model.AppxModel;
+import webapp.model.AgroupModel;
+import webapp.model.AppxModel;
 
 
 public class TableJoinTest {

@@ -7,8 +7,8 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import weed3test.DbUtil;
 import weed3test.dso.rocedure.appx_get;
-import weed3test.model.AppxModel;
-import weed3test.model.AppxModel2;
+import webapp.model.AppxModel;
+import webapp.model.AppxModel2;
 
 public class CacheTest {
     DbContext db2 = DbUtil.db;

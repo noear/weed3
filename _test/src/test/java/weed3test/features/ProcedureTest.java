@@ -6,7 +6,7 @@ import weed3test.DbUtil;
 import weed3test.dso.rocedure.appx_dels;
 import weed3test.dso.rocedure.appx_get;
 import weed3test.dso.rocedure.appx_get_byid;
-import weed3test.model.AppxModel;
+import webapp.model.AppxModel;
 
 public class ProcedureTest {
     DbContext db2 = DbUtil.db;

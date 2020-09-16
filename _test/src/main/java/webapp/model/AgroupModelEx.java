@@ -1,8 +1,6 @@
-package weed3test.model;
+package webapp.model;
 
 import lombok.Data;
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
 
 //和表名不相同，须注解表名
 @Data

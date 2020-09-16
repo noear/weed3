@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
-import weed3test.model.AgroupModelEx;
-import weed3test.model.Appx2Model;
+import webapp.model.AgroupModelEx;
+import webapp.model.Appx2Model;
 
 
 public class _PrivateTest {

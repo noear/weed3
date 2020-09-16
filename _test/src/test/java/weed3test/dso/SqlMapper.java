@@ -3,14 +3,14 @@ package weed3test.dso;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.annotation.Sql;
 import org.noear.weed.xml.Namespace;
+import webapp.model.AppxModel;
 import weed3test.DbUtil;
-import weed3test.model.AppxModel;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Namespace("webapp.dso")
+@Namespace("webapp.dso.SqlMapper")
 public interface SqlMapper extends BaseMapper<AppxModel> {
     //随便取条数据的ID
     int appx_get() throws Exception;

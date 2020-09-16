@@ -1,10 +1,8 @@
-package weed3test.model;
+package webapp.model;
 
 import lombok.Data;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
-
-import java.util.Date;
 
 //和表名不相同，须注解表名
 @Data

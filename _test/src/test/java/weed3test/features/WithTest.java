@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.wrap.DbType;
+import webapp.model.AppxModel;
 import weed3test.DbUtil;
-import weed3test.model.AppxModel;
 
 import java.util.List;
 import java.util.Map;

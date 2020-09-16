@@ -93,6 +93,7 @@ public class XmlSqlMapperGenerator {
         sb.append("package ").append(packagename).append(";\n\n");
 
         sb.append("import java.math.*;\n");
+        sb.append("import java.sql.SQLException;\n");
         sb.append("import java.time.*;\n");
         sb.append("import java.util.*;\n\n");
 

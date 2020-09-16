@@ -1,8 +1,6 @@
-package weed3test.model;
+package webapp.model;
 
 import lombok.Data;
-import org.noear.weed.annotation.Column;
-import org.noear.weed.annotation.Exclude;
 import org.noear.weed.annotation.PrimaryKey;
 import org.noear.weed.annotation.Table;
 

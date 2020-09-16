@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
 import weed3test.dso.SqlMapper;
-import weed3test.model.AppxModel;
+import webapp.model.AppxModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

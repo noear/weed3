@@ -1,4 +1,4 @@
-package weed3test.model;
+package webapp.model;
 
 import lombok.Data;
 import org.noear.weed.annotation.PrimaryKey;

@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import weed3test.DbUtil;
-import weed3test.model.TestModel;
+import webapp.model.TestModel;
 
 import java.util.ArrayList;
 import java.util.List;
