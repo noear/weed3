@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//noear.org//DTD Mapper 3.0//EN" "http://noear.org/dtd/weed3-mapper.dtd">
 <mapper namespace="weed3demo2.xmlsql2"
         import="weed3demo.mapper.*">
-    <sql id="get_group_buying_by_ids"
+    <sql id="get_group_buying_by_ids" remarks="通过ID获取当前团购"
          return="List[zm.data.code.pepper.api.models.db.GroupBuyingModel]"
          caching="cache_pepper"
-         cacheTag="group_buying"
-         note="通过ID获取当前团购">
+         cacheTag="group_buying">
         SELECT * FROM `group_buying` WHERE gb_id in (@{gb_ids:Iterable[Long]})
         ORDER BY FIELD (gb_id,${gb_ids:Iterable[Long]}) desc;
     </sql>
