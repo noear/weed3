@@ -10,7 +10,6 @@ import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -51,11 +50,11 @@ public class XmlSqlMapperGenerator {
             return;
         }
 
-        String dic_path = sourceDir.getAbsolutePath()+"/" + block._namespace.replace(".", "/");
+        String dic_path = sourceDir.getAbsolutePath()+"/" + block._packageName.replace(".", "/");
 
         new File(dic_path).mkdirs();
 
-        String file_path = dic_path + "/" + block._classname + ".java";
+        String file_path = dic_path + "/" + block._className + ".java";
         File file = new File(file_path);
         if (!file.exists()) {
             file.createNewFile();
@@ -169,7 +168,8 @@ public class XmlSqlMapperGenerator {
         JavaCodeBlock codeBlock = new JavaCodeBlock();
 
         codeBlock._namespace = namespace;
-        codeBlock._classname =classname;
+        codeBlock._packageName = packagename;
+        codeBlock._className =classname;
         codeBlock._code = sb.toString();
 
         return codeBlock;
