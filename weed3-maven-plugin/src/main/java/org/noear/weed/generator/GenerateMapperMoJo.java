@@ -10,8 +10,8 @@ import org.noear.weed.generator.xml.XmlSqlMapperGenerator;
 import java.io.File;
 
 
-@Mojo(name="generator")
-public class GeneratorMoJo extends AbstractMojo {
+@Mojo(name="generate-mapper")
+public class GenerateMapperMoJo extends AbstractMojo {
     @Parameter(defaultValue = "${basedir}")
     private File baseDir;
 
