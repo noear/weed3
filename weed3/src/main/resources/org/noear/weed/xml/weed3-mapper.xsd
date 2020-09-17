@@ -51,7 +51,6 @@
             <xs:attribute name="caching"/>
             <xs:attribute name="cacheClear"/>
             <xs:attribute name="cacheTag"/>
-            <xs:attribute name="useCache"/>
             <xs:attribute name="usingCache"/>
         </xs:complexType>
     </xs:element>
