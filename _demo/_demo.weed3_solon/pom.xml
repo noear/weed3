@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3-solon-plugin</artifactId>
-            <version>3.2.19</version>
+            <version>3.2.20</version>
         </dependency>
 
         <dependency>
@@ -57,7 +57,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.2.19</version>
+                <version>3.2.20</version>
             </plugin>
 
             <plugin>
