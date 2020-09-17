@@ -41,6 +41,7 @@
         <!ATTLIST dao
                 basePackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
+                db CDATA #IMPLIED
                 >
 
         <!ELEMENT service (#PCDATA)*>
