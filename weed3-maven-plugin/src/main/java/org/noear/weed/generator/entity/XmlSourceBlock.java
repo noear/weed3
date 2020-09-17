@@ -10,4 +10,11 @@ public class XmlSourceBlock {
 
     public String entity_basePackage;
     public String entity_entityName;
+    public String entity_fieldStyle;
+
+    public String dao_basePackage;
+    public String dao_entityName;
+
+    public String service_basePackage;
+    public String service_entityName;
 }

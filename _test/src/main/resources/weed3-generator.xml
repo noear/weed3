@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE generator PUBLIC "-//noear.org//DTD Generator 3.0//EN" "http://noear.org/dtd/weed3-generator.dtd">
 <generator>
     <source schema="rock"
             url="jdbc:mysql://localdb:3306/rock?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true"
@@ -6,5 +7,7 @@
             password="UL0hHlg0Ybq60xyb"
             driverClassName="com.mysql.cj.jdbc.Driver">
         <entity basePackage="weed3demo2.model2" />
+        <dao basePackage="weed3demo2.model2" />
+        <service basePackage="weed3demo2.model2" />
     </source>
 </generator>

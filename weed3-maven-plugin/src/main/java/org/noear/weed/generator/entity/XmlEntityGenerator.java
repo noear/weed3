@@ -68,24 +68,67 @@ public class XmlEntityGenerator {
             if (XmlNames.tag_entity.equals(n2.getNodeName())) {
                 source.entity_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
                 source.entity_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
+                source.entity_fieldStyle = XmlUtils.attr(n2, XmlNames.att_fieldStyle);
+            }
 
-                if (StringUtils.isEmpty(source.entity_entityName)) {
-                    source.entity_entityName = "${table}Model";
-                }
+            if (XmlNames.tag_dao.equals(n2.getNodeName())) {
+                source.dao_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.dao_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
+            }
+
+            if (XmlNames.tag_service.equals(n2.getNodeName())) {
+                source.service_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.service_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
             }
         }
+
+        if (StringUtils.isEmpty(source.entity_entityName)) {
+            source.entity_entityName = "${table}Model";
+        }
+
+        if (StringUtils.isEmpty(source.dao_entityName)) {
+            source.dao_entityName = source.entity_entityName;
+        }
+
+        if (StringUtils.isEmpty(source.service_entityName)) {
+            source.service_entityName = source.entity_entityName;
+        }
+
 
         if (StringUtils.isEmpty(source.driverClassName) == false) {
             Class.forName(source.driverClassName);
         }
 
-        String packDir = (sourceDir.getAbsolutePath() + "/" + source.entity_basePackage.replace(".", "/") + "/");
 
         DbContext db = new DbContext(source.schema, source.url, source.username, source.password);
 
+        tryGenerateEntityFiles(db, source, sourceDir);
+        tryGenerateDaoFiles(db, source, sourceDir);
+    }
+
+    private static void tryGenerateEntityFiles(DbContext db, XmlSourceBlock source, File sourceDir) {
+        if (StringUtils.isEmpty(source.entity_basePackage)) {
+            return;
+        }
+
+        String packDir = (sourceDir.getAbsolutePath() + "/" + source.entity_basePackage.replace(".", "/") + "/");
 
         try {
             EntityGenerator.createByDb(packDir, source.entity_basePackage, db, source.entity_entityName);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void tryGenerateDaoFiles(DbContext db, XmlSourceBlock source, File sourceDir) {
+        if (StringUtils.isEmpty(source.dao_basePackage)) {
+            return;
+        }
+
+        String packDir = (sourceDir.getAbsolutePath() + "/" + source.dao_basePackage.replace(".", "/") + "/");
+
+        try {
+            MapperGenerator.createByDb("", packDir, source.dao_basePackage, db, source.dao_entityName);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
