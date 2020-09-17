@@ -29,7 +29,7 @@ public class MapperGenerator {
             String tmp = clzNameTml.replace("${table}", tw.getName());
             String clzName = NamingUtils.toCamelString(tmp, true);
 
-            tmp = clzNameTml.replace(entNameTml, tw.getName());
+            tmp = entNameTml.replace("${table}", tw.getName());
             String entName = NamingUtils.toCamelString(tmp, true);
 
             String code = buildByTable(modelPck, packName, tw, clzName, entName, dbName);
@@ -72,7 +72,11 @@ public class MapperGenerator {
             sb.append("package ").append(packName).append(";").append("\n\n");
         }
 
-        sb.append("import ").append(modelPck).append(".").append(clzName).append(";\n");
+        if (StringUtils.isNotEmpty(dbName)) {
+            sb.append("import org.noear.weed.annotation.Db;\n");
+        }
+
+        sb.append("import ").append(modelPck).append(".").append(entName).append(";\n");
         sb.append("import org.noear.weed.BaseMapper;").append("\n\n");
 
         if (StringUtils.isEmpty(tw.getRemarks()) == false) {
