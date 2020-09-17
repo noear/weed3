@@ -1,4 +1,4 @@
 package org.noear.weed.generator.entity;
 
-public class XmlAnalyzer {
+public class TableBlock {
 }

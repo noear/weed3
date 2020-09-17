@@ -2,6 +2,7 @@ package org.noear.weed.generator.mapper;
 
 import org.noear.weed.generator.utils.IOUtils;
 import org.noear.weed.generator.utils.StringUtils;
+import org.noear.weed.generator.utils.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -70,7 +71,7 @@ public class XmlSqlMapperGenerator {
             return null;
         }
 
-        Document doc = parseDoc(xmlFile);
+        Document doc = XmlUtils.parseDoc(xmlFile);
 
         Node nm = doc.getDocumentElement();
 
@@ -446,28 +447,6 @@ public class XmlSqlMapperGenerator {
         }
     }
 
-    private static DocumentBuilderFactory docBf = null;
-    private static DocumentBuilder docB = null;
-    //xml:解析文档
-    private static Document parseDoc(File xmlFile) throws Exception{
-        if(docBf ==null) {
-            docBf = DocumentBuilderFactory.newInstance();
-            docBf.setValidating(false);
-            docB = docBf.newDocumentBuilder();
-
-            docB.setEntityResolver(( publicId,  systemId)->{
-                if (systemId.contains("weed3-mapper.dtd")) {
-//                    InputStream dtdStream = XmlSqlBlock.class.getResourceAsStream("/org/noear/weed/xml/weed3-mapper.dtd");
-//                    return new InputSource(dtdStream);
-                    return new InputSource(new StringReader(""));
-                } else {
-                    return null;
-                }
-            });
-        }
-
-        return docB.parse(xmlFile);
-    }
 
     //sql::格式化字符串
     private static void parseTxt(StringBuilder sb, XmlSqlBlock dblock, String txt0){
