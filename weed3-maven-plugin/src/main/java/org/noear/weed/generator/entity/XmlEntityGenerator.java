@@ -83,7 +83,7 @@ public class XmlEntityGenerator {
         }
 
         if (StringUtils.isEmpty(source.entity_entityName)) {
-            source.entity_entityName = "${table}Model";
+            source.entity_entityName = "${table}";
         }
 
         if (StringUtils.isEmpty(source.dao_entityName)) {
