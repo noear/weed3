@@ -11,8 +11,8 @@ public class XmlSqlBlock {
     private static final String _lock ="";
 
     public String _namespace;
-    public String _classname;
-    public StringBuilder _classcode;
+    public String _className;
+    public StringBuilder _classCode;
 
     public String _id;
     public String _param;

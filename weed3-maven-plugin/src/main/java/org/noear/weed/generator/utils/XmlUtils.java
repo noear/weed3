@@ -1,6 +1,7 @@
 package org.noear.weed.generator.utils;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -25,5 +26,28 @@ public class XmlUtils {
         }
 
         return docB.parse(xmlFile);
+    }
+
+    //xml:读取属性
+    public static String attr(Node n, String name) {
+        if (name.startsWith(":")) {
+            return attr(n, name, name.substring(1));
+        } else {
+            return attr(n, name, null);
+        }
+    }
+
+    public static String attr(Node n, String name, String name2){
+        Node tmp = n.getAttributes().getNamedItem(name);
+
+        if(tmp == null && name2 != null){
+            tmp = n.getAttributes().getNamedItem(name2);
+        }
+
+        if(tmp == null){
+            return null;
+        }else{
+            return tmp.getNodeValue();
+        }
     }
 }

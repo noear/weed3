@@ -6,12 +6,8 @@ import org.noear.weed.generator.utils.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,12 +73,12 @@ public class XmlSqlMapperGenerator {
 
         Set<String> importSet = new HashSet<>();
 
-        String namespace = attr(nm, "namespace");
-        String _import = attr(nm, "import");
+        String namespace = XmlUtils.attr(nm, "namespace");
+        String _import = XmlUtils.attr(nm, "import");
         int sepindex = namespace.lastIndexOf('.');
 
-        String baseMapperOf = attr(nm, ":baseMapper");
-        String dbOf = attr(nm,":db");
+        String baseMapperOf = XmlUtils.attr(nm, ":baseMapper");
+        String dbOf = XmlUtils.attr(nm,":db");
 
         String packagename = namespace.substring(0,sepindex);
         String classname = namespace.substring(sepindex+1);
@@ -120,7 +116,7 @@ public class XmlSqlMapperGenerator {
         NodeList sql_list = doc.getElementsByTagName("sql");
         for (int i = 0, len = sql_list.getLength(); i < len; i++) {
             Node n = sql_list.item(i);
-            String id = attr(n,"id");
+            String id = XmlUtils.attr(n,"id");
             if(id!=null){
                 node_map.put(id,n);
             }
@@ -223,18 +219,18 @@ public class XmlSqlMapperGenerator {
         dblock.__nodeMap = nodeMap;
 
         dblock._namespace = namespace;
-        dblock._classname = classname;
-        dblock._classcode = sb;
+        dblock._className = classname;
+        dblock._classCode = sb;
 
-        dblock._id = attr(n, "id");
+        dblock._id = XmlUtils.attr(n, "id");
 
-        dblock._remarks = attr(n, ":remarks");
+        dblock._remarks = XmlUtils.attr(n, ":remarks");
         if(dblock._remarks == null) {
-            dblock._remarks = attr(n, ":note");
+            dblock._remarks = XmlUtils.attr(n, ":note");
         }
-        dblock._param = attr(n, ":param");
-        dblock._declare = attr(n, ":declare");
-        dblock._return = attr(n, ":return");
+        dblock._param = XmlUtils.attr(n, ":param");
+        dblock._declare = XmlUtils.attr(n, ":declare");
+        dblock._return = XmlUtils.attr(n, ":return");
         if (dblock._return != null) {
             TypeBlock tBlock = new TypeBlock(dblock._return);
 
@@ -244,10 +240,10 @@ public class XmlSqlMapperGenerator {
             }
         }
 
-        dblock._caching = attr(n, ":caching");
-        dblock._usingCache = attr(n, ":usingCache");
-        dblock._cacheTag = attr(n, ":cacheTag");
-        dblock._cacheClear = attr(n, ":cacheClear");
+        dblock._caching = XmlUtils.attr(n, ":caching");
+        dblock._usingCache = XmlUtils.attr(n, ":usingCache");
+        dblock._cacheTag = XmlUtils.attr(n, ":cacheTag");
+        dblock._cacheClear = XmlUtils.attr(n, ":cacheClear");
 
         //构建申明的变量
         _parseDeclare(dblock);
@@ -362,7 +358,7 @@ public class XmlSqlMapperGenerator {
 
     //xml:解析 if 指令节点
     private static void parseIfNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
-        String _test = attr(n, "test");
+        String _test = XmlUtils.attr(n, "test");
 
         newLine(sb, depth).append("if(").append(_test).append("){");
 
@@ -373,7 +369,7 @@ public class XmlSqlMapperGenerator {
 
     //xml:解析 ref 指令节点
     private static void parseRefNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
-        String _sql_id = attr(n, "sql");
+        String _sql_id = XmlUtils.attr(n, "sql");
         if (StringUtils.isEmpty(_sql_id) == false) {
             Node ref_n = dblock.__nodeMap.get(_sql_id);
             if (ref_n == null) {
@@ -385,7 +381,7 @@ public class XmlSqlMapperGenerator {
 
     //xml:解析 for 指令节点
     private static void parseForNode(StringBuilder sb, XmlSqlBlock dblock, Node n , int depth) {
-        String _var_str = attr(n, "var").trim();
+        String _var_str = XmlUtils.attr(n, "var").trim();
 
         if (_var_str.indexOf(":") < 0 || _var_str.length() < 3) {
             StringBuilder eb = new StringBuilder();
@@ -397,7 +393,7 @@ public class XmlSqlMapperGenerator {
         String[] kv = _var_str.split(":");
 
         XmlSqlVar _var = new XmlSqlVar(_var_str, kv[0].trim(), kv[1].trim());
-        String _items = attr(n, "items");
+        String _items = XmlUtils.attr(n, "items");
 
         //newLine(sb, depth).append("Iterable<").append(_var.type).append("> ").append(_items).append("=(Iterable<").append(_var.type).append(">)map.get(\"").append(_items).append("\");");
         newLine(sb, depth).append("for(").append(_var.type).append(" ").append(_var.name).append(" : ").append(_items).append("){");
@@ -422,29 +418,6 @@ public class XmlSqlMapperGenerator {
         }
 
         return sb;
-    }
-
-    //xml:读取属性
-    private static String attr(Node n, String name) {
-        if (name.startsWith(":")) {
-            return attr(n, name, name.substring(1));
-        } else {
-            return attr(n, name, null);
-        }
-    }
-
-    private static String attr(Node n, String name, String name2){
-        Node tmp = n.getAttributes().getNamedItem(name);
-
-        if(tmp == null && name2 != null){
-            tmp = n.getAttributes().getNamedItem(name2);
-        }
-
-        if(tmp == null){
-            return null;
-        }else{
-            return tmp.getNodeValue();
-        }
     }
 
 
