@@ -24,17 +24,17 @@ public class XmlSqlMapperGenerator {
             String path = (baseDir.getAbsolutePath() + "/src/main/resources/weed3");
             File dic = new File(path);
 
-            do_generate(dic,sourceDir);
+            generate0(dic,sourceDir);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
 
-    private static void do_generate(File file, File sourceDir) throws Throwable {
+    private static void generate0(File file, File sourceDir) throws Throwable {
         if (file.isDirectory()) {
             File[] tmps = file.listFiles();
             for (File tmp : tmps) {
-                do_generate(tmp, sourceDir);
+                generate0(tmp, sourceDir);
             }
         } else {
             if (file.getName().endsWith(".xml")) {
