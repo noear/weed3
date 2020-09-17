@@ -17,7 +17,7 @@ import java.io.IOException;
  * EntityBuilder.createByDb("demo.dso.mapper",db);
  * */
 public class EntityGenerator {
-    public static void createByDb(String packDir, String packName, DbContext db, String clzNameTml) throws IOException {
+    public static void createByDb(String packDir, String packName, DbContext db, String clzNameTml, boolean camel) throws IOException {
         File dir = new File(packDir);
         if (dir.exists() == false) {
             dir.mkdirs();
@@ -31,7 +31,7 @@ public class EntityGenerator {
             String clzName = NamingUtils.toCamelString(tmp, true);
 
 
-            String code = buildByTable(packName, tw, clzName);
+            String code = buildByTable(packName, tw, clzName, camel);
             String fileFullName = packDir + clzName + ".java";
 
             File file = new File(fileFullName);
@@ -50,7 +50,7 @@ public class EntityGenerator {
 
 
     public static void createByDb(String packDir, String packName, DbContext db) throws IOException {
-        createByDb(packDir, packName, db, "${table}");
+        createByDb(packDir, packName, db, "${table}", false);
     }
 
     public static void createByDb(String packName, DbContext db) throws IOException {
@@ -67,7 +67,7 @@ public class EntityGenerator {
         createByDb(packDir, packName, db);
     }
 
-    public static String buildByTable(String packName, TableWrap tw, String clzName) {
+    public static String buildByTable(String packName, TableWrap tw, String clzName, boolean camel) {
         StringBuilder sb2 = new StringBuilder();
         StringBuilder sb = new StringBuilder();
 
@@ -89,7 +89,14 @@ public class EntityGenerator {
                 sb.append("  @PrimaryKey").append("\n");
             }
 
-            sb.append("  private ").append(SqlTypeMap.getType(cw)).append(" ").append(cw.getName()).append(";").append("\n");
+            sb.append("  private ").append(SqlTypeMap.getType(cw)).append(" ");
+            if(camel){
+                sb.append(NamingUtils.toCamelString(cw.getName()));
+            }else {
+                sb.append(cw.getName());
+            }
+
+            sb.append(";").append("\n");
         }
 
         sb.append("}");

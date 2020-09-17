@@ -114,7 +114,10 @@ public class XmlEntityGenerator {
         String packDir = (sourceDir.getAbsolutePath() + "/" + source.entity_basePackage.replace(".", "/") + "/");
 
         try {
-            EntityGenerator.createByDb(packDir, source.entity_basePackage, db, source.entity_entityName);
+            EntityGenerator.createByDb(packDir,
+                    source.entity_basePackage, db,
+                    source.entity_entityName,
+                    XmlNames.val_camel.equals(source.entity_fieldStyle));
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
@@ -128,7 +131,9 @@ public class XmlEntityGenerator {
         String packDir = (sourceDir.getAbsolutePath() + "/" + source.dao_basePackage.replace(".", "/") + "/");
 
         try {
-            MapperGenerator.createByDb(source.entity_basePackage, packDir, source.dao_basePackage, db, source.dao_entityName, source.dao_db);
+            MapperGenerator.createByDb(source.entity_basePackage, packDir,
+                    source.dao_basePackage, db,
+                    source.dao_entityName, source.dao_db);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }

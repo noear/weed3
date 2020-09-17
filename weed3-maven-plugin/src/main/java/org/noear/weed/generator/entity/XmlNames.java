@@ -16,4 +16,6 @@ public final class XmlNames {
     public static final String att_entityName = "entityName";
     public static final String att_fieldStyle = "fieldStyle";
     public static final String att_db = "db";
+
+    public static final String val_camel="camel";
 }
