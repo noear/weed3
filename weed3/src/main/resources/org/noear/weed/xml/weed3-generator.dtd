@@ -21,7 +21,7 @@
                 >
 
 
-        <!ELEMENT source ( entity | dao | service)*>
+        <!ELEMENT source ( entity | dao)*>
         <!ATTLIST source
                 schema CDATA #REQUIRED
                 url CDATA #REQUIRED
@@ -42,10 +42,4 @@
                 basePackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
                 db CDATA #IMPLIED
-                >
-
-        <!ELEMENT service (#PCDATA)*>
-        <!ATTLIST service
-                basePackage CDATA #REQUIRED
-                entityName CDATA #IMPLIED
                 >
