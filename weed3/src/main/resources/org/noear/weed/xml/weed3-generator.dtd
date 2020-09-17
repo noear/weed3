@@ -17,9 +17,6 @@
 
         -->
         <!ELEMENT generator (source*)+>
-        <!ATTLIST generator
-                >
-
 
         <!ELEMENT source ( entity | dao)*>
         <!ATTLIST source

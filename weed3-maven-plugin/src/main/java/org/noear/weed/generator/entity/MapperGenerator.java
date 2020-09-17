@@ -44,6 +44,8 @@ public class MapperGenerator {
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(code);
             }
+
+            System.out.println("Generated : "+file.getAbsolutePath());
         }
     }
 

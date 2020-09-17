@@ -36,7 +36,7 @@
                 <xs:element ref="dao"/>
             </xs:choice>
             <xs:attribute name="schema" type="xs:string" use="required"/>
-            <xs:attribute name="url" type="xs:anyURI" use="required"/>
+            <xs:attribute name="url" type="xs:string" use="required"/>
             <xs:attribute name="username" type="xs:string" use="required"/>
             <xs:attribute name="password" type="xs:string" use="required"/>
             <xs:attribute name="driverClassName" type="xs:string"  use="required"/>
@@ -46,7 +46,7 @@
     <xs:element name="entity">
         <xs:complexType mixed="true">
             <xs:attribute name="basePackage" type="xs:string"  use="required"/>
-            <xs:attribute name="entityName" type="xs:string" />
+            <xs:attribute name="entityName" type="entityName" />
             <xs:attribute name="fieldStyle" type="xs:string" />
         </xs:complexType>
     </xs:element>
@@ -54,11 +54,16 @@
     <xs:element name="dao">
         <xs:complexType mixed="true">
             <xs:attribute name="basePackage" type="xs:string" use="required"/>
-            <xs:attribute name="entityName" type="xs:string" />
+            <xs:attribute name="entityName" type="entityName" />
             <xs:attribute name="db" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 
 
+    <xs:simpleType name='entityName'>
+        <xs:restriction base='xs:string'>
+            <xs:pattern value='\$\{table\}.*'/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>
