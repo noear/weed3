@@ -5,6 +5,6 @@
             username="demo"
             password="UL0hHlg0Ybq60xyb"
             driverClassName="com.mysql.cj.jdbc.Driver">
-        <entity basePackage="webapp.model2" />
+        <entity basePackage="weed3demo2.model2" />
     </source>
 </generator>
