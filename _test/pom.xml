@@ -60,11 +60,6 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.tool</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
             <artifactId>weed3.cache.redis</artifactId>
         </dependency>
 
@@ -166,15 +161,15 @@
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
                 <version>3.2.20</version>
-                <executions>
-                    <execution>
-                        <id>weed3</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate-entity</goal>
-                        </goals>
-                    </execution>
-                </executions>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>weed3</id>-->
+<!--                        <phase>compile</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>generate-entity</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>

@@ -42,20 +42,20 @@ public class XmlEntityGenerator {
         }
     }
 
-    private static void generateJavaFile(Node n1, File sourceDir) {
+    private static void generateJavaFile(Node n1, File sourceDir) throws Exception {
         if (XmlNames.tag_source.equals(n1.getNodeName()) == false) {
             return;
         }
 
         Element e1 = (Element) n1;
 
-        SourceBlock source = new SourceBlock();
+        XmlSourceBlock source = new XmlSourceBlock();
 
-        source.schema = XmlUtils.attr(n1, "schema");
-        source.url = XmlUtils.attr(n1, "url");
-        source.username = XmlUtils.attr(n1, "username");
-        source.password = XmlUtils.attr(n1, "password");
-        source.driverClassName = XmlUtils.attr(n1, "driverClassName");
+        source.schema = XmlUtils.attr(n1, XmlNames.att_schema);
+        source.url = XmlUtils.attr(n1, XmlNames.att_url);
+        source.username = XmlUtils.attr(n1, XmlNames.att_username);
+        source.password = XmlUtils.attr(n1, XmlNames.att_password);
+        source.driverClassName = XmlUtils.attr(n1, XmlNames.att_driverClassName);
 
         NodeList n2l = n1.getChildNodes();
         for (int i = 0, len = n2l.getLength(); i < len; i++) {
@@ -65,26 +65,27 @@ public class XmlEntityGenerator {
                 continue;
             }
 
-            if (XmlNames.tag_table.equals(n2.getNodeName())) {
-                source.table_basePackage = XmlUtils.attr(n2, "basePackage");
+            if (XmlNames.tag_entity.equals(n2.getNodeName())) {
+                source.entity_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.entity_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
+
+                if (StringUtils.isEmpty(source.entity_entityName)) {
+                    source.entity_entityName = "${table}Model";
+                }
             }
         }
 
-        if(StringUtils.isEmpty(source.driverClassName) == false){
-            try{
-                Class.forName(source.driverClassName);
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
+        if (StringUtils.isEmpty(source.driverClassName) == false) {
+            Class.forName(source.driverClassName);
         }
 
-        String packDir = (sourceDir.getAbsolutePath() + "/" + source.table_basePackage.replace(".", "/") + "/");
+        String packDir = (sourceDir.getAbsolutePath() + "/" + source.entity_basePackage.replace(".", "/") + "/");
 
         DbContext db = new DbContext(source.schema, source.url, source.username, source.password);
 
 
         try {
-            EntityGenerator.createByDb(packDir, source.table_basePackage, db);
+            EntityGenerator.createByDb(packDir, source.entity_basePackage, db, source.entity_entityName);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }

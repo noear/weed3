@@ -1,6 +1,7 @@
 package org.noear.weed.generator.entity;
 
 import org.noear.weed.DbContext;
+import org.noear.weed.generator.utils.NamingUtils;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.ColumnWrap;
 import org.noear.weed.wrap.TableWrap;
@@ -22,26 +23,12 @@ public class EntityGenerator {
             dir.mkdirs();
         }
 
-        StringBuilder nameSb = new StringBuilder();
-
         for (TableWrap tw : db.dbTables()) {
             if(clzNameTml == null){
                 clzNameTml="${table}";
             }
-            nameSb.setLength(0);
             String tmp = clzNameTml.replace("${table}", tw.getName());
-
-            for(String s : tmp.split("_")){
-                if(s.length() > 0){
-                    nameSb.append(s.substring(0,1).toUpperCase());
-                }
-
-                if(s.length() > 1){
-                    nameSb.append(s.substring(1));
-                }
-            }
-
-            String clzName = nameSb.toString();
+            String clzName = NamingUtils.toCamelString(tmp, true);
 
 
             String code = buildByTable(packName, tw, clzName);
@@ -86,7 +73,8 @@ public class EntityGenerator {
             sb.append("/** ").append(tw.getRemarks()).append(" */\n");
         }
 
-        sb.append("@Data").append("\n");
+        sb.append("@Getter").append("\n");
+        sb.append("@Setter").append("\n");
         sb.append("@Table(\"").append(tw.getName()).append("\")\n");
         sb.append("public class ").append(clzName).append("{").append("\n");
 
@@ -109,11 +97,16 @@ public class EntityGenerator {
             sb2.append("package ").append(packName).append(";").append("\n\n");
         }
 
-        sb2.append("import lombok.Data;").append("\n");
+        sb2.append("import lombok.Getter;").append("\n");
+        sb2.append("import lombok.Setter;").append("\n");
         if (sb.indexOf(" Date ") > 0) {
             sb2.append("import java.util.Date;").append("\n");
         }
+        if (sb.indexOf(" BigDecimal ") > 0) {
+            sb2.append("import java.math.BigDecimal;").append("\n");
+        }
         sb2.append("import org.noear.weed.annotation.*;").append("\n");
+
 
         sb2.append("\n");
         sb2.append(sb);

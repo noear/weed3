@@ -23,7 +23,7 @@ class SqlTypeMap {
         mapping.put(Types.CLOB, "String");
         mapping.put(Types.DATALINK, UNKNOW);
         mapping.put(Types.DATE, "Date");
-        mapping.put(Types.DECIMAL, "SPECIAL");
+        mapping.put(Types.DECIMAL, "BigDecimal");
         mapping.put(Types.DISTINCT, UNKNOW);
         mapping.put(Types.DOUBLE, "Double");
         mapping.put(Types.FLOAT, "Float");

@@ -1,6 +1,6 @@
 package org.noear.weed.generator.entity;
 
-public class SourceBlock {
+public class XmlSourceBlock {
     public String schema;
     public String url;
     public String username;
@@ -8,5 +8,6 @@ public class SourceBlock {
     public String driverClassName;
 
 
-    public String table_basePackage;
+    public String entity_basePackage;
+    public String entity_entityName;
 }
