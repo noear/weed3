@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<generator>
+    <source schema="rock"
+            url="jdbc:mysql://localdb:3306/rock?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true"
+            username="demo"
+            password="UL0hHlg0Ybq60xyb"
+            driverClassName="com.mysql.cj.jdbc.Driver">
+    </source>
+</generator>

@@ -166,15 +166,15 @@
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
                 <version>3.2.19</version>
-                <executions>
-                    <execution>
-                        <id>weed3</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate-mapper</goal>
-                        </goals>
-                    </execution>
-                </executions>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>weed3</id>-->
+<!--                        <phase>compile</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>generate-mapper</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
 
             <plugin>
