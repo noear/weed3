@@ -7,6 +7,10 @@ public class StringUtils {
         return (str == null || str.length() == 0);
     }
 
+    public static boolean isNotEmpty(String str) {
+        return !(str == null || str.length() == 0);
+    }
+
     private static final Stack<StringBuilder> builders = new Stack();
     private static final int MaxCachedBuilderSize = 8192;
     private static final int MaxIdleBuilders = 8;

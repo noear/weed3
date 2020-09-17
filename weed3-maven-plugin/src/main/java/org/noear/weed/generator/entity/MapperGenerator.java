@@ -1,7 +1,8 @@
 package org.noear.weed.generator.entity;
 
 import org.noear.weed.DbContext;
-import org.noear.weed.utils.StringUtils;
+import org.noear.weed.generator.utils.NamingUtils;
+import org.noear.weed.generator.utils.StringUtils;
 import org.noear.weed.wrap.TableWrap;
 
 import java.io.File;
@@ -9,36 +10,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MapperGenerator {
-    public static void createByDb(String modelPck, String packDir, String packName, DbContext db, String clzNameTml) throws IOException {
+    public static void createByDb(String modelPck, String packDir, String packName, DbContext db, String entNameTml, String dbName) throws IOException {
         File dir = new File(packDir);
         if (dir.exists() == false) {
             dir.mkdirs();
         }
 
         StringBuilder nameSb = new StringBuilder();
+        if(StringUtils.isEmpty(entNameTml)){
+            entNameTml = "${table}";
+        }
 
         for (TableWrap tw : db.dbTables()) {
-            if (clzNameTml == null) {
-                clzNameTml = "${table}";
-            }
+
+            String clzNameTml = "${table}";
 
             nameSb.setLength(0);
             String tmp = clzNameTml.replace("${table}", tw.getName());
+            String clzName = NamingUtils.toCamelString(tmp, true);
 
-            for (String s : tmp.split("_")) {
-                if (s.length() > 0) {
-                    nameSb.append(s.substring(0, 1).toUpperCase());
-                }
+            tmp = clzNameTml.replace(entNameTml, tw.getName());
+            String entName = NamingUtils.toCamelString(tmp, true);
 
-                if (s.length() > 1) {
-                    nameSb.append(s.substring(1));
-                }
-            }
-
-            String clzName = nameSb.toString();
-
-
-            String code = buildByTable(modelPck, packName, tw, clzName);
+            String code = buildByTable(modelPck, packName, tw, clzName, entName, dbName);
             String fileFullName = packDir + clzName + "Mapper.java";
 
             File file = new File(fileFullName);
@@ -54,7 +48,7 @@ public class MapperGenerator {
     }
 
     public static void createByDb(String modelPck, String packDir, String packName, DbContext db) throws IOException {
-        createByDb(modelPck, packDir, packName, db, "${table}");
+        createByDb(modelPck, packDir, packName, db, "${table}", null);
     }
 
     public static void createByDb(String modelPck, String packName, DbContext db) throws IOException {
@@ -71,7 +65,7 @@ public class MapperGenerator {
         createByDb(modelPck, packDir, packName, db);
     }
 
-    public static String buildByTable(String modelPck, String packName, TableWrap tw, String clzName) {
+    public static String buildByTable(String modelPck, String packName, TableWrap tw, String clzName, String entName,String dbName) {
         StringBuilder sb = new StringBuilder();
 
         if (StringUtils.isEmpty(packName) == false) {
@@ -85,7 +79,11 @@ public class MapperGenerator {
             sb.append("/** ").append(tw.getRemarks()).append(" Mapper */\n");
         }
 
-        sb.append("public interface ").append(clzName).append("Mapper extends BaseMapper<").append(clzName).append("> {").append("\n");
+        if (StringUtils.isNotEmpty(dbName)) {
+            sb.append("@Db(\"").append(dbName).append("\")").append("\n");
+        }
+
+        sb.append("public interface ").append(clzName).append("Mapper extends BaseMapper<").append(entName).append("> {").append("\n");
         sb.append("}");
 
         return sb.toString();

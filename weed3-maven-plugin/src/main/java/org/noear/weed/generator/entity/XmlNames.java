@@ -1,4 +1,4 @@
-package org.noear.weed.generator.utils;
+package org.noear.weed.generator.entity;
 
 public final class XmlNames {
     public static final String tag_source = "source";
@@ -15,4 +15,5 @@ public final class XmlNames {
     public static final String att_basePackage = "basePackage";
     public static final String att_entityName = "entityName";
     public static final String att_fieldStyle = "fieldStyle";
+    public static final String att_db = "db";
 }

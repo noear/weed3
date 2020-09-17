@@ -2,7 +2,6 @@ package org.noear.weed.generator.entity;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.generator.utils.StringUtils;
-import org.noear.weed.generator.utils.XmlNames;
 import org.noear.weed.generator.utils.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -74,6 +73,7 @@ public class XmlEntityGenerator {
             if (XmlNames.tag_dao.equals(n2.getNodeName())) {
                 source.dao_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
                 source.dao_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
+                source.dao_db = XmlUtils.attr(n2, XmlNames.att_db);
             }
 
             if (XmlNames.tag_service.equals(n2.getNodeName())) {
@@ -128,7 +128,7 @@ public class XmlEntityGenerator {
         String packDir = (sourceDir.getAbsolutePath() + "/" + source.dao_basePackage.replace(".", "/") + "/");
 
         try {
-            MapperGenerator.createByDb("", packDir, source.dao_basePackage, db, source.dao_entityName);
+            MapperGenerator.createByDb(source.entity_basePackage, packDir, source.dao_basePackage, db, source.dao_entityName, source.dao_db);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }

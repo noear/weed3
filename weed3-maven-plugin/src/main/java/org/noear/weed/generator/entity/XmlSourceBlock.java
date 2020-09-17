@@ -14,6 +14,7 @@ public class XmlSourceBlock {
 
     public String dao_basePackage;
     public String dao_entityName;
+    public String dao_db;
 
     public String service_basePackage;
     public String service_entityName;
