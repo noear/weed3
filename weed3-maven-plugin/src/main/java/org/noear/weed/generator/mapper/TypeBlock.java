@@ -1,4 +1,4 @@
-package org.noear.weed.generator.xml;
+package org.noear.weed.generator.mapper;
 
 //
 // 变量类型：name, name:type,@{name:type},${name:type}

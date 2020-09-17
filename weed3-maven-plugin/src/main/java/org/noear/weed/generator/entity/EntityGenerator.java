@@ -1,4 +1,4 @@
-package org.noear.weed.generator.tool;
+package org.noear.weed.generator.entity;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.utils.StringUtils;
