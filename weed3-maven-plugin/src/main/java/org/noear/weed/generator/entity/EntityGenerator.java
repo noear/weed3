@@ -43,6 +43,8 @@ public class EntityGenerator {
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(code);
             }
+
+            System.out.println("Generated : "+file.getAbsolutePath());
         }
     }
 
