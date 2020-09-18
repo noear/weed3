@@ -29,14 +29,14 @@
 
         <!ELEMENT entity (#PCDATA)*>
         <!ATTLIST entity
-                basePackage CDATA #REQUIRED
+                targetPackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
                 fieldStyle (original | camel) #IMPLIED
                 >
 
         <!ELEMENT dao (#PCDATA)*>
         <!ATTLIST dao
-                basePackage CDATA #REQUIRED
+                targetPackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
                 db CDATA #IMPLIED
                 >
