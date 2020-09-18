@@ -88,7 +88,7 @@ class DbContextMetaData {
         initMetaDataDo();
     }
 
-    private void initMetaData() {
+    public void initMetaData() {
         if (_dbDialect != null) {
             return;
         }
