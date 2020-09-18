@@ -140,7 +140,7 @@ public class DbTran {
                         kv.getValue().close();
                     }
                 } catch (Exception ex) {
-
+                    WeedConfig.runExceptionEvent(null, ex);
                 }
             }
         }
