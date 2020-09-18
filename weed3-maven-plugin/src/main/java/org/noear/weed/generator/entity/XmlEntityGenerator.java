@@ -65,19 +65,19 @@ public class XmlEntityGenerator {
             }
 
             if (XmlNames.tag_entity.equals(n2.getNodeName())) {
-                source.entity_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.entity_basePackage = XmlUtils.attr(n2, XmlNames.att_targetPackage);
                 source.entity_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
                 source.entity_fieldStyle = XmlUtils.attr(n2, XmlNames.att_fieldStyle);
             }
 
             if (XmlNames.tag_dao.equals(n2.getNodeName())) {
-                source.dao_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.dao_basePackage = XmlUtils.attr(n2, XmlNames.att_targetPackage);
                 source.dao_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
                 source.dao_db = XmlUtils.attr(n2, XmlNames.att_db);
             }
 
             if (XmlNames.tag_service.equals(n2.getNodeName())) {
-                source.service_basePackage = XmlUtils.attr(n2, XmlNames.att_basePackage);
+                source.service_basePackage = XmlUtils.attr(n2, XmlNames.att_targetPackage);
                 source.service_entityName = XmlUtils.attr(n2, XmlNames.att_entityName);
             }
         }

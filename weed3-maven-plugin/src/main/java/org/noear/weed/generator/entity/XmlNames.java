@@ -12,7 +12,7 @@ public final class XmlNames {
     public static final String att_password = "password";
     public static final String att_driverClassName = "driverClassName";
 
-    public static final String att_basePackage = "basePackage";
+    public static final String att_targetPackage = "targetPackage";
     public static final String att_entityName = "entityName";
     public static final String att_fieldStyle = "fieldStyle";
     public static final String att_db = "db";
