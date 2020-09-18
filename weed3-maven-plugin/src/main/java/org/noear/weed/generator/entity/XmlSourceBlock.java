@@ -8,14 +8,14 @@ public class XmlSourceBlock {
     public String driverClassName;
 
 
-    public String entity_basePackage;
+    public String entity_targetPackage;
     public String entity_entityName;
     public String entity_fieldStyle;
 
-    public String dao_basePackage;
+    public String dao_targetPackage;
     public String dao_entityName;
     public String dao_db;
 
-    public String service_basePackage;
+    public String service_targetPackage;
     public String service_entityName;
 }
