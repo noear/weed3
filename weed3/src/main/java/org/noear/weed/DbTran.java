@@ -15,19 +15,19 @@ public class DbTran {
     private final Map<DataSource, Connection> conMap = new HashMap<>();
     private DbTranQueue queue;
 
-    private Act1Ex<DbTran,Throwable> _handler = null;
+    private Act1Ex<DbTran, Throwable> _handler = null;
 
     //当前为master事务时，才会用到这个字段;(用于记录这个队列里，最后一个事务；方便下一个事务设置before)
     private DbContext _context = null;/*数据访问上下文*/
 
     public Object result;
     private boolean _isSucceed = false;
-    public boolean isSucceed(){
+
+    public boolean isSucceed() {
         return _isSucceed;
     }
 
-    public DbContext db()
-    {
+    public DbContext db() {
         return _context;
     }
 
@@ -51,19 +51,19 @@ public class DbTran {
     /*加盟（到某一个事务当中）*/
     public DbTran join(DbTranQueue queue) {
         if (queue != null) {
-           this.queue =queue;
+            this.queue = queue;
             queue.add(this);
         }
 
         return this;
     }
 
-    public DbTran(DbContext context)  {
+    public DbTran(DbContext context) {
         _context = context;
     }
 
     /*执行事务过程 = action(...) + excute() */
-    public DbTran execute(Act1Ex<DbTran,Throwable> handler) throws SQLException {
+    public DbTran execute(Act1Ex<DbTran, Throwable> handler) throws SQLException {
         DbTran tranTmp = DbTranUtil.current();
 
         try {
@@ -107,15 +107,15 @@ public class DbTran {
     }
 
 
-    public DbTran action(Act1Ex<DbTran,Throwable> handler){
+    public DbTran action(Act1Ex<DbTran, Throwable> handler) {
         _handler = handler;
         return this;
     }
 
     //isQueue:是否由Queue调用的
     protected void rollback(boolean isQueue) throws SQLException {
-        if(queue == null || isQueue) {
-            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
+        if (queue == null || isQueue) {
+            for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {
                 kv.getValue().rollback();
             }
         }
@@ -123,8 +123,8 @@ public class DbTran {
 
     //isQueue:是否由Queue调用的
     protected void commit(boolean isQueue) throws SQLException {
-        if(queue == null || isQueue) {
-            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
+        if (queue == null || isQueue) {
+            for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {
                 kv.getValue().commit();
             }
         }
@@ -132,10 +132,16 @@ public class DbTran {
 
     //isQueue:是否由Queue调用的
     protected void close(boolean isQueue) throws SQLException {
-        if(queue == null || isQueue) {
-            for(Map.Entry<DataSource,Connection> kv : conMap.entrySet()){
-                kv.getValue().setAutoCommit(true);
-                kv.getValue().close();
+        if (queue == null || isQueue) {
+            for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {
+                //kv.getValue().setAutoCommit(true);
+                try {
+                    if (kv.getValue().isClosed() == false) {
+                        kv.getValue().close();
+                    }
+                } catch (Exception ex) {
+
+                }
             }
         }
     }
