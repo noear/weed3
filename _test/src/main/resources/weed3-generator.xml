@@ -6,7 +6,7 @@
             username="demo"
             password="UL0hHlg0Ybq60xyb"
             driverClassName="com.mysql.cj.jdbc.Driver">
-        <entity targetPackage="weed3demo2.model2" entityName="${table}Model" />
+        <entity targetPackage="weed3demo2.model2" entityName="${table}Do" />
         <dao targetPackage="weed3demo2.dao2" db="db1" />
     </source>
 </generator>
