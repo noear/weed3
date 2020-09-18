@@ -18,7 +18,7 @@
         -->
         <!ELEMENT generator (source*)+>
 
-        <!ELEMENT source ( entity | dao)*>
+        <!ELEMENT source ( entity | dao | service)*>
         <!ATTLIST source
                 schema CDATA #REQUIRED
                 url CDATA #REQUIRED
@@ -39,4 +39,11 @@
                 targetPackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
                 db CDATA #IMPLIED
+                >
+
+        <!ELEMENT service (#PCDATA)*>
+        <!ATTLIST service
+                targetPackage CDATA #REQUIRED
+                entityName CDATA #IMPLIED
+                framework (spring | solon) #IMPLIED
                 >
