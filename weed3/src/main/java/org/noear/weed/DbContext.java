@@ -382,4 +382,5 @@ public class DbContext extends DbContextMetaData {
     public DbTranQueue tranQueue(Act1Ex<DbTranQueue, Throwable> handler) throws Throwable {
         return new DbTranQueue().execute(handler);
     }
+
 }

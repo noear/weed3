@@ -41,6 +41,10 @@ class DbContextMetaData {
         return WeedConfig.connectionFactory.getConnection(dataSource());
     }
 
+    public Connection getMetaConnection() throws SQLException{
+        return  dataSource().getConnection();
+    }
+
     //数据集名称
 
     public DbType dbType() {
@@ -101,7 +105,7 @@ class DbContextMetaData {
         Connection conn = null;
         try {
             System.out.println("Weed3::Start testing database connectivity...");
-            conn = getConnection();
+            conn = getMetaConnection();
             DatabaseMetaData md = conn.getMetaData();
             System.out.println("Weed3::The connection is successful");
 
