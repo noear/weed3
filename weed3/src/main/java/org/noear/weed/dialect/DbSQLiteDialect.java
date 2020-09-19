@@ -35,7 +35,8 @@ public class DbSQLiteDialect implements DbDialect {
                     .replaceAll("`\\(\\d+\\)\\)", "`)")
                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "")
                     .replace(" int NOT NULL AUTO_INCREMENT"," INTEGER PRIMARY KEY AUTOINCREMENT")
-                    .replace(" bigint NOT NULL AUTO_INCREMENT"," INTEGER PRIMARY KEY AUTOINCREMENT");
+                    .replace(" bigint NOT NULL AUTO_INCREMENT"," INTEGER PRIMARY KEY AUTOINCREMENT")
+                    .replaceAll("\\sCOMMENT\\s+'[^']*'\\s","");
 
         }
 
