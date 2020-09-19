@@ -31,7 +31,7 @@
         <!ELEMENT entityGenerator (#PCDATA)*>
         <!ATTLIST entityGenerator
                 targetPackage CDATA #REQUIRED
-                entityName CDATA #IMPLIED
+                entityName CDATA #REQUIRED
                 >
 
         <!ELEMENT table (#PCDATA)*>
