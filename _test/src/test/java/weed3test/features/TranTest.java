@@ -85,9 +85,11 @@ public class TranTest {
 
         }
 
+        db1.sql("insert into test (v1) values (1024);").insert();
+
         long count = db1.table("test").count();
         System.out.print(count);
-        assert count == 0;
+        assert count == 1;
     }
 
     public void demo2() throws Throwable {
