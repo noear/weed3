@@ -29,15 +29,15 @@ public class DbSQLiteDialect implements DbDialect {
     @Override
     public String preReview(String code) {
         if (code.indexOf("CREATE TABLE") >= 0) {
-            return code.replace("ENGINE=InnoDB ", "")
+            code = code.replace("ENGINE=InnoDB ", "")
                     .replace("USING BTREE", "")
                     .replace("USING HASH", "")
                     .replaceAll("`\\(\\d+\\)\\)", "`)")
                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "")
-                    .replace(" int NOT NULL AUTO_INCREMENT"," INTEGER PRIMARY KEY AUTOINCREMENT")
-                    .replace(" bigint NOT NULL AUTO_INCREMENT"," INTEGER PRIMARY KEY AUTOINCREMENT")
-                    .replaceAll("\\sCOMMENT\\s+'[^']*'\\s","");
+                    .replace(" int NOT NULL AUTO_INCREMENT", " INTEGER PRIMARY KEY AUTOINCREMENT")
+                    .replace(" bigint NOT NULL AUTO_INCREMENT", " INTEGER PRIMARY KEY AUTOINCREMENT");
 
+            return code.replaceAll("\\sCOMMENT\\s+'[^']*'", "");
         }
 
         if(code.indexOf("information_schema.")>=0){

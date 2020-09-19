@@ -1,6 +1,6 @@
 CREATE TABLE `appx` (
   `app_id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `app_key` varchar(40) DEFAULT NULL ,
+  `app_key` varchar(40) DEFAULT NULL COMMENT 'xx',
   `akey` varchar(40) DEFAULT NULL ,
   `ugroup_id` int DEFAULT '0',
   `agroup_id` int DEFAULT NULL ,
