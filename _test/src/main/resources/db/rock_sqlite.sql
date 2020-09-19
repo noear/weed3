@@ -1,5 +1,5 @@
 CREATE TABLE `appx` (
-  `app_id` int NOT NULL ,
+  `app_id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `app_key` varchar(40) DEFAULT NULL ,
   `akey` varchar(40) DEFAULT NULL ,
   `ugroup_id` int DEFAULT '0',
@@ -13,7 +13,7 @@ CREATE TABLE `appx` (
 ) ;
 
 CREATE TABLE `appx_copy` (
-  `app_id` int NOT NULL ,
+  `app_id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `app_key` varchar(40) DEFAULT NULL ,
   `akey` varchar(40) DEFAULT NULL ,
   `ugroup_id` int DEFAULT '0' ,

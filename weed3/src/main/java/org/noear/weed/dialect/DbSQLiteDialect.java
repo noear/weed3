@@ -33,7 +33,8 @@ public class DbSQLiteDialect implements DbDialect {
                     .replace("USING BTREE", "")
                     .replace("USING HASH", "")
                     .replaceAll("`\\(\\d+\\)\\)", "`)")
-                    .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
+                    .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "")
+                    .replace(" AUTO_INCREMENT"," AUTOINCREMENT");
 
         }
 
