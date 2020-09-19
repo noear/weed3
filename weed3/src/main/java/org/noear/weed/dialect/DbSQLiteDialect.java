@@ -44,6 +44,10 @@ public class DbSQLiteDialect implements DbDialect {
             return  code.toUpperCase();
         }
 
+        if(code.indexOf("TRUNCATE TABLE ") >=0){
+            return code.replace("TRUNCATE TABLE ", "DELETE FROM");
+        }
+
         return code;
     }
 

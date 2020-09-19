@@ -18,7 +18,7 @@ public class TableTest {
 
         assert db.table("appx_copy")
                 .setMap(map)
-                .whereEq("app_id",101)
+                .whereEq("app_id",11)
                 .update() > 0;
 
         System.out.println(db.lastCommand.text);
@@ -32,7 +32,7 @@ public class TableTest {
 
         assert db.table("appx_copy")
                 .setMap(map)
-                .whereEq("app_id",101).orEq("agroup_id",null)
+                .whereEq("app_id",11).orEq("agroup_id",null)
                 .update() > 0;
 
         System.out.println(db.lastCommand.text);

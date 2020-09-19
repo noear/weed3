@@ -26,6 +26,13 @@ CREATE TABLE `appx_copy` (
   `log_fulltime` timestamp DEFAULT NULL
 ) ;
 
+CREATE TABLE `test` (
+  `id` int NOT NULL AUTO_INCREMENT ,
+  `v1` int DEFAULT NULL
+) ;
+
+
+
 
 
 INSERT INTO `appx` VALUES ('1', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', '测试', '1', '0', '0', '2017-08-25 10:59:44');
@@ -82,6 +89,9 @@ INSERT INTO `appx` VALUES ('51', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'd
 INSERT INTO `appx` VALUES ('52', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd-1', null, '0', '0', '0', '2017-08-25 10:59:45');
 INSERT INTO `appx` VALUES ('53', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-04 17:49:54');
 INSERT INTO `appx` VALUES ('54', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-25 10:59:45');
+
+
+INSERT INTO `appx_copy` VALUES ('11', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-25 10:59:45');
 
 
 CREATE TABLE `appx_agroup` (
