@@ -59,11 +59,22 @@ public class DbSQLiteDialect implements DbDialect {
             sqlB.append(orderBy);
         }
 
-        sqlB.append(" LIMIT ")
-                .append(size)
-                .append(" OFFSET ")
-                .append(start);
+        if (supportsVariablePaging()) {
+            sqlB.append(" LIMIT ? OFFSET ?");
+            sqlB.paramS.add(size);
+            sqlB.paramS.add(start);
+        }else {
+            sqlB.append(" LIMIT ")
+                    .append(size)
+                    .append(" OFFSET ")
+                    .append(start);
+        }
     }
 
     //top 和mysql一样
+
+    @Override
+    public boolean supportsVariablePaging() {
+        return true;
+    }
 }
