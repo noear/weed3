@@ -22,7 +22,7 @@ public class DbH2Dialect implements DbDialect {
 
     @Override
     public ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
-        return md.getTables(null, null, "TABLE%", new String[]{"TABLE"});
+        return md.getTables(null, null, null, new String[]{"TABLE"});
     }
 
     @Override

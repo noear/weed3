@@ -27,7 +27,7 @@ public class DbUtil {
         HikariDataSource ds = new HikariDataSource();
 
         //ds.setSchema("PUBLIC");
-        ds.setJdbcUrl("jdbc:h2:mem:rock;DB_CLOSE_ON_EXIT=FALSE");
+        ds.setJdbcUrl("jdbc:h2:mem:rock;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false");
         ds.setUsername("sa");
         ds.setPassword("");
         ds.setDriverClassName("org.h2.Driver");
@@ -147,7 +147,7 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        HikariDataSource source = dbMysqlCfg(); //dbH2Cfg(); //dbSqliteCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
+        HikariDataSource source = dbSqliteCfg(); //dbH2Cfg(); //dbMysqlCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
 
         DbContext db = new DbContext(source.getSchema(), source).nameSet("rock");
         //WeedConfig.isUsingSchemaPrefix =true;
