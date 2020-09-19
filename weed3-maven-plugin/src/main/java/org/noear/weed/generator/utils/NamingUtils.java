@@ -122,10 +122,7 @@ public class NamingUtils {
     }
 
     /**
-     * <p>
-     * Capitalizes a String changing the first letter to title case as per {@link Character#toTitleCase(char)}. No other
-     * letters are changed.
-     * </p>
+     * 首字符大小
      *
      *
      *
