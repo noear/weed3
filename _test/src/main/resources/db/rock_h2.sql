@@ -90,6 +90,7 @@ INSERT INTO `appx` VALUES ('52', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'd
 INSERT INTO `appx` VALUES ('53', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-04 17:49:54');
 INSERT INTO `appx` VALUES ('54', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-25 10:59:45');
 INSERT INTO `appx` VALUES ('55', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', '测试', '1', '0', '0', '2017-08-25 10:59:44');
+INSERT INTO `appx` VALUES ('56', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', '测试', '1', '0', '0', '2017-08-25 10:59:44');
 
 INSERT INTO `appx_copy` VALUES ('11', 'aaaaaaaaa', 'zzzzzzzzzzzzzzzzzz', '1', '1', 'ddd', null, '0', '0', '0', '2017-08-25 10:59:45');
 
