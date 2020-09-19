@@ -85,8 +85,9 @@ public class TranTest {
 
         }
 
-
-        assert db1.table("test").count() == 0;
+        long count = db1.table("test").count();
+        System.out.print(count);
+        assert count == 0;
     }
 
     public void demo2() throws Throwable {

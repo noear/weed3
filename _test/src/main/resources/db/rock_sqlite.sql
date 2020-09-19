@@ -27,8 +27,8 @@ CREATE TABLE `appx_copy` (
 ) ;
 
 CREATE TABLE `test` (
-  `id` int NOT NULL AUTO_INCREMENT ,
-  `v1` int DEFAULT NULL
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `v1` int
 ) ;
 
 
