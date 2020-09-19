@@ -32,39 +32,29 @@
     <xs:element name="source">
         <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:element ref="entity"/>
-                <xs:element ref="dao"/>
-                <xs:element ref="service"/>
+                <xs:element ref="entityGenerator"/>
+                <xs:element ref="table"/>
             </xs:choice>
             <xs:attribute name="schema" type="xs:string" use="required"/>
             <xs:attribute name="url" type="xs:string" use="required"/>
             <xs:attribute name="username" type="xs:string" use="required"/>
             <xs:attribute name="password" type="xs:string" use="required"/>
             <xs:attribute name="driverClassName" type="xs:string"  use="required"/>
+            <xs:attribute name="namingStyle" type="xs:string" />
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="entity">
+    <xs:element name="entityGenerator">
         <xs:complexType mixed="true">
             <xs:attribute name="targetPackage" type="xs:string"  use="required"/>
-            <xs:attribute name="entityName" type="xs:string" />
-            <xs:attribute name="fieldStyle" type="xs:string" />
+            <xs:attribute name="entityName" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="dao">
+    <xs:element name="table">
         <xs:complexType mixed="true">
-            <xs:attribute name="targetPackage" type="xs:string" use="required"/>
-            <xs:attribute name="entityName" type="xs:string" />
-            <xs:attribute name="db" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="service">
-        <xs:complexType mixed="true">
-            <xs:attribute name="targetPackage" type="xs:string" use="required"/>
-            <xs:attribute name="entityName" type="xs:string" />
-            <xs:attribute name="framework" type="xs:string"/>
+            <xs:attribute name="tableName" type="xs:string" use="required"/>
+            <xs:attribute name="domainName" type="xs:string" />
         </xs:complexType>
     </xs:element>
 

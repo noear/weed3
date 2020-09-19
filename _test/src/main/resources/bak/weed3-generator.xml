@@ -7,23 +7,24 @@
             password="UL0hHlg0Ybq60xyb"
             driverClassName="com.mysql.cj.jdbc.Driver"
             namingStyle="camel">
-        <!--
-        ${tableName}
-        ${domainName}
-        ${entityName}
-        ${fields}
-        ${fields_getter}
-        ${fields_setter}
-        -->
-        <entityGenerator targetPackage="weed3demo2.model2" entityName="${domainName}Model">
+        <entityGenerator targetPackage="weed3demo2.model2" entityName="${domainName}Do">
             <![CDATA[
+import lombok.Data;
+
+@Data
 @Table("${tableName}")
 public class ${entityName}{
     ${fields}
+}
+]]>
+        </entityGenerator>
 
-    ${fields_getter}
+        <entityGenerator targetPackage="weed3demo2.model2" entityName="${domainName}Vo">
+            <![CDATA[
+import weed3demo2.model2.*;
 
-    ${fields_setter}
+public class ${entityName} extends ${domainName}Do{
+
 }
 ]]>
         </entityGenerator>
@@ -33,7 +34,7 @@ public class ${entityName}{
 import weed3demo2.model2.*;
 
 @Db("db1")
-public interface ${entityName} extends BaseMapper<${domainName}Model>{
+public interface ${entityName} extends BaseMapper<${domainName}Vo>{
 
 }
 ]]>

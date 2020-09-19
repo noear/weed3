@@ -167,7 +167,7 @@ public class XmlEntityGenerator {
 
     private static String buildFields(XmlSourceBlock source, TableItem table) {
         StringBuilder sb = new StringBuilder();
-        boolean camel = "camel".equals(source.namingStyle);
+        boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
@@ -193,7 +193,7 @@ public class XmlEntityGenerator {
 
     private static String buildFieldsGetter(XmlSourceBlock source, TableItem table) {
         StringBuilder sb = new StringBuilder();
-        boolean camel = "camel".equals(source.namingStyle);
+        boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
@@ -224,7 +224,7 @@ public class XmlEntityGenerator {
 
     private static String buildFieldsSetter(XmlSourceBlock source, TableItem table) {
         StringBuilder sb = new StringBuilder();
-        boolean camel = "camel".equals(source.namingStyle);
+        boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {

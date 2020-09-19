@@ -16,34 +16,27 @@
                limitations under the License.
 
         -->
-        <!ELEMENT generator (source*)+>
+        <!ELEMENT generator (source)+>
 
-        <!ELEMENT source ( entity | dao | service)*>
+        <!ELEMENT source ( entityGenerator | table)+>
         <!ATTLIST source
                 schema CDATA #REQUIRED
                 url CDATA #REQUIRED
                 username CDATA #REQUIRED
                 password CDATA #REQUIRED
                 driverClassName CDATA #REQUIRED
+                namingStyle (original | camel) #IMPLIED
                 >
 
-        <!ELEMENT entity (#PCDATA)*>
-        <!ATTLIST entity
+        <!ELEMENT entityGenerator (#PCDATA)*>
+        <!ATTLIST entityGenerator
                 targetPackage CDATA #REQUIRED
                 entityName CDATA #IMPLIED
-                fieldStyle (original | camel) #IMPLIED
                 >
 
-        <!ELEMENT dao (#PCDATA)*>
-        <!ATTLIST dao
-                targetPackage CDATA #REQUIRED
-                entityName CDATA #IMPLIED
-                db CDATA #IMPLIED
+        <!ELEMENT table (#PCDATA)*>
+        <!ATTLIST table
+                tableName CDATA #REQUIRED
+                domainName CDATA #IMPLIED
                 >
 
-        <!ELEMENT service (#PCDATA)*>
-        <!ATTLIST service
-                targetPackage CDATA #REQUIRED
-                entityName CDATA #IMPLIED
-                framework (spring | solon) #IMPLIED
-                >
