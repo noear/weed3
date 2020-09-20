@@ -7,7 +7,7 @@
             password="UL0hHlg0Ybq60xyb"
             driverClassName="com.mysql.cj.jdbc.Driver"
             namingStyle="camel">
-        <!--
+        <!-- 支持变量
         ${tableName}
         ${domainName}
         ${entityName}
