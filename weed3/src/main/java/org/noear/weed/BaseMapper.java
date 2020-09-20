@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by noear on 19-12-11.
+ * @author noear
  */
 public interface BaseMapper<T> {
     Long insert(T entity, boolean excludeNull);
