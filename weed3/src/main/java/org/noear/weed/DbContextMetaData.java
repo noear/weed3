@@ -187,6 +187,11 @@ class DbContextMetaData {
 
         try {
             _schema = conn.getSchema();
+
+            if(_schema == null){
+                _schema = _catalog;
+            }
+
         } catch (Throwable e) {
             switch (_dbType) {
                 case PostgreSQL:
