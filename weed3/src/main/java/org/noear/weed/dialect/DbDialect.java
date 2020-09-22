@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * 数据库方言处理
+ *
+ * @author noear
+ * @since 3.2
+ * */
 public interface DbDialect {
 
     default Object preChange(Object val) throws SQLException {return val;}

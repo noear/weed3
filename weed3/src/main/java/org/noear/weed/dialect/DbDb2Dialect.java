@@ -4,7 +4,10 @@ import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
 /**
- * BETWEEN AND :: >= + <=
+ * DB2数据库方言处理（BETWEEN AND :: >= + <=）
+ *
+ * @author noear
+ * @since 3.2
  * */
 public class DbDb2Dialect implements DbDialect {
 

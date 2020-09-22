@@ -5,6 +5,12 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * H2数据库方言处理
+ *
+ * @author noear
+ * @since 3.2
+ * */
 public class DbH2Dialect implements DbDialect {
     //top,page 和mysql一样
 

@@ -3,6 +3,12 @@ package org.noear.weed.dialect;
 import org.noear.weed.DbContext;
 import org.noear.weed.SQLBuilder;
 
+/**
+ * PostgreSQL数据库方言处理（BETWEEN AND :: >= + <=）
+ *
+ * @author noear
+ * @since 3.2
+ * */
 public class DbPostgreSQLDialect implements DbDialect {
     @Override
     public boolean excludeFormat(String str) {
