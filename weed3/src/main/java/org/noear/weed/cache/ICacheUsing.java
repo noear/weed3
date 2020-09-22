@@ -1,5 +1,11 @@
 package org.noear.weed.cache;
 
+/**
+ * 缓存使用控制接口
+ *
+ * @author noear
+ * @since 3.0
+ */
 public interface ICacheUsing<Q> {
     Q usingCache(boolean isCache);
 

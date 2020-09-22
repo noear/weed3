@@ -2,6 +2,12 @@ package org.noear.weed.cache;
 
 import org.noear.weed.ext.Fun1;
 
+/**
+ * 二级缓存容器
+ *
+ * @author noear
+ * @since 3.0
+ * */
 public class SecondCache implements ICacheServiceEx {
     private ICacheServiceEx cache1;
     private ICacheServiceEx cache2;

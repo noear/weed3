@@ -1,7 +1,10 @@
 package org.noear.weed.cache;
 
 /**
- * Created by noear on 2017/7/22.
+ * 空缓存服务
+ *
+ * @author noear
+ * @since 3.0
  */
 public class EmptyCache implements ICacheServiceEx {
     @Override

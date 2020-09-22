@@ -1,7 +1,10 @@
 package org.noear.weed.cache;
 
 /**
- * Created by noear on 14-6-12.
+ * 缓存服务接口
+ *
+ * @author noear
+ * @since 3.0
  */
 public interface ICacheService {
     /** 保存 */

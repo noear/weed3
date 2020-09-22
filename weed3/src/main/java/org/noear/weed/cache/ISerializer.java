@@ -2,6 +2,9 @@ package org.noear.weed.cache;
 
 /**
  * 对象序列化接口
+ *
+ * @author noear
+ * @since 3.0
  * */
 public interface ISerializer<T> {
     /**

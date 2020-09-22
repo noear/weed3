@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.util.concurrent.Executors;
 
 /**
- * Created by noear on 14-6-12.
+ * 缓存服务扩展接口
+ *
+ * @author noear
+ * @since 3.0
  */
 public interface ICacheServiceEx extends ICacheService {
     /** 缓存标签管理器 */

@@ -4,6 +4,9 @@ import java.lang.annotation.*;
 
 /**
  * 表标识; 可继承
+ *
+ * @author noear
+ * @since 3.2
  * */
 @Inherited
 @Target({ElementType.TYPE})

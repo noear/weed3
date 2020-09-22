@@ -4,9 +4,10 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
- * Created by noear on 19-06-05
- * 嵌入式缓存效率高；
+ * 本地缓存
  *
+ * @author noear
+ * @since 3.0
  */
 public class LocalCache implements ICacheServiceEx {
     private String _cacheKeyHead;

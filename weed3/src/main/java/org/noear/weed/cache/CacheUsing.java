@@ -7,7 +7,10 @@ import org.noear.weed.ext.Fun0;
 import org.noear.weed.ext.Fun0Ex;
 
 /**
- * Created by noear on 14-6-11.
+ * 缓存使用控制接口
+ *
+ * @author noear
+ * @since 3.0
  */
 public class CacheUsing implements ICacheUsing<CacheUsing>, IWeedKey {
     //#region ICacheControllerState 成员

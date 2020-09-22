@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by noear on 14-6-12.
+ * 缓存标签
+ *
+ * @author noear
+ * @since 3.0
  */
 public class CacheTags {
     private ICacheService _Cache;
