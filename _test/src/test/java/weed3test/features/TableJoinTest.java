@@ -6,6 +6,8 @@ import weed3test.DbUtil;
 import webapp.model.AgroupModel;
 import webapp.model.AppxModel;
 
+import java.sql.SQLException;
+
 
 public class TableJoinTest {
     DbContext db = DbUtil.db;
@@ -23,4 +25,13 @@ public class TableJoinTest {
         System.out.println(db.lastCommand.text);
     }
 
+    @Test
+    public void join_update() throws SQLException {
+        db.table("#appx a, appx_agroup g")
+                .set("a.note", "测试2")
+                .where("a.agroup_id = g.agroup_id").andEq("a.app_id", 1)
+                .update();
+
+        System.out.print(db.lastCommand.text);
+    }
 }
