@@ -346,27 +346,6 @@ public class DbContext extends DbContextMetaData {
 
 
     @Deprecated
-    public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws SQLException {
-        DbTran tran = DbTranUtil.current();
-
-        if (tran == null) {
-            return tran().execute(handler);
-        } else {
-            try {
-                handler.run(tran);
-            } catch (RuntimeException ex) {
-                throw ex;
-            } catch (SQLException ex) {
-                throw ex;
-            } catch (Throwable ex) {
-                throw new RuntimeException(ex);
-            }
-
-            return tran;
-        }
-    }
-
-    @Deprecated
     public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Throwable> handler) throws SQLException {
         return tran().join(queue).execute(handler);
     }
@@ -384,4 +363,56 @@ public class DbContext extends DbContextMetaData {
         return new DbTranQueue().execute(handler);
     }
 
+
+    /**
+     * 开始事务（如果当前有，则加入；否则新起事务）
+     */
+    public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws SQLException {
+        DbTran tran = DbTranUtil.current();
+
+        if (tran == null) {
+            return new DbTran(this).execute(handler);
+        } else {
+            try {
+                handler.run(tran);
+            } catch (RuntimeException ex) {
+                throw ex;
+            } catch (SQLException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new RuntimeException(ex);
+            }
+
+            return tran;
+        }
+    }
+
+    /**
+     * 开始一个新的事务
+     */
+    public DbTran tranNew(Act1Ex<DbTran, Throwable> handler) throws SQLException {
+        return new DbTran(this).execute(handler);
+    }
+
+    /**
+     * 以非事务方式运行（如果当有事务，则挂起）
+     */
+    public void tranNot(Act0Ex<Throwable> handler) throws SQLException {
+        DbTran tran = DbTranUtil.current();
+        DbTranUtil.currentRemove();
+
+        try {
+            handler.run();
+        } catch (RuntimeException ex) {
+            throw ex;
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Throwable ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            if (tran != null) {
+                DbTranUtil.currentSet(tran);
+            }
+        }
+    }
 }
