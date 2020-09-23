@@ -302,19 +302,20 @@ class SQLer {
         }
 
         //1.构建连接和命令(外部的c不能给conn)
+        Connection c;
         if(cmd.tran == null){
-            conn = cmd.context.getConnection();
+            c = conn = cmd.context.getConnection();
         }else{
-            conn = cmd.tran.getConnection(cmd.context); //事务时，conn 须为 null
+            c = cmd.tran.getConnection(cmd.context); //事务时，conn 须为 null
         }
 
         if (cmd.text.indexOf("{call") >= 0)
-            stmt = conn.prepareCall(cmd.fullText());
+            stmt = c.prepareCall(cmd.fullText());
         else {
             if (isInsert)
-                stmt = conn.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
+                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
             else
-                stmt = conn.prepareStatement(cmd.fullText());
+                stmt = c.prepareStatement(cmd.fullText());
         }
 
         WeedConfig.runExecuteStmEvent(cmd,stmt);
