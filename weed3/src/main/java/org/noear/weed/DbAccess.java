@@ -116,7 +116,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     //
     /** 执行插入（返回自增ID）*/
     public long insert() throws SQLException{
-        return new SQLer().insert(getCommand(),_tran);
+        return new SQLer().insert(getCommand());
     }
 
     /** 执行更新（返回受影响数）*/
@@ -134,7 +134,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     /** 执行命令（返回受影响数）*/
     public int execute() throws SQLException
     {
-        return new SQLer().execute(getCommand(),_tran);
+        return new SQLer().execute(getCommand());
     }
 
     @Override
@@ -382,12 +382,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     protected DbTran _tran = null;
+    @Deprecated
     public T tran(DbTran transaction)
     {
         _tran = transaction;
         return (T)this;
     }
 
+    @Deprecated
     public DbTran tran(DbTranQueue queue)
     {
         _tran = context.tran();
@@ -400,6 +402,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return _tran;
     }
 
+    @Deprecated
     public DbTran tran()
     {
         _tran = context.tran();

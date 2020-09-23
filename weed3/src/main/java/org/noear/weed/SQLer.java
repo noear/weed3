@@ -217,7 +217,7 @@ class SQLer {
     }
 
     //执行
-    public int execute(Command cmd,DbTran tran)  throws SQLException {
+    public int execute(Command cmd)  throws SQLException {
         if(cmd.context.isCompilationMode){
             return 0;
         }
@@ -242,7 +242,7 @@ class SQLer {
         }
     }
     //插入
-    public long insert(Command cmd,DbTran tran)  throws SQLException {
+    public long insert(Command cmd)  throws SQLException {
         if(cmd.context.isCompilationMode){
             return 0;
         }

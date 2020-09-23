@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by noear on 14/10/30.
  */
+@Deprecated
 public class DbTranQueue {
     private List<DbTran> queue = new ArrayList<DbTran>();
 

@@ -345,7 +345,7 @@ public class DbContext extends DbContextMetaData {
 //    }
 
 
-
+    @Deprecated
     public DbTran tran(Act1Ex<DbTran, Throwable> handler) throws SQLException {
         DbTran tran = DbTranUtil.current();
 
@@ -366,11 +366,12 @@ public class DbContext extends DbContextMetaData {
         }
     }
 
-
+    @Deprecated
     public DbTran tran(DbTranQueue queue, Act1Ex<DbTran, Throwable> handler) throws SQLException {
         return tran().join(queue).execute(handler);
     }
 
+    @Deprecated
     public DbTran tran() {
         return new DbTran(this);
     }

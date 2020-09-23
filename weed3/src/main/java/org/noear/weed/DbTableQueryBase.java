@@ -562,12 +562,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
     protected DbTran _tran = null;
+    @Deprecated
     public T tran(DbTran transaction)
     {
         _tran = transaction;
         return (T)this;
     }
 
+    @Deprecated
     public T tran()
     {
         _tran = _context.tran();
