@@ -171,7 +171,7 @@ public class XmlEntityGenerator {
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  //").append(cw.getRemarks()).append("\n");
+                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
             }
 
             if (table.tableWrap.getPks().contains(cw.getName())) {
@@ -196,8 +196,8 @@ public class XmlEntityGenerator {
         boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
-            if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  //").append(cw.getRemarks()).append("\n");
+            if (StringUtils.isEmpty(cw.getRemarks()) == false) {
+                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
             }
 
             sb.append("  public ").append(SqlTypeMap.getType(cw)).append(" get");
@@ -228,7 +228,7 @@ public class XmlEntityGenerator {
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  //").append(cw.getRemarks()).append("\n");
+                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
             }
 
             sb.append("  public void set");
