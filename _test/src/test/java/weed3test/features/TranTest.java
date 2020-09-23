@@ -2,6 +2,7 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbTran;
 import org.noear.weed.DbTranQueue;
 import org.noear.weed.VarHolder;
 import weed3test.DbUtil;
@@ -62,6 +63,21 @@ public class TranTest {
     }
 
     @Test
+    public void test1_1() throws Throwable {
+        DbContext db1 = DbUtil.db;
+        DbContext db2 = DbUtil.db;
+
+        clear(db1);
+
+        new DbTran().execute((tq) -> {
+            db1.sql("insert into test (v1) values (1024);").insert();
+            db2.sql("insert into test (v1) values (1024);").insert();
+        });
+
+        assert db1.table("test").count() == 2;
+    }
+
+    @Test
     public void test11() throws Throwable {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
@@ -92,6 +108,32 @@ public class TranTest {
         assert count == 1;
     }
 
+    @Test
+    public void test11_1() throws Throwable {
+        DbContext db1 = DbUtil.db;
+        DbContext db2 = DbUtil.db;
+
+        clear(db1);
+
+        try {
+            new DbTran().execute((tq) -> {
+                db1.sql("insert into test (v1) values (1024);").insert();
+                db2.sql("insert into test (v1) values (1024);").insert();
+
+                throw new RuntimeException("不让你加");
+            });
+
+        } catch (Exception ex) {
+
+        }
+
+        db1.sql("insert into test (v1) values (1024);").insert();
+
+        long count = db1.table("test").count();
+        System.out.print(count);
+        assert count == 1;
+    }
+
     public void demo2() throws Throwable {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
@@ -106,6 +148,19 @@ public class TranTest {
             db2.tran(tq, t -> {
                 db2.sql("").update();
             });
+        });
+    }
+
+    public void demo2_1() throws Throwable {
+        DbContext db1 = DbUtil.db;
+        DbContext db2 = DbUtil.db;
+
+        new DbTran().execute((tq) -> {
+            VarHolder<Long> tmp = new VarHolder<>();
+
+            tmp.value = db1.sql("").insert();
+            db2.sql("").update();
+
         });
     }
 

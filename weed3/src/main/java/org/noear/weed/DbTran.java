@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 数据事务：支持事务模式和单链接模式
+ * 数据事务：支持事务模式和单链接模式（同时，可替代之前的DbTranQueue）
  *
  * @author noear
  * @since 14-9-16
