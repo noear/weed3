@@ -217,7 +217,7 @@
         <module>../weed3-maven-plugin</module>
 
         <module>../_extend/weed3-solon-plugin</module>
-<!--        <module>../_extend/weed3-springboot-starter</module>-->
+        <module>../_extend/weed3-springboot-starter</module>
 
         <module>../_extend/weed3.cache.memcached</module>
         <module>../_extend/weed3.cache.redis</module>

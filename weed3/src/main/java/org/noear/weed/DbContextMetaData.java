@@ -107,7 +107,7 @@ class DbContextMetaData {
             System.out.println("Weed3::Start testing database connectivity...");
             conn = getMetaConnection();
             DatabaseMetaData md = conn.getMetaData();
-            System.out.println("Weed3::The connection is successful");
+
 
             if (_dbDialect == null) {
                 //1.
@@ -115,6 +115,12 @@ class DbContextMetaData {
 
                 //2.
                 setSchema(conn);
+            }
+
+            if (_schema != null) {
+                System.out.println("Weed3::The connection is successful - " + _schema);
+            }else{
+                System.out.println("Weed3::The connection is successful");
             }
 
             //3.
