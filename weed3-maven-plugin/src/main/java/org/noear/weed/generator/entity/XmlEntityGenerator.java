@@ -63,15 +63,13 @@ public class XmlEntityGenerator {
         List<TableItem> tableItems = XmlParser.getTables(source, db);
 
         for (XmlEntityBlock entityBlock : source.entityBlocks) {
-            if(entityBlock.code != null){
+            if (entityBlock.code != null) {
                 for (TableItem tableItem : tableItems) {
                     generateJavaFile(source, entityBlock, tableItem, sourceDir);
                 }
             }
         }
     }
-
-
 
 
     private static void generateJavaFile(XmlSourceBlock source, XmlEntityBlock entityBlock, TableItem tableItem, File sourceDir) throws Exception {
@@ -170,9 +168,7 @@ public class XmlEntityGenerator {
         boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
-            if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
-            }
+            buildColumnRemarks(cw, sb);
 
             if (table.tableWrap.getPks().contains(cw.getName())) {
                 sb.append("  @PrimaryKey").append("\n");
@@ -196,9 +192,7 @@ public class XmlEntityGenerator {
         boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
-            if (StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
-            }
+            buildColumnRemarks(cw, sb);
 
             sb.append("  public ").append(SqlTypeMap.getType(cw)).append(" get");
             if (camel) {
@@ -227,9 +221,7 @@ public class XmlEntityGenerator {
         boolean camel = Names.val_camel.equals(source.namingStyle);
 
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
-            if (org.noear.weed.utils.StringUtils.isEmpty(cw.getRemarks()) == false) {
-                sb.append("  /** ").append(cw.getRemarks()).append(" */\n");
-            }
+            buildColumnRemarks(cw, sb);
 
             sb.append("  public void set");
             if (camel) {
@@ -251,6 +243,13 @@ public class XmlEntityGenerator {
         }
 
         return sb.toString();
+    }
+
+    private static void buildColumnRemarks(ColumnWrap cw, StringBuilder sb) {
+        if (StringUtils.isEmpty(cw.getRemarks()) == false) {
+            String remarks = cw.getRemarks().replace("\r\n"," ").replace("\n", " ");
+            sb.append("  /** ").append(remarks).append(" */\n");
+        }
     }
 }
 
