@@ -97,9 +97,9 @@ class DbContextMetaData {
 
     private void initPrintln(String x) {
         if (_schema == null) {
-            System.out.print(x);
+            System.out.println(x);
         } else {
-            System.out.print(x + " - " + _schema);
+            System.out.println(x + " - " + _schema);
         }
     }
 
