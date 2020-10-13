@@ -36,7 +36,7 @@ db.table("user u")
   .select("u.*,e.sex,e.label")
   .getList(User.class);
 
-//Table 接口，拼条件条件查询（特别适合管理后台）
+//Table 接口，拼装条件查询（特别适合管理后台）
 db.table(logger)
   .where("1 = 1")
   .andIf(TextUtils.isNotEmpty(trace_id), "trace_id = ?", trace_id)
