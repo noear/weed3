@@ -31,6 +31,22 @@ db.table("user u")
   .limit(100,20)
   .select("u.*,e.sex,e.label")
   .getList(User.class);
+
+//Table接口，拼条件条件查询（特别适合管理后台）
+db.table(logger)
+  .where("1 = 1")
+  .andIf(TextUtils.isNotEmpty(trace_id), "trace_id = ?", trace_id)
+  .andIf(TextUtils.isNotEmpty(tag), "tag = ?", tag)
+  .andIf(TextUtils.isNotEmpty(tag1), "tag1 = ?", tag1)
+  .andIf(TextUtils.isNotEmpty(tag2), "tag2 = ?", tag2)
+  .andIf(TextUtils.isNotEmpty(tag3), "tag3 = ?", tag3)
+  .andIf(log_date > 0, "log_date = ?", log_date)
+  .andIf(log_id > 0, "log_id <= ?", log_id)
+  .andIf(level > 0, "level=?", level)
+  .orderBy("log_fulltime desc")
+  .limit(size)
+  .select("*")
+  .getList(LogModel.class);
 ```
 
 
