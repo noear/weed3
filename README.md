@@ -21,10 +21,14 @@
 * 四个接口：db.mapper(), db.table(), db.call(), db.sql()
 
 ```java
-//Mapper接口
+//BaseMapper 接口
 db.mapperBase(User.class).selectById(1);
 
-//Table接口
+//BaseMapper 接口，条件查询
+db.mapperBase(User.class).selectList(mq->mq.whereLt(User::getGroup,1).andEq(User::getLabel,"T"));
+
+
+//Table 接口
 db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
   .whereEq("u.type",11)
@@ -32,7 +36,7 @@ db.table("user u")
   .select("u.*,e.sex,e.label")
   .getList(User.class);
 
-//Table接口，拼条件条件查询（特别适合管理后台）
+//Table 接口，拼条件条件查询（特别适合管理后台）
 db.table(logger)
   .where("1 = 1")
   .andIf(TextUtils.isNotEmpty(trace_id), "trace_id = ?", trace_id)
