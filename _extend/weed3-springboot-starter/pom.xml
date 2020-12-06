@@ -14,6 +14,10 @@
     <artifactId>weed3-springboot-starter</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <spring.boot.ver>2.0.4.RELEASE</spring.boot.ver>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
@@ -23,14 +27,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.0.4.RELEASE</version>
+            <version>${spring.boot.ver}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>2.0.4.RELEASE</version>
+            <version>${spring.boot.ver}</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
