@@ -560,32 +560,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         }
     }
 
-
-    protected DbTran _tran = null;
-    @Deprecated
-    public T tran(DbTran transaction)
-    {
-        _tran = transaction;
-        return (T)this;
-    }
-
-    @Deprecated
-    public T tran()
-    {
-        _tran = _context.tran();
-        return (T)this;
-    }
-
-
     //编译（成DbQuery）
     private DbQuery compile() {
         DbQuery temp = new DbQuery(_context).sql(_builder);
 
         _builder.clear();
-
-        if(_tran!=null) {
-            temp.tran(_tran);
-        }
 
         return temp.onCommandBuilt((cmd)->{
             cmd.isLog = _isLog;

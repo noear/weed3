@@ -381,38 +381,6 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return getDataItem().getMap();
     }
 
-    protected DbTran _tran = null;
-    @Deprecated
-    public T tran(DbTran transaction)
-    {
-        _tran = transaction;
-        return (T)this;
-    }
-
-    @Deprecated
-    public DbTran tran(DbTranQueue queue)
-    {
-        _tran = context.tran();
-        _tran.join(queue);
-
-        _tran.action(tt->{
-            this.execute();
-        });
-
-        return _tran;
-    }
-
-    @Deprecated
-    public DbTran tran()
-    {
-        _tran = context.tran();
-
-        _tran.action(tt->{
-            this.execute();
-        });
-
-        return _tran;
-    }
 
     //=======================
     //

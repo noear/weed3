@@ -3,7 +3,7 @@ package weed3test.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTran;
-import org.noear.weed.DbTranQueue;
+import org.noear.weed.Trans;
 import org.noear.weed.VarHolder;
 import weed3test.DbUtil;
 
@@ -14,12 +14,12 @@ public class TranTest {
 
         clear(db1);
 
-        db1.tran(t -> {
+        Trans.tran(() -> {
             db1.sql("insert into test (v1) values (1024);").insert();
             db1.sql("insert into test (v1) values (1024);").insert();
         });
 
-        assert  db1.table("test").count()==2;
+        assert db1.table("test").count() == 2;
     }
 
     @Test
@@ -29,17 +29,17 @@ public class TranTest {
         clear(db1);
 
         try {
-            db1.tran(t -> {
+            Trans.tran(() -> {
                 db1.sql("insert into test (v1) values (1024);").insert();
                 db1.sql("insert into test (v1) values (1024);").insert();
 
                 throw new RuntimeException("不让你加");
             });
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
 
-        assert  db1.table("test").count()==0;
+        assert db1.table("test").count() == 0;
     }
 
     @Test
@@ -49,17 +49,13 @@ public class TranTest {
 
         clear(db1);
 
-        new DbTranQueue().execute((tq) -> {
-            db1.tran(tq, t -> {
-                db1.sql("insert into test (v1) values (1024);").insert();
-            });
+        Trans.tran(() -> {
+            db1.sql("insert into test (v1) values (1024);").insert();
 
-            db2.tran(tq, t -> {
-                db2.sql("insert into test (v1) values (1024);").insert();
-            });
+            db2.sql("insert into test (v1) values (1024);").insert();
         });
 
-        assert  db1.table("test").count()==2;
+        assert db1.table("test").count() == 2;
     }
 
     @Test
@@ -69,7 +65,7 @@ public class TranTest {
 
         clear(db1);
 
-        new DbTran().execute((tq) -> {
+        Trans.tran(() -> {
             db1.sql("insert into test (v1) values (1024);").insert();
             db2.sql("insert into test (v1) values (1024);").insert();
         });
@@ -85,14 +81,11 @@ public class TranTest {
         clear(db1);
 
         try {
-            new DbTranQueue().execute((tq) -> {
-                db1.tran(tq, t -> {
-                    db1.sql("insert into test (v1) values (1024);").insert();
-                });
+            Trans.tran(() -> {
+                db1.sql("insert into test (v1) values (1024);").insert();
 
-                db2.tran(tq, t -> {
-                    db2.sql("insert into test (v1) values (1024);").insert();
-                });
+                db2.sql("insert into test (v1) values (1024);").insert();
+
 
                 throw new RuntimeException("不让你加");
             });
@@ -116,7 +109,7 @@ public class TranTest {
         clear(db1);
 
         try {
-            new DbTran().execute((tq) -> {
+            Trans.tran(() -> {
                 db1.sql("insert into test (v1) values (1024);").insert();
                 db2.sql("insert into test (v1) values (1024);").insert();
 
@@ -138,16 +131,13 @@ public class TranTest {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
-        new DbTranQueue().execute((tq) -> {
+        Trans.tran(() -> {
             VarHolder<Long> tmp = new VarHolder<>();
 
-            db1.tran(tq, t -> {
-                tmp.value = db1.sql("").insert();
-            });
+            tmp.value = db1.sql("").insert();
 
-            db2.tran(tq, t -> {
-                db2.sql("").update();
-            });
+            db2.sql("").update();
+
         });
     }
 
@@ -155,7 +145,7 @@ public class TranTest {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
-        new DbTran().execute((tq) -> {
+        Trans.tran(() -> {
             VarHolder<Long> tmp = new VarHolder<>();
 
             tmp.value = db1.sql("").insert();

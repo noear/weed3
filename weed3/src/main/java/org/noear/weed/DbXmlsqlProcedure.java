@@ -60,15 +60,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
     }
 
     private void _onSet(String name, Object val){
-        if("_tran".equals(name)){
-            if(val instanceof DbTran){
-                this.tran((DbTran)val);
-            }
 
-            if(val instanceof DbTranQueue){
-                this.tran((DbTranQueue)val);
-            }
-        }
     }
 
     @Override
@@ -95,7 +87,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
 
     @Override
     protected Command getCommand(){
-        Command cmd = new Command(this.context,_tran);
+        Command cmd = new Command(this.context);
 
         cmd.key      = getCommandID();
 
