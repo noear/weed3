@@ -225,7 +225,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public Long selectCount(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).count());
+        return RunUtils.call(()-> getQr(c).selectCount());
     }
 
     @Override

@@ -2,7 +2,6 @@ package weed3test.features;
 
 import org.junit.Test;
 import org.noear.weed.DbContext;
-import org.noear.weed.DbTran;
 import org.noear.weed.Trans;
 import org.noear.weed.VarHolder;
 import weed3test.DbUtil;
@@ -19,7 +18,7 @@ public class TranTest {
             db1.sql("insert into test (v1) values (1024);").insert();
         });
 
-        assert db1.table("test").count() == 2;
+        assert db1.table("test").selectCount() == 2;
     }
 
     @Test
@@ -39,7 +38,7 @@ public class TranTest {
 
         }
 
-        assert db1.table("test").count() == 0;
+        assert db1.table("test").selectCount() == 0;
     }
 
     @Test
@@ -55,7 +54,7 @@ public class TranTest {
             db2.sql("insert into test (v1) values (1024);").insert();
         });
 
-        assert db1.table("test").count() == 2;
+        assert db1.table("test").selectCount() == 2;
     }
 
     @Test
@@ -70,7 +69,7 @@ public class TranTest {
             db2.sql("insert into test (v1) values (1024);").insert();
         });
 
-        assert db1.table("test").count() == 2;
+        assert db1.table("test").selectCount() == 2;
     }
 
     @Test
@@ -96,7 +95,7 @@ public class TranTest {
 
         db1.sql("insert into test (v1) values (1024);").insert();
 
-        long count = db1.table("test").count();
+        long count = db1.table("test").selectCount();
         System.out.print(count);
         assert count == 1;
     }
@@ -122,7 +121,7 @@ public class TranTest {
 
         db1.sql("insert into test (v1) values (1024);").insert();
 
-        long count = db1.table("test").count();
+        long count = db1.table("test").selectCount();
         System.out.print(count);
         assert count == 1;
     }

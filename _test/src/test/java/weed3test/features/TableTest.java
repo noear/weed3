@@ -69,7 +69,7 @@ public class TableTest {
         db.table("test").set("v1", 2).set("id", 2).insert();
         db.table("test").set("v1", 3).set("id", 3).insert();
 
-        assert db.table("test").count() == 3;
+        assert db.table("test").selectCount() == 3;
 
 
         //改

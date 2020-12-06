@@ -493,15 +493,31 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return  (T)this;
     }
 
-    public long count() throws SQLException{
-        return count("COUNT(*)");
+    public long selectCount() throws SQLException{
+        return selectCount("COUNT(*)");
     }
 
-    public long count(String code) throws SQLException{
+    public long selectCount(String code) throws SQLException{
         return select(code).getVariate().longValue(0l);
     }
 
+    public Variate selectVariate(String code) throws SQLException{
+        return select(code).getVariate();
+    }
+
+    public DataItem selectItem(String columns) throws SQLException{
+        return select(columns).getDataItem();
+    }
+
+    public DataList selectList(String columns) throws SQLException{
+        return select(columns).getDataList();
+    }
+
     public IQuery select(String columns) {
+        return select0(columns);
+    }
+
+    private IQuery select0(String columns) {
         select_do(columns, true);
 
         DbQuery rst = compile();
