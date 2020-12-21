@@ -58,12 +58,12 @@ public class DbOracleDialect implements DbDialect {
 
         if(ss.length > 1){
             if("*".equals(ss[1])){
-                return "\"" + ss[0] + "\".*";
+                return "\"" + ss[0].toUpperCase() + "\".*";
             }else {
-                return "\"" + ss[0] + "\".\"" + ss[1] + "\"";
+                return "\"" + ss[0] + "\".\"" + ss[1].toUpperCase() + "\"";
             }
         }else{
-            return "\"" + ss[0] + "\"";
+            return "\"" + ss[0].toUpperCase() + "\"";
         }
     }
 
