@@ -197,14 +197,7 @@ public interface DbDialect {
         return true;
     }
 
-    default PreparedStatement prepareCMD(Connection c, Command cmd, boolean isInsert) throws SQLException {
-        if (cmd.text.indexOf("{call") >= 0)
-            return c.prepareCall(cmd.fullText());
-        else {
-            if (isInsert)
-                return c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
-            else
-                return c.prepareStatement(cmd.fullText());
-        }
+    default boolean insertGeneratedKey(){
+        return true;
     }
 }

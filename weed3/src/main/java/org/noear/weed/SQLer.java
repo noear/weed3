@@ -255,10 +255,12 @@ class SQLer {
 
             stmt.executeUpdate();
 
-            try {
-                rset = stmt.getGeneratedKeys(); //乎略错误
-            } catch (Exception ex) {
-                //ex.printStackTrace();
+            if(cmd.context.dbDialect().insertGeneratedKey()) {
+                try {
+                    rset = stmt.getGeneratedKeys(); //乎略错误
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
             //*.监听
@@ -310,16 +312,14 @@ class SQLer {
             c = cmd.tran.getConnection(cmd.context); //事务时，conn 须为 null
         }
 
-        stmt = cmd.context.dbDialect().prepareCMD(c, cmd, isInsert);
-
-//        if (cmd.text.indexOf("{call") >= 0)
-//            stmt = c.prepareCall(cmd.fullText());
-//        else {
-//            if (isInsert)
-//                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
-//            else
-//                stmt = c.prepareStatement(cmd.fullText());
-//        }
+        if (cmd.text.indexOf("{call") >= 0)
+            stmt = c.prepareCall(cmd.fullText());
+        else {
+            if (isInsert && cmd.context.dbDialect().insertGeneratedKey())
+                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
+            else
+                stmt = c.prepareStatement(cmd.fullText());
+        }
 
         WeedConfig.runExecuteStmEvent(cmd, stmt);
 
