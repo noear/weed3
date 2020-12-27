@@ -21,4 +21,9 @@ public class DbPhoenixDialect implements DbDialect {
     public String columnFormat(String name) {
         return name;
     }
+
+    @Override
+    public String insertCmd() {
+        return "UPSERT INTO";
+    }
 }

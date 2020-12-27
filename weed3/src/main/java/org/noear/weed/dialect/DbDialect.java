@@ -75,11 +75,64 @@ public interface DbDialect {
         }
     }
 
+    default String insertCmd(){
+        return "INSERT INTO";
+    }
+
+    default <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean,String> isSqlExpr, boolean _usingNull, IDataItem values){
+        List<Object> args = new ArrayList<Object>();
+        StringBuilder sb = StringUtils.borrowBuilder();
+
+        sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
+        values.forEach((key, value) -> {
+            if(value==null) {
+                if(_usingNull == false) {
+                    return;
+                }
+            }
+
+            sb.append(ctx.formater().formatColumn(key)).append(",");
+        });
+
+        sb.deleteCharAt(sb.length() - 1);
+
+        sb.append(") ");
+        sb.append("VALUES");
+        sb.append("(");
+
+        values.forEach((key, value) -> {
+            if (value == null) {
+                if(_usingNull) {
+                    sb.append("null,"); //充许插入null
+                }
+            } else {
+                if (value instanceof String) {
+                    String val2 = (String) value;
+                    if (isSqlExpr.run(val2)) { //说明是SQL函数
+                        sb.append(val2.substring(1)).append(",");
+                    } else {
+                        sb.append("?,");
+                        args.add(value);
+                    }
+                } else {
+                    sb.append("?,");
+                    args.add(value);
+                }
+            }
+        });
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(")");
+
+        sqlB.append(StringUtils.releaseBuilder(sb), args.toArray());
+
+        return true;
+    }
+
     default <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean,String> isSqlExpr, IDataItem cols, Collection<T> valuesList){
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
-        sb.append(" INSERT INTO ").append(table1).append(" (");
+        sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
         for (String key : cols.keys()) {
             sb.append(ctx.formater().formatColumn(key)).append(",");
         }
