@@ -1,7 +1,9 @@
 package weed3demo.demo.tran;
 
+import org.noear.weed.DbContext;
 import org.noear.weed.DbTran;
 import org.noear.weed.DbTranQueue;
+import org.noear.weed.Trans;
 import weed3demo.config.DbConfig;
 
 import java.sql.SQLException;
@@ -31,34 +33,32 @@ public class Tran2Demo {
     private static void tast_db1_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
+        DbContext db = DbConfig.pc_user;
         DbTran tran = new DbTran(DbConfig.pc_user);
 
         tran.join(queue).execute((t) -> {
-            t.db().sql("insert into $.test(txt) values(?)", "cc").tran(t).insert();
-            t.db().sql("insert into $.test(txt) values(?)", "dd").tran(t).execute();
-            t.db().sql("insert into $.test(txt) values(?)", "ee").tran(t).execute();
+            db.sql("insert into $.test(txt) values(?)", "cc").tran(t).insert();
+            db.sql("insert into $.test(txt) values(?)", "dd").tran(t).execute();
+            db.sql("insert into $.test(txt) values(?)", "ee").tran(t).execute();
 
-            t.result = t.db().sql("select name from $.user_info where user_id=3").tran(t).getValue("");
+            t.result = db.sql("select name from $.user_info where user_id=3").tran(t).getValue("");
         });
     }
 
     private static void tast_db2_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
-        DbTran tran = DbConfig.pc_base.tran();
-
-        tran.join(queue).execute((t) -> {
-            t.db().sql("insert into $.test(txt) values(?)", "gg").tran(t).execute();
+        Trans.tranNew(()->{
+            DbConfig.pc_user.sql("insert into $.test(txt) values(?)", "gg").execute();
         });
     }
 
     private static void tast_db3_tran(DbTranQueue queue) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
-        DbTran tran = new DbTran(DbConfig.pc_live);
 
-        tran.join(queue).execute((t) -> {
-            t.db().sql("insert into $.test(txt) values(?)", "xx").tran(t).execute();
+        Trans.tran(() -> {
+            DbConfig.pc_live.sql("insert into $.test(txt) values(?)", "xx").execute();
 
             throw new SQLException("xxxx");
         });

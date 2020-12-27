@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.ext.Act0Ex;
 import org.noear.weed.ext.Act1Ex;
 
 import javax.sql.DataSource;
@@ -29,6 +30,7 @@ public class DbTran {
     //是否自动提交
     private boolean _autoCommit = false;
 
+    @Deprecated
     public boolean isSucceed() {
         return _isSucceed;
     }
@@ -58,6 +60,7 @@ public class DbTran {
 
 
     /*加盟（到某一个事务当中）*/
+    @Deprecated
     public DbTran join(DbTranQueue queue) {
         if (queue != null) {
             this.queue = queue;
@@ -67,6 +70,7 @@ public class DbTran {
         return this;
     }
 
+    @Deprecated
     public DbTran(DbContext context) {
         _context = context;
     }
@@ -83,6 +87,11 @@ public class DbTran {
     }
 
     /*执行事务过程 = action(...) + excute() */
+    public DbTran execute(Act0Ex<Throwable> handler) throws SQLException {
+        return execute(t -> handler.run());
+    }
+
+    @Deprecated
     public DbTran execute(Act1Ex<DbTran, Throwable> handler) throws SQLException {
 
         //挂起之前的事务
@@ -137,13 +146,18 @@ public class DbTran {
         return execute(_handler);
     }
 
+    public DbTran action(Act0Ex<Throwable> handler) {
+        return action(t -> handler.run());
+    }
 
+    @Deprecated
     public DbTran action(Act1Ex<DbTran, Throwable> handler) {
         _handler = handler;
         return this;
     }
 
     //isQueue:是否由Queue调用的
+    @Deprecated
     protected void rollback(boolean isQueue) throws SQLException {
         if (queue == null || isQueue) {
             for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {
@@ -153,6 +167,7 @@ public class DbTran {
     }
 
     //isQueue:是否由Queue调用的
+    @Deprecated
     protected void commit(boolean isQueue) throws SQLException {
         if (queue == null || isQueue) {
             for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {
@@ -162,6 +177,7 @@ public class DbTran {
     }
 
     //isQueue:是否由Queue调用的
+    @Deprecated
     protected void close(boolean isQueue) throws SQLException {
         if (queue == null || isQueue) {
             for (Map.Entry<DataSource, Connection> kv : conMap.entrySet()) {

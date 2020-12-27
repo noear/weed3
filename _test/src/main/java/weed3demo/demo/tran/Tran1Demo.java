@@ -25,14 +25,15 @@ public class Tran1Demo {
     /*所有的执行在一个事务控制范围内*/
     private static void test_db1_tran() throws Throwable {
         //1.简单处理
+        DbContext db = DbConfig.pc_user;
         DbConfig.pc_user.tran((t) -> {
             //
             // 此表达式内的操作，会自动加入事务（3.2.0.3 开始支持）
             //
-            t.db().sql("insert into test(txt) values(?)", "cc").execute();
-            t.db().sql("insert into test(txt) values(?)", "dd").execute();
+            db.sql("insert into test(txt) values(?)", "cc").execute();
+            db.sql("insert into test(txt) values(?)", "dd").execute();
 
-            t.db().sql("update test set txt='1' where id=1").execute();
+            db.sql("update test set txt='1' where id=1").execute();
         });
     }
 
