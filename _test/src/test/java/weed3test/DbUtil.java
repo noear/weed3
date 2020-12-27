@@ -15,9 +15,9 @@ public class DbUtil {
         HikariDataSource ds = new HikariDataSource();
 
         ds.setSchema("rock");
-        ds.setJdbcUrl("jdbc:mysql://localdb:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-        ds.setUsername("demo");
-        ds.setPassword("UL0hHlg0Ybq60xyb");
+        ds.setJdbcUrl("jdbc:mysql://localhost:3306/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        ds.setUsername("root");
+        ds.setPassword("123456");
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
         return ds;
@@ -147,7 +147,7 @@ public class DbUtil {
             System.out.println(":::"+cmd.text);
         });
 
-        HikariDataSource source = dbMysqlCfg(); // dbSqliteCfg(); // dbH2Cfg(); //dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
+        HikariDataSource source = dbSqliteCfg(); // dbH2Cfg(); //dbMysqlCfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //
 
         DbContext db = new DbContext(source).nameSet("rock");
         //WeedConfig.isUsingSchemaPrefix =true;
