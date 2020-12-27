@@ -140,9 +140,9 @@
 
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.176</version>
+            <groupId>com.aliyun.phoenix</groupId>
+            <artifactId>ali-phoenix-shaded-thin-client</artifactId>
+            <version>5.2.1-HBase-2.x</version>
         </dependency>
 
         <dependency>

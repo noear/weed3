@@ -169,7 +169,10 @@ class DbContextMetaData {
             } else if (pn.indexOf("h2") >= 0) {
                 _dbType = DbType.H2;
                 _dbDialect = new DbH2Dialect();
-            } else {
+            } else if (pn.indexOf("phoenix") >= 0) {
+                _dbType = DbType.Phoenix;
+                _dbDialect = new DbPhoenixDialect();
+            }else {
                 //做为默认
                 _dbDialect = new DbMySQLDialect();
             }

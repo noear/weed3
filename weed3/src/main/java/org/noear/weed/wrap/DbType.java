@@ -15,6 +15,7 @@ public enum DbType {
     DB2,
     SQLite,
     H2,
+    Phoenix,
 
     /*
     Unknown(DatabaseType.Unknown, "Unknown", "Unknown", 0),
