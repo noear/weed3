@@ -4,9 +4,7 @@ import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
 import org.noear.weed.utils.StringUtils;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,74 +17,88 @@ import java.util.List;
  * */
 public interface DbDialect {
 
-    default Object preChange(Object val) throws SQLException {return val;}
-    default String preReview(String code){return code;}
+    default Object preChange(Object val) throws SQLException {
+        return val;
+    }
 
-    default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException{ return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"}); }
+    default String preReview(String code) {
+        return code;
+    }
+
+    default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
+        return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"});
+    }
 
     /**
      * 是否支持变量分页
-     * */
-    default boolean supportsVariablePaging(){return false;}
+     */
+    default boolean supportsVariablePaging() {
+        return false;
+    }
+
     /**
      * 排除格式化
-     * */
+     */
     default boolean excludeFormat(String str) {
         return str.startsWith("`") || str.indexOf(".") > 0;
     }
 
-    default String schemaFormat(String name){ return name;}
-    default String tableFormat(String name){
+    default String schemaFormat(String name) {
+        return name;
+    }
+
+    default String tableFormat(String name) {
         return "`" + name + "`";
     }
-    default String columnFormat(String name){
+
+    default String columnFormat(String name) {
         return "`" + name + "`";
     }
 
 
-    default void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size){
-        sqlB.insert(0,"SELECT ");
+    default void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+        sqlB.insert(0, "SELECT ");
 
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
 
-        if(supportsVariablePaging()){
+        if (supportsVariablePaging()) {
             sqlB.append(" LIMIT ?,?");
             sqlB.paramS.add(start);
             sqlB.paramS.add(size);
-        }else {
+        } else {
             sqlB.append(" LIMIT ").append(start).append(",").append(size);
         }
     }
 
-    default void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size){
-        sqlB.insert(0,"SELECT ");
+    default void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
+        sqlB.insert(0, "SELECT ");
 
         if (orderBy != null) {
             sqlB.append(orderBy);
         }
 
-        if(supportsVariablePaging()){
+        if (supportsVariablePaging()) {
             sqlB.append(" LIMIT ?");
             sqlB.paramS.add(size);
-        }else {
+        } else {
             sqlB.append(" LIMIT ").append(size);
         }
     }
 
-    default String insertCmd(){
+    default String insertCmd() {
         return "INSERT INTO";
     }
 
-    default <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean,String> isSqlExpr, boolean _usingNull, IDataItem values){
+    default <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
         sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
         values.forEach((key, value) -> {
-            if(value==null) {
-                if(_usingNull == false) {
+            if (value == null) {
+                if (_usingNull == false) {
                     return;
                 }
             }
@@ -102,7 +114,7 @@ public interface DbDialect {
 
         values.forEach((key, value) -> {
             if (value == null) {
-                if(_usingNull) {
+                if (_usingNull) {
                     sb.append("null,"); //充许插入null
                 }
             } else {
@@ -128,7 +140,7 @@ public interface DbDialect {
         return true;
     }
 
-    default <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean,String> isSqlExpr, IDataItem cols, Collection<T> valuesList){
+    default <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, IDataItem cols, Collection<T> valuesList) {
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = StringUtils.borrowBuilder();
 
@@ -173,7 +185,7 @@ public interface DbDialect {
         }
 
         //如果长度没有增加，说明没有数据
-        if(sb_len == sb.length()){
+        if (sb_len == sb.length()) {
             return false;
         }
 
@@ -183,5 +195,16 @@ public interface DbDialect {
         sqlB.append(StringUtils.releaseBuilder(sb), args.toArray());
 
         return true;
+    }
+
+    default PreparedStatement prepareCMD(Connection c, Command cmd, boolean isInsert) throws SQLException {
+        if (cmd.text.indexOf("{call") >= 0)
+            return c.prepareCall(cmd.fullText());
+        else {
+            if (isInsert)
+                return c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
+            else
+                return c.prepareStatement(cmd.fullText());
+        }
     }
 }

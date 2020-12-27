@@ -15,7 +15,7 @@ class SQLer {
     private PreparedStatement stmt;
     private Connection conn;
 
-    private  void tryClose() {
+    private void tryClose() {
         try {
             if (rset != null) {
                 rset.close();
@@ -46,16 +46,16 @@ class SQLer {
         }
     }
 
-    private Object getObject(Command cmd, String key) throws SQLException{
+    private Object getObject(Command cmd, String key) throws SQLException {
         return cmd.context.dbDialect().preChange(rset.getObject(key));
     }
 
-    private Object getObject(Command cmd, int idx) throws SQLException{
+    private Object getObject(Command cmd, int idx) throws SQLException {
         return cmd.context.dbDialect().preChange(rset.getObject(idx));
     }
 
     public Variate getVariate(Command cmd) throws SQLException {
-        if(cmd.context.isCompilationMode){
+        if (cmd.context.isCompilationMode) {
             return null;
         }
 
@@ -75,7 +75,7 @@ class SQLer {
     }
 
     public <T extends IBinder> T getItem(Command cmd, T model) throws SQLException {
-        if(cmd.context.isCompilationMode){
+        if (cmd.context.isCompilationMode) {
             return null;
         }
 
@@ -105,7 +105,7 @@ class SQLer {
     }
 
     public <T extends IBinder> List<T> getList(Command cmd, T model) throws SQLException {
-        if(cmd.context.isCompilationMode){
+        if (cmd.context.isCompilationMode) {
             return null;
         }
 
@@ -149,7 +149,7 @@ class SQLer {
     }
 
     public DataItem getRow(Command cmd) throws SQLException {
-        if(cmd.context.isCompilationMode){
+        if (cmd.context.isCompilationMode) {
             return null;
         }
 
@@ -182,7 +182,7 @@ class SQLer {
     }
 
     public DataList getTable(Command cmd) throws SQLException {
-        if(cmd.context.isCompilationMode){
+        if (cmd.context.isCompilationMode) {
             return null;
         }
 
@@ -217,8 +217,8 @@ class SQLer {
     }
 
     //执行
-    public int execute(Command cmd)  throws SQLException {
-        if(cmd.context.isCompilationMode){
+    public int execute(Command cmd) throws SQLException {
+        if (cmd.context.isCompilationMode) {
             return 0;
         }
 
@@ -241,9 +241,10 @@ class SQLer {
             tryClose();
         }
     }
+
     //插入
-    public long insert(Command cmd)  throws SQLException {
-        if(cmd.context.isCompilationMode){
+    public long insert(Command cmd) throws SQLException {
+        if (cmd.context.isCompilationMode) {
             return 0;
         }
 
@@ -257,7 +258,7 @@ class SQLer {
             try {
                 rset = stmt.getGeneratedKeys(); //乎略错误
             } catch (Exception ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
 
             //*.监听
@@ -297,35 +298,37 @@ class SQLer {
 
     private boolean buildCMD(Command cmd, boolean isInsert) throws SQLException {
         //*.监听
-        if(WeedConfig.runExecuteBefEvent(cmd) == false){
+        if (WeedConfig.runExecuteBefEvent(cmd) == false) {
             return false;
         }
 
         //1.构建连接和命令(外部的c不能给conn)
         Connection c;
-        if(cmd.tran == null){
+        if (cmd.tran == null) {
             c = conn = cmd.context.getConnection();
-        }else{
+        } else {
             c = cmd.tran.getConnection(cmd.context); //事务时，conn 须为 null
         }
 
-        if (cmd.text.indexOf("{call") >= 0)
-            stmt = c.prepareCall(cmd.fullText());
-        else {
-            if (isInsert)
-                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
-            else
-                stmt = c.prepareStatement(cmd.fullText());
-        }
+        stmt = cmd.context.dbDialect().prepareCMD(c, cmd, isInsert);
 
-        WeedConfig.runExecuteStmEvent(cmd,stmt);
+//        if (cmd.text.indexOf("{call") >= 0)
+//            stmt = c.prepareCall(cmd.fullText());
+//        else {
+//            if (isInsert)
+//                stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
+//            else
+//                stmt = c.prepareStatement(cmd.fullText());
+//        }
+
+        WeedConfig.runExecuteStmEvent(cmd, stmt);
 
         int idx = 1;
         //2.设置参数值
         for (Variate v : cmd.paramS) {
-            if(v.getValue() == null){
-                stmt.setNull(idx,Types.VARCHAR);
-            }else {
+            if (v.getValue() == null) {
+                stmt.setNull(idx, Types.VARCHAR);
+            } else {
                 stmt.setObject(idx, v.getValue());
             }
             idx++;

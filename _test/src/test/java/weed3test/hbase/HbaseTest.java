@@ -32,6 +32,12 @@ public class HbaseTest {
         //db.exe("UPSERT INTO us_population VALUES('CN','Hang Zhou',?)",1);
         //db.exe("UPSERT INTO us_population VALUES('CN','Bei jing',?)",2);
 
+        try {
+            db.table("us_population").set("state", "CN").set("city", "Nan jin").set("population", 2).insert();
+        }finally {
+            System.out.println(db.lastCommand.fullText());
+        }
+
         List<Map<String,Object>> dl = db.table("us_population").limit(2).select("*").getMapList();
 
         System.out.println(db.lastCommand.fullText());
