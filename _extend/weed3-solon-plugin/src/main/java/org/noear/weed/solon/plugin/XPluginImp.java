@@ -1,7 +1,7 @@
 package org.noear.weed.solon.plugin;
 
-import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
+import org.noear.solon.SolonApp;
+import org.noear.solon.Utils;
 import org.noear.solon.core.*;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
@@ -11,9 +11,9 @@ import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
 
-public class XPluginImp implements XPlugin {
+public class XPluginImp implements Plugin {
     @Override
-    public void start(XApp app) {
+    public void start(SolonApp app) {
         //
         // 事件监听，用于时实初始化
         //
@@ -24,12 +24,12 @@ public class XPluginImp implements XPlugin {
         //
         WeedConfig.connectionFactory = new DsConnectionFactoryImpl();
 
-        Aop.factory().beanCreatorAdd(Db.class, (clz, cbw, anno) -> {
+        Aop.context().beanBuilderAdd(Db.class, (clz, cbw, anno) -> {
             if (clz.isInterface() == false) {
                 return;
             }
 
-            if (XUtil.isEmpty(anno.value())) {
+            if (Utils.isEmpty(anno.value())) {
                 Aop.getAsyn(DataSource.class, (dsBw) -> {
                     create0(clz, dsBw);
                 });
@@ -42,8 +42,8 @@ public class XPluginImp implements XPlugin {
             }
         });
 
-        Aop.factory().beanInjectorAdd(Db.class, (varH, anno) -> {
-            if (XUtil.isEmpty(anno.value())) {
+        Aop.context().beanInjectorAdd(Db.class, (varH, anno) -> {
+            if (Utils.isEmpty(anno.value())) {
                 Aop.getAsyn(DataSource.class, (dsBw) -> {
                     inject0(varH, dsBw);
                 });
