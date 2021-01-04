@@ -1,12 +1,13 @@
 package webapp.controller;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
 
-@XController
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+
+@Controller
 public class _HomeController {
-    @XMapping("/")
+    @Mapping("/")
     public Object home() {
         return new ModelAndView("nav.htm", null);
     }

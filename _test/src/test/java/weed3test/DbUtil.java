@@ -1,7 +1,7 @@
 package weed3test;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.noear.solon.XUtil;
+import org.noear.solon.Utils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -75,7 +75,7 @@ public class DbUtil {
 
     private static String[] getSqlFromFile(String uri){
         try{
-            InputStream ins = XUtil.getResource(uri).openStream();
+            InputStream ins = Utils.getResource(uri).openStream();
             int len = ins.available();
             byte[] bs = new byte[len];
             ins.read(bs);

@@ -1,23 +1,22 @@
 package webapp.controller;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.annotation.XSingleton;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.annotation.Singleton;
 import org.noear.weed.BaseMapper;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
-import webapp.Config;
 import webapp.dso.SqlMapper;
 import webapp.model.AppxModel;
 
-@XMapping("/test")
-@XSingleton(true)
-@XController
+@Mapping("/test")
+@Singleton(true)
+@Controller
 public class TestController {
     @Db
     DbContext db2;
 
-    @XMapping("demo1")
+    @Mapping("demo1")
     public Object test(String sql) throws Exception {
         //
         // mysql 8.0 才支持
@@ -37,7 +36,7 @@ public class TestController {
         }
     }
 
-    @XMapping("demo2")
+    @Mapping("demo2")
     public Object test2(String sql) throws Exception {
         //
         // mysql 8.0 才支持
@@ -56,7 +55,7 @@ public class TestController {
         }
     }
 
-    @XMapping("demo3")
+    @Mapping("demo3")
     public Object test3(String sql) throws Exception {
         BaseMapper<AppxModel> mapper = db2.mapperBase(AppxModel.class);
         Object tmp = mapper.selectById(48);
@@ -72,7 +71,7 @@ public class TestController {
         }
     }
 
-    @XMapping("demo4")
+    @Mapping("demo4")
     public Object test4(String sql) throws Exception {
         SqlMapper mapper = db2.mapper(SqlMapper.class);
 

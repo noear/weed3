@@ -1,9 +1,9 @@
 package webapp.controller;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.annotation.XSingleton;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.annotation.Singleton;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.weed.DbContext;
 import org.noear.weed.annotation.Db;
 import webapp.model.AppxModel;
@@ -12,15 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@XMapping("/xmlexc")
-@XSingleton(true)
-@XController
+@Mapping("/xmlexc")
+@Singleton(true)
+@Controller
 public class XmlExcController {
 
     @Db
     DbContext db2;
 
-    @XMapping("demo0/html")
+    @Mapping("demo0/html")
     public ModelAndView demo0() throws Exception {
         ModelAndView mv = new ModelAndView("view.ftl");
 
@@ -39,7 +39,7 @@ public class XmlExcController {
     }
 
 
-    @XMapping("demo1/json")
+    @Mapping("demo1/json")
     public Object demo1() throws Exception {
         Map<String, Object> map = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class XmlExcController {
         return tmp;
     }
 
-    @XMapping("demo2/json")
+    @Mapping("demo2/json")
     public Object demo2() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
@@ -55,7 +55,7 @@ public class XmlExcController {
         return tmp;
     }
 
-    @XMapping("demo3/json")
+    @Mapping("demo3/json")
     public Object demo3() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 48);
@@ -64,7 +64,7 @@ public class XmlExcController {
         return tmp;
     }
 
-    @XMapping("demo4/json")
+    @Mapping("demo4/json")
     public Object demo4() throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("app_id", 1);
@@ -72,7 +72,7 @@ public class XmlExcController {
         return tmp;
     }
 
-    @XMapping("demo5/json")
+    @Mapping("demo5/json")
     public Object demo5() throws Exception {
         List<Integer> tmp = db2.mapper("@webapp.dso.appx_getids", null);
         return tmp;
