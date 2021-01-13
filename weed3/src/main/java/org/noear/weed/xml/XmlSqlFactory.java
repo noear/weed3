@@ -13,6 +13,7 @@ public class XmlSqlFactory {
     public static void register(String sqlid, IXmlSqlBuilder xmlSqlBuilder) {
         XmlSqlBlock tmp = _sqlMap.get(sqlid);
 
+        //这个注册，相当于绑定
         if (tmp != null) {
             tmp.builder = xmlSqlBuilder;
         }
