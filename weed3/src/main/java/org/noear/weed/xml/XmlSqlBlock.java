@@ -102,7 +102,7 @@ public class XmlSqlBlock {
         String txt2 = block._cacheTag;
 
         for (XmlSqlVar dv : block.tagMap.values()) {
-            if (dv.label == 0) {
+            if (dv.label == 1) {
                 //1.先从入参取值
                 Object val = map.get(dv.name);
 

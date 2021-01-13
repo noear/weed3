@@ -7,7 +7,11 @@ public class XmlSqlVar {
     public String name;
     public String type;
 
-    //标记，用于区分不同的变量类型
+    /**
+     * 标记，用于区分不同的变量类型
+     * 0:cacheClear
+     * 1:cacheTag
+     * */
     public int label;
 
     public XmlSqlVar(){}
