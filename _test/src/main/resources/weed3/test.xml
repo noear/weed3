@@ -16,4 +16,20 @@
     </sql>
 
     <sql id="appx_getids" return="List[Integer]">select app_id from appx limit 4</sql>
+
+    <sql id="appx_udp" return="int" declare="tag:String,tag1:String">
+        select app_id from appx
+        <if test="tag?! and tag1??">
+            where app_id > 10
+        </if>
+        limit 4
+    </sql>
+
+    <sql id="appx_udp2" return="int" declare="tag:String,tag1:String">
+        select app_id from appx
+        <if test="tag ?! and tag1 ??">
+            where app_id > 10
+        </if>
+        limit 4
+    </sql>
 </mapper>

@@ -418,9 +418,9 @@ public class XmlSqlCompiler {
     }
 
     private static String parseIfTestExpr(String test) {
-        Pattern r = Pattern.compile("([\\w\\.]*?)\\?(\\?|\\!|\\w*)");
+        Pattern r = Pattern.compile("([\\w\\.]*?)\\s*\\?(\\?|\\!|\\w*)");
         Matcher m = r.matcher(test);
-        if (m.find()) {
+        while (m.find()) {
             String vname = m.group(1);
             String vfun = "?" + m.group(2);
             if ("??".equals(vfun)) {
