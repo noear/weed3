@@ -1,3 +1,6 @@
+#### 3.2.39
+* 修改 xml sql [if test(xxx?! and yyy?!)]（多个?!会出错的问题）
+
 #### 3.2.29
 * 添加 HBase sql（Phoenix）方言支持
 

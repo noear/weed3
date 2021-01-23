@@ -92,14 +92,14 @@ db.table(logger)
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.29</version>
+    <version>3.2.30</version>
 </dependency>
 
 <!-- 可选：maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.29</version>
+    <version>3.2.30</version>
 </plugin>
 ```
 
