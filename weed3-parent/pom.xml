@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>weed3-parent</artifactId>
-    <version>3.2.30</version>
+    <version>3.2.31</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -41,7 +41,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <weed3.ver>3.2.30</weed3.ver>
+        <weed3.ver>3.2.31</weed3.ver>
         <snack3.ver>3.1.13</snack3.ver>
         <solon.ver>1.2.25</solon.ver>
     </properties>
