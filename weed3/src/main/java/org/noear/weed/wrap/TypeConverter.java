@@ -45,6 +45,10 @@ public class TypeConverter {
             if (val instanceof String) {
                 return Timestamp.valueOf((String) val);
             }
+
+            if (val instanceof Long) {
+                return new Timestamp((Long) val);
+            }
         }
 
         if (target == LocalDateTime.class) {
