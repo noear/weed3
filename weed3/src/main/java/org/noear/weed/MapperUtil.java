@@ -125,30 +125,48 @@ class MapperUtil {
                     case "DataList":
                         return sp.getDataList();
                     default: {
-                        Variate val = sp.getVariate();
+                        Variate valV = sp.getVariate();
 
-                        if (val.getValue() == null) {
-                            return 0;
+                        if (valV.getValue() == null) {
+                            if(Integer.TYPE == rType){
+                                return 0;
+                            }
+
+                            if(Long.TYPE == rType){
+                                return 0L;
+                            }
+
+                            if(Float.TYPE == rType){
+                                return 0F;
+                            }
+
+                            if(Double.TYPE == rType){
+                                return 0D;
+                            }
+                        } else {
+                            //解决 BigDecimal BigInteger 问题
+                            if (block._return.toLowerCase().startsWith("int")) {
+                                return valV.intValue(0);
+                            }
+
+                            if (block._return.toLowerCase().startsWith("long")) {
+                                return valV.longValue(0);
+                            }
+
+                            if (block._return.toLowerCase().startsWith("float")) {
+                                return valV.floatValue(0);
+                            }
+
+                            if (block._return.toLowerCase().startsWith("double")) {
+                                return valV.doubleValue(0);
+                            }
+
+                            if (block._return.toLowerCase().startsWith("str")) {
+                                return valV.stringValue(null);
+                            }
                         }
 
-                        //解决 BigDecimal BigInteger 问题
-                        if (block._return.toLowerCase().startsWith("int")) {
-                            return val.intValue(0);
-                        }
-
-                        if (block._return.toLowerCase().startsWith("long")) {
-                            return val.longValue(0);
-                        }
-
-                        if (block._return.toLowerCase().startsWith("doub")) {
-                            return val.doubleValue(0);
-                        }
-
-                        if (block._return.toLowerCase().startsWith("str")) {
-                            return val.stringValue(null);
-                        }
-
-                        return val.getValue();
+                        return valV.getValue();
                     }
                 }
             }
