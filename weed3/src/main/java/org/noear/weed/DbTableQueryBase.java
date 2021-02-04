@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -496,12 +497,16 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return  (T)this;
     }
 
+    @Deprecated
     public long count() throws SQLException{
-        return count("COUNT(*)");
+        return selectCount();
+        //return count("COUNT(*)");
     }
 
+    @Deprecated
     public long count(String code) throws SQLException{
-        return select(code).getVariate().longValue(0l);
+        return selectCount(code);
+        //return select(code).getVariate().longValue(0l);
     }
 
     public IQuery select(String columns) {
@@ -517,6 +522,42 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         return rst;
     }
+
+    public long selectCount() throws SQLException{
+        return selectCount("COUNT(*)");
+    }
+    public long selectCount(String column) throws SQLException{
+        return select(column).getVariate().longValue(0L);
+    }
+
+    public Object selectValue(String column) throws SQLException {
+        return select(column).getValue();
+    }
+
+    public <T> T selectValue(String column, T def) throws SQLException {
+        return select(column).getValue(def);
+    }
+
+    public <T> T selectItem(String columns, Class<T> cls) throws SQLException {
+        return select(columns).getItem(cls);
+    }
+
+    public <T> List<T> selectList(String columns, Class<T> cls) throws SQLException {
+        return select(columns).getList(cls);
+    }
+
+    public Map<String,Object> selectMap(String columns) throws SQLException{
+        return select(columns).getMap();
+    }
+
+    public List<Map<String, Object>> selectMapList(String columns) throws SQLException{
+        return select(columns).getMapList();
+    }
+
+    public <T> List<T> selectArray(String column) throws SQLException{
+        return select(column).getArray();
+    }
+
 
     public SelectQ selectQ(String columns) {
         select_do(columns, true);
