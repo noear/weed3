@@ -535,10 +535,6 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return select(column).getVariate().longValue(0L);
     }
 
-    public Variate selectVariate(String column) throws SQLException {
-        return select(column).getVariate();
-    }
-
     public Object selectValue(String column) throws SQLException {
         return select(column).getValue();
     }
