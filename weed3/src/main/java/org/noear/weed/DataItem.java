@@ -104,6 +104,10 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>> {
         _data.remove(name);
     }
 
+    /**
+     * 改用：toEntity
+     * */
+    @Deprecated
     @Override
     public <T extends IBinder> T toItem(T item) {
         item.bind((key) -> getVariate(key));

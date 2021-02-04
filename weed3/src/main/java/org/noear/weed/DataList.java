@@ -62,6 +62,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
     /**
      * 将所有列转为类做为数组的数据（类为：IBinder 子类）
      */
+    @Deprecated
     public <T extends IBinder> List<T> toList(T model) throws SQLException {
         List<T> list = new ArrayList<T>(getRowCount());
 
