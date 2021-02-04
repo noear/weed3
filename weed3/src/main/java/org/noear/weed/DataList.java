@@ -85,14 +85,25 @@ public class DataList implements Serializable,Iterable<DataItem> {
      * 将所有列转为类做为数组的数据
      */
     public <T> List<T> toEntityList(Class<T> clz) {
+        ClassWrap clzWrap = ClassWrap.get(clz);
         List<T> list = new ArrayList<T>(getRowCount());
 
-        ClassWrap clzWrap = ClassWrap.get(clz);
+        if (IBinder.class.isAssignableFrom(clz)) {
+            IBinder mod = clzWrap.newInstance();
 
-        for (DataItem r : _rows) {
-            T item = clzWrap.toEntity(r);
-            list.add((T) item);
+            for (DataItem r : _rows) {
+                IBinder item = mod.clone();
+                item.bind(key -> r.getVariate(key));
+                list.add((T) item);
+            }
+        } else {
+            for (DataItem r : _rows) {
+                T item = clzWrap.toEntity(r);
+                list.add((T) item);
+            }
+
         }
+
         return list;
     }
 

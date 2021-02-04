@@ -92,6 +92,14 @@ public class ClassWrap {
         return clazz.hashCode();
     }
 
+    public <T> T newInstance() {
+        try {
+            return (T)clazz.newInstance();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     //将 data 转为 entity
     public <T> T toEntity(DataItem data) {
         try {

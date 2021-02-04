@@ -189,12 +189,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
 
     /*执行命令（返回一个模理）*/
+    @Deprecated
     @Override
     public <T extends IBinder> T getItem(T model) throws SQLException {
         return getDataItem().toItem(model);
     }
 
     /*执行命令（返回一个模理）*/
+    @Deprecated
     @Override
     public <T extends IBinder> T getItem(T model, Act2<CacheUsing, T> cacheCondition) throws SQLException {
         if (cacheCondition == null) {
@@ -222,12 +224,14 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     }
 
     /*执行命令（返回一个列表）*/
+    @Deprecated
     @Override
     public <T extends IBinder> List<T> getList(T model) throws SQLException {
         return getDataList().toList(model);
     }
 
     /*执行命令（返回一个列表）*/
+    @Deprecated
     @Override
     public <T extends IBinder> List<T> getList(T model, Act2<CacheUsing, List<T>> cacheCondition) throws SQLException {
         if (cacheCondition == null) {

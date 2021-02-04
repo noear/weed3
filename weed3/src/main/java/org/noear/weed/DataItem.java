@@ -4,6 +4,7 @@ import org.noear.weed.ext.Act2;
 import org.noear.weed.ext.Fun2;
 import org.noear.weed.ext.LinkedCaseInsensitiveMap;
 import org.noear.weed.utils.EntityUtils;
+import org.noear.weed.wrap.ClassWrap;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -14,20 +15,26 @@ import java.util.function.Consumer;
  * 不能转为继承自Map
  * 否则，嵌入别的引擎时，会变转为不可知的MapAdapter
  */
-public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
-    Map<String,Object> _data = new LinkedCaseInsensitiveMap<>();
+public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>> {
+    Map<String, Object> _data = new LinkedCaseInsensitiveMap<>();
 
-    public DataItem() { }
-    public DataItem(Boolean isUsingDbNull) { _isUsingDbNull = isUsingDbNull; }
+    public DataItem() {
+    }
+
+    public DataItem(Boolean isUsingDbNull) {
+        _isUsingDbNull = isUsingDbNull;
+    }
 
     @Override
-    public int count(){
+    public int count() {
         return _data.size();
     }
+
     @Override
-    public void clear(){
+    public void clear() {
         _data.clear();
     }
+
     @Override
     public boolean exists(String name) {
         if (name == null) {
@@ -38,21 +45,20 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     @Override
-    public Set<String> keys(){
+    public Set<String> keys() {
         return _data.keySet();
     }
 
     @Override
-    public DataItem set(String name,Object value)
-    {
+    public DataItem set(String name, Object value) {
         _data.put(name, value);
         return this;
     }
 
     @Override
-    public DataItem setIf(boolean condition, String name, Object value){
-        if(condition){
-            set(name,value);
+    public DataItem setIf(boolean condition, String name, Object value) {
+        if (condition) {
+            set(name, value);
         }
         return this;
     }
@@ -80,88 +86,85 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
     @Override
-    public Object get(String name){
+    public Object get(String name) {
         return _data.get(name);
     }
+
     @Override
-    public Variate getVariate(String name)
-    {
+    public Variate getVariate(String name) {
         if (_data.containsKey(name)) {
             return new Variate(name, get(name));
-        }
-        else {
+        } else {
             return new Variate(name, null);
         }
     }
 
     @Override
-    public void remove(String name){
+    public void remove(String name) {
         _data.remove(name);
     }
 
     @Override
-    public <T extends IBinder> T toItem(T item)
-    {
+    public <T extends IBinder> T toItem(T item) {
         item.bind((key) -> getVariate(key));
 
         return item;
     }
 
     @Override
-    public short getShort(String name){
-        return (short)get(name);
+    public short getShort(String name) {
+        return (short) get(name);
     }
 
     @Override
-    public int getInt(String name){
-        return ((Number)get(name)).intValue();
+    public int getInt(String name) {
+        return ((Number) get(name)).intValue();
     }
 
     @Override
-    public long getLong(String name){
-        return ((Number)get(name)).longValue();
+    public long getLong(String name) {
+        return ((Number) get(name)).longValue();
     }
 
     @Override
-    public double getDouble(String name){
-        return ((Number)get(name)).doubleValue();
+    public double getDouble(String name) {
+        return ((Number) get(name)).doubleValue();
     }
 
     @Override
-    public float getFloat(String name){
-        return ((Number)get(name)).floatValue();
+    public float getFloat(String name) {
+        return ((Number) get(name)).floatValue();
     }
 
     @Override
-    public String getString(String name){
-        return (String)get(name);
+    public String getString(String name) {
+        return (String) get(name);
     }
 
     @Override
-    public boolean getBoolean(String name){
-        return (boolean)get(name);
+    public boolean getBoolean(String name) {
+        return (boolean) get(name);
     }
 
     @Override
-    public Date getDateTime(String name){
-        return (Date)get(name);
+    public Date getDateTime(String name) {
+        return (Date) get(name);
     }
 
     @Override
-    public void forEach(Act2<String, Object> callback)
-    {
-        for(Map.Entry<String,Object> kv : _data.entrySet()){
+    public void forEach(Act2<String, Object> callback) {
+        for (Map.Entry<String, Object> kv : _data.entrySet()) {
             Object val = kv.getValue();
 
-            if(val == null && _isUsingDbNull){
+            if (val == null && _isUsingDbNull) {
                 callback.run(kv.getKey(), "$NULL");
-            }else {
+            } else {
                 callback.run(kv.getKey(), val);
             }
         }
     }
 
-    private boolean _isUsingDbNull=false;
+    private boolean _isUsingDbNull = false;
 
     //============================
     public static IDataItem create(IDataItem schema, GetHandler source) {
@@ -194,15 +197,17 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
     }
 
 
-    /** 从map加载数据 */
-    public DataItem setMap(Map<String,Object> data) {
+    /**
+     * 从map加载数据
+     */
+    public DataItem setMap(Map<String, Object> data) {
         //
         //保持也where的相同逻辑
         //
         return setMapIf(data, (k, v) -> v != null);
     }
 
-    public DataItem setMapIf(Map<String,Object> data, Fun2<Boolean,String,Object> condition) {
+    public DataItem setMapIf(Map<String, Object> data, Fun2<Boolean, String, Object> condition) {
         data.forEach((k, v) -> {
             if (condition.run(k, v)) {
                 set(k, v);
@@ -212,7 +217,9 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return this;
     }
 
-    /** 从Entity 加载数据 */
+    /**
+     * 从Entity 加载数据
+     */
     public DataItem setEntity(Object obj) {
         //
         //保持也where的相同逻辑
@@ -220,7 +227,7 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return setEntityIf(obj, (k, v) -> v != null);
     }
 
-    public DataItem setEntityIf(Object obj, Fun2<Boolean,String,Object> condition) {
+    public DataItem setEntityIf(Object obj, Fun2<Boolean, String, Object> condition) {
         EntityUtils.fromEntity(obj, (k, v) -> {
             if (condition.run(k, v)) {
                 set(k, v);
@@ -229,27 +236,39 @@ public class DataItem implements IDataItem, Iterable<Map.Entry<String,Object>>{
         return this;
     }
 
-    /** 获取map */
-    public Map<String,Object> getMap(){
+    /**
+     * 获取map
+     */
+    public Map<String, Object> getMap() {
         return _data;
     }
 
 
     /**
-     *  从Entity 加载数据
-     *
-     *  可改用：setEntity
-     *  */
+     * 从Entity 加载数据
+     * <p>
+     * 可改用：setEntity
+     */
     @Deprecated
-    public void fromEntity(Object obj)  {
-        EntityUtils.fromEntity(obj,(k, v)->{
+    public void fromEntity(Object obj) {
+        EntityUtils.fromEntity(obj, (k, v) -> {
             set(k, v);
         });
     }
 
-    /** 转为Entity */
-    public  <T> T toEntity(Class<T> cls) {
-        return EntityUtils.toEntity(cls,this);
+    /**
+     * 转为Entity
+     */
+    public <T> T toEntity(Class<T> cls) {
+        ClassWrap classWrap = ClassWrap.get(cls);
+
+        if (IBinder.class.isAssignableFrom(cls)) {
+            IBinder mod = classWrap.newInstance();
+            mod.bind(key -> getVariate(key));
+            return (T) mod;
+        } else {
+            return classWrap.toEntity(this);
+        }
     }
 }
 
