@@ -5,5 +5,5 @@ package org.noear.weed;
  * 作为缓存的主键
  */
 public interface IWeedKey {
-    public String getWeedKey();
+    String getWeedKey();
 }

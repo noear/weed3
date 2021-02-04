@@ -474,21 +474,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
 
+    @Deprecated
     public boolean exists() throws SQLException {
-        int bak = limit_top;
-        limit(1);
-        select_do(" 1 ", false);
-        limit(bak);
-
-        DbQuery rst = compile();
-
-        if (_cache != null) {
-            rst.cache(_cache);
-        }
-
-        _builder.restore();
-
-        return rst.getValue() != null;
+        return selectExists();
     }
 
     String _hint = null;
@@ -521,6 +509,23 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.restore();
 
         return rst;
+    }
+
+    public boolean selectExists() throws SQLException {
+        int bak = limit_top;
+        limit(1);
+        select_do(" 1 ", false);
+        limit(bak);
+
+        DbQuery rst = compile();
+
+        if (_cache != null) {
+            rst.cache(_cache);
+        }
+
+        _builder.restore();
+
+        return rst.getValue() != null;
     }
 
     public long selectCount() throws SQLException{
