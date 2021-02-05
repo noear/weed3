@@ -43,6 +43,12 @@ public class MgTableQuery {
     }
 
     //添加SQL where = 语句
+    public MgTableQuery whereTrue() {
+        initWhereMap();
+        return this;
+    }
+
+    //添加SQL where = 语句
     public MgTableQuery whereEq(String col, Object val) {
         initWhereMap();
 
@@ -237,9 +243,15 @@ public class MgTableQuery {
     }
 
 
-    private Map<String, Object> buildFilter() {
-        if (whereMap == null || whereMap.size() == 0) {
+    private Map<String, Object> buildFilter(boolean forced) {
+        if (whereMap == null) {
             throw new IllegalArgumentException("No update condition...");
+        }
+
+        if (forced) {
+            if (whereMap.size() == 0) {
+                throw new IllegalArgumentException("No update condition...");
+            }
         }
 
         return whereMap;
@@ -296,7 +308,7 @@ public class MgTableQuery {
             throw new IllegalArgumentException("No update data...");
         }
 
-        Map<String, Object> filter = buildFilter();
+        Map<String, Object> filter = buildFilter(true);
 
         return mongoX.updateMany(table, filter, dataItem);
     }
@@ -305,7 +317,7 @@ public class MgTableQuery {
     // 替换
     //
     public long replace(){
-        Map<String, Object> filter = buildFilter();
+        Map<String, Object> filter = buildFilter(true);
 
         return mongoX.replaceOne(table, filter, dataItem);
     }
@@ -315,7 +327,7 @@ public class MgTableQuery {
     //
 
     public long delete() {
-        Map<String, Object> filter = buildFilter();
+        Map<String, Object> filter = buildFilter(true);
 
         return mongoX.deleteMany(table, filter);
     }
@@ -379,7 +391,7 @@ public class MgTableQuery {
     }
 
     public List<Map<String, Object>> selectMapList() {
-        Map<String, Object> filter = buildFilter();
+        Map<String, Object> filter = buildFilter(true);
 
         if (limit_size > 0) {
             return mongoX.findPage(table, filter, orderMap, limit_start, limit_size);
@@ -389,15 +401,19 @@ public class MgTableQuery {
     }
 
     public Map<String, Object> selectMap() {
-        Map<String, Object> filter = buildFilter();
+        Map<String, Object> filter = buildFilter(true);
 
         return mongoX.findOne(table, filter);
     }
 
 
-    public long selectCount(){
-        Map<String, Object> filter = buildFilter();
-        return mongoX.count(table);
+    public long selectCount() {
+        Map<String, Object> filter = buildFilter(false);
+        if (filter.size() > 0) {
+            return mongoX.countDocuments(table, filter);
+        } else {
+            return mongoX.count(table);
+        }
     }
 
     public boolean selectExists(){
