@@ -24,6 +24,11 @@ public class MgContext {
         return new MgTable(mongoX).table(table);
     }
 
+
+    public MongoX mongoX(){
+        return mongoX;
+    }
+
     /**
      * 创建索引
      */
