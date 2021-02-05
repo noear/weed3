@@ -109,14 +109,20 @@ public class MongoX {
     public long updateOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
+        Document newData = new Document();
+        newData.put("$set", data);
 
-        return collM.updateOne(new Document(filter), new Document(data)).getModifiedCount();
+
+        return collM.updateOne(new Document(filter), newData).getModifiedCount();
     }
 
     public long updateMany(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        return collM.updateMany(new Document(filter), new Document(data)).getModifiedCount();
+        Document newData = new Document();
+        newData.put("$set", data);
+
+        return collM.updateMany(new Document(filter), newData).getModifiedCount();
     }
 
 

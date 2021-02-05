@@ -13,6 +13,10 @@ public class MgContext {
         mongoX = new MongoX(properties, db);
     }
 
+    public MgContext(String host, int port, String db) {
+        mongoX = new MongoX(host, port, db);
+    }
+
     /**
      * 表操作
      * */

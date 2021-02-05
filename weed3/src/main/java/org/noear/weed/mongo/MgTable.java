@@ -12,15 +12,33 @@ import java.util.Map;
  */
 public class MgTable {
     private String table;
-    private Map<String, Object> whereMap = new LinkedHashMap<>();
-    private Map<String, Object> andMap = new LinkedHashMap<>();
-    private Map<String, Object> orMap = new LinkedHashMap<>();
+    private Map<String, Object> whereMap;
+    private Map<String, Object> andMap;
+    private Map<String, Object> orMap;
     private Map<String, Object> orderMap;
     private Map<String, Object> dataItem;
     private int limit_size;
     private int limit_start;
 
     private MongoX mongoX;
+
+    private void initWhereMap(){
+        if(whereMap == null){
+            whereMap = new LinkedHashMap<>();
+        }
+    }
+
+    private void initAndMap(){
+        if(andMap == null){
+            andMap = new LinkedHashMap<>();
+        }
+    }
+
+    private void initOrMap(){
+        if(orMap == null){
+            orMap = new LinkedHashMap<>();
+        }
+    }
 
     public MgTable(MongoX mongoX) {
         this.mongoX = mongoX;
@@ -38,12 +56,16 @@ public class MgTable {
 
     //添加SQL where = 语句
     public MgTable whereEq(String col, Object val) {
+        initWhereMap();
+
         whereMap.put(col, val);
         return this;
     }
 
     //添加SQL where != 语句
     public MgTable whereNeq(String col, Object val) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$ne", val);
         whereMap.put(col, tmp);
@@ -53,6 +75,8 @@ public class MgTable {
 
     //添加SQL where < 语句
     public MgTable whereLt(String col, Object val) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lt", val);
         whereMap.put(col, tmp);
@@ -61,6 +85,8 @@ public class MgTable {
 
     //添加SQL where <= 语句
     public MgTable whereLte(String col, Object val) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lte", val);
         whereMap.put(col, tmp);
@@ -69,6 +95,8 @@ public class MgTable {
 
     //添加SQL where > 语句
     public MgTable whereGt(String col, Object val) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gt", val);
         whereMap.put(col, tmp);
@@ -77,6 +105,8 @@ public class MgTable {
 
     //添加SQL where >= 语句
     public MgTable whereGte(String col, Object val) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
         whereMap.put(col, tmp);
@@ -85,6 +115,8 @@ public class MgTable {
 
 
     public MgTable whereExists(String col, boolean exists) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
         whereMap.put(col, tmp);
@@ -92,6 +124,8 @@ public class MgTable {
     }
 
     public MgTable whereIn(String col, Iterable<Object> ary) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$in", ary);
         whereMap.put(col, tmp);
@@ -99,6 +133,8 @@ public class MgTable {
     }
 
     public MgTable whereNin(String col, Iterable<Object> ary) {
+        initWhereMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$nin", ary);
         whereMap.put(col, tmp);
@@ -116,12 +152,16 @@ public class MgTable {
 
     //添加SQL and = 语句
     public MgTable andEq(String col, Object val) {
+        initAndMap();
+
         andMap.put(col, val);
         return this;
     }
 
     //添加SQL where != 语句
     public MgTable andNeq(String col, Object val) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$ne", val);
         andMap.put(col, tmp);
@@ -131,6 +171,8 @@ public class MgTable {
 
     //添加SQL where < 语句
     public MgTable andLt(String col, Object val) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lt", val);
         andMap.put(col, tmp);
@@ -139,6 +181,8 @@ public class MgTable {
 
     //添加SQL where <= 语句
     public MgTable andLte(String col, Object val) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lte", val);
         andMap.put(col, tmp);
@@ -147,6 +191,8 @@ public class MgTable {
 
     //添加SQL where > 语句
     public MgTable andGt(String col, Object val) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gt", val);
         andMap.put(col, tmp);
@@ -155,6 +201,8 @@ public class MgTable {
 
     //添加SQL where >= 语句
     public MgTable andGte(String col, Object val) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
         andMap.put(col, tmp);
@@ -163,6 +211,8 @@ public class MgTable {
 
 
     public MgTable andExists(String col, boolean exists) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
         andMap.put(col, tmp);
@@ -170,6 +220,8 @@ public class MgTable {
     }
 
     public MgTable andIn(String col, Iterable<Object> ary) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$in", ary);
         andMap.put(col, tmp);
@@ -177,6 +229,8 @@ public class MgTable {
     }
 
     public MgTable andNin(String col, Iterable<Object> ary) {
+        initAndMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$nin", ary);
         andMap.put(col, tmp);
@@ -194,12 +248,16 @@ public class MgTable {
 
     //添加SQL or = 语句
     public MgTable orEq(String col, Object val) {
+        initOrMap();
+
         orMap.put(col, val);
         return this;
     }
 
     //添加SQL or != 语句
     public MgTable orNeq(String col, Object val) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$ne", val);
         orMap.put(col, tmp);
@@ -209,6 +267,8 @@ public class MgTable {
 
     //添加SQL or < 语句
     public MgTable orLt(String col, Object val) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lt", val);
         orMap.put(col, tmp);
@@ -217,6 +277,8 @@ public class MgTable {
 
     //添加SQL or <= 语句
     public MgTable orLte(String col, Object val) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lte", val);
         orMap.put(col, tmp);
@@ -225,6 +287,8 @@ public class MgTable {
 
     //添加SQL or > 语句
     public MgTable orGt(String col, Object val) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gt", val);
         orMap.put(col, tmp);
@@ -233,6 +297,8 @@ public class MgTable {
 
     //添加SQL or >= 语句
     public MgTable orGte(String col, Object val) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
         orMap.put(col, tmp);
@@ -241,6 +307,8 @@ public class MgTable {
 
 
     public MgTable orExists(String col, boolean exists) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
         orMap.put(col, tmp);
@@ -248,6 +316,8 @@ public class MgTable {
     }
 
     public MgTable orIn(String col, Iterable<Object> ary) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$in", ary);
         orMap.put(col, tmp);
@@ -255,6 +325,8 @@ public class MgTable {
     }
 
     public MgTable orNin(String col, Iterable<Object> ary) {
+        initOrMap();
+
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$nin", ary);
         orMap.put(col, tmp);
@@ -266,8 +338,11 @@ public class MgTable {
             throw new IllegalArgumentException("No update condition...");
         }
 
-        Map<String, Object> filter = new LinkedHashMap<>();
-        filter.put("$where", whereMap);
+        if(andMap == null && orMap == null){
+            return whereMap;
+        }
+
+        Map<String, Object> filter = whereMap;
 
         if (andMap != null && andMap.size() > 0) {
             filter.put("$and", andMap);
