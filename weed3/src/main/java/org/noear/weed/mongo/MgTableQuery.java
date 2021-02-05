@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * @author noear 2021/2/5 created
  */
-public class MgTable {
+public class MgTableQuery {
     private String table;
     private Map<String, Object> whereMap;
     private Map<String, Object> orderMap;
@@ -28,22 +28,22 @@ public class MgTable {
     }
 
 
-    public MgTable(MongoX mongoX) {
+    public MgTableQuery(MongoX mongoX) {
         this.mongoX = mongoX;
     }
 
-    public MgTable table(String table) {
+    public MgTableQuery table(String table) {
         this.table = table;
         return this;
     }
 
-    public MgTable whereMap(Map<String, Object> map) {
+    public MgTableQuery whereMap(Map<String, Object> map) {
         this.whereMap = map;
         return this;
     }
 
     //添加SQL where = 语句
-    public MgTable whereEq(String col, Object val) {
+    public MgTableQuery whereEq(String col, Object val) {
         initWhereMap();
 
         whereMap.put(col, val);
@@ -51,7 +51,7 @@ public class MgTable {
     }
 
     //添加SQL where != 语句
-    public MgTable whereNeq(String col, Object val) {
+    public MgTableQuery whereNeq(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -62,7 +62,7 @@ public class MgTable {
 
 
     //添加SQL where < 语句
-    public MgTable whereLt(String col, Object val) {
+    public MgTableQuery whereLt(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -72,7 +72,7 @@ public class MgTable {
     }
 
     //添加SQL where <= 语句
-    public MgTable whereLte(String col, Object val) {
+    public MgTableQuery whereLte(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -82,7 +82,7 @@ public class MgTable {
     }
 
     //添加SQL where > 语句
-    public MgTable whereGt(String col, Object val) {
+    public MgTableQuery whereGt(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -92,7 +92,7 @@ public class MgTable {
     }
 
     //添加SQL where >= 语句
-    public MgTable whereGte(String col, Object val) {
+    public MgTableQuery whereGte(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -102,7 +102,7 @@ public class MgTable {
     }
 
 
-    public MgTable whereExists(String col, boolean exists) {
+    public MgTableQuery whereExists(String col, boolean exists) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -111,7 +111,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable whereIn(String col, Iterable<Object> ary) {
+    public MgTableQuery whereIn(String col, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -120,7 +120,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable whereNin(String col, Iterable<Object> ary) {
+    public MgTableQuery whereNin(String col, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -129,7 +129,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable whereLk(String col, String regex) {
+    public MgTableQuery whereLk(String col, String regex) {
         initWhereMap();
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
@@ -142,7 +142,7 @@ public class MgTable {
     // for and
     //
     //添加SQL and = 语句
-    public MgTable andEq(String col, Object val) {
+    public MgTableQuery andEq(String col, Object val) {
         initWhereMap();
 
         whereMap.put(col, val);
@@ -150,7 +150,7 @@ public class MgTable {
     }
 
     //添加SQL where != 语句
-    public MgTable andNeq(String col, Object val) {
+    public MgTableQuery andNeq(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -161,7 +161,7 @@ public class MgTable {
 
 
     //添加SQL where < 语句
-    public MgTable andLt(String col, Object val) {
+    public MgTableQuery andLt(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -171,7 +171,7 @@ public class MgTable {
     }
 
     //添加SQL where <= 语句
-    public MgTable andLte(String col, Object val) {
+    public MgTableQuery andLte(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -181,7 +181,7 @@ public class MgTable {
     }
 
     //添加SQL where > 语句
-    public MgTable andGt(String col, Object val) {
+    public MgTableQuery andGt(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -191,7 +191,7 @@ public class MgTable {
     }
 
     //添加SQL where >= 语句
-    public MgTable andGte(String col, Object val) {
+    public MgTableQuery andGte(String col, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -201,7 +201,7 @@ public class MgTable {
     }
 
 
-    public MgTable andExists(String col, boolean exists) {
+    public MgTableQuery andExists(String col, boolean exists) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -210,7 +210,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable andIn(String col, Iterable<Object> ary) {
+    public MgTableQuery andIn(String col, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -219,7 +219,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable andNin(String col, Iterable<Object> ary) {
+    public MgTableQuery andNin(String col, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -228,7 +228,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable andLk(String col, String regex) {
+    public MgTableQuery andLk(String col, String regex) {
         initWhereMap();
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
@@ -248,7 +248,7 @@ public class MgTable {
     //
     // set
     //
-    public MgTable set(String col, Object val) {
+    public MgTableQuery set(String col, Object val) {
         if (dataItem == null) {
             dataItem = new LinkedHashMap<>();
         }
@@ -258,12 +258,12 @@ public class MgTable {
         return this;
     }
 
-    public MgTable setMap(Map<String, Object> map) {
+    public MgTableQuery setMap(Map<String, Object> map) {
         dataItem = map;
         return this;
     }
 
-    public MgTable setEntity(Object bean) {
+    public MgTableQuery setEntity(Object bean) {
         dataItem = new DataItem().setEntity(bean).getMap();
         return this;
     }
@@ -324,18 +324,18 @@ public class MgTable {
     // 查询
     //
 
-    public MgTable limit(int size) {
+    public MgTableQuery limit(int size) {
         limit_size = size;
         return this;
     }
 
-    public MgTable limit(int start, int size) {
+    public MgTableQuery limit(int start, int size) {
         limit_size = size;
         limit_start = start;
         return this;
     }
 
-    public MgTable orderByAsc(String col) {
+    public MgTableQuery orderByAsc(String col) {
         if (orderMap == null) {
             orderMap = new LinkedHashMap<>();
         }
@@ -345,7 +345,7 @@ public class MgTable {
         return this;
     }
 
-    public MgTable orderByDesc(String col) {
+    public MgTableQuery orderByDesc(String col) {
         if (orderMap == null) {
             orderMap = new LinkedHashMap<>();
         }
@@ -354,11 +354,11 @@ public class MgTable {
         return this;
     }
 
-    public MgTable andByAsc(String col) {
+    public MgTableQuery andByAsc(String col) {
         return orderByAsc(col);
     }
 
-    public MgTable andByDesc(String col) {
+    public MgTableQuery andByDesc(String col) {
         return orderByDesc(col);
     }
 

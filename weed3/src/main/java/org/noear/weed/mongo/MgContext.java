@@ -20,8 +20,8 @@ public class MgContext {
     /**
      * 表操作
      * */
-    public MgTable table(String table) {
-        return new MgTable(mongoX).table(table);
+    public MgTableQuery table(String table) {
+        return new MgTableQuery(mongoX).table(table);
     }
 
 
