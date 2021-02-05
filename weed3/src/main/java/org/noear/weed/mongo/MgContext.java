@@ -28,15 +28,4 @@ public class MgContext {
     public MongoX mongoX(){
         return mongoX;
     }
-
-    /**
-     * 创建索引
-     */
-    public String createIndex(String coll, Map<String, Object> keys, Map<String, Object> options) {
-        return mongoX.createIndex(coll, keys, options);
-    }
-
-    public String createIndex(String coll, Map<String, Object> keys) {
-        return createIndex(coll, keys);
-    }
 }

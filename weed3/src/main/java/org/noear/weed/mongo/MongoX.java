@@ -230,6 +230,13 @@ public class MongoX {
     /**
      * 创建索引
      */
+
+    public String createIndex(String coll, Map<String, Object> keys, IndexOptions options) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        return collM.createIndex(new Document(keys), options);
+    }
+
     public String createIndex(String coll, Map<String, Object> keys, Map<String, Object> options) {
         MongoCollection<Document> collM = getCollection(coll);
 

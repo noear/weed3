@@ -1,5 +1,6 @@
 package org.noear.weed.mongo;
 
+import com.mongodb.client.model.IndexOptions;
 import org.noear.weed.DataItem;
 
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class MgTableQuery {
 
     private MongoX mongoX;
 
-    private void initWhereMap(){
-        if(whereMap == null){
+    private void initWhereMap() {
+        if (whereMap == null) {
             whereMap = new LinkedHashMap<>();
         }
     }
@@ -245,12 +246,12 @@ public class MgTableQuery {
 
     private Map<String, Object> buildFilter(boolean forced) {
         if (whereMap == null) {
-            throw new IllegalArgumentException("No update condition...");
+            throw new IllegalArgumentException("No where condition...");
         }
 
         if (forced) {
             if (whereMap.size() == 0) {
-                throw new IllegalArgumentException("No update condition...");
+                throw new IllegalArgumentException("No where condition...");
             }
         }
 
@@ -316,7 +317,7 @@ public class MgTableQuery {
     //
     // 替换
     //
-    public long replace(){
+    public long replace() {
         Map<String, Object> filter = buildFilter(true);
 
         return mongoX.replaceOne(table, filter, dataItem);
@@ -416,9 +417,25 @@ public class MgTableQuery {
         }
     }
 
-    public boolean selectExists(){
+    public boolean selectExists() {
         Map map = selectMap();
 
         return (map != null && map.size() > 0);
+    }
+
+    public String createIndex(boolean background) {
+        return createIndex(new IndexOptions().background(background));
+    }
+
+    public String createIndex(IndexOptions options) {
+        if (orderMap == null || orderMap.size() == 0) {
+            throw new IllegalArgumentException("No index keys...");
+        }
+
+        if (options == null) {
+            return mongoX.createIndex(table, orderMap);
+        } else {
+            return mongoX.createIndex(table, orderMap, options);
+        }
     }
 }
