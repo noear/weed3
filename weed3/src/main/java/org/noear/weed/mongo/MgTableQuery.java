@@ -402,6 +402,20 @@ public class MgTableQuery {
         }
     }
 
+    public <T> List<T> selectArray(String col) {
+        List<T> list = new ArrayList<>();
+        List<Map<String, Object>> listTmp = selectMapList();
+
+        for (Map<String, Object> map : listTmp) {
+            Object v1 = map.get(col);
+            if (v1 != null) {
+                list.add((T) v1);
+            }
+        }
+
+        return list;
+    }
+
     public Map<String, Object> selectMap() {
         Map<String, Object> filter = buildFilter(true);
 
