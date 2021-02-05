@@ -14,7 +14,7 @@ public class MgTable {
     private String table;
     private Map<String, Object> whereMap;
     private Map<String, Object> andMap;
-    private Map<String, Object> orMap;
+//    private Map<String, Object> orMap;
     private Map<String, Object> orderMap;
     private Map<String, Object> dataItem;
     private int limit_size;
@@ -34,11 +34,11 @@ public class MgTable {
         }
     }
 
-    private void initOrMap(){
-        if(orMap == null){
-            orMap = new LinkedHashMap<>();
-        }
-    }
+//    private void initOrMap(){
+//        if(orMap == null){
+//            orMap = new LinkedHashMap<>();
+//        }
+//    }
 
     public MgTable(MongoX mongoX) {
         this.mongoX = mongoX;
@@ -241,116 +241,119 @@ public class MgTable {
     //
     // for or
     //
-    public MgTable orMap(Map<String, Object> map) {
-        this.orMap = map;
-        return this;
-    }
-
-    //添加SQL or = 语句
-    public MgTable orEq(String col, Object val) {
-        initOrMap();
-
-        orMap.put(col, val);
-        return this;
-    }
-
-    //添加SQL or != 语句
-    public MgTable orNeq(String col, Object val) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$ne", val);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-
-    //添加SQL or < 语句
-    public MgTable orLt(String col, Object val) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$lt", val);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-    //添加SQL or <= 语句
-    public MgTable orLte(String col, Object val) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$lte", val);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-    //添加SQL or > 语句
-    public MgTable orGt(String col, Object val) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$gt", val);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-    //添加SQL or >= 语句
-    public MgTable orGte(String col, Object val) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$gte", val);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-
-    public MgTable orExists(String col, boolean exists) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$exists", exists);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-    public MgTable orIn(String col, Iterable<Object> ary) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$in", ary);
-        orMap.put(col, tmp);
-        return this;
-    }
-
-    public MgTable orNin(String col, Iterable<Object> ary) {
-        initOrMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$nin", ary);
-        orMap.put(col, tmp);
-        return this;
-    }
+//    public MgTable orMap(Map<String, Object> map) {
+//        this.orMap = map;
+//        return this;
+//    }
+//
+//    //添加SQL or = 语句
+//    public MgTable orEq(String col, Object val) {
+//        initOrMap();
+//
+//        orMap.put(col, val);
+//        return this;
+//    }
+//
+//    //添加SQL or != 语句
+//    public MgTable orNeq(String col, Object val) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$ne", val);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//
+//    //添加SQL or < 语句
+//    public MgTable orLt(String col, Object val) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$lt", val);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//    //添加SQL or <= 语句
+//    public MgTable orLte(String col, Object val) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$lte", val);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//    //添加SQL or > 语句
+//    public MgTable orGt(String col, Object val) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$gt", val);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//    //添加SQL or >= 语句
+//    public MgTable orGte(String col, Object val) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$gte", val);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//
+//    public MgTable orExists(String col, boolean exists) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$exists", exists);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//    public MgTable orIn(String col, Iterable<Object> ary) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$in", ary);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
+//
+//    public MgTable orNin(String col, Iterable<Object> ary) {
+//        initOrMap();
+//
+//        Map<String, Object> tmp = new LinkedHashMap<>();
+//        tmp.put("$nin", ary);
+//        orMap.put(col, tmp);
+//        return this;
+//    }
 
     private Map<String, Object> buildFilter() {
         if (whereMap == null || whereMap.size() == 0) {
             throw new IllegalArgumentException("No update condition...");
         }
 
-        if(andMap == null && orMap == null){
-            return whereMap;
-        }
+//        if(andMap == null && orMap == null){
+//            return whereMap;
+//        }
 
-        Map<String, Object> filter = whereMap;
+        Map<String, Object> filter = new LinkedHashMap<>();
+
+        filter.putAll(whereMap);
 
         if (andMap != null && andMap.size() > 0) {
-            filter.put("$and", andMap);
+            filter.putAll(andMap);
+            //filter.put("$and", andMap);
         }
 
-        if (orMap != null && orMap.size() > 0) {
-            filter.put("$or", orMap);
-        }
+//        if (orMap != null && orMap.size() > 0) {
+//            filter.put("$or", orMap);
+//        }
 
         return filter;
     }
