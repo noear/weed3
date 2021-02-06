@@ -44,9 +44,24 @@ public class MgTableQuery {
         return this;
     }
 
+
     //添加SQL where = 语句
     public MgTableQuery whereTrue() {
         initWhereMap();
+        return this;
+    }
+
+    /**
+     * <p><code>
+     *     db.table("user").whereScript("parseFloat(this.age) > 20 && parseFloat(this.age) <= 40")
+     * </code></p>
+     * 添加SQL where script 语句
+     * */
+    public MgTableQuery whereScript(String code) {
+        initWhereMap();
+
+        String fun = "function (){return " + code + "};";
+        whereMap.put("$where", fun);
         return this;
     }
 
@@ -105,6 +120,19 @@ public class MgTableQuery {
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereBtw(String col, Object start, Object end) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$gte", start);
+        whereMap.put(col, tmp);
+
+        tmp = new LinkedHashMap<>();
+        tmp.put("$lte", end);
         whereMap.put(col, tmp);
         return this;
     }
@@ -208,6 +236,18 @@ public class MgTableQuery {
         return this;
     }
 
+    public MgTableQuery andBtw(String col, Object start, Object end) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$gte", start);
+        whereMap.put(col, tmp);
+
+        tmp = new LinkedHashMap<>();
+        tmp.put("$lte", end);
+        whereMap.put(col, tmp);
+        return this;
+    }
 
     public MgTableQuery andExists(String col, boolean exists) {
         initWhereMap();

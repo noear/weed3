@@ -47,6 +47,10 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
 
+    public T whereTrue(){
+        return where("1=1");
+    }
+
     /**
      * 添加SQL where 语句
      * 可使用?,?...占位符（ ?... 表示数组占位符）
