@@ -53,14 +53,20 @@ public class MgTableQuery {
 
     /**
      * <p><code>
-     *     db.table("user").whereScript("parseFloat(this.age) > 20 && parseFloat(this.age) <= 40")
+     *     db.table("user").whereScript("this.age > 20 && this.age <= 40")
      * </code></p>
-     * 添加SQL where script 语句
+     * 添加SQL where script 语句，需要服务器开启脚本能力
      * */
     public MgTableQuery whereScript(String code) {
         initWhereMap();
 
-        String fun = "function (){return " + code + "};";
+        String fun = null;
+        if (code.contains("return ")) {
+            fun = "function (){" + code + "};";
+        } else {
+            fun = "function (){return " + code + "};";
+        }
+
         whereMap.put("$where", fun);
         return this;
     }
@@ -129,10 +135,8 @@ public class MgTableQuery {
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", start);
-        whereMap.put(col, tmp);
-
-        tmp = new LinkedHashMap<>();
         tmp.put("$lte", end);
+
         whereMap.put(col, tmp);
         return this;
     }
@@ -241,10 +245,8 @@ public class MgTableQuery {
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", start);
-        whereMap.put(col, tmp);
-
-        tmp = new LinkedHashMap<>();
         tmp.put("$lte", end);
+
         whereMap.put(col, tmp);
         return this;
     }

@@ -17,27 +17,6 @@ public class MongoTest2 {
 
     MgContext db = new MgContext(serverIp, serverPort, "demo");
 
-    @Test
-    public void init() {
-        for (int i = 0; i < 100; i++) {
-            db.table("user")
-                    .set("id", i)
-                    .set("type", 1)
-                    .set("name", "noear")
-                    .set("nickname", "xidao")
-                    .insert();
-
-
-            UserModel userDo = new UserModel();
-            userDo.id = i;
-            userDo.type = 2;
-            userDo.name = "noear";
-            userDo.nickname = "xidao";
-
-            db.table("user").setEntity(userDo)
-                    .insert();
-        }
-    }
 
     @Test
     public void test1() {
