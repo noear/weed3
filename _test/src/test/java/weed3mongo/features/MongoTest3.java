@@ -1,6 +1,8 @@
 package weed3mongo.features;
 
 import org.junit.Test;
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
 import org.noear.weed.mongo.MgContext;
 import weed3mongo.model.UserModel;
 
@@ -26,6 +28,23 @@ public class MongoTest3 {
 
         assert mapList.size() == 10;
         assert mapList.get(0).id == 10;
+    }
+
+    @Test
+    public void test12(){
+        ICacheServiceEx cache = new LocalCache();
+
+        for(int i=0 ; i< 3; i++) {
+            List<UserModel> mapList = db.table("user")
+                    .whereBtw("id", 10, 20)
+                    .orderByAsc("id")
+                    .limit(10)
+                    .caching(cache)
+                    .selectList(UserModel.class);
+
+            assert mapList.size() == 10;
+            assert mapList.get(0).id == 10;
+        }
     }
 
     @Test

@@ -2,6 +2,9 @@ package org.noear.weed.mongo;
 
 import com.mongodb.client.model.IndexOptions;
 import org.noear.weed.DataItem;
+import org.noear.weed.cache.CacheUsing;
+import org.noear.weed.cache.ICacheController;
+import org.noear.weed.cache.ICacheService;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -10,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * @author noear 2021/2/5 created
  */
-public class MgTableQuery {
+public class MgTableQuery implements ICacheController<MgTableQuery> {
     private String table;
     private Map<String, Object> whereMap;
     private Map<String, Object> orderMap;
@@ -50,10 +53,10 @@ public class MgTableQuery {
 
     /**
      * <p><code>
-     *     db.table("user").whereScript("this.age > 20 && this.age <= 40")
+     * db.table("user").whereScript("this.age > 20 && this.age <= 40")
      * </code></p>
      * 添加SQL where script 语句，需要服务器开启脚本能力
-     * */
+     */
     public MgTableQuery whereScript(String code) {
         initWhereMap();
 
@@ -148,20 +151,20 @@ public class MgTableQuery {
         return this;
     }
 
-    public MgTableQuery whereMod(String field, long base, long result) {
+    public MgTableQuery whereMod(String field, long base, long val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, result));
+        tmp.put("$mod", Arrays.asList(base, val));
         whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereNmod(String field, long base, long result) {
+    public MgTableQuery whereNmod(String field, long base, long val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, result));
+        tmp.put("$mod", Arrays.asList(base, val));
 
         Map<String, Object> tmp2 = new LinkedHashMap<>();
         tmp2.put("$not", tmp2);
@@ -231,158 +234,73 @@ public class MgTableQuery {
     //
     //添加SQL and = 语句
     public MgTableQuery andEq(String field, Object val) {
-        initWhereMap();
-
-        whereMap.put(field, val);
-        return this;
+        return whereEq(field, val);
     }
 
     //添加SQL where != 语句
     public MgTableQuery andNeq(String field, Object val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$ne", val);
-        whereMap.put(field, tmp);
-        return this;
+        return whereNeq(field, val);
     }
 
 
     //添加SQL where < 语句
     public MgTableQuery andLt(String field, Object val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$lt", val);
-        whereMap.put(field, tmp);
-        return this;
+        return whereLt(field, val);
     }
 
     //添加SQL where <= 语句
     public MgTableQuery andLte(String field, Object val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$lte", val);
-        whereMap.put(field, tmp);
-        return this;
+        return whereLte(field, val);
     }
 
     //添加SQL where > 语句
     public MgTableQuery andGt(String field, Object val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$gt", val);
-        whereMap.put(field, tmp);
-        return this;
+        return whereGt(field, val);
     }
 
     //添加SQL where >= 语句
     public MgTableQuery andGte(String field, Object val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$gte", val);
-        whereMap.put(field, tmp);
-        return this;
+        return whereGte(field, val);
     }
 
     public MgTableQuery andBtw(String field, Object start, Object end) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$gte", start);
-        tmp.put("$lte", end);
-
-        whereMap.put(field, tmp);
-        return this;
+        return whereBtw(field, start, end);
     }
 
     public MgTableQuery andExists(String field, boolean exists) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$exists", exists);
-        whereMap.put(field, tmp);
-        return this;
+        return whereExists(field, exists);
     }
 
-    public MgTableQuery andMod(String field, long base, long result) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, result));
-        whereMap.put(field, tmp);
-        return this;
+    public MgTableQuery andMod(String field, long base, long val) {
+        return whereMod(field, base, val);
     }
 
-    public MgTableQuery andNmod(String field, long base, long result) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, result));
-
-        Map<String, Object> tmp2 = new LinkedHashMap<>();
-        tmp2.put("$not", tmp2);
-
-        whereMap.put(field, tmp2);
-        return this;
+    public MgTableQuery andNmod(String field, long base, long val) {
+        return whereNmod(field, base, val);
     }
 
     public MgTableQuery andSize(String field, long size) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$size", size);
-        whereMap.put(field, tmp);
-        return this;
+        return whereSize(field, size);
     }
 
     public MgTableQuery andAll(String field, Iterable<Object> ary) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$all", ary);
-        whereMap.put(field, tmp);
-        return this;
+        return whereAll(field, ary);
     }
 
     public MgTableQuery andIn(String field, Iterable<Object> ary) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$in", ary);
-        whereMap.put(field, tmp);
-        return this;
+        return whereIn(field, ary);
     }
 
     public MgTableQuery andNin(String field, Iterable<Object> ary) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$nin", ary);
-        whereMap.put(field, tmp);
-        return this;
+        return whereNin(field, ary);
     }
 
     public MgTableQuery andLk(String field, String regex) {
-        initWhereMap();
-
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        whereMap.put(field, pattern);
-        return this;
+        return whereLk(field, regex);
     }
 
     public MgTableQuery andNlk(String field, String regex) {
-        initWhereMap();
-
-        Pattern expr = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$not", expr);
-
-        whereMap.put(field, tmp);
-        return this;
+        return whereNlk(field, regex);
     }
 
 
@@ -409,6 +327,22 @@ public class MgTableQuery {
         }
 
         dataItem.put(field, val);
+
+        return this;
+    }
+
+    /**
+     * 设置自增加
+     */
+    public MgTableQuery setInc(String field, long val) {
+        if (dataItem == null) {
+            dataItem = new LinkedHashMap<>();
+        }
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put(field, val);
+
+        dataItem.put("$inc", tmp);
 
         return this;
     }
@@ -533,9 +467,28 @@ public class MgTableQuery {
         return new DataItem().setMap(itemTmp).toEntity(clz);
     }
 
+    private String getWeedkey(Map<String, Object> filter){
+        StringBuilder buf = new StringBuilder();
+        buf.append(table)
+                .append("@").append(filter.toString())
+                .append("@").append(limit_size)
+                .append("@").append(limit_start);
+
+        return buf.toString();
+    }
+
     public List<Map<String, Object>> selectMapList() {
         Map<String, Object> filter = buildFilter(true);
 
+        if (_cache == null) {
+            return selectMapListDo(filter);
+        } else {
+            String weedKey = getWeedkey(filter);
+            return _cache.getEx(weedKey, () -> selectMapListDo(filter));
+        }
+    }
+
+    private List<Map<String, Object>> selectMapListDo(Map<String, Object> filter) {
         if (limit_size > 0) {
             return mongoX.findPage(table, filter, orderMap, limit_start, limit_size);
         } else {
@@ -560,12 +513,26 @@ public class MgTableQuery {
     public Map<String, Object> selectMap() {
         Map<String, Object> filter = buildFilter(true);
 
-        return mongoX.findOne(table, filter);
+        if (_cache == null) {
+            return mongoX.findOne(table, filter);
+        } else {
+            String weedKey = getWeedkey(filter);
+            return _cache.getEx(weedKey, () -> mongoX.findOne(table, filter));
+        }
     }
-
 
     public long selectCount() {
         Map<String, Object> filter = buildFilter(false);
+
+        if (_cache == null) {
+            return selectCountDo(filter);
+        } else {
+            String weedKey = getWeedkey(filter);
+            return _cache.getEx(weedKey, () -> selectCountDo(filter));
+        }
+    }
+
+    private long selectCountDo(Map<String, Object> filter) {
         if (filter.size() > 0) {
             return mongoX.countDocuments(table, filter);
         } else {
@@ -595,8 +562,48 @@ public class MgTableQuery {
         }
     }
 
-    public MgTableQuery build(Consumer<MgTableQuery> builder){
+    public MgTableQuery build(Consumer<MgTableQuery> builder) {
         builder.accept(this);
+        return this;
+    }
+
+
+    //=======================
+    //
+    // 缓存控制相关
+    //
+
+    protected CacheUsing _cache = null;
+
+    /**
+     * 使用一个缓存服务
+     */
+    public MgTableQuery caching(ICacheService service) {
+        _cache = new CacheUsing(service);
+        return this;
+    }
+
+    /**
+     * 是否使用缓存
+     */
+    public MgTableQuery usingCache(boolean isCache) {
+        _cache.usingCache(isCache);
+        return this;
+    }
+
+    /**
+     * 使用缓存时间（单位：秒）
+     */
+    public MgTableQuery usingCache(int seconds) {
+        _cache.usingCache(seconds);
+        return this;
+    }
+
+    /**
+     * 为缓存添加标签
+     */
+    public MgTableQuery cacheTag(String tag) {
+        _cache.cacheTag(tag);
         return this;
     }
 }

@@ -39,6 +39,18 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         return this;
     }
 
+    public DbTableQuery setInc(String name, long value) {
+        usingExpr(true);
+        if (value < 0) {
+            set(name, "$" + name + value);
+        } else {
+            set(name, "$" + name + "+" + value);
+        }
+
+        return this;
+    }
+
+
     public DbTableQuery setDf(String name, Object value, Object def) {
         if (value == null) {
             set(name, def);
