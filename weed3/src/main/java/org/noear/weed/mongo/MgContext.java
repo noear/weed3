@@ -17,14 +17,16 @@ public class MgContext {
     }
 
     /**
-     * 表操作
+     * 获取表操作
      * */
     public MgTableQuery table(String table) {
         return new MgTableQuery(mongoX).table(table);
     }
 
-
-    public MongoX mongoX(){
+    /**
+     * 获取驱动操作
+     * */
+    public MongoX mongo(){
         return mongoX;
     }
 }
