@@ -455,8 +455,10 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         List<T> list = new ArrayList<>();
         List<Map<String, Object>> listTmp = selectMapList();
 
-        for (Map<String, Object> itemTmp : listTmp) {
-            list.add(new DataItem().setMap(itemTmp).toEntity(clz));
+        if (listTmp != null) {
+            for (Map<String, Object> itemTmp : listTmp) {
+                list.add(new DataItem().setMap(itemTmp).toEntity(clz));
+            }
         }
 
         return list;
@@ -464,7 +466,11 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
     public <T> T selectItem(Class<T> clz) {
         Map<String, Object> itemTmp = selectMap();
-        return new DataItem().setMap(itemTmp).toEntity(clz);
+        if (itemTmp == null) {
+            return null;
+        } else {
+            return new DataItem().setMap(itemTmp).toEntity(clz);
+        }
     }
 
     private String getWeedkey(Map<String, Object> filter){
@@ -500,10 +506,12 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         List<T> list = new ArrayList<>();
         List<Map<String, Object>> listTmp = selectMapList();
 
-        for (Map<String, Object> map : listTmp) {
-            Object v1 = map.get(field);
-            if (v1 != null) {
-                list.add((T) v1);
+        if(listTmp != null) {
+            for (Map<String, Object> map : listTmp) {
+                Object v1 = map.get(field);
+                if (v1 != null) {
+                    list.add((T) v1);
+                }
             }
         }
 
