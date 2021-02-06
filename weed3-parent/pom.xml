@@ -62,19 +62,6 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3-solon-plugin</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>weed3-springboot-starter</artifactId>
-                <version>${weed3.ver}</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.noear</groupId>
                 <artifactId>weed3.cache.ehcache</artifactId>
                 <version>${weed3.ver}</version>
             </dependency>
@@ -240,8 +227,8 @@
         <module>../weed3</module>
         <module>../weed3-maven-plugin</module>
 
-        <module>../_extend/weed3-solon-plugin</module>
-        <module>../_extend/weed3-springboot-starter</module>
+<!--        <module>../_extend/weed3-solon-plugin</module>-->
+<!--        <module>../_extend/weed3-springboot-starter</module>-->
 
         <module>../_extend/weed3.cache.memcached</module>
         <module>../_extend/weed3.cache.redis</module>
