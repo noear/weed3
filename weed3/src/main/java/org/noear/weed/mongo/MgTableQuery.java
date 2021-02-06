@@ -157,6 +157,19 @@ public class MgTableQuery {
         return this;
     }
 
+    public MgTableQuery whereNmod(String col, long base, long result) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, result));
+
+        Map<String, Object> tmp2 = new LinkedHashMap<>();
+        tmp2.put("$not", tmp2);
+
+        whereMap.put(col, tmp2);
+        return this;
+    }
+
     public MgTableQuery whereSize(String col, long size) {
         initWhereMap();
 
@@ -198,6 +211,17 @@ public class MgTableQuery {
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         whereMap.put(col, pattern);
+        return this;
+    }
+
+    public MgTableQuery whereNlk(String col, String regex) {
+        initWhereMap();
+
+        Pattern expr = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$not", expr);
+
+        whereMap.put(col, tmp);
         return this;
     }
 
@@ -293,6 +317,19 @@ public class MgTableQuery {
         return this;
     }
 
+    public MgTableQuery andNmod(String col, long base, long result) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, result));
+
+        Map<String, Object> tmp2 = new LinkedHashMap<>();
+        tmp2.put("$not", tmp2);
+
+        whereMap.put(col, tmp2);
+        return this;
+    }
+
     public MgTableQuery andSize(String col, long size) {
         initWhereMap();
 
@@ -334,6 +371,17 @@ public class MgTableQuery {
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         whereMap.put(col, pattern);
+        return this;
+    }
+
+    public MgTableQuery andNlk(String col, String regex) {
+        initWhereMap();
+
+        Pattern expr = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$not", expr);
+
+        whereMap.put(col, tmp);
         return this;
     }
 
