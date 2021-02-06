@@ -3,10 +3,7 @@ package org.noear.weed.mongo;
 import com.mongodb.client.model.IndexOptions;
 import org.noear.weed.DataItem;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -151,6 +148,33 @@ public class MgTableQuery {
         return this;
     }
 
+    public MgTableQuery whereMod(String col, long base, long result) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, result));
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereSize(String col, long size) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$size", size);
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereAll(String col, Iterable<Object> ary) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$all", ary);
+        whereMap.put(col, tmp);
+        return this;
+    }
+
     public MgTableQuery whereIn(String col, Iterable<Object> ary) {
         initWhereMap();
 
@@ -256,6 +280,33 @@ public class MgTableQuery {
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery andMod(String col, long base, long result) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, result));
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery andSize(String col, long size) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$size", size);
+        whereMap.put(col, tmp);
+        return this;
+    }
+
+    public MgTableQuery andAll(String col, Iterable<Object> ary) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$all", ary);
         whereMap.put(col, tmp);
         return this;
     }

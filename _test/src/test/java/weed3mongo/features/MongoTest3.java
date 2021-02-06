@@ -40,15 +40,28 @@ public class MongoTest3 {
         assert mapList.get(0).id == 3;
     }
 
-    @Test
+    //@Test
     public void test3(){
+        //需要服务器开启脚本能力
         List<UserModel> mapList =  db.table("user")
-                .whereScript("id==3")
+                .whereScript("this.id==3")
                 .orderByAsc("id")
                 .limit(10)
                 .selectList(UserModel.class);
 
         assert mapList.size() > 2;
         assert mapList.get(0).id == 3;
+    }
+
+    @Test
+    public void test4(){
+        List<UserModel> mapList =  db.table("user")
+                .whereMod("id", 3,1)
+                .orderByAsc("id")
+                .limit(10)
+                .selectList(UserModel.class);
+
+        assert mapList.size() > 2;
+        assert mapList.get(0).id == 1;
     }
 }
