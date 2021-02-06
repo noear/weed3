@@ -69,95 +69,95 @@ public class MgTableQuery {
     }
 
     //添加SQL where = 语句
-    public MgTableQuery whereEq(String col, Object val) {
+    public MgTableQuery whereEq(String field, Object val) {
         initWhereMap();
 
-        whereMap.put(col, val);
+        whereMap.put(field, val);
         return this;
     }
 
     //添加SQL where != 语句
-    public MgTableQuery whereNeq(String col, Object val) {
+    public MgTableQuery whereNeq(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$ne", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
 
     //添加SQL where < 语句
-    public MgTableQuery whereLt(String col, Object val) {
+    public MgTableQuery whereLt(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lt", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where <= 语句
-    public MgTableQuery whereLte(String col, Object val) {
+    public MgTableQuery whereLte(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lte", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where > 语句
-    public MgTableQuery whereGt(String col, Object val) {
+    public MgTableQuery whereGt(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gt", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where >= 语句
-    public MgTableQuery whereGte(String col, Object val) {
+    public MgTableQuery whereGte(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereBtw(String col, Object start, Object end) {
+    public MgTableQuery whereBtw(String field, Object start, Object end) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", start);
         tmp.put("$lte", end);
 
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
 
-    public MgTableQuery whereExists(String col, boolean exists) {
+    public MgTableQuery whereExists(String field, boolean exists) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereMod(String col, long base, long result) {
+    public MgTableQuery whereMod(String field, long base, long result) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$mod", Arrays.asList(base, result));
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereNmod(String col, long base, long result) {
+    public MgTableQuery whereNmod(String field, long base, long result) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -166,62 +166,62 @@ public class MgTableQuery {
         Map<String, Object> tmp2 = new LinkedHashMap<>();
         tmp2.put("$not", tmp2);
 
-        whereMap.put(col, tmp2);
+        whereMap.put(field, tmp2);
         return this;
     }
 
-    public MgTableQuery whereSize(String col, long size) {
+    public MgTableQuery whereSize(String field, long size) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$size", size);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereAll(String col, Iterable<Object> ary) {
+    public MgTableQuery whereAll(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$all", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereIn(String col, Iterable<Object> ary) {
+    public MgTableQuery whereIn(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$in", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereNin(String col, Iterable<Object> ary) {
+    public MgTableQuery whereNin(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$nin", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery whereLk(String col, String regex) {
+    public MgTableQuery whereLk(String field, String regex) {
         initWhereMap();
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        whereMap.put(col, pattern);
+        whereMap.put(field, pattern);
         return this;
     }
 
-    public MgTableQuery whereNlk(String col, String regex) {
+    public MgTableQuery whereNlk(String field, String regex) {
         initWhereMap();
 
         Pattern expr = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$not", expr);
 
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
@@ -230,94 +230,94 @@ public class MgTableQuery {
     // for and
     //
     //添加SQL and = 语句
-    public MgTableQuery andEq(String col, Object val) {
+    public MgTableQuery andEq(String field, Object val) {
         initWhereMap();
 
-        whereMap.put(col, val);
+        whereMap.put(field, val);
         return this;
     }
 
     //添加SQL where != 语句
-    public MgTableQuery andNeq(String col, Object val) {
+    public MgTableQuery andNeq(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$ne", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
 
     //添加SQL where < 语句
-    public MgTableQuery andLt(String col, Object val) {
+    public MgTableQuery andLt(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lt", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where <= 语句
-    public MgTableQuery andLte(String col, Object val) {
+    public MgTableQuery andLte(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$lte", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where > 语句
-    public MgTableQuery andGt(String col, Object val) {
+    public MgTableQuery andGt(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gt", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
     //添加SQL where >= 语句
-    public MgTableQuery andGte(String col, Object val) {
+    public MgTableQuery andGte(String field, Object val) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", val);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andBtw(String col, Object start, Object end) {
+    public MgTableQuery andBtw(String field, Object start, Object end) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$gte", start);
         tmp.put("$lte", end);
 
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andExists(String col, boolean exists) {
+    public MgTableQuery andExists(String field, boolean exists) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$exists", exists);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andMod(String col, long base, long result) {
+    public MgTableQuery andMod(String field, long base, long result) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$mod", Arrays.asList(base, result));
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andNmod(String col, long base, long result) {
+    public MgTableQuery andNmod(String field, long base, long result) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -326,62 +326,62 @@ public class MgTableQuery {
         Map<String, Object> tmp2 = new LinkedHashMap<>();
         tmp2.put("$not", tmp2);
 
-        whereMap.put(col, tmp2);
+        whereMap.put(field, tmp2);
         return this;
     }
 
-    public MgTableQuery andSize(String col, long size) {
+    public MgTableQuery andSize(String field, long size) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$size", size);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andAll(String col, Iterable<Object> ary) {
+    public MgTableQuery andAll(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$all", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andIn(String col, Iterable<Object> ary) {
+    public MgTableQuery andIn(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$in", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andNin(String col, Iterable<Object> ary) {
+    public MgTableQuery andNin(String field, Iterable<Object> ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$nin", ary);
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
-    public MgTableQuery andLk(String col, String regex) {
+    public MgTableQuery andLk(String field, String regex) {
         initWhereMap();
 
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        whereMap.put(col, pattern);
+        whereMap.put(field, pattern);
         return this;
     }
 
-    public MgTableQuery andNlk(String col, String regex) {
+    public MgTableQuery andNlk(String field, String regex) {
         initWhereMap();
 
         Pattern expr = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Map<String, Object> tmp = new LinkedHashMap<>();
         tmp.put("$not", expr);
 
-        whereMap.put(col, tmp);
+        whereMap.put(field, tmp);
         return this;
     }
 
@@ -403,12 +403,12 @@ public class MgTableQuery {
     //
     // set
     //
-    public MgTableQuery set(String col, Object val) {
+    public MgTableQuery set(String field, Object val) {
         if (dataItem == null) {
             dataItem = new LinkedHashMap<>();
         }
 
-        dataItem.put(col, val);
+        dataItem.put(field, val);
 
         return this;
     }
@@ -490,31 +490,31 @@ public class MgTableQuery {
         return this;
     }
 
-    public MgTableQuery orderByAsc(String col) {
+    public MgTableQuery orderByAsc(String field) {
         if (orderMap == null) {
             orderMap = new LinkedHashMap<>();
         }
 
-        orderMap.put(col, 1);
+        orderMap.put(field, 1);
 
         return this;
     }
 
-    public MgTableQuery orderByDesc(String col) {
+    public MgTableQuery orderByDesc(String field) {
         if (orderMap == null) {
             orderMap = new LinkedHashMap<>();
         }
 
-        orderMap.put(col, -1);
+        orderMap.put(field, -1);
         return this;
     }
 
-    public MgTableQuery andByAsc(String col) {
-        return orderByAsc(col);
+    public MgTableQuery andByAsc(String field) {
+        return orderByAsc(field);
     }
 
-    public MgTableQuery andByDesc(String col) {
-        return orderByDesc(col);
+    public MgTableQuery andByDesc(String field) {
+        return orderByDesc(field);
     }
 
     public <T> List<T> selectList(Class<T> clz) {
@@ -543,12 +543,12 @@ public class MgTableQuery {
         }
     }
 
-    public <T> List<T> selectArray(String col) {
+    public <T> List<T> selectArray(String field) {
         List<T> list = new ArrayList<>();
         List<Map<String, Object>> listTmp = selectMapList();
 
         for (Map<String, Object> map : listTmp) {
-            Object v1 = map.get(col);
+            Object v1 = map.get(field);
             if (v1 != null) {
                 list.add((T) v1);
             }
