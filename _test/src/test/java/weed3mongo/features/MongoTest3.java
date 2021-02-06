@@ -40,6 +40,18 @@ public class MongoTest3 {
         assert mapList.get(0).id == 3;
     }
 
+    @Test
+    public void test22(){
+        List<UserModel> mapList =  db.table("user")
+                .whereNlk("name", "^no")
+                .orderByAsc("id")
+                .limit(10)
+                .selectList(UserModel.class);
+
+       System.out.println(mapList);
+       assert mapList.size() == 0;
+    }
+
     //@Test
     public void test3(){
         //需要服务器开启脚本能力
