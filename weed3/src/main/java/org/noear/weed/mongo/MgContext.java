@@ -1,13 +1,12 @@
 package org.noear.weed.mongo;
 
-import java.util.Map;
 import java.util.Properties;
 
 /**
  * @author noear 2021/2/5 created
  */
 public class MgContext {
-    MongoX mongoX;
+    private MongoX mongoX;
 
     public MgContext(Properties properties, String db) {
         mongoX = new MongoX(properties, db);
