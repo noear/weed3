@@ -5,6 +5,7 @@ import org.noear.weed.DataItem;
 import org.noear.weed.cache.CacheUsing;
 import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
+import org.noear.weed.ext.Fun2;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -370,8 +371,18 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return this;
     }
 
+    public MgTableQuery setMapIf(Map<String, Object> map, Fun2<Boolean,String,Object> condition) {
+        dataItem = new DataItem().setMapIf(map, condition).getMap();
+        return this;
+    }
+
     public MgTableQuery setEntity(Object bean) {
         dataItem = new DataItem().setEntity(bean).getMap();
+        return this;
+    }
+
+    public MgTableQuery setEntityIf(Object bean, Fun2<Boolean,String,Object> condition) {
+        dataItem = new DataItem().setEntityIf(bean, condition).getMap();
         return this;
     }
 

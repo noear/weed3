@@ -60,7 +60,7 @@ public class _TimeTest {
 
         db.table("appx_copy")
                 .setEntityIf(map, (k, v) -> v != null)
-                .upsert("app_id");
+                .upsertBy("app_id");
         System.out.println(db.lastCommand.text);
     }
 

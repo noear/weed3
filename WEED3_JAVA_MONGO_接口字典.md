@@ -54,7 +54,9 @@
 -set(name:String,value:Object) -> self  //设置变量
 -setInc(name:String,value:long) -> self //设置自增变量
 -setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)  //null会默认排除
+-setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
 -setEntity(data:Object) -> self     //设置变量(将实体输入) //null会默认排除
+-setEntityIf(data:Object,(k,v)->bool) -> self
 
 
 -orderByAsc(field:String) -> self //添加SQL order by .. ASC语句
