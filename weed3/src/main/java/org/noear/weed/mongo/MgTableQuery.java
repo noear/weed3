@@ -141,53 +141,17 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return this;
     }
 
-
-    public MgTableQuery whereExists(String field, boolean exists) {
+    public MgTableQuery whereNbtw(String field, Object start, Object end) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$exists", exists);
-        whereMap.put(field, tmp);
-        return this;
-    }
-
-    public MgTableQuery whereMod(String field, long base, long val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, val));
-        whereMap.put(field, tmp);
-        return this;
-    }
-
-    public MgTableQuery whereNmod(String field, long base, long val) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$mod", Arrays.asList(base, val));
+        tmp.put("$gte", start);
+        tmp.put("$lte", end);
 
         Map<String, Object> tmp2 = new LinkedHashMap<>();
-        tmp2.put("$not", tmp2);
+        tmp2.put("$not",tmp);
 
         whereMap.put(field, tmp2);
-        return this;
-    }
-
-    public MgTableQuery whereSize(String field, long size) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$size", size);
-        whereMap.put(field, tmp);
-        return this;
-    }
-
-    public MgTableQuery whereAll(String field, Iterable<Object> ary) {
-        initWhereMap();
-
-        Map<String, Object> tmp = new LinkedHashMap<>();
-        tmp.put("$all", ary);
-        whereMap.put(field, tmp);
         return this;
     }
 
@@ -227,6 +191,60 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         whereMap.put(field, tmp);
         return this;
     }
+
+
+
+
+    public MgTableQuery whereMod(String field, long base, long val) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, val));
+        whereMap.put(field, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereNmod(String field, long base, long val) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$mod", Arrays.asList(base, val));
+
+        Map<String, Object> tmp2 = new LinkedHashMap<>();
+        tmp2.put("$not", tmp2);
+
+        whereMap.put(field, tmp2);
+        return this;
+    }
+
+    public MgTableQuery whereAll(String field, Iterable<Object> ary) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$all", ary);
+        whereMap.put(field, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereSize(String field, long size) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$size", size);
+        whereMap.put(field, tmp);
+        return this;
+    }
+
+    public MgTableQuery whereExists(String field, boolean exists) {
+        initWhereMap();
+
+        Map<String, Object> tmp = new LinkedHashMap<>();
+        tmp.put("$exists", exists);
+        whereMap.put(field, tmp);
+        return this;
+    }
+
+
 
 
     //
@@ -556,6 +574,11 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
     public String createIndex(boolean background) {
         return createIndex(new IndexOptions().background(background));
+    }
+
+    public String createIndex(Map<String,Object> options) {
+        IndexOptions options1 = new DataItem().setMap(options).toEntity(IndexOptions.class);
+        return createIndex(options1);
     }
 
     public String createIndex(IndexOptions options) {

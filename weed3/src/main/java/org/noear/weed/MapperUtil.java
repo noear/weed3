@@ -85,33 +85,29 @@ class MapperUtil {
                         return sp.getArray(0);
                     } else {
                         Class<?> rst_clz2 = item_type(rType, block);
-                        if (IBinder.class.isAssignableFrom(rst_clz2)) {
-                            return sp.getList((IBinder) rst_clz2.newInstance());
-                        } else {
-                            return sp.getList(rst_clz2);
-                        }
-                    }
 
+                        return sp.getList(rst_clz2);
+                    }
                 } else {
                     Class<?> rst_type = rClz;
-                    if(rClz == null) {
+                    if (rClz == null) {
                         if (StringUtils.isEmpty(block._return) == false) {
-                            rst_type  = Class.forName(block._return);
-                        }else{
+                            rst_type = Class.forName(block._return);
+                        } else {
                             rst_type = Void.TYPE;
                         }
                     }
 
                     //是单实体
-                    if (IBinder.class.isAssignableFrom(rst_type)) {
-                        return sp.getItem((IBinder) rst_type.newInstance());
-                    } else {
-                        return sp.getItem(rst_type);
-                    }
+                    return sp.getItem(rst_type);
                 }
             } else {
                 if (block._return.startsWith("List<")) {
                     return sp.getDataList().toArray(0);
+                }
+
+                if (block._return.startsWith("Set<")) {
+                    return sp.getDataList().toSet(0);
                 }
 
                 //普通职处理

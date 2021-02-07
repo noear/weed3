@@ -146,6 +146,15 @@ public class DataList implements Serializable,Iterable<DataItem> {
         return set;
     }
 
+    public <T> Set<T> toSet(int columnIndex) {
+        Set<T> set = new HashSet<>();
+
+        for (DataItem r : _rows) {
+            set.add((T) r.get(columnIndex));
+        }
+        return set;
+    }
+
 
     /**
      * 选一列做为数组的数据
