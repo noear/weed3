@@ -149,9 +149,16 @@
 
 -select(columns:String) -> IQuery //执行查询，并返回查询接口（有非富的数据获取方式）
 
--exists() -> boolean //执行查询，并返回存在情况
--count() -> long //执行查询，并返回COUNT(*)值
--count(code:String) -> long //执行查询，并返回COUNT(..) //count code 要自己手写
+-selectExists() -> boolean //执行查询，并返回存在情况
+-selectCount() -> long //执行查询，并返回COUNT(*)值
+-selectCount(code:String) -> long //执行查询，并返回COUNT(..) //count code 要自己手写
+-selectValue(column:String)-> Object
+-selectValue(column:String, def:T)-> T
+-selectItem(columns:String,Class<T> clz)-> T
+-selectList(columns:String,Class<T> clz)-> List<T>
+-selectMap(columns:String)-> Map<String,Object>
+-selectMapList(columns:String)-> List<Map<String,Object>>
+-selectArray(column:String)-> List<Object>
 
 //
 // 控制相关

@@ -543,12 +543,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return select(column).getValue(def);
     }
 
-    public <T> T selectItem(String columns, Class<T> cls) throws SQLException {
-        return select(columns).getItem(cls);
+    public <T> T selectItem(String columns, Class<T> clz) throws SQLException {
+        return select(columns).getItem(clz);
     }
 
-    public <T> List<T> selectList(String columns, Class<T> cls) throws SQLException {
-        return select(columns).getList(cls);
+    public <T> List<T> selectList(String columns, Class<T> clz) throws SQLException {
+        return select(columns).getList(clz);
     }
 
     public Map<String,Object> selectMap(String columns) throws SQLException{
