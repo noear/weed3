@@ -118,6 +118,8 @@
 -orderBy(code:String) -> self //添加SQL order by语句
 -orderByAsc(col:String) -> self //添加SQL order by .. ASC语句
 -orderByDesc(col:String) -> self //添加SQL order by .. DESC语句
+-andByAsc(col:String) -> self //添加SQL order by .. ASC语句
+-andByDesc(col:String) -> self //添加SQL order by .. DESC语句
 
 -limit(size:int) -> self //添加SQL 分页语句（已兼容不同数据库）
 -limit(start:int, size:int) -> self //添加SQL 分页语句（已兼容不同数据库）
