@@ -74,7 +74,6 @@ db.table(logger)
 | 可选组件 | 说明 |
 | --- | --- |
 | org.noear:weed3-maven-plugin| Maven插件，用于生成Xml sql mapper |
-| org.noear:weed3-solon-plugin | Solon插件，支持@Db注解、Mapper直接注入 |
 | | |
 | org.noear:weed3.cache.memcached| 基于 Memcached 适配的扩展缓存服务 |
 | org.noear:weed3.cache.redis| 基于 Redis 适配的扩展缓存服务 |
@@ -92,14 +91,14 @@ db.table(logger)
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.2.35</version>
+    <version>3.2.34</version>
 </dependency>
 
 <!-- 可选：maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.35</version>
+    <version>3.2.34</version>
 </plugin>
 ```
 
