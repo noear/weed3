@@ -33,6 +33,8 @@
 //      .getMapList();
 -with(name:String,code:String,args:Object...) -> self //添加SQL with 语句
 
+-whereTrue()-> self
+
 //例1: .where("name=?","x")
 //例2: .where("((name=? or id=?) and sex=0)","x",1)
 -where(code:String,args:Object...) -> self //添加SQL where 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
@@ -202,6 +204,7 @@
 // 变量设置相关
 //
 -set(name:String,value:Object) -> self  //设置变量
+-setInc(name:String,value:long) -> self //设置自增变量
 -setIf(condition:bool,name:String,value:Object) -> self
 -setMap(data:Map<String,Object>) -> self    //设置变量(将map输入)
 -setMapIf(data:Map<String,Object>,(k,v)->bool) -> self
