@@ -528,29 +528,38 @@ public abstract class WhereBase<T extends WhereBase> {
         return (T) this;
     }
 
-
-
-    public T orderBy(String code) {
+    protected T orderByDo(String code) {
         if(_orderBy == null){
             _orderBy = new StringBuilder(" ORDER BY ");
         }else{
             _orderBy.append(", ");
         }
 
-        _orderBy.append(fmtMutColumns(code));
+        _orderBy.append(code);
 
         return (T) this;
     }
 
+    public T orderBy(String code) {
+        return orderByDo(fmtMutColumns(code));
+    }
+
     public T orderByAsc(String fileds) {
-        orderBy(fmtMutColumns(fileds) + " ASC ");
-        return (T) this;
+        return orderByDo(fmtMutColumns(fileds) + " ASC ");
     }
 
 
     public T orderByDesc(String fileds) {
-        orderBy(fmtMutColumns(fileds) + " DESC ");
-        return (T)this;
+        return orderByDo(fmtMutColumns(fileds) + " DESC ");
+    }
+
+    public T andByAsc(String fileds) {
+        return orderByDo(fmtMutColumns(fileds) + " ASC ");
+    }
+
+
+    public T andByDesc(String fileds) {
+        return orderByDo(fmtMutColumns(fileds) + " DESC ");
     }
 
 

@@ -184,6 +184,12 @@ public class MapperWhereQ extends WhereBase<MapperWhereQ> {
     public <C> MapperWhereQ orderByDesc(Property<C,?> property) {
         return orderByDesc(getColumnName(property));
     }
+    public <C> MapperWhereQ andByAsc(Property<C,?> property) {
+        return andByAsc(getColumnName(property));
+    }
+    public <C> MapperWhereQ andByDesc(Property<C,?> property) {
+        return andByDesc(getColumnName(property));
+    }
 
 
     public <C> MapperWhereQ groupBy(Property<C,?> property) {

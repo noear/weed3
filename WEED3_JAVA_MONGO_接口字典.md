@@ -14,7 +14,7 @@ db.table("user")
    .insert();
 
 //查询
-List<UserModel> mapList =  db.table("user")
+List<UserModel> list = db.table("user")
         .whereEq("type",1)
         .orderByAsc("id")
         .limit(10,10)
