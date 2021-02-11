@@ -77,6 +77,7 @@ public class XmlEntityGenerator {
         //${domainName}
         //${tableName}
         //${fields}
+        //${fields_public}
         //
 
         String tableName = tableItem.tableName;
@@ -92,8 +93,13 @@ public class XmlEntityGenerator {
         code = code.replace(Names.sym_tableName, tableName);
 
         if (code.contains(Names.sym_fields)) {
-            String tmp = buildFields(source, tableItem);
+            String tmp = buildFields(source, tableItem, false);
             code = code.replace(Names.sym_fields, tmp);
+        }
+
+        if (code.contains(Names.sym_fields_public)) {
+            String tmp = buildFields(source, tableItem, true);
+            code = code.replace(Names.sym_fields_public, tmp);
         }
 
         if (code.contains(Names.sym_fields_getter)) {
@@ -163,7 +169,7 @@ public class XmlEntityGenerator {
         System.out.println("Generated : " + file.getAbsolutePath());
     }
 
-    private static String buildFields(XmlSourceBlock source, TableItem table) {
+    private static String buildFields(XmlSourceBlock source, TableItem table, boolean usePublic) {
         StringBuilder sb = new StringBuilder();
         boolean camel = Names.val_camel.equals(source.namingStyle);
 
@@ -171,10 +177,16 @@ public class XmlEntityGenerator {
             buildColumnRemarks(cw, sb);
 
             if (table.tableWrap.getPks().contains(cw.getName())) {
-                sb.append("  @PrimaryKey").append("\n");
+                sb.append("@PrimaryKey").append("\n");
             }
 
-            sb.append("  private ").append(SqlTypeMap.getType(cw)).append(" ");
+            if(usePublic){
+                sb.append("  public ");
+            }else{
+                sb.append("  private ");
+            }
+
+            sb.append(SqlTypeMap.getType(cw)).append(" ");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName()));
             } else {
