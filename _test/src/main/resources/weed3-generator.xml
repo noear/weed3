@@ -41,9 +41,9 @@ public interface ${entityName} extends BaseMapper<${domainName}Model>{
 
         <entityGenerator targetPackage="weed3demo2.dao2" entityName="${domainName}Service">
             <![CDATA[
-@XService
+@Service
 public class ${entityName}{
-    @XInject
+    @Inject
     ${domainName}Mapper mapper;
 }
 ]]>
