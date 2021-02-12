@@ -80,7 +80,7 @@ class SqlTypeMap {
         }
 
         if (type.equals(TINYINT)) {
-            if (size == 1) {
+            if (size != null && size == 1) {
                 return "Boolean";
             }
         }
