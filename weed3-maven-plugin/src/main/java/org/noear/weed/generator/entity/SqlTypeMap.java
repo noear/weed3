@@ -12,6 +12,7 @@ class SqlTypeMap {
 
     public final static String UNKNOW = "UNKNOW";
     public final static String SPECIAL = "SPECIAL";
+    public final static String TINYINT = "TINYINT";
 
     static {
         mapping.put(Types.BIGINT, "Long");
@@ -58,8 +59,8 @@ class SqlTypeMap {
 
     }
 
-    public static String getType(ColumnWrap cw){
-        return getType(cw.getType(),cw.getSize(),cw.getDigit());
+    public static String getType(ColumnWrap cw) {
+        return getType(cw.getType(), cw.getSize(), cw.getDigit());
     }
 
     public static String getType(Integer sqlType, Integer size, Integer digit) {
@@ -76,8 +77,14 @@ class SqlTypeMap {
                     return "Integer";
                 }
             }
-        } else {
-            return type;
         }
+
+        if (type.equals(TINYINT)) {
+            if (size == 1) {
+                return "Boolean";
+            }
+        }
+
+        return type;
     }
 }
