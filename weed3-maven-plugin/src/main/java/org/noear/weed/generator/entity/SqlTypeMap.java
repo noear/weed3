@@ -56,30 +56,38 @@ class SqlTypeMap {
         put(Types.TIME_WITH_TIMEZONE, "Date", "Date");
     }
 
-    public static String getType(ColumnWrap cw) {
-        return getType(cw.getType(), cw.getSize(), cw.getDigit());
-    }
-
-    public static String getType(Integer sqlType, Integer size, Integer digit) {
-        SqlTypeEntity type = mapping.get(sqlType);
+    public static String getType(ColumnWrap cw, boolean style2) {
+        SqlTypeEntity type = getType(cw.getType(), cw.getSize(), cw.getDigit());
 
         if (type == null) {
             return "Unknown";
-        }
-
-        if (type.javaType.equals(NUMERIC)) {
-            if (digit != null && digit != 0) {
-                type = mapping.get(Types.DOUBLE);
+        } else {
+            if (style2) {
+                return type.javaType2;
             } else {
-                // 有可能是BigInt，但先忽略，这种情况很少，用户也可以手工改
-                if (size >= 9) {
-                    type = mapping.get(Types.BIGINT);
+                return type.javaType;
+            }
+        }
+    }
+
+    private static SqlTypeEntity getType(Integer sqlType, Integer size, Integer digit) {
+        SqlTypeEntity type = mapping.get(sqlType);
+
+        if (type != null) {
+            if (type.javaType.equals(NUMERIC)) {
+                if (digit != null && digit != 0) {
+                    type = mapping.get(Types.DOUBLE);
                 } else {
-                    type = mapping.get(Types.INTEGER);
+                    // 有可能是BigInt，但先忽略，这种情况很少，用户也可以手工改
+                    if (size >= 9) {
+                        type = mapping.get(Types.BIGINT);
+                    } else {
+                        type = mapping.get(Types.INTEGER);
+                    }
                 }
             }
         }
 
-        return type.javaType;
+        return type;
     }
 }

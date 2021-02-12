@@ -186,7 +186,7 @@ public class XmlEntityGenerator {
                 sb.append("  private ");
             }
 
-            sb.append(SqlTypeMap.getType(cw)).append(" ");
+            sb.append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" ");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName()));
             } else {
@@ -206,7 +206,7 @@ public class XmlEntityGenerator {
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             buildColumnRemarks(cw, sb);
 
-            sb.append("  public ").append(SqlTypeMap.getType(cw)).append(" get");
+            sb.append("  public ").append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" get");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName(), true));
             } else {
@@ -241,7 +241,7 @@ public class XmlEntityGenerator {
             } else {
                 sb.append(NamingUtils.capitalize(cw.getName()));
             }
-            sb.append("(").append(SqlTypeMap.getType(cw)).append(" val){\n");
+            sb.append("(").append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" val){\n");
             sb.append("  ");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName()));

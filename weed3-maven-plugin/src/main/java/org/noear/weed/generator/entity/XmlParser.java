@@ -30,6 +30,11 @@ public class XmlParser {
         source.password = XmlUtils.attr(n1, Names.att_password);
         source.driverClassName = XmlUtils.attr(n1, Names.att_driverClassName);
         source.namingStyle = XmlUtils.attr(n1, Names.att_namingStyle);
+        source.typeStyle = XmlUtils.attr(n1, Names.att_typeStyle);
+
+        if (source.typeStyle == null) {
+            source.typeStyle = "";
+        }
 
         NodeList n2l = n1.getChildNodes();
         for (int i = 0, len = n2l.getLength(); i < len; i++) {

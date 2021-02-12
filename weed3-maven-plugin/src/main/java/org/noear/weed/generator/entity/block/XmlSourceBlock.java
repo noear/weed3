@@ -10,6 +10,7 @@ public class XmlSourceBlock {
     public String password;
     public String driverClassName;
     public String namingStyle;
+    public String typeStyle;
 
     public List<XmlEntityBlock> entityBlocks = new ArrayList<>();
     public List<XmlTableBlock> tableBlocks = new ArrayList<>();

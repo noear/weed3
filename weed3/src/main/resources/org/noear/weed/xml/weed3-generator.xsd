@@ -41,6 +41,7 @@
             <xs:attribute name="password" type="xs:string" use="required"/>
             <xs:attribute name="driverClassName" type="xs:string"  use="required"/>
             <xs:attribute name="namingStyle" type="xs:string" />
+            <xs:attribute name="typeStyle" type="xs:string" />
         </xs:complexType>
     </xs:element>
 

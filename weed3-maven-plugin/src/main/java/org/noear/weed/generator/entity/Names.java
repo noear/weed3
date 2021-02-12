@@ -11,6 +11,7 @@ public final class Names {
     public static final String att_password = "password";
     public static final String att_driverClassName = "driverClassName";
     public static final String att_namingStyle = "namingStyle";
+    public static final String att_typeStyle = "typeStyle";
 
     public static final String att_targetPackage = "targetPackage";
     public static final String att_entityName = "entityName";
