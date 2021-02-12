@@ -188,10 +188,12 @@ public class XmlSqlCompiler {
                         .append(dv.type).append(" ").append(dv.name).append(" = ")
                         .append("(").append(dv.type).append(")map.get(\"").append(dv.name).append("\");");
             } else {
-                //没类型
-                newLine(sb, depth + 1)
-                        .append("Object ").append(dv.name).append(" = ")
-                        .append("map.get(\"").append(dv.name).append("\");");
+                //没类型（排除带点的变量，属于模型属性）
+                if(dv.name.indexOf(".") < 0) {
+                    newLine(sb, depth + 1)
+                            .append("Object ").append(dv.name).append(" = ")
+                            .append("map.get(\"").append(dv.name).append("\");");
+                }
             }
         }
 
