@@ -128,16 +128,16 @@ public class XmlEntityGenerator {
             sb.append("import org.noear.weed.annotation.*;").append("\n");
         }
 
-        if (code.contains("@XInject")) {
-            sb.append("import org.noear.solon.annotation.XInject;").append("\n");
+        if (code.contains("@Inject")) {
+            sb.append("import org.noear.solon.annotation.Inject;").append("\n");
         }
 
-        if (code.contains("@XDao")) {
-            sb.append("import org.noear.solon.extend.aspect.annotation.XDao;").append("\n");
+        if (code.contains("@Dao")) {
+            sb.append("import org.noear.solon.extend.aspect.annotation.Dao;").append("\n");
         }
 
-        if (code.contains("@XService")) {
-            sb.append("import org.noear.solon.extend.aspect.annotation.XService;").append("\n");
+        if (code.contains("@Service")) {
+            sb.append("import org.noear.solon.extend.aspect.annotation.Service;").append("\n");
         }
 
 

@@ -2,61 +2,58 @@ package org.noear.weed.generator.entity;
 
 import org.noear.weed.wrap.ColumnWrap;
 
+import java.sql.JDBCType;
+import java.sql.SQLType;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
 class SqlTypeMap {
 
-    public static Map<Integer, String> mapping = new HashMap<Integer, String>();
+    public static Map<Integer, SqlTypeEntity> mapping = new HashMap<Integer, SqlTypeEntity>();
 
-    public final static String UNKNOW = "UNKNOW";
-    public final static String SPECIAL = "SPECIAL";
-    public final static String TINYINT = "TINYINT";
+    public final static String NUMERIC = "NUMERIC";
+
+    private static void put(Integer sqlType, String javaType, String javaType2) {
+        mapping.put(sqlType, new SqlTypeEntity(sqlType, javaType, javaType2));
+    }
 
     static {
-        mapping.put(Types.BIGINT, "Long");
-        mapping.put(Types.BINARY, "byte[]");
-        mapping.put(Types.BIT, "Integer");
-        mapping.put(Types.BLOB, "byte[]");
-        mapping.put(Types.BOOLEAN, "Integer");
-        mapping.put(Types.CHAR, "String");
-        mapping.put(Types.CLOB, "String");
-        mapping.put(Types.DATALINK, UNKNOW);
-        mapping.put(Types.DATE, "Date");
-        mapping.put(Types.DECIMAL, "BigDecimal");
-        mapping.put(Types.DISTINCT, UNKNOW);
-        mapping.put(Types.DOUBLE, "Double");
-        mapping.put(Types.FLOAT, "Float");
-        mapping.put(Types.INTEGER, "Integer");
-        mapping.put(Types.JAVA_OBJECT, UNKNOW);
-        mapping.put(Types.LONGNVARCHAR, "String");
-        mapping.put(Types.LONGVARBINARY, "byte[]");
-        mapping.put(Types.LONGVARCHAR, "String");
-        mapping.put(Types.NCHAR, "String");
-        mapping.put(Types.NVARCHAR, "String");
-        mapping.put(Types.NCLOB, "String");
-        mapping.put(Types.NULL, UNKNOW);
+        put(Types.BIGINT, "Long", "long");
+        put(Types.BINARY, "byte[]", "byte[]");
+        put(Types.BIT, "Boolean", "boolean");
+        put(Types.BLOB, "byte[]", "byte[]");
+        put(Types.BOOLEAN, "Boolean", "boolean");
+        put(Types.CHAR, "String", "String");
+        put(Types.CLOB, "String", "String");
+        put(Types.DATE, "Date", "Date");
+        put(Types.DECIMAL, "BigDecimal", "BigDecimal");
+        put(Types.DOUBLE, "Double", "double");
+        put(Types.FLOAT, "Float", "float");
+        put(Types.INTEGER, "Integer", "int");
+        put(Types.JAVA_OBJECT, "Object", "Object");
+        put(Types.LONGNVARCHAR, "String", "String");
+        put(Types.LONGVARBINARY, "byte[]", "byte[]");
+        put(Types.LONGVARCHAR, "String", "String");
+        put(Types.NCHAR, "String", "String");
+        put(Types.NVARCHAR, "String", "String");
+        put(Types.NCLOB, "String", "String");
         // 根据长度制定Integer，或者Double
-        mapping.put(Types.NUMERIC, SPECIAL);
-        mapping.put(Types.OTHER, "Object");
-        mapping.put(Types.REAL, "Double");
-        mapping.put(Types.REF, UNKNOW);
+        put(Types.NUMERIC, NUMERIC, NUMERIC);
+        put(Types.OTHER, "Object", "Object");
+        put(Types.REAL, "Float", "float");
 
-        mapping.put(Types.SMALLINT, "Integer");
-        mapping.put(Types.SQLXML, "SQLXML");
-        mapping.put(Types.STRUCT, UNKNOW);
-        mapping.put(Types.TIME, "Date");
-        mapping.put(Types.TIMESTAMP, "Date");
-        mapping.put(Types.TINYINT, "Integer");
-        mapping.put(Types.VARBINARY, "byte[]");
-        mapping.put(Types.VARCHAR, "String");
+        put(Types.SMALLINT, "Integer", "int");
+        put(Types.SQLXML, "SQLXML", "SQLXML");
+        put(Types.TIME, "Date", "Date");
+        put(Types.TIMESTAMP, "Date", "Date");
+        put(Types.TINYINT, "Integer", "int");
+        put(Types.VARBINARY, "byte[]", "byte[]");
+        put(Types.VARCHAR, "String", "String");
 
         // jdk 8 support
-        mapping.put(Types.REF_CURSOR, UNKNOW);
-        mapping.put(Types.TIMESTAMP_WITH_TIMEZONE, "Date");
-        mapping.put(Types.TIME_WITH_TIMEZONE, "Date");
-
+        put(Types.TIMESTAMP_WITH_TIMEZONE, "Date", "Date");
+        put(Types.TIME_WITH_TIMEZONE, "Date", "Date");
     }
 
     public static String getType(ColumnWrap cw) {
@@ -64,27 +61,25 @@ class SqlTypeMap {
     }
 
     public static String getType(Integer sqlType, Integer size, Integer digit) {
-        String type = mapping.get(sqlType);
-        if (type.equals(SPECIAL)) {
+        SqlTypeEntity type = mapping.get(sqlType);
 
+        if (type == null) {
+            return "Unknown";
+        }
+
+        if (type.javaType.equals(NUMERIC)) {
             if (digit != null && digit != 0) {
-                return "Double";
+                type = mapping.get(Types.DOUBLE);
             } else {
                 // 有可能是BigInt，但先忽略，这种情况很少，用户也可以手工改
                 if (size >= 9) {
-                    return "Long";
+                    type = mapping.get(Types.BIGINT);
                 } else {
-                    return "Integer";
+                    type = mapping.get(Types.INTEGER);
                 }
             }
         }
 
-        if (type.equals(TINYINT)) {
-            if (size != null && size == 1) {
-                return "Boolean";
-            }
-        }
-
-        return type;
+        return type.javaType;
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE generator PUBLIC "-//noear.org//DTD Generator 3.0//EN" "http://noear.org/dtd/weed3-generator.dtd">
+<generator>
+    <source schema="rock"
+            url="jdbc:mysql://localdb:3306/rock?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;rewriteBatchedStatements=true"
+            username="demo"
+            password="UL0hHlg0Ybq60xyb"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            namingStyle="camel">
+        <!-- 支持变量
+        ${tableName}
+        ${domainName}
+        ${entityName}
+        ${fields}
+        ${fields_getter}
+        ${fields_setter}
+        -->
+        <entityGenerator targetPackage="weed3demo2.model2" entityName="${domainName}Model">
+            <![CDATA[
+@Table("${tableName}")
+public class ${entityName}{
+    ${fields}
+
+    ${fields_getter}
+
+    ${fields_setter}
+}
+]]>
+        </entityGenerator>
+
+        <entityGenerator targetPackage="weed3demo2.dao2" entityName="${domainName}Mapper">
+            <![CDATA[
+import weed3demo2.model2.*;
+
+@Db("db1")
+public interface ${entityName} extends BaseMapper<${domainName}Model>{
+
+}
+]]>
+        </entityGenerator>
+
+        <entityGenerator targetPackage="weed3demo2.dao2" entityName="${domainName}Service">
+            <![CDATA[
+@Service
+public class ${entityName}{
+    @Inject
+    ${domainName}Mapper mapper;
+}
+]]>
+        </entityGenerator>
+
+        <table tableName="appx" />
+        <table tableName="appx_agroup" />
+    </source>
+</generator>
