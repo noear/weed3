@@ -57,7 +57,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.2.35</version>
+                <version>3.2.36</version>
             </plugin>
 
             <plugin>
