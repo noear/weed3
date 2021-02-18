@@ -494,10 +494,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     @Deprecated
     public long count(String code) throws SQLException{
         return selectCount(code);
-        //return select(code).getVariate().longValue(0l);
+        //return selectDo(code).getVariate().longValue(0l);
     }
 
+    @Deprecated
     public IQuery select(String columns) {
+        return selectDo(columns);
+    }
+
+    protected IQuery selectDo(String columns) {
         select_do(columns, true);
 
         DbQuery rst = compile();
@@ -532,35 +537,35 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return selectCount("COUNT(*)");
     }
     public long selectCount(String column) throws SQLException{
-        return select(column).getVariate().longValue(0L);
+        return selectDo(column).getVariate().longValue(0L);
     }
 
     public Object selectValue(String column) throws SQLException {
-        return select(column).getValue();
+        return selectDo(column).getValue();
     }
 
     public <T> T selectValue(String column, T def) throws SQLException {
-        return select(column).getValue(def);
+        return selectDo(column).getValue(def);
     }
 
     public <T> T selectItem(String columns, Class<T> clz) throws SQLException {
-        return select(columns).getItem(clz);
+        return selectDo(columns).getItem(clz);
     }
 
     public <T> List<T> selectList(String columns, Class<T> clz) throws SQLException {
-        return select(columns).getList(clz);
+        return selectDo(columns).getList(clz);
     }
 
     public Map<String,Object> selectMap(String columns) throws SQLException{
-        return select(columns).getMap();
+        return selectDo(columns).getMap();
     }
 
     public List<Map<String, Object>> selectMapList(String columns) throws SQLException{
-        return select(columns).getMapList();
+        return selectDo(columns).getMapList();
     }
 
     public <T> List<T> selectArray(String column) throws SQLException{
-        return select(column).getArray();
+        return selectDo(column).getArray();
     }
 
 

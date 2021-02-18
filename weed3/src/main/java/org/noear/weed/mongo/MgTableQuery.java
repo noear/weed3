@@ -513,7 +513,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
     }
 
     public List<Map<String, Object>> selectMapList() {
-        Map<String, Object> filter = buildFilter(true);
+        Map<String, Object> filter = buildFilter(false);
 
         if (_cache == null) {
             return selectMapListDo(filter);
