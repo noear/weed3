@@ -1,6 +1,7 @@
 package org.noear.weed.mongo;
 
 import com.mongodb.client.model.IndexOptions;
+import org.bson.Document;
 import org.noear.weed.DataItem;
 import org.noear.weed.cache.CacheUsing;
 import org.noear.weed.cache.ICacheController;
@@ -37,6 +38,11 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
     public MgTableQuery table(String table) {
         this.table = table;
+        return this;
+    }
+
+    public MgTableQuery table(Class<?> table) {
+        this.table = table.getSimpleName();
         return this;
     }
 
@@ -482,7 +488,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
     public <T> List<T> selectList(Class<T> clz) {
         List<T> list = new ArrayList<>();
-        List<Map<String, Object>> listTmp = selectMapList();
+        List<Document> listTmp = selectMapList();
 
         if (listTmp != null) {
             for (Map<String, Object> itemTmp : listTmp) {
@@ -512,7 +518,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return buf.toString();
     }
 
-    public List<Map<String, Object>> selectMapList() {
+    public List<Document> selectMapList() {
         Map<String, Object> filter = buildFilter(false);
 
         if (_cache == null) {
@@ -523,7 +529,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         }
     }
 
-    private List<Map<String, Object>> selectMapListDo(Map<String, Object> filter) {
+    private List<Document> selectMapListDo(Map<String, Object> filter) {
         if (limit_size > 0) {
             return mongoX.findPage(table, filter, orderMap, limit_start, limit_size);
         } else {
@@ -533,7 +539,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
     public <T> List<T> selectArray(String field) {
         List<T> list = new ArrayList<>();
-        List<Map<String, Object>> listTmp = selectMapList();
+        List<Document> listTmp = selectMapList();
 
         if(listTmp != null) {
             for (Map<String, Object> map : listTmp) {
@@ -547,7 +553,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return list;
     }
 
-    public Map<String, Object> selectMap() {
+    public Document selectMap() {
         Map<String, Object> filter = buildFilter(true);
 
         if (_cache == null) {

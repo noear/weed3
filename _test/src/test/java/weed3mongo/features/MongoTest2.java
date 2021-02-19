@@ -1,5 +1,6 @@
 package weed3mongo.features;
 
+import org.bson.Document;
 import org.junit.Test;
 import org.noear.solon.Utils;
 import org.noear.weed.mongo.MgContext;
@@ -74,7 +75,7 @@ public class MongoTest2 {
 
     @Test
     public void test5() {
-        List<Map<String,Object>> mapList =  db.table("user")
+        List<Document> mapList =  db.table("user")
                 .whereEq("type",1)
                 .orderByAsc("id")
                 .limit(10)
