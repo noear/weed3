@@ -59,6 +59,9 @@ public class XmlSqlServiceGenerator {
         File file = new File(file_path);
         if (!file.exists()) {
             file.createNewFile();
+        }else{
+            System.err.println("Warning : "+file.getAbsolutePath());
+            return;
         }
 
         IOUtils.fileWrite(file, block._code);
