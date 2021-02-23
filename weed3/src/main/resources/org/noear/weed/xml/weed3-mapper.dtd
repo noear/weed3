@@ -19,7 +19,7 @@
         <!ELEMENT mapper (sql*)+>
         <!ATTLIST mapper
                 namespace CDATA #REQUIRED
-                addService CDATA #REQUIRED
+                addService CDATA #IMPLIED
                 import CDATA #IMPLIED
                 baseMapper CDATA #IMPLIED
                 db CDATA #IMPLIED
