@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.noear.weed.generator.mapper.XmlSqlMapperGenerator;
+import org.noear.weed.generator.service.XmlSqlServiceGenerator;
 
 import java.io.File;
 
@@ -15,7 +16,7 @@ public class GenerateMapperMoJo extends AbstractMojo {
     @Parameter(defaultValue = "${basedir}")
     private File baseDir;
 
-    @Parameter(defaultValue = "${project.build.sourceDirectory}",required = true,readonly = true)
+    @Parameter(defaultValue = "${project.build.sourceDirectory}", required = true, readonly = true)
     private File sourceDir;
 
     @Override
@@ -25,6 +26,7 @@ public class GenerateMapperMoJo extends AbstractMojo {
 
         System.out.println("Start building mapper files:");
         XmlSqlMapperGenerator.generate(baseDir, sourceDir);
+        XmlSqlServiceGenerator.generate(baseDir, sourceDir);
         //getLog().info("Hello MavenPlugin, I'm Weed3.");
     }
 }

@@ -27,6 +27,7 @@
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="sql"/>
             </xs:choice>
             <xs:attribute name="namespace" use="required"/>
+            <xs:attribute name="addService" use="required"/>
             <xs:attribute name="import"/>
             <xs:attribute name="baseMapper"/>
             <xs:attribute name="db"/>

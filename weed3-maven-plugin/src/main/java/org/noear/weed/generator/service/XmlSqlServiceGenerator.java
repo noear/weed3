@@ -1,5 +1,9 @@
-package org.noear.weed.generator.mapper;
+package org.noear.weed.generator.service;
 
+import org.noear.weed.generator.mapper.JavaCodeBlock;
+import org.noear.weed.generator.mapper.TypeBlock;
+import org.noear.weed.generator.mapper.XmlSqlBlock;
+import org.noear.weed.generator.mapper.XmlSqlVar;
 import org.noear.weed.generator.utils.IOUtils;
 import org.noear.weed.generator.utils.StringUtils;
 import org.noear.weed.generator.utils.XmlUtils;
@@ -13,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class XmlSqlMapperGenerator {
+public class XmlSqlServiceGenerator {
 
     /** 生成 java 类 */
     public static void generate(File baseDir, File sourceDir) {
@@ -58,7 +62,7 @@ public class XmlSqlMapperGenerator {
         }
 
         IOUtils.fileWrite(file, block._code);
-        System.out.println("Generated mapper: "+file.getAbsolutePath());
+        System.out.println("Generated service: "+file.getAbsolutePath());
     }
 
     //将xml解析为java code
@@ -73,12 +77,15 @@ public class XmlSqlMapperGenerator {
 
         Set<String> importSet = new HashSet<>();
 
-        String namespace = XmlUtils.attr(nm, "namespace"); //印映全名
+        String namespace = XmlUtils.attr(nm, "addService"); // 服务全名
+
+        if(namespace == null || namespace.length()==0){
+            return null;
+        }
+
+        String mapper = XmlUtils.attr(nm, "namespace"); //印映全名
         String _import = XmlUtils.attr(nm, "import");
         int sepindex = namespace.lastIndexOf('.');
-
-        String baseMapperOf = XmlUtils.attr(nm, ":baseMapper");
-        String dbOf = XmlUtils.attr(nm,":db");
 
         String packagename = namespace.substring(0,sepindex);
         String classname = namespace.substring(sepindex+1);
@@ -94,11 +101,11 @@ public class XmlSqlMapperGenerator {
         sb.append("import java.time.*;\n");
         sb.append("import java.util.*;\n\n");
 
-        sb.append("import org.noear.weed.BaseMapper;\n");
+        sb.append("import org.noear.solon.annotation.Inject;\n");
+        sb.append("import org.noear.solon.extend.aspect.annotation.Service;\n");
         sb.append("import org.noear.weed.DataItem;\n");
         sb.append("import org.noear.weed.DataList;\n");
         sb.append("import org.noear.weed.annotation.Db;\n");
-        sb.append("import org.noear.weed.xml.Namespace;\n");
         if(StringUtils.isEmpty(_import) == false) {
             String[] ss = _import.split(";");
             for (String s : ss) {
@@ -122,17 +129,11 @@ public class XmlSqlMapperGenerator {
             }
         }
 
-        if(StringUtils.isEmpty(dbOf) == false){
-            sb2.append("@Db(\"").append(dbOf).append("\")\n");
-        }
-        sb2.append("@Namespace(\"").append(namespace).append("\")\n");
-        sb2.append("public interface ").append(classname);
-        if(StringUtils.isEmpty(baseMapperOf) == false) {
-            sb2.append(" extends BaseMapper<")
-                    .append(baseMapperOf)
-                    .append(">");
-        }
-        sb2.append("{");
+        sb2.append("@Service\n");
+        sb2.append("public class ").append(classname);
+        sb2.append("{\n");
+        sb2.append("    @Inject\n");
+        sb2.append("    ").append(mapper).append(" mapper;\n");
 
         //构建block
         StringBuilder sb_tmp  =new StringBuilder();
@@ -173,42 +174,59 @@ public class XmlSqlMapperGenerator {
         return codeBlock;
     }
 
-    private static void writerBlock(StringBuilder sb, XmlSqlBlock block){
+    private static void writerBlock(StringBuilder sb, XmlSqlBlock block) {
         //写入注释
-        if(block._remarks != null && block._remarks.length()>0){
-            newLine(sb,2).append("//").append(block._remarks);
+        if (block._remarks != null && block._remarks.length() > 0) {
+            newLine(sb, 2).append("//").append(block._remarks);
         }
 
         //写入接口定义
-        newLine(sb,2);
-        if(StringUtils.isEmpty(block._return)){
+        newLine(sb, 2);
+        sb.append("public ");
+        if (StringUtils.isEmpty(block._return)) {
             sb.append("void");
-        }
-        else{
-            if("Map".equals(block._return)){
+        } else {
+            if ("Map".equals(block._return)) {
                 sb.append("Map<String,Object>");
-            } else if("MapList".equals(block._return)){
+            } else if ("MapList".equals(block._return)) {
                 sb.append("List<Map<String,Object>>");
-            } else{
+            } else {
                 sb.append(block._return);
             }
         }
 
         sb.append(" ").append(block._id).append("(");
 
-        for(String k : block.varMap.keySet()){
+        for (String k : block.varMap.keySet()) {
             XmlSqlVar v = block.varMap.get(k);
 
             sb.append(v.type).append(" ").append(v.name).append(", ");
         }
 
-        if(block.varMap.size()>0){
+        if (block.varMap.size() > 0) {
             //删掉最后的：(, )
-            sb.deleteCharAt(sb.length()-1);
-            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length() - 1);
+            sb.deleteCharAt(sb.length() - 1);
         }
 
-        sb.append(") throws SQLException;");
+        sb.append(") throws SQLException{");
+        newLine(sb, 4);
+        sb.append("return mapper.").append(block._id).append("(");
+
+        for (String k : block.varMap.keySet()) {
+            XmlSqlVar v = block.varMap.get(k);
+
+            sb.append(v.name).append(",");
+        }
+
+        if (block.varMap.size() > 0) {
+            //删掉最后的：(, )
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        sb.append(");");
+        newLine(sb, 2);
+        sb.append("}");
     }
 
     //xml:解析 sql 指令节点

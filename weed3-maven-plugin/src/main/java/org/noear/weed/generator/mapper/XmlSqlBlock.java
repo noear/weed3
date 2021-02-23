@@ -27,7 +27,7 @@ public class XmlSqlBlock {
     public String _usingCache;
 
     //临时变量
-    protected Map<String, Node> __nodeMap;
+    public Map<String, Node> __nodeMap;
 
     public Map<String, XmlSqlVar> varMap = new LinkedHashMap<String, XmlSqlVar>();
     public void varPut(XmlSqlVar dv) {
