@@ -62,7 +62,7 @@ public class XmlSqlServiceGenerator {
         }
 
         IOUtils.fileWrite(file, block._code);
-        System.out.println("Generated service: "+file.getAbsolutePath());
+        System.out.println("Generated : "+file.getAbsolutePath());
     }
 
     //将xml解析为java code

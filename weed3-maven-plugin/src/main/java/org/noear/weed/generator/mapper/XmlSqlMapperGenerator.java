@@ -58,7 +58,7 @@ public class XmlSqlMapperGenerator {
         }
 
         IOUtils.fileWrite(file, block._code);
-        System.out.println("Generated mapper: "+file.getAbsolutePath());
+        System.out.println("Generated : "+file.getAbsolutePath());
     }
 
     //将xml解析为java code
