@@ -77,7 +77,7 @@ public class XmlSqlServiceGenerator {
 
         Set<String> importSet = new HashSet<>();
 
-        String namespace = XmlUtils.attr(nm, "addService"); // 服务全名
+        String namespace = XmlUtils.attr(nm, "proxy"); // 代理服务全名
 
         if(namespace == null || namespace.length()==0){
             return null;
