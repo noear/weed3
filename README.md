@@ -33,8 +33,7 @@ db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
   .whereEq("u.type",11)
   .limit(100,20)
-  .select("u.*,e.sex,e.label")
-  .getList(User.class);
+  .selectList("u.*,e.sex,e.label", User.class);
 
 //Table 接口，拼装条件查询（特别适合管理后台）
 db.table(logger)
@@ -49,8 +48,7 @@ db.table(logger)
   .andIf(level > 0, "level=?", level)
   .orderBy("log_fulltime desc")
   .limit(size)
-  .select("*")
-  .getList(LogModel.class);
+  .selectList("*", LogModel.class);
 ```
 
 
@@ -153,8 +151,7 @@ db.table("user").set("sex",1).whereEq("id",2).update();
 db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
   .whereEq("u.id",1001)
-  .select("u.*,e.sex,e.label")
-  .getItem(User.class);
+  .selectItem("u.*,e.sex,e.label", User.class);
 
 
 
