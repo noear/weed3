@@ -103,8 +103,8 @@ List<UserModel> list = db.table("user")
 -selectCount() -> long //执行查询，并返回数量
 -selectItem(Class<T> clz)-> T
 -selectList(Class<T> clz)-> List<T>
--selectMap()-> Map<String,Object>
--selectMapList()-> List<Map<String,Object>>
+-selectMap()-> Document
+-selectMapList()-> List<Document>
 -selectArray(field:String)-> List<Object>
 
 
