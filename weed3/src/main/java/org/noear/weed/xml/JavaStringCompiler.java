@@ -63,7 +63,7 @@ class JavaStringCompiler {
         boolean is_ok = javaCompiler.getTask(null, javaFileManager, diagnosticsCollector, null, null, files).call();
 
         //编译耗时(单位ms)
-        System.out.println(" compiler time::" + (System.currentTimeMillis() - startTime) + "ms");
+        System.out.println("[Weed3] compiler time::" + (System.currentTimeMillis() - startTime) + "ms");
 
         return is_ok;
     }
@@ -177,7 +177,7 @@ class JavaStringCompiler {
                     cls.newInstance();
                 }
 
-                System.out.println("String class loaded::" + k);
+                System.out.println("[Weed3] String class loaded::" + k);
             }catch (Throwable ex){
                 ex.printStackTrace();
             }

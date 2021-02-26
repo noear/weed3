@@ -109,7 +109,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
         try {
             sqlBuilder = block.builder.build(_map);
         }catch (Throwable ex){
-            System.out.println(block.getClasscode(true));
+            System.out.println("[Weed3] "+block.getClasscode(true));
             throw new RuntimeException(ex);
         }
 

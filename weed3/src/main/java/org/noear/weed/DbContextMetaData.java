@@ -97,19 +97,19 @@ class DbContextMetaData {
 
     private void initPrintln(String x) {
         if (_schema == null) {
-            System.out.println(x);
+            System.out.println("[Weed3] [Init] " + x);
         } else {
-            System.out.println(x + " - " + _schema);
+            System.out.println("[Weed3] [Init] " + x + " - " + _schema);
         }
     }
 
     private synchronized void initMetaDataDo() {
         //这段不能去掉
-        initPrintln("Weed3::Init metadata");
+        initPrintln("Init metadata");
 
         Connection conn = null;
         try {
-            initPrintln("Weed3::Start testing database connectivity...");
+            initPrintln("Start testing database connectivity...");
             conn = getMetaConnection();
             DatabaseMetaData md = conn.getMetaData();
 
@@ -122,13 +122,13 @@ class DbContextMetaData {
                 setSchema(conn);
             }
 
-            initPrintln("Weed3::The connection is successful");
+            initPrintln("The connection is successful");
 
             //3.
             setTables(md);
 
         } catch (Throwable ex) {
-            initPrintln("Weed3::The connection error");
+            initPrintln("The connection error");
             ex.printStackTrace();
         } finally {
             if (conn != null) {

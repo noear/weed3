@@ -23,7 +23,7 @@ public class XmlEntityGenerator {
             File file = new File(path);
 
             if (file.exists() == false) {
-                System.err.println("No configuration file: weed3-generator.xml");
+                System.err.println("[Weed3] No configuration file: weed3-generator.xml");
             }
 
             generate0(file, sourceDir);
@@ -166,7 +166,7 @@ public class XmlEntityGenerator {
             fw.write(fileContent);
         }
 
-        System.out.println("Generated : " + file.getAbsolutePath());
+        System.out.println("[Weed3] Generated : " + file.getAbsolutePath());
     }
 
     private static String buildFields(XmlSourceBlock source, TableItem table, boolean usePublic) {

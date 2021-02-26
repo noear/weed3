@@ -67,7 +67,7 @@ public class XmlSqlLoader {
             JavaStringCompiler.instance().loadClassAll(true);
         } else {
             String error = JavaStringCompiler.instance().getCompilerMessage();
-            System.out.println(error);
+            System.out.println("[Weed3] " + error);
             throw new RuntimeException(error);
         }
     }
