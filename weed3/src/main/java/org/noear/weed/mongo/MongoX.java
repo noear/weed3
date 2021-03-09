@@ -1,16 +1,9 @@
 package org.noear.weed.mongo;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.weed.DataItem;
-import org.noear.weed.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,57 +21,12 @@ public class MongoX {
 
 
     public MongoX(Properties props, String db) {
-        List<ServerAddress> lists = new ArrayList<>();
-        MongoClientOptions options = new MongoClientOptions.Builder().build();
-
-        String server = props.getProperty("server");
-        String source = props.getProperty("source");
-        String username = props.getProperty("username");
-        String password = props.getProperty("password");
-
-        String[] serverAry = server.split(";");
-
-        for (String sev : serverAry) {
-            if (StringUtils.isNotEmpty(sev)) {
-                lists.add(buildServer(sev));
-            }
-        }
-
-        if (StringUtils.isNotEmpty(username)) {
-            MongoCredential credential = MongoCredential.createCredential(username, source, password.toCharArray());
-            client = new MongoClient(lists, credential, options);
-        } else {
-            client = new MongoClient(lists, options);
-        }
-
-
-        database = client.getDatabase(db);
+        this(props.getProperty("url"), db);
     }
 
-    public MongoX(String host, int port, String db) {
-        if (port > 0) {
-            client = new MongoClient(host, port);
-        } else {
-            client = new MongoClient(host);
-        }
-
+    public MongoX(String url, String db) {
+        client = MongoClients.create(url);
         database = client.getDatabase(db);
-    }
-
-    private ServerAddress buildServer(String sev) {
-        String host;
-        int port = 0;
-
-        if (sev.contains(":")) {
-            String[] ss = sev.split(":");
-            host = ss[0];
-            port = Integer.parseInt(ss[1]);
-        } else {
-            host = sev;
-            port = 27017;
-        }
-
-        return new ServerAddress(host, port);
     }
 
     public MongoCollection<Document> getCollection(String coll) {

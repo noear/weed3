@@ -12,8 +12,8 @@ public class MgContext {
         mongoX = new MongoX(properties, db);
     }
 
-    public MgContext(String host, int port, String db) {
-        mongoX = new MongoX(host, port, db);
+    public MgContext(String url, String db) {
+        mongoX = new MongoX(url, db);
     }
 
     /**

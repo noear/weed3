@@ -8,10 +8,8 @@ import weed3mongo.model.UserModel;
  * @author noear 2021/2/6 created
  */
 public class MongoTest1 {
-    String serverIp = "172.168.0.162";
-    int serverPort = 27017;
-
-    MgContext db = new MgContext(serverIp, serverPort, "demo");
+    String url = "mongodb://172.168.0.162:27017";
+    MgContext db = new MgContext(url, "demo");
 
 //    @Test
     public void init() {
