@@ -13,6 +13,8 @@ public class MongoTest1 {
 
 //    @Test
     public void init() {
+
+
         for (int i = 0; i < 100; i++) {
             db.table("user")
                     .set("id", i)

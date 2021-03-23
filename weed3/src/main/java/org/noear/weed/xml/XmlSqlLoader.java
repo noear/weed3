@@ -40,9 +40,10 @@ public class XmlSqlLoader {
     }
 
     private void load0() throws Exception {
-        XmlFileScaner.scan("weed3", ".xml")
+        XmlFileScaner.scan("weed3/", ".xml")
                 .stream()
                 .map(k -> IOUtils.getResource(k))
+                .filter(url -> url != null)
                 .forEach(url -> _g.xmlFiles.add(url));
 
         if (_g.xmlFiles.size() == 0) {
@@ -52,7 +53,10 @@ public class XmlSqlLoader {
         //构建代码
         List<String> codes = new ArrayList<>();
         for (URL file : _g.xmlFiles) {
+            System.out.println("[Weed] Xml Compiler: " + file);
+
             String code = XmlSqlCompiler.parse(file);
+
             if (code != null) {
                 codes.add(code);
             }

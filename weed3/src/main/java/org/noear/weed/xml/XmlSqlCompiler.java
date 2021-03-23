@@ -111,9 +111,13 @@ public class XmlSqlCompiler {
             docBf.setValidating(false);
             docB = docBf.newDocumentBuilder();
 
-            docB.setEntityResolver(( publicId,  systemId)->{
+            docB.setEntityResolver((publicId, systemId) -> {
                 if (systemId.contains("weed3-mapper.dtd")) {
                     InputStream dtdStream = XmlSqlBlock.class.getResourceAsStream("/org/noear/weed/xml/weed3-mapper.dtd");
+                    return new InputSource(dtdStream);
+                    //return new InputSource(new StringReader(""));
+                } else if (systemId.contains("weed3-generator.dtd")) {
+                    InputStream dtdStream = XmlSqlBlock.class.getResourceAsStream("/org/noear/weed/xml/weed3-generator.dtd");
                     return new InputSource(dtdStream);
                     //return new InputSource(new StringReader(""));
                 } else {
