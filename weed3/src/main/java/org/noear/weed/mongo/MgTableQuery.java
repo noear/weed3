@@ -330,13 +330,13 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
 
     private Map<String, Object> buildFilter(boolean forced) {
-        if (whereMap == null) {
-            throw new IllegalArgumentException("No where condition...");
-        }
-
         if (forced) {
             if (whereMap.size() == 0) {
                 throw new IllegalArgumentException("No where condition...");
+            }
+        }else{
+            if (whereMap == null) {
+                whereMap = new LinkedHashMap<>();
             }
         }
 
@@ -533,6 +533,10 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         if (limit_size > 0) {
             return mongoX.findPage(table, filter, orderMap, limit_start, limit_size);
         } else {
+            if(filter == null || filter.size() == 0){
+                throw new IllegalArgumentException("No where condition...");
+            }
+
             return mongoX.findMany(table, filter, orderMap);
         }
     }
