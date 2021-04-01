@@ -39,4 +39,26 @@ public class CacheTest {
 
         assert tmp != tmp2;
     }
+
+    @Test
+    public void test2() throws Exception{
+        long tmp = cache.getBy(300, "key", (uc) -> {
+            return System.currentTimeMillis();
+        });
+
+        long tmp2 = cache.getBy(300, "key", (uc) -> {
+            return System.currentTimeMillis();
+        });
+
+        assert tmp == tmp2;
+
+
+        Thread.sleep(1000 * 200);
+
+        tmp2 = cache.getBy(300, "key", (uc) -> {
+            return System.currentTimeMillis();
+        });
+
+        assert tmp == tmp2;
+    }
 }
