@@ -26,12 +26,6 @@ public class WhereTest {
         }
 
         List<AppxModel> list = qr.selectList("*", AppxModel.class);
-
-
-
-//        SelectQ selectQ = db2.table("appx").selectQ("*");
-//        selectQ.builder;
-//        selectQ.paramS;
     }
 
     @Test
