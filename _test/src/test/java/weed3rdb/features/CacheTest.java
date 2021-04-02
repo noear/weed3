@@ -19,9 +19,8 @@ public class CacheTest {
         AppxModel tmp = db2.table("appx")
                 .whereEq("app_id", 23)
                 .caching(cache)
-                .select("*")
                 .cacheTag("app_23")
-                .getItem(AppxModel.class);
+                .selectItem("*", AppxModel.class);
 
         System.out.println("tmp.app_id = " + tmp.app_id);
         assert tmp.app_id == 23;
