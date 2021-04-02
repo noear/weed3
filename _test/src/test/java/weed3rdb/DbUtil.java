@@ -73,20 +73,6 @@ public class DbUtil {
         return ds;
     }
 
-    private static String[] getSqlFromFile(String uri){
-        try{
-            InputStream ins = Utils.getResource(uri).openStream();
-            int len = ins.available();
-            byte[] bs = new byte[len];
-            ins.read(bs);
-            String str = new String(bs,"UTF-8");
-            String[] sql = str.split(";");
-            return sql;
-        }catch(Exception ex){
-            throw new RuntimeException(ex);
-        }
-    }
-
     private final static HikariDataSource dbDb2Cfg(){
         HikariDataSource ds = new HikariDataSource();
 
@@ -158,4 +144,20 @@ public class DbUtil {
 
     public static DbContext db = getDb();
     public static ICacheServiceEx cache = new LocalCache().nameSet("test");
+
+
+
+    private static String[] getSqlFromFile(String uri){
+        try{
+            InputStream ins = Utils.getResource(uri).openStream();
+            int len = ins.available();
+            byte[] bs = new byte[len];
+            ins.read(bs);
+            String str = new String(bs,"UTF-8");
+            String[] sql = str.split(";");
+            return sql;
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
 }

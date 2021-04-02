@@ -25,6 +25,7 @@ public class WhereTest {
             qr.andEq("type",2);
         }
 
+        long count = qr.selectCount();
         List<AppxModel> list = qr.selectList("*", AppxModel.class);
     }
 
