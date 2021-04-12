@@ -579,7 +579,7 @@ public class XmlSqlCompiler {
 
             for (XmlSqlVar dv : tmpList) {
                 if(dv.type != null && dv.type.indexOf(">")>0){
-                    txt2 = txt2.replace(dv.mark, "?...");
+                    txt2 = txt2.replace(dv.mark, "?..."); //支持 IN (@{xxx:List[Long]})
                 }else{
                     txt2 = txt2.replace(dv.mark, "?");
                 }
