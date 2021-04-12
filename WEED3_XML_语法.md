@@ -151,6 +151,12 @@ return="String" => String （任何单职类型）
         FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
 
     </sql>
+
+    <sql id="user_get_list3"
+         remarks="获取一批符合条件的用户"
+         return="List[UserModel]">
+        SELECT * FROM user WHERE user_id IN (@{user_ids:List[Long]})
+    </sql>
 </mapper>
 
 ```
