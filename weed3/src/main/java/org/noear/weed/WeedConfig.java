@@ -66,10 +66,12 @@ public final class WeedConfig {
 
     protected static void runExceptionEvent(Command cmd, Throwable ex) {
         if (onException_listener.size() > 0) {
-            cmd.timestop = System.currentTimeMillis();
+            if (cmd != null) {
+                cmd.timestop = System.currentTimeMillis();
+            }
 
-            onException_listener.forEach(fun->{
-                fun.run(cmd,ex);
+            onException_listener.forEach(fun -> {
+                fun.run(cmd, ex);
             });
         }
     }
