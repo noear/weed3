@@ -1,10 +1,7 @@
 package weed3rdb.features;
 
 import org.junit.Test;
-import org.noear.weed.DbContext;
-import org.noear.weed.DbTran;
-import org.noear.weed.DbTranQueue;
-import org.noear.weed.VarHolder;
+import org.noear.weed.*;
 import weed3rdb.DbUtil;
 
 public class TranTest {
@@ -14,9 +11,11 @@ public class TranTest {
 
         clear(db1);
 
-        db1.tran(t -> {
+        Trans.tran(()->{
             db1.sql("insert into test (v1) values (1024);").insert();
             db1.sql("insert into test (v1) values (1024);").insert();
+
+            db1.sql("update test set v1=12 where id=?",1).update();
         });
 
         assert  db1.table("test").count()==2;
@@ -29,7 +28,7 @@ public class TranTest {
         clear(db1);
 
         try {
-            db1.tran(t -> {
+            Trans.tran(() -> {
                 db1.sql("insert into test (v1) values (1024);").insert();
                 db1.sql("insert into test (v1) values (1024);").insert();
 
@@ -49,33 +48,14 @@ public class TranTest {
 
         clear(db1);
 
-        new DbTranQueue().execute((tq) -> {
-            db1.tran(tq, t -> {
-                db1.sql("insert into test (v1) values (1024);").insert();
-            });
-
-            db2.tran(tq, t -> {
-                db2.sql("insert into test (v1) values (1024);").insert();
-            });
+        Trans.tran(()->{
+            db1.sql("insert into test (v1) values (1024);").insert();
+            db2.sql("insert into test (v1) values (1024);").insert();
         });
 
         assert  db1.table("test").count()==2;
     }
 
-    @Test
-    public void test1_1() throws Throwable {
-        DbContext db1 = DbUtil.db;
-        DbContext db2 = DbUtil.db;
-
-        clear(db1);
-
-        new DbTran().execute((tq) -> {
-            db1.sql("insert into test (v1) values (1024);").insert();
-            db2.sql("insert into test (v1) values (1024);").insert();
-        });
-
-        assert db1.table("test").count() == 2;
-    }
 
     @Test
     public void test11() throws Throwable {
@@ -85,38 +65,7 @@ public class TranTest {
         clear(db1);
 
         try {
-            new DbTranQueue().execute((tq) -> {
-                db1.tran(tq, t -> {
-                    db1.sql("insert into test (v1) values (1024);").insert();
-                });
-
-                db2.tran(tq, t -> {
-                    db2.sql("insert into test (v1) values (1024);").insert();
-                });
-
-                throw new RuntimeException("不让你加");
-            });
-
-        } catch (Exception ex) {
-
-        }
-
-        db1.sql("insert into test (v1) values (1024);").insert();
-
-        long count = db1.table("test").count();
-        System.out.print(count);
-        assert count == 1;
-    }
-
-    @Test
-    public void test11_1() throws Throwable {
-        DbContext db1 = DbUtil.db;
-        DbContext db2 = DbUtil.db;
-
-        clear(db1);
-
-        try {
-            new DbTran().execute((tq) -> {
+            Trans.tran(()->{
                 db1.sql("insert into test (v1) values (1024);").insert();
                 db2.sql("insert into test (v1) values (1024);").insert();
 
@@ -133,6 +82,7 @@ public class TranTest {
         System.out.print(count);
         assert count == 1;
     }
+
 
     public void demo2() throws Throwable {
         DbContext db1 = DbUtil.db;
