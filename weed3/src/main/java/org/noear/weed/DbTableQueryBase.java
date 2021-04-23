@@ -189,54 +189,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return 0;
         }
 
-//        List<Object> args = new ArrayList<Object>();
-//        StringBuilder sb = StringUtils.borrowBuilder();
-//
-//        sb.append(" INSERT INTO ").append(_table).append(" (");
-//        data.forEach((key, value) -> {
-//            if(value==null) {
-//                if(_usingNull == false) {
-//                    return;
-//                }
-//            }
-//
-//            sb.append(fmtColumn(key)).append(",");
-//        });
-//
-//        sb.deleteCharAt(sb.length() - 1);
-//
-//        sb.append(") ");
-//        sb.append("VALUES");
-//        sb.append("(");
-//
-//        data.forEach((key, value) -> {
-//            if (value == null) {
-//                if(_usingNull) {
-//                    sb.append("null,"); //充许插入null
-//                }
-//            } else {
-//                if (value instanceof String) {
-//                    String val2 = (String) value;
-//                    if (isSqlExpr(val2)) { //说明是SQL函数
-//                        sb.append(val2.substring(1)).append(",");
-//                    } else {
-//                        sb.append("?,");
-//                        args.add(value);
-//                    }
-//                } else {
-//                    sb.append("?,");
-//                    args.add(value);
-//                }
-//            }
-//        });
-//        sb.deleteCharAt(sb.length() - 1);
-//        sb.append(")");
-
         _builder.clear();
 
         _context.dbDialect()
                 .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
-        //_builder.append(StringUtils.releaseBuilder(sb), args.toArray());
 
         return compile().insert();
     }
