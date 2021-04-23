@@ -216,7 +216,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             _context.dbDialect()
                     .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
 
-            _builder.insert(6," IGNORE ");
+            _builder.insert(7," IGNORE ");
 
             return compile().insert();
         } else {
