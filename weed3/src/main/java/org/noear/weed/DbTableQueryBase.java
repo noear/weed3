@@ -6,6 +6,7 @@ import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.wrap.DbType;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -198,23 +199,38 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     /** 根据约束进行插入 */
-    public long insertBy(IDataItem data, String conditionFields) throws SQLException{
+    public long insertBy(IDataItem data, String conditionFields) throws SQLException {
+        if (data == null || data.count() == 0) {
+            return 0;
+        }
+
         String[] ff = conditionFields.split(",");
 
         if (ff.length == 0) {
             throw new RuntimeException("Please enter constraints");
         }
 
-        this.where("1=1");
-        for (String f : ff) {
-            this.andEq(f, data.get(f));
-        }
+        if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
+            _builder.clear();
 
-        if (this.exists()) {
-            return 0;
-        }
+            _context.dbDialect()
+                    .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
 
-        return insert(data);
+            _builder.insert(6," IGNORE ");
+
+            return compile().insert();
+        } else {
+            this.where("1=1");
+            for (String f : ff) {
+                this.andEq(f, data.get(f));
+            }
+
+            if (this.exists()) {
+                return 0;
+            }
+
+            return insert(data);
+        }
     }
 
     /** 执行批量合并插入，使用集合数据 */
@@ -285,25 +301,51 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
      * 使用data的数据,根据约束字段自动插入或更新
      * */
     public long upsertBy(IDataItem data, String conditionFields) throws SQLException {
+        if (data == null || data.count() == 0) {
+            return 0;
+        }
+
         String[] ff = conditionFields.split(",");
 
         if (ff.length == 0) {
             throw new RuntimeException("Please enter constraints");
         }
 
-        this.where("1=1");
-        for (String f : ff) {
-            this.andEq(f, data.get(f));
-        }
+        if (dbType() == DbType.MySQL || dbType() == DbType.MySQL) {
+            _builder.clear();
+            _context.dbDialect()
+                    .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
 
-        if (this.exists()) {
+            _builder.append("ON DUPLICATE KEY UPDATE ");
+
             for (String f : ff) {
                 data.remove(f);
             }
 
-            return this.update(data);
+            List<Object> args = new ArrayList<Object>();
+            StringBuilder sb = StringUtils.borrowBuilder();
+
+            updateItemsBuild0(data, sb, args);
+
+            _builder.append(sb.toString(), args);
+
+            return compile().insert();
+
         } else {
-            return this.insert(data);
+            this.where("1=1");
+            for (String f : ff) {
+                this.andEq(f, data.get(f));
+            }
+
+            if (this.exists()) {
+                for (String f : ff) {
+                    data.remove(f);
+                }
+
+                return this.update(data);
+            } else {
+                return this.insert(data);
+            }
         }
     }
 
@@ -328,31 +370,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         sb.append("UPDATE ").append(_table).append(" SET ");
 
-        data.forEach((key,value)->{
-            if(value==null) {
-                if (_usingNull) {
-                    sb.append(fmtColumn(key)).append("=null,");
-                }
-                return;
-            }
-
-            if (value instanceof String) {
-                String val2 = (String)value;
-                if (isSqlExpr(val2)) {
-                    sb.append(fmtColumn(key)).append("=").append(val2.substring(1)).append(",");
-                }
-                else {
-                    sb.append(fmtColumn(key)).append("=?,");
-                    args.add(value);
-                }
-            }
-            else {
-                sb.append(fmtColumn(key)).append("=?,");
-                args.add(value);
-            }
-        });
-
-        sb.deleteCharAt(sb.length() - 1);
+        updateItemsBuild0(data, sb, args);
 
         _builder.backup();
         _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
@@ -366,6 +384,32 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.restore();
 
         return rst;
+    }
+
+    private void updateItemsBuild0(IDataItem data, StringBuilder buf, List<Object> args) {
+        data.forEach((key, value) -> {
+            if (value == null) {
+                if (_usingNull) {
+                    buf.append(fmtColumn(key)).append("=null,");
+                }
+                return;
+            }
+
+            if (value instanceof String) {
+                String val2 = (String) value;
+                if (isSqlExpr(val2)) {
+                    buf.append(fmtColumn(key)).append("=").append(val2.substring(1)).append(",");
+                } else {
+                    buf.append(fmtColumn(key)).append("=?,");
+                    args.add(value);
+                }
+            } else {
+                buf.append(fmtColumn(key)).append("=?,");
+                args.add(value);
+            }
+        });
+
+        buf.deleteCharAt(buf.length() - 1);
     }
 
     /** 执行删除，并返回影响行数 */
