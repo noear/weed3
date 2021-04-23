@@ -323,7 +323,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             }
 
             List<Object> args = new ArrayList<Object>();
-            StringBuilder sb = StringUtils.borrowBuilder();
+            StringBuilder sb = new StringBuilder();
 
             updateItemsBuild0(data, sb, args);
 
@@ -366,14 +366,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
 
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append("UPDATE ").append(_table).append(" SET ");
 
         updateItemsBuild0(data, sb, args);
 
         _builder.backup();
-        _builder.insert(StringUtils.releaseBuilder(sb), args.toArray());
+        _builder.insert(sb.toString(), args.toArray());
 
         if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
             throw new RuntimeException("Lack of update condition!!!");
