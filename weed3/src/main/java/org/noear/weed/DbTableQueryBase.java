@@ -327,7 +327,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
             updateItemsBuild0(data, sb, args);
 
-            _builder.append(sb.toString(), args);
+            _builder.append(sb.toString(), args.toArray());
 
             return compile().insert();
 
