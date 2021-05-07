@@ -379,9 +379,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             throw new RuntimeException("Lack of update condition!!!");
         }
 
-        if(limit_size > 0) {
+        if(limit_top > 0) {
             if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
-                _builder.append(" LIMIT ?", limit_size);
+                _builder.append(" LIMIT ?", limit_top);
             }
         }
 
@@ -432,9 +432,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.insert(StringUtils.releaseBuilder(sb));
 
-        if(limit_size > 0) {
+        if(limit_top > 0) {
             if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
-                _builder.append(" LIMIT ?", limit_size);
+                _builder.append(" LIMIT ?", limit_top);
             }
         }
 
