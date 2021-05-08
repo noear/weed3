@@ -1,3 +1,7 @@
+#### 3.3.9
+* 增加统一的 Trans 事务管理器
+* 添加 db.table().where().limit().delete() //delete 的 limit 支持
+
 #### 3.2.39
 * 修改 xml sql [if test(xxx?! and yyy?!)]（多个?!会出错的问题）
 
