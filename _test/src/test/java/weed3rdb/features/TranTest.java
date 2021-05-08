@@ -18,7 +18,7 @@ public class TranTest {
             db1.sql("update test set v1=12 where id=?",1).update();
         });
 
-        assert  db1.table("test").count()==2;
+        assert  db1.table("test").selectCount()==2;
     }
 
     @Test
@@ -88,16 +88,12 @@ public class TranTest {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
-        new DbTranQueue().execute((tq) -> {
+        Trans.tran(() -> {
             VarHolder<Long> tmp = new VarHolder<>();
 
-            db1.tran(tq, t -> {
-                tmp.value = db1.sql("").insert();
-            });
+            tmp.value = db1.sql("").insert();
 
-            db2.tran(tq, t -> {
-                db2.sql("").update();
-            });
+            db2.sql("").update();
         });
     }
 
@@ -105,7 +101,7 @@ public class TranTest {
         DbContext db1 = DbUtil.db;
         DbContext db2 = DbUtil.db;
 
-        new DbTran().execute((tq) -> {
+        Trans.tran(()->{
             VarHolder<Long> tmp = new VarHolder<>();
 
             tmp.value = db1.sql("").insert();
