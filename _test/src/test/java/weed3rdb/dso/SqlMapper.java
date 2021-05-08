@@ -6,6 +6,7 @@ import org.noear.weed.xml.Namespace;
 import webapp.model.AppxModel;
 import weed3rdb.DbUtil;
 
+import javax.annotation.PostConstruct;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public interface SqlMapper extends BaseMapper<AppxModel> {
     List<AppxModel> appx_getlist(int app_id) throws SQLException;
 
     List<Integer> appx_getids() throws SQLException;
+
 
     int appx_get_error();
 
