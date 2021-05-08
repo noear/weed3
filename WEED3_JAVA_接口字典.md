@@ -313,4 +313,3 @@ public interface IQuery extends ICacheController<IQuery> {
      <T> List<T> getArray(int columnIndex) throws SQLException;
 }
 ```
-
