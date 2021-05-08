@@ -46,7 +46,7 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.2.6.2</version>
+    <version>3.3.9</version>
 </plugin>
 ```
 
@@ -84,7 +84,7 @@ demo.db:
   
 ```java
 //使用Properties配置的示例
-Properties properties = XApp.cfg().getProp("demo.db"); //这是solon框架的接口
+Properties properties = Solon.cfg().getProp("demo.db"); //这是solon框架的接口
 DbContext db  = new DbContext(properties); 
 
 //使用Map配置的示例
@@ -231,15 +231,14 @@ public void saveUser(UserModel m){
 db.table("user").where("id<?", 100).and("LENGTH(name)>?",10).count();
 
 //查询20条，id>10的记录
-db.table("user").whereGte("id", 10).limit(20).select("*").getMapList();
+db.table("user").whereGte("id", 10).limit(20).selectMapList("*");
 
 //关联查询并输出一个实体
 db.table("user u")
   .innerJoin("user_ex e").onEq("u.id","e.user_id")
   .whereEq("u.id", 10).andEq("e.sex",1)
   .limit(1)
-  .select("u.*,e.sex user_sex")
-  .getItem(User.class);
+  .selectItem("u.*,e.sex user_sex", User.class);
 
 ```
 
@@ -247,7 +246,7 @@ db.table("user u")
 
 ```java
 //如果有名字，加名字条件；（管理后台的查询，很实用的; 省了很多if）
-db.talbe("user").whereIf(name!=null, "name=?", name).limit(10).select("*");
+db.talbe("user").whereIf(name!=null, "name=?", name).limit(10).selectMapList("*");
 
 //插入，过滤null
 db.table("user").setMapIf(map,(k,v)->v!=null).insert(); //过滤null
@@ -490,30 +489,30 @@ ${name:type} = 变量替换
 ICacheServiceEx cache = new LocalCache().nameSet("cache");
 
 User user = db.table("user")
-              .where("id=?",12)
+              .whereEq("id",12)
               .caching(cache)  //加缓存，时间为cache的默认时间
-              .select("*").getItem(User.class);
+              .selectItem("*", User.class);
 ```
 
 * 缓存控制（不需要的可以跳过）
 ```java
 //查询时，缓存
 User user = db.table("user")
-              .where("id>?",12)
+              .whereGt("id",12)
               .limit(100,20) //分页查询
               .caching(cache)
               .usingCache(60*5)     //缓存5分钟
               .cacheTag("user_all") //加缓存标签user_all
-              .select("*").getList(User.class);
+              .selectList("*", User.class);
 
 //更新时，清除缓存 //下次查询时，又可拿到最新数据
-db.table("user").set("sex",0).where("id=101").update();
+db.table("user").set("sex",0).whereEq("id",101).update();
 cache.clear("user_all");
 ```
 
 * 单库数据库事务
 ```java
-db.tran(t->{
+Trans.tran(()->{
   //注册用户
   long user_id = userDao.addUser(user);
   
@@ -524,18 +523,14 @@ db.tran(t->{
 
 * 跨库数据库事务（不知道算不算是分布式事务的一种）
 ```java
-new DbTranQueue().execute((tq) -> {
+Trans.tran(() -> {
     //用户系统，添加用户关金币
-    db1.tran().join(tq).execute(t -> {
-        user.id = userDao.addUser(user); //id自增
-    });
+    user.id = userDao.addUser(user); //id自增
 
     //银行系统
-    db2.tran().join(tq).execute(t -> {
-        bankDao.addAccount(user.id); //新建账号
-        bankDao.addAccountGold(user.id, 10); //添加账号叫金币
-        bankDao.addJournal(user.id,10); //添加日记账
-    });
+    bankDao.addAccount(user.id); //新建账号
+    bankDao.addAccountGold(user.id, 10); //添加账号叫金币
+    bankDao.addJournal(user.id,10); //添加日记账
   
     //扩播消息//为后续横向扩展业务
     MsgUtil.sendMessage("user.registered",user.value);
