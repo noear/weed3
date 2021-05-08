@@ -389,15 +389,25 @@ public class DbContext extends DbContextMetaData {
 
     /**
      * 开始一个新的事务
+     *
+     * @see Trans#tranNew(Act0Ex)
      */
+    @Deprecated
     public DbTran tranNew(Act1Ex<DbTran, Throwable> handler) throws SQLException {
+        //请改用：Trans.tranNew()
+
         return new DbTran(this).execute(handler);
     }
 
     /**
      * 以非事务方式运行（如果当有事务，则挂起）
+     *
+     * @see Trans#tranNot(Act0Ex)
      */
+    @Deprecated
     public void tranNot(Act0Ex<Throwable> handler) throws SQLException {
+        //请改用：Trans.tranNot()
+
         DbTran tran = DbTranUtil.current();
         DbTranUtil.currentRemove();
 
