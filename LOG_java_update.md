@@ -1,4 +1,4 @@
-#### 3.3.9
+#### 3.3.8
 * 增加统一的 Trans 事务管理器
 * 添加 db.table().where().limit().delete() //delete 的 limit 支持
 
