@@ -6,10 +6,6 @@ import org.noear.weed.annotation.Column;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * Field wrap
