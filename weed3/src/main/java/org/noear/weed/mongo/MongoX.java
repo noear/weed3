@@ -5,6 +5,8 @@ import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.weed.DataItem;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.Properties;
  *
  * @author noear 2021/2/1 created
  */
-public class MongoX {
+public class MongoX implements AutoCloseable {
     MongoClient client;
     MongoDatabase database;
 
@@ -38,7 +40,6 @@ public class MongoX {
     }
 
 
-
     public void insertOne(Class<?> coll, Map<String, Object> data) {
         insertOne(coll.getSimpleName(), data);
     }
@@ -52,6 +53,7 @@ public class MongoX {
     public void insertMany(Class<?> coll, List<Map<String, Object>> dataList) {
         insertMany(coll.getSimpleName(), dataList);
     }
+
     public void insertMany(String coll, List<Map<String, Object>> dataList) {
         MongoCollection<Document> collM = getCollection(coll);
         List<Document> list = new ArrayList<>();
@@ -77,7 +79,7 @@ public class MongoX {
         return collM.updateOne(new Document(filter), newData).getModifiedCount();
     }
 
-    public long updateMany(Class<?> coll, Map<String, Object> filter, Map<String, Object> data){
+    public long updateMany(Class<?> coll, Map<String, Object> filter, Map<String, Object> data) {
         return updateMany(coll.getSimpleName(), filter, data);
     }
 
@@ -90,18 +92,20 @@ public class MongoX {
         return collM.updateMany(new Document(filter), newData).getModifiedCount();
     }
 
-    public long replaceOne(Class<?> coll, Map<String, Object> filter, Map<String, Object> data){
+    public long replaceOne(Class<?> coll, Map<String, Object> filter, Map<String, Object> data) {
         return replaceOne(coll, filter, data);
     }
+
     public long replaceOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
         return collM.replaceOne(new Document(filter), new Document(data)).getModifiedCount();
     }
 
-    public Document findOne(Class<?> coll, Map<String, Object> filter){
+    public Document findOne(Class<?> coll, Map<String, Object> filter) {
         return findOne(coll.getSimpleName(), filter);
     }
+
     public Document findOne(String coll, Map<String, Object> filter) {
         FindIterable<Document> listM = find(coll, filter);
         listM.limit(1);
@@ -116,6 +120,7 @@ public class MongoX {
     public List<Document> findMany(Class<?> coll, Map<String, Object> filter, Map<String, Object> sort) {
         return findMany(coll.getSimpleName(), filter, sort);
     }
+
     public List<Document> findMany(String coll, Map<String, Object> filter, Map<String, Object> sort) {
         FindIterable<Document> cursor = find(coll, filter);
 
@@ -135,6 +140,7 @@ public class MongoX {
     public List<Document> findTop(Class<?> coll, Map<String, Object> filter, Map<String, Object> sort, int top) {
         return findTop(coll.getSimpleName(), filter, sort, top);
     }
+
     public List<Document> findTop(String coll, Map<String, Object> filter, Map<String, Object> sort, int top) {
         return findPage(coll, filter, sort, 0, top);
     }
@@ -142,6 +148,7 @@ public class MongoX {
     public List<Document> findPage(Class<?> coll, Map<String, Object> filter, Map<String, Object> sort, int start, int size) {
         return findPage(coll.getSimpleName(), filter, sort, start, size);
     }
+
     /**
      * @param start 起始位
      * @param size  数量
@@ -181,9 +188,10 @@ public class MongoX {
         return collM.find(new Document(filter));
     }
 
-    public long deleteOne(Class<?> coll, Map<String, Object> filter){
+    public long deleteOne(Class<?> coll, Map<String, Object> filter) {
         return deleteOne(coll.getSimpleName(), filter);
     }
+
     public long deleteOne(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
@@ -203,6 +211,7 @@ public class MongoX {
     public long count(Class<?> coll) {
         return count(coll.getSimpleName());
     }
+
     public long count(String coll) {
         MongoCollection<Document> collM = getCollection(coll);
         return collM.estimatedDocumentCount();
@@ -211,6 +220,7 @@ public class MongoX {
     public long countDocuments(Class<?> coll, Map<String, Object> filter) {
         return countDocuments(coll.getSimpleName(), filter);
     }
+
     public long countDocuments(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
@@ -246,5 +256,12 @@ public class MongoX {
 
     public String createIndex(String coll, Map<String, Object> keys) {
         return createIndex(coll, keys);
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (client != null) {
+            client.close();
+        }
     }
 }
