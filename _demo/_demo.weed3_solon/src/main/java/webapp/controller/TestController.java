@@ -10,7 +10,6 @@ import webapp.dso.SqlMapper;
 import webapp.model.AppxModel;
 
 @Mapping("/test")
-@Singleton(true)
 @Controller
 public class TestController {
     @Db

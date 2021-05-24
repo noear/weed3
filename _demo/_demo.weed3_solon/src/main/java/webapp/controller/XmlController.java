@@ -10,7 +10,6 @@ import org.noear.weed.annotation.Db;
 import webapp.dso.*;
 
 @Mapping("/xml")
-@Singleton(true)
 @Controller
 public class XmlController {
 

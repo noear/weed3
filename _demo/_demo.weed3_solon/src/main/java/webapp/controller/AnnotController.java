@@ -15,7 +15,6 @@ import java.util.Map;
 
 
 @Mapping("/annot")
-@Singleton(true)
 @Controller
 public class AnnotController {
     @Db

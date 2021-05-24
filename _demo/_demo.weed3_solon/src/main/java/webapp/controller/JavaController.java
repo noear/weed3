@@ -11,7 +11,6 @@ import webapp.model.AppxModel;
 
 
 @Mapping("/java")
-@Singleton(true)
 @Controller
 public class JavaController {
     @Db

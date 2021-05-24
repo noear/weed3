@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 @Mapping("/xmlexc")
-@Singleton(true)
 @Controller
 public class XmlExcController {
 
