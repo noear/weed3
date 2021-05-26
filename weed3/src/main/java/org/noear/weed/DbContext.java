@@ -336,7 +336,6 @@ public class DbContext extends DbContextMetaData {
     /**
      * 执行代码，返回影响行数
      * */
-//    @Deprecated
 //    public int exec(String code, Object... args) throws Exception {
 //        return sql(code, args).execute();
 //    }
