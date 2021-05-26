@@ -2,7 +2,6 @@ package weed3demo.demo.tran;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTran;
-import org.noear.weed.DbTranQueue;
 import org.noear.weed.Trans;
 import weed3demo.config.DbConfig;
 
@@ -14,38 +13,33 @@ import java.sql.SQLException;
 public class Tran2Demo {
     //不同函数串一起，跨多个数据库（分布式）
     public static void tast_tran() throws Throwable{
-        DbTranQueue queue = new DbTranQueue();//空事务，只提供最后的complete服务；
 
-        try {
+
+        Trans.tran(() -> {
             //以下操作在同一个事务队列里执行（各事务独立）
-            tast_db1_tran(queue);
-            tast_db2_tran(queue);
-            tast_db3_tran(queue);
-        }
-        finally {
-            //确保事务有完成的执行
-            queue.complete();
-        }
+            tast_db1_tran();
+            tast_db2_tran();
+            tast_db3_tran();
+        });
     }
 
     //------------------
 
-    private static void tast_db1_tran(DbTranQueue queue) throws Throwable {
+    private static void tast_db1_tran( ) throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
         DbContext db = DbConfig.pc_user;
-        DbTran tran = new DbTran(DbConfig.pc_user);
 
-        tran.join(queue).execute((t) -> {
-            db.sql("insert into $.test(txt) values(?)", "cc").tran(t).insert();
-            db.sql("insert into $.test(txt) values(?)", "dd").tran(t).execute();
-            db.sql("insert into $.test(txt) values(?)", "ee").tran(t).execute();
+        Trans.tran(() -> {
+            db.sql("insert into $.test(txt) values(?)", "cc").insert();
+            db.sql("insert into $.test(txt) values(?)", "dd").execute();
+            db.sql("insert into $.test(txt) values(?)", "ee").execute();
 
-            t.result = db.sql("select name from $.user_info where user_id=3").tran(t).getValue("");
+            db.sql("select name from $.user_info where user_id=3").getValue("");
         });
     }
 
-    private static void tast_db2_tran(DbTranQueue queue) throws Throwable {
+    private static void tast_db2_tran() throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
         Trans.tranNew(()->{
@@ -53,7 +47,7 @@ public class Tran2Demo {
         });
     }
 
-    private static void tast_db3_tran(DbTranQueue queue) throws Throwable {
+    private static void tast_db3_tran() throws Throwable {
         //使用了 .await(true) 将不提交事务（交由上一层控制）
         //
 

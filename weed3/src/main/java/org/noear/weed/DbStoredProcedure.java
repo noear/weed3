@@ -50,7 +50,7 @@ public class DbStoredProcedure extends DbProcedure {
     protected Command getCommand(){
         tryLazyload();
 
-        Command cmd = new Command(this.context,_tran);
+        Command cmd = new Command(this.context);
 
         cmd.key      = getCommandID();
         cmd.paramS   = this.paramS;

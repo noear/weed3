@@ -12,9 +12,9 @@ public class CallTest {
     @Test
     public void test11() throws Exception {
         String code = null;
-        if(db2.dbType() == DbType.Oracle){
+        if (db2.dbType() == DbType.Oracle) {
             code = "select * from \"$\".\"APPX\" where \"app_id\"=@{id}";
-        }else{
+        } else {
             code = "select * from $.appx where app_id=@{id}";
         }
 
@@ -26,10 +26,11 @@ public class CallTest {
 
     @Test
     public void test21() throws Exception {
-        if(db2.dbType() == DbType.MySQL) {
-            assert db2.call("appx_get_byid").set("_app_id", 22)
-                    .getItem(AppxModel.class).app_id == 22;
+        if (db2.dbType() == DbType.MySQL) {
+            AppxModel app = db2.call("appx_get_byid").set("_app_id", 2)
+                    .getItem(AppxModel.class);
+
+            assert app.app_id == 22;
         }
     }
-
 }

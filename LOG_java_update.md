@@ -1,3 +1,9 @@
+#### 3.3.11
+* 取消旧的事务代码
+
+#### 3.3.10
+* MgContext 增加 autoclose 接口
+
 #### 3.3.8
 * 增加统一的 Trans 事务管理器
 * 添加 db.table().where().limit().delete() //delete 的 limit 支持

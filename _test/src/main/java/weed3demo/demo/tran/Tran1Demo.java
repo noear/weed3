@@ -1,10 +1,8 @@
 package weed3demo.demo.tran;
 
 import org.noear.weed.DbContext;
-import org.noear.weed.DbTranQueue;
+import org.noear.weed.Trans;
 import weed3demo.config.DbConfig;
-
-import java.sql.SQLException;
 
 /**
  * Created by noear on 2017/7/22.
@@ -26,7 +24,7 @@ public class Tran1Demo {
     private static void test_db1_tran() throws Throwable {
         //1.简单处理
         DbContext db = DbConfig.pc_user;
-        DbConfig.pc_user.tran((t) -> {
+        Trans.tran(() -> {
             //
             // 此表达式内的操作，会自动加入事务（3.2.0.3 开始支持）
             //
@@ -44,26 +42,16 @@ public class Tran1Demo {
 
 
         //1.建立主事务，并执于
-        DbTranQueue queue = new DbTranQueue();
+        Trans.tran(() -> {
+            db.table("").select("");
 
-        queue.execute((qt)->{
-            db.table("").tran(db.tran().join(qt))
-                    .select("");
-        });
-
-        db.tran().join(queue).execute((t) -> {
             db.sql("insert into test(txt) values(?)", "cc").execute();
             db.sql("insert into test(txt) values(?)", "dd").execute();
             db.sql("insert into test(txt) values(?)", "ee").execute();
-        });
 
-        //2.执行第二个事务
-        db2.tran().join(queue).execute((t) -> {
             db2.sql("insert into test(txt) values(?)", "gg")
                     .execute();
         });
-
-        queue.complete();
     }
 
     /*2个数据库的事务，后面的根据前面的执行结果再决定要不要跟进（在同一个函数内，分布式）*/
@@ -72,27 +60,14 @@ public class Tran1Demo {
         DbContext db2 = DbConfig.pc_base;
 
         //1.建立主事务，并执于
-        DbTranQueue queue = new DbTranQueue();
 
         //1.建立主事务，并执于
-        db.tran().join(queue).execute((t) -> {
+        Trans.tran(() -> {
             db.sql("insert into test(txt) values(?)", "cc").execute();
             db.sql("insert into test(txt) values(?)", "dd").execute();
             db.sql("insert into test(txt) values(?)", "ee").execute();
 
-            queue.result = 1;
+            db2.sql("insert into test(txt) values(?)", "gg").execute();
         });
-
-
-        //2.根据执行结果判断
-        if ((int) queue.result == 1) {
-            //3.执行第二个事务
-            db2.tran().join(queue).execute((t) -> {
-                db2.sql("insert into test(txt) values(?)", "gg").execute();
-            });//json(tran) 时，会自动调用 await(true);  当 await(true)时，需要之后的事务来触发或手动触发
-        }
-
-        //4.统一触发事务
-        queue.complete();
     }
 }

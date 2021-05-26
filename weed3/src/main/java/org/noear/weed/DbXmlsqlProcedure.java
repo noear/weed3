@@ -34,7 +34,6 @@ public class DbXmlsqlProcedure extends DbProcedure {
     @Override
     public DbProcedure set(String param, Object value) {
         _map.put(param,value);
-        _onSet(param,value);
         return this;
     }
 
@@ -43,7 +42,6 @@ public class DbXmlsqlProcedure extends DbProcedure {
         if (map != null) {
             map.forEach((k, v) -> {
                 _map.put(k,v);
-                _onSet(k,v);
             });
         }
         return this;
@@ -53,21 +51,12 @@ public class DbXmlsqlProcedure extends DbProcedure {
     public DbProcedure setEntity(Object obj){
         EntityUtils.fromEntity(obj,(k, v)->{
             _map.put(k,v);
-
-            _onSet(k,v);
         });
         return this;
     }
 
     private void _onSet(String name, Object val){
         if("_tran".equals(name)){
-            if(val instanceof DbTran){
-                this.tran((DbTran)val);
-            }
-
-            if(val instanceof DbTranQueue){
-                this.tran((DbTranQueue)val);
-            }
         }
     }
 
@@ -95,7 +84,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
 
     @Override
     protected Command getCommand(){
-        Command cmd = new Command(this.context,_tran);
+        Command cmd = new Command(this.context);
 
         cmd.key      = getCommandID();
 
