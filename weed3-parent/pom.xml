@@ -43,7 +43,7 @@
 
         <weed3.ver>3.3.11</weed3.ver>
         <snack3.ver>3.1.17</snack3.ver>
-        <solon.ver>1.4.3</solon.ver>
+        <solon.ver>1.4.5</solon.ver>
     </properties>
 
     <dependencyManagement>
