@@ -23,7 +23,7 @@ public class GenerateEntityMoJo extends AbstractMojo {
         //getLog().info(baseDir.getAbsolutePath());
         //getLog().info(sourceDir.getAbsolutePath());
 
-        System.out.println("[Weed3] Start building entity files:");
+        System.out.println("[Weed] Start building entity files:");
         XmlEntityGenerator.generate(baseDir, sourceDir);
         //getLog().info("Hello MavenPlugin, I'm Weed3.");
     }

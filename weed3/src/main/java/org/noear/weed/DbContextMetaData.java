@@ -97,9 +97,9 @@ class DbContextMetaData {
 
     private void initPrintln(String x) {
         if (_schema == null) {
-            System.out.println("[Weed3] [Init] " + x);
+            System.out.println("[Weed] Init: " + x);
         } else {
-            System.out.println("[Weed3] [Init] " + x + " - " + _schema);
+            System.out.println("[Weed] Init: " + x + " - " + _schema);
         }
     }
 

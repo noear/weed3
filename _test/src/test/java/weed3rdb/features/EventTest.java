@@ -8,7 +8,7 @@ import org.noear.weed.WeedConfig;
 public class EventTest {
     public void demo(){
         WeedConfig.onExecuteAft((cmd)->{
-            System.out.println("[Weed3] " + cmd.toSqlString());
+            System.out.println("[Weed] " + cmd.toSqlString());
         });
     }
 }

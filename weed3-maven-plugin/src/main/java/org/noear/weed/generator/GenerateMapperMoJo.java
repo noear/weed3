@@ -24,7 +24,7 @@ public class GenerateMapperMoJo extends AbstractMojo {
         //getLog().info(baseDir.getAbsolutePath());
         //getLog().info(sourceDir.getAbsolutePath());
 
-        System.out.println("[Weed3] Start building mapper files:");
+        System.out.println("[Weed] Start building mapper files:");
         XmlSqlMapperGenerator.generate(baseDir, sourceDir);
         XmlSqlServiceGenerator.generate(baseDir, sourceDir);
         //getLog().info("Hello MavenPlugin, I'm Weed3.");
