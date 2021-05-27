@@ -26,7 +26,6 @@ public class NamingUtils {
      * 转换为驼峰命名法格式<br>
      * 如: user_name = userName, iuser_service = iuserService, i_user_service = iUserService
      *
-     * @author zhaohuihua
      * @param name 待转换的名称
      * @return 驼峰命名法名称
      */
@@ -39,7 +38,6 @@ public class NamingUtils {
      * 如startsWithUpperCase=true时:<br>
      * user_name = UserName, iuser_service = IuserService, i_user_service = IUserService
      *
-     * @author zhaohuihua
      * @param name 待转换的名称
      * @param startsWithUpperCase 是否以大写字母开头
      * @return 驼峰命名法名称
@@ -85,7 +83,6 @@ public class NamingUtils {
      * 如: userName = user name, SiteURL = site url, IUserService = iuser service<br>
      * user$Name = user$name, user Name = user name, user name = user name, md5String = md5 string
      *
-     * @author zhaohuihua
      * @param name 待转换的名称
      * @return 空格拆分的字符串
      */
