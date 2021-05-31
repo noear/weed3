@@ -23,7 +23,7 @@ class JavaCompilerUtil {
     Map<String, Class<?>> dynamicClassMap;
 
     private JavaCompilerUtil() {
-        dynamicCompiler = new DynamicCompiler(Thread.currentThread().getContextClassLoader());
+        dynamicCompiler = new DynamicCompiler();
     }
 
     /**
