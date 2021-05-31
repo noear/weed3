@@ -2,7 +2,6 @@ package org.noear.weed.xml;
 
 import org.noear.weed.utils.IOUtils;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,11 +64,11 @@ public class XmlSqlLoader {
             return;
         }
 
-        boolean is_ok = JavaStringCompiler.instance().compiler(codes);
+        boolean is_ok = JavaCompilerUtil.instance().compiler(codes);
         if (is_ok) {
-            JavaStringCompiler.instance().loadClassAll(true);
+            JavaCompilerUtil.instance().loadClassAll(true);
         } else {
-            String error = JavaStringCompiler.instance().getCompilerMessage();
+            String error = JavaCompilerUtil.instance().getCompilerMessage();
             System.out.println("[Weed] " + error);
             throw new RuntimeException(error);
         }
