@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class JavaCompilerUtil {
-    static JavaCompilerUtil _instance;
+class CompilerUtil {
+    static CompilerUtil _instance;
 
-    public static JavaCompilerUtil instance() {
+    public static CompilerUtil instance() {
         if (_instance == null) {
-            _instance = new JavaCompilerUtil();
+            _instance = new CompilerUtil();
         }
 
         return _instance;
@@ -22,7 +22,7 @@ class JavaCompilerUtil {
     DynamicCompiler dynamicCompiler;
     Map<String, Class<?>> dynamicClassMap;
 
-    private JavaCompilerUtil() {
+    private CompilerUtil() {
         dynamicCompiler = new DynamicCompiler();
     }
 

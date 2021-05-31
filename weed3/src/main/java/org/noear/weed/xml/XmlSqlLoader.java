@@ -64,11 +64,11 @@ public class XmlSqlLoader {
             return;
         }
 
-        boolean is_ok = JavaCompilerUtil.instance().compiler(codes);
+        boolean is_ok = CompilerUtil.instance().compiler(codes);
         if (is_ok) {
-            JavaCompilerUtil.instance().loadClassAll(true);
+            CompilerUtil.instance().loadClassAll(true);
         } else {
-            String error = JavaCompilerUtil.instance().getCompilerMessage();
+            String error = CompilerUtil.instance().getCompilerMessage();
             System.out.println("[Weed] " + error);
             throw new RuntimeException(error);
         }
