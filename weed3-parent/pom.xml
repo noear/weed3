@@ -66,11 +66,11 @@
                 <version>${weed3.ver}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>org.noear</groupId>-->
-<!--                <artifactId>weed3.cache.j2cache</artifactId>-->
-<!--                <version>${weed3.ver}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3.cache.j2cache</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
@@ -292,7 +292,7 @@
         <module>../_extend/weed3.cache.memcached</module>
         <module>../_extend/weed3.cache.redis</module>
         <module>../_extend/weed3.cache.ehcache</module>
-<!--        <module>../_extend/weed3.cache.j2cache</module>-->
+        <module>../_extend/weed3.cache.j2cache</module>
 
     </modules>
 
