@@ -391,7 +391,7 @@ if 判断控制指令（没有else）
   test （属性：判断检测代码）
      //xml避免语法增强:
      //lt(<) lte(<=) gt(>) gte(>=) and(&&) or(||)
-        //例：m.sex gt 12 :: m.sex >=12
+        //例：m.sex gte 12 :: m.sex >=12
      //简化语法增强:
      //??(非null,var!=null) ?!(非空字符串,StringUtils.isEmpty(var)==false)
         //例：m.icon??  ::m.icon!=null
