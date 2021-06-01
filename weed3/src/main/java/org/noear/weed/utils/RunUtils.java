@@ -10,8 +10,9 @@ public class RunUtils {
             return fun.run();
         } catch (RuntimeException ex) {
             throw ex;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Throwable ex) {
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 }

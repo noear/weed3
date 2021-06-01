@@ -1,5 +1,7 @@
 package org.noear.weed;
 
+import org.noear.weed.utils.ThrowableUtils;
+
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -43,9 +45,9 @@ public class DbDataSource implements DataSource {
     public void setDriverClassName(String driverClass) {
         try {
             Class.forName(driverClass);
-        }catch (Exception ex){
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
+        }catch (Throwable ex){
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 

@@ -1,6 +1,7 @@
 package org.noear.weed.xml;
 
 import org.noear.weed.utils.IOUtils;
+import org.noear.weed.utils.ThrowableUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,8 +33,9 @@ public class XmlSqlLoader {
     public static void tryLoad() {
         try {
             load();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Throwable ex) {
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 

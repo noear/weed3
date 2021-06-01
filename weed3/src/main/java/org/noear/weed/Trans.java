@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act0Ex;
+import org.noear.weed.utils.ThrowableUtils;
 
 import java.sql.SQLException;
 
@@ -25,7 +26,8 @@ public class Trans {
             } catch (SQLException ex) {
                 throw ex;
             } catch (Throwable ex) {
-                throw new RuntimeException(ex);
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
 
             return tran;
@@ -53,7 +55,8 @@ public class Trans {
         } catch (SQLException ex) {
             throw ex;
         } catch (Throwable ex) {
-            throw new RuntimeException(ex);
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         } finally {
             if (tran != null) {
                 DbTranUtil.currentSet(tran);

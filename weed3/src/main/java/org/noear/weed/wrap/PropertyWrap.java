@@ -1,5 +1,7 @@
 package org.noear.weed.wrap;
 
+import org.noear.weed.utils.ThrowableUtils;
+
 import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
@@ -18,8 +20,9 @@ public class PropertyWrap implements Serializable {
                 if (l != null) {
                     clz = l;
                 }
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Throwable ex) {
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         }
         return clz;

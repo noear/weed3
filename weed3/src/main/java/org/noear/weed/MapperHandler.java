@@ -1,5 +1,6 @@
 package org.noear.weed;
 
+import org.noear.weed.utils.ThrowableUtils;
 import org.noear.weed.wrap.MethodWrap;
 import org.noear.weed.xml.Namespace;
 
@@ -33,7 +34,8 @@ class MapperHandler implements InvocationHandler {
         } catch (SQLException ex) {
             throw ex;
         } catch (Throwable ex) {
-            throw new RuntimeException(ex);
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 

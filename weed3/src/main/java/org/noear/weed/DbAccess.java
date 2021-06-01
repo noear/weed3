@@ -5,6 +5,7 @@ import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.utils.ThrowableUtils;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -209,8 +210,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             try {
                 _tmp.value = di.toItem(model);
                 cacheCondition.run(cu, (T) _tmp.value);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Throwable ex) {
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         });
 
@@ -244,8 +246,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             try {
                 _tmp.value = dl.toList(model);
                 cacheCondition.run(cu, (List<T>) _tmp.value);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Throwable ex) {
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         });
 
@@ -285,8 +288,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             try {
                 _tmp.value = dl.toEntityList(cls);
                 cacheCondition.run(cu, (List<T>) _tmp.value);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Throwable ex) {
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         });
 
@@ -315,8 +319,9 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             try {
                 _tmp.value = di.toEntity(cls);
                 cacheCondition.run(cu, (T) _tmp.value);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } catch (Throwable ex) {
+                ex = ThrowableUtils.throwableUnwrap(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         });
 

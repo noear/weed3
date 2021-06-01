@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.utils.EntityUtils;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.utils.ThrowableUtils;
 import org.noear.weed.xml.XmlSqlBlock;
 import org.noear.weed.xml.XmlSqlFactory;
 
@@ -99,7 +100,8 @@ public class DbXmlsqlProcedure extends DbProcedure {
             sqlBuilder = block.builder.build(_map);
         }catch (Throwable ex){
             System.out.println("[Weed] "+block.getClasscode(true));
-            throw new RuntimeException(ex);
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
 
         for (Object p1 : sqlBuilder.paramS) {

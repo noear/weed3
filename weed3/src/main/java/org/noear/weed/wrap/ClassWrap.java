@@ -4,6 +4,7 @@ import org.noear.weed.DataItem;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.utils.ThrowableUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -113,8 +114,9 @@ public class ClassWrap {
             }
 
             return item;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Throwable ex) {
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 
@@ -126,8 +128,9 @@ public class ClassWrap {
                     setter.run(fw.name, fw.getValue(obj));
                 }
             }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Throwable ex) {
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            throw ThrowableUtils.throwableWrap(ex);
         }
     }
 }
