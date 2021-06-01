@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act0Ex;
+import org.noear.weed.utils.ThrowableUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -66,12 +67,11 @@ public class DbTran {
                 rollback();
             }
 
-            if (ex instanceof RuntimeException) {
-                throw (RuntimeException) ex;
-            } else if (ex instanceof SQLException) {
+            ex = ThrowableUtils.throwableUnwrap(ex);
+            if (ex instanceof SQLException) {
                 throw (SQLException) ex;
             } else {
-                throw new RuntimeException(ex);
+                throw ThrowableUtils.throwableWrap(ex);
             }
         } finally {
             DbTranUtil.currentRemove();
