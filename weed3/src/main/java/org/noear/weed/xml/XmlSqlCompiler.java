@@ -4,13 +4,10 @@ import org.noear.weed.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
@@ -30,9 +27,6 @@ public class XmlSqlCompiler {
 
         Node nm = doc.getDocumentElement();
 
-//        String filepath = xmlFile.getPath();
-//        int filename_idx = filepath.lastIndexOf("/")+1;
-//        String filename = filepath.substring(filename_idx);
 
         String namespace = attr(nm, "namespace");
         String _import = attr(nm, "import");
