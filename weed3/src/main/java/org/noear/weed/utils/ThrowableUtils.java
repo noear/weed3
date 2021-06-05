@@ -20,17 +20,6 @@ public final class ThrowableUtils {
     }
 
     /**
-     * 包装异常
-     * */
-    public static RuntimeException throwableWrap(Throwable ex){
-        if(ex instanceof RuntimeException){
-            return  (RuntimeException)ex;
-        }else {
-            return new RuntimeException(ex);
-        }
-    }
-
-    /**
      * 解包异常
      * */
     public static Throwable throwableUnwrap(Throwable ex) {

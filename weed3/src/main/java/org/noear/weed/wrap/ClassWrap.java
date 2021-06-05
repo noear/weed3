@@ -116,7 +116,11 @@ public class ClassWrap {
             return item;
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -130,7 +134,11 @@ public class ClassWrap {
             }
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

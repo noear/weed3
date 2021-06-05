@@ -100,8 +100,13 @@ public class DbXmlsqlProcedure extends DbProcedure {
             sqlBuilder = block.builder.build(_map);
         }catch (Throwable ex){
             System.out.println("[Weed] "+block.getClasscode(true));
+
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
 
         for (Object p1 : sqlBuilder.paramS) {

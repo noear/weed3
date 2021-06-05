@@ -21,13 +21,15 @@ public class Trans {
         } else {
             try {
                 handler.run();
-            } catch (RuntimeException ex) {
-                throw ex;
-            } catch (SQLException ex) {
-                throw ex;
             } catch (Throwable ex) {
                 ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
+                if (ex instanceof SQLException) {
+                    throw (SQLException) ex;
+                } else if (ex instanceof RuntimeException) {
+                    throw (RuntimeException) ex;
+                } else {
+                    throw new RuntimeException(ex);
+                }
             }
 
             return tran;
@@ -50,13 +52,15 @@ public class Trans {
 
         try {
             handler.run();
-        } catch (RuntimeException ex) {
-            throw ex;
-        } catch (SQLException ex) {
-            throw ex;
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+            if (ex instanceof SQLException) {
+                throw (SQLException) ex;
+            } else if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         } finally {
             if (tran != null) {
                 DbTranUtil.currentSet(tran);

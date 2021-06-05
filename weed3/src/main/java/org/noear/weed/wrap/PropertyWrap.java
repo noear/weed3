@@ -20,9 +20,8 @@ public class PropertyWrap implements Serializable {
                 if (l != null) {
                     clz = l;
                 }
-            } catch (Throwable ex) {
-                ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
         }
         return clz;

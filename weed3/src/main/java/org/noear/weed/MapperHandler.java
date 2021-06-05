@@ -29,13 +29,16 @@ class MapperHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         try {
             return invoke0(proxy, method, args);
-        } catch (RuntimeException ex) {
-            throw ex;
-        } catch (SQLException ex) {
-            throw ex;
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+
+            if (ex instanceof RuntimeException) {
+                throw ex;
+            } else if (ex instanceof SQLException) {
+                throw ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
     }
 

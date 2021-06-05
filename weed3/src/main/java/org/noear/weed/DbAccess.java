@@ -207,13 +207,8 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         VarHolder _tmp = new VarHolder();
 
         DataItem item = getDataItem((cu, di) -> {
-            try {
-                _tmp.value = di.toItem(model);
-                cacheCondition.run(cu, (T) _tmp.value);
-            } catch (Throwable ex) {
-                ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
-            }
+            _tmp.value = di.toItem(model);
+            cacheCondition.run(cu, (T) _tmp.value);
         });
 
         if (_tmp.value == null) {
@@ -243,13 +238,8 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         VarHolder _tmp = new VarHolder();
 
         DataList list = getDataList((cu, dl) -> {
-            try {
-                _tmp.value = dl.toList(model);
-                cacheCondition.run(cu, (List<T>) _tmp.value);
-            } catch (Throwable ex) {
-                ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
-            }
+            _tmp.value = dl.toList(model);
+            cacheCondition.run(cu, (List<T>) _tmp.value);
         });
 
         if (_tmp == null) {
@@ -285,13 +275,8 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         VarHolder _tmp = new VarHolder();
 
         DataList list = getDataList((cu, dl) -> {
-            try {
-                _tmp.value = dl.toEntityList(cls);
-                cacheCondition.run(cu, (List<T>) _tmp.value);
-            } catch (Throwable ex) {
-                ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
-            }
+            _tmp.value = dl.toEntityList(cls);
+            cacheCondition.run(cu, (List<T>) _tmp.value);
         });
 
         if (_tmp.value == null) {
@@ -316,13 +301,8 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         VarHolder _tmp = new VarHolder();
 
         DataItem item = getDataItem((cu, di) -> {
-            try {
-                _tmp.value = di.toEntity(cls);
-                cacheCondition.run(cu, (T) _tmp.value);
-            } catch (Throwable ex) {
-                ex = ThrowableUtils.throwableUnwrap(ex);
-                throw ThrowableUtils.throwableWrap(ex);
-            }
+            _tmp.value = di.toEntity(cls);
+            cacheCondition.run(cu, (T) _tmp.value);
         });
 
         if (_tmp.value == null) {

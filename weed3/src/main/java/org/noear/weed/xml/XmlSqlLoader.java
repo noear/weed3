@@ -35,7 +35,11 @@ public class XmlSqlLoader {
             load();
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            } else {
+                throw new RuntimeException(ex);
+            }
         }
     }
 

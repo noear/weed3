@@ -45,9 +45,8 @@ public class DbDataSource implements DataSource {
     public void setDriverClassName(String driverClass) {
         try {
             Class.forName(driverClass);
-        }catch (Throwable ex){
-            ex = ThrowableUtils.throwableUnwrap(ex);
-            throw ThrowableUtils.throwableWrap(ex);
+        }catch (ClassNotFoundException ex){
+            throw new RuntimeException(ex);
         }
     }
 

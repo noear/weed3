@@ -63,7 +63,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
      * 将所有列转为类做为数组的数据（类为：IBinder 子类）
      */
     @Deprecated
-    public <T extends IBinder> List<T> toList(T model) throws SQLException {
+    public <T extends IBinder> List<T> toList(T model)  {
         List<T> list = new ArrayList<T>(getRowCount());
 
         for (DataItem r : _rows) {
@@ -71,7 +71,7 @@ public class DataList implements Serializable,Iterable<DataItem> {
 
             if (WeedConfig.isDebug) {
                 if (model.getClass().isInstance(item) == false) {
-                    throw new SQLException(model.getClass() + " clone error (" + item.getClass() + ")");
+                    throw new IllegalArgumentException(model.getClass() + " clone error (" + item.getClass() + ")");
                 }
             }
 

@@ -70,8 +70,10 @@ public class DbTran {
             ex = ThrowableUtils.throwableUnwrap(ex);
             if (ex instanceof SQLException) {
                 throw (SQLException) ex;
+            } else if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
             } else {
-                throw ThrowableUtils.throwableWrap(ex);
+                throw new RuntimeException(ex);
             }
         } finally {
             DbTranUtil.currentRemove();
