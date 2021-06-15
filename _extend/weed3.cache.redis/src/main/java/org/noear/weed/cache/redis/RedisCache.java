@@ -13,6 +13,14 @@ public class RedisCache implements ICacheServiceEx {
     private RedisX _cache = null;
     private ISerializer<String> _serializer = null;
 
+    public RedisCache serializer(ISerializer<String> serializer) {
+        if(serializer != null) {
+            this._serializer = serializer;
+        }
+
+        return this;
+    }
+
     public RedisCache(Properties prop) {
         this(prop, prop.getProperty("keyHeader"), 0);
     }
