@@ -210,27 +210,17 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             throw new RuntimeException("Please enter constraints");
         }
 
-        if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
-            _builder.clear();
+        this.where("1=1");
 
-            _context.dbDialect()
-                    .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
-
-            _builder.insert(7," IGNORE ");
-
-            return compile().insert();
-        } else {
-            this.where("1=1");
-            for (String f : ff) {
-                this.andEq(f, data.get(f));
-            }
-
-            if (this.exists()) {
-                return 0;
-            }
-
-            return insert(data);
+        for (String f : ff) {
+            this.andEq(f, data.get(f));
         }
+
+        if (this.exists()) {
+            return 0;
+        }
+
+        return insert(data);
     }
 
     /** 执行批量合并插入，使用集合数据 */
@@ -311,41 +301,19 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             throw new RuntimeException("Please enter constraints");
         }
 
-        if (dbType() == DbType.MySQL || dbType() == DbType.MySQL) {
-            _builder.clear();
-            _context.dbDialect()
-                    .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
+        this.where("1=1");
+        for (String f : ff) {
+            this.andEq(f, data.get(f));
+        }
 
-            _builder.append("ON DUPLICATE KEY UPDATE ");
-
+        if (this.exists()) {
             for (String f : ff) {
                 data.remove(f);
             }
 
-            List<Object> args = new ArrayList<Object>();
-            StringBuilder sb = new StringBuilder();
-
-            updateItemsBuild0(data, sb, args);
-
-            _builder.append(sb.toString(), args.toArray());
-
-            return compile().insert();
-
+            return this.update(data);
         } else {
-            this.where("1=1");
-            for (String f : ff) {
-                this.andEq(f, data.get(f));
-            }
-
-            if (this.exists()) {
-                for (String f : ff) {
-                    data.remove(f);
-                }
-
-                return this.update(data);
-            } else {
-                return this.insert(data);
-            }
+            return this.insert(data);
         }
     }
 
