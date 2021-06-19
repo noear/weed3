@@ -1,8 +1,10 @@
 package weed3mongo.features;
 
 import org.bson.Document;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.noear.solon.Utils;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.mongo.MgContext;
 import weed3mongo.model.UserModel;
 
@@ -13,14 +15,19 @@ import java.util.Map;
  * @author noear 2021/2/5 created
  */
 public class MongoTest2 {
-    String url = "mongodb://172.168.0.162:27017";
+    String url = "mongodb://admin:admin@localhost";
     MgContext db = new MgContext(url, "demo");
+
+    @BeforeClass
+    public static void bef(){
+        WeedConfig.isUsingUnderlineColumnName = false;
+    }
 
     @Test
     public void test1() {
         db.table("user")
                 .set("_id", Utils.guid())
-                .set("id", System.currentTimeMillis())
+                .set("userId", System.currentTimeMillis())
                 .set("name", "noear")
                 .insert();
     }
@@ -29,14 +36,14 @@ public class MongoTest2 {
     public void test2() {
         db.table("user")
                 .set("_id", Utils.guid())
-                .set("id", 3)
+                .set("userId", 3)
                 .set("type",1)
                 .set("name", "noear")
                 .insert();
 
         db.table("user")
                 .set("_id", Utils.guid())
-                .set("id", 5)
+                .set("userId", 5)
                 .set("type",1)
                 .set("name", "noear")
                 .insert();
@@ -46,53 +53,59 @@ public class MongoTest2 {
     public void test3() {
         assert db.table("user")
                 .set("name", "noear-update" + System.currentTimeMillis())
-                .whereEq("id", 5).andLk("name", "^no")
+                .whereEq("userId", 5).andLk("name", "^no")
                 .update() > 0;
     }
 
     @Test
     public void test4() {
         Map map =  db.table("user")
-                .whereEq("id", 5).andEq("type",1)
+                .whereEq("userId", 5).andEq("type",1)
                 .selectMap();
 
         System.out.println(map);
-        assert (Integer) map.get("id") == 5;
+        assert (Integer) map.get("userId") == 5;
     }
 
     @Test
     public void test42() {
         UserModel user = db.table("user")
-                .whereEq("id", 5).andEq("type", 1)
+                .whereEq("userId", 5).andEq("type", 1)
                 .selectItem(UserModel.class);
 
         System.out.println(user);
-        assert user.id == 5;
+        assert user.userId == 5;
     }
 
     @Test
     public void test5() {
         List<Document> mapList =  db.table("user")
                 .whereEq("type",1)
-                .orderByAsc("id")
+                .orderByAsc("userId")
                 .limit(10)
                 .selectMapList();
 
         System.out.println(mapList);
 
         assert mapList.size() == 10;
+
+        System.out.println(mapList.get(1));
+        assert mapList.get(1).get("userId",0) > 0;
     }
 
     @Test
     public void test52() {
         List<UserModel> mapList =  db.table("user")
                 .whereEq("type",1)
-                .orderByAsc("id")
+                .orderByAsc("userId")
                 .limit(10,10)
                 .selectList(UserModel.class);
 
         System.out.println(mapList);
 
         assert mapList.size() == 10;
+
+        System.out.println(mapList.get(1));
+        assert mapList.get(1).userId > 0;
     }
 }

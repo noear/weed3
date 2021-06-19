@@ -7,18 +7,18 @@ import java.io.Serializable;
  */
 
 public class UserModel implements Serializable {
-    public long id;
+    public long userId;
     public int type;
     public String name;
-    public String nickname;
+    public String nickName;
 
     @Override
     public String toString() {
         return "UserModel{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", type=" + type +
                 ", name='" + name + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", nickName='" + nickName + '\'' +
                 '}';
     }
 }
