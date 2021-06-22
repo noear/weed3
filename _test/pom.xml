@@ -143,11 +143,10 @@
             <scope>compile</scope>
         </dependency>
 
-
         <dependency>
             <groupId>com.aliyun.phoenix</groupId>
             <artifactId>ali-phoenix-shaded-thin-client</artifactId>
-            <version>5.2.1-HBase-2.x</version>
+            <version>5.2.5.1-HBase-2.x</version>
         </dependency>
 
         <dependency>
