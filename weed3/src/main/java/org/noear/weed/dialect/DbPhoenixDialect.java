@@ -24,7 +24,7 @@ public class DbPhoenixDialect implements DbDialect {
 
     @Override
     public String insertCmd() {
-        return "INSERT INTO";
+        return "UPSERT INTO";
     }
 
     @Override
