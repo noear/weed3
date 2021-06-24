@@ -536,6 +536,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return selectDo(columns).getList(clz);
     }
 
+    public DataItem selectDataItem(String columns) throws SQLException {
+        return selectDo(columns).getDataItem();
+    }
+
+    public DataList selectDataList(String columns) throws SQLException {
+        return selectDo(columns).getDataList();
+    }
+
     public Map<String,Object> selectMap(String columns) throws SQLException{
         return selectDo(columns).getMap();
     }
