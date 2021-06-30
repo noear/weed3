@@ -50,11 +50,11 @@ public class RedisCache implements ICacheServiceEx {
         }
 
 
-        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, Snack3Serializer.instance);
+        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, JavabinSerializer.instance);
     }
 
     public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol) {
-        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, Snack3Serializer.instance);
+        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, JavabinSerializer.instance);
     }
 
     public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
