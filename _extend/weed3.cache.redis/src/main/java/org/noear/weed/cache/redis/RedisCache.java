@@ -77,6 +77,10 @@ public class RedisCache implements ICacheServiceEx {
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
 
+        if (_defaultSeconds < 1) {
+            _defaultSeconds = 30;
+        }
+
         _cache = new RedisX(server, password, db, maxTotaol);
         _serializer = serializer;
     }

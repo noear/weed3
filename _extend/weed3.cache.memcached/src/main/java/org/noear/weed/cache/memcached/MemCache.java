@@ -30,9 +30,6 @@ public class MemCache implements ICacheServiceEx {
             defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
         }
 
-        if (defSeconds < 10) {
-            defSeconds = 60;
-        }
 
         do_init(keyHeader, defSeconds, server, user, password);
     }
@@ -44,6 +41,10 @@ public class MemCache implements ICacheServiceEx {
     private void do_init(String keyHeader, int defSeconds, String server, String user, String password) {
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
+
+        if (_defaultSeconds < 1) {
+            _defaultSeconds = 30;
+        }
 
         try {
             if (TextUtils.isEmpty(user) || TextUtils.isEmpty(password)) {
