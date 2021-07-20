@@ -20,11 +20,16 @@ public class LocalCacheTest {
     public void test() throws Exception{
         cache.remove("key");
 
-        long tmp = cache.getBy(6, "key", (uc) -> {
+        cache.getBy(6, "key", (uc) -> {
+            return null;
+        });
+
+
+        Long tmp = cache.getBy(6, "key", (uc) -> {
             return System.currentTimeMillis();
         });
 
-        long tmp2 = cache.getBy(6, "key", (uc) -> {
+        Long tmp2 = cache.getBy(6, "key", (uc) -> {
             return System.currentTimeMillis();
         });
 
@@ -55,11 +60,11 @@ public class LocalCacheTest {
     public void test2() throws Exception{
         cache.remove("key2");
 
-        long tmp = cache.getBy(30, "key2", (uc) -> {
+        Long tmp = cache.getBy(30, "key2", (uc) -> {
             return System.currentTimeMillis();
         });
 
-        long tmp2 = cache.getBy(30, "key2", (uc) -> {
+        Long tmp2 = cache.getBy(30, "key2", (uc) -> {
             return System.currentTimeMillis();
         });
 

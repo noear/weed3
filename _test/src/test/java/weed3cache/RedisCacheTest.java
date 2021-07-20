@@ -21,6 +21,10 @@ public class RedisCacheTest {
     public void test() throws Exception{
         cache.remove("key");
 
+        cache.getBy(6, "key", (uc) -> {
+            return null;
+        });
+
         long tmp = cache.getBy(6, "key", (uc) -> {
             return System.currentTimeMillis();
         });
