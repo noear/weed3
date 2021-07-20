@@ -17,12 +17,20 @@ public class JavabinSerializer implements ISerializer<String> {
 
     @Override
     public String serialize(Object obj) throws Exception {
+        if(obj == null){
+            return null;
+        }
+
         byte[] tmp = SerializationUtils.serialize(obj);
         return Base64.getEncoder().encodeToString(tmp);
     }
 
     @Override
     public Object deserialize(String dta) throws Exception {
+        if(dta == null){
+            return null;
+        }
+
         byte[] bytes = Base64.getDecoder().decode(dta);
         return SerializationUtils.deserialize(bytes);
     }

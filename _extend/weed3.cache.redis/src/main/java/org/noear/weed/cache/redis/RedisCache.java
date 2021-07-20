@@ -62,10 +62,6 @@ public class RedisCache implements ICacheServiceEx {
     }
 
     private void do_init(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
-        if (defSeconds < 10) {
-            defSeconds = 60;
-        }
-
         if (db < 1) {
             db = 1;
         }

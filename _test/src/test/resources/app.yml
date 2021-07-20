@@ -1,0 +1,15 @@
+
+solon.app:
+  name: demoapp
+  group: demo
+
+cache1:
+  server: memcached.water.io:11211
+  user: memcached
+  keyHeader: demo
+
+
+cache2:
+  server: redis.water.io:6379
+  password: 123456
+  keyHeader: demo
