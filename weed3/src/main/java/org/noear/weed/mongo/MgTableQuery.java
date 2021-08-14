@@ -162,7 +162,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return this;
     }
 
-    public MgTableQuery whereIn(String field, Iterable<Object> ary) {
+    public MgTableQuery whereIn(String field, Iterable ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -171,7 +171,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return this;
     }
 
-    public MgTableQuery whereNin(String field, Iterable<Object> ary) {
+    public MgTableQuery whereNin(String field, Iterable ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -224,7 +224,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return this;
     }
 
-    public MgTableQuery whereAll(String field, Iterable<Object> ary) {
+    public MgTableQuery whereAll(String field, Iterable ary) {
         initWhereMap();
 
         Map<String, Object> tmp = new LinkedHashMap<>();
@@ -308,15 +308,15 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         return whereSize(field, size);
     }
 
-    public MgTableQuery andAll(String field, Iterable<Object> ary) {
+    public MgTableQuery andAll(String field, Iterable ary) {
         return whereAll(field, ary);
     }
 
-    public MgTableQuery andIn(String field, Iterable<Object> ary) {
+    public MgTableQuery andIn(String field, Iterable ary) {
         return whereIn(field, ary);
     }
 
-    public MgTableQuery andNin(String field, Iterable<Object> ary) {
+    public MgTableQuery andNin(String field, Iterable ary) {
         return whereNin(field, ary);
     }
 

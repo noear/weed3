@@ -215,7 +215,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL where in(?...) 语句
      */
-    public T whereIn(String column, Iterable<Object> ary) {
+    public T whereIn(String column, Iterable ary) {
         _builder.append(" WHERE ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
@@ -224,7 +224,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL where not in(?...) 语句
      */
-    public T whereNin(String column, Iterable<Object> ary) {
+    public T whereNin(String column, Iterable ary) {
         _builder.append(" WHERE ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }
@@ -352,7 +352,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL and in(?...) 语句
      */
-    public T andIn(String column, Iterable<Object> ary) {
+    public T andIn(String column, Iterable ary) {
         _builder.append(" AND ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
@@ -360,7 +360,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL and not in(?...) 语句
      */
-    public T andNin(String column, Iterable<Object> ary) {
+    public T andNin(String column, Iterable ary) {
         _builder.append(" AND ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }
@@ -489,7 +489,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL or in(?...) 语句
      */
-    public T orIn(String column, Iterable<Object> ary) {
+    public T orIn(String column, Iterable ary) {
         _builder.append(" OR ").append(fmtColumn(column)).append(" IN (?...) ", ary);
         return (T) this;
     }
@@ -497,7 +497,7 @@ public abstract class WhereBase<T extends WhereBase> {
     /**
      * 添加SQL or not in(?...) 语句
      */
-    public T orNin(String column, Iterable<Object> ary) {
+    public T orNin(String column, Iterable ary) {
         _builder.append(" OR ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
         return (T) this;
     }

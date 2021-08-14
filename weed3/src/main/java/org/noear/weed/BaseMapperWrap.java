@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.utils.RunUtils;
+import org.noear.weed.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +14,29 @@ import java.util.Map;
 public class BaseMapperWrap<T> implements BaseMapper<T> {
     private DbContext _db;
     private BaseEntityWrap _table;
+    private String _tabelName;
 
     private Class<?> _entityType;
     protected Class<?> entityType() {
         return _entityType;
     }
 
-    public BaseMapperWrap(DbContext db, Class<?> entityType) {
+    public BaseMapperWrap(DbContext db, Class<?> entityType, String tableName) {
         _db = db;
         _entityType = entityType;
         _table = BaseEntityWrap.get(this);
+
+        if (StringUtils.isEmpty(tableName)) {
+            _tabelName = _table.tableName;
+        } else {
+            _tabelName = tableName;
+        }
     }
 
     public BaseMapperWrap(DbContext db, BaseMapper<T> baseMapper) {
         _db = db;
         _table = BaseEntityWrap.get(baseMapper);
+        _tabelName = _table.tableName;
     }
 
     private DbContext db(){
@@ -35,7 +44,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     private String tableName(){
-        return _table.tableName;
+        return _tabelName;
     }
 
     private String pk(){
@@ -80,7 +89,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public Integer deleteByIds(Iterable<Object> idList) {
+    public Integer deleteByIds(Iterable idList) {
         return RunUtils.call(()
                 -> getQr().whereIn(pk(), idList ).delete());
     }
@@ -183,7 +192,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public List<T> selectByIds(Iterable<Object> idList) {
+    public List<T> selectByIds(Iterable idList) {
         Class<T> clz = (Class<T>) entityClz();
 
         return RunUtils.call(()

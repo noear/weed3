@@ -54,8 +54,8 @@
 -whereNlk(col:String,val:String) -> self //添加SQL where not like 语句
 -whereBtw(col:String, start:Object, end:Object) -> self //添加SQL where BETWEEN .. AND 语句
 -whereNbtw(col:String, start:Object, end:Object) -> self //添加SQL where NOT BETWEEN .. AND 语句
--whereIn(col:String, ary:Iterable<Object>)-> self //添加SQL where IN (...) 语句
--whereNin(col:String, ary:Iterable<Object>)-> self //添加SQL where not IN (...) 语句
+-whereIn(col:String, ary:Iterable)-> self //添加SQL where IN (...) 语句
+-whereNin(col:String, ary:Iterable)-> self //添加SQL where not IN (...) 语句
 
 //例1：.and("name=?","x")
 //例2: .and("(name=? or id=?)","x",1)
@@ -72,8 +72,8 @@
 -andNlk(col:String,val:String) -> self //添加SQL and not like 语句
 -andBtw(col:String, start:Object, end:Object) -> self //添加SQL and BETWEEN .. AND 语句
 -andNbtw(col:String, start:Object, end:Object) -> self //添加SQL and NOT BETWEEN .. AND 语句
--andIn(col:String, ary:Iterable<Object>)-> self //添加SQL and IN (...) 语句
--andNin(col:String, ary:Iterable<Object>)-> self //添加SQL and not IN (...) 语句
+-andIn(col:String, ary:Iterable)-> self //添加SQL and IN (...) 语句
+-andNin(col:String, ary:Iterable)-> self //添加SQL and not IN (...) 语句
 
 //例1：.or("name=?","x"); 
 //例2: .or("(name=? or id=?)","x",1)
@@ -90,8 +90,8 @@
 -orNlk(col:String,val:String) -> self //添加SQL or not like 语句
 -orBtw(col:String, start:Object, end:Object) -> self //添加SQL or BETWEEN .. AND 语句
 -orNbtw(col:String, start:Object, end:Object) -> self //添加SQL or NOT BETWEEN .. AND 语句
--orIn(col:String, ary:Iterable<Object>)-> self //添加SQL or IN (...) 语句
--orNin(col:String, ary:Iterable<Object>)-> self //添加SQL or not IN (...) 语句
+-orIn(col:String, ary:Iterable)-> self //添加SQL or IN (...) 语句
+-orNin(col:String, ary:Iterable)-> self //添加SQL or not IN (...) 语句
 
 -begin() -> self //添加左括号
 -begin(code:String,args:Object...) -> self //添加左括号并附加代码//可使用?,?...占位符（ ?... 表示数组占位符）

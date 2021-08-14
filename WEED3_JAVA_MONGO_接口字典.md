@@ -43,11 +43,11 @@ List<UserModel> list = db.table("user")
 -whereNlk(field:String,regex:String) -> self //添加 where not like 语句（正由表达式）
 -whereBtw(field:String, start:Object, end:Object) -> self //添加 where >=start && <=end 语句
 -whereNbtw(field:String, start:Object, end:Object) -> self //添加 where NOT >=start && <=end 语句
--whereIn(field:String, ary:Iterable<Object>)-> self //添加 where IN (...) 语句
--whereNin(field:String, ary:Iterable<Object>)-> self //添加 where not IN (...) 语句
+-whereIn(field:String, ary:Iterable)-> self //添加 where IN (...) 语句
+-whereNin(field:String, ary:Iterable)-> self //添加 where not IN (...) 语句
 -whereMod(field:String, base:long, val:long) -> self //添加 where mod(field) = val 语句
 -whereNmod(field:String, base:long, val:long) -> self //添加 where not mod(field) = val 语句
--whereAll(field:String, ary:Iterable<Object>)-> self //添加 where ALL (...) 语句
+-whereAll(field:String, ary:Iterable)-> self //添加 where ALL (...) 语句
 -whereSize(field:String, size:long) -> self //添加 where $size(field) = size 语句
 -whereExists(field:String, exists:bool) -> self //添加 where $exists() = exists 语句
 
@@ -61,11 +61,11 @@ List<UserModel> list = db.table("user")
 -andNlk(field:String,regex:String) -> self //添加 and not like 语句（正由表达式）
 -andBtw(field:String, start:Object, end:Object) -> self //添加 and >=start && <=end 语句
 -andNbtw(field:String, start:Object, end:Object) -> self //添加 and NOT >=start && <=end 语句
--andIn(field:String, ary:Iterable<Object>)-> self //添加 and IN (...) 语句
--andNin(field:String, ary:Iterable<Object>)-> self //添加 and not IN (...) 语句
+-andIn(field:String, ary:Iterable)-> self //添加 and IN (...) 语句
+-andNin(field:String, ary:Iterable)-> self //添加 and not IN (...) 语句
 -andMod(field:String, base:long, val:long) -> self //添加 and mod(field) = val 语句
 -andNmod(field:String, base:long, val:long) -> self //添加 and not mod(field) = val 语句
--andAll(field:String, ary:Iterable<Object>)-> self //添加 and ALL (...) 语句
+-andAll(field:String, ary:Iterable)-> self //添加 and ALL (...) 语句
 -andSize(field:String, size:long) -> self //添加 where $size(field) = size 语句
 -andExists(field:String, exists:bool) -> self //添加 where $exists() = exists 语句
 

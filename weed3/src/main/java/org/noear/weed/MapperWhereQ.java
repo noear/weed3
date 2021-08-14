@@ -77,10 +77,10 @@ public class MapperWhereQ extends WhereBase<MapperWhereQ> {
         return whereNbtw(getColumnName(property), start, end);
     }
 
-    public <C> MapperWhereQ whereIn(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ whereIn(Property<C, ?> property, Iterable ary) {
         return whereIn(getColumnName(property), ary);
     }
-    public <C> MapperWhereQ whereNin(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ whereNin(Property<C, ?> property, Iterable ary) {
         return whereNin(getColumnName(property), ary);
     }
 
@@ -123,11 +123,11 @@ public class MapperWhereQ extends WhereBase<MapperWhereQ> {
     public <C> MapperWhereQ andNbtw(Property<C, ?> property, Object start, Object end) {
         return andNbtw(getColumnName(property), start, end);
     }
-    public <C> MapperWhereQ andIn(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ andIn(Property<C, ?> property, Iterable ary) {
         return andIn(getColumnName(property), ary);
     }
 
-    public <C> MapperWhereQ andNin(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ andNin(Property<C, ?> property, Iterable ary) {
         return andNin(getColumnName(property), ary);
     }
 
@@ -169,11 +169,11 @@ public class MapperWhereQ extends WhereBase<MapperWhereQ> {
     public <C> MapperWhereQ orNbtw(Property<C, ?> property, Object start, Object end) {
         return orNbtw(getColumnName(property), start, end);
     }
-    public <C> MapperWhereQ orIn(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ orIn(Property<C, ?> property, Iterable ary) {
         return orIn(getColumnName(property), ary);
     }
 
-    public <C> MapperWhereQ orNin(Property<C, ?> property, Iterable<Object> ary) {
+    public <C> MapperWhereQ orNin(Property<C, ?> property, Iterable ary) {
         return orNin(getColumnName(property), ary);
     }
 

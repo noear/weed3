@@ -39,14 +39,14 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.3.18</version>
+    <version>3.3.19</version>
 </dependency>
 
 <!-- maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.3.18</version>
+    <version>3.3.19</version>
 </plugin>
 ```
 
@@ -310,7 +310,7 @@ db.exe("update user sex=1 where id=12");
 * `Long insert(T entity, boolean excludeNull);`
 * `void insertList(List<T> list);`
 * `Integer deleteById(Object id);`
-* `Integer deleteByIds(Iterable<Object> idList);`
+* `Integer deleteByIds(Iterable idList);`
 * `Integer deleteByMap(Map<String, Object> columnMap);`
 * `Integer delete(Act1<WhereQ> condition);`
 * `Integer updateById(T entity, boolean excludeNull);`
@@ -320,7 +320,7 @@ db.exe("update user sex=1 where id=12");
 * `boolean existsById(Object id);`
 * `boolean exists(Act1<WhereQ> condition);`
 * `T selectById(Object id);`
-* `List<T> selectByIds(Iterable<Object> idList);`
+* `List<T> selectByIds(Iterable idList);`
 * `List<T> selectByMap(Map<String, Object> columnMap);`
 * `T selectItem(T entity);`
 * `T selectItem(Act1<WhereQ> condition);`

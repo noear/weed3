@@ -220,7 +220,11 @@ public class DbContext extends DbContextMetaData {
     //
 
     public <T> BaseMapper<T> mapperBase(Class<T> clz) {
-        return new BaseMapperWrap<T>(this, clz);
+        return new BaseMapperWrap<T>(this, clz, null);
+    }
+
+    public <T> BaseMapper<T> mapperBase(Class<T> clz,String tableName) {
+        return new BaseMapperWrap<T>(this, clz, tableName);
     }
 
     /**

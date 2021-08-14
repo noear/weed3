@@ -13,7 +13,7 @@ public interface BaseMapper<T> {
     void insertList(List<T> list);
 
     Integer deleteById(Object id);
-    Integer deleteByIds(Iterable<Object> idList);
+    Integer deleteByIds(Iterable idList);
     Integer deleteByMap(Map<String, Object> columnMap);
     Integer delete(Act1<MapperWhereQ> condition);
 
@@ -30,7 +30,7 @@ public interface BaseMapper<T> {
     boolean exists(Act1<MapperWhereQ> condition);
 
     T selectById(Object id);
-    List<T> selectByIds(Iterable<Object> idList);
+    List<T> selectByIds(Iterable idList);
     List<T> selectByMap(Map<String, Object> columnMap);
 
     T selectItem(T entity);
