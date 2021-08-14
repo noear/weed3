@@ -1,7 +1,10 @@
 package weed3demo.mapper;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class UserModel {
     public long id;
     public long user_id;

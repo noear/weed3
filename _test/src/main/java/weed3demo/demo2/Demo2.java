@@ -2,11 +2,19 @@ package weed3demo.demo2;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import weed3demo.mapper.UserModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Demo2 {
     DbContext db = new DbContext();
+
+    public void test() {
+        List<String> ids = new ArrayList<>();
+        db.mapperBase(UserModel.class).selectList(wq -> wq.andIn(UserModel::getId, ids));
+    }
 
     public Object searchBy(Integer id, String name, Integer type) throws Exception {
         DbTableQuery qr = db.table("user").where("1=1");

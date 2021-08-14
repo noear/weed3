@@ -1,5 +1,6 @@
 #### 3.3.19
 * 条件器的 Iterable<Object> 改为 Iterable 类型
+* 增加新接口 db.mapperBase(clz,tableName);
 
 
 #### 3.3.11
