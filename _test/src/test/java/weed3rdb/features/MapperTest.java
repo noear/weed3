@@ -17,7 +17,7 @@ public class MapperTest {
     BaseMapper<AppxModel> mapper;
 
     @Before
-    public void test_bef(){
+    public void test_bef() {
         mapper = db2.mapperBase(AppxModel.class);
     }
 
@@ -34,8 +34,6 @@ public class MapperTest {
 
         assert temp instanceof Map;
     }
-
-
 
 
     @Test
@@ -73,7 +71,7 @@ public class MapperTest {
     }
 
     @Test
-    public void test_select_m4(){
+    public void test_select_m4() {
         AppxModel ent2 = new AppxModel();
         ent2.agroup_id = 1;
 
@@ -90,21 +88,21 @@ public class MapperTest {
     }
 
     @Test
-    public void test_select_m6(){
+    public void test_select_m6() {
         //selectObj
         Object m6 = mapper.selectValue("app_id", m -> m.whereEq(AppxModel::getApp_id, 21));
         System.out.println("m6: " + m6);
-        assert ((Number)m6).longValue() == (21);
+        assert ((Number) m6).longValue() == (21);
     }
 
     @Test
-    public void test_select_m7(){
+    public void test_select_m7() {
         //selectMap
-        Map m7 = mapper.selectMap(m -> m.whereEq("app_id",21));
+        Map m7 = mapper.selectMap(m -> m.whereEq("app_id", 21));
         System.out.println("m7: " + m7);
         assert m7.size() > 10;
 
-        Long m8 = mapper.selectCount(m -> m.whereEq("agroup_id",1));
+        Long m8 = mapper.selectCount(m -> m.whereEq("agroup_id", 1));
         System.out.println("m8: " + m8);
         assert m8 > 20;
     }
@@ -160,5 +158,28 @@ public class MapperTest {
         List<Map<String, Object>> m15 = mapper.selectMapTop(5, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m15: " + m15);
         assert m15.size() == 5;
+    }
+
+    @Test
+    public void test_update() {
+        AppxModel app = new AppxModel();
+        app.note = "test";
+
+        AppxModel appOld = mapper.selectById(40);
+        if (appOld.note == null) {
+            appOld.note = "";
+        }
+        System.out.println(appOld.note);
+
+        mapper.update(app, true, wq -> wq.whereEq(AppxModel::getApp_id, 40));
+
+
+        assert mapper.selectById(40).note.equals("test");
+
+        app.note = appOld.note;
+        mapper.update(app, true, wq -> wq.whereEq(AppxModel::getApp_id, 40));
+
+        assert mapper.selectById(40).note.equals(appOld.note);
+
     }
 }
