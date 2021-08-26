@@ -24,13 +24,13 @@ public class CallTest {
         assert m.app_id == 48;
     }
 
-    @Test
-    public void test21() throws Exception {
-        if (db2.dbType() == DbType.MySQL) {
-            AppxModel app = db2.call("appx_get_byid").set("_app_id", 2)
-                    .getItem(AppxModel.class);
-
-            assert app.app_id == 22;
-        }
-    }
+//    @Test
+//    public void test21() throws Exception {
+//        if (db2.dbType() == DbType.MySQL) {
+//            AppxModel app = db2.call("appx_get_byid").set("_app_id", 2)
+//                    .getItem(AppxModel.class);
+//
+//            assert app.app_id == 22;
+//        }
+//    }
 }

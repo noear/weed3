@@ -242,6 +242,47 @@ class SQLer {
         }
     }
 
+    //批量执行
+    public int[] executeBatch(Command cmd) throws SQLException {
+        if (cmd.context.isCompilationMode) {
+            return null;
+        }
+
+        try {
+            if (false == buildCMD0(cmd, false)) {
+                return null;
+            }
+
+            for(List<Variate> data: cmd.paramBatchS){
+                int idx = 1;
+                //2.设置参数值
+                for (Variate v : data) {
+                    if (v.getValue() == null) {
+                        stmt.setNull(idx, Types.VARCHAR);
+                    } else {
+                        stmt.setObject(idx, v.getValue());
+                    }
+                    idx++;
+                }
+                stmt.addBatch();
+            }
+
+
+            int[] rst = stmt.executeBatch();
+
+            //*.监听
+            WeedConfig.runExecuteAftEvent(cmd);
+
+            return rst;
+
+        } catch (SQLException ex) {
+            WeedConfig.runExceptionEvent(cmd, ex);
+            throw ex;
+        } finally {
+            tryClose();
+        }
+    }
+
     //插入
     public long insert(Command cmd) throws SQLException {
         if (cmd.context.isCompilationMode) {
@@ -255,7 +296,7 @@ class SQLer {
 
             stmt.executeUpdate();
 
-            if(cmd.context.dbDialect().insertGeneratedKey()) {
+            if (cmd.context.dbDialect().insertGeneratedKey()) {
                 try {
                     rset = stmt.getGeneratedKeys(); //乎略错误
                 } catch (Exception ex) {
@@ -299,6 +340,25 @@ class SQLer {
     }
 
     private boolean buildCMD(Command cmd, boolean isInsert) throws SQLException {
+        if (buildCMD0(cmd, isInsert) == false) {
+            return false;
+        }
+
+        int idx = 1;
+        //2.设置参数值
+        for (Variate v : cmd.paramS) {
+            if (v.getValue() == null) {
+                stmt.setNull(idx, Types.VARCHAR);
+            } else {
+                stmt.setObject(idx, v.getValue());
+            }
+            idx++;
+        }
+
+        return true;
+    }
+
+    private boolean buildCMD0(Command cmd, boolean isInsert) throws SQLException {
         //*.监听
         if (WeedConfig.runExecuteBefEvent(cmd) == false) {
             return false;
@@ -322,17 +382,6 @@ class SQLer {
         }
 
         WeedConfig.runExecuteStmEvent(cmd, stmt);
-
-        int idx = 1;
-        //2.设置参数值
-        for (Variate v : cmd.paramS) {
-            if (v.getValue() == null) {
-                stmt.setNull(idx, Types.VARCHAR);
-            } else {
-                stmt.setObject(idx, v.getValue());
-            }
-            idx++;
-        }
 
         return true;
     }
