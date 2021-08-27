@@ -1,10 +1,12 @@
 #### 3.3.21
+* 增加 WeedConfig.isSelectItemEmptyAsNull 配置项
+
+#### 3.3.20
 * 修复 MapperBase update(item, bool, wq) 数据没进去的 bug
 
 #### 3.3.19
 * 条件器的 Iterable<Object> 改为 Iterable 类型
 * 增加新接口 db.mapperBase(clz,tableName);
-
 
 #### 3.3.11
 * 取消旧的事务代码
