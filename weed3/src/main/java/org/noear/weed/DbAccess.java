@@ -193,7 +193,16 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
     @Deprecated
     @Override
     public <T extends IBinder> T getItem(T model) throws SQLException {
-        return getDataItem().toItem(model);
+        DataItem item = getDataItem();
+
+        // nullable 处理
+        if (item.count() == 0) {
+            if (WeedConfig.isSelectItemEmptyAsNull) {
+                return null;
+            }
+        }
+
+        return item.toItem(model);
     }
 
     /*执行命令（返回一个模理）*/
@@ -204,12 +213,21 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             return getItem(model);
         }
 
+
         VarHolder _tmp = new VarHolder();
 
         DataItem item = getDataItem((cu, di) -> {
+            _tmp.value = di;
             _tmp.value = di.toItem(model);
             cacheCondition.run(cu, (T) _tmp.value);
         });
+
+        // nullable 处理
+        if (item.count() == 0) {
+            if (WeedConfig.isSelectItemEmptyAsNull) {
+                return null;
+            }
+        }
 
         if (_tmp.value == null) {
             //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理
@@ -289,7 +307,16 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     @Override
     public <T> T getItem(Class<T> cls) throws SQLException {
-        return getDataItem().toEntity(cls);
+        DataItem item = getDataItem();
+
+        // nullable 处理
+        if (item.count() == 0) {
+            if (WeedConfig.isSelectItemEmptyAsNull) {
+                return null;
+            }
+        }
+
+        return item.toEntity(cls);
     }
 
     @Override
@@ -304,6 +331,13 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
             _tmp.value = di.toEntity(cls);
             cacheCondition.run(cu, (T) _tmp.value);
         });
+
+        // nullable 处理
+        if (item.count() == 0) {
+            if (WeedConfig.isSelectItemEmptyAsNull) {
+                return null;
+            }
+        }
 
         if (_tmp.value == null) {
             //说明是缓存里拿出来的 // 没有经过 cacheCondition 处理

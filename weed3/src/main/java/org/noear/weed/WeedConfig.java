@@ -24,6 +24,7 @@ public final class WeedConfig {
     public static boolean isUpdateMustConditional=true;
     public static boolean isDeleteMustConditional=true;
     public static boolean isUsingUnderlineColumnName=true;
+    public static boolean isSelectItemEmptyAsNull=false;
 
     /**
      * 非注解的命名策略
