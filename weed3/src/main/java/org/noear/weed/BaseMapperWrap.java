@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
+import org.noear.weed.ext.Act2;
 import org.noear.weed.utils.RunUtils;
 import org.noear.weed.utils.StringUtils;
 
@@ -139,15 +140,9 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public int[] upsertList(List<T> list, String conditionFields) {
-        List<DataItem> list2 = new ArrayList<>();
-        for(T d : list){
-            DataItem item = new DataItem().setEntity(d);
-            list2.add(item);
-        }
-
+    public int[] upsertList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields) {
         return RunUtils.call(()
-                -> getQr().updateList(list2, conditionFields));
+                -> getQr().updateList(list, dataBuilder, conditionFields));
     }
 
     @Override

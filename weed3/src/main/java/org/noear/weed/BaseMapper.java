@@ -1,6 +1,7 @@
 package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
+import org.noear.weed.ext.Act2;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface BaseMapper<T> {
     Integer updateById(T entity, boolean excludeNull);
     Integer update(T entity, boolean excludeNull, Act1<MapperWhereQ> condition);
 
-    int[] upsertList(List<T> list, String conditionFields);
+    int[] upsertList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields);
 
     Long upsert(T entity, boolean excludeNull);
     Long upsertBy(T entity, boolean excludeNull, String conditionFields);

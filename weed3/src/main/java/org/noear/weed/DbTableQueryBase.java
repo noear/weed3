@@ -396,6 +396,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 执行批量合并插入，使用集合数据 */
     public int[] updateList(List<DataItem> valuesList, String conditionFields) throws SQLException {
+        if (valuesList == null || valuesList.size() == 0) {
+            return null;
+        }
+
         return updateList(valuesList.get(0), valuesList, conditionFields);
     }
 
