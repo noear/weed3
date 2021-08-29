@@ -18,6 +18,8 @@ public class demo_table_inserlist {
 
     public void demo_insertlist() throws SQLException {
         List<UserInfoModel> list = new ArrayList<>();
+        //list.add(new UserInfoModel()...);
+        //list.add(new UserInfoModel()...);
 
         db.table("user").insertList(list, (d, m) -> {
             m.set("city_id", d.city_id);
