@@ -145,7 +145,10 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
         return new SQLer().execute(cmd);
     }
 
-    protected int[] executeBatch() throws SQLException {
+    /**
+     * 批量执行命令（返回受影响数）
+     * */
+    public int[] executeBatch() throws SQLException {
         Command cmd = getCommand();
         return new SQLer().executeBatch(cmd);
     }

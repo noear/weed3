@@ -8,6 +8,7 @@ import org.noear.weed.xml.XmlSqlLoader;
 import javax.sql.DataSource;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -43,59 +44,62 @@ public class DbContext extends DbContextMetaData {
     protected String _codeHint = null;
     protected String _name;
 
-    private String get_do(Get1<?,Object> sets, String name){
+    private String get_do(Get1<?, Object> sets, String name) {
         Object tmp = sets.get(name);
-        if(tmp!=null){
+        if (tmp != null) {
             return tmp.toString();
-        }else{
+        } else {
             return null;
         }
     }
 
-    public DbContext propSet(Map prop){
+    public DbContext propSet(Map prop) {
         return propSet(prop::get);
     }
 
-    public DbContext propSet( Properties prop){
+    public DbContext propSet(Properties prop) {
         return propSet(prop::get);
     }
 
-    public DbContext propSet(Get1<?,Object> sets){
-        String schema = get_do(sets,"schema");
-        String url = get_do(sets,"url");
-        String username = get_do(sets,"username");
-        String password = get_do(sets,"password");
-        String driverClassName = get_do(sets,"driverClassName");
+    public DbContext propSet(Get1<?, Object> sets) {
+        String schema = get_do(sets, "schema");
+        String url = get_do(sets, "url");
+        String username = get_do(sets, "username");
+        String password = get_do(sets, "password");
+        String driverClassName = get_do(sets, "driverClassName");
 
-        if(StringUtils.isEmpty(url) || url.startsWith("jdbc:")==false){
+        if (StringUtils.isEmpty(url) || url.startsWith("jdbc:") == false) {
             throw new RuntimeException("url 配置有问题!");
         }
 
-        if(StringUtils.isEmpty(driverClassName) == false){
+        if (StringUtils.isEmpty(driverClassName) == false) {
             driverSet(driverClassName);
         }
 
-        if(StringUtils.isEmpty(_schema)) {
+        if (StringUtils.isEmpty(_schema)) {
             _schema = schema;
         }
 
-        if(StringUtils.isEmpty(_schema) && url.indexOf("://")>0) {
+        if (StringUtils.isEmpty(_schema) && url.indexOf("://") > 0) {
             _schema = URI.create(url.substring(5)).getPath().substring(1);
         }
 
-        if(StringUtils.isEmpty(username)){
+        if (StringUtils.isEmpty(username)) {
             dataSourceSet(new DbDataSource(url));
-        }else{
+        } else {
             dataSourceSet(new DbDataSource(url, username, password));
         }
 
         return this;
     }
 
-    /** 名字获取 */
-    public String name(){
+    /**
+     * 名字获取
+     */
+    public String name() {
         return _name;
     }
+
     public DbContext nameSet(String name) {
         _name = name;
         WeedConfig.libOfDb.put(name, this);
@@ -106,65 +110,82 @@ public class DbContext extends DbContextMetaData {
     // 构建函数 end
     //
 
-    /** 特性设置 */
+    /**
+     * 特性设置
+     */
     public DbContext attrSet(String name, String value) {
         _attrMap.put(name, value);
         return this;
     }
 
-    /** 特性获取 */
+    /**
+     * 特性获取
+     */
     public String attr(String name) {
         return _attrMap.get(name);
     }
 
 
-    /** 设置JDBC驱动 */
-    public DbContext driverSet(String driverClassName){
-        try{
+    /**
+     * 设置JDBC驱动
+     */
+    public DbContext driverSet(String driverClassName) {
+        try {
             Class.forName(driverClassName);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return this;
     }
 
-    /** 数据源设置 */
+    /**
+     * 数据源设置
+     */
     public DbContext dataSourceSet(DataSource ds) {
         dataSourceDoSet(ds);
         return this;
     }
 
 
-
-    /** 数据集合名称设置 */
+    /**
+     * 数据集合名称设置
+     */
     public DbContext schemaSet(String schema) {
         _schema = schema;
-        if(_name == null){
+        if (_name == null) {
             _name = schema;
         }
 
         return this;
     }
 
-    /** 代码注解设置 */
+    /**
+     * 代码注解设置
+     */
     public DbContext codeHintSet(String hint) {
         _codeHint = hint;
         return this;
     }
 
-    /** 代码注解获取 */
+    /**
+     * 代码注解获取
+     */
     public String codeHint() {
         return _codeHint;
     }
 
 
-    /** 是否配置了schema */
+    /**
+     * 是否配置了schema
+     */
     @Deprecated
     public boolean schemaHas() {
         return _schema != null;
     }
 
-    /** 获取schema */
+    /**
+     * 获取schema
+     */
     public String schema() {
         return _schema;
     }
@@ -172,11 +193,12 @@ public class DbContext extends DbContextMetaData {
     //
     // 格式化处理
     //
-    public DbContext formaterSet(DbFormater formater){
+    public DbContext formaterSet(DbFormater formater) {
         _formater = formater;
         return this;
     }
-    public DbFormater formater(){
+
+    public DbFormater formater() {
         return _formater;
     }
 
@@ -223,13 +245,13 @@ public class DbContext extends DbContextMetaData {
         return new BaseMapperWrap<T>(this, clz, null);
     }
 
-    public <T> BaseMapper<T> mapperBase(Class<T> clz,String tableName) {
+    public <T> BaseMapper<T> mapperBase(Class<T> clz, String tableName) {
         return new BaseMapperWrap<T>(this, clz, tableName);
     }
 
     /**
      * 印映一个接口代理
-     * */
+     */
     public <T> T mapper(Class<T> clz) {
         return MapperUtil.proxy(clz, this);
     }
@@ -238,8 +260,8 @@ public class DbContext extends DbContextMetaData {
      * 印映一份数据
      *
      * @param xsqlid @{namespace}.{id}
-     * */
-    public <T> T mapper(String xsqlid, Map<String,Object> args) throws Exception {
+     */
+    public <T> T mapper(String xsqlid, Map<String, Object> args) throws Exception {
         return (T) MapperUtil.exec(this, xsqlid, args, null, null);
     }
 
@@ -269,7 +291,7 @@ public class DbContext extends DbContextMetaData {
         return new DbStoredProcedure(this).call(process);
     }
 
-    public DbProcedure call(String process, Map<String,Object> args){
+    public DbProcedure call(String process, Map<String, Object> args) {
         if (process.startsWith("@")) {
             XmlSqlLoader.tryLoad();
             return new DbXmlsqlProcedure(this).sql(process.substring(1));
@@ -313,14 +335,14 @@ public class DbContext extends DbContextMetaData {
     public Object exe(String code, Object... args) throws Exception {
         String cmd = "val";
         String[] ss = code.split("::");
-        if(ss.length>1){
+        if (ss.length > 1) {
             cmd = ss[0];
             code = ss[1];
         }
 
-        String codeUp = code.trim().substring(0,10).toUpperCase();
-        if(codeUp.startsWith("SELECT ")){
-            switch (cmd){
+        String codeUp = code.trim().substring(0, 10).toUpperCase();
+        if (codeUp.startsWith("SELECT ")) {
+            switch (cmd) {
                 case "obj":
                 case "map":
                     return sql(code, args).getMap();
@@ -332,16 +354,17 @@ public class DbContext extends DbContextMetaData {
                 default:
                     return sql(code, args).getValue();
             }
-        }else{
+        } else {
             return sql(code, args).execute();
         }
     }
 
     /**
-     * 执行代码，返回影响行数
+     * 批量执行
      * */
-//    public int exec(String code, Object... args) throws Exception {
-//        return sql(code, args).execute();
-//    }
-
+    public int[] exeBatch(String code, List<Object[]> args) throws Exception {
+        SQLBuilder sql = new SQLBuilder();
+        sql.append(code, args.toArray());
+        return sql(sql).executeBatch();
+    }
 }

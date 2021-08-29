@@ -1,0 +1,41 @@
+package weed3rdb.features;
+
+import org.junit.Test;
+import org.noear.weed.DataItem;
+import org.noear.weed.DbContext;
+import weed3rdb.DbUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author noear 2021/8/29 created
+ */
+public class TableUpdateListTest {
+    DbContext db = DbUtil.db;
+
+    @Test
+    public void test11() throws Exception{
+        //删
+        db.table("test").where("1=1").delete();
+
+        List<DataItem> items = new ArrayList<>();
+        items.add(new DataItem().set("id",1).set("v1",1));
+        items.add(new DataItem().set("id",2).set("v1",2));
+        items.add(new DataItem().set("id",3).set("v1",3));
+
+        //增
+        db.table("test").insertList(items);
+
+
+        items.clear();
+        items.add(new DataItem().set("id",1).set("v1",11));
+        items.add(new DataItem().set("id",2).set("v1",12));
+        items.add(new DataItem().set("id",3).set("v1",13));
+
+        db.table("test").updateList(items, "id");
+
+        assert  db.table("test").whereEq("id",1).selectValue("v1",0) == 11;
+        assert  db.table("test").whereEq("id",2).selectValue("v1",0) == 12;
+    }
+}
