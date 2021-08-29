@@ -140,7 +140,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public int[] upsertList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields) {
+    public int[] updateList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields) {
         return RunUtils.call(()
                 -> getQr().updateList(list, dataBuilder, conditionFields));
     }

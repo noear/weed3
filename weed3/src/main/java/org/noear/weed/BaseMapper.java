@@ -24,7 +24,7 @@ public interface BaseMapper<T> {
     Integer updateById(T entity, boolean excludeNull);
     Integer update(T entity, boolean excludeNull, Act1<MapperWhereQ> condition);
 
-    int[] upsertList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields);
+    int[] updateList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields);
 
     Long upsert(T entity, boolean excludeNull);
     Long upsertBy(T entity, boolean excludeNull, String conditionFields);
