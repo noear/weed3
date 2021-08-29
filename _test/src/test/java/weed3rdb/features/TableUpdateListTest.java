@@ -3,8 +3,6 @@ package weed3rdb.features;
 import org.junit.Test;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
-import org.noear.weed.Variate;
-import org.noear.weed.wrap.Property;
 import webapp.model.TestModel;
 import weed3rdb.DbUtil;
 
@@ -36,8 +34,10 @@ public class TableUpdateListTest {
         items.add(new DataItem().set("id", 2).set("v1", 12));
         items.add(new DataItem().set("id", 3).set("v1", 13));
 
+        //批量更新
         db.table("test").updateList(items, "id");
 
+        //检测更新结果
         assert db.table("test").whereEq("id", 1).selectValue("v1", 0) == 11;
         assert db.table("test").whereEq("id", 2).selectValue("v1", 0) == 12;
     }
@@ -61,8 +61,11 @@ public class TableUpdateListTest {
         item2.add(new DataItem().set("id", 2).set("v1", 12));
         item2.add(new DataItem().set("id", 3).set("v1", 13));
 
+
+        //批量更新
         db.table("test").updateList(item2, "id");
 
+        //检测更新结果
         assert db.table("test").whereEq("id", 1).selectValue("v1", 0) == 11;
         assert db.table("test").whereEq("id", 2).selectValue("v1", 0) == 12;
     }
@@ -86,8 +89,11 @@ public class TableUpdateListTest {
         item2.add(new TestModel(2, 12));
         item2.add(new TestModel(3, 13));
 
+
+        //批量更新
         db.mapperBase(TestModel.class).updateList(item2, (d, m) -> m.setEntity(d), TestModel::getId);
 
+        //检测更新结果
         assert db.table("test").whereEq("id", 1).selectValue("v1", 0) == 11;
         assert db.table("test").whereEq("id", 2).selectValue("v1", 0) == 12;
     }
