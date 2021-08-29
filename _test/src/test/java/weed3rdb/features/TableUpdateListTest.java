@@ -3,6 +3,7 @@ package weed3rdb.features;
 import org.junit.Test;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
+import org.noear.weed.Variate;
 import weed3rdb.DbUtil;
 
 import java.util.ArrayList;
@@ -34,6 +35,31 @@ public class TableUpdateListTest {
         items.add(new DataItem().set("id",3).set("v1",13));
 
         db.table("test").updateList(items, "id");
+
+        assert  db.table("test").whereEq("id",1).selectValue("v1",0) == 11;
+        assert  db.table("test").whereEq("id",2).selectValue("v1",0) == 12;
+    }
+
+    @Test
+    public void test12() throws Exception{
+        //删
+        db.table("test").where("1=1").delete();
+
+        List<Object[]> items = new ArrayList<>();
+        items.add(new Object[]{1,1});
+        items.add(new Object[]{2,2});
+        items.add(new Object[]{3,3});
+
+        //增
+        db.exeBatch("INSERT INTO test(id,v1) VALUES(?,?)", items);
+
+
+        List<DataItem> item2 = new ArrayList<>();
+        item2.add(new DataItem().set("id",1).set("v1",11));
+        item2.add(new DataItem().set("id",2).set("v1",12));
+        item2.add(new DataItem().set("id",3).set("v1",13));
+
+        db.table("test").updateList(item2, "id");
 
         assert  db.table("test").whereEq("id",1).selectValue("v1",0) == 11;
         assert  db.table("test").whereEq("id",2).selectValue("v1",0) == 12;
