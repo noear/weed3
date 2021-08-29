@@ -1,3 +1,7 @@
+#### 3.3.22
+* 增加批量jdbc执行的能力
+* 增加批量jdbc更新的能力
+
 #### 3.3.21
 * 增加 WeedConfig.isSelectItemEmptyAsNull 配置项
 
