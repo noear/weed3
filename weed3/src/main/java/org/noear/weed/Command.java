@@ -34,6 +34,9 @@ public class Command {
     /** 数据处理事务 */
     public DbTran tran;
 
+    /** 是否为批处理 */
+    public boolean isBatch = false;
+
     //计时变量
     public long timestart = 0;
     public long timestop = 0;
