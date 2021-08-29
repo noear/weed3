@@ -253,14 +253,15 @@ class SQLer {
                 return null;
             }
 
-            for(List<Variate> data: cmd.paramBatchS){
+            for(Variate data: cmd.paramS){
                 int idx = 1;
+                Object[] ary = (Object[])data.value();
                 //2.设置参数值
-                for (Variate v : data) {
-                    if (v.getValue() == null) {
+                for (Object v : ary) {
+                    if (v == null) {
                         stmt.setNull(idx, Types.VARCHAR);
                     } else {
-                        stmt.setObject(idx, v.getValue());
+                        stmt.setObject(idx, v);
                     }
                     idx++;
                 }

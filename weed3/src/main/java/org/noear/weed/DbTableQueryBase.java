@@ -386,6 +386,97 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         buf.deleteCharAt(buf.length() - 1);
     }
 
+    private void updateItemsBuildByFields0(IDataItem data, StringBuilder buf) {
+        data.forEach((key, value) -> {
+            buf.append(fmtColumn(key)).append("=?,");
+        });
+        buf.deleteCharAt(buf.length() - 1);
+    }
+
+
+    /** 执行批量合并插入，使用集合数据 */
+    public int[] updateList(List<DataItem> valuesList, String conditionFields) throws SQLException {
+        return updateList(valuesList.get(0), valuesList, conditionFields);
+    }
+
+    /** 执行批量合并插入，使用集合数据（由dataBuilder构建数据） */
+    public <T> int[] updateList(Collection<T> valuesList, Act2<T,DataItem> dataBuilder, String conditionFields) throws SQLException {
+        if (valuesList == null || valuesList.size() == 0) {
+            return null;
+        }
+
+        List<DataItem> list2 = new ArrayList<>();
+
+        for (T values : valuesList) {
+            DataItem item = new DataItem();
+            dataBuilder.run(values, item);
+
+            list2.add(item);
+        }
+
+
+        if (list2.size() > 0) {
+            return updateList(list2.get(0), list2, conditionFields);
+        }else{
+            return null;
+        }
+    }
+
+
+    protected <T extends GetHandler> int[] updateList(IDataItem cols, Collection<T> valuesList, String conditionFields)throws SQLException {
+        if (valuesList == null || valuesList.size() == 0) {
+            return null;
+        }
+
+        if (cols == null || cols.count() == 0) {
+            return null;
+        }
+
+        String[] ff = conditionFields.split(",");
+
+        if (ff.length == 0) {
+            throw new RuntimeException("Please enter constraints");
+        }
+
+
+        _builder.backup();
+
+        this.where("1=1");
+        for (String f : ff) {
+            this.and(f + "=?");
+        }
+
+        List<Object[]> argList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("UPDATE ").append(_table).append(" SET ");
+
+        updateItemsBuildByFields0(cols, sb);
+
+        for(GetHandler item : valuesList){
+            List<Object> tmp = new ArrayList<>();
+            for(String key : cols.keys()){
+                tmp.add(item.get(key));
+            }
+
+            for (String key : ff) {
+                tmp.add(item.get(key));
+            }
+            argList.add(tmp.toArray());
+        }
+
+
+        _builder.insert(sb.toString(), argList.toArray());
+
+        int[] rst = compile().executeBatch();
+
+        _builder.restore();
+
+        return rst;
+    }
+
+
+
     /** 执行删除，并返回影响行数 */
     public int delete() throws SQLException {
         StringBuilder sb  = StringUtils.borrowBuilder();

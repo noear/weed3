@@ -26,8 +26,6 @@ public class Command {
     public String       text;
     /** 命令参数 */
     public List<Variate> paramS;
-    /** 命令批处理参数 */
-    public List<List<Variate>> paramBatchS;
     /** 数据库上下文（肯定且必须有） */
     public DbContext context;
     /** 缓存服务对象（可能有，可能没有） */

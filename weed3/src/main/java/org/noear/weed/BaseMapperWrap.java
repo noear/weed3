@@ -139,6 +139,18 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
+    public int[] upsertList(List<T> list, String conditionFields) {
+        List<DataItem> list2 = new ArrayList<>();
+        for(T d : list){
+            DataItem item = new DataItem().setEntity(d);
+            list2.add(item);
+        }
+
+        return RunUtils.call(()
+                -> getQr().updateList(list2, conditionFields));
+    }
+
+    @Override
     public Long upsert(T entity, boolean excludeNull) {
         DataItem data = new DataItem();
 
