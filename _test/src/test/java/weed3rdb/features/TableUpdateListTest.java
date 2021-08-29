@@ -52,7 +52,7 @@ public class TableUpdateListTest {
         items.add(new Object[]{2, 2});
         items.add(new Object[]{3, 3});
 
-        //增
+        //增(这个函数，可以执行任何批处理语句)
         db.exeBatch("INSERT INTO test(id,v1) VALUES(?,?)", items);
 
 
