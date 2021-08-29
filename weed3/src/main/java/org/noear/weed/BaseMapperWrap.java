@@ -4,6 +4,8 @@ import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.utils.RunUtils;
 import org.noear.weed.utils.StringUtils;
+import org.noear.weed.wrap.Property;
+import org.noear.weed.wrap.PropertyWrap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,9 +142,21 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public int[] updateList(List<T> list, Act2<T,DataItem> dataBuilder, String conditionFields) {
+    public int[] updateList(List<T> list, Act2<T,DataItem> dataBuilder, Property<T, ?>... conditionFields) {
+        if (conditionFields.length == 0) {
+            throw new RuntimeException("Please enter constraints");
+        }
+
+        StringBuilder buf = new StringBuilder();
+
+        for (Property<T, ?> p : conditionFields) {
+            buf.append(PropertyWrap.get(p).name).append(",");
+        }
+
+        buf.setLength(buf.length() - 1);
+
         return RunUtils.call(()
-                -> getQr().updateList(list, dataBuilder, conditionFields));
+                -> getQr().updateList(list, dataBuilder, buf.toString()));
     }
 
     @Override

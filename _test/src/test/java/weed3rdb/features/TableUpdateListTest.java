@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.weed.Variate;
+import org.noear.weed.wrap.Property;
 import webapp.model.TestModel;
 import weed3rdb.DbUtil;
 
@@ -85,7 +86,7 @@ public class TableUpdateListTest {
         item2.add(new TestModel(2, 12));
         item2.add(new TestModel(3, 13));
 
-        db.mapperBase(TestModel.class).updateList(item2, (d, m) -> m.setEntity(d), "id");
+        db.mapperBase(TestModel.class).updateList(item2, (d, m) -> m.setEntity(d), TestModel::getId);
 
         assert db.table("test").whereEq("id", 1).selectValue("v1", 0) == 11;
         assert db.table("test").whereEq("id", 2).selectValue("v1", 0) == 12;
