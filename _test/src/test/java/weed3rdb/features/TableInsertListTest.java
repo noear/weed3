@@ -41,6 +41,14 @@ public class TableInsertListTest {
         assert db.table("test").count() == 3;
     }
 
+    public void test11_2() throws Exception{
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{1,2});
+        list.add(new Object[]{1,3});
+
+        db.exeBatch("INSERT INTO test(a,b) VALUES(?,?)", list);
+    }
+
     @Test
     public void test12() throws Exception{
         //删
