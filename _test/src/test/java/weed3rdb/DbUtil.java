@@ -130,7 +130,11 @@ public class DbUtil {
         });
 
         WeedConfig.onExecuteAft((cmd)->{
-            System.out.println(":::"+cmd.text);
+            if(cmd.isBatch){
+                System.out.println(":::" + cmd.text +" --:batch");
+            }else {
+                System.out.println(":::" + cmd.text);
+            }
         });
 
         HikariDataSource source = dbMysqlCfg(); // dbH2Cfg(); // dbSqliteCfg(); // dbH2Cfg(); // dbOracleCfg(); //  dbPgsqlCfg(); // dbMssqlCfg(); //

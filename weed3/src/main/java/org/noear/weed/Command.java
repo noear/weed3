@@ -106,6 +106,10 @@ public class Command {
             }
         }
 
+        if(isBatch){
+            sb.append(" --:batch");
+        }
+
         return sb.toString();
     }
 
