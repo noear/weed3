@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//noear.org//DTD Mapper 3.0//EN" "http://noear.org/dtd/weed3-mapper.dtd">
 <mapper namespace="webapp.dso.SqlMapper"
-        addService="webapp.dso.SqlService">
+        proxy="webapp.dso.SqlService">
     <sql id="appx_get" return="int"  remarks="随便取条数据的ID">
         select app_id from appx limit 1
     </sql>
