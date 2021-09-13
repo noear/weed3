@@ -11,12 +11,12 @@ mapper 开始标签
 sql 代码块定义指令
   id
   param?（属性：外部输入变量申明；默认会自动生成::新增***）
-  declare（属性：内部变量类型预申明）
+  declare?（属性：内部变量类型预申明）
   return（属性：返回类型）
 
   remarks（属性：描述、摘要）
 
-  caching（属性：缓存服务name） //是对 ICacheController 接口的映射
+  caching?（属性：缓存服务name） //是对 ICacheController 接口的映射
   cacheClear?（属性：清除缓存）
   cacheTag?（属性：缓存标签，支持在入参或结果里取值替换）
   usingCache?（属性：缓存时间,int）
@@ -27,9 +27,9 @@ if 判断控制指令（没有else）
      //lt(<) lte(<=) gt(>) gte(>=) and(&&) or(||)
         //例：m.sex gte 12 :: m.sex >=12
      //简化语法增强:
-     //??(非null,var!=null) ?!(非空字符串,StringUtils.isEmpty(var)==false)
+     //??(非null,var!=null) ?!(非空字符串, Utils.isNoteEmpty(var))
         //例：m.icon??  ::m.icon!=null
-        //例：m.icon?!  ::StringUtils.isEmpty(m.icon)==false
+        //例：m.icon?!  ::Utils.isNoteEmpty(m.icon)
 
 for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::新增***）
   var （属性：循环变量申明）
