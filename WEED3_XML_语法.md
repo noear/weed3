@@ -148,8 +148,9 @@ return="String" => String （任何单职类型）
         <if test="foList == 1">
             <ref sql="user_cols2"/>
         </if>
-        FROM user WHERE sex>1 AND mobile LIKE '@{mobile:String}%'
-
+        <![CDATA[
+        FROM user WHERE sex > 1 AND mobile LIKE '@{mobile:String}%'
+        ]]>
     </sql>
 
     <sql id="user_get_list3"
