@@ -42,7 +42,6 @@
         <java.version>1.8</java.version>
 
         <weed3.ver>3.3.22</weed3.ver>
-        <solon.ver>1.5.15</solon.ver>
     </properties>
 
     <dependencyManagement>
