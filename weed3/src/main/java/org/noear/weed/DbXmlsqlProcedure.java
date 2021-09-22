@@ -70,7 +70,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
     public String getWeedKey() {
         if(_weedKey==null)
         {
-            StringBuilder sb = StringUtils.borrowBuilder();
+            StringBuilder sb = new StringBuilder();
 
             sb.append(getCommandID()).append(":");
 
@@ -78,7 +78,7 @@ public class DbXmlsqlProcedure extends DbProcedure {
                 sb.append("_").append(p);
             }
 
-            _weedKey= StringUtils.releaseBuilder(sb);
+            _weedKey= sb.toString();
         }
         return _weedKey;
     }

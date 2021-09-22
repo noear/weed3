@@ -2,7 +2,6 @@ package org.noear.weed.dialect;
 
 import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
-import org.noear.weed.utils.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public interface DbDialect {
 
     default <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
         values.forEach((key, value) -> {
@@ -135,14 +134,14 @@ public interface DbDialect {
         sb.deleteCharAt(sb.length() - 1);
         sb.append(")");
 
-        sqlB.append(StringUtils.releaseBuilder(sb), args.toArray());
+        sqlB.append(sb.toString(), args.toArray());
 
         return true;
     }
 
     default <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, IDataItem cols, Collection<T> valuesList) {
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
         for (String key : cols.keys()) {
@@ -192,7 +191,7 @@ public interface DbDialect {
         sb.deleteCharAt(sb.length() - 1);
         //sb.append("");
 
-        sqlB.append(StringUtils.releaseBuilder(sb), args.toArray());
+        sqlB.append(sb.toString(), args.toArray());
 
         return true;
     }

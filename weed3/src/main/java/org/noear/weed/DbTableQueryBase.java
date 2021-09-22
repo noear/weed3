@@ -483,7 +483,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /** 执行删除，并返回影响行数 */
     public int delete() throws SQLException {
-        StringBuilder sb  = StringUtils.borrowBuilder();
+        StringBuilder sb  = new StringBuilder();
 
         sb.append("DELETE ");
 
@@ -493,7 +493,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             sb.append(_table);
         }
 
-        _builder.insert(StringUtils.releaseBuilder(sb));
+        _builder.insert(sb.toString());
 
         if(limit_top > 0) {
             if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {

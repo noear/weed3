@@ -55,7 +55,7 @@ public class DbStoredProcedure extends DbProcedure {
         cmd.key      = getCommandID();
         cmd.paramS   = this.paramS;
 
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("{call ");
 
         if(WeedConfig.isUsingSchemaPrefix && context.schema() != null) {
@@ -74,7 +74,7 @@ public class DbStoredProcedure extends DbProcedure {
         }
         sb.append('}');
 
-        cmd.text = StringUtils.releaseBuilder(sb);
+        cmd.text = sb.toString();
 
         runCommandBuiltEvent(cmd);
 

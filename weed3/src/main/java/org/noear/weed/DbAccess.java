@@ -66,7 +66,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     protected String buildWeedKey(Collection<Variate> args) {
         if (_weedKey == null) {
-            StringBuilder sb = StringUtils.borrowBuilder();
+            StringBuilder sb = new StringBuilder();
 
             sb.append(getCommandID()).append(":");
 
@@ -74,7 +74,7 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
                 sb.append("_").append(p.getValue());
             }
 
-            _weedKey = StringUtils.releaseBuilder(sb);
+            _weedKey = sb.toString();
         }
         return _weedKey;
     }

@@ -40,7 +40,7 @@ public class DbFormater{
             return columns;
         }
 
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
         //将列切分
         String[] ss = columns.split(",");
 
@@ -73,7 +73,7 @@ public class DbFormater{
             sb.deleteCharAt(sb.length()-1);
         }
 
-        return StringUtils.releaseBuilder(sb);
+        return sb.toString();
     }
 
 

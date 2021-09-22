@@ -117,7 +117,7 @@ public class DbOracleDialect implements DbDialect {
     @Override
     public <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, IDataItem cols, Collection<T> valuesList) {
         List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
 
         sb.append(" INSERT ALL ");
         for(GetHandler gh: valuesList) {
@@ -129,7 +129,7 @@ public class DbOracleDialect implements DbDialect {
             return false;
         }
 
-        sqlB.append(StringUtils.releaseBuilder(sb), args.toArray());
+        sqlB.append(sb.toString(), args.toArray());
 
         return true;
     }

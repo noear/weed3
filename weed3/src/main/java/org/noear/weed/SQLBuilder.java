@@ -158,11 +158,11 @@ public class SQLBuilder {
             paramS = new ArrayList<>();
 
             if (args != null && args.length > 0) {
-                StringBuilder builder = StringUtils.borrowBuilder();
+                StringBuilder builder = new StringBuilder();
                 builder.append(code);
                 for (Object p1 : args) {
                     if (p1 instanceof Iterable) { //将数组转为单体
-                        StringBuilder sb = StringUtils.borrowBuilder();
+                        StringBuilder sb = new StringBuilder();
                         for (Object p2 : (Iterable) p1) {
                             paramS.add(p2);
                             sb.append("?").append(",");
@@ -174,7 +174,7 @@ public class SQLBuilder {
                         }
 
                         int idx = builder.indexOf("?...");
-                        String tmp = StringUtils.releaseBuilder(sb);
+                        String tmp = sb.toString();
 
                         //imporved by Yukai
                         if (len == 0) {
@@ -200,7 +200,7 @@ public class SQLBuilder {
                     }
                 }
 
-                this.code = StringUtils.releaseBuilder(builder);
+                this.code = builder.toString();
             } else {
                 this.code = code;
             }

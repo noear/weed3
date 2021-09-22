@@ -124,7 +124,7 @@ public class DbQueryProcedure extends DbProcedure {
 
             Object tmp = val.getValue();
             if (tmp instanceof Iterable) { //支持数组型参数
-                StringBuilder sb = StringUtils.borrowBuilder();
+                StringBuilder sb = new StringBuilder();
                 for (Object p2 : (Iterable) tmp) {
                     doSet(new Variate(tm.name, p2));//对this.paramS进行设值
 
@@ -136,7 +136,7 @@ public class DbQueryProcedure extends DbProcedure {
                     sb.deleteCharAt(len - 1);
                 }
 
-                tmpList.put(tm.mark, StringUtils.releaseBuilder(sb));
+                tmpList.put(tm.mark, sb.toString());
             } else {
                 if (tm.mark.startsWith("@")) {
                     doSet(val);
