@@ -611,7 +611,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     public long selectCount() throws SQLException{
         return selectCount("COUNT(*)");
     }
-    public long selectCount(String column) throws SQLException{
+    public long selectCount(String column) throws SQLException {
+        if (column.indexOf("(") < 0) {
+            column = "COUNT(" + column + ")";
+        }
+
         return selectDo(column).getVariate().longValue(0L);
     }
 

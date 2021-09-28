@@ -22,6 +22,8 @@ public class demo_table_inserlist {
         //list.add(new UserInfoModel()...);
 
         db.table("user").insertList(list, (d, m) -> {
+            //m.setEntity(d);
+
             m.set("city_id", d.city_id);
             m.set("name", d.name);
             m.set("mobile", d.mobile);

@@ -1,3 +1,9 @@
+#### 3.3.24
+* 为 selectCount 自动加上 count(?)
+
+#### 3.3.23
+* 去掉 StringBuilder 的缓存
+
 #### 3.3.22
 * 增加批量jdbc执行的能力
 * 增加批量jdbc更新的能力
