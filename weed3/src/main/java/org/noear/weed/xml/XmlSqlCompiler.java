@@ -399,20 +399,21 @@ public class XmlSqlCompiler {
     //xml:解析 if 指令节点
     private static void parseIfNode(StringBuilder sb,String sqlBuilderName, XmlSqlBlock dblock, Node n , int depth) {
         String _test = attr(n, "test")
-                        .replace(" lt "," < ")
-                        .replace(" lte "," <= ")
-                        .replace(" gt "," > ")
-                        .replace(" gte "," >= ")
-                        .replace(" and ", " && ")
-                        .replace(" or ", " || ");
+                .replace(" lt ", " < ")
+                .replace(" lte ", " <= ")
+                .replace(" gt ", " > ")
+                .replace(" gte ", " >= ")
+                .replace(" and ", " && ")
+                .replace(" or ", " || ")
+                .replace("'", "\"");
 
-        if(_test.indexOf("?")>0){
+        if (_test.indexOf("?") > 0) {
             _test = parseIfTestExpr(_test);
         }
 
         newLine(sb, depth).append("if(").append(_test).append("){ /*if node*/");
 
-        _parseNodeList(n.getChildNodes(),sqlBuilderName, sb, dblock, depth + 1);
+        _parseNodeList(n.getChildNodes(), sqlBuilderName, sb, dblock, depth + 1);
 
         newLine(sb, depth).append("}");
     }

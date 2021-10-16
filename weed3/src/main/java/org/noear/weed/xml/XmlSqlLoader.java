@@ -1,5 +1,6 @@
 package org.noear.weed.xml;
 
+import org.noear.weed.WeedException;
 import org.noear.weed.utils.IOUtils;
 import org.noear.weed.utils.ThrowableUtils;
 
@@ -75,8 +76,8 @@ public class XmlSqlLoader {
             CompilerUtil.instance().loadClassAll(true);
         } else {
             String error = CompilerUtil.instance().getCompilerMessage();
-            System.out.println("[Weed] " + error);
-            throw new RuntimeException(error);
+            //System.out.println("[Weed] " + error);
+            throw new WeedException("Xml sql compiler error: \r\n" + error);
         }
     }
 

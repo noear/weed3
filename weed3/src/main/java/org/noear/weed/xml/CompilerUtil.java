@@ -3,6 +3,8 @@ package org.noear.weed.xml;
 import org.noear.liquor.DynamicCompiler;
 import org.noear.liquor.DynamicCompilerException;
 
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -56,8 +58,8 @@ class CompilerUtil {
      */
     public String getCompilerMessage() {
         StringBuilder sb = new StringBuilder();
-        for (String diagnostic : dynamicCompiler.getErrors()) {
-            sb.append(diagnostic).append("\r\n");
+        for (Diagnostic<? extends JavaFileObject> diagnostic : dynamicCompiler.getOriginalErrors()) {
+            sb.append(diagnostic.toString()).append("\r\n");
         }
         return sb.toString();
     }
