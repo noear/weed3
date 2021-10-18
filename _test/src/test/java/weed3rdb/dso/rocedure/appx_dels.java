@@ -8,7 +8,7 @@ public class appx_dels extends DbQueryProcedure {
     public appx_dels(DbContext context) {
         super(context);
         lazyload(()->{
-            if(context.dbType() == DbType.Oracle){
+            if(context.getType() == DbType.Oracle){
                 sql("delete from \"$\".\"APPX_COPY\" where \"app_id\"=@{id1}; " +
                         "delete from \"$\".\"APPX_COPY\" where \"app_id\"=@{id2}; " +
                         "delete from \"$\".\"APPX_COPY\" where \"app_id\"=@{id3}");

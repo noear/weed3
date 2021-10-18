@@ -23,7 +23,7 @@ public class DbTran {
 
 
     public Connection getConnection(DbContext db) throws SQLException {
-        return getConnection(db.getMetaData().dataSource());
+        return getConnection(db.getMetaData().getDataSource());
     }
 
     public Connection getConnection(DataSource ds) throws SQLException {

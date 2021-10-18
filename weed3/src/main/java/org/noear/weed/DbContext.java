@@ -31,13 +31,34 @@ public class DbContext {
     /**
      * 充许多片段执行
      */
-    public boolean allowMultiQueries;
+    private boolean allowMultiQueries;
+
+
+    public boolean isAllowMultiQueries() {
+        return allowMultiQueries;
+    }
+
+    public void setAllowMultiQueries(boolean allowMultiQueries) {
+        this.allowMultiQueries = allowMultiQueries;
+    }
+
     /**
      * 编译模式（用于产生代码）
      */
-    public boolean isCompilationMode = false;
+    private boolean compilationMode = false;
 
-    protected DbContextMetaData metaData = new DbContextMetaData();
+    /**
+     *
+     * */
+    public boolean isCompilationMode() {
+        return compilationMode;
+    }
+
+    public void setCompilationMode(boolean compilationMode) {
+        this.compilationMode = compilationMode;
+    }
+
+    private DbContextMetaData metaData = new DbContextMetaData();
 
     /**
      * 获取元信息
@@ -50,14 +71,14 @@ public class DbContext {
      * 获取类型
      * */
     public DbType getType(){
-        return metaData.type();
+        return getMetaData().getType();
     }
 
     /**
      * 获取方言
      * */
     public DbDialect getDialect(){
-        return metaData.dialect();
+        return getMetaData().getDialect();
     }
 
     /**
@@ -78,14 +99,6 @@ public class DbContext {
     protected String _codeHint = null;
     protected String _name;
 
-    private String get_do(Get1<?, Object> sets, String name) {
-        Object tmp = sets.get(name);
-        if (tmp != null) {
-            return tmp.toString();
-        } else {
-            return null;
-        }
-    }
 
     public DbContext propSet(Map prop) {
         return propSet(prop::get);
@@ -96,11 +109,11 @@ public class DbContext {
     }
 
     public DbContext propSet(Get1<?, Object> sets) {
-        String schema = get_do(sets, "schema");
-        String url = get_do(sets, "url");
-        String username = get_do(sets, "username");
-        String password = get_do(sets, "password");
-        String driverClassName = get_do(sets, "driverClassName");
+        String schema = doGet(sets, "schema");
+        String url = doGet(sets, "url");
+        String username = doGet(sets, "username");
+        String password = doGet(sets, "password");
+        String driverClassName = doGet(sets, "driverClassName");
 
         if (StringUtils.isEmpty(url) || url.startsWith("jdbc:") == false) {
             throw new RuntimeException("url 配置有问题!");
@@ -110,12 +123,12 @@ public class DbContext {
             driverSet(driverClassName);
         }
 
-        if (StringUtils.isEmpty(metaData.schema())) {
-            metaData.schemaSet(schema);
+        if (StringUtils.isEmpty(getMetaData().getSchema())) {
+            getMetaData().setSchema(schema);
         }
 
-        if (StringUtils.isEmpty(metaData.schema()) && url.indexOf("://") > 0) {
-            metaData.schemaSet(URI.create(url.substring(5)).getPath().substring(1));
+        if (StringUtils.isEmpty(getMetaData().getSchema()) && url.indexOf("://") > 0) {
+            getMetaData().setSchema(URI.create(url.substring(5)).getPath().substring(1));
         }
 
         if (StringUtils.isEmpty(username)) {
@@ -125,6 +138,15 @@ public class DbContext {
         }
 
         return this;
+    }
+
+    private String doGet(Get1<?, Object> sets, String name) {
+        Object tmp = sets.get(name);
+        if (tmp != null) {
+            return tmp.toString();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -176,7 +198,7 @@ public class DbContext {
      * 数据源设置
      */
     public DbContext dataSourceSet(DataSource ds) {
-        metaData.dataSourceDoSet(ds);
+        getMetaData().setDataSource(ds);
         return this;
     }
 
@@ -185,7 +207,7 @@ public class DbContext {
      * 数据集合名称设置
      */
     public DbContext schemaSet(String schema) {
-        metaData.schemaSet(schema);
+        getMetaData().setSchema(schema);
         if (_name == null) {
             _name = schema;
         }
@@ -214,14 +236,14 @@ public class DbContext {
      */
     @Deprecated
     public boolean schemaHas() {
-        return metaData.schema() != null;
+        return getMetaData().getSchema() != null;
     }
 
     /**
      * 获取schema
      */
     public String schema() {
-        return metaData.schema();
+        return getMetaData().getSchema();
     }
 
     //

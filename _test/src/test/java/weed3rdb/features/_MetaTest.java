@@ -10,7 +10,7 @@ public class _MetaTest {
     @Test
     public void test1() throws Exception{
 
-        db.dbTables().forEach(tw->{
+        db.getMetaData().getTableAll().forEach(tw->{
             System.out.println("Table: "+tw.getName());
             tw.getColumns().forEach(cw->{
                 System.out.print(cw.getName()+";");
@@ -18,7 +18,7 @@ public class _MetaTest {
             System.out.println("");
         });
 
-        System.out.println(db.dbTables().size());
-        assert  db.dbTables().size() > 0;
+        System.out.println(db.getMetaData().getTableAll().size());
+        assert  db.getMetaData().getTableAll().size() > 0;
     }
 }

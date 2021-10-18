@@ -142,7 +142,7 @@ public class DbUtil {
         DbContext db = new DbContext(source).nameSet("rock");
         //WeedConfig.isUsingSchemaPrefix =true;
         //WeedConfig.isUsingUnderlineColumnName=true;
-        db.initMetaData();
+        db.getMetaData().init();
         return db;
     }
 

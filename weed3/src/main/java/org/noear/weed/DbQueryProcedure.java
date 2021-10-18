@@ -185,7 +185,7 @@ public class DbQueryProcedure extends DbProcedure {
     public int execute() throws SQLException {
         tryLazyload();
 
-        if(context.allowMultiQueries){
+        if(context.isAllowMultiQueries()){
             return super.execute();
         }else {
             int num = 0;

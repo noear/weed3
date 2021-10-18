@@ -13,58 +13,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DbContextMetaData {
-    private String _schema;
-    private String _catalog;
+    private String schema;
+    private String catalog;
 
-    private transient Map<String, TableWrap> _tables = new HashMap<>();
-    private transient DbType _dbType = DbType.Unknown;
-    private transient DbDialect _dbDialect;
+    private transient Map<String, TableWrap> tableAll = new HashMap<>();
+    private transient DbType type = DbType.Unknown;
+    private transient DbDialect dialect;
 
     //数据源
-    private transient DataSource __dataSource; //通过dataSourceSet写入
+    private transient DataSource dataSource; //通过dataSourceSet写入
 
 
     /**
      * 获取数据源
      */
-    public DataSource dataSource() {
-        return __dataSource;
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
-    protected void dataSourceDoSet(DataSource ds) {
-        __dataSource = ds;
+    protected void setDataSource(DataSource ds) {
+        dataSource = ds;
     }
 
     /**
      * 获取连接
      */
     public Connection getConnection() throws SQLException {
-        return WeedConfig.connectionFactory.getConnection(dataSource());
+        return WeedConfig.connectionFactory.getConnection(getDataSource());
     }
 
     /**
      * 获取元信息链接
      */
     public Connection getMetaConnection() throws SQLException {
-        return dataSource().getConnection();
+        return getDataSource().getConnection();
     }
 
     /**
      * 获取 schema
      */
-    public String schema() {
-        return _schema;
+    public String getSchema() {
+        return schema;
     }
 
-    protected void schemaSet(String schema) {
-        _schema = schema;
+    protected void setSchema(String schema) {
+        this.schema = schema;
     }
 
     /**
      * 获取 catalog
      */
-    public String catalog() {
-        return _catalog;
+    public String getCatalog() {
+        return catalog;
     }
 
 
@@ -73,33 +73,33 @@ public class DbContextMetaData {
     /**
      * 获取类型
      */
-    public DbType type() {
+    public DbType getType() {
         init();
-        return _dbType;
+        return type;
     }
 
     /**
      * 获取方言
      */
-    public DbDialect dialect() {
+    public DbDialect getDialect() {
         init();
-        return _dbDialect;
+        return dialect;
     }
 
-    public void dialectSet(DbDialect adapter) {
+    public void setDialect(DbDialect adapter) {
         init();
-        _dbDialect = adapter;
+        dialect = adapter;
     }
 
-    public Collection<TableWrap> tables() {
+    public Collection<TableWrap> getTableAll() {
         init();
-        return _tables.values();
+        return tableAll.values();
     }
 
-    public TableWrap table(String tableName) {
+    public TableWrap getTable(String tableName) {
         init();
 
-        for (Map.Entry<String, TableWrap> kv : _tables.entrySet()) {
+        for (Map.Entry<String, TableWrap> kv : tableAll.entrySet()) {
             if (tableName.equalsIgnoreCase(kv.getKey())) {
                 return kv.getValue();
             }
@@ -108,31 +108,37 @@ public class DbContextMetaData {
         return null;
     }
 
-    public String tablePk1(String tableName) {
-        TableWrap tw = table(tableName);
+    public String getTablePk1(String tableName) {
+        TableWrap tw = getTable(tableName);
         return tw == null ? null : tw.getPk1();
     }
 
-    public void refresh() {
+    /**
+     * 刷新
+     * */
+    public synchronized void refresh() {
         initDo();
     }
 
+    /**
+     * 初始化
+     * */
     public synchronized void init() {
-        if (_dbDialect != null) {
+        if (dialect != null) {
             return;
         }
         initDo();
     }
 
     private void initPrintln(String x) {
-        if (_schema == null) {
+        if (schema == null) {
             System.out.println("[Weed] Init: " + x);
         } else {
-            System.out.println("[Weed] Init: " + x + " - " + _schema);
+            System.out.println("[Weed] Init: " + x + " - " + schema);
         }
     }
 
-    private synchronized void initDo() {
+    private void initDo() {
         //这段不能去掉
         initPrintln("Init metadata");
 
@@ -143,7 +149,7 @@ public class DbContextMetaData {
             DatabaseMetaData md = conn.getMetaData();
 
 
-            if (_dbDialect == null) {
+            if (dialect == null) {
                 //1.
                 setDatabaseType(md.getDatabaseProductName());
 
@@ -175,74 +181,74 @@ public class DbContextMetaData {
             String pn = driverName.toLowerCase().replace(" ", "");
 
             if (pn.indexOf("mysql") >= 0) {
-                _dbType = DbType.MySQL;
-                _dbDialect = new DbMySQLDialect();
+                type = DbType.MySQL;
+                dialect = new DbMySQLDialect();
             } else if (pn.indexOf("mariadb") >= 0) {
-                _dbType = DbType.MariaDB;
-                _dbDialect = new DbMySQLDialect();
+                type = DbType.MariaDB;
+                dialect = new DbMySQLDialect();
             } else if (pn.indexOf("sqlserver") >= 0) {
-                _dbType = DbType.SQLServer;
-                _dbDialect = new DbSQLServerDialect();
+                type = DbType.SQLServer;
+                dialect = new DbSQLServerDialect();
             } else if (pn.indexOf("oracle") >= 0) {
-                _dbType = DbType.Oracle;
-                _dbDialect = new DbOracleDialect();
+                type = DbType.Oracle;
+                dialect = new DbOracleDialect();
             } else if (pn.indexOf("postgresql") >= 0) {
-                _dbType = DbType.PostgreSQL;
-                _dbDialect = new DbPostgreSQLDialect();
+                type = DbType.PostgreSQL;
+                dialect = new DbPostgreSQLDialect();
             } else if (pn.indexOf("db2") >= 0) {
-                _dbType = DbType.DB2;
-                _dbDialect = new DbDb2Dialect();
+                type = DbType.DB2;
+                dialect = new DbDb2Dialect();
             } else if (pn.indexOf("sqlite") >= 0) {
-                _dbType = DbType.SQLite;
-                _dbDialect = new DbSQLiteDialect();
+                type = DbType.SQLite;
+                dialect = new DbSQLiteDialect();
             } else if (pn.indexOf("h2") >= 0) {
-                _dbType = DbType.H2;
-                _dbDialect = new DbH2Dialect();
+                type = DbType.H2;
+                dialect = new DbH2Dialect();
             } else if (pn.indexOf("phoenix") >= 0) {
-                _dbType = DbType.Phoenix;
-                _dbDialect = new DbPhoenixDialect();
+                type = DbType.Phoenix;
+                dialect = new DbPhoenixDialect();
             } else {
                 //做为默认
-                _dbDialect = new DbMySQLDialect();
+                dialect = new DbMySQLDialect();
             }
         } else {
             //默认为mysql
             //
-            _dbType = DbType.MySQL;
-            _dbDialect = new DbMySQLDialect();
+            type = DbType.MySQL;
+            dialect = new DbMySQLDialect();
         }
     }
 
     private void setSchema(Connection conn) throws SQLException {
         try {
-            _catalog = conn.getCatalog();
+            catalog = conn.getCatalog();
         } catch (Throwable e) {
             e.printStackTrace();
         }
 
-        if (_schema != null) {
+        if (schema != null) {
             return;
         }
 
         try {
-            _schema = conn.getSchema();
+            schema = conn.getSchema();
 
-            if (_schema == null) {
-                _schema = _catalog;
+            if (schema == null) {
+                schema = catalog;
             }
 
         } catch (Throwable e) {
-            switch (_dbType) {
+            switch (type) {
                 case PostgreSQL:
-                    _schema = "public";
+                    schema = "public";
                     break;
                 case H2:
-                    _schema = "PUBLIC";
+                    schema = "PUBLIC";
                     break;
                 case SQLServer:
-                    _schema = "dbo";
+                    schema = "dbo";
                 case Oracle:
-                    _schema = conn.getMetaData().getUserName();
+                    schema = conn.getMetaData().getUserName();
                     break;
             }
         }
@@ -251,18 +257,18 @@ public class DbContextMetaData {
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
 
-        rs = dialect().getTables(md, _catalog, _schema);
+        rs = getDialect().getTables(md, catalog, schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");
             TableWrap tWrap = new TableWrap(name, remarks);
-            _tables.put(name, tWrap);
+            tableAll.put(name, tWrap);
         }
         rs.close();
 
-        for (String key : _tables.keySet()) {
-            TableWrap tWrap = _tables.get(key);
-            rs = md.getColumns(_catalog, _schema, key, "%");
+        for (String key : tableAll.keySet()) {
+            TableWrap tWrap = tableAll.get(key);
+            rs = md.getColumns(catalog, schema, key, "%");
 
             while (rs.next()) {
                 int digit = 0;
@@ -283,7 +289,7 @@ public class DbContextMetaData {
             }
             rs.close();
 
-            rs = md.getPrimaryKeys(_catalog, _schema, key);
+            rs = md.getPrimaryKeys(catalog, schema, key);
             while (rs.next()) {
                 String idName = rs.getString("COLUMN_NAME");
                 tWrap.addPk(idName);

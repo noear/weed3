@@ -55,7 +55,7 @@ class SQLer {
     }
 
     public Variate getVariate(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -75,7 +75,7 @@ class SQLer {
     }
 
     public <T extends IBinder> T getItem(Command cmd, T model) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -105,7 +105,7 @@ class SQLer {
     }
 
     public <T extends IBinder> List<T> getList(Command cmd, T model) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -149,7 +149,7 @@ class SQLer {
     }
 
     public DataItem getRow(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -182,7 +182,7 @@ class SQLer {
     }
 
     public DataList getTable(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -218,7 +218,7 @@ class SQLer {
 
     //执行
     public int execute(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return 0;
         }
 
@@ -244,7 +244,7 @@ class SQLer {
 
     //批量执行
     public int[] executeBatch(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return null;
         }
 
@@ -286,7 +286,7 @@ class SQLer {
 
     //插入
     public long insert(Command cmd) throws SQLException {
-        if (cmd.context.isCompilationMode) {
+        if (cmd.context.isCompilationMode()) {
             return 0;
         }
 

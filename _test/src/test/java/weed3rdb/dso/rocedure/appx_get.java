@@ -8,7 +8,7 @@ public class appx_get extends DbQueryProcedure {
     public appx_get(DbContext context) {
         super(context);
         lazyload(()->{
-            if(context.dbType() == DbType.Oracle){
+            if(context.getType() == DbType.Oracle){
                 sql("select * from \"$\".\"APPX\" where \"app_id\"=@{id}");
             }else{
                 sql("select * from $.appx where app_id=@{id}");

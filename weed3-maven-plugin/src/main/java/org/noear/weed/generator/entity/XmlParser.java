@@ -83,7 +83,7 @@ public class XmlParser {
 
         for(XmlTableBlock tb : source.tableBlocks){
             if("*".equals(tb.tableName)){
-                for(TableWrap tw : db.getMetaData().tables()){
+                for(TableWrap tw : db.getMetaData().getTableAll()){
                     TableItem item = new TableItem();
                     item.tableName = tw.getName();
                     item.domainName = NamingUtils.toCamelString(item.tableName,true);
@@ -94,7 +94,7 @@ public class XmlParser {
 
                 break;
             }else{
-                for(TableWrap tw : db.getMetaData().tables()){
+                for(TableWrap tw : db.getMetaData().getTableAll()){
                     if(tw.getName().equals(tb.tableName)) {
                         TableItem item = new TableItem();
                         item.tableName = tw.getName();
