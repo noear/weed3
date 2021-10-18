@@ -21,6 +21,7 @@ public class CallTest {
         AppxModel m = db2.call(code)
                 .set("id", 48)
                 .getItem(AppxModel.class);
+
         assert m.app_id == 48;
     }
 

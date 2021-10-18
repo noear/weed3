@@ -44,8 +44,7 @@ public class _PageTest {
                 .leftJoin("appx_agroup b").onEq("a.agroup_id", "b.agroup_id")
                 .orderByAsc("a.app_id")
                 .limit(1, 10)
-                .select("a.*,b.name agroup_name")
-                .getList(AppxModel.class);
+                .selectList("a.*,b.name agroup_name", AppxModel.class);
 
         assert list.size() == 10;
         assert list.get(0).app_id == 2;

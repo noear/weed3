@@ -6,7 +6,7 @@ import org.noear.weed.DataItem;
 import java.util.Map;
 
 public class _TypeTest {
-    @Test
+//    @Test
     public void test(){
         Map<String,Object> args = new DataItem().set("date",20201010).getMap();
     }

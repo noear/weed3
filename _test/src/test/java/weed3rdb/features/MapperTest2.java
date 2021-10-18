@@ -40,7 +40,7 @@ public class MapperTest2 {
 
     @Test
     public void testX4() throws Exception {
-        Object temp = db2.table("appx").whereEq("app_id", 48).select("*").getMap();
+        Object temp = db2.table("appx").whereEq("app_id", 48).selectMap("*");
 
         assert temp instanceof Map;
     }

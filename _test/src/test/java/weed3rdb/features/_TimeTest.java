@@ -13,31 +13,31 @@ public class _TimeTest {
     DbContext db = DbUtil.db;
 
     private AppxCopy2Model _model;
-    private AppxCopy2Model model() throws Exception{
-        if(_model == null) {
+
+    private AppxCopy2Model model() throws Exception {
+        if (_model == null) {
             _model = db.table("appx_copy")
                     .whereEq("app_id", 22)
-                    .select("*")
-                    .getItem(AppxCopy2Model.class);
+                    .selectItem("*", AppxCopy2Model.class);
 
             System.out.println(db.lastCommand.text);
         }
 
         return _model;
     }
+
     @Test
-    public void test0() throws Exception{
+    public void test0() throws Exception {
         model();
     }
 
     @Test
     public void test_insert() throws Exception {
-        Map<String,Object> map = db.table("appx_copy")
+        Map<String, Object> map = db.table("appx_copy")
                 .whereEq("app_id", 22)
-                .select("*")
-                .getMap();
+                .selectMap("*");
 
-        map.put("app_id",1001);
+        map.put("app_id", 1001);
 
         db.table("appx_copy").setMap(map).upsertBy("app_id");
         System.out.println(db.lastCommand.text);
@@ -47,12 +47,11 @@ public class _TimeTest {
     public void test_insert2() throws Exception {
         AppxCopy2Model map = db.table("appx_copy")
                 .whereEq("app_id", 22)
-                .select("*")
-                .getItem(AppxCopy2Model.class);
+                .selectItem("*", AppxCopy2Model.class);
 
         map.app_id = 1000;
 
-        if(db.getType() == DbType.Oracle){
+        if (db.getType() == DbType.Oracle) {
             map.datetime1 = null;
             map.time1 = null;
             map.date1 = null;
