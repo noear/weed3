@@ -192,7 +192,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.clear();
 
-        _context.dbDialect()
+        _context.getDialect()
                 .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
 
         return compile().insert();
@@ -262,7 +262,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return false;
         }
 
-        _context.dbDialect()
+        _context.getDialect()
                 .insertList(_context, _table, _builder, this::isSqlExpr, cols, valuesList);
 
         return compile().execute() > 0;
@@ -679,9 +679,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         //2.尝试构建分页
         if (limit_top > 0) {
-            _context.dbDialect().selectTop(_context, _table_raw, _builder, _orderBy, limit_top);
+            _context.getDialect().selectTop(_context, _table_raw, _builder, _orderBy, limit_top);
         } else if (limit_size > 0) {
-            _context.dbDialect().selectPage(_context, _table_raw, _builder, _orderBy, limit_start, limit_size);
+            _context.getDialect().selectPage(_context, _table_raw, _builder, _orderBy, limit_start, limit_size);
         } else {
             _builder.insert(0, "SELECT ");
             if (_orderBy != null) {

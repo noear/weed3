@@ -47,11 +47,11 @@ class SQLer {
     }
 
     private Object getObject(Command cmd, String key) throws SQLException {
-        return cmd.context.dbDialect().preChange(rset.getObject(key));
+        return cmd.context.getDialect().preChange(rset.getObject(key));
     }
 
     private Object getObject(Command cmd, int idx) throws SQLException {
-        return cmd.context.dbDialect().preChange(rset.getObject(idx));
+        return cmd.context.getDialect().preChange(rset.getObject(idx));
     }
 
     public Variate getVariate(Command cmd) throws SQLException {
@@ -297,7 +297,7 @@ class SQLer {
 
             stmt.executeUpdate();
 
-            if (cmd.context.dbDialect().insertGeneratedKey()) {
+            if (cmd.context.getDialect().insertGeneratedKey()) {
                 try {
                     rset = stmt.getGeneratedKeys(); //乎略错误
                 } catch (Exception ex) {
@@ -376,7 +376,7 @@ class SQLer {
         if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.fullText());
         else {
-            if (isInsert && cmd.context.dbDialect().insertGeneratedKey())
+            if (isInsert && cmd.context.getDialect().insertGeneratedKey())
                 stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
             else
                 stmt = c.prepareStatement(cmd.fullText());

@@ -1,12 +1,16 @@
 package org.noear.weed;
 
+import org.noear.weed.dialect.DbDialect;
 import org.noear.weed.ext.*;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.DbFormater;
+import org.noear.weed.wrap.DbType;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
 import java.net.URI;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +21,7 @@ import java.util.Properties;
  * Created by noear on 14-6-12.
  * 数据库上下文
  */
-public class DbContext extends DbContextMetaData {
+public class DbContext {
 
     /**
      * 最后次执行命令 (线程不安全，仅供调试用)
@@ -32,6 +36,36 @@ public class DbContext extends DbContextMetaData {
      * 编译模式（用于产生代码）
      */
     public boolean isCompilationMode = false;
+
+    protected DbContextMetaData metaData = new DbContextMetaData();
+
+    /**
+     * 获取元信息
+     * */
+    public DbContextMetaData getMetaData(){
+        return metaData;
+    }
+
+    /**
+     * 获取类型
+     * */
+    public DbType getType(){
+        return metaData.type();
+    }
+
+    /**
+     * 获取方言
+     * */
+    public DbDialect getDialect(){
+        return metaData.dialect();
+    }
+
+    /**
+     * 获取链接
+     * */
+    public Connection getConnection() throws SQLException {
+        return getMetaData().getConnection();
+    }
 
 
     //数据集名称
@@ -76,12 +110,12 @@ public class DbContext extends DbContextMetaData {
             driverSet(driverClassName);
         }
 
-        if (StringUtils.isEmpty(_schema)) {
-            _schema = schema;
+        if (StringUtils.isEmpty(metaData.schema())) {
+            metaData.schemaSet(schema);
         }
 
-        if (StringUtils.isEmpty(_schema) && url.indexOf("://") > 0) {
-            _schema = URI.create(url.substring(5)).getPath().substring(1);
+        if (StringUtils.isEmpty(metaData.schema()) && url.indexOf("://") > 0) {
+            metaData.schemaSet(URI.create(url.substring(5)).getPath().substring(1));
         }
 
         if (StringUtils.isEmpty(username)) {
@@ -142,7 +176,7 @@ public class DbContext extends DbContextMetaData {
      * 数据源设置
      */
     public DbContext dataSourceSet(DataSource ds) {
-        dataSourceDoSet(ds);
+        metaData.dataSourceDoSet(ds);
         return this;
     }
 
@@ -151,7 +185,7 @@ public class DbContext extends DbContextMetaData {
      * 数据集合名称设置
      */
     public DbContext schemaSet(String schema) {
-        _schema = schema;
+        metaData.schemaSet(schema);
         if (_name == null) {
             _name = schema;
         }
@@ -180,14 +214,14 @@ public class DbContext extends DbContextMetaData {
      */
     @Deprecated
     public boolean schemaHas() {
-        return _schema != null;
+        return metaData.schema() != null;
     }
 
     /**
      * 获取schema
      */
     public String schema() {
-        return _schema;
+        return metaData.schema();
     }
 
     //

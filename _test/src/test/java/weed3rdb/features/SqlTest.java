@@ -15,7 +15,7 @@ public class SqlTest {
     @Test
     public void test1() throws Exception {
         String code = null;
-        if(db.dbType() == DbType.Oracle){
+        if(db.getType() == DbType.Oracle){
             code = "select * from \"$\".\"APPX\" where \"app_id\"=?";
         }else{
             code = "select * from $.appx where app_id=?";

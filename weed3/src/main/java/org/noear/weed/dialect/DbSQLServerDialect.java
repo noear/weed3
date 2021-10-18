@@ -30,7 +30,7 @@ public class DbSQLServerDialect implements DbDialect {
         StringBuilder sb = new StringBuilder();
         if (orderBy == null) {
             String tb = table1.split(" ")[0].replace("$.","").trim();
-            String pk = ctx.dbTablePk1(tb);
+            String pk = ctx.getMetaData().tablePk1(tb);
 
             if(pk == null){
                 throw new RuntimeException("Please add orderBy");

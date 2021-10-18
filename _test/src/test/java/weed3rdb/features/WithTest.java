@@ -13,7 +13,7 @@ public class WithTest {
 
     @Test
     public void test() throws Exception {
-        if(db.dbType() == DbType.Oracle){
+        if(db.getType() == DbType.Oracle){
             return;
         }
 
@@ -32,7 +32,7 @@ public class WithTest {
 
     @Test
     public void test2() throws Exception {
-        if(db.dbType() == DbType.Oracle){
+        if(db.getType() == DbType.Oracle){
             return;
         }
 

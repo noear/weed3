@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-class DbContextMetaData {
-    protected String _schema;
-    protected String _catalog;
+public class DbContextMetaData {
+    private String _schema;
+    private String _catalog;
 
     private transient Map<String, TableWrap> _tables = new HashMap<>();
     private transient DbType _dbType = DbType.Unknown;
@@ -22,6 +22,7 @@ class DbContextMetaData {
 
     //数据源
     private transient DataSource __dataSource; //通过dataSourceSet写入
+
 
     /**
      * 获取数据源
@@ -41,34 +42,62 @@ class DbContextMetaData {
         return WeedConfig.connectionFactory.getConnection(dataSource());
     }
 
-    public Connection getMetaConnection() throws SQLException{
-        return  dataSource().getConnection();
+    /**
+     * 获取元信息链接
+     */
+    public Connection getMetaConnection() throws SQLException {
+        return dataSource().getConnection();
     }
+
+    /**
+     * 获取 schema
+     */
+    public String schema() {
+        return _schema;
+    }
+
+    protected void schemaSet(String schema) {
+        _schema = schema;
+    }
+
+    /**
+     * 获取 catalog
+     */
+    public String catalog() {
+        return _catalog;
+    }
+
 
     //数据集名称
 
-    public DbType dbType() {
-        initMetaData();
+    /**
+     * 获取类型
+     */
+    public DbType type() {
+        init();
         return _dbType;
     }
 
-    public DbDialect dbDialect() {
-        initMetaData();
+    /**
+     * 获取方言
+     */
+    public DbDialect dialect() {
+        init();
         return _dbDialect;
     }
 
-    public void dbDialectSet(DbDialect adapter) {
-        initMetaData();
+    public void dialectSet(DbDialect adapter) {
+        init();
         _dbDialect = adapter;
     }
 
-    public Collection<TableWrap> dbTables() {
-        initMetaData();
+    public Collection<TableWrap> tables() {
+        init();
         return _tables.values();
     }
 
-    public TableWrap dbTable(String tableName) {
-        initMetaData();
+    public TableWrap table(String tableName) {
+        init();
 
         for (Map.Entry<String, TableWrap> kv : _tables.entrySet()) {
             if (tableName.equalsIgnoreCase(kv.getKey())) {
@@ -79,20 +108,20 @@ class DbContextMetaData {
         return null;
     }
 
-    public String dbTablePk1(String tableName) {
-        TableWrap tw = dbTable(tableName);
+    public String tablePk1(String tableName) {
+        TableWrap tw = table(tableName);
         return tw == null ? null : tw.getPk1();
     }
 
-    public void refreshMeta() {
-        initMetaDataDo();
+    public void refresh() {
+        initDo();
     }
 
-    public synchronized void initMetaData() {
+    public synchronized void init() {
         if (_dbDialect != null) {
             return;
         }
-        initMetaDataDo();
+        initDo();
     }
 
     private void initPrintln(String x) {
@@ -103,7 +132,7 @@ class DbContextMetaData {
         }
     }
 
-    private synchronized void initMetaDataDo() {
+    private synchronized void initDo() {
         //这段不能去掉
         initPrintln("Init metadata");
 
@@ -172,7 +201,7 @@ class DbContextMetaData {
             } else if (pn.indexOf("phoenix") >= 0) {
                 _dbType = DbType.Phoenix;
                 _dbDialect = new DbPhoenixDialect();
-            }else {
+            } else {
                 //做为默认
                 _dbDialect = new DbMySQLDialect();
             }
@@ -198,7 +227,7 @@ class DbContextMetaData {
         try {
             _schema = conn.getSchema();
 
-            if(_schema == null){
+            if (_schema == null) {
                 _schema = _catalog;
             }
 
@@ -222,7 +251,7 @@ class DbContextMetaData {
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
 
-        rs = dbDialect().getTables(md, _catalog, _schema);
+        rs = dialect().getTables(md, _catalog, _schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");

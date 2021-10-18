@@ -24,7 +24,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     protected DbType dbType(){
-        return _context.dbType();
+        return _context.getMetaData().type();
     }
 
     protected String fmtSchema(String name){
