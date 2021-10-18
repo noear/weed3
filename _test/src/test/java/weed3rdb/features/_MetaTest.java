@@ -19,6 +19,7 @@ public class _MetaTest {
         });
 
         System.out.println(db.getMetaData().getTableAll().size());
+
         assert  db.getMetaData().getTableAll().size() > 0;
     }
 }
