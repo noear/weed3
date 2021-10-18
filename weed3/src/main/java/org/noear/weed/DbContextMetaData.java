@@ -257,7 +257,7 @@ public class DbContextMetaData {
     private void setTables(DatabaseMetaData md) throws SQLException {
         ResultSet rs = null;
 
-        rs = getDialect().getTables(md, catalog, schema);
+        rs = getDialect().getTableAll(md, catalog, schema);
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             String remarks = rs.getString("REMARKS");

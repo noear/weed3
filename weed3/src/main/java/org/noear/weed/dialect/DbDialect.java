@@ -24,7 +24,7 @@ public interface DbDialect {
         return code;
     }
 
-    default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
+    default ResultSet getTableAll(DatabaseMetaData md, String catalog, String schema) throws SQLException {
         return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"});
     }
 
