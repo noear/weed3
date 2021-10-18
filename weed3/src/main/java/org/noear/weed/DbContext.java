@@ -68,6 +68,13 @@ public class DbContext {
     }
 
     /**
+     * 初始化元信息
+     * */
+    public void initMetaData(){
+        getMetaData().init();
+    }
+
+    /**
      * 获取类型
      * */
     public DbType getType(){
