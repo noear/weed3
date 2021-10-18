@@ -28,7 +28,7 @@ public class DbSQLiteDialect implements DbDialect {
     }
 
     @Override
-    public ResultSet getTableAll(DatabaseMetaData md, String catalog, String schema) throws SQLException {
+    public ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
         return md.getTables(null, null, null, new String[]{"TABLE"});
     }
 

@@ -1,17 +1,10 @@
 package org.noear.weed.dialect;
 
 import org.noear.weed.DbContext;
-import org.noear.weed.GetHandler;
-import org.noear.weed.IDataItem;
 import org.noear.weed.SQLBuilder;
-import org.noear.weed.ext.Fun1;
-import org.noear.weed.utils.StringUtils;
 
 import java.sql.Clob;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Oracle数据库方言处理（BETWEEN AND :: >= + <=）
@@ -112,59 +105,5 @@ public class DbOracleDialect implements DbDialect {
         if(orderBy!=null){
             sqlB.append(orderBy);
         }
-    }
-
-    @Override
-    public <T extends GetHandler> boolean insertList(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, IDataItem cols, Collection<T> valuesList) {
-        List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(" INSERT ALL ");
-        for(GetHandler gh: valuesList) {
-            insertOne(ctx, sb, table1, isSqlExpr, cols, gh, args);
-        }
-        sb.append(" SELECT 1 from dual");
-
-        if(sb.length() < 20){
-            return false;
-        }
-
-        sqlB.append(sb.toString(), args.toArray());
-
-        return true;
-    }
-
-    private void insertOne(DbContext ctx, StringBuilder sb, String _table, Fun1<Boolean, String> isSqlExpr, IDataItem cols, GetHandler gh, List<Object> args){
-        sb.append(" INTO ").append(_table).append(" (");
-
-        for(String key : cols.keys()){
-            sb.append(ctx.formater().formatColumn(key)).append(",");
-        }
-
-        sb.deleteCharAt(sb.length() - 1);
-
-        sb.append(") ");
-        sb.append("VALUES");
-        sb.append("(");
-
-        for(String key : cols.keys()) {
-            Object value = gh.get(key);
-
-            if (value instanceof String) {
-                String val2 = (String) value;
-                if (isSqlExpr.run(val2)) { //说明是SQL函数
-                    sb.append(val2.substring(1)).append(",");
-                } else {
-                    sb.append("?,");
-                    args.add(value);
-                }
-            } else {
-                sb.append("?,");
-                args.add(value);
-            }
-        }
-
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append(") \n");
     }
 }

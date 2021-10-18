@@ -9,10 +9,7 @@ import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.DbType;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -262,10 +259,32 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             return false;
         }
 
-        _context.getDialect()
-                .insertList(_context, _table, _builder, this::isSqlExpr, cols, valuesList);
+        _builder.backup();
 
-        return compile().execute() > 0;
+        _context.getDialect().insertItem(_context, _table, _builder, this::isSqlExpr, true, cols);
+
+        List<Object[]> argList = new ArrayList<>();
+        String tml = _builder.toString();
+
+        for (GetHandler item : valuesList) {
+            List<Object> tmp = new ArrayList<>();
+            for (String key : cols.keys()) {
+                tmp.add(item.get(key));
+            }
+
+            argList.add(tmp.toArray());
+        }
+
+
+        _builder.clear();
+        _builder.append(tml, argList.toArray());
+
+        int[] rst = compile().executeBatch();
+
+        _builder.restore();
+
+
+        return rst.length > 0;
     }
 
 
