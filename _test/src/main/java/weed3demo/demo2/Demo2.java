@@ -2,6 +2,7 @@ package weed3demo.demo2;
 
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import weed3demo.config.DbConfig;
 import weed3demo.mapper.UserModel;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Demo2 {
-    DbContext db = new DbContext();
+    DbContext db = DbConfig.pc_bcf;
 
     public void test() {
         List<String> ids = new ArrayList<>();

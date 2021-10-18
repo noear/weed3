@@ -100,55 +100,6 @@ public class DbContext {
     protected String _name;
 
 
-    public DbContext propSet(Map prop) {
-        return propSet(prop::get);
-    }
-
-    public DbContext propSet(Properties prop) {
-        return propSet(prop::get);
-    }
-
-    public DbContext propSet(Get1<?, Object> sets) {
-        String schema = doGet(sets, "schema");
-        String url = doGet(sets, "url");
-        String username = doGet(sets, "username");
-        String password = doGet(sets, "password");
-        String driverClassName = doGet(sets, "driverClassName");
-
-        if (StringUtils.isEmpty(url) || url.startsWith("jdbc:") == false) {
-            throw new RuntimeException("url 配置有问题!");
-        }
-
-        if (StringUtils.isEmpty(driverClassName) == false) {
-            driverSet(driverClassName);
-        }
-
-        if (StringUtils.isEmpty(getMetaData().getSchema())) {
-            getMetaData().setSchema(schema);
-        }
-
-        if (StringUtils.isEmpty(getMetaData().getSchema()) && url.indexOf("://") > 0) {
-            getMetaData().setSchema(URI.create(url.substring(5)).getPath().substring(1));
-        }
-
-        if (StringUtils.isEmpty(username)) {
-            dataSourceSet(new DbDataSource(url));
-        } else {
-            dataSourceSet(new DbDataSource(url, username, password));
-        }
-
-        return this;
-    }
-
-    private String doGet(Get1<?, Object> sets, String name) {
-        Object tmp = sets.get(name);
-        if (tmp != null) {
-            return tmp.toString();
-        } else {
-            return null;
-        }
-    }
-
     /**
      * 名字获取
      */
@@ -191,14 +142,6 @@ public class DbContext {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return this;
-    }
-
-    /**
-     * 数据源设置
-     */
-    public DbContext dataSourceSet(DataSource ds) {
-        getMetaData().setDataSource(ds);
         return this;
     }
 
@@ -261,36 +204,56 @@ public class DbContext {
     //
     // 构建函数 start
     //
-    public DbContext() {
-    }
-
     public DbContext(DataSource dataSource) {
-        dataSourceSet(dataSource);
+        getMetaData().setDataSource(dataSource);
     }
 
-    public DbContext(Properties properties) {
-        propSet(properties);
+    public DbContext(Properties prop) {
+        String schema = prop.getProperty("schema");
+        String url = prop.getProperty( "url");
+        String username = prop.getProperty( "username");
+        String password = prop.getProperty( "password");
+        String driverClassName = prop.getProperty( "driverClassName");
+
+        if (StringUtils.isEmpty(url) || url.startsWith("jdbc:") == false) {
+            throw new RuntimeException("url 配置有问题!");
+        }
+
+        if (StringUtils.isEmpty(driverClassName) == false) {
+            driverSet(driverClassName);
+        }
+
+        if (StringUtils.isEmpty(getMetaData().getSchema())) {
+            getMetaData().setSchema(schema);
+        }
+
+        if (StringUtils.isEmpty(getMetaData().getSchema()) && url.indexOf("://") > 0) {
+            getMetaData().setSchema(URI.create(url.substring(5)).getPath().substring(1));
+        }
+
+        if (StringUtils.isEmpty(username)) {
+            getMetaData().setDataSource(new DbDataSource(url));
+        } else {
+            getMetaData().setDataSource(new DbDataSource(url, username, password));
+        }
     }
 
-    public DbContext(Map map) {
-        propSet(map);
-    }
 
     //基于线程池配置（如："proxool."）
     public DbContext(String schema, String url) {
         schemaSet(schema);
-        dataSourceSet(new DbDataSource(url));
+        getMetaData().setDataSource(new DbDataSource(url));
     }
 
     //基于手动配置（无线程池）
     public DbContext(String schema, String url, String username, String password) {
         schemaSet(schema);
-        dataSourceSet(new DbDataSource(url, username, password));
+        getMetaData().setDataSource(new DbDataSource(url, username, password));
     }
 
     public DbContext(String schema, DataSource dataSource) {
         schemaSet(schema);
-        dataSourceSet(dataSource);
+        getMetaData().setDataSource(dataSource);
     }
 
     //
