@@ -157,9 +157,12 @@ public class DbContext {
      * 数据集合名称设置
      */
     public DbContext schemaSet(String schema) {
-        getMetaData().setSchema(schema);
-        if (_name == null) {
-            _name = schema;
+        if (StringUtils.isNotEmpty(schema)) {
+            getMetaData().setSchema(schema);
+
+            if (_name == null) {
+                _name = schema;
+            }
         }
 
         return this;
@@ -212,25 +215,30 @@ public class DbContext {
     // 构建函数 start
     //
     public DbContext(DataSource dataSource) {
+        this(dataSource, null);
+    }
+
+    public DbContext(DataSource dataSource, String schema) {
+        schemaSet(schema);
         getMetaData().setDataSource(dataSource);
     }
 
     public DbContext(Properties prop) {
         String schema = prop.getProperty("schema");
-        String url = prop.getProperty( "url");
-        String username = prop.getProperty( "username");
-        String password = prop.getProperty( "password");
-        String driverClassName = prop.getProperty( "driverClassName");
+        String url = prop.getProperty("url");
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+        String driverClassName = prop.getProperty("driverClassName");
 
         if (StringUtils.isEmpty(url) || url.startsWith("jdbc:") == false) {
-            throw new RuntimeException("url 配置有问题!");
+            throw new IllegalArgumentException("DataSource url configuration error");
         }
 
-        if (StringUtils.isEmpty(driverClassName) == false) {
+        if (StringUtils.isNotEmpty(driverClassName) == false) {
             driverSet(driverClassName);
         }
 
-        if (StringUtils.isEmpty(getMetaData().getSchema())) {
+        if (StringUtils.isNotEmpty(schema)) {
             getMetaData().setSchema(schema);
         }
 
