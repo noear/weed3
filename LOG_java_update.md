@@ -1,4 +1,13 @@
+#### 3.4.1
+* xmlsql 不再对 " 做转码
+
+
 #### 3.4.0
+* 独立 DbContextMetaData，并调整相关接口
+* 将批量插入改为 jdbc 模式（之前为拼sql模式）
+
+
+#### 3.3.24
 * 为 selectCount 自动加上 count(?)
 
 #### 3.3.23

@@ -533,7 +533,7 @@ public class XmlSqlCompiler {
         //临时变量列表
         List<XmlSqlVar> tmpList = new ArrayList<>();
 
-        String txt2 = txt0.replace("\n"," ").replace("\"", "\\\"");
+        String txt2 = txt0.replace("\n"," ");//.replace("\"", "\\\"");
         dblock._texts.append(txt2);
 
         //1.处理${xxx},${xxx:type}
