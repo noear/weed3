@@ -1,7 +1,6 @@
 #### 3.4.1
 * xmlsql 不再对 " 做转码
 
-
 #### 3.4.0
 * 独立 DbContextMetaData，并调整相关接口
 * 将批量插入改为 jdbc 模式（之前为拼sql模式）
