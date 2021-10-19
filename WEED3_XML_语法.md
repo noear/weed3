@@ -84,7 +84,7 @@ return="String" => String （任何单职类型）
         INSERT user(user_id) VALUES(@{user_id:int})
     </sql>
 
-    <sql id="user_add_for" return="long" remarks="批量添加用户3">
+    <sql id="user_add_for" return="long" declare="list:List[UserModel]" remarks="批量添加用户3">
         INSERT user(id,mobile,sex) VALUES
         <for var="m:UserModel" items="list">
             (@{m.user_id},@{m.mobile},@{m.sex})
