@@ -106,7 +106,7 @@ public abstract class DbDialectBase implements DbDialect {
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
+        sb.append(" ").append(insertCmd()).append(" ").append(tableFormat(table1)).append(" (");
         values.forEach((key, value) -> {
             if (value == null) {
                 if (_usingNull == false) {
@@ -114,7 +114,7 @@ public abstract class DbDialectBase implements DbDialect {
                 }
             }
 
-            sb.append(ctx.formater().formatColumn(key)).append(",");
+            sb.append(columnFormat(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);

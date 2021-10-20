@@ -9,12 +9,12 @@ import org.noear.weed.annotation.Table;
 @Table("test")
 public class TestModel {
     @PrimaryKey
-    public Integer id;
+    public Long id;
     public Integer v1;
 
     public TestModel(){}
 
-    public TestModel(int id, int v1){
+    public TestModel(long id, int v1){
         this.id = id;
         this.v1 = v1;
     }
