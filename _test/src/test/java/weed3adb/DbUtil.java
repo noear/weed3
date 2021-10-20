@@ -18,7 +18,7 @@ public class DbUtil {
         ds.setJdbcUrl("jdbc:clickhouse://localhost:8123/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
         //ds.setUsername("root");
         //ds.setPassword("123456");
-        ds.setDriverClassName("ru.yandex.clickhouse-jdbc");
+        ds.setDriverClassName("ru.yandex.clickhouse.ClickHouseDriver");
 
         return ds;
     }
