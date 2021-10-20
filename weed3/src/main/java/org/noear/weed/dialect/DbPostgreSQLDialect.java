@@ -9,7 +9,7 @@ import org.noear.weed.SQLBuilder;
  * @author noear
  * @since 3.2
  * */
-public class DbPostgreSQLDialect implements DbDialect {
+public class DbPostgreSQLDialect extends DbDialectBase{
     @Override
     public boolean excludeFormat(String str) {
         return str.startsWith("\"") || str.indexOf(".") > 0;
@@ -31,7 +31,7 @@ public class DbPostgreSQLDialect implements DbDialect {
     }
 
     @Override
-    public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+    public void buildSelectRangeCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
         sqlB.insert(0, "SELECT ");
 
         if (orderBy != null) {

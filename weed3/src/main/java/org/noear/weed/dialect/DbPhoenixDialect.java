@@ -6,7 +6,7 @@ package org.noear.weed.dialect;
  * @author noear
  * @since 3.2
  * */
-public class DbPhoenixDialect implements DbDialect {
+public class DbPhoenixDialect extends DbDialectBase{
     @Override
     public boolean supportsVariablePaging() {
         return true;
@@ -28,7 +28,7 @@ public class DbPhoenixDialect implements DbDialect {
     }
 
     @Override
-    public boolean insertGeneratedKey() {
+    public boolean supportsInsertGeneratedKey() {
         return false;
     }
 }

@@ -9,7 +9,7 @@ import org.noear.weed.SQLBuilder;
  * @author noear
  * @since 3.2
  * */
-public class DbSQLServerDialect implements DbDialect {
+public class DbSQLServerDialect extends DbDialectBase{
     @Override
     public boolean excludeFormat(String str) {
         return str.startsWith("\"") || str.startsWith("[") || str.indexOf(".") > 0;
@@ -26,7 +26,7 @@ public class DbSQLServerDialect implements DbDialect {
     }
 
     @Override
-    public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+    public void buildSelectRangeCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
         StringBuilder sb = new StringBuilder();
         if (orderBy == null) {
             String tb = table1.split(" ")[0].replace("$.","").trim();
@@ -56,7 +56,7 @@ public class DbSQLServerDialect implements DbDialect {
     }
 
     @Override
-    public void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
+    public void buildSelectTopCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
         sqlB.insert(0, "SELECT TOP " + size);
         if (orderBy != null) {
             sqlB.append(orderBy);

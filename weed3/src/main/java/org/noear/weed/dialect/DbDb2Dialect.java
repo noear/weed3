@@ -9,7 +9,7 @@ import org.noear.weed.SQLBuilder;
  * @author noear
  * @since 3.2
  * */
-public class DbDb2Dialect implements DbDialect {
+public class DbDb2Dialect extends DbDialectBase{
 
     @Override
     public boolean excludeFormat(String str) {
@@ -27,7 +27,7 @@ public class DbDb2Dialect implements DbDialect {
     }
 
     @Override
-    public void selectPage( DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+    public void buildSelectRangeCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
         StringBuilder sb = new StringBuilder();
         if (orderBy == null) {
             sb.append("SELECT ROWNUM _ROW_NUM, ");
@@ -50,7 +50,7 @@ public class DbDb2Dialect implements DbDialect {
     }
 
     @Override
-    public void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
+    public void buildSelectTopCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
         sqlB.insert(0,"SELECT ");
 
         if(sqlB.indexOf(" WHERE ") > 0){

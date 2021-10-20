@@ -297,7 +297,7 @@ class SQLer {
 
             stmt.executeUpdate();
 
-            if (cmd.context.getDialect().insertGeneratedKey()) {
+            if (cmd.context.getDialect().supportsInsertGeneratedKey()) {
                 try {
                     rset = stmt.getGeneratedKeys(); //乎略错误
                 } catch (Exception ex) {
@@ -376,7 +376,7 @@ class SQLer {
         if (cmd.text.indexOf("{call") >= 0)
             stmt = c.prepareCall(cmd.fullText());
         else {
-            if (isInsert && cmd.context.getDialect().insertGeneratedKey())
+            if (isInsert && cmd.context.getDialect().supportsInsertGeneratedKey())
                 stmt = c.prepareStatement(cmd.fullText(), Statement.RETURN_GENERATED_KEYS);
             else
                 stmt = c.prepareStatement(cmd.fullText());

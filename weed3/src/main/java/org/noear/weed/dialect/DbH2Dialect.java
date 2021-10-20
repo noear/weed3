@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * @author noear
  * @since 3.2
  * */
-public class DbH2Dialect implements DbDialect {
+public class DbH2Dialect extends DbDialectBase{
     //top,page 和mysql一样
 
     @Override

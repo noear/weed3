@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author noear
  * @since 3.2
  * */
-public class DbSQLiteDialect implements DbDialect {
+public class DbSQLiteDialect extends DbDialectBase{
     @Override
     public Object preChange(Object val) throws SQLException {
         if (val instanceof Clob) {
@@ -58,7 +58,7 @@ public class DbSQLiteDialect implements DbDialect {
     }
 
     @Override
-    public void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
+    public void buildSelectRangeCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
         sqlB.insert(0,"SELECT ");
 
         if(orderBy!=null){

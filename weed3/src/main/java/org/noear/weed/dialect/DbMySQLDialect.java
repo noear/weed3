@@ -6,7 +6,7 @@ package org.noear.weed.dialect;
  * @author noear
  * @since 3.2
  * */
-public class DbMySQLDialect implements DbDialect {
+public class DbMySQLDialect extends DbDialectBase{
     @Override
     public boolean supportsVariablePaging() {
         return true;

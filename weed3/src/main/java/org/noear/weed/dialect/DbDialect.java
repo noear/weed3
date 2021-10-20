@@ -4,8 +4,6 @@ import org.noear.weed.*;
 import org.noear.weed.ext.Fun1;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 数据库方言处理
@@ -15,130 +13,72 @@ import java.util.List;
  * */
 public interface DbDialect {
 
-    default Object preChange(Object val) throws SQLException {
-        return val;
-    }
+    /**
+     * 预转换数据（如：SqlTime 转为 Date）
+     * */
+    Object preChange(Object val) throws SQLException;
 
-    default String preReview(String code) {
-        return code;
-    }
+    /**
+     * 预评审代码
+     * */
+    String preReview(String code);
 
-    default ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException {
-        return md.getTables(catalog, schema, null, new String[]{"TABLE", "VIEW"});
-    }
+    /**
+     * 获取所有的表
+     * */
+    ResultSet getTables(DatabaseMetaData md, String catalog, String schema) throws SQLException;
 
     /**
      * 是否支持变量分页
      */
-    default boolean supportsVariablePaging() {
-        return false;
-    }
+    boolean supportsVariablePaging();
+    
+    /**
+     * 是否支持生成主键
+     * */
+    boolean supportsInsertGeneratedKey();
 
     /**
      * 排除格式化
      */
-    default boolean excludeFormat(String str) {
-        return str.startsWith("`") || str.indexOf(".") > 0;
-    }
+    boolean excludeFormat(String str);
 
-    default String schemaFormat(String name) {
-        return name;
-    }
+    /**
+     * 架构名格式化
+     */
+    String schemaFormat(String name);
 
-    default String tableFormat(String name) {
-        return "`" + name + "`";
-    }
+    /**
+     * 表名格式化
+     */
+    String tableFormat(String name);
 
-    default String columnFormat(String name) {
-        return "`" + name + "`";
-    }
+    /**
+     * 列名格式化
+     */
+    String columnFormat(String name);
 
 
-    default void selectPage(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size) {
-        sqlB.insert(0, "SELECT ");
+    /**
+     * 分页查询代码构建
+     * */
+    void buildSelectRangeCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int start, int size);
 
-        if (orderBy != null) {
-            sqlB.append(orderBy);
-        }
+    /**
+     * 顶部查询代码构建
+     * */
+    void buildSelectTopCode(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size);
 
-        if (supportsVariablePaging()) {
-            sqlB.append(" LIMIT ?,?");
-            sqlB.paramS.add(start);
-            sqlB.paramS.add(size);
-        } else {
-            sqlB.append(" LIMIT ").append(start).append(",").append(size);
-        }
-    }
 
-    default void selectTop(DbContext ctx, String table1, SQLBuilder sqlB, StringBuilder orderBy, int size) {
-        sqlB.insert(0, "SELECT ");
+    /**
+     * 单条插入代码构建
+     * */
+    <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values);
 
-        if (orderBy != null) {
-            sqlB.append(orderBy);
-        }
 
-        if (supportsVariablePaging()) {
-            sqlB.append(" LIMIT ?");
-            sqlB.paramS.add(size);
-        } else {
-            sqlB.append(" LIMIT ").append(size);
-        }
-    }
+    /**
+     * 插入命令
+     * */
+    String insertCmd();
 
-    default String insertCmd() {
-        return "INSERT INTO";
-    }
-
-    default <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
-        List<Object> args = new ArrayList<Object>();
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(" ").append(insertCmd()).append(" ").append(table1).append(" (");
-        values.forEach((key, value) -> {
-            if (value == null) {
-                if (_usingNull == false) {
-                    return;
-                }
-            }
-
-            sb.append(ctx.formater().formatColumn(key)).append(",");
-        });
-
-        sb.deleteCharAt(sb.length() - 1);
-
-        sb.append(") ");
-        sb.append("VALUES");
-        sb.append("(");
-
-        values.forEach((key, value) -> {
-            if (value == null) {
-                if (_usingNull) {
-                    sb.append("null,"); //充许插入null
-                }
-            } else {
-                if (value instanceof String) {
-                    String val2 = (String) value;
-                    if (isSqlExpr.run(val2)) { //说明是SQL函数
-                        sb.append(val2.substring(1)).append(",");
-                    } else {
-                        sb.append("?,");
-                        args.add(value);
-                    }
-                } else {
-                    sb.append("?,");
-                    args.add(value);
-                }
-            }
-        });
-        sb.deleteCharAt(sb.length() - 1);
-        sb.append(")");
-
-        sqlB.append(sb.toString(), args.toArray());
-
-        return true;
-    }
-
-    default boolean insertGeneratedKey(){
-        return true;
-    }
 }

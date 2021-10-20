@@ -5,7 +5,6 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
-import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.DbType;
 
 import java.sql.SQLException;
@@ -698,9 +697,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         //2.尝试构建分页
         if (limit_top > 0) {
-            _context.getDialect().selectTop(_context, _table_raw, _builder, _orderBy, limit_top);
+            _context.getDialect().buildSelectTopCode(_context, _table_raw, _builder, _orderBy, limit_top);
         } else if (limit_size > 0) {
-            _context.getDialect().selectPage(_context, _table_raw, _builder, _orderBy, limit_start, limit_size);
+            _context.getDialect().buildSelectRangeCode(_context, _table_raw, _builder, _orderBy, limit_start, limit_size);
         } else {
             _builder.insert(0, "SELECT ");
             if (_orderBy != null) {
