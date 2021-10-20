@@ -16,6 +16,7 @@ public enum DbType {
     SQLite,
     H2,
     Phoenix,
+    ClickHouse,
 
     /*
     Unknown(DatabaseType.Unknown, "Unknown", "Unknown", 0),
@@ -55,5 +56,7 @@ public enum DbType {
     GreenPlum(DatabaseType.GreenPlum, "org.postgresql.Driver", "jdbc:postgresql://${host}:${port}/${name}", 5432),
 
     GBase(DatabaseType.GBase, "com.gbase.jdbc.Driver", "jdbc:gbase://${host}:${port}/${name}", 5258);
+
+    ClickHouse("jdbc:clickhouse://192.168.110.133:8123/system");// url路径
     */
 }

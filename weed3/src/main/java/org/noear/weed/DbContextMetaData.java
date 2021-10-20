@@ -15,10 +15,18 @@ import java.util.Map;
 public class DbContextMetaData {
     private String schema;
     private String catalog;
+    private String productName;
 
     private transient Map<String, TableWrap> tableAll = new HashMap<>();
     private transient DbType type = DbType.Unknown;
     private transient DbDialect dialect;
+
+    /**
+     * 获取数据产品名
+     * */
+    public String getProductName() {
+        return productName;
+    }
 
     //数据源
     private transient DataSource dataSource; //通过dataSourceSet写入
@@ -148,10 +156,11 @@ public class DbContextMetaData {
             conn = getMetaConnection();
             DatabaseMetaData md = conn.getMetaData();
 
+            productName = md.getDatabaseProductName();
 
             if (dialect == null) {
                 //1.
-                setDatabaseType(md.getDatabaseProductName());
+                setDatabaseType(md.getURL());
 
                 //2.
                 setSchema(conn);
@@ -176,37 +185,40 @@ public class DbContextMetaData {
         }
     }
 
-    private void setDatabaseType(String driverName) {
-        if (driverName != null) {
-            String pn = driverName.toLowerCase().replace(" ", "");
+    private void setDatabaseType(String jdbcUrl) {
+        if (jdbcUrl != null) {
+            String pn = jdbcUrl.toLowerCase().replace(" ", "");
 
-            if (pn.indexOf("mysql") >= 0) {
+            if (pn.startsWith("jdbc:mysql:")) {
                 type = DbType.MySQL;
                 dialect = new DbMySQLDialect();
-            } else if (pn.indexOf("mariadb") >= 0) {
+            } else if (pn.startsWith("jdbc:mariadb:")) {
                 type = DbType.MariaDB;
                 dialect = new DbMySQLDialect();
-            } else if (pn.indexOf("sqlserver") >= 0) {
+            } else if (pn.startsWith("jdbc:sqlserver:")) {
                 type = DbType.SQLServer;
                 dialect = new DbSQLServerDialect();
-            } else if (pn.indexOf("oracle") >= 0) {
+            } else if (pn.startsWith("jdbc:oracle:")) {
                 type = DbType.Oracle;
                 dialect = new DbOracleDialect();
-            } else if (pn.indexOf("postgresql") >= 0) {
+            } else if (pn.startsWith("jdbc:postgresql:")) {
                 type = DbType.PostgreSQL;
                 dialect = new DbPostgreSQLDialect();
-            } else if (pn.indexOf("db2") >= 0) {
+            } else if (pn.startsWith("jdbc:db2:")) {
                 type = DbType.DB2;
                 dialect = new DbDb2Dialect();
-            } else if (pn.indexOf("sqlite") >= 0) {
+            } else if (pn.startsWith("jdbc:sqlite:")) {
                 type = DbType.SQLite;
                 dialect = new DbSQLiteDialect();
-            } else if (pn.indexOf("h2") >= 0) {
+            } else if (pn.startsWith("jdbc:h2:")) {
                 type = DbType.H2;
                 dialect = new DbH2Dialect();
-            } else if (pn.indexOf("phoenix") >= 0) {
+            } else if (pn.startsWith("jdbc:phoenix:")) {
                 type = DbType.Phoenix;
                 dialect = new DbPhoenixDialect();
+            } else if (pn.startsWith("jdbc:clickhouse:")) {
+                type = DbType.ClickHouse;
+                dialect = new DbClickHouseDialect();
             } else {
                 //做为默认
                 dialect = new DbMySQLDialect();
