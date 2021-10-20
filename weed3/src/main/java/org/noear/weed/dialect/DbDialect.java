@@ -73,7 +73,7 @@ public interface DbDialect {
     /**
      * 单条插入代码构建
      * */
-    <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values);
+    void buildInsertOneCode(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values);
 
 
     /**

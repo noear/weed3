@@ -102,7 +102,7 @@ public abstract class DbDialectBase implements DbDialect {
     }
 
     @Override
-    public <T extends GetHandler> boolean insertItem(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
+    public void buildInsertOneCode(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
 
@@ -147,8 +147,6 @@ public abstract class DbDialectBase implements DbDialect {
         sb.append(")");
 
         sqlB.append(sb.toString(), args.toArray());
-
-        return true;
     }
 
     @Override

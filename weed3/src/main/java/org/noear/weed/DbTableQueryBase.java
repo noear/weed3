@@ -189,7 +189,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.clear();
 
         _context.getDialect()
-                .insertItem(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
+                .buildInsertOneCode(_context, _table, _builder, this::isSqlExpr, _usingNull, data);
 
         return compile().insert();
     }
@@ -260,7 +260,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.backup();
 
-        _context.getDialect().insertItem(_context, _table, _builder, this::isSqlExpr, true, cols);
+        _context.getDialect().buildInsertOneCode(_context, _table, _builder, this::isSqlExpr, true, cols);
 
         List<Object[]> argList = new ArrayList<>();
         String tml = _builder.toString();
