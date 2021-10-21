@@ -13,4 +13,14 @@ public class DbClickHouseDialect extends DbDialectBase{
     public boolean supportsInsertGeneratedKey() {
         return false;
     }
+
+    @Override
+    public void updateCmd(StringBuilder sb, String table1) {
+        sb.append("ALTER TABLE ").append(table1).append(" UPDATE ");
+    }
+
+    @Override
+    public void deleteCmd(StringBuilder sb, String table1, boolean addFrom) {
+        sb.append("ALTER TABLE ").append(table1).append(" DELETE ");
+    }
 }

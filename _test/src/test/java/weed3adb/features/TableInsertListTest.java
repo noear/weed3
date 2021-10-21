@@ -15,7 +15,7 @@ public class TableInsertListTest {
     @Test
     public void test1() throws Exception {
         //删
-        //db.table("test").where("1=1").delete();
+        db.table("test").where("1=1").delete();
 
         long idBase = System.currentTimeMillis();
 
@@ -30,7 +30,7 @@ public class TableInsertListTest {
     @Test
     public void test11() throws Exception{
         //删
-        //db.table("test").where("1=1").delete();
+        db.table("test").where("1=1").delete();
 
         long idBase = System.currentTimeMillis();
 
@@ -60,7 +60,7 @@ public class TableInsertListTest {
     @Test
     public void test12() throws Exception{
         //删
-        //db.table("test").where("1=1").delete();
+        db.table("test").where("1=1").delete();
 
 
         long idBase = System.currentTimeMillis();

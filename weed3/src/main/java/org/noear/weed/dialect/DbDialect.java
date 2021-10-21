@@ -79,6 +79,10 @@ public interface DbDialect {
     /**
      * 插入命令
      * */
-    String insertCmd();
+    void insertCmd(StringBuilder sb, String table1);
+
+    void updateCmd(StringBuilder sb, String table1);
+
+    void deleteCmd(StringBuilder sb, String table1, boolean addFrom);
 
 }

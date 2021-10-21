@@ -13,6 +13,11 @@ public class DbPhoenixDialect extends DbDialectBase{
     }
 
     @Override
+    public boolean supportsInsertGeneratedKey() {
+        return false;
+    }
+
+    @Override
     public String tableFormat(String name) {
         return name;
     }
@@ -23,12 +28,7 @@ public class DbPhoenixDialect extends DbDialectBase{
     }
 
     @Override
-    public String insertCmd() {
-        return "UPSERT INTO";
-    }
-
-    @Override
-    public boolean supportsInsertGeneratedKey() {
-        return false;
+    public void insertCmd(StringBuilder sb, String table1) {
+        sb.append("UPSERT INTO ").append(tableFormat(table1));
     }
 }

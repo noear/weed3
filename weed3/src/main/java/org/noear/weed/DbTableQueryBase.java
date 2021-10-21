@@ -354,7 +354,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("UPDATE ").append(_table).append(" SET ");
+        _context.getDialect().updateCmd(sb, _table);
 
         updateItemsBuild0(data, sb, args);
 
@@ -471,7 +471,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         List<Object[]> argList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("UPDATE ").append(_table).append(" SET ");
+        _context.getDialect().updateCmd(sb, _table);
 
         updateItemsBuildByFields0(cols, sb);
 
@@ -503,13 +503,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     public int delete() throws SQLException {
         StringBuilder sb  = new StringBuilder();
 
-        sb.append("DELETE ");
-
-        if(_builder.indexOf(" FROM ")<0){
-            sb.append(" FROM ").append(_table);
-        }else{
-            sb.append(_table);
-        }
+        _context.getDialect().deleteCmd(sb, _table, _builder.indexOf(" FROM ")<0);
 
         _builder.insert(sb.toString());
 

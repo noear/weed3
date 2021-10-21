@@ -39,6 +39,12 @@ public abstract class DbDialectBase implements DbDialect {
         return false;
     }
 
+
+    @Override
+    public boolean supportsInsertGeneratedKey() {
+        return true;
+    }
+
     /**
      * 排除格式化
      */
@@ -96,17 +102,15 @@ public abstract class DbDialectBase implements DbDialect {
         }
     }
 
-    @Override
-    public String insertCmd() {
-        return "INSERT INTO";
-    }
 
     @Override
     public void buildInsertOneCode(DbContext ctx, String table1, SQLBuilder sqlB, Fun1<Boolean, String> isSqlExpr, boolean _usingNull, IDataItem values) {
         List<Object> args = new ArrayList<Object>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(" ").append(insertCmd()).append(" ").append(tableFormat(table1)).append(" (");
+        insertCmd(sb, table1);
+
+        sb.append(" (");
         values.forEach((key, value) -> {
             if (value == null) {
                 if (_usingNull == false) {
@@ -149,8 +153,28 @@ public abstract class DbDialectBase implements DbDialect {
         sqlB.append(sb.toString(), args.toArray());
     }
 
+
     @Override
-    public boolean supportsInsertGeneratedKey() {
-        return true;
+    public void insertCmd(StringBuilder sb, String table1) {
+        sb.append("INSERT INTO ").append(table1).append(" ");
+    }
+
+    @Override
+    public void updateCmd(StringBuilder sb, String table1) {
+        sb.append("UPDATE ").append(table1).append(" SET ");
+    }
+
+    @Override
+    public void deleteCmd(StringBuilder sb, String table1, boolean addFrom) {
+
+        sb.append("DELETE ");
+
+        if (addFrom) {
+            sb.append(" FROM ").append(table1);
+        } else {
+            sb.append(table1);
+        }
+
+        sb.append(" ");
     }
 }
