@@ -16,16 +16,32 @@ public class DbContextMetaData {
     private String schema;
     private String catalog;
     private String productName;
+    private String productVersion;
+    private String url;
 
     private transient Map<String, TableWrap> tableAll = new HashMap<>();
     private transient DbType type = DbType.Unknown;
     private transient DbDialect dialect;
 
     /**
-     * 获取数据产品名
+     * 获取链接字符串
+     * */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * 获取产品名称
      * */
     public String getProductName() {
         return productName;
+    }
+
+    /**
+     * 获取产品版本号
+     * */
+    public String getProductVersion() {
+        return productVersion;
     }
 
     //数据源
@@ -156,11 +172,14 @@ public class DbContextMetaData {
             conn = getMetaConnection();
             DatabaseMetaData md = conn.getMetaData();
 
+
+            url = md.getURL();
             productName = md.getDatabaseProductName();
+            productVersion = md.getDatabaseProductVersion();
 
             if (dialect == null) {
                 //1.
-                setDatabaseType(md.getURL());
+                setDatabaseType(url);
 
                 //2.
                 setSchema(conn);
