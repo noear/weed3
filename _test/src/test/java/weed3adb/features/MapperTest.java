@@ -159,27 +159,4 @@ public class MapperTest {
         System.out.println("m15: " + m15);
         assert m15.size() == 5;
     }
-
-    @Test
-    public void test_update() {
-        AppxModel app = new AppxModel();
-        app.note = "test";
-
-        AppxModel appOld = mapper.selectById(40);
-        if (appOld.note == null) {
-            appOld.note = "";
-        }
-        System.out.println(appOld.note);
-
-        mapper.update(app, true, wq -> wq.whereEq(AppxModel::getApp_id, 40));
-
-
-        assert mapper.selectById(40).note.equals("test");
-
-        app.note = appOld.note;
-        mapper.update(app, true, wq -> wq.whereEq(AppxModel::getApp_id, 40));
-
-        assert mapper.selectById(40).note.equals(appOld.note);
-
-    }
 }
