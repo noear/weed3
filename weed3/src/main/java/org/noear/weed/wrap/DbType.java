@@ -17,6 +17,7 @@ public enum DbType {
     H2,
     Phoenix,
     ClickHouse,
+    Presto,
 
     /*
     Unknown(DatabaseType.Unknown, "Unknown", "Unknown", 0),

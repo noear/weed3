@@ -101,6 +101,12 @@
             </dependency>
 
             <dependency>
+                <groupId>io.prestosql</groupId>
+                <artifactId>presto-jdbc</artifactId>
+                <version>350</version>
+            </dependency>
+
+            <dependency>
                 <groupId>net.spy</groupId>
                 <artifactId>spymemcached</artifactId>
                 <version>2.12.3</version>

@@ -238,6 +238,9 @@ public class DbContextMetaData {
             } else if (pn.startsWith("jdbc:clickhouse:")) {
                 type = DbType.ClickHouse;
                 dialect = new DbClickHouseDialect();
+            } else if (pn.startsWith("jdbc:presto:")) {
+                type = DbType.Presto;
+                dialect = new DbPrestoDialect();
             } else {
                 //做为默认
                 dialect = new DbMySQLDialect();

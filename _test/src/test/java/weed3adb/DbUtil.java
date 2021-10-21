@@ -23,6 +23,18 @@ public class DbUtil {
         return ds;
     }
 
+    private final static HikariDataSource dbPrestoCfg() {
+        HikariDataSource ds = new HikariDataSource();
+
+        ds.setSchema("rock");
+        ds.setJdbcUrl("jdbc:presto://localhost:8123/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        //ds.setUsername("root");
+        //ds.setPassword("123456");
+        ds.setDriverClassName("io.prestosql.jdbc.PrestoDriver");
+
+        return ds;
+    }
+
 
     public static DbContext getDb() {
         //
