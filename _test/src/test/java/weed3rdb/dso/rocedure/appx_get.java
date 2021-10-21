@@ -11,7 +11,7 @@ public class appx_get extends DbQueryProcedure {
             if(context.getType() == DbType.Oracle){
                 sql("select * from \"$\".\"APPX\" where \"app_id\"=@{id}");
             }else{
-                sql("select * from $.appx where app_id=@{id}");
+                sql("select * from appx where app_id=@{id}");
             }
 
 
