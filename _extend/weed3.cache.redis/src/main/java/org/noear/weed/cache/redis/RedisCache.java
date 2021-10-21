@@ -1,8 +1,10 @@
 package org.noear.weed.cache.redis;
 
+import org.noear.redisx.RedisClient;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.ISerializer;
 import org.noear.weed.utils.EncryptUtils;
+import org.noear.weed.utils.StringUtils;
 
 import java.util.Properties;
 
@@ -10,11 +12,11 @@ public class RedisCache implements ICacheServiceEx {
     private String _cacheKeyHead;
     private int _defaultSeconds;
 
-    private RedisX _cache = null;
+    private RedisClient _cache = null;
     private ISerializer<String> _serializer = null;
 
     public RedisCache serializer(ISerializer<String> serializer) {
-        if(serializer != null) {
+        if (serializer != null) {
             this._serializer = serializer;
         }
 
@@ -33,7 +35,7 @@ public class RedisCache implements ICacheServiceEx {
         String maxTotaol_str = prop.getProperty("maxTotaol");
 
         if (defSeconds == 0) {
-            if(TextUtils.isEmpty(defSeconds_str) == false){
+            if (StringUtils.isEmpty(defSeconds_str) == false) {
                 defSeconds = Integer.parseInt(defSeconds_str);
             }
         }
@@ -41,11 +43,11 @@ public class RedisCache implements ICacheServiceEx {
         int db = 1;
         int maxTotaol = 200;
 
-        if (TextUtils.isEmpty(db_str) == false) {
+        if (StringUtils.isEmpty(db_str) == false) {
             db = Integer.parseInt(db_str);
         }
 
-        if (TextUtils.isEmpty(maxTotaol_str) == false) {
+        if (StringUtils.isEmpty(maxTotaol_str) == false) {
             maxTotaol = Integer.parseInt(maxTotaol_str);
         }
 
@@ -77,7 +79,7 @@ public class RedisCache implements ICacheServiceEx {
             _defaultSeconds = 30;
         }
 
-        _cache = new RedisX(server, password, db, maxTotaol);
+        _cache = new RedisClient(server, "", password, db, maxTotaol);
         _serializer = serializer;
     }
 
@@ -87,7 +89,7 @@ public class RedisCache implements ICacheServiceEx {
             String newKey = newKey(key);
             try {
                 String val = _serializer.serialize(obj);
-                _cache.open0((ru) -> ru.key(newKey).expire(seconds).set(val));
+                _cache.open((ru) -> ru.key(newKey).expire(seconds).set(val));
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -100,7 +102,7 @@ public class RedisCache implements ICacheServiceEx {
     public Object get(String key) {
         if (_cache != null) {
             String newKey = newKey(key);
-            String val = _cache.open1((ru) -> ru.key(newKey).get());
+            String val = _cache.openAndGet((ru) -> ru.key(newKey).get());
             try {
                 return _serializer.deserialize(val);
             } catch (Exception ex) {
@@ -116,7 +118,7 @@ public class RedisCache implements ICacheServiceEx {
     public void remove(String key) {
         if (_cache != null) {
             String newKey = newKey(key);
-            _cache.open0((ru) -> {
+            _cache.open((ru) -> {
                 ru.key(newKey).delete();
             });
         }

@@ -1,5 +1,6 @@
 package org.noear.weed.cache.redis;
 
+import org.noear.redisx.utils.SerializationUtil;
 import org.noear.weed.cache.ISerializer;
 
 import java.util.Base64;
@@ -21,7 +22,7 @@ public class JavabinSerializer implements ISerializer<String> {
             return null;
         }
 
-        byte[] tmp = SerializationUtils.serialize(obj);
+        byte[] tmp = SerializationUtil.serialize(obj);
         return Base64.getEncoder().encodeToString(tmp);
     }
 
@@ -32,6 +33,6 @@ public class JavabinSerializer implements ISerializer<String> {
         }
 
         byte[] bytes = Base64.getDecoder().decode(dta);
-        return SerializationUtils.deserialize(bytes);
+        return SerializationUtil.deserialize(bytes);
     }
 }
