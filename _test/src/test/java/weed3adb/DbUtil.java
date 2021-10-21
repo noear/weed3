@@ -3,27 +3,25 @@ package weed3adb;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.Utils;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbDataSource;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 
 public class DbUtil {
 
-    private final static HikariDataSource dbClickHouseCfg() {
-        HikariDataSource ds = new HikariDataSource();
+    private final static DataSource dbClickHouseCfg() {
+        DbDataSource ds = new DbDataSource("jdbc:clickhouse://localhost:8123/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
 
-        ds.setSchema("rock");
-        ds.setJdbcUrl("jdbc:clickhouse://localhost:8123/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-        //ds.setUsername("root");
-        //ds.setPassword("123456");
         ds.setDriverClassName("ru.yandex.clickhouse.ClickHouseDriver");
 
         return ds;
     }
 
-    private final static HikariDataSource dbPrestoCfg() {
+    private final static DataSource dbPrestoCfg() {
         HikariDataSource ds = new HikariDataSource();
 
         ds.setSchema("rock");
@@ -51,7 +49,7 @@ public class DbUtil {
             }
         });
 
-        HikariDataSource source = dbClickHouseCfg();
+        DataSource source = dbClickHouseCfg();
 
         DbContext db = new DbContext(source).nameSet("rock");
         //WeedConfig.isUsingSchemaPrefix =true;
