@@ -153,4 +153,15 @@ public class EsTest {
 
         assert result.getSize() == 10;
     }
+
+    @Test
+    public void test8() throws Exception {
+
+        Page<LogDo> result = context.table(indice)
+                .whereLk("tag", "list1")
+                .limit(0, 10)
+                .select(LogDo.class);
+
+        assert result.getSize() == 10;
+    }
 }
