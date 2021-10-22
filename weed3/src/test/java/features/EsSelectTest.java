@@ -154,11 +154,11 @@ public class EsSelectTest {
         Page<LogDo> result = context.table(indice)
                 .where(c -> c.term("tag", "list1"))
                 .limit(0, 10)
-                .orderByDesc("log_id")
-                .andByAsc("level")
+                .orderByDesc("level")
+                .andByAsc("log_id")
                 .select( LogDo.class);
 
         assert result.getListSize() == 10;
-        assert result.getList().get(0).log_id > result.getList().get(1).log_id;
+        assert result.getList().get(0).log_id < result.getList().get(1).log_id;
     }
 }
