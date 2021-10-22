@@ -24,6 +24,13 @@ public class EsSelectTest {
 
 
     @Test
+    public void test1() throws Exception {
+        LogDo logDo = context.table(indice).selectById("1", LogDo.class);
+        assert logDo != null;
+        assert logDo.log_id == 1;
+    }
+
+    @Test
     public void test10() throws Exception {
 
         Page<LogDo> result = context.table(indice)
@@ -43,6 +50,7 @@ public class EsSelectTest {
                 .select(LogDo.class);
 
         assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id > 0;
     }
 
     @Test
@@ -54,6 +62,7 @@ public class EsSelectTest {
                 .select(LogDo.class);
 
         assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id > 0;
     }
 
     @Test
@@ -65,6 +74,7 @@ public class EsSelectTest {
                 .select(LogDo.class);
 
         assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id > 0;
     }
 
     @Test
@@ -74,13 +84,40 @@ public class EsSelectTest {
                 .where(c -> c.must()
                         .match("tag", "list1")
                         .term("level", 3)
-                        .add(c1->c1.mustNot()
-                                .matchPrefix("summary","${")
-                                .matchPrefix("summary","#{")))
+                        .add(c1 -> c1.mustNot()
+                                .matchPrefix("summary", "${")
+                                .matchPrefix("summary", "#{")))
                 .limit(0, 10)
                 .select(LogDo.class);
 
+        System.out.println(result);
         assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id > 0;
     }
 
+    @Test
+    public void test30() throws Exception {
+        //输出字段控制（选择模式）
+        Page<LogDo> result = context.table(indice)
+                .where(c -> c.term("tag", "list1"))
+                .limit(0, 10)
+                .select("log_id,trace_id", LogDo.class);
+
+        System.out.println(result);
+        assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id > 0;
+    }
+
+    @Test
+    public void test31() throws Exception {
+        //输出字段控制（排除模式）
+        Page<LogDo> result = context.table(indice)
+                .where(c -> c.term("tag", "list1"))
+                .limit(0, 10)
+                .select("!log_id,trace_id", LogDo.class);
+
+        System.out.println(result);
+        assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id == 0;
+    }
 }

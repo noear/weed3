@@ -71,6 +71,25 @@ public class EsTest {
 
 
         context.table(indice).upsert(Utils.guid(), logDo);
+
+
+        /////////////
+
+         logDo = new LogDo();
+        logDo.logger = "waterapi";
+        logDo.log_id = 1;
+        logDo.trace_id = Utils.guid();
+        logDo.class_name = this.getClass().getName();
+        logDo.thread_name = Thread.currentThread().getName();
+        logDo.tag = "test1";
+        logDo.level = 2;
+        logDo.content = json;
+        logDo.log_date = LocalDateTime.now().toLocalDate().getDayOfYear();
+        logDo.log_fulltime = new Date();
+
+
+        context.table(indice).upsert("1", logDo);
+
     }
 
     @Test

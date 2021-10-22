@@ -2,8 +2,10 @@ package org.noear.weed.elasticsearch;
 
 import org.noear.snack.ONode;
 import org.noear.weed.model.Page;
+import org.noear.weed.utils.StringUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -156,7 +158,10 @@ public class EsTableQuery {
     public <T> T selectById(String docId, Class<?> clz) throws IOException {
         String tmp = getHttp(String.format("/%s/_doc/%s", table, docId)).get();
 
-        return ONode.loadStr(tmp).toObject(clz);
+        ONode oItem = ONode.loadStr(tmp);
+        oItem.setAll(oItem.get("_source"));
+
+        return oItem.toObject(clz);
     }
 
     //
@@ -197,10 +202,10 @@ public class EsTableQuery {
 
     //
     public <T> Page<T> select(Class<T> clz) throws IOException {
-        return select(clz, null);
+        return select(null, clz);
     }
 
-    public <T> Page<T> select(Class<T> clz, Consumer<EsSource> source) throws IOException {
+    public <T> Page<T> select(String fields, Class<T> clz) throws IOException {
         if (queryMatch != null) {
             if (queryMatch.count() > 1) {
                 getDslq().getOrNew("query").set("multi_match", queryMatch);
@@ -209,9 +214,13 @@ public class EsTableQuery {
             }
         }
 
-        if (source != null) {
+        if (StringUtils.isNotEmpty(fields)) {
             EsSource s = new EsSource();
-            source.accept(s);
+            if (fields.startsWith("!")) {
+                s.excludes(fields.substring(1).split(","));
+            } else {
+                s.includes(fields.split(","));
+            }
             getDslq().set("_source", s.oNode);
         }
 
@@ -221,6 +230,13 @@ public class EsTableQuery {
         ONode oHits = ONode.loadStr(json).get("hits");
 
         long total = oHits.get("total").get("value").getLong();
+
+        if (StringUtils.isNotEmpty(fields)) {
+            oHits.get("hits").forEach(n -> {
+                n.setAll(n.get("_source"));
+            });
+        }
+
         List<T> list = oHits.get("hits").toObjectList(clz);
 
         return new Page<>(total, list);
