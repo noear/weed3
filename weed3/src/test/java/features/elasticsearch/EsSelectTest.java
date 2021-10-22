@@ -1,6 +1,6 @@
-package features;
+package features.elasticsearch;
 
-import features.model.LogDo;
+import features.elasticsearch.model.LogDo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.noear.solon.test.SolonJUnit4ClassRunner;

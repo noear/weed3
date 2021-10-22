@@ -1,4 +1,4 @@
-package features.model;
+package features.elasticsearch.model;
 
 import java.util.Date;
 
