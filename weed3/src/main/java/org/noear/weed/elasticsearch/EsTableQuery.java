@@ -18,7 +18,7 @@ public class EsTableQuery {
     private final String table;
 
     private ONode query;
-    private ONode queryWhere;
+    private ONode queryMatch;
     private ONode item;
 
     protected EsTableQuery(EsContext context, String table) {
@@ -38,9 +38,9 @@ public class EsTableQuery {
         return query;
     }
 
-    private ONode getQueryWhere() {
-        if (queryWhere == null) {
-            queryWhere = new ONode().asObject();
+    private ONode getQueryMatch() {
+        if (queryMatch == null) {
+            queryMatch = new ONode().asObject();
         }
 
         return query;
@@ -84,7 +84,7 @@ public class EsTableQuery {
 
     /**
      * 插入
-     * */
+     */
     public String insert() throws IOException {
         return insertDo(item);
     }
@@ -118,7 +118,7 @@ public class EsTableQuery {
         return upsertDo(docId, ONode.loadObj(doc));
     }
 
-    public <T> String upsertList(Map<String,T> docs) throws IOException {
+    public <T> String upsertList(Map<String, T> docs) throws IOException {
         StringBuilder docJson = new StringBuilder();
         docs.forEach((docId, doc) -> {
             docJson.append(new ONode().build(n -> n.getOrNew("index").set("_id", docId)).toJson()).append("\n");
@@ -159,13 +159,23 @@ public class EsTableQuery {
     // select
     //
 
-    public EsTableQuery where(String field, Object value) {
-        getQueryWhere().set(field, value);
+    public EsTableQuery whereEq(String field, Object value) {
+        getQuery().getOrNew("term").set(field, value);
         return this;
     }
 
-    public EsTableQuery and(String field, Object value) {
-        getQueryWhere().set(field, value);
+    public EsTableQuery whereLk(String field, Object value) {
+        getQueryMatch().set(field, value);
+        return this;
+    }
+
+    public EsTableQuery andEq(String field, Object value) {
+        getQuery().getOrNew("term").set(field, value);
+        return this;
+    }
+
+    public EsTableQuery andLk(String field, Object value) {
+        getQueryMatch().set(field, value);
         return this;
     }
 
@@ -197,11 +207,11 @@ public class EsTableQuery {
 
 
     public <T> Page<T> select(Class<T> clz) throws IOException {
-        if (queryWhere != null) {
-            if (queryWhere.count() > 1) {
-                getQuery().set("multi_match", queryWhere);
+        if (queryMatch != null) {
+            if (queryMatch.count() > 1) {
+                getQuery().set("multi_match", queryMatch);
             } else {
-                getQuery().set("match", queryWhere);
+                getQuery().set("match", queryMatch);
             }
         }
 
