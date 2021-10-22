@@ -1,4 +1,4 @@
-package features.elasticsearch;
+package features.utils;
 
 public class SnowflakeUtils {
     /**

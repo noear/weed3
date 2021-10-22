@@ -1,6 +1,7 @@
 package features.elasticsearch;
 
 import features.elasticsearch.model.LogDo;
+import features.utils.SnowflakeUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.noear.solon.Utils;
