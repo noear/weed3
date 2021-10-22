@@ -3,6 +3,7 @@ package org.noear.weed.elasticsearch;
 import org.noear.snack.ONode;
 import org.noear.weed.WeedException;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 /**
@@ -55,6 +56,16 @@ public class EsCondition {
         }
         return this;
     }
+
+    public EsCondition terms(String field, Object... values) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values));
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values))));
+        }
+        return this;
+    }
+
 
     public EsCondition add(Consumer<EsCondition> condition) {
         EsCondition c = new EsCondition();
