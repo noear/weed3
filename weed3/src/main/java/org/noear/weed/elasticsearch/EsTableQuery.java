@@ -5,8 +5,6 @@ import org.noear.weed.model.Page;
 import org.noear.weed.utils.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -231,11 +229,9 @@ public class EsTableQuery {
 
         long total = oHits.get("total").get("value").getLong();
 
-        if (StringUtils.isNotEmpty(fields)) {
-            oHits.get("hits").forEach(n -> {
-                n.setAll(n.get("_source"));
-            });
-        }
+        oHits.get("hits").forEach(n -> {
+            n.setAll(n.get("_source"));
+        });
 
         List<T> list = oHits.get("hits").toObjectList(clz);
 
