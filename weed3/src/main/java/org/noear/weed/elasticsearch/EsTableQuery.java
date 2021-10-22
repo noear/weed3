@@ -17,7 +17,7 @@ public class EsTableQuery {
     private final EsContext context;
     private final String table;
 
-    private ONode query;
+    private ONode dslq;
     private ONode queryMatch;
     private ONode item;
 
@@ -30,12 +30,12 @@ public class EsTableQuery {
         return context.getHttp(path);
     }
 
-    private ONode getQuery() {
-        if (query == null) {
-            query = new ONode().asObject();
+    private ONode getDslq() {
+        if (dslq == null) {
+            dslq = new ONode().asObject();
         }
 
-        return query;
+        return dslq;
     }
 
     private ONode getQueryMatch() {
@@ -43,7 +43,7 @@ public class EsTableQuery {
             queryMatch = new ONode().asObject();
         }
 
-        return query;
+        return queryMatch;
     }
 
 
@@ -160,7 +160,7 @@ public class EsTableQuery {
     //
 
     public EsTableQuery whereEq(String field, Object value) {
-        getQuery().getOrNew("term").set(field, value);
+        getDslq().getOrNew("query").getOrNew("term").set(field, value);
         return this;
     }
 
@@ -170,7 +170,7 @@ public class EsTableQuery {
     }
 
     public EsTableQuery andEq(String field, Object value) {
-        getQuery().getOrNew("term").set(field, value);
+        getDslq().getOrNew("query").getOrNew("term").set(field, value);
         return this;
     }
 
@@ -180,28 +180,28 @@ public class EsTableQuery {
     }
 
     public EsTableQuery limit(int start, int size) {
-        getQuery().set("from", start);
-        getQuery().set("size", size);
+        getDslq().set("from", start);
+        getDslq().set("size", size);
         return this;
     }
 
     public EsTableQuery orderByAsc(String field) {
-        getQuery().getOrNew("sort").getOrNew(field).set("order", "asc");
+        getDslq().getOrNew("sort").getOrNew(field).set("order", "asc");
         return this;
     }
 
     public EsTableQuery orderByDesc(String field) {
-        getQuery().getOrNew("sort").getOrNew(field).set("order", "desc");
+        getDslq().getOrNew("sort").getOrNew(field).set("order", "desc");
         return this;
     }
 
     public EsTableQuery andByAsc(String field) {
-        getQuery().getOrNew("sort").getOrNew(field).set("order", "asc");
+        getDslq().getOrNew("sort").getOrNew(field).set("order", "asc");
         return this;
     }
 
     public EsTableQuery andByDesc(String field) {
-        getQuery().getOrNew("sort").getOrNew(field).set("order", "desc");
+        getDslq().getOrNew("sort").getOrNew(field).set("order", "desc");
         return this;
     }
 
@@ -209,13 +209,13 @@ public class EsTableQuery {
     public <T> Page<T> select(Class<T> clz) throws IOException {
         if (queryMatch != null) {
             if (queryMatch.count() > 1) {
-                getQuery().set("multi_match", queryMatch);
+                getDslq().getOrNew("query").set("multi_match", queryMatch);
             } else {
-                getQuery().set("match", queryMatch);
+                getDslq().getOrNew("query").set("match", queryMatch);
             }
         }
 
-        String dsl = getQuery().toJson();
+        String dsl = getDslq().toJson();
         String json = getHttp(String.format("/%s/_search", table)).bodyTxt(dsl, mime_json).post();
 
         ONode oHits = ONode.loadStr(json).get("hits");
