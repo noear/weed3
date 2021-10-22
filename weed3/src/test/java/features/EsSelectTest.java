@@ -25,7 +25,7 @@ public class EsSelectTest {
     public void test10() throws Exception {
 
         Page<LogDo> result = context.table(indice)
-                .whereEq("tag", "list1")
+                .where(c -> c.term("tag", "list1"))
                 .limit(0, 10)
                 .select(LogDo.class);
 
@@ -36,8 +36,8 @@ public class EsSelectTest {
     public void test11() throws Exception {
 
         Page<LogDo> result = context.table(indice)
-                .whereEq("tag", "list1")
-                .andEq("level", 3)
+                .where(c -> c.must().term("tag", "list1")
+                        .term("level", 3))
                 .limit(0, 10)
                 .select(LogDo.class);
 
@@ -48,7 +48,7 @@ public class EsSelectTest {
     public void test20() throws Exception {
 
         Page<LogDo> result = context.table(indice)
-                .whereLk("tag", "list1")
+                .where(c -> c.match("tag", "list1"))
                 .limit(0, 10)
                 .select(LogDo.class);
 
@@ -59,8 +59,7 @@ public class EsSelectTest {
     public void test21() throws Exception {
 
         Page<LogDo> result = context.table(indice)
-                .whereLk("tag", "list1")
-                .andEq("level", 3)
+                .where(c -> c.must().match("tag", "list1").term("level", 3))
                 .limit(0, 10)
                 .select(LogDo.class);
 
