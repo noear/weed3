@@ -66,11 +66,20 @@ public class EsCondition {
         return this;
     }
 
-    public EsCondition terms(String field, Object... values) {
+    public EsCondition termsIn(String field, Object... values) {
         if (oNodeArray == null) {
             oNode.getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values));
         } else {
             oNodeArray.add(new ONode().build(n -> n.getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values))));
+        }
+        return this;
+    }
+
+    public EsCondition termsLike(String field, Object... values) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("constant_score").getOrNew("filter").getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values));
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("constant_score").getOrNew("filter").getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values))));
         }
         return this;
     }
@@ -105,6 +114,7 @@ public class EsCondition {
         return this;
     }
     //todo: https://www.cnblogs.com/juncaoit/p/12664109.html
+    //todo: https://www.jianshu.com/p/2abd2e344dcb
 
 
     public EsCondition add(Consumer<EsCondition> condition) {
