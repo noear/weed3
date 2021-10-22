@@ -103,9 +103,9 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .select("log_id,trace_id", LogDo.class);
 
-        System.out.println(result);
         assert result.getListSize() == 10;
         assert result.getList().get(0).log_id > 0;
+        assert result.getList().get(0).tag == null;
     }
 
     @Test
@@ -116,8 +116,8 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .select("!log_id,trace_id", LogDo.class);
 
-        System.out.println(result);
         assert result.getListSize() == 10;
         assert result.getList().get(0).log_id == 0;
+        assert result.getList().get(0).tag != null;
     }
 }
