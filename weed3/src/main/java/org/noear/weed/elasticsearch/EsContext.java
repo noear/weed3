@@ -67,6 +67,14 @@ public class EsContext {
         return http;
     }
 
+    public String exec(String method, String path, String dsl) throws IOException {
+        if (StringUtils.isEmpty(dsl)) {
+            return getHttp(path).exec2(method);
+        } else {
+            return getHttp(path).bodyTxt(dsl, EsTableQuery.mime_json).exec2(method);
+        }
+    }
+
     /**
      * 获取表操作
      */
