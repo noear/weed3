@@ -48,6 +48,15 @@ public class EsCondition {
         return this;
     }
 
+    public EsCondition ids(String field, Object... values) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("ids").getOrNew(field).addAll(Arrays.asList(values));
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("ids").getOrNew(field).addAll(Arrays.asList(values))));
+        }
+        return this;
+    }
+
     public EsCondition term(String field, Object value) {
         if (oNodeArray == null) {
             oNode.getOrNew("term").set(field, value);
@@ -65,6 +74,37 @@ public class EsCondition {
         }
         return this;
     }
+
+    public EsCondition prefix(String field, String value) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("prefix").set(field, value);
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("prefix").set(field, value)));
+        }
+        return this;
+    }
+
+    /**
+     * @param value *表示任意字符，?表示任意单个字符(
+     * */
+    public EsCondition wildcard(String field, String value) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("wildcard").set(field, value);
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("wildcard").set(field, value)));
+        }
+        return this;
+    }
+
+    public EsCondition regexp(String field, String value) {
+        if (oNodeArray == null) {
+            oNode.getOrNew("regexp").set(field, value);
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("regexp").set(field, value)));
+        }
+        return this;
+    }
+    //todo: https://www.cnblogs.com/juncaoit/p/12664109.html
 
 
     public EsCondition add(Consumer<EsCondition> condition) {
