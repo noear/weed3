@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.noear.solon.test.SolonJUnit4ClassRunner;
 import org.noear.weed.elasticsearch.EsContext;
+import org.noear.weed.model.Page;
 
 /**
  * ElasticSearch 测试
@@ -139,7 +140,7 @@ public class EsSelectTest {
                 .where(c -> c.term("tag", "list1"))
                 .limit(0, 10)
                 .orderByAsc("log_id")
-                .select( LogDo.class);
+                .select(LogDo.class);
 
         assert result.getListSize() == 10;
         assert result.getList().get(0).log_id < result.getList().get(1).log_id;
@@ -152,7 +153,7 @@ public class EsSelectTest {
                 .where(c -> c.term("tag", "list1"))
                 .limit(0, 10)
                 .orderByDesc("log_id")
-                .select( LogDo.class);
+                .select(LogDo.class);
 
         assert result.getListSize() == 10;
         assert result.getList().get(0).log_id > result.getList().get(1).log_id;
@@ -166,9 +167,26 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .orderByDesc("level")
                 .andByAsc("log_id")
-                .select( LogDo.class);
+                .select(LogDo.class);
 
         assert result.getListSize() == 10;
+        assert result.getList().get(0).log_id < result.getList().get(1).log_id;
+    }
+
+    @Test
+    public void test50() throws Exception {
+        //输出字段控制（选择模式）
+        Page<LogDo> result = context.table(indice)
+                .where(c -> c.must()
+                        .term("tag", "list1")
+                        .range("level", r -> r.gt(3)))
+                .limit(0, 10)
+                .orderByAsc("level")
+                .andByAsc("log_id")
+                .select(LogDo.class);
+
+        assert result.getListSize() == 10;
+        assert result.getList().get(0).level >= 3;
         assert result.getList().get(0).log_id < result.getList().get(1).log_id;
     }
 }
