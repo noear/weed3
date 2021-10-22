@@ -115,6 +115,21 @@ public class EsCondition {
         return this;
     }
 
+    /**
+     * constant_score/filter/range
+     * */
+    public EsCondition range(String field, Consumer<EsRange> range) {
+        EsRange r = new EsRange();
+        range.accept(r);
+
+        if (oNodeArray == null) {
+            oNode.getOrNew("constant_score").getOrNew("filter").getOrNew("range").set(field, r.oNode);
+        } else {
+            oNodeArray.add(new ONode().build(n -> n.getOrNew("constant_score").getOrNew("filter").getOrNew("range").set(field, r.oNode)));
+        }
+        return this;
+    }
+
 
     /**
      * prefix
@@ -155,6 +170,8 @@ public class EsCondition {
     }
     //todo: https://www.cnblogs.com/juncaoit/p/12664109.html
     //todo: https://www.jianshu.com/p/2abd2e344dcb
+
+
 
 
     public EsCondition add(Consumer<EsCondition> condition) {

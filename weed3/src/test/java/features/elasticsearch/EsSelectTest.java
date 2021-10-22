@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.noear.solon.test.SolonJUnit4ClassRunner;
 import org.noear.weed.elasticsearch.EsContext;
-import org.noear.weed.model.Page;
 
 /**
  * ElasticSearch 测试
