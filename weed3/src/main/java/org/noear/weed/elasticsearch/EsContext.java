@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * 只支持 7.x +
+ * ElasticSearch 上下文（只支持 7.x +）
  *
  * @author noear
  */

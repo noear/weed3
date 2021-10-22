@@ -14,16 +14,16 @@ public class Page<T> implements Serializable {
         return total;
     }
 
-    public int getSize() {
+    public List<T> getList() {
+        return list;
+    }
+
+    public int getListSize() {
         if (list == null) {
             return 0;
         } else {
             return list.size();
         }
-    }
-
-    public List<T> getList() {
-        return list;
     }
 
     public Page(long total, List<T> list) {

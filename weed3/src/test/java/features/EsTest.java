@@ -6,12 +6,13 @@ import org.junit.runner.RunWith;
 import org.noear.solon.Utils;
 import org.noear.solon.test.SolonJUnit4ClassRunner;
 import org.noear.weed.elasticsearch.EsContext;
-import org.noear.weed.model.Page;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 /**
+ * ElasticSearch 测试
+ *
  * @author noear 2021/10/22 created
  */
 @RunWith(SolonJUnit4ClassRunner.class)

@@ -8,6 +8,8 @@ import org.noear.weed.elasticsearch.EsContext;
 import org.noear.weed.model.Page;
 
 /**
+ * ElasticSearch 测试
+ *
  * @author noear 2021/10/22 created
  */
 
@@ -29,19 +31,18 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .select(LogDo.class);
 
-        assert result.getSize() == 10;
+        assert result.getListSize() == 10;
     }
 
     @Test
     public void test11() throws Exception {
 
         Page<LogDo> result = context.table(indice)
-                .where(c -> c.must().term("tag", "list1")
-                        .term("level", 3))
+                .where(c -> c.must().term("tag", "list1").term("level", 3))
                 .limit(0, 10)
                 .select(LogDo.class);
 
-        assert result.getSize() == 10;
+        assert result.getListSize() == 10;
     }
 
     @Test
@@ -52,7 +53,7 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .select(LogDo.class);
 
-        assert result.getSize() == 10;
+        assert result.getListSize() == 10;
     }
 
     @Test
@@ -63,6 +64,23 @@ public class EsSelectTest {
                 .limit(0, 10)
                 .select(LogDo.class);
 
-        assert result.getSize() == 10;
+        assert result.getListSize() == 10;
     }
+
+    @Test
+    public void test22() throws Exception {
+
+        Page<LogDo> result = context.table(indice)
+                .where(c -> c.must()
+                        .match("tag", "list1")
+                        .term("level", 3)
+                        .add(c1->c1.mustNot()
+                                .matchPrefix("summary","${")
+                                .matchPrefix("summary","#{")))
+                .limit(0, 10)
+                .select(LogDo.class);
+
+        assert result.getListSize() == 10;
+    }
+
 }

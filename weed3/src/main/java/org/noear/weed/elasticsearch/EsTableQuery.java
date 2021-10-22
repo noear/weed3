@@ -4,12 +4,14 @@ import org.noear.snack.ONode;
 import org.noear.weed.model.Page;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
+ * ElasticSearch 查询器
+ *
  * @author noear 2021/10/22 created
  */
 public class EsTableQuery {
@@ -193,14 +195,24 @@ public class EsTableQuery {
         return this;
     }
 
-
+    //
     public <T> Page<T> select(Class<T> clz) throws IOException {
+        return select(clz, null);
+    }
+
+    public <T> Page<T> select(Class<T> clz, Consumer<EsSource> source) throws IOException {
         if (queryMatch != null) {
             if (queryMatch.count() > 1) {
                 getDslq().getOrNew("query").set("multi_match", queryMatch);
             } else {
                 getDslq().getOrNew("query").set("match", queryMatch);
             }
+        }
+
+        if (source != null) {
+            EsSource s = new EsSource();
+            source.accept(s);
+            getDslq().set("_source", s.oNode);
         }
 
         String dsl = getDslq().toJson();

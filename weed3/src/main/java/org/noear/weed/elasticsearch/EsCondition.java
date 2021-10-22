@@ -6,6 +6,8 @@ import org.noear.weed.WeedException;
 import java.util.function.Consumer;
 
 /**
+ * ElasticSearch 条件构建器
+ *
  * @author noear 2021/10/22 created
  */
 public class EsCondition {
