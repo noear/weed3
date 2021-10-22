@@ -186,7 +186,7 @@ public class EsSelectTest {
                 .select(LogDo.class);
 
         assert result.getListSize() == 10;
-        assert result.getList().get(0).level >= 3;
+        assert result.getList().get(0).level > 3;
         assert result.getList().get(0).log_id < result.getList().get(1).log_id;
     }
 }
