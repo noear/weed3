@@ -42,6 +42,17 @@ public class EsSelectTest {
     }
 
     @Test
+    public void test10_2() throws Exception {
+
+        Page<LogDo> result = context.table(indice)
+                .where(c -> c.terms("tag", "list1"))
+                .limit(0, 10)
+                .select(LogDo.class);
+
+        assert result.getListSize() == 10;
+    }
+
+    @Test
     public void test11() throws Exception {
 
         Page<LogDo> result = context.table(indice)
