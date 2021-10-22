@@ -1,5 +1,6 @@
 package features;
 
+import features.model.LogDo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.noear.solon.Utils;
@@ -143,25 +144,4 @@ public class EsTest {
         context.table(indice).insertList(docs);
     }
 
-    @Test
-    public void test7() throws Exception {
-
-        Page<LogDo> result = context.table(indice)
-                .whereEq("tag", "list1")
-                .limit(0, 10)
-                .select(LogDo.class);
-
-        assert result.getSize() == 10;
-    }
-
-    @Test
-    public void test8() throws Exception {
-
-        Page<LogDo> result = context.table(indice)
-                .whereLk("tag", "list1")
-                .limit(0, 10)
-                .select(LogDo.class);
-
-        assert result.getSize() == 10;
-    }
 }

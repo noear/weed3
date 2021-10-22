@@ -1,4 +1,4 @@
-package features;
+package features.model;
 
 import java.util.Date;
 

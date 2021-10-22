@@ -160,22 +160,64 @@ public class EsTableQuery {
     //
 
     public EsTableQuery whereEq(String field, Object value) {
-        getDslq().getOrNew("query").getOrNew("term").set(field, value);
+        ONode oNode = new ONode().build(n-> n.getOrNew("term").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
         return this;
     }
 
     public EsTableQuery whereLk(String field, Object value) {
-        getQueryMatch().set(field, value);
+        ONode oNode = new ONode().build(n-> n.getOrNew("match").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
+
+        return this;
+    }
+
+    public EsTableQuery whereLkl(String field, Object value) {
+        ONode oNode = new ONode().build(n-> n.getOrNew("match_phrase_prefix").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
+
         return this;
     }
 
     public EsTableQuery andEq(String field, Object value) {
-        getDslq().getOrNew("query").getOrNew("term").set(field, value);
+        ONode oNode = new ONode().build(n-> n.getOrNew("term").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
         return this;
     }
 
     public EsTableQuery andLk(String field, Object value) {
-        getQueryMatch().set(field, value);
+        ONode oNode = new ONode().build(n-> n.getOrNew("match").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
+        return this;
+    }
+
+    public EsTableQuery andLkl(String field, Object value) {
+        ONode oNode = new ONode().build(n-> n.getOrNew("match_phrase_prefix").set(field, value));
+
+        getDslq().getOrNew("query")
+                .getOrNew("bool")
+                .getOrNew("must")
+                .add(oNode);
         return this;
     }
 
@@ -226,3 +268,9 @@ public class EsTableQuery {
         return new Page<>(total, list);
     }
 }
+/**
+ * filter:过滤，不参与打分
+ * must:如果有多个条件，这些条件都必须满足 and与
+ * should:如果有多个条件，满足一个或多个即可 or或
+ * must_not:和must相反，必须都不满足条件才可以匹配到 ！非
+ * */
