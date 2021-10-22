@@ -15,21 +15,33 @@ public class EsCondition {
     protected final ONode oNode = new ONode();
     ONode oNodeArray;
 
+    /**
+     * bool/must
+     * */
     public EsCondition must() {
         oNodeArray = oNode.getOrNew("bool").getOrNew("must").asArray();
         return this;
     }
 
+    /**
+     * bool/should
+     * */
     public EsCondition should() {
         oNodeArray = oNode.getOrNew("bool").getOrNew("should").asArray();
         return this;
     }
 
+    /**
+     * bool/mustNot
+     * */
     public EsCondition mustNot() {
         oNodeArray = oNode.getOrNew("bool").getOrNew("must_not").asArray();
         return this;
     }
 
+    /**
+     * match
+     * */
     public EsCondition match(String field, Object value) {
         if (oNodeArray == null) {
             oNode.getOrNew("match").set(field, value);
@@ -39,6 +51,10 @@ public class EsCondition {
         return this;
     }
 
+
+    /**
+     * match_phrase_prefix
+     * */
     public EsCondition matchPrefix(String field, Object value) {
         if (oNodeArray == null) {
             oNode.getOrNew("match_phrase_prefix").set(field, value);
@@ -48,6 +64,10 @@ public class EsCondition {
         return this;
     }
 
+
+    /**
+     * ids
+     * */
     public EsCondition ids(String field, Object... values) {
         if (oNodeArray == null) {
             oNode.getOrNew("ids").getOrNew(field).addAll(Arrays.asList(values));
@@ -57,6 +77,10 @@ public class EsCondition {
         return this;
     }
 
+
+    /**
+     * term
+     * */
     public EsCondition term(String field, Object value) {
         if (oNodeArray == null) {
             oNode.getOrNew("term").set(field, value);
@@ -66,6 +90,10 @@ public class EsCondition {
         return this;
     }
 
+
+    /**
+     * terms
+     * */
     public EsCondition termsIn(String field, Object... values) {
         if (oNodeArray == null) {
             oNode.getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values));
@@ -75,6 +103,9 @@ public class EsCondition {
         return this;
     }
 
+    /**
+     * constant_score/filter/terms
+     * */
     public EsCondition termsLike(String field, Object... values) {
         if (oNodeArray == null) {
             oNode.getOrNew("constant_score").getOrNew("filter").getOrNew("terms").getOrNew(field).addAll(Arrays.asList(values));
@@ -84,6 +115,10 @@ public class EsCondition {
         return this;
     }
 
+
+    /**
+     * prefix
+     * */
     public EsCondition prefix(String field, String value) {
         if (oNodeArray == null) {
             oNode.getOrNew("prefix").set(field, value);
@@ -94,6 +129,8 @@ public class EsCondition {
     }
 
     /**
+     * wildcard
+     *
      * @param value *表示任意字符，?表示任意单个字符(
      * */
     public EsCondition wildcard(String field, String value) {
@@ -105,6 +142,9 @@ public class EsCondition {
         return this;
     }
 
+    /**
+     * regexp
+     * */
     public EsCondition regexp(String field, String value) {
         if (oNodeArray == null) {
             oNode.getOrNew("regexp").set(field, value);
