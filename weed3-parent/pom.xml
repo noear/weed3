@@ -35,7 +35,6 @@
         <tag>master</tag>
     </scm>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -86,12 +85,6 @@
                 <groupId>org.noear</groupId>
                 <artifactId>redisx</artifactId>
                 <version>1.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>okhttp</artifactId>
-                <version>3.14.9</version>
             </dependency>
 
             <dependency>
