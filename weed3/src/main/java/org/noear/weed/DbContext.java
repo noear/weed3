@@ -8,6 +8,8 @@ import org.noear.weed.wrap.DbType;
 import org.noear.weed.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
+import java.io.Closeable;
+import java.io.IOException;
 import java.net.URI;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ import java.util.Properties;
  * Created by noear on 14-6-12.
  * 数据库上下文
  */
-public class DbContext {
+public class DbContext implements Closeable {
 
     /**
      * 最后次执行命令 (线程不安全，仅供调试用)
@@ -49,7 +51,7 @@ public class DbContext {
 
     /**
      *
-     * */
+     */
     public boolean isCompilationMode() {
         return compilationMode;
     }
@@ -62,35 +64,35 @@ public class DbContext {
 
     /**
      * 获取元信息
-     * */
-    public DbContextMetaData getMetaData(){
+     */
+    public DbContextMetaData getMetaData() {
         return metaData;
     }
 
     /**
      * 初始化元信息
-     * */
-    public void initMetaData(){
+     */
+    public void initMetaData() {
         getMetaData().init();
     }
 
     /**
      * 获取类型
-     * */
-    public DbType getType(){
+     */
+    public DbType getType() {
         return getMetaData().getType();
     }
 
     /**
      * 获取方言
-     * */
-    public DbDialect getDialect(){
+     */
+    public DbDialect getDialect() {
         return getMetaData().getDialect();
     }
 
     /**
      * 获取链接
-     * */
+     */
     public Connection getConnection() throws SQLException {
         return getMetaData().getConnection();
     }
@@ -395,10 +397,17 @@ public class DbContext {
 
     /**
      * 批量执行
-     * */
+     */
     public int[] exeBatch(String code, List<Object[]> args) throws Exception {
         SQLBuilder sql = new SQLBuilder();
         sql.append(code, args.toArray());
         return sql(sql).executeBatch();
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (metaData != null) {
+            metaData.close();
+        }
     }
 }

@@ -4,6 +4,8 @@ import org.noear.weed.dialect.*;
 import org.noear.weed.wrap.*;
 
 import javax.sql.DataSource;
+import java.io.Closeable;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -12,7 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DbContextMetaData {
+public class DbContextMetaData implements Closeable {
     private String schema;
     private String catalog;
     private String productName;
@@ -25,21 +27,21 @@ public class DbContextMetaData {
 
     /**
      * 获取链接字符串
-     * */
+     */
     public String getUrl() {
         return url;
     }
 
     /**
      * 获取产品名称
-     * */
+     */
     public String getProductName() {
         return productName;
     }
 
     /**
      * 获取产品版本号
-     * */
+     */
     public String getProductVersion() {
         return productVersion;
     }
@@ -139,14 +141,14 @@ public class DbContextMetaData {
 
     /**
      * 刷新
-     * */
+     */
     public synchronized void refresh() {
         initDo();
     }
 
     /**
      * 初始化
-     * */
+     */
     public synchronized void init() {
         if (dialect != null) {
             return;
@@ -329,6 +331,13 @@ public class DbContextMetaData {
                 tWrap.addPk(idName);
             }
             rs.close();
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (dataSource != null && dataSource instanceof Closeable) {
+            ((Closeable) dataSource).close();
         }
     }
 }
