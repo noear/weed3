@@ -14,7 +14,7 @@ import java.io.InputStream;
 public class DbUtil {
 
     private final static DataSource dbClickHouseCfg() {
-        DbDataSource ds = new DbDataSource("jdbc:clickhouse://localhost:8123/rock?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+        DbDataSource ds = new DbDataSource("jdbc:clickhouse://localhost:8123/rock");
 
         ds.setDriverClassName("ru.yandex.clickhouse.ClickHouseDriver");
 
