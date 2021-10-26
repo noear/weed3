@@ -94,12 +94,6 @@
             </dependency>
 
             <dependency>
-                <groupId>ru.yandex.clickhouse</groupId>
-                <artifactId>clickhouse-jdbc</artifactId>
-                <version>0.3.1-patch</version>
-            </dependency>
-
-            <dependency>
                 <groupId>io.prestosql</groupId>
                 <artifactId>presto-jdbc</artifactId>
                 <version>350</version>
