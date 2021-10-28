@@ -31,7 +31,7 @@ public class TableInsertListTest {
         db.table("test").where("1=1").delete();
 
         List<DataItem> items = new ArrayList<>();
-        items.add(new DataItem().set("id",1).set("v1",1));
+        items.add(new DataItem().set("id",1).set("v1",1).set("v2", null));
         items.add(new DataItem().set("id",2).set("v1",2));
         items.add(new DataItem().set("id",3).set("v1",3));
 

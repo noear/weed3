@@ -11,6 +11,7 @@ public class TestModel {
     @PrimaryKey
     public Long id;
     public Integer v1;
+    public Integer v2;
 
     public TestModel(){}
 
