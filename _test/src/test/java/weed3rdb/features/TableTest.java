@@ -34,10 +34,9 @@ public class TableTest {
         map.remove("app_id");
 
 
-
         assert db.table("appx_copy")
                 .setMap(map)
-                .whereEq("app_id",11)
+                .whereEq("app_id", 11)
                 .update() > 0;
 
         System.out.println(db.lastCommand.text);
@@ -51,7 +50,7 @@ public class TableTest {
 
         assert db.table("appx_copy")
                 .setMap(map)
-                .whereEq("app_id",11).orEq("agroup_id",null)
+                .whereEq("app_id", 11).orEq("agroup_id", null)
                 .update() > 0;
 
         System.out.println(db.lastCommand.text);
@@ -103,14 +102,23 @@ public class TableTest {
         assert db.table("test")
                 .whereEq("id", id)
                 .select("v1")
-                .getVariate().longValue(0l)== 10;
+                .getVariate().longValue(0l) == 10;
     }
 
     @Test
-    public void test3() throws Exception{
+    public void test3() throws Exception {
         assert db.table("test")
                 .set("v1", 10)
                 .whereEq("id", 10)
                 .update() == 1;
+    }
+
+    @Test
+    public void test4() throws Exception {
+        db.table("test")
+                .set("v1", 10)
+                .set("v2", null)
+                .usingNull(true)
+                .insert();
     }
 }
