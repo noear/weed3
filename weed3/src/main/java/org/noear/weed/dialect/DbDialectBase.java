@@ -130,7 +130,8 @@ public abstract class DbDialectBase implements DbDialect {
         values.forEach((key, value) -> {
             if (value == null) {
                 if (_usingNull) {
-                    sb.append("null,"); //充许插入null
+                    sb.append("?,"); //充许插入null
+                    args.add(null);
                 }
             } else {
                 if (value instanceof String) {
