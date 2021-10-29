@@ -6,7 +6,6 @@ import org.noear.weed.xml.Namespace;
 import webapp.model.AppxModel;
 import weed3rdb.DbUtil;
 
-import javax.annotation.PostConstruct;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
