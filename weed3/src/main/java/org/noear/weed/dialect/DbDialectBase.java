@@ -118,7 +118,7 @@ public abstract class DbDialectBase implements DbDialect {
                 }
             }
 
-            sb.append(columnFormat(key)).append(",");
+            sb.append(ctx.formater().formatColumn(key)).append(",");
         });
 
         sb.deleteCharAt(sb.length() - 1);
