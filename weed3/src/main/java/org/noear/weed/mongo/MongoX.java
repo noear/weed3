@@ -4,6 +4,7 @@ import com.mongodb.client.*;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.weed.DataItem;
+import org.noear.weed.utils.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -27,6 +28,10 @@ public class MongoX implements AutoCloseable {
     }
 
     public MongoX(String url, String db) {
+        if(StringUtils.isEmpty(db)){
+            throw new IllegalArgumentException("MongoX: Missing db configuration");
+        }
+
         client = MongoClients.create(url);
         database = client.getDatabase(db);
     }
