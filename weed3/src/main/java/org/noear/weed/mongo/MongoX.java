@@ -23,17 +23,17 @@ public class MongoX implements AutoCloseable {
     MongoDatabase database;
 
 
-    public MongoX(Properties props, String db) {
-        this(props.getProperty("url"), db);
+    public MongoX(Properties props, String schema) {
+        this(props.getProperty("url"), schema);
     }
 
-    public MongoX(String url, String db) {
-        if(StringUtils.isEmpty(db)){
-            throw new IllegalArgumentException("MongoX: Missing db configuration");
+    public MongoX(String url, String schema) {
+        if (StringUtils.isEmpty(schema)) {
+            throw new IllegalArgumentException("MongoX: Missing schema configuration");
         }
 
         client = MongoClients.create(url);
-        database = client.getDatabase(db);
+        database = client.getDatabase(schema);
     }
 
     public MongoCollection<Document> getCollection(String coll) {

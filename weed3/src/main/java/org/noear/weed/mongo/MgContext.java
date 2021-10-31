@@ -10,15 +10,15 @@ public class MgContext implements AutoCloseable {
     private MongoX mongoX;
 
     public MgContext(Properties properties) {
-        mongoX = new MongoX(properties, properties.getProperty("db"));
+        mongoX = new MongoX(properties, properties.getProperty("schema"));
     }
 
-    public MgContext(Properties properties, String db) {
-        mongoX = new MongoX(properties, db);
+    public MgContext(Properties properties, String schema) {
+        mongoX = new MongoX(properties, schema);
     }
 
-    public MgContext(String url, String db) {
-        mongoX = new MongoX(url, db);
+    public MgContext(String url, String schema) {
+        mongoX = new MongoX(url, schema);
     }
 
     /**
