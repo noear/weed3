@@ -236,7 +236,7 @@ public class DbContext implements Closeable {
             throw new IllegalArgumentException("DataSource url configuration error");
         }
 
-        if (StringUtils.isNotEmpty(driverClassName) == false) {
+        if (StringUtils.isNotEmpty(driverClassName)) {
             driverSet(driverClassName);
         }
 
