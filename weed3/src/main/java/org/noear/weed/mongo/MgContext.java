@@ -1,6 +1,5 @@
 package org.noear.weed.mongo;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -9,6 +8,10 @@ import java.util.Properties;
  */
 public class MgContext implements AutoCloseable {
     private MongoX mongoX;
+
+    public MgContext(Properties properties) {
+        mongoX = new MongoX(properties, properties.getProperty("db"));
+    }
 
     public MgContext(Properties properties, String db) {
         mongoX = new MongoX(properties, db);
