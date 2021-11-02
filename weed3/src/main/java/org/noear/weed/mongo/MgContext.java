@@ -1,5 +1,7 @@
 package org.noear.weed.mongo;
 
+import org.noear.weed.utils.StringUtils;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -10,7 +12,12 @@ public class MgContext implements AutoCloseable {
     private MongoX mongoX;
 
     public MgContext(Properties properties) {
-        mongoX = new MongoX(properties, properties.getProperty("schema"));
+        String schema = properties.getProperty("schema");
+        if(StringUtils.isEmpty(schema)){
+            schema = properties.getProperty("db");
+        }
+
+        mongoX = new MongoX(properties, schema);
     }
 
     public MgContext(Properties properties, String schema) {
