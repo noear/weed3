@@ -29,7 +29,7 @@ public class MongoX implements AutoCloseable {
 
     public MongoX(String url, String schema) {
         if (StringUtils.isEmpty(schema)) {
-            throw new IllegalArgumentException("MongoX: Missing schema configuration");
+            throw new IllegalArgumentException("MongoX: Missing schema(db) configuration");
         }
 
         client = MongoClients.create(url);
