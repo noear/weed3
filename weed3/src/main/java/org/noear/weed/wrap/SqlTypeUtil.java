@@ -1,21 +1,17 @@
-package org.noear.weed.generator.entity;
+package org.noear.weed.wrap;
 
-import org.noear.weed.wrap.ColumnWrap;
-
-import java.sql.JDBCType;
-import java.sql.SQLType;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
-class SqlTypeMap {
+public class SqlTypeUtil {
 
-    public static Map<Integer, SqlTypeEntity> mapping = new HashMap<Integer, SqlTypeEntity>();
+    public static Map<Integer, SqlTypeDesc> mapping = new HashMap<Integer, SqlTypeDesc>();
 
     public final static String NUMERIC = "NUMERIC";
 
     private static void put(Integer sqlType, String javaType, String javaType2) {
-        mapping.put(sqlType, new SqlTypeEntity(sqlType, javaType, javaType2));
+        mapping.put(sqlType, new SqlTypeDesc(sqlType, javaType, javaType2));
     }
 
     static {
@@ -56,8 +52,12 @@ class SqlTypeMap {
         put(Types.TIME_WITH_TIMEZONE, "Date", "Date");
     }
 
-    public static String getType(ColumnWrap cw, boolean style2) {
-        SqlTypeEntity type = getType(cw.getType(), cw.getSize(), cw.getDigit());
+    public static SqlTypeDesc getTypeDesc(ColumnWrap cw) {
+        return getTypeDo(cw.getSqlType(), cw.getSize(), cw.getDigit());
+    }
+
+    public static String getJavaType(ColumnWrap cw, boolean style2) {
+        SqlTypeDesc type = getTypeDesc(cw);
 
         if (type == null) {
             return "Unknown";
@@ -70,8 +70,8 @@ class SqlTypeMap {
         }
     }
 
-    private static SqlTypeEntity getType(Integer sqlType, Integer size, Integer digit) {
-        SqlTypeEntity type = mapping.get(sqlType);
+    private static SqlTypeDesc getTypeDo(Integer sqlType, Integer size, Integer digit) {
+        SqlTypeDesc type = mapping.get(sqlType);
 
         if (type != null) {
             if (type.javaType.equals(NUMERIC)) {

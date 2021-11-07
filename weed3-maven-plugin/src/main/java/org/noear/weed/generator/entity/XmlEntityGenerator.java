@@ -8,6 +8,7 @@ import org.noear.weed.generator.utils.NamingUtils;
 import org.noear.weed.generator.utils.StringUtils;
 import org.noear.weed.generator.utils.XmlUtils;
 import org.noear.weed.wrap.ColumnWrap;
+import org.noear.weed.wrap.SqlTypeUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -186,7 +187,7 @@ public class XmlEntityGenerator {
                 sb.append("  private ");
             }
 
-            sb.append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" ");
+            sb.append(SqlTypeUtil.getJavaType(cw, source.typeStyle.startsWith("base"))).append(" ");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName()));
             } else {
@@ -206,7 +207,7 @@ public class XmlEntityGenerator {
         for (ColumnWrap cw : table.tableWrap.getColumns()) {
             buildColumnRemarks(cw, sb);
 
-            sb.append("  public ").append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" get");
+            sb.append("  public ").append(SqlTypeUtil.getJavaType(cw, source.typeStyle.startsWith("base"))).append(" get");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName(), true));
             } else {
@@ -241,7 +242,7 @@ public class XmlEntityGenerator {
             } else {
                 sb.append(NamingUtils.capitalize(cw.getName()));
             }
-            sb.append("(").append(SqlTypeMap.getType(cw, source.typeStyle.startsWith("base"))).append(" val){\n");
+            sb.append("(").append(SqlTypeUtil.getJavaType(cw, source.typeStyle.startsWith("base"))).append(" val){\n");
             sb.append("  ");
             if (camel) {
                 sb.append(NamingUtils.toCamelString(cw.getName()));

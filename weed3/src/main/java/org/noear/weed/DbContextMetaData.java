@@ -318,6 +318,7 @@ public class DbContextMetaData implements Closeable {
                         rs.getInt("DATA_TYPE"),
                         rs.getInt("COLUMN_SIZE"),
                         digit,
+                        rs.getString("IS_NULLABLE"),
                         rs.getString("REMARKS")
                 );
 
