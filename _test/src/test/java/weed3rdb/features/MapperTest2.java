@@ -1,7 +1,9 @@
 package weed3rdb.features;
 
+import org.h2.mvstore.Page;
 import org.junit.Test;
 import org.noear.weed.DbContext;
+import org.noear.weed.IPage;
 import weed3rdb.DbUtil;
 import weed3rdb.dso.SqlMapper;
 import webapp.model.AppxModel;
@@ -161,19 +163,37 @@ public class MapperTest2 {
     }
 
     @Test
-    public void test_select_page_m12() {
+    public void test_select_list_m12() {
         //selectPage
-        List<AppxModel> m12 = mapper.selectPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        List<AppxModel> m12 = mapper.selectList(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m12: " + m12);
         assert m12.size() == 10;
     }
 
     @Test
-    public void test_select_page_m13() {
+    public void test_select_list_m13() {
         //selectMapsPage
-        List<Map<String, Object>> m13 = mapper.selectMapPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        List<Map<String, Object>> m13 = mapper.selectMapList(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
         System.out.println("m13: " + m13);
         assert m13.size() == 10;
+    }
+
+    @Test
+    public void test_select_page_m12() {
+        //selectPage
+        IPage<AppxModel> m12 = mapper.selectPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m12: " + m12);
+        assert m12.getList().size() == 10;
+        assert m12.getTotal() > 10;
+    }
+
+    @Test
+    public void test_select_page_m13() {
+        //selectMapsPage
+        IPage<Map<String, Object>> m13 = mapper.selectMapPage(1, 10, m -> m.whereEq("agroup_id", 1).andLt("app_id", 40));
+        System.out.println("m13: " + m13);
+        assert m13.getList().size() == 10;
+        assert m13.getTotal() > 10;
     }
 
     @Test

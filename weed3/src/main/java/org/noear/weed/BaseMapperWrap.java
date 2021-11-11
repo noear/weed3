@@ -2,6 +2,7 @@ package org.noear.weed;
 
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.impl.IPageImpl;
 import org.noear.weed.utils.RunUtils;
 import org.noear.weed.utils.StringUtils;
 import org.noear.weed.wrap.Property;
@@ -20,6 +21,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     private String _tabelName;
 
     private Class<?> _entityType;
+
     protected Class<?> entityType() {
         return _entityType;
     }
@@ -42,31 +44,30 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         _tabelName = _table.tableName;
     }
 
-    private DbContext db(){
+    private DbContext db() {
         return _db;
     }
 
-    private String tableName(){
+    private String tableName() {
         return _tabelName;
     }
 
-    private String pk(){
+    private String pk() {
         return _table.pkName;
     }
 
-    private Class<?> entityClz(){
+    private Class<?> entityClz() {
         return _table.entityClz;
     }
 
 
-
     @Override
-    public Long insert(T entity, boolean excludeNull)  {
+    public Long insert(T entity, boolean excludeNull) {
         DataItem data = new DataItem();
 
-        if(excludeNull) {
-            data.setEntityIf(entity, (k,v)-> v!=null);
-        }else{
+        if (excludeNull) {
+            data.setEntityIf(entity, (k, v) -> v != null);
+        } else {
             data.setEntity(entity);
         }
 
@@ -88,13 +89,13 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     @Override
     public Integer deleteById(Object id) {
         return RunUtils.call(()
-                -> getQr().whereEq(pk(),id ).delete());
+                -> getQr().whereEq(pk(), id).delete());
     }
 
     @Override
     public Integer deleteByIds(Iterable idList) {
         return RunUtils.call(()
-                -> getQr().whereIn(pk(), idList ).delete());
+                -> getQr().whereIn(pk(), idList).delete());
     }
 
     @Override
@@ -114,25 +115,25 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     public Integer updateById(T entity, boolean excludeNull) {
         DataItem data = new DataItem();
 
-        if(excludeNull) {
-            data.setEntityIf(entity, (k,v)-> v!=null);
-        }else{
+        if (excludeNull) {
+            data.setEntityIf(entity, (k, v) -> v != null);
+        } else {
             data.setEntity(entity);
         }
 
         Object id = data.get(pk());
 
         return RunUtils.call(()
-                -> getQr().whereEq(pk(), id ).update(data));
+                -> getQr().whereEq(pk(), id).update(data));
     }
 
     @Override
     public Integer update(T entity, boolean excludeNull, Act1<MapperWhereQ> c) {
         DataItem data = new DataItem();
 
-        if(excludeNull) {
-            data.setEntityIf(entity, (k,v)-> v!=null);
-        }else{
+        if (excludeNull) {
+            data.setEntityIf(entity, (k, v) -> v != null);
+        } else {
             data.setEntity(entity);
         }
 
@@ -142,7 +143,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     }
 
     @Override
-    public int[] updateList(List<T> list, Act2<T,DataItem> dataBuilder, Property<T, ?>... conditionFields) {
+    public int[] updateList(List<T> list, Act2<T, DataItem> dataBuilder, Property<T, ?>... conditionFields) {
         if (conditionFields.length == 0) {
             throw new RuntimeException("Please enter constraints");
         }
@@ -194,7 +195,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
     @Override
     public boolean existsById(Object id) {
         return RunUtils.call(()
-                -> getQr().whereEq(pk(), id ).selectExists());
+                -> getQr().whereEq(pk(), id).selectExists());
     }
 
     @Override
@@ -245,29 +246,29 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
 
     @Override
     public Object selectValue(String column, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).selectValue(column));
+        return RunUtils.call(() -> getQr(c).selectValue(column));
     }
 
     @Override
     public Map<String, Object> selectMap(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).selectMap("*"));
+        return RunUtils.call(() -> getQr(c).selectMap("*"));
     }
 
     @Override
     public Long selectCount(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).count());
+        return RunUtils.call(() -> getQr(c).count());
     }
 
     @Override
     public List<T> selectList(Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> getQr(c).selectList("*", clz));
+        return RunUtils.call(() -> getQr(c).selectList("*", clz));
     }
 
     @Override
     public List<Map<String, Object>> selectMapList(Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).selectMapList("*"));
+        return RunUtils.call(() -> getQr(c).selectMapList("*"));
     }
 
     @Override
@@ -275,39 +276,66 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         return RunUtils.call(() -> getQr(c).selectArray(column));
     }
 
-
     @Override
-    public List<T> selectPage(int start, int size, Act1<MapperWhereQ> c) {
+    public List<T> selectList(int start, int size, Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> getQr(c).limit(start, size).selectList("*", clz));
+        return RunUtils.call(() -> getQr(c).limit(start, size).selectList("*", clz));
     }
 
     @Override
-    public List<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).limit(start, size).selectMapList("*"));
+    public List<Map<String, Object>> selectMapList(int start, int size, Act1<MapperWhereQ> c) {
+        return RunUtils.call(() -> getQr(c).limit(start, size).selectMapList("*"));
+    }
+
+    @Override
+    public List<Object> selectArray(String column, int start, int size, Act1<MapperWhereQ> c) {
+        return RunUtils.call(() -> getQr(c).limit(start, size).selectArray(column));
+    }
+
+
+    @Override
+    public IPage<T> selectPage(int start, int size, Act1<MapperWhereQ> c) {
+        Class<T> clz = (Class<T>) entityClz();
+
+        List<T> list = RunUtils.call(() -> getQr(c).limit(start, size).selectList("*", clz));
+        long total = RunUtils.call(() -> getQr(c).selectCount());
+
+        IPageImpl<T> page = new IPageImpl<>(list, total);
+
+        return page;
+    }
+
+    @Override
+    public IPage<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> c) {
+        List<Map<String, Object>> list = RunUtils.call(() -> getQr(c).limit(start, size).selectMapList("*"));
+        long total = RunUtils.call(() -> getQr(c).selectCount());
+
+        IPageImpl<Map<String, Object>> page = new IPageImpl<>(list, total);
+
+        return page;
     }
 
     @Override
     public List<T> selectTop(int size, Act1<MapperWhereQ> c) {
         Class<T> clz = (Class<T>) entityClz();
 
-        return RunUtils.call(()-> getQr(c).top(size).selectList("*", clz));
+        return RunUtils.call(() -> getQr(c).top(size).selectList("*", clz));
     }
 
     @Override
     public List<Map<String, Object>> selectMapTop(int size, Act1<MapperWhereQ> c) {
-        return RunUtils.call(()-> getQr(c).top(size).selectMapList("*"));
+        return RunUtils.call(() -> getQr(c).top(size).selectMapList("*"));
     }
 
-    private DbTableQuery getQr(){
+    private DbTableQuery getQr() {
         return db().table(tableName());
     }
 
-    private DbTableQuery getQr(Act1<MapperWhereQ> c){
+    private DbTableQuery getQr(Act1<MapperWhereQ> c) {
         DbTableQuery qr = db().table(tableName());
 
-        if(c != null) {
+        if (c != null) {
             c.run(new MapperWhereQ(qr));
         }
 

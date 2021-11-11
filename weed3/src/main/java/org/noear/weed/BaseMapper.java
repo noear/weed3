@@ -49,11 +49,16 @@ public interface BaseMapper<T> {
     List<Map<String, Object>> selectMapList(Act1<MapperWhereQ> condition);
     List<Object> selectArray(String column, Act1<MapperWhereQ> condition);
 
+
+    List<T> selectList(int start, int size, Act1<MapperWhereQ> condition);
+    List<Map<String, Object>> selectMapList(int start, int size, Act1<MapperWhereQ> condition);
+    List<Object> selectArray(String column, int start, int size, Act1<MapperWhereQ> condition);
+
     /**
      * @param start 从0开始
      * */
-    List<T> selectPage(int start, int size, Act1<MapperWhereQ> condition);
-    List<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> condition);
+    IPage<T> selectPage(int start, int size, Act1<MapperWhereQ> condition);
+    IPage<Map<String, Object>> selectMapPage(int start, int size, Act1<MapperWhereQ> condition);
 
     List<T> selectTop(int size, Act1<MapperWhereQ> condition);
     List<Map<String, Object>> selectMapTop(int size, Act1<MapperWhereQ> condition);
