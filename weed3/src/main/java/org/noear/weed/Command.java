@@ -14,27 +14,45 @@ import java.util.Map;
  * 命令
  */
 public class Command {
-    /** 命令tag（用于寄存一些数据）*/
-    public String       tag;
-    /** 是否进行日志 */
-    public int      isLog; //def:0  no:-1 yes:1
+    /**
+     * 命令tag（用于寄存一些数据）
+     */
+    public String tag;
+    /**
+     * 是否进行日志
+     */
+    public int isLog; //def:0  no:-1 yes:1
 
 
-    /** 命令id */
-    public String       key;
-    /** 命令文本 */
-    public String       text;
-    /** 命令参数 */
+    /**
+     * 命令id
+     */
+    public String key;
+    /**
+     * 命令文本
+     */
+    public String text;
+    /**
+     * 命令参数
+     */
     public List<Variate> paramS;
-    /** 数据库上下文（肯定且必须有） */
+    /**
+     * 数据库上下文（肯定且必须有）
+     */
     public DbContext context;
-    /** 缓存服务对象（可能有，可能没有） */
+    /**
+     * 缓存服务对象（可能有，可能没有）
+     */
     public ICacheServiceEx cache;
 
-    /** 数据处理事务 */
+    /**
+     * 数据处理事务
+     */
     public DbTran tran;
 
-    /** 是否为批处理 */
+    /**
+     * 是否为批处理
+     */
     public boolean isBatch = false;
 
     //计时变量
@@ -46,17 +64,17 @@ public class Command {
         this.context.lastCommand = this;
         this.tran = tran;
 
-        if(tran == null){
+        if (tran == null) {
             this.tran = DbTranUtil.current();
         }
     }
 
-    private Map<String,Object> _paramMap;
+    private Map<String, Object> _paramMap;
 
     /**
      * 参数字典
-     * */
-    public Map<String,Object> paramMap() {
+     */
+    public Map<String, Object> paramMap() {
         if (_paramMap == null) {
             _paramMap = new LinkedHashMap<>();
 
@@ -64,7 +82,7 @@ public class Command {
             for (Variate v : paramS) {
                 if (StringUtils.isEmpty(v._name)) {
                     _paramMap.put("v" + idx, v.getValue());
-                }else{
+                } else {
                     _paramMap.put("v" + idx + "-" + v._name, v.getValue());
                 }
                 idx++;
@@ -75,39 +93,40 @@ public class Command {
     }
 
     @Deprecated
-    public String text2(){
+    public String text2() {
         return toSqlString();
     }
 
     /**
      * 转为SQL字符串
-     * */
-    public String toSqlString(){
+     */
+    public String toSqlString() {
         StringBuilder sb = new StringBuilder();
 
-        String[] ss = text.split("\\?");
-        for(int i=0,len=ss.length; i<len; i++){
-            sb.append(ss[i]);
+        if (isBatch) {
+            sb.append(text);
+            sb.append(" --:batch");
+        } else {
+            String[] ss = text.split("\\?");
+            for (int i = 0, len = ss.length; i < len; i++) {
+                sb.append(ss[i]);
 
-            if(i< len-1) {
-                Variate val = paramS.get(i);
+                if (i < len - 1) {
+                    Variate val = paramS.get(i);
 
-                if (val.isNull()) {
-                    sb.append("NULL");
-                } else if (val.getValue() instanceof String) {
-                    sb.append("'").append(val.getString()).append("'");
-                } else if (val.getValue() instanceof Boolean) {
-                    sb.append(val.getBoolean());
-                } else if (val.getValue() instanceof Date) {
-                    sb.append("'").append(val.getDate()).append("'");
-                } else {
-                    sb.append(val.getValue());
+                    if (val.isNull()) {
+                        sb.append("NULL");
+                    } else if (val.getValue() instanceof String) {
+                        sb.append("'").append(val.getString()).append("'");
+                    } else if (val.getValue() instanceof Boolean) {
+                        sb.append(val.getBoolean());
+                    } else if (val.getValue() instanceof Date) {
+                        sb.append("'").append(val.getDate()).append("'");
+                    } else {
+                        sb.append(val.getValue());
+                    }
                 }
             }
-        }
-
-        if(isBatch){
-            sb.append(" --:batch");
         }
 
         return sb.toString();
@@ -115,14 +134,14 @@ public class Command {
 
     /**
      * 执行时长
-     * */
-    public long timespan(){
-        return timestop  -timestart;
+     */
+    public long timespan() {
+        return timestop - timestart;
     }
 
     /**
      * 完整的命令文本
-     * */
+     */
     public String fullText() {
         if (context.codeHint() == null)
             return context.getDialect().preReview(text);
