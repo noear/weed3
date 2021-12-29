@@ -111,12 +111,8 @@ public class ClassWrap {
             for (FieldWrap fw : fieldWraps) {
                 //转入时，不排除; 交dataItem检查
                 if (data.exists(fw.name)) {
-                    Object val = data.get(fw.name);
-
-                    if (val != null) {
-                        //可以支持字段的初始值，做为默认值
-                        fw.setValue(item, val);
-                    }
+                    //内部已有去null处理
+                    fw.setValue(item, data.get(fw.name));
                 }
             }
 
