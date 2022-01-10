@@ -43,6 +43,19 @@ public class TableTest {
     }
 
     @Test
+    public void test0_2() throws Exception {
+        Map<String, Object> map = db.table("appx").whereEq("app_id", 1).select("*").getMap();
+
+        map.put("app_id",11);
+
+        assert db.table("appx_copy")
+                .setMap(map)
+                .updateBy("app_id") > 0;
+
+        System.out.println(db.lastCommand.text);
+    }
+
+    @Test
     public void test02() throws Exception {
         Map<String, Object> map = db.table("appx").whereEq("app_id", 1).select("*").getMap();
 
