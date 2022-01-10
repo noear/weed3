@@ -134,6 +134,14 @@ public class DbTableQuery extends DbTableQueryBase<DbTableQuery> {
         }
     }
 
+    public int updateBy(String conditionFields) throws SQLException {
+        if (_item == null) {
+            return 0;
+        } else {
+            return updateBy(_item, conditionFields);
+        }
+    }
+
     /**
      * 使用set接口的数据,根据约束字段自动插入或更新
      * （默认，只会更新不是null的数据）

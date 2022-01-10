@@ -25,7 +25,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     String _table; //表名
 
     SQLBuilder _builder_bef;
-    int _isLog=0;
+    int _isLog = 0;
 
     public DbTableQueryBase(DbContext context) {
         super(context);
@@ -33,7 +33,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-    /** 标记是否记录日志 */
+    /**
+     * 标记是否记录日志
+     */
     public T log(boolean isLog) {
         _isLog = isLog ? 1 : -1;
         return (T) this;
@@ -41,17 +43,19 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
     /**
      * 通过表达式构建自己（请使用build替代）
-     * */
+     */
     @Deprecated
-    public T expre(Act1<T> action){
-        action.run((T)this);
-        return (T)this;
+    public T expre(Act1<T> action) {
+        action.run((T) this);
+        return (T) this;
     }
 
-    /** 通过表达式构建自己 */
-    public T build(Act1<T> builder){
-        builder.run((T)this);
-        return (T)this;
+    /**
+     * 通过表达式构建自己
+     */
+    public T build(Act1<T> builder) {
+        builder.run((T) this);
+        return (T) this;
     }
 
     protected T table(String table) { //相当于 from
@@ -76,19 +80,20 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T) this;
     }
 
-    /** 添加SQL with 语句（要确保数据库支持）
-     *
+    /**
+     * 添加SQL with 语句（要确保数据库支持）
+     * <p>
      * 例：db.table("user u")
-     *       .with("a","select type num from group by type")
-     *       .where("u.type in(select a.type) and u.type2 in (select a.type)")
-     *       .select("u.*")
-     *       .getMapList();
-     * */
+     * .with("a","select type num from group by type")
+     * .where("u.type in(select a.type) and u.type2 in (select a.type)")
+     * .select("u.*")
+     * .getMapList();
+     */
     public T with(String name, String code, Object... args) {
         if (_builder_bef.length() < 6) {
             _builder_bef.append(" WITH ");
-        }else{
-            _builder_bef.append("," );
+        } else {
+            _builder_bef.append(",");
         }
 
         _builder_bef.append(fmtColumn(name))
@@ -102,8 +107,8 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     public T with(String name, SelectQ select) {
         if (_builder_bef.length() < 6) {
             _builder_bef.append(" WITH ");
-        }else{
-            _builder_bef.append("," );
+        } else {
+            _builder_bef.append(",");
         }
 
         _builder_bef.append(fmtColumn(name))
@@ -115,11 +120,12 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-
-    /** 添加 FROM 语句 */
-    public T from(String table){
+    /**
+     * 添加 FROM 语句
+     */
+    public T from(String table) {
         _builder.append(" FROM ").append(fmtObject(table));
-        return (T)this;
+        return (T) this;
     }
 
 
@@ -136,30 +142,38 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return (T) this;
     }
 
-    /** 添加SQL 内关联语句 */
+    /**
+     * 添加SQL 内关联语句
+     */
     public T innerJoin(String table) {
-        return join(" INNER JOIN ",table);
+        return join(" INNER JOIN ", table);
     }
 
-    /** 添加SQL 左关联语句 */
+    /**
+     * 添加SQL 左关联语句
+     */
     public T leftJoin(String table) {
-        return join(" LEFT JOIN ",table);
+        return join(" LEFT JOIN ", table);
     }
 
-    /** 添加SQL 右关联语句 */
+    /**
+     * 添加SQL 右关联语句
+     */
     public T rightJoin(String table) {
-        return join(" RIGHT JOIN ",table);
+        return join(" RIGHT JOIN ", table);
     }
 
-    /** 添加无限制代码 */
-    public T append(String code,  Object... args){
+    /**
+     * 添加无限制代码
+     */
+    public T append(String code, Object... args) {
         _builder.append(code, args);
-        return (T)this;
+        return (T) this;
     }
 
     public T on(String code) {
         _builder.append(" ON ").append(code);
-        return (T)this;
+        return (T) this;
     }
 
     public T onEq(String column1, String column2) {
@@ -168,19 +182,19 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-
-
-
-    /** 执行插入并返回自增值，使用dataBuilder构建的数据 */
-    public long insert(Act1<IDataItem> dataBuilder) throws SQLException
-    {
+    /**
+     * 执行插入并返回自增值，使用dataBuilder构建的数据
+     */
+    public long insert(Act1<IDataItem> dataBuilder) throws SQLException {
         DataItem item = new DataItem();
         dataBuilder.run(item);
 
         return insert(item);
     }
 
-    /** 执行插入并返回自增值，使用data数据 */
+    /**
+     * 执行插入并返回自增值，使用data数据
+     */
     public long insert(IDataItem data) throws SQLException {
         if (data == null || data.count() == 0) {
             return 0;
@@ -194,7 +208,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return compile().insert();
     }
 
-    /** 根据约束进行插入 */
+    /**
+     * 根据约束进行插入
+     */
     public long insertBy(IDataItem data, String conditionFields) throws SQLException {
         if (data == null || data.count() == 0) {
             return 0;
@@ -219,7 +235,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return insert(data);
     }
 
-    /** 执行批量合并插入，使用集合数据 */
+    /**
+     * 执行批量合并插入，使用集合数据
+     */
     public boolean insertList(List<DataItem> valuesList) throws SQLException {
         if (valuesList == null) {
             return false;
@@ -228,8 +246,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return insertList(valuesList.get(0), valuesList);
     }
 
-    /** 执行批量合并插入，使用集合数据（由dataBuilder构建数据） */
-    public <T> boolean insertList(Collection<T> valuesList, Act2<T,DataItem> dataBuilder) throws SQLException {
+    /**
+     * 执行批量合并插入，使用集合数据（由dataBuilder构建数据）
+     */
+    public <T> boolean insertList(Collection<T> valuesList, Act2<T, DataItem> dataBuilder) throws SQLException {
         List<DataItem> list2 = new ArrayList<>();
 
         for (T values : valuesList) {
@@ -240,16 +260,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         }
 
 
-
         if (list2.size() > 0) {
             return insertList(list2.get(0), list2);
-        }else{
+        } else {
             return false;
         }
     }
 
 
-    protected <T extends GetHandler> boolean insertList(IDataItem cols, Collection<T> valuesList)throws SQLException {
+    protected <T extends GetHandler> boolean insertList(IDataItem cols, Collection<T> valuesList) throws SQLException {
         if (valuesList == null || valuesList.size() == 0) {
             return false;
         }
@@ -287,27 +306,29 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-    /** 使用data的数据,根据约束字段自动插入或更新
-     *
+    /**
+     * 使用data的数据,根据约束字段自动插入或更新
+     * <p>
      * 请改用 upsertBy
-     * */
+     */
     @Deprecated
     public void updateExt(IDataItem data, String conditionFields) throws SQLException {
         upsertBy(data, conditionFields);
     }
 
-    /** 使用data的数据,根据约束字段自动插入或更新
-     *
+    /**
+     * 使用data的数据,根据约束字段自动插入或更新
+     * <p>
      * 请改用 upsertBy
-     * */
+     */
     @Deprecated
     public long upsert(IDataItem data, String conditionFields) throws SQLException {
-        return upsertBy(data,conditionFields);
+        return upsertBy(data, conditionFields);
     }
 
     /**
      * 使用data的数据,根据约束字段自动插入或更新
-     * */
+     */
     public long upsertBy(IDataItem data, String conditionFields) throws SQLException {
         if (data == null || data.count() == 0) {
             return 0;
@@ -335,17 +356,36 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         }
     }
 
-    /** 执行更新并返回影响行数，使用dataBuilder构建的数据 */
-    public int update(Act1<IDataItem> dataBuilder) throws SQLException
-    {
+    public int updateBy(IDataItem data, String conditionFields) throws SQLException {
+        String[] ff = conditionFields.split(",");
+
+        if (ff.length == 0) {
+            throw new RuntimeException("Please enter constraints");
+        }
+
+        this.whereTrue();
+
+        for (String f : ff) {
+            this.andEq(f, data.get(f));
+        }
+
+        return update(data);
+    }
+
+    /**
+     * 执行更新并返回影响行数，使用dataBuilder构建的数据
+     */
+    public int update(Act1<IDataItem> dataBuilder) throws SQLException {
         DataItem item = new DataItem();
         dataBuilder.run(item);
 
         return update(item);
     }
 
-    /** 执行更新并返回影响行数，使用set接口的数据 */
-    public int update(IDataItem data) throws SQLException{
+    /**
+     * 执行更新并返回影响行数，使用set接口的数据
+     */
+    public int update(IDataItem data) throws SQLException {
         if (data == null || data.count() == 0) {
             return 0;
         }
@@ -361,11 +401,11 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         _builder.backup();
         _builder.insert(sb.toString(), args.toArray());
 
-        if(WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ")<0){
+        if (WeedConfig.isUpdateMustConditional && _builder.indexOf(" WHERE ") < 0) {
             throw new RuntimeException("Lack of update condition!!!");
         }
 
-        if(limit_top > 0) {
+        if (limit_top > 0) {
             if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
                 _builder.append(" LIMIT ?", limit_top);
             }
@@ -412,7 +452,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-    /** 执行批量合并插入，使用集合数据 */
+    /**
+     * 执行批量合并插入，使用集合数据
+     */
     public int[] updateList(List<DataItem> valuesList, String conditionFields) throws SQLException {
         if (valuesList == null || valuesList.size() == 0) {
             return null;
@@ -421,8 +463,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return updateList(valuesList.get(0), valuesList, conditionFields);
     }
 
-    /** 执行批量合并插入，使用集合数据（由dataBuilder构建数据） */
-    public <T> int[] updateList(Collection<T> valuesList, Act2<T,DataItem> dataBuilder, String conditionFields) throws SQLException {
+    /**
+     * 执行批量合并插入，使用集合数据（由dataBuilder构建数据）
+     */
+    public <T> int[] updateList(Collection<T> valuesList, Act2<T, DataItem> dataBuilder, String conditionFields) throws SQLException {
         if (valuesList == null || valuesList.size() == 0) {
             return null;
         }
@@ -439,13 +483,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         if (list2.size() > 0) {
             return updateList(list2.get(0), list2, conditionFields);
-        }else{
+        } else {
             return null;
         }
     }
 
 
-    protected <T extends GetHandler> int[] updateList(IDataItem cols, Collection<T> valuesList, String conditionFields)throws SQLException {
+    protected <T extends GetHandler> int[] updateList(IDataItem cols, Collection<T> valuesList, String conditionFields) throws SQLException {
         if (valuesList == null || valuesList.size() == 0) {
             return null;
         }
@@ -475,9 +519,9 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         updateItemsBuildByFields0(cols, sb);
 
-        for(GetHandler item : valuesList){
+        for (GetHandler item : valuesList) {
             List<Object> tmp = new ArrayList<>();
-            for(String key : cols.keys()){
+            for (String key : cols.keys()) {
                 tmp.add(item.get(key));
             }
 
@@ -498,23 +542,24 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-
-    /** 执行删除，并返回影响行数 */
+    /**
+     * 执行删除，并返回影响行数
+     */
     public int delete() throws SQLException {
-        StringBuilder sb  = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-        _context.getDialect().deleteCmd(sb, _table, _builder.indexOf(" FROM ")<0);
+        _context.getDialect().deleteCmd(sb, _table, _builder.indexOf(" FROM ") < 0);
 
         _builder.insert(sb.toString());
 
-        if(limit_top > 0) {
+        if (limit_top > 0) {
             if (dbType() == DbType.MySQL || dbType() == DbType.MariaDB) {
                 _builder.append(" LIMIT ?", limit_top);
             }
         }
 
 
-        if(WeedConfig.isDeleteMustConditional && _builder.indexOf(" WHERE ")<0){
+        if (WeedConfig.isDeleteMustConditional && _builder.indexOf(" WHERE ") < 0) {
             throw new RuntimeException("Lack of delete condition!!!");
         }
 
@@ -522,43 +567,48 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
 
-
-
     protected int limit_start, limit_size;
 
-    /** 添加SQL paging语句 */
+    /**
+     * 添加SQL paging语句
+     */
     public T limit(int start, int size) {
         limit_start = start;
         limit_size = size;
         //_builder.append(" LIMIT " + start + "," + rows + " ");
-        return (T)this;
+        return (T) this;
     }
 
     protected int limit_top = 0;
-    /** 添加SQL top语句 */
+
+    /**
+     * 添加SQL top语句
+     */
     public T limit(int size) {
         limit_top = size;
         //_builder.append(" LIMIT " + rows + " ");
-        return (T)this;
+        return (T) this;
     }
 
 
-    /** 添加SQL paging语句 */
+    /**
+     * 添加SQL paging语句
+     */
     public T paging(int start, int size) {
         limit_start = start;
         limit_size = size;
         //_builder.append(" LIMIT " + start + "," + rows + " ");
-        return (T)this;
+        return (T) this;
     }
 
-    /** 添加SQL top语句 */
+    /**
+     * 添加SQL top语句
+     */
     public T top(int size) {
         limit_top = size;
         //_builder.append(" LIMIT " + rows + " ");
-        return (T)this;
+        return (T) this;
     }
-
-
 
 
     @Deprecated
@@ -567,19 +617,20 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     }
 
     String _hint = null;
-    public T hint(String hint){
+
+    public T hint(String hint) {
         _hint = hint;
-        return  (T)this;
+        return (T) this;
     }
 
     @Deprecated
-    public long count() throws SQLException{
+    public long count() throws SQLException {
         return selectCount();
         //return count("COUNT(*)");
     }
 
     @Deprecated
-    public long count(String code) throws SQLException{
+    public long count(String code) throws SQLException {
         return selectCount(code);
         //return selectDo(code).getVariate().longValue(0l);
     }
@@ -594,7 +645,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         DbQuery rst = compile();
 
-        if(_cache != null){
+        if (_cache != null) {
             rst.cache(_cache);
         }
 
@@ -620,9 +671,10 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return rst.getValue() != null;
     }
 
-    public long selectCount() throws SQLException{
+    public long selectCount() throws SQLException {
         return selectCount("COUNT(*)");
     }
+
     public long selectCount(String column) throws SQLException {
         if (column.indexOf("(") < 0) {
             column = "COUNT(" + column + ")";
@@ -655,15 +707,15 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return selectDo(columns).getDataList();
     }
 
-    public Map<String,Object> selectMap(String columns) throws SQLException{
+    public Map<String, Object> selectMap(String columns) throws SQLException {
         return selectDo(columns).getMap();
     }
 
-    public List<Map<String, Object>> selectMapList(String columns) throws SQLException{
+    public List<Map<String, Object>> selectMapList(String columns) throws SQLException {
         return selectDo(columns).getMapList();
     }
 
-    public <T> List<T> selectArray(String column) throws SQLException{
+    public <T> List<T> selectArray(String column) throws SQLException {
         return selectDo(column).getArray();
     }
 
@@ -719,24 +771,30 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
 
         _builder.clear();
 
-        return temp.onCommandBuilt((cmd)->{
+        return temp.onCommandBuilt((cmd) -> {
             cmd.isLog = _isLog;
-            cmd.tag   = _table;
+            cmd.tag = _table;
         });
     }
 
     private boolean _usingNull = WeedConfig.isUsingValueNull;
-    /** 充许使用null插入或更新 */
-    public T usingNull(boolean isUsing){
+
+    /**
+     * 充许使用null插入或更新
+     */
+    public T usingNull(boolean isUsing) {
         _usingNull = isUsing;
-        return (T)this;
+        return (T) this;
     }
 
     private boolean _usingExpression = WeedConfig.isUsingValueExpression;
-    /** 充许使用$表达式构建sql */
-    public T usingExpr(boolean isUsing){
+
+    /**
+     * 充许使用$表达式构建sql
+     */
+    public T usingExpr(boolean isUsing) {
         _usingExpression = isUsing;
-        return (T)this;
+        return (T) this;
     }
 
     private boolean isSqlExpr(String txt) {
@@ -759,29 +817,36 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
     //
 
     protected CacheUsing _cache = null;
-    /** 使用一个缓存服务 */
-    public T caching(ICacheService service)
-    {
+
+    /**
+     * 使用一个缓存服务
+     */
+    public T caching(ICacheService service) {
         _cache = new CacheUsing(service);
-        return (T)this;
-    }
-    /** 是否使用缓存 */
-    public T usingCache (boolean isCache)
-    {
-        _cache.usingCache(isCache);
-        return (T)this;
-    }
-    /** 使用缓存时间（单位：秒）*/
-    public T usingCache (int seconds)
-    {
-        _cache.usingCache(seconds);
-        return (T)this;
+        return (T) this;
     }
 
-    /** 为缓存添加标签 */
-    public T cacheTag(String tag)
-    {
+    /**
+     * 是否使用缓存
+     */
+    public T usingCache(boolean isCache) {
+        _cache.usingCache(isCache);
+        return (T) this;
+    }
+
+    /**
+     * 使用缓存时间（单位：秒）
+     */
+    public T usingCache(int seconds) {
+        _cache.usingCache(seconds);
+        return (T) this;
+    }
+
+    /**
+     * 为缓存添加标签
+     */
+    public T cacheTag(String tag) {
         _cache.cacheTag(tag);
-        return (T)this;
+        return (T) this;
     }
 }
