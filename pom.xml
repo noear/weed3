@@ -16,6 +16,7 @@
         <java.version>1.8</java.version>
     </properties>
 
+    
     <modules>
         <module>weed3-parent</module>
 
