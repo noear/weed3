@@ -156,18 +156,18 @@ public abstract class DbAccess<T extends DbAccess> implements IWeedKey,IQuery,Se
 
     @Override
     public long getCount() throws SQLException {
-        return getValue(0L);
+        return getVariate().longValue(0L);
     }
 
     @Override
     public Object getValue() throws SQLException {
-        return getVariate(null).getValue();
+        return getVariate().getValue();
     }
 
     /*执行命令（返回符合条件的第一个值）*/
     @Override
     public <T> T getValue(T def) throws SQLException {
-        return getVariate(null).value(def);
+        return getVariate().value(def);
     }
 
     /*执行命令（返回符合条件的第一个值）*/
