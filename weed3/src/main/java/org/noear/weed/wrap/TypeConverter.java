@@ -39,6 +39,10 @@ public class TypeConverter {
             if(Date.class == target){
                 return new Date(number.longValue());
             }
+
+            if(LocalDateTime.class == target){
+                return new Timestamp(number.longValue()).toLocalDateTime();
+            }
         }
 
         if(target == java.util.Date.class) {
