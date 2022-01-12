@@ -5,6 +5,7 @@ import org.noear.weed.cache.ICacheController;
 import org.noear.weed.cache.ICacheService;
 import org.noear.weed.ext.Act1;
 import org.noear.weed.ext.Act2;
+import org.noear.weed.impl.IPageImpl;
 import org.noear.weed.wrap.DbType;
 
 import java.sql.SQLException;
@@ -699,6 +700,13 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return selectDo(columns).getList(clz);
     }
 
+    public <T> IPage<T> selectPage(String columns, Class<T> clz) throws SQLException {
+        long total = selectCount();
+        List<T> list = selectDo(columns).getList(clz);
+
+        return new IPageImpl<>(list, total);
+    }
+
     public DataItem selectDataItem(String columns) throws SQLException {
         return selectDo(columns).getDataItem();
     }
@@ -707,12 +715,26 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         return selectDo(columns).getDataList();
     }
 
+    public IPage<DataItem> selectDataPage(String columns) throws SQLException {
+        long total = selectCount();
+        List<DataItem> list = selectDo(columns).getDataList().getRows();
+
+        return new IPageImpl<>(list, total);
+    }
+
     public Map<String, Object> selectMap(String columns) throws SQLException {
         return selectDo(columns).getMap();
     }
 
     public List<Map<String, Object>> selectMapList(String columns) throws SQLException {
         return selectDo(columns).getMapList();
+    }
+
+    public IPage<Map<String, Object>> selectMapPage(String columns) throws SQLException {
+        long total = selectCount();
+        List<Map<String, Object>> list = selectDo(columns).getMapList();
+
+        return new IPageImpl<>(list, total);
     }
 
     public <T> List<T> selectArray(String column) throws SQLException {
