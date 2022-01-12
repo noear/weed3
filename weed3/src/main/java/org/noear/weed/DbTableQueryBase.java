@@ -681,6 +681,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             column = "COUNT(" + column + ")";
         }
 
+        //备份
         int limit_start_bak = limit_start;
         int limit_size_bak = limit_size;
         int limit_top_bak = limit_top;
@@ -689,13 +690,14 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         limit_size = 0;
         limit_top = 0;
 
-        long count = selectDo(column).getVariate().longValue(0L);
-
-        limit_start = limit_start_bak;
-        limit_size = limit_size_bak;
-        limit_top = limit_top_bak;
-
-        return count;
+        try {
+            return selectDo(column).getVariate().longValue(0L);
+        } finally {
+            //恢复
+            limit_start = limit_start_bak;
+            limit_size = limit_size_bak;
+            limit_top = limit_top_bak;
+        }
     }
 
     public Object selectValue(String column) throws SQLException {
