@@ -14,13 +14,15 @@ public class FieldWrap {
     public final Field field;
     public final String name;
     public final boolean exclude;
+    public final boolean readonly;
 
     private Method _getter;
     private Method _setter;
 
-    protected FieldWrap(Class<?> clz, Field f1) {
+    protected FieldWrap(Class<?> clz, Field f1, boolean isFinal) {
         field = f1;
         exclude = (f1.getAnnotation(Exclude.class) != null);
+        readonly = isFinal;
 
         Column fn = f1.getAnnotation(Column.class);
         if (fn != null) {
@@ -44,6 +46,9 @@ public class FieldWrap {
     }
 
     public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
+        if(readonly){
+            return;
+        }
 
         try {
             if (val == null) {

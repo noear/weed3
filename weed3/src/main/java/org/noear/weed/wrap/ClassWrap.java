@@ -6,8 +6,10 @@ import org.noear.weed.annotation.Table;
 import org.noear.weed.ext.Act2;
 import org.noear.weed.utils.ThrowableUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -33,13 +35,18 @@ public class ClassWrap {
     public final Class<?> clazz;
     public final List<FieldWrap> fieldWraps; //所有的字段（包括继承的）
     public final String tableName;
-    private final Map<String,FieldWrap> _fieldWrapMap = new HashMap<>();
+    private final Map<String, FieldWrap> _fieldWrapMap = new HashMap<>();
+
+    //for record
+    private boolean _recordable;
+    private Constructor _recordConstructor;
+    private Parameter[] _recordParams;
 
     protected ClassWrap(Class<?> clz) {
         clazz = clz;
         fieldWraps = new ArrayList<>();
 
-        scanAllFields(clz, _fieldWrapMap::containsKey,(k,fw)->{
+        scanAllFields(clz, _fieldWrapMap::containsKey, (k, fw) -> {
             fieldWraps.add(fw);
             _fieldWrapMap.put(k.toLowerCase(), fw);
         });
@@ -47,13 +54,38 @@ public class ClassWrap {
         Table ann = clz.getAnnotation(Table.class);
         if (ann != null) {
             tableName = ann.value();
-        }else {
+        } else {
             tableName = WeedConfig.namingStrategy.classToTableName(clz);
+        }
+
+        if (fieldWraps.size() == 0) {
+            _recordable = false;
+        }
+
+        if (_recordable) {
+            //如果合字段只读
+            _recordConstructor = clz.getConstructors()[0];
+            _recordParams = _recordConstructor.getParameters();
         }
     }
 
-    /** 扫描一个类的所有字段（不能与Snack3的复用；它需要排除非序列化字段） */
-    private static void scanAllFields(Class<?> clz, Predicate<String> checker, BiConsumer<String,FieldWrap> consumer) {
+    //for record
+    public boolean recordable() {
+        return _recordable;
+    }
+
+    public Constructor recordConstructor() {
+        return _recordConstructor;
+    }
+
+    public Parameter[] recordParams() {
+        return _recordParams;
+    }
+
+    /**
+     * 扫描一个类的所有字段（不能与Snack3的复用；它需要排除非序列化字段）
+     */
+    private void scanAllFields(Class<?> clz, Predicate<String> checker, BiConsumer<String, FieldWrap> consumer) {
         if (clz == null) {
             return;
         }
@@ -64,7 +96,8 @@ public class ClassWrap {
             if (!Modifier.isStatic(mod)) {
                 if (checker.test(f.getName()) == false) {
                     f.setAccessible(true);
-                    consumer.accept(f.getName(), new FieldWrap(clz, f));
+                    _recordable &= Modifier.isFinal(mod);
+                    consumer.accept(f.getName(), new FieldWrap(clz, f, Modifier.isFinal(mod)));
                 }
             }
         }
@@ -75,7 +108,7 @@ public class ClassWrap {
         }
     }
 
-    public FieldWrap getFieldWrap(String name){
+    public FieldWrap getFieldWrap(String name) {
         return _fieldWrapMap.get(name.toLowerCase());
     }
 
@@ -95,7 +128,7 @@ public class ClassWrap {
 
     public <T> T newInstance() {
         try {
-            return (T)clazz.newInstance();
+            return (T) clazz.newInstance();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -104,17 +137,45 @@ public class ClassWrap {
     //将 data 转为 entity
     public <T> T toEntity(DataItem data) {
         try {
-            T item = (T) clazz.newInstance();
+            if (recordable()) {
+                Parameter[] argsP = recordParams();
+                Object[] argsV = new Object[recordParams().length];
 
-            for (FieldWrap fw : fieldWraps) {
-                //转入时，不排除; 交dataItem检查
-                if (data.exists(fw.name)) {
-                    //内部已有去null处理
-                    fw.setValue(item, data.get(fw.name));
+                for (int i = 0; i < argsP.length; i++) {
+                    Parameter p = argsP[i];
+
+                    //转入时，不排除; 交dataItem检查
+                    if (data.exists(p.getName())) {
+                        //内部已有去null处理
+                        Object val = data.get(p.getName());
+
+                        if (val != null) {
+                            //尝试类型转换
+                            val = WeedConfig.typeConverter.convert(val, p.getType());
+                        }
+
+                        argsV[i] = val;
+                    } else {
+                        argsV[i] = null;
+                    }
                 }
-            }
 
-            return item;
+                Object item = recordConstructor().newInstance(argsV);
+
+                return (T) item;
+            } else {
+                Object item = clazz.newInstance();
+
+                for (FieldWrap fw : fieldWraps) {
+                    //转入时，不排除; 交dataItem检查
+                    if (data.exists(fw.name)) {
+                        //内部已有去null处理
+                        fw.setValue(item, data.get(fw.name));
+                    }
+                }
+
+                return (T) item;
+            }
         } catch (Throwable ex) {
             ex = ThrowableUtils.throwableUnwrap(ex);
             if (ex instanceof RuntimeException) {
