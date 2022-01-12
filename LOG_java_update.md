@@ -1,4 +1,4 @@
-#### 3.4.14
+#### 3.4.15
 * 增加 实体接收时，支持 数字型转 LocalDataTime 
 * 增加对 kotlin data class 和 jdk14+ record 的支持
 

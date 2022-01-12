@@ -681,7 +681,21 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
             column = "COUNT(" + column + ")";
         }
 
-        return selectDo(column).getVariate().longValue(0L);
+        int limit_start_bak = limit_start;
+        int limit_size_bak = limit_size;
+        int limit_top_bak = limit_top;
+
+        limit_start = 0;
+        limit_size = 0;
+        limit_top = 0;
+
+        long count = selectDo(column).getVariate().longValue(0L);
+
+        limit_start = limit_start_bak;
+        limit_size = limit_size_bak;
+        limit_top = limit_top_bak;
+
+        return count;
     }
 
     public Object selectValue(String column) throws SQLException {
