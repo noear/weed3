@@ -3,6 +3,7 @@ package weed3rdb.features;
 import org.junit.Test;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import webapp.model.AppxD;
 import weed3rdb.DbUtil;
 import webapp.model.AppxModel;
 
@@ -75,6 +76,18 @@ public class TableTest {
                 .whereEq("app_id", 22)
                 .select("*")
                 .getItem(AppxModel.class).app_id == 22;
+
+        System.out.println(db.lastCommand.text);
+    }
+
+    @Test
+    public void test1_2() throws Exception {
+        AppxD appxD = db.table("appx")
+                .whereEq("app_id", 22)
+                .select("*")
+                .getItem(AppxD.class);
+
+        assert appxD.app_id() == 22;
 
         System.out.println(db.lastCommand.text);
     }

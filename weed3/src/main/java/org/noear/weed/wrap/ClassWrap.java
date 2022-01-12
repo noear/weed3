@@ -45,6 +45,7 @@ public class ClassWrap {
     protected ClassWrap(Class<?> clz) {
         clazz = clz;
         fieldWraps = new ArrayList<>();
+        _recordable = true;
 
         scanAllFields(clz, _fieldWrapMap::containsKey, (k, fw) -> {
             fieldWraps.add(fw);
