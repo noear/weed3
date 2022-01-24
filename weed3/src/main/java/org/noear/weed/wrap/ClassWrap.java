@@ -94,7 +94,7 @@ public class ClassWrap {
         for (Field f : clz.getDeclaredFields()) {
             int mod = f.getModifiers();
 
-            if (!Modifier.isStatic(mod) && !Modifier.isTransient(mod)) {
+            if (!Modifier.isStatic(mod)) {
                 if (checker.test(f.getName()) == false) {
                     FieldWrap fw = new FieldWrap(clz, f, Modifier.isFinal(mod));
                     if (fw.exclude == false) {
