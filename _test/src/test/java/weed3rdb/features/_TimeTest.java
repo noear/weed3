@@ -87,6 +87,6 @@ public class _TimeTest {
         Datetime log_fulltime = new Datetime(m.log_fulltime);
 
         assert m.app_id == 22;
-        assert log_fulltime.getSeconds() == m.time1.getSecond();
+        assert m.time1 == null;
     }
 }

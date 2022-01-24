@@ -94,11 +94,13 @@ public class ClassWrap {
         for (Field f : clz.getDeclaredFields()) {
             int mod = f.getModifiers();
 
-            if (!Modifier.isStatic(mod)) {
+            if (!Modifier.isStatic(mod) && !Modifier.isTransient(mod)) {
                 if (checker.test(f.getName()) == false) {
-                    f.setAccessible(true);
-                    _recordable &= Modifier.isFinal(mod);
-                    consumer.accept(f.getName(), new FieldWrap(clz, f, Modifier.isFinal(mod)));
+                    FieldWrap fw = new FieldWrap(clz, f, Modifier.isFinal(mod));
+                    if (fw.exclude == false) {
+                        _recordable &= Modifier.isFinal(mod);
+                        consumer.accept(f.getName(), fw);
+                    }
                 }
             }
         }
