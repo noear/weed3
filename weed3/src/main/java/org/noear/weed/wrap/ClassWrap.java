@@ -97,10 +97,9 @@ public class ClassWrap {
             if (!Modifier.isStatic(mod)) {
                 if (checker.test(f.getName()) == false) {
                     FieldWrap fw = new FieldWrap(clz, f, Modifier.isFinal(mod));
-                    if (fw.exclude == false) {
-                        _recordable &= Modifier.isFinal(mod);
-                        consumer.accept(f.getName(), fw);
-                    }
+
+                    _recordable &= Modifier.isFinal(mod);
+                    consumer.accept(f.getName(), fw);
                 }
             }
         }

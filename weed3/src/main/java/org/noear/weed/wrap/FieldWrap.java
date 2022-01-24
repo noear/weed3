@@ -6,6 +6,7 @@ import org.noear.weed.annotation.Column;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * Field wrap
@@ -21,7 +22,7 @@ public class FieldWrap {
 
     protected FieldWrap(Class<?> clz, Field f1, boolean isFinal) {
         field = f1;
-        exclude = (f1.getAnnotation(Exclude.class) != null);
+        exclude = ((f1.getAnnotation(Exclude.class) != null) || Modifier.isFinal(f1.getModifiers()));
         readonly = isFinal;
 
         Column fn = f1.getAnnotation(Column.class);
@@ -46,7 +47,7 @@ public class FieldWrap {
     }
 
     public void setValue(Object tObj, Object val) throws ReflectiveOperationException {
-        if(readonly){
+        if (readonly) {
             return;
         }
 
