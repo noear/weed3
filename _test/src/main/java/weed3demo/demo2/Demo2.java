@@ -6,6 +6,7 @@ import weed3demo.config.DbConfig;
 import weed3demo.mapper.UserModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,14 @@ public class Demo2 {
     public void test() {
         List<String> ids = new ArrayList<>();
         db.mapperBase(UserModel.class).selectList(wq -> wq.andIn(UserModel::getId, ids));
+
+//        //没参数的
+//        db.call("@webapp.dso.SqlMapper.appx_get").getMap();
+//
+//
+//        //有参数的
+//        Map<String,Object> args = new HashMap<>();
+//        db.call("@webapp.dso.SqlMapper.appx_get").setMap(args).getMap();
     }
 
     public Object searchBy(Integer id, String name, Integer type) throws Exception {

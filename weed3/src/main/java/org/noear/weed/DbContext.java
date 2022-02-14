@@ -330,7 +330,7 @@ public class DbContext implements Closeable {
     public DbProcedure call(String process, Map<String, Object> args) {
         if (process.startsWith("@")) {
             XmlSqlLoader.tryLoad();
-            return new DbXmlsqlProcedure(this).sql(process.substring(1));
+            return new DbXmlsqlProcedure(this).sql(process.substring(1)).setMap(args);
         }
 
         if (process.lastIndexOf(" ") > 0) {
