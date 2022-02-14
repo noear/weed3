@@ -68,7 +68,14 @@ public class MapperTest2 {
         assert mapper.appx_get2(1).app_id == 1;
     }
 
+    @Test
+    public void test_get2_2() throws SQLException {
+        AppxModel app = db2.call("@webapp.dso.SqlMapper.appx_get2")
+                .set("app_id", 1)
+                .getItem(AppxModel.class);
 
+        assert app.app_id == 1;
+    }
 
     @Test
     public void tast_select_m1() {
