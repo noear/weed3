@@ -116,3 +116,4 @@ List<UserModel> list = db.table("user")
 -usingCache(seconds:int) //使用缓存时间（单位：秒）
 -cacheTag(tag:String) //为缓存添加标签
 ```
+
