@@ -327,6 +327,11 @@ public class DbContext implements Closeable {
         return new DbStoredProcedure(this).call(process);
     }
 
+    /**
+     * 输入process name，获取process执行对象
+     *
+     * @param process process name,process code,xsqlid
+     */
     public DbProcedure call(String process, Map<String, Object> args) {
         if (process.startsWith("@")) {
             XmlSqlLoader.tryLoad();
