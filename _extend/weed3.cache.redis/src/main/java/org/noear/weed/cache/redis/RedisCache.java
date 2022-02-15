@@ -87,10 +87,15 @@ public class RedisCache implements ICacheServiceEx {
     public void store(String key, Object obj, int seconds) {
         if (_cache != null) {
             String newKey = newKey(key);
+
             try {
                 String val = _serializer.serialize(obj);
-                _cache.open((ru) -> ru.key(newKey).expire(seconds).set(val));
 
+                if (seconds > 0) {
+                    _cache.open((ru) -> ru.key(newKey).expire(seconds).set(val));
+                } else {
+                    _cache.open((ru) -> ru.key(newKey).expire(getDefalutSeconds()).set(val));
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 throw new RuntimeException(ex);

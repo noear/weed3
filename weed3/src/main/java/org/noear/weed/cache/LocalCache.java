@@ -29,10 +29,18 @@ public class LocalCache implements ICacheServiceEx {
     public LocalCache(String keyHeader, int defSeconds) {
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
+
+        if (_defaultSeconds < 1) {
+            _defaultSeconds = 30;
+        }
     }
 
     @Override
     public void store(String key, Object obj, int seconds) {
+        if (seconds <= 0) {
+            seconds = getDefalutSeconds();
+        }
+
         synchronized (key.intern()) {
             Entity ent = _data.get(key);
             if (ent == null) {

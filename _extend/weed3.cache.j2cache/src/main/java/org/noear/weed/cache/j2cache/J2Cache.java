@@ -17,10 +17,18 @@ public class J2Cache implements ICacheServiceEx {
         _defaultSeconds = defSeconds;
 
         _cache = cacheChannel;
+
+        if (_defaultSeconds < 1) {
+            _defaultSeconds = 30;
+        }
     }
 
     @Override
     public void store(String key, Object obj, int seconds) {
+        if (seconds <= 0) {
+            seconds = getDefalutSeconds();
+        }
+
         _cache.set(_cacheKeyHead, key, obj, seconds);
     }
 

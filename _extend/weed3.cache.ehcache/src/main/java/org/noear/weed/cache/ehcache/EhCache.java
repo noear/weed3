@@ -57,6 +57,10 @@ public class EhCache implements ICacheServiceEx {
                 .build(true);
 
         _cache = manager.getCache("defaultCache", String.class, Object.class);//获得缓存
+
+        if (_defaultSeconds < 1) {
+            _defaultSeconds = 30;
+        }
     }
 
     @Override

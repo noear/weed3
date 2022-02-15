@@ -71,8 +71,12 @@ public class MemCache implements ICacheServiceEx {
         if (_cache != null) {
             String newKey = newKey(key);
             try {
-                _cache.set(newKey, seconds, obj);
-            }catch (Exception ex) {
+                if (seconds > 0) {
+                    _cache.set(newKey, seconds, obj);
+                } else {
+                    _cache.set(newKey, getDefalutSeconds(), obj);
+                }
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
