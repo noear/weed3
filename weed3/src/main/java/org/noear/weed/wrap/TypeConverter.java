@@ -3,9 +3,7 @@ package org.noear.weed.wrap;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 public class TypeConverter {
     public Object convert(Object val, Class<?> target){
@@ -52,6 +50,14 @@ public class TypeConverter {
 
             if (val instanceof Long) {
                 return new Timestamp((Long) val);
+            }
+
+            if (val instanceof LocalDateTime) {
+                return Date.from(((LocalDateTime) val).atZone(ZoneId.systemDefault()).toInstant());
+            }
+
+            if (val instanceof LocalDate) {
+                return Date.from(((LocalDate) val).atStartOfDay(ZoneId.systemDefault()).toInstant());
             }
         }
 
