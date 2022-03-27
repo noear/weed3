@@ -149,6 +149,7 @@ db.table("user").setMap(map).insert();
 db.table("user").whereEq("id",2).delete();
 //改::
 db.table("user").set("sex",1).whereEq("id",2).update();
+db.table("user").setInc("level",1).whereEq("id",2).update(); //字段自+1
 //查::
 db.table("user u")
   .innerJoin("user_ext e").onEq("u.id","e.user_id")
