@@ -30,9 +30,9 @@ public class SqlTest {
         
     }
 
+    @Test
     public void test2() throws Exception {
-        Map<String, Object> map = new HashMap<>();
-
-        db.table("appx").setMap(map).upsert("akey");
+         db.table("appx").whereGt("app_id",1).limit(1).selectMap("*");
+         System.out.println(db.lastCommand.toSqlString());
     }
 }

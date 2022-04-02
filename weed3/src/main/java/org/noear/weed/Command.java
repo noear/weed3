@@ -111,7 +111,7 @@ public class Command {
             for (int i = 0, len = ss.length; i < len; i++) {
                 sb.append(ss[i]);
 
-                if (i < len - 1) {
+                if (i < len) {
                     Variate val = paramS.get(i);
 
                     if (val.isNull()) {
