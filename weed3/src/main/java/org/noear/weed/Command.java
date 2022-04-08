@@ -108,10 +108,10 @@ public class Command {
             sb.append(" --:batch");
         } else {
             String[] ss = text.split("\\?");
-            for (int i = 0, len = ss.length; i < len; i++) {
+            for (int i = 0, len = ss.length, len2= paramS.size(); i < len; i++) {
                 sb.append(ss[i]);
 
-                if (i < len) {
+                if (i < len2) {
                     Variate val = paramS.get(i);
 
                     if (val.isNull()) {

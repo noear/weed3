@@ -35,4 +35,10 @@ public class SqlTest {
          db.table("appx").whereGt("app_id",1).limit(1).selectMap("*");
          System.out.println(db.lastCommand.toSqlString());
     }
+
+    @Test
+    public void test3() throws Exception {
+        db.table("appx").whereGt("app_id",1).selectMap("*");
+        System.out.println(db.lastCommand.toSqlString());
+    }
 }
