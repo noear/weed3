@@ -16,29 +16,39 @@ public class MemCache implements ICacheServiceEx {
 
     private MemcachedClient _cache = null;
 
+    public MemCache(String keyHeader, int defSeconds, String server, String user, String password) {
+        Properties prop = new Properties();
+        prop.setProperty("server", server);
+
+        if (user != null) {
+            prop.setProperty("user", user);
+        }
+
+        if (password != null) {
+            prop.setProperty("password", password);
+        }
+
+        initDo(prop, keyHeader, defSeconds);
+    }
+
     public MemCache(Properties prop) {
-        this(prop, prop.getProperty("keyHeader"), 0);
+        initDo(prop, prop.getProperty("keyHeader"), 0);
     }
 
     public MemCache(Properties prop, String keyHeader, int defSeconds) {
-        String defSeconds_str = prop.getProperty("defSeconds");
+        initDo(prop, keyHeader, defSeconds);
+    }
+
+    private void initDo(Properties prop, String keyHeader, int defSeconds) {
         String server = prop.getProperty("server");
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");
 
         if (defSeconds == 0) {
+            String defSeconds_str = prop.getProperty("defSeconds");
             defSeconds = (defSeconds_str == null ? 60 * 1 : Integer.parseInt(defSeconds_str));
         }
 
-
-        do_init(keyHeader, defSeconds, server, user, password);
-    }
-
-    public MemCache(String keyHeader, int defSeconds, String server, String user, String password) {
-        do_init(keyHeader, defSeconds, server, user, password);
-    }
-
-    private void do_init(String keyHeader, int defSeconds, String server, String user, String password) {
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
 

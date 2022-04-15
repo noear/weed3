@@ -23,16 +23,31 @@ public class RedisCache implements ICacheServiceEx {
         return this;
     }
 
+    public RedisCache(String keyHeader, int defSeconds, String server, String user, String password) {
+        Properties prop = new Properties();
+        prop.setProperty("server", server);
+
+        if (user != null) {
+            prop.setProperty("user", user);
+        }
+
+        if (password != null) {
+            prop.setProperty("password", password);
+        }
+
+        initDo(prop, keyHeader, defSeconds);
+    }
+
     public RedisCache(Properties prop) {
-        this(prop, prop.getProperty("keyHeader"), 0);
+        initDo(prop, prop.getProperty("keyHeader"), 0);
     }
 
     public RedisCache(Properties prop, String keyHeader, int defSeconds) {
+        initDo(prop, keyHeader, defSeconds);
+    }
+
+    private void initDo(Properties prop, String keyHeader, int defSeconds) {
         String defSeconds_str = prop.getProperty("defSeconds");
-        String server = prop.getProperty("server");
-        String password = prop.getProperty("password");
-        String db_str = prop.getProperty("db");
-        String maxTotaol_str = prop.getProperty("maxTotaol");
 
         if (defSeconds == 0) {
             if (StringUtils.isEmpty(defSeconds_str) == false) {
@@ -40,37 +55,6 @@ public class RedisCache implements ICacheServiceEx {
             }
         }
 
-        int db = 1;
-        int maxTotaol = 200;
-
-        if (StringUtils.isEmpty(db_str) == false) {
-            db = Integer.parseInt(db_str);
-        }
-
-        if (StringUtils.isEmpty(maxTotaol_str) == false) {
-            maxTotaol = Integer.parseInt(maxTotaol_str);
-        }
-
-
-        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, JavabinSerializer.instance);
-    }
-
-    public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol) {
-        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, JavabinSerializer.instance);
-    }
-
-    public RedisCache(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
-        do_init(keyHeader, defSeconds, server, password, db, maxTotaol, serializer);
-    }
-
-    private void do_init(String keyHeader, int defSeconds, String server, String password, int db, int maxTotaol, ISerializer<String> serializer) {
-        if (db < 1) {
-            db = 1;
-        }
-
-        if (maxTotaol < 10) {
-            maxTotaol = 10;
-        }
 
         _cacheKeyHead = keyHeader;
         _defaultSeconds = defSeconds;
@@ -79,8 +63,8 @@ public class RedisCache implements ICacheServiceEx {
             _defaultSeconds = 30;
         }
 
-        _cache = new RedisClient(server, "", password, db, maxTotaol);
-        _serializer = serializer;
+        _cache = new RedisClient(prop);
+        _serializer = JavabinSerializer.instance;
     }
 
     @Override
