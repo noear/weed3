@@ -364,9 +364,9 @@ public class XmlSqlCompiler {
     //xml:解析 trim 指令节点
     private static void parseTrimNode(StringBuilder sb, String sqlBuilderName , XmlSqlBlock dblock, Node n , int depth) {
         String _trimStart = attr(n, "trimStart");//开始去除
-        String _trimEnd = attr(n, "trimEnd");//结属去除
-        String _prefix = attr(n, "prefix");//添前缀
-        String _suffix = attr(n, "suffix");//添后缀
+        String _trimEnd = attr(n, "trimEnd");//结尾去除
+        String _prefix = attr(n, "prefix");//添加前缀
+        String _suffix = attr(n, "suffix");//添加后缀
 
         dblock.varNum++;
 
@@ -378,19 +378,19 @@ public class XmlSqlCompiler {
         _parseNodeList(n.getChildNodes(), varName, sb, dblock, depth);
 
         if(StringUtils.isEmpty(_trimStart) == false){
-            newLine(sb, depth).append(varName).append(".trimStart(\"").append(_trimStart.trim()).append("\");");
+            newLine(sb, depth).append(varName).append(".trimStart(\"").append(_trimStart).append("\");");
         }
 
         if(StringUtils.isEmpty(_trimEnd) == false){
-            newLine(sb, depth).append(varName).append(".trimEnd(\"").append(_trimEnd.trim()).append("\");");
+            newLine(sb, depth).append(varName).append(".trimEnd(\"").append(_trimEnd).append("\");");
         }
 
         if(StringUtils.isEmpty(_prefix) == false){
-            newLine(sb, depth).append(varName).append(".addPrefix(\"").append(_prefix.trim()).append("\");");
+            newLine(sb, depth).append(varName).append(".addPrefix(\"").append(_prefix).append("\", false);");
         }
 
         if(StringUtils.isEmpty(_suffix) == false){
-            newLine(sb, depth).append(varName).append(".addSuffix(\"").append(_suffix.trim()).append("\");");
+            newLine(sb, depth).append(varName).append(".addSuffix(\"").append(_suffix).append("\", false);");
         }
 
         newLine(sb, depth).append(sqlBuilderName).append(".append(").append(varName).append(");\n");

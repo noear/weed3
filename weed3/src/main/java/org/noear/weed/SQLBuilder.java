@@ -129,13 +129,37 @@ public class SQLBuilder {
 
     //添加前缀
     public SQLBuilder addPrefix(String str) {
-        builder.insert(0, str);
-        return this;
+        return addPrefix(str, true);
     }
 
     //添加后缀
     public SQLBuilder addSuffix(String str) {
-        builder.append(str);
+       return addSuffix(str, true);
+    }
+
+    //添加前缀
+    public SQLBuilder addPrefix(String str, boolean allowEmpty) {
+        if (allowEmpty) {
+            builder.insert(0, str);
+        } else {
+            if (builder.length() > 0) {
+                builder.insert(0, str);
+            }
+        }
+
+        return this;
+    }
+
+    //添加后缀
+    public SQLBuilder addSuffix(String str, boolean allowEmpty) {
+        if (allowEmpty) {
+            builder.append(str);
+        } else {
+            if (builder.length() > 0) {
+                builder.append(str);
+            }
+        }
+
         return this;
     }
 
