@@ -16,4 +16,14 @@ public class XmlTest {
 
         System.out.println(code);
     }
+
+    @Test
+    public void test2() throws Exception {
+
+        URL url = Utils.getResource("weed3/SqlMapper.xml");
+
+        String code = XmlSqlCompiler.parse(url);
+
+        System.out.println(code);
+    }
 }

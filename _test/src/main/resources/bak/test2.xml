@@ -9,4 +9,16 @@
         SELECT * FROM `group_buying` WHERE gb_id in (@{gb_ids:Iterable[Long]})
         ORDER BY FIELD (gb_id,${gb_ids:Iterable[Long]}) desc;
     </sql>
+
+    <sql id="test"
+         param="gb_ids:List[Long]"
+         return="List[zm.data.code.pepper.api.models.db.GroupBuyingModel]">
+        SELECT * FROM `group_buying`
+        <trim prefix="WHERE " trimStart="AND ">
+            <if test="gb_ids.size() gt 0">
+                AND gb_id in (@{gb_ids})
+            </if>
+        </trim>
+        order by gb_id
+</sql>
 </mapper>

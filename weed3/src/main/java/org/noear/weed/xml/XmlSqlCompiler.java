@@ -322,11 +322,12 @@ public class XmlSqlCompiler {
         int type = n.getNodeType();
 
         if (type == 3 || type == 4) {//text or CDATA
-            String text = n.getTextContent().trim();
+            String text = n.getTextContent().trim(); //不 trim
 
             if (text.length() > 0) {
+                text = " " + text;//避免没有空隔接到一起
                 newLine(sb, depth).append(sqlBuilderName).append(".append(");
-                parseTxt(sb,dblock,text);
+                parseTxt(sb, dblock, text);
                 sb.append(");");
             }
         }

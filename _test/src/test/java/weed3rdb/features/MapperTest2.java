@@ -69,6 +69,16 @@ public class MapperTest2 {
     }
 
     @Test
+    public void test_getlist_by_trim() throws SQLException {
+        List<AppxModel> list1 = mapper.appx_getlist_byid(1);
+        List<AppxModel> list2 = mapper.appx_getlist_byid(11);
+
+        assert list1.size()==4;
+        assert list2.size()==4;
+        assert list1.get(0).app_id != list2.get(0).app_id;
+    }
+
+    @Test
     public void test_get2_2() throws SQLException {
         AppxModel app = db2.call("@webapp.dso.SqlMapper.appx_get2")
                 .set("app_id", 1)

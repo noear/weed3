@@ -20,7 +20,20 @@
     </sql>
 
     <sql id="appx_getlist" return="List[webapp.model.AppxModel]">
-        select * from appx where app_id>@{app_id:int} order by app_id asc limit 4
+        select * from appx where app_id <![CDATA[>]]> @{app_id:int} order by app_id asc limit 4
+    </sql>
+
+    <sql id="appx_getlist_byid"
+         return="List[webapp.model.AppxModel]">
+        select * from appx
+
+        <trim prefix="WHERE " trimStart="AND ">
+            <if test="app_id gt 10">
+                AND app_id <![CDATA[>]]> @{app_id:int}
+            </if>
+        </trim>
+
+        order by app_id asc limit 4
     </sql>
 
     <sql id="appx_getids" return="List[Integer]">
