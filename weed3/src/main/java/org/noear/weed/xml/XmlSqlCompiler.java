@@ -176,7 +176,7 @@ public class XmlSqlCompiler {
 
         //1.打印变量
         int var_num = 0;
-        for (XmlSqlVar dv : dblock.varMap.values()) {
+        for (XmlSqlVar dv : dblock.varList()) {
 
             var_num++;
             if (dv.type != null && dv.type.length() > 0) {

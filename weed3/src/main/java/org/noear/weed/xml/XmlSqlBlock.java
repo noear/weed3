@@ -68,7 +68,11 @@ public class XmlSqlBlock {
     //其它的操作不需要判断
 
     /** 变量标签集合 */
-    public Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
+    private Map<String, XmlSqlVar> varMap = new LinkedHashMap<>();
+    public Collection<XmlSqlVar> varList(){
+        return Collections.unmodifiableCollection(varMap.values());
+    }
+
     public void varPut(XmlSqlVar dv) {
         if (dv.type == null || dv.type.length() == 0) {
             varMap.putIfAbsent(dv.name, dv);
