@@ -24,7 +24,7 @@ public class WithTest {
                 .limit(10)
                 .with("ax", db.table("appx").selectQ("*"))
                 .with("ag", db.table("appx_agroup").whereLt("agroup_id",10).selectQ("*"))
-                .with("ah", "select * from $.appx_agroup where agroup_id<?", 10)
+                .with("ah", "select * from appx_agroup where agroup_id<?", 10)
                 .selectList("ax.*", AppxModel.class);
 
         System.out.println(db.lastCommand.text);
@@ -43,8 +43,7 @@ public class WithTest {
                 .orderByDesc("app_id")
                 .limit(2)
                 .with("ax", db.table("appx").selectQ("*"))
-                .select("ax.*")
-                .getMapList();
+                .selectMapList("ax.*");
 
         System.out.println(db.lastCommand.text);
     }
