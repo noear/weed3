@@ -1,6 +1,7 @@
 #### 3.4.23
 * 优化 trim 指令：当为空时不添加前后缀
 * 执行异常时，仍可以触发 onExecuteAft
+* 修复 param 和 declare 失效的问题
 
 #### 3.4.22
 * 升级 redisx 1.4.1
