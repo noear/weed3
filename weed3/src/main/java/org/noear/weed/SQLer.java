@@ -229,15 +229,15 @@ class SQLer {
 
             int rst = stmt.executeUpdate();
 
-            //*.监听
-            WeedConfig.runExecuteAftEvent(cmd);
-
             return rst;
 
         } catch (SQLException ex) {
             WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
+            //*.监听
+            WeedConfig.runExecuteAftEvent(cmd);
+
             tryClose();
         }
     }
@@ -271,15 +271,14 @@ class SQLer {
 
             int[] rst = stmt.executeBatch();
 
-            //*.监听
-            WeedConfig.runExecuteAftEvent(cmd);
-
             return rst;
 
         } catch (SQLException ex) {
             WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
+            //*.监听
+            WeedConfig.runExecuteAftEvent(cmd);
             tryClose();
         }
     }
@@ -305,9 +304,6 @@ class SQLer {
                 }
             }
 
-            //*.监听
-            WeedConfig.runExecuteAftEvent(cmd);
-
             //这里，是与.execute()区别的地方
             if (rset != null && rset.next()) {
                 Object tmp = getObject(cmd, 1);
@@ -321,6 +317,8 @@ class SQLer {
             WeedConfig.runExceptionEvent(cmd, ex);
             throw ex;
         } finally {
+            //*.监听
+            WeedConfig.runExecuteAftEvent(cmd);
             tryClose();
         }
     }
@@ -331,13 +329,13 @@ class SQLer {
             return null;
         }
 
-        //3.执行
-        ResultSet rst = stmt.executeQuery();
-
-        //*.监听
-        WeedConfig.runExecuteAftEvent(cmd);
-
-        return rst;
+        try {
+            //3.执行
+            return stmt.executeQuery();
+        } finally {
+            //*.监听
+            WeedConfig.runExecuteAftEvent(cmd);
+        }
     }
 
     private boolean buildCMD(Command cmd, boolean isInsert) throws SQLException {
