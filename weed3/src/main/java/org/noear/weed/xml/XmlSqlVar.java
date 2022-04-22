@@ -15,10 +15,10 @@ public class XmlSqlVar {
     public int label;
 
     public XmlSqlVar(){}
-    public XmlSqlVar(String mark, String name, String type){
+    public XmlSqlVar(String mark, String name, String type) {
         this.mark = mark;
         this.name = name;
-        this.type = type;
+        this.type = CompilerUtil.varTypeParse(type);
     }
 
     //替换形变量表达式

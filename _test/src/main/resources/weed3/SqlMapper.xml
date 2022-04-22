@@ -24,12 +24,13 @@
     </sql>
 
     <sql id="appx_getlist_byid"
+         param="app_id:int"
          return="List[webapp.model.AppxModel]">
         select * from appx
 
         <trim prefix="WHERE " trimStart="AND ">
             <if test="app_id gt 10">
-                AND app_id <![CDATA[>]]> @{app_id:int}
+                AND app_id <![CDATA[>]]> @{app_id}
             </if>
         </trim>
 

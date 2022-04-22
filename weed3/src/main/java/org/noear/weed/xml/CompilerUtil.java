@@ -101,4 +101,12 @@ class CompilerUtil {
             }
         });
     }
+
+    public static String varTypeParse(String str) {
+        if (str.contains("[")) {
+            return str.replace("[", "<").replace("]", ">");
+        } else {
+            return str;
+        }
+    }
 }

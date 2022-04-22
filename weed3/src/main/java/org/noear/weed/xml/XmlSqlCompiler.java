@@ -147,8 +147,7 @@ public class XmlSqlCompiler {
         dblock._declare = attr(n, ":declare");
         dblock._return = attr(n, ":return");
         if (dblock._return != null && dblock._return.indexOf("[") > 0) {
-            dblock._return = dblock._return.replace("[", "<")
-                    .replace("]", ">");
+            dblock._return = CompilerUtil.varTypeParse(dblock._return);
 
             int start = dblock._return.indexOf("<");
             int end = dblock._return.indexOf(">");
@@ -597,7 +596,7 @@ public class XmlSqlCompiler {
     private static XmlSqlVar parseTxtVar(Matcher m){
         XmlSqlVar dv = new XmlSqlVar();
         dv.mark = m.group(0);
-        dv.name = m.group(1).trim().replace("[","<").replace("]",">");
+        dv.name = CompilerUtil.varTypeParse(m.group(1).trim());
         if (dv.name.indexOf(":") > 0) {
             String[] kv = dv.name.split(":");
             dv.name = kv[0].trim();
