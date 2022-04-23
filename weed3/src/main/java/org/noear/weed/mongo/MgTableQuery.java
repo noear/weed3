@@ -1,5 +1,6 @@
 package org.noear.weed.mongo;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.weed.DataItem;
@@ -591,6 +592,26 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
         Map map = selectMap();
 
         return (map != null && map.size() > 0);
+    }
+
+    public FindIterable<Document> selectCursor() {
+        Map<String, Object> filter = buildFilter(true);
+
+        FindIterable<Document> cursor = mongoX.find(table, filter);
+
+        if(limit_size > 0) {
+            if (limit_start > 0) {
+                cursor.skip(limit_start);
+            }
+
+            cursor.limit(limit_size);
+        }
+
+        if (orderMap == null || orderMap.size() == 0) {
+            cursor.sort(new Document(orderMap));
+        }
+
+        return cursor;
     }
 
     public String createIndex(boolean background) {
