@@ -599,7 +599,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
 
         FindIterable<Document> cursor = mongoX.find(table, filter);
 
-        if(limit_size > 0) {
+        if (limit_size > 0) {
             if (limit_start > 0) {
                 cursor.skip(limit_start);
             }
@@ -607,7 +607,7 @@ public class MgTableQuery implements ICacheController<MgTableQuery> {
             cursor.limit(limit_size);
         }
 
-        if (orderMap == null || orderMap.size() == 0) {
+        if (orderMap != null && orderMap.size() > 0) {
             cursor.sort(new Document(orderMap));
         }
 
