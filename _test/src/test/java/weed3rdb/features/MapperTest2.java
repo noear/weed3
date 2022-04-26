@@ -66,6 +66,8 @@ public class MapperTest2 {
     @Test
     public void test_get2() throws SQLException {
         assert mapper.appx_get2(1).app_id == 1;
+
+        assert mapper.appx_get2(Integer.MAX_VALUE).app_id == null;
     }
 
     @Test
@@ -85,6 +87,16 @@ public class MapperTest2 {
                 .getItem(AppxModel.class);
 
         assert app.app_id == 1;
+
+        app = db2.call("@webapp.dso.SqlMapper.appx_get2")
+                .set("app_id", Integer.MAX_VALUE)
+                .getItem(AppxModel.class);
+
+        assert app.app_id == null;
+
+        assert  db2.call("@webapp.dso.SqlMapper.appx_get2")
+                .set("app_id", Integer.MAX_VALUE)
+                .getMap().size() == 0;
     }
 
     @Test
