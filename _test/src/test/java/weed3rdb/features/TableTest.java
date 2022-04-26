@@ -100,7 +100,25 @@ public class TableTest {
                 .getItem(AppxModel.class).app_id == null;
 
         System.out.println(db.lastCommand.text);
+
+        assert db.table("appx")
+                .whereEq("app_id", null)
+                .selectMap("*").size() == 0;
     }
+
+    @Test
+    public void test12_2() throws Exception {
+        assert db.table("appx")
+                .whereEq("app_id", null)
+                .selectList("*", AppxModel.class).size() == 0;
+
+        System.out.println(db.lastCommand.text);
+
+        assert db.table("appx")
+                .whereEq("app_id", null)
+                .selectMapList("*").size() == 0;
+    }
+
 
 
     @Test
