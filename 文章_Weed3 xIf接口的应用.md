@@ -6,7 +6,7 @@
 * 旧风格代码：
 ```java
 public Object searchBy(Integer id, String name,Integer type) throws Exception {
-    DbTableQuery qr = db.table("user").where("1=1");
+    DbTableQuery qr = db.table("user").whereTrue();
     if (id != null) {
         qr.and("id=?", id);
     }
@@ -27,7 +27,7 @@ public Object searchBy(Integer id, String name,Integer type) throws Exception {
 ```java
 public Object searchBy(Integer id, String name,Integer type) throws Exception {
     return db.table("user")
-            .where("1=1")
+            .whereTrue()
             .andIf(id != null, "id=?", id)
             .andIf(name != null, "name=?", name)
             .andIf(type != null && type > 2, "type=?", type)
@@ -38,7 +38,7 @@ public Object searchBy(Integer id, String name,Integer type) throws Exception {
 //在Mapper里也适用
 public Object searchBy(Integer id, String name,Integer type) throws Exception {
     return db.mapperBase(User.class).selectMapTop(50, q->
-            q.where("1=1")
+            q.whereTrue()
              .andIf(id != null, "id=?", id)
              .andIf(name != null, "name=?", name)
              .andIf(type != null && type > 2, "type=?", type));
