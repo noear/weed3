@@ -4,13 +4,13 @@
 ```
 mapper 开始标签
   namespace （属性：命名空间，{namespace}.{id} = sqlid；不包括文件名）
-  import（属性：导入包或类，多个以;号隔开。可以简化后面的模型写法）
+  import（属性：导入包或类，多个以;号隔开。可以简化后面的模型写法，或引入工具类）
   baseMapper（属性：扩展BaseMapper 的模型，效果：BaseMapper<Xxx>）
-  db（属性：关联 db bean；效果：@Db("xxx")）
+  db（属性：关联 dataSource bean；效果：@Db("xxx")）
 
 sql 代码块定义指令
   id
-  param?（属性：外部输入变量申明；默认会自动生成::新增***）
+  param?（属性：外部输入变量申明；默认会自动生成）
   declare?（属性：内部变量类型预申明）
   return（属性：返回类型）
 
@@ -31,10 +31,10 @@ if 判断控制指令（没有else）
         //例：m.icon??  ::m.icon!=null
         //例：m.icon?!  ::Utils.isNoteEmpty(m.icon)
 
-for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index::新增***）
+for 循环控制指令 （通过 ${var}_index 可获得序号，例：m_index）
   var （属性：循环变量申明）
   items （属性：集合变量名称）
-  sep? （属性：分隔符::新增***）
+  sep? （属性：分隔符）
 
 trim 修剪指令
   trimStart（属性：开始位去除）
@@ -47,7 +47,7 @@ ref 引用代码块指令
 
 name:type    = 变量申明（可用于属性：:param, :declare，var，或宏定义 @{..},${..}）
 @{name:type?} = 变量注入
-${name:type?} = 变量替换
+${name:type?} = 变量替换，即成为字符串的一部份
 
 //列表([]替代<>)
 return="List[weed3demo.mapper.UserModel]" => List<UserModel>
@@ -93,7 +93,7 @@ return="String" => String （任何单职类型）
 
     <sql id="user_del" remarks="删除一个用户">
         DELETE FROM user WHERE id=@{user_id:long}
-        <if test="sex > 0">
+        <if test="sex gt 0">
             AND sex=@{sex:int}
         </if>
     </sql>
