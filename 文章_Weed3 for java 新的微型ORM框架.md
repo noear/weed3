@@ -239,7 +239,7 @@ db.table("user u")
   .selectItem("u.*,e.sex user_sex", User.class);
 
 
-//查++（折开来拼接条件）::
+//查询++（折开来拼接条件）::
 var tb = db.table("user u");
 if(test.a){
   tb.innerJoin("user_ext e").onEq("u.id","e.user_id");
@@ -251,7 +251,7 @@ if(test.b){
 
 tb.selectItem("u.*,e.sex,e.label", User.class);
 
-//查++2（通过构建函数拼接条件）::
+//查询++2（通过构建函数拼接条件）::
 db.table("user u")
   .build(tb->{
     if(test.a){
