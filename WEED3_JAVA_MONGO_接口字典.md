@@ -106,6 +106,7 @@ List<UserModel> list = db.table("user")
 -selectMap()-> Document
 -selectMapList()-> List<Document>
 -selectArray(field:String)-> List<Object>
+-selectCursor()-> FindIterable<Document>
 
 
 //
