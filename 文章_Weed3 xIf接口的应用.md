@@ -34,15 +34,6 @@ public Object searchBy(Integer id, String name,Integer type) throws Exception {
             .limit(50)
             .select("*").getMapList()
 }
-
-//在Mapper里也适用
-public Object searchBy(Integer id, String name,Integer type) throws Exception {
-    return db.mapperBase(User.class).selectMapTop(50, q->
-            q.whereTrue()
-             .andIf(id != null, "id=?", id)
-             .andIf(name != null, "name=?", name)
-             .andIf(type != null && type > 2, "type=?", type));
-}
 ```
 
 #### setIf(),setMapIf(),setEntityIf()
