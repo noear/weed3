@@ -2,7 +2,7 @@
 
 Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；template sql；事务；缓存；监听；等...）
 
-应该算是个功能全面且小巧的ORM框架：0.1mb，无其它依赖。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
+应该算是个功能全面且小巧的ORM框架：0.2Mb，无其它依赖。对外的接口也不多，主要由DbContext上的四个接口发起所有的操作。
 
 
 #### Weed3 特点和理念：
@@ -79,16 +79,14 @@ demo.db:
 
 * 2.有配置之后开始实列化DbContext：
 
-  > 如果是 Spring 框架，可以通过注解获取配置
-如果是 solon 框架，可以通过注解 或 接口获取配置
+  > 如果是 Spring 框架，可以通过注解获取配置 
+  > 
+  > 如果是 solon 框架，可以通过注解 或 接口获取配置
   
 ```java
 //使用Properties配置的示例
 Properties properties = Solon.cfg().getProp("demo.db"); //这是solon框架的接口
 DbContext db  = new DbContext(properties); 
-
-//使用Map配置的示例
-DbContext db  = new DbContext(map); 
 
 //使用proxool线程池配置的示例（好像现在不流行了）//proxool通过xml配置
 DbContext db  = new DbContext("user","proxool.xxx_db"); 
