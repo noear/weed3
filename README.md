@@ -156,7 +156,18 @@ db.table("user u")
   .whereEq("u.id",1001)
   .selectItem("u.*,e.sex,e.label", User.class);
 
-
+//查++::
+db.table("user u")
+   .build(tb->{
+       if(test.a){
+          tb.innerJoin("user_ext e").onEq("u.id","e.user_id"); 
+       }
+       
+       if(test.b){
+          tb.whereEq("u.id",1001);
+       }
+   })
+  .selectItem("u.*,e.sex,e.label", User.class);
 
 /** 2.3.Call用法 */
 //调用存储过程
