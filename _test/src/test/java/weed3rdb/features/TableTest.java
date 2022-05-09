@@ -28,6 +28,13 @@ public class TableTest {
         }
     }
 
+    public void demo2() throws Exception {
+        db.table("appx_copy")
+                .setInc("a", 1)
+                .whereEq("app_id", 11)
+                .update();
+    }
+
     @Test
     public void test0() throws Exception {
         Map<String, Object> map = db.table("appx").whereEq("app_id", 1).select("*").getMap();
