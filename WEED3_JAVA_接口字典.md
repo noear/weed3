@@ -60,7 +60,7 @@
 //例2: .and("(name=? or id=?)","x",1)
 -and(code:String,args:Object...) -> self //添加SQL and 语句 //可使用?,?...占位符（ ?... 表示数组占位符）
 -andIf(condition:bool, code:String,args:Object...) -> self
--and() -> self //添加SQL where 关键字
+-and() -> self //添加SQL and 关键字
 -andEq(col:String,val:Object) -> self //添加SQL and = 语句      //val为null时，转为 IS NULL
 -andNeq(col:String,val:Object) -> self //添加SQL and != 语句    //val为null时，转为 IS NOT NULL
 -andLt(col:String,val:Object) -> self //添加SQL and < 语句

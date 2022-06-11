@@ -250,7 +250,7 @@ public abstract class WhereBase<T extends WhereBase> {
     }
 
     /**
-     * 添加SQL where 关键字
+     * 添加SQL and 关键字
      */
     public T and() {
         _builder.append(" AND ");
@@ -519,6 +519,115 @@ public abstract class WhereBase<T extends WhereBase> {
         _builder.append(" ( ").append(fmtCondition(code), args);
         return (T) this;
     }
+
+    /**
+     * 添加SQL ( = 语句
+     */
+    public T beginEq(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NULL ");
+        }else{
+            _builder.append(" = ? ", val);
+        }
+
+        return (T) this;
+    }
+
+
+    public T beginNeq(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column));
+        if(val == null){
+            _builder.append(" IS NOT NULL ");
+        }else{
+            _builder.append(" != ? ", val);
+        }
+
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( < 语句
+     */
+    public T beginLt(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" < ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( <= 语句
+     */
+    public T beginLte(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" <= ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( > 语句
+     */
+    public T beginGt(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" > ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( >= 语句
+     */
+    public T beginGte(String column, Object val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" >= ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( like 语句
+     */
+    public T beginLk(String column, String val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" LIKE ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( not like 语句
+     */
+    public T beginNlk(String column, String val) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" NOT LIKE ? ", val);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( between 语句
+     */
+    public T beginBtw(String column, Object start, Object end) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+
+    /**
+     * 添加SQL ( not between 语句
+     */
+    public T beginNbtw(String column, Object start, Object end) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" NOT BETWEEN ? AND ? ", start, end);
+        return (T) this;
+    }
+
+
+    /**
+     * 添加SQL ( in(?...) 语句
+     */
+    public T beginIn(String column, Iterable ary) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" IN (?...) ", ary);
+        return (T) this;
+    }
+
+    /**
+     * 添加SQL ( not in(?...) 语句
+     */
+    public T beginNin(String column, Iterable ary) {
+        _builder.append(" ( ").append(fmtColumn(column)).append(" NOT IN (?...) ", ary);
+        return (T) this;
+    }
+
 
     /**
      * 添加右括号
