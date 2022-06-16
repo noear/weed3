@@ -35,7 +35,7 @@ public class Tran1Demo {
         });
     }
 
-    /*2个数据库的事务（在同一个函数内，分布式）*/
+    /*2个数据库的事务*/
     public static void test_db2_tran() throws Throwable {
         DbContext db = DbConfig.pc_user;
         DbContext db2 = DbConfig.pc_base;
@@ -54,7 +54,7 @@ public class Tran1Demo {
         });
     }
 
-    /*2个数据库的事务，后面的根据前面的执行结果再决定要不要跟进（在同一个函数内，分布式）*/
+    /*2个数据库的事务，后面的根据前面的执行结果再决定要不要跟进*/
     public static void test_db2_tran2() throws Throwable {
         DbContext db = DbConfig.pc_user;
         DbContext db2 = DbConfig.pc_base;

@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * Created by noear on 2017/7/22.
  */
 public class Tran2Demo {
-    //不同函数串一起，跨多个数据库（分布式）
+    //不同函数串一起，跨多个数据库
     public static void tast_tran() throws Throwable{
 
 
