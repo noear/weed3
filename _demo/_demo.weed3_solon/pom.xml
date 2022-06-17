@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.cache.memcached</artifactId>
-            <version>3.4.26</version>
+            <version>3.4.27</version>
         </dependency>
 
 
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.4.26</version>
+                <version>3.4.27</version>
             </plugin>
 
             <plugin>

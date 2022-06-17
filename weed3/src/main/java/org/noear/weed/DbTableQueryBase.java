@@ -720,7 +720,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         long total = selectCount();
         List<T> list = selectDo(columns).getList(clz);
 
-        return new IPageImpl<>(list, total);
+        return new IPageImpl<>(list, total, limit_size);
     }
 
     public DataItem selectDataItem(String columns) throws SQLException {
@@ -735,7 +735,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         long total = selectCount();
         List<DataItem> list = selectDo(columns).getDataList().getRows();
 
-        return new IPageImpl<>(list, total);
+        return new IPageImpl<>(list, total, limit_size);
     }
 
     public Map<String, Object> selectMap(String columns) throws SQLException {
@@ -750,7 +750,7 @@ public class DbTableQueryBase<T extends DbTableQueryBase> extends WhereBase<T> i
         long total = selectCount();
         List<Map<String, Object>> list = selectDo(columns).getMapList();
 
-        return new IPageImpl<>(list, total);
+        return new IPageImpl<>(list, total, limit_size);
     }
 
     public <T> List<T> selectArray(String column) throws SQLException {

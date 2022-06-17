@@ -11,10 +11,12 @@ public class IPageImpl<T> implements IPage<T> {
 
     private final List<T> list;
     private final long total;
+    private final int size;
 
-    public IPageImpl(List<T> list, long total) {
+    public IPageImpl(List<T> list, long total, int size) {
         this.list = list;
         this.total = total;
+        this.size = size;
     }
 
     @Override
@@ -25,5 +27,24 @@ public class IPageImpl<T> implements IPage<T> {
     @Override
     public long getTotal() {
         return total;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public long getPages() {
+        if (this.getSize() == 0L) {
+            return 0L;
+        } else {
+            long pages = this.getTotal() / this.getSize();
+            if (this.getTotal() % this.getSize() != 0L) {
+                ++pages;
+            }
+
+            return pages;
+        }
     }
 }

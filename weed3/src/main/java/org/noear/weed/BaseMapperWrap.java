@@ -301,7 +301,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         List<T> list = RunUtils.call(() -> getQr(c).limit(start, size).selectList("*", clz));
         long total = RunUtils.call(() -> getQr(c).selectCount());
 
-        IPageImpl<T> page = new IPageImpl<>(list, total);
+        IPageImpl<T> page = new IPageImpl<>(list, total, size);
 
         return page;
     }
@@ -311,7 +311,7 @@ public class BaseMapperWrap<T> implements BaseMapper<T> {
         List<Map<String, Object>> list = RunUtils.call(() -> getQr(c).limit(start, size).selectMapList("*"));
         long total = RunUtils.call(() -> getQr(c).selectCount());
 
-        IPageImpl<Map<String, Object>> page = new IPageImpl<>(list, total);
+        IPageImpl<Map<String, Object>> page = new IPageImpl<>(list, total, size);
 
         return page;
     }
