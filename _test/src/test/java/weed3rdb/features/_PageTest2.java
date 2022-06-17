@@ -25,6 +25,8 @@ public class _PageTest2 {
         assert list.getList().size() == 10;
         assert list.getList().get(0).app_id == 1;
         assert list.getTotal() > 10;
+        assert list.getPages() > 0;
+        assert list.getSize() == 10;
 
         System.out.println(db2.lastCommand.text);
     }
@@ -35,6 +37,8 @@ public class _PageTest2 {
         assert  list.getList().size() == 10;
         assert list.getList().get(0).app_id == 2;
         assert list.getTotal() > 10;
+        assert list.getPages() > 0;
+        assert list.getSize() == 10;
 
         System.out.println(db2.lastCommand.text);
     }
@@ -50,6 +54,8 @@ public class _PageTest2 {
         assert  list.getList().size() == 10;
         assert list.getList().get(0).app_id == 2;
         assert list.getTotal() > 10;
+        assert list.getPages() > 0;
+        assert list.getSize() == 10;
 
         System.out.println(db2.lastCommand.text);
     }
