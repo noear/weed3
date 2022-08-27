@@ -38,6 +38,12 @@
             <version>3.4.28</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+            <version>3.4.28</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.h2database</groupId>

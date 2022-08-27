@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>weed3-parent</artifactId>
-    <version>${revision}</version>
+    <version>3.4.28</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -36,11 +36,11 @@
     </scm>
 
     <properties>
-        <revision>3.4.28</revision>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
+        <weed3.ver>3.4.28</weed3.ver>
     </properties>
 
     <dependencyManagement>
@@ -48,37 +48,37 @@
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3.cache.ehcache</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3.cache.j2cache</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3.cache.memcached</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3.cache.redis</artifactId>
-                <version>${revision}</version>
+                <version>${weed3.ver}</version>
             </dependency>
 
             <dependency>
