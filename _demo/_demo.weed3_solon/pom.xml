@@ -15,10 +15,24 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.10.1</solon.ver>
+        <solon.ver>1.10.0</solon.ver>
     </properties>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.cache.memcached</artifactId>
+            <version>3.4.29</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+            <version>3.4.29</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.noear</groupId>
@@ -30,20 +44,13 @@
             <groupId>org.noear</groupId>
             <artifactId>weed3-solon-plugin</artifactId>
             <version>${solon.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.noear</groupId>
+                    <artifactId>weed3</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.memcached</artifactId>
-            <version>3.4.28</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
-            <version>3.4.28</version>
-        </dependency>
-
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -71,7 +78,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-maven-plugin</artifactId>
-                <version>3.4.28</version>
+                <version>3.4.29</version>
             </plugin>
 
             <plugin>
