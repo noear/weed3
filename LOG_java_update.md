@@ -1,3 +1,12 @@
+#### 3.4.28
+* IPage 调整为可序列化
+
+#### 3.4.27
+* 调整 IPage 接口，增加页数与页长
+
+#### 3.4.26
+* 增加 beginEq，beginNeq... 系列操作函数
+
 #### 3.4.25
 * 增加 MgTableQuery::selectCursor 接口
 
