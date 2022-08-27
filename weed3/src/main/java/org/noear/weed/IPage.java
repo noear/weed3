@@ -1,11 +1,12 @@
 package org.noear.weed;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author noear 2021/11/11 created
  */
-public interface IPage<T> {
+public interface IPage<T> extends Serializable {
     /**
      * 记录
      * */

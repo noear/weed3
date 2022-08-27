@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>weed3-parent</artifactId>
-        <version>3.4.27</version>
+        <version>${revision}</version>
         <relativePath>../../weed3-parent/pom.xml</relativePath>
     </parent>
 

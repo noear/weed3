@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class IPageImpl<T> implements IPage<T> {
 
-    private final List<T> list;
-    private final long total;
-    private final int size;
+    private List<T> list;
+    private long total;
+    private int size;
 
     public IPageImpl(List<T> list, long total, int size) {
         this.list = list;
