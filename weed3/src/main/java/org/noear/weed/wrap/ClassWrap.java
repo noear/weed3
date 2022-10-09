@@ -130,7 +130,7 @@ public class ClassWrap {
 
     public <T> T newInstance() {
         try {
-            return (T) clazz.newInstance();
+            return (T) clazz.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -166,7 +166,7 @@ public class ClassWrap {
 
                 return (T) item;
             } else {
-                Object item = clazz.newInstance();
+                Object item = clazz.getDeclaredConstructor().newInstance();
 
                 for (FieldWrap fw : fieldWraps) {
                     //转入时，不排除; 交dataItem检查

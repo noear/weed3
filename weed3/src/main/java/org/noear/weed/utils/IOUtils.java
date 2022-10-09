@@ -31,7 +31,7 @@ public class IOUtils {
         try {
             Class<?> clz = Class.forName(className);
             if (clz != null) {
-                return (T) clz.newInstance();
+                return (T) clz.getDeclaredConstructor().newInstance();
             }
         } catch (Throwable ex) {}
         return null;

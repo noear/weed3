@@ -92,7 +92,7 @@ class CompilerUtil {
                 Class<?> cls = dynamicClassMap.get(k);
 
                 if (instantiation && cls != null) {
-                    cls.newInstance();
+                    cls.getDeclaredConstructor().newInstance();
                 }
 
                 System.out.println("[Weed] String class loaded::" + k);
