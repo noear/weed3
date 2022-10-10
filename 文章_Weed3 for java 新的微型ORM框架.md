@@ -39,14 +39,14 @@ Weed3，微型ORM框架（支持：java sql，xml sql，annotation sql；templat
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>weed3</artifactId>
-    <version>3.4.30</version>
+    <version>3.4.31</version>
 </dependency>
 
 <!-- maven 插件，用于生成Xml sql mapper接口 -->
 <plugin>
     <groupId>org.noear</groupId>
     <artifactId>weed3-maven-plugin</artifactId>
-    <version>3.4.30</version>
+    <version>3.4.31</version>
 </plugin>
 ```
 
