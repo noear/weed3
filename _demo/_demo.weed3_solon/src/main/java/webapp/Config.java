@@ -5,10 +5,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
-import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import webapp.dso.DsHelper;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class Config {
@@ -22,8 +23,8 @@ public class Config {
     //直接配置 数据库上下文
     //
     @Bean(value = "db1" ,typed = true)
-    public DbContext db1(@Inject("${test.db1}") HikariDataSource dataSource) {
+    public DataSource db1(@Inject("${test.db1}") HikariDataSource dataSource) {
         DsHelper.initData(dataSource);
-        return new DbContext(dataSource);
+        return dataSource;
     }
 }
