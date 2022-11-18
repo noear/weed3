@@ -24,7 +24,9 @@ public class Config {
     //
     @Bean(value = "db1" ,typed = true)
     public DataSource db1(@Inject("${test.db1}") HikariDataSource dataSource) {
+        //初始化 h2 数据库
         DsHelper.initData(dataSource);
+
         return dataSource;
     }
 }
