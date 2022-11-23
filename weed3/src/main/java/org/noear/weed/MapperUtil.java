@@ -16,31 +16,10 @@ class MapperUtil {
     // 代理
     ///////////////////////////////
 
-    private static String _proxy_lock = "";
-    private static Map<Class<?>, Object> _proxy_cache = new HashMap<>();
-
-    /**
-     * 获取Mapper
-     */
-    protected static <T> T proxy(Class<T> mapperInf, DbContext db) {
-        Object tmp = _proxy_cache.get(mapperInf);
-        if (tmp == null) {
-            synchronized (_proxy_lock) {
-                tmp = _proxy_cache.get(mapperInf);
-                if (tmp == null) {
-                    tmp = buildProxy(mapperInf, db);
-                    _proxy_cache.put(mapperInf, tmp);
-                }
-            }
-        }
-
-        return (T) tmp;
-    }
-
     /**
      * 获取代理实例
      */
-    private static <T> T buildProxy(Class<?> mapperInf, DbContext db) {
+    protected static <T> T createProxy(Class<?> mapperInf, DbContext db) {
         XmlSqlLoader.tryLoad();
 
         return (T) Proxy.newProxyInstance(
