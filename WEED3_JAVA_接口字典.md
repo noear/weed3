@@ -16,7 +16,6 @@
 //例3：UserModel um = db.mapper("@demo.dao.db.user_get",{app_id:12});
 ```
 
-
 #### db.table("table") -> new:DbTableQuery
 ```swift
 //
