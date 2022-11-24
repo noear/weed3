@@ -20,6 +20,7 @@
         <module>weed3-parent</module>
 
         <module>_test</module>
+        
         <module>_demo/_demo.weed3_solon</module>
         <module>_demo/_demo.weed3_springboot</module>
     </modules>
