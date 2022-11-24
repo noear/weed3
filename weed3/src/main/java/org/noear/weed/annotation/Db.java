@@ -9,7 +9,8 @@ import java.lang.annotation.*;
  * @since 3.2
  * */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.FIELD})
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
+@Documented
 public @interface Db {
     String value() default "";
 }
